@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint test'
+      tasks: 'lint test-run concat'
     },
     concat: {
       build: {
@@ -34,8 +34,6 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', 'lint test concat');
-
-  grunt.registerTask('watch', 'lint test concat');
 
   grunt.registerTask('server', 'start testacular server', function() {
     var done = this.async();

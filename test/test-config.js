@@ -6,6 +6,7 @@ basePath = '../';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
+  'test/lib/jquery-1.8.2.min.js',
   'test/lib/angular-1.0.2.js',
   'test/lib/angular-1.0.2-mocks.js',
   'common/*.js',

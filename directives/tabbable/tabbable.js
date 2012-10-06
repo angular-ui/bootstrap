@@ -1,12 +1,13 @@
 angular.module('ui.bootstrap').directive('bsTabbable', [function() {
   return {
-    restrict: 'C',
+    restrict: 'ECA',
     compile: function(element) {
       var navTabs = angular.element('<ul class="nav nav-tabs"></ul>'),
           tabContent = angular.element('<div class="tab-content"></div>');
 
       tabContent.append(element.contents());
       element.append(navTabs).append(tabContent);
+      element.addClass('bs-tabbable');
     },
     controller: ['$scope', '$element', function($scope, $element) {
       var navTabs = $element.contents().eq(0),
