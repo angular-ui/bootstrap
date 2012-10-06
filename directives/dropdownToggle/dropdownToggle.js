@@ -1,19 +1,15 @@
-angular.module('ui.bootstrap').directive('bsDropdownToggle',['$document', '$location', '$window',
+angular.module('ui.bootstrap').directive('bsDropdownToggle', ['$document', '$location', '$window',
 function ($document,   $location,   $window) {
   var openElement = null, close;
   return {
-    restrict: 'C',
+    restrict: 'ECA',
     link: function(scope, element, attrs) {
-      scope.$watch(function(){return $location.path();}, function() {
-        if (close) {
-          close();
-        }
+      scope.$watch(function dropdownTogglePathWatch(){return $location.path();}, function dropdownTogglePathWatchAction() {
+        if (close) { close(); }
       });
 
       element.parent().bind('click', function(event) {
-        if (close) {
-          close();
-        }
+        if (close) { close(); }
       });
 
       element.bind('click', function(event) {
