@@ -1,6 +1,3 @@
-
-var testacular = require('testacular');
-
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -35,44 +32,40 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', 'lint test concat');
 
-  grunt.registerTask('server', 'start testacular server', function() {
-    var done = this.async();
-    testacular.server.start({configFile: 'test/test-config.js'});
-  });
-
-  function spawnTestacular(args, callback) {
-    grunt.utils.spawn({
-      cmd: __dirname + "/node_modules/.bin/" +
-        (process.platform === 'win32' ? 'testacular.cmd' : 'testacular'),
+  // Testacular configuration
+  var runTestacular = function(command, options) {
+    var testacularCmd = process.platform === 'win32' ? 'testacular.cmd' : 'testacular';
+    var args = [command, 'test/test-config.js'].concat(options);
+    var done = grunt.task.current.async();
+    var child = grunt.utils.spawn({
+      cmd: testacularCmd,
       args: args
-    }, callback);
-  }
-
-  grunt.registerTask('test-run', 'run tests against continuous testacular server', function() {
-    var done = this.async();
-    spawnTestacular(['run'], function(error, result, code) {
-      if (error) {
-        grunt.warn("Make sure the testacular server is online: run `grunt server`.\n" +
-          "Also make sure you have a browser open to http://localhost:9018/.\n" +
-          grunt.warn(error.stdout + error.stderr));
-        setTimeout(done,1000);
+    }, function(err, result, code) {
+      if (code) {
+        done(false);
       } else {
-        grunt.log.write(result.stdout);
         done();
       }
     });
-  });
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+  };
 
   grunt.registerTask('test', 'run tests on single-run server', function() {
-    var done = this.async();
-    spawnTestacular(['start', 'test/test-config.js','--single-run', '--log-level=warn'], function(error, result, code) {
-      if (error) {
-        grunt.warn(error.stdout + error.stderr);
-      } else {
-        grunt.log.write(result.stdout);
-      }
-      done();
-    });
+    var options = ['--single-run', '--no-auto-watch'];
+
+    //we can specify additional arguments to the test task
+    options = options.concat(this.args);
+    runTestacular('start', options);
   });
 
+  grunt.registerTask('server', 'start testacular server', function() {
+    var options = ['--no-single-run', '--no-auto-watch'];
+    runTestacular('start', options);
+  });
+
+  grunt.registerTask('test-run', 'run tests against continuous testacular server', function() {
+    var options = ['--single-run', '--no-auto-watch'];
+    runTestacular('run', options);
+  });
 };
