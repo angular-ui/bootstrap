@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint test-run concat'
+      tasks: 'lint test-run'
     },
     concat: {
       build: {
@@ -56,20 +56,18 @@ module.exports = function(grunt) {
   };
 
   grunt.registerTask('test', 'run tests on single-run server', function() {
-    var options = ['--single-run', '--no-auto-watch'];
-
-    //we can specify additional arguments to the test task
-    options = options.concat(this.args);
+    //Can augment options with command line arguments
+    var options = ['--single-run', '--no-auto-watch'].concat(this.args);
     runTestacular('start', options);
   });
 
   grunt.registerTask('server', 'start testacular server', function() {
-    var options = ['--no-single-run', '--no-auto-watch'];
+    var options = ['--no-single-run', '--no-auto-watch'].concat(this.args);
     runTestacular('start', options);
   });
 
   grunt.registerTask('test-run', 'run tests against continuous testacular server', function() {
-    var options = ['--single-run', '--no-auto-watch'];
+    var options = ['--single-run', '--no-auto-watch'].concat(this.args);
     runTestacular('run', options);
   });
 };
