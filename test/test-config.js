@@ -10,7 +10,7 @@ files = [
   'test/lib/angular-1.0.2.js',
   'test/lib/angular-1.0.2-mocks.js',
   'common/*.js',
-  'directives/**/*.js',
+  'directives/**/*.js'
 ];
 
 // list of files to exclude

@@ -29,8 +29,12 @@ module.exports = function(grunt) {
     }
   });
 
+  //register before and after test tasks so we've don't have to change cli options on the goole's CI server
+  grunt.registerTask('before-test', 'lint');
+  grunt.registerTask('after-test', 'concat');
+
   // Default task.
-  grunt.registerTask('default', 'lint test concat');
+  grunt.registerTask('default', 'before-test test after-test');
 
   // Testacular configuration
   var runTestacular = function(command, options) {
