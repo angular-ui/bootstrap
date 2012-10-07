@@ -1,5 +1,6 @@
 angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
   var backdropEl;
+  var body = angular.element(document.getElementsByTagName('body')[0]);
   var defaultOpts = {
     backdrop: true,
     escape: true
@@ -15,7 +16,7 @@ angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
       if (opts.backdrop && !backdropEl) {
         backdropEl = angular.element('<div class="modal-backdrop"></div>');
         backdropEl.css('display','none');
-        angular.element(document.getElementsByTagName('body')[0]).append(backdropEl);
+        body.append(backdropEl);
       }
       
       function setShown(shown) {
@@ -32,29 +33,29 @@ angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
       }
       
       function close() {
-        if (opts.escape) { body.unbind('keyup', escapeClose); console.log('escp'); }
+        if (opts.escape) { body.unbind('keyup', escapeClose); }
         if (opts.backdrop) {
-          backdropEl.css('display', 'none');
+          backdropEl.css('display', 'none').removeClass('in');
           backdropEl.unbind('click', clickClose);
         }
-        elm.css('display', 'none');
+        elm.css('display', 'none').removeClass('in');
+        body.removeClass('modal-open');
       }
       function open() {
         if (opts.escape) { body.bind('keyup', escapeClose); }
         if (opts.backdrop) {
-          backdropEl.css('display', 'block');
+          backdropEl.css('display', 'block').addClass('in');
           backdropEl.bind('click', clickClose);
         }
-        elm.css('display', 'block');
+        elm.css('display', 'block').addClass('in');
+        body.addClass('modal-open');
       }
 
       scope.$watch(shownAttr, function(isShown, oldShown) {
-        if (isShown !== oldShown) {
-          if (isShown) {
-            open();
-          } else {
-            close();
-          }
+        if (isShown) {
+          open();
+        } else {
+          close();
         }
       });
     }
