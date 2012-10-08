@@ -7,10 +7,12 @@ describe('modal', function() {
     $compile = _$compile_;
   }));
 
-  function modal(options, expr) {
+  function modal(options, expr, closeExpr) {
     scope.modalOpts = options;
-    return $compile("<div bs-modal='"+(expr || 'modalShown')+"' options='modalOpts'>" +
-      "Content</div>")(scope);
+    return $compile('<div bs-modal="' + (expr || 'modalShown') + '"' +
+                    ' options="modalOpts"' +
+                    ' ' + (closeExpr && 'close="'+closeExpr+"'") +
+                    '>Hello!</div>')(scope);
   }
 
   it('should toggle modal with model', function() {
@@ -59,9 +61,24 @@ describe('modal', function() {
     expect(elm).not.toHaveClass('in');
   });
 
-  it('should work with escape/backdrop when an expression TODO', function() {
-    expect(true).toBe(false);
-    //failed test so we know it doesn't work yet
+  it('should work with a close expression and escape close', function() {
+    scope.bar = true;
+    scope.show = function() { return scope.bar; };
+    var elm = $compile("<div bs-modal='show()' close='bar=false'></div>")(scope);
+    scope.$apply();
+    expect(elm).toHaveClass('in');
+    $("body").trigger({type :'keyup', which: 27}); //escape
+    expect(elm).not.toHaveClass('in');
+  });
+
+  it('should work with a close expression and backdrop close', function() {
+    scope.baz = 1;
+    scope.hello = function() { return scope.baz===1; };
+    var elm = $compile("<div bs-modal='hello()' close='baz=0'></div>")(scope);
+    scope.$apply();
+    expect(elm).toHaveClass("in");
+    $(".modal-backdrop").click();
+    expect(elm).not.toHaveClass('in');
   });
 });
 

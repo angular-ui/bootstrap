@@ -9,8 +9,20 @@ angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
     restrict: 'ECA',
     link: function(scope, elm, attrs) {
       var opts = angular.extend(defaultOpts, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
-      var shownAttr = attrs.bsModal || attrs.ngModel || attrs.ngShow || attrs.uiShow;
-      var model = $parse(shownAttr);
+      var shownExpr = attrs.bsModal || attrs.show;
+      var setClosed;
+
+      if (attrs.close) {
+        setClosed = function() {
+          scope.$apply(attrs.close);
+        };
+      } else {
+        setClosed = function() {
+          scope.$apply(function() {
+            $parse(shownExpr).assign(scope, false);
+          });
+        };
+      }
       elm.addClass('modal');
 
       if (opts.backdrop && !backdropEl) {
@@ -26,10 +38,10 @@ angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
       }
 
       function escapeClose(evt) {
-        if (evt.which === 27) { setShown(false); }
+        if (evt.which === 27) { setClosed(); }
       }
       function clickClose() { 
-        setShown(false); 
+        setClosed();
       }
       
       function close() {
@@ -51,7 +63,7 @@ angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
         body.addClass('modal-open');
       }
 
-      scope.$watch(shownAttr, function(isShown, oldShown) {
+      scope.$watch(shownExpr, function(isShown, oldShown) {
         if (isShown) {
           open();
         } else {
