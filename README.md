@@ -1,7 +1,8 @@
-bootstrap-ui
-============
+# bootstrap - [AngularJS](http://angularjs.org/) directives specific to [twitter bootstrap](http://twitter.github.com/bootstrap/)
 
-Directives specific to twitter bootstrap
+***
+
+[![Build Status](https://secure.travis-ci.org/angular-ui/bootstrap.png)](http://travis-ci.org/angular-ui/bootstrap)
 
 ## Development
 ### Prepare your environment

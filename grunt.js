@@ -56,8 +56,13 @@ module.exports = function(grunt) {
   };
 
   grunt.registerTask('test', 'run tests on single-run server', function() {
-    //Can augment options with command line arguments
-    var options = ['--single-run', '--no-auto-watch'].concat(this.args);
+    var options = ['--single-run', '--no-auto-watch'];
+    if (process.env.TRAVIS) {
+      options =  options.concat(['--browsers=Firefox']);
+    } else {
+      //Can augment options with command line arguments
+      options =  options.concat(this.args);
+    }
     runTestacular('start', options);
   });
 
