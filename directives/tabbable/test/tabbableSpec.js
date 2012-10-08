@@ -15,7 +15,7 @@ describe('tabs', function() {
       return jQuery(element[0]).find('> .nav-tabs > li').eq(index);
     }
     function findTabPane(element, index) {
-      return jQuery(element[0]).find('> .tab-content > .bs-tab-pane').eq(index);
+      return jQuery(element[0]).find('> .tab-content > .tab-pane').eq(index);
     }
 
     this.addMatchers({

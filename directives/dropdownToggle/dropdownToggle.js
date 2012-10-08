@@ -1,8 +1,21 @@
-angular.module('ui.bootstrap').directive('bsDropdownToggle', ['$document', '$location', '$window',
-function ($document,   $location,   $window) {
+/*
+ * dropdownToggle - Provides dropdown menu functionality in place of bootstrap js
+ * @example:
+   <li class="dropdown">
+     <a bs-dropdown-toggle class="dropdown-toggle">My Dropdown Menu</a>
+     <ul bs-dropdown-toggle class="dropdown-menu">
+       <li ng-repeat="choice in dropChoices">
+         <a ng-href="{{choice.href}}>{{choice.text}}</a>
+       </li>
+     </ul>
+   </li>
+ */
+
+angular.module('ui.bootstrap').directive('bsDropdownToggle', 
+['$document', '$location', '$window', function ($document, $location, $window) {
   var openElement = null, close;
   return {
-    restrict: 'ECA',
+    restrict: 'CA',
     link: function(scope, element, attrs) {
       scope.$watch(function dropdownTogglePathWatch(){return $location.path();}, function dropdownTogglePathWatchAction() {
         if (close) { close(); }

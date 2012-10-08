@@ -1,3 +1,15 @@
+
+/* bs-tabbable: Bootstrap tabs implementation
+ * @example
+   <bs-tabbable ng-model="curTab">
+     <tabbable title="First" value="first">
+     <tabbable ng-repeat="t in tabs" title="{{t.title}}" value="{{t.id}}">
+   </bs-tabbable>
+   ...
+   scope.curTab = "first"; //sets first tab to selected
+   scope.curTab = "t[0].id"; //sets first tab in repeater to selected
+ */
+
 angular.module('ui.bootstrap').directive('bsTabbable', [function() {
   return {
     restrict: 'ECA',
@@ -7,7 +19,7 @@ angular.module('ui.bootstrap').directive('bsTabbable', [function() {
 
       tabContent.append(element.contents());
       element.append(navTabs).append(tabContent);
-      element.addClass('bs-tabbable');
+      element.addClass('tabbable');
     },
     controller: ['$scope', '$element', function($scope, $element) {
       var navTabs = $element.contents().eq(0),
