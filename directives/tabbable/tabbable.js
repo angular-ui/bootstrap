@@ -7,7 +7,7 @@
    </bs-tabbable>
    ...
    scope.curTab = "first"; //sets first tab to selected
-   scope.curTab = "t[0].id"; //sets first tab in repeater to selected
+   scope.curTab = t[0].id; //sets first tab in repeater to selected
  */
 
 angular.module('ui.bootstrap').directive('bsTabbable', [function() {
