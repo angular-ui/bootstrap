@@ -29,17 +29,18 @@ angular.module('ui.bootstrap').directive('bsPopover',
     };
     return position[placement] || position.right;
   }
+
+  var popoverTemplate = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
    
   return { 
     restrict: 'ECA',
-    compile: function(tElement, tAttrs) {
-      var popover = angular.element('<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>');
+    compile: function(tElement) {
+      var popover = angular.element(popoverTemplate);
       var titleEl = popover.find('h3').eq(0);
       
-      //Manually transclusion.. probably better way to do this.
+      //Doing manu ltransclusion: probably could be done better
       popover.find('p').html(tElement.html());
-      tElement.html('');
-      tElement.append(popover);
+      tElement.html('').append(popover);
       
       popover.css('display','none');
       
@@ -53,14 +54,16 @@ angular.module('ui.bootstrap').directive('bsPopover',
         }); 
       
         function show(targetEl, placement) {
-          var pos = popPosition(placement || attrs.placement || 'right', popover, targetEl);
+          var pos = popPosition(placement || attrs.placement || 'right',
+                                popover, targetEl);
           popover
             .css('left', pos.left + 'px')
             .css('top', pos.top + 'px')
-            .css('display', 'block');
+            .css('display', 'block')
+            .addClass('in');
         }
         function hide() {
-          popover.css('display', 'none');
+          popover.css('display', 'none').removeClass('in');
         } 
           
         scope.$on('bs.popoverShow', function(evt, popId, targetEl, placement) {
@@ -75,10 +78,10 @@ angular.module('ui.bootstrap').directive('bsPopover',
 }])
 .directive('bsPopTarget', ['$rootScope', '$interpolate', function($rootScope, $interpolate) {
   return {
-    restrict: 'A',
+    restrict: 'CA',
     link: function(scope, elm, attrs) {
+      var idAttr = $interpolate(attrs.bsPopTarget);
       scope.$watch(attrs.show, function(shown, oldShown) {
-        var idAttr = $interpolate(attrs.bsPopTarget);
         if (shown !== oldShown) {
           var popId = idAttr(scope);
           if (shown) {
