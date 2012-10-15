@@ -62,7 +62,7 @@ module.exports = function(grunt) {
     var files = grunt._watch_changed_files || grunt.file.expand(this.data);
   
     function escapeContent(content) {
-      return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "');
+      return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "').replace(/\r/g, '');
     }
     files.forEach(function(file) {
       grunt.file.write(file + ".js", grunt.template.process(TPL, {
