@@ -1,15 +1,15 @@
 describe('modal', function() {
   var scope, $compile;
 
-  beforeEach(module('ui.bootstrap'));
+  beforeEach(module('ui.bootstrap.modal'));
   beforeEach(inject(function($rootScope, _$compile_) {
-    scope = $rootScope;//.$new();
+    scope = $rootScope.$new();
     $compile = _$compile_;
   }));
 
   function modal(options, expr, closeExpr) {
     scope.modalOpts = options;
-    return $compile('<div bs-modal="' + (expr || 'modalShown') + '"' +
+    return $compile('<div modal="' + (expr || 'modalShown') + '"' +
                     ' options="modalOpts"' +
                     ' ' + (closeExpr && 'close="'+closeExpr+"'") +
                     '>Hello!</div>')(scope);
@@ -64,7 +64,7 @@ describe('modal', function() {
   it('should work with a close expression and escape close', function() {
     scope.bar = true;
     scope.show = function() { return scope.bar; };
-    var elm = $compile("<div bs-modal='show()' close='bar=false'></div>")(scope);
+    var elm = $compile("<div modal='show()' close='bar=false'></div>")(scope);
     scope.$apply();
     expect(elm).toHaveClass('in');
     $("body").trigger({type :'keyup', which: 27}); //escape
@@ -74,7 +74,7 @@ describe('modal', function() {
   it('should work with a close expression and backdrop close', function() {
     scope.baz = 1;
     scope.hello = function() { return scope.baz===1; };
-    var elm = $compile("<div bs-modal='hello()' close='baz=0'></div>")(scope);
+    var elm = $compile("<div modal='hello()' close='baz=0'></div>")(scope);
     scope.$apply();
     expect(elm).toHaveClass("in");
     $(".modal-backdrop").click();

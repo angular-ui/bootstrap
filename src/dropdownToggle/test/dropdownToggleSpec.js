@@ -1,7 +1,7 @@
 describe('dropdownToggle', function() {
   var $compile, $rootScope, $document, $location;
 
-  beforeEach(module('ui.bootstrap'));
+  beforeEach(module('ui.bootstrap.dropdownToggle'));
 
   beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _$location_) {
     $compile = _$compile_;
@@ -12,7 +12,7 @@ describe('dropdownToggle', function() {
   }));
 
   function dropdown() {
-    return $compile('<li class="dropdown"><a bs-dropdown-toggle></a><ul bs-dropdown-toggle><li>Hello</li></ul></li>')($rootScope);
+    return $compile('<li class="dropdown"><a dropdown-toggle></a><ul dropdown-toggle><li>Hello</li></ul></li>')($rootScope);
   }
   
   it('should toggle on `a` click', function() {

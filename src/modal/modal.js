@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
+angular.module('ui.bootstrap.modal', []).directive('modal', ['$parse',function($parse) {
   var backdropEl;
   var body = angular.element(document.getElementsByTagName('body')[0]);
   var defaultOpts = {
@@ -9,7 +9,7 @@ angular.module('ui.bootstrap').directive('bsModal', ['$parse',function($parse) {
     restrict: 'ECA',
     link: function(scope, elm, attrs) {
       var opts = angular.extend(defaultOpts, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
-      var shownExpr = attrs.bsModal || attrs.show;
+      var shownExpr = attrs.modal || attrs.show;
       var setClosed;
 
       if (attrs.close) {

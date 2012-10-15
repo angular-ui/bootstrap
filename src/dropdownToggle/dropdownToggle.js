@@ -11,7 +11,7 @@
    </li>
  */
 
-angular.module('ui.bootstrap').directive('bsDropdownToggle', 
+angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', 
 ['$document', '$location', '$window', function ($document, $location, $window) {
   var openElement = null, close;
   return {
