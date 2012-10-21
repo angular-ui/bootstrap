@@ -1,9 +1,10 @@
 /*
  * dropdownToggle - Provides dropdown menu functionality in place of bootstrap js
+ * @restrict class or attribute
  * @example:
    <li class="dropdown">
-     <a dropdown-toggle class="dropdown-toggle">My Dropdown Menu</a>
-     <ul dropdown-toggle class="dropdown-menu">
+     <a class="dropdown-toggle">My Dropdown Menu</a>
+     <ul class="dropdown-menu">
        <li ng-repeat="choice in dropChoices">
          <a ng-href="{{choice.href}}>{{choice.text}}</a>
        </li>
