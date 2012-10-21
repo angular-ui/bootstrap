@@ -10,7 +10,6 @@ files = [
   'test/lib/angular-1.0.2.js',
   'test/lib/angular-1.0.2-mocks.js',
   'test/lib/helpers.js',
-  'common/*.js',
   'src/**/*.js',
   'template/**/*.js'
 ];
