@@ -2,8 +2,8 @@
  * dropdownToggle - Provides dropdown menu functionality in place of bootstrap js
  * @example:
    <li class="dropdown">
-     <a bs-dropdown-toggle class="dropdown-toggle">My Dropdown Menu</a>
-     <ul bs-dropdown-toggle class="dropdown-menu">
+     <a dropdown-toggle class="dropdown-toggle">My Dropdown Menu</a>
+     <ul dropdown-toggle class="dropdown-menu">
        <li ng-repeat="choice in dropChoices">
          <a ng-href="{{choice.href}}>{{choice.text}}</a>
        </li>
