@@ -111,4 +111,9 @@ module.exports = function(grunt) {
     var options = ['--single-run', '--no-auto-watch'].concat(this.args);
     runTestacular('run', options);
   });
+
+  grunt.registerTask('test-watch', 'start testacular server, watch & execute tests', function() {
+    var options = ['--no-single-run', '--auto-watch'].concat(this.args);
+    runTestacular('start', options);
+  });
 };
