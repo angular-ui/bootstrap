@@ -7,7 +7,7 @@
 ## Development
 ### Prepare your environment
 * Install [Node.js](http://nodejs.org/) and NPM (should come with)
-* Install global dev dependencies: `npm install -g grunt@0.3.x testacular@0.2.x`
+* Install global dev dependencies: `npm install -g grunt testacular`
 * Instal local dev dependencies: `npm install` while current directory is bootstrap repo
 
 ### Run unit tests
