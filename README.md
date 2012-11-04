@@ -16,3 +16,7 @@
 
 ### Before commit
 * Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
+
+## Contributing to the project
+
+ We are always looking for the quality contributions! Please check the CONTRIBUTING.md for the contribution guidelines.
