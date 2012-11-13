@@ -3,23 +3,32 @@ angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$sc
 
   var groups = $scope.groups = [];
 
-  this.select = function (group) {
+  this.select = function(group) {
     angular.forEach(groups, function (group) {
       group.selected = false;
     });
     group.selected = true;
   };
 
-  this.addGroup = function (group) {
+  this.toggle = function(group) {
+    if (group.selected) {
+      group.selected = false;
+    } else {
+      this.select(group);
+    }
+  };
+
+  this.addGroup = function(group) {
     groups.push(group);
     if(group.selected) {
       this.select(group);
     }
   };
 
-  this.removeGroup = function (group) {
+  this.removeGroup = function(group) {
     groups.splice(groups.indexOf(group), 1);
   };
+
 }]);
 
 /* accordion: Bootstrap accordion implementation
@@ -48,12 +57,16 @@ angular.module('ui.bootstrap.accordion').directive('accordionGroup', function ()
     scope:{
       title:'='
     },
-    link:function (scope, element, attrs, accordionCtrl) {
+    link: function(scope, element, attrs, accordionCtrl) {
 
       accordionCtrl.addGroup(scope);
 
-      scope.select = function () {
+      scope.select = function() {
         accordionCtrl.select(scope);
+      };
+
+      scope.toggle = function() {
+        accordionCtrl.toggle(scope);
       };
 
       scope.$on('$destroy', function (event) {

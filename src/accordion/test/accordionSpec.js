@@ -90,6 +90,13 @@ describe('accordion', function () {
         expect(findGroupBody(0)).not.toHaveClass('in');
         expect(findGroupBody(1)).toHaveClass('in');
       });
+
+      it('should toggle element on click', function() {
+        findGroupLink(0).click();
+        expect(findGroupBody(0)).toHaveClass('in');
+        findGroupLink(0).click();
+        expect(findGroupBody(0)).not.toHaveClass('in');
+      });
     });
 
     describe('dynamic accordion', function () {
