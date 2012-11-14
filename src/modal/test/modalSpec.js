@@ -7,6 +7,10 @@ describe('modal', function() {
     $compile = _$compile_;
   }));
 
+  afterEach(function(){
+    $('.modal-backdrop').remove();
+  });
+
   function modal(options, expr, closeExpr) {
     scope.modalOpts = options;
     return $compile('<div modal="' + (expr || 'modalShown') + '"' +
