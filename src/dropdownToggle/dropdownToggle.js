@@ -6,7 +6,7 @@
      <a class="dropdown-toggle">My Dropdown Menu</a>
      <ul class="dropdown-menu">
        <li ng-repeat="choice in dropChoices">
-         <a ng-href="{{choice.href}}>{{choice.text}}</a>
+         <a ng-href="{{choice.href}}">{{choice.text}}</a>
        </li>
      </ul>
    </li>
