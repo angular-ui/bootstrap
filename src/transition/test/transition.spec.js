@@ -82,8 +82,7 @@ describe('$transition', function() {
       $transition(element, '').then(resolutionHandler);
       // Simulate the end of transition event
       triggerTransitionEnd();
-      // Run the digest to cause $q resolves to be processed
-      inject(function($rootScope) { $rootScope.$digest(); });
+      $timeout.flush();
 
       expect(resolutionHandler).toHaveBeenCalledWith(element);
     });

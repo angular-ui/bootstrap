@@ -16,7 +16,10 @@ angular.module('ui.bootstrap.transition', [])
     var deferred = $q.defer();
     var transitionEndHandler = function(event) {
       element.unbind($transition.transitionEndEventName, transitionEndHandler);
-      deferred.resolve(element);
+      // Run a $digest (could be done with $rootScope but this seems reasonable)
+      $timeout(function() {
+        deferred.resolve(element);
+      });
     };
 
     // Only bind if the browser supports transitions
