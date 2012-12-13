@@ -55,6 +55,12 @@ describe('$transition', function() {
   // Versions of Internet Explorer before version 10 do not have CSS transitions
   if ( !ie  || ie > 9 ) {
 
+    describe('transitionEndEventName', function() {
+      it('should be a string ending with transitionend', function() {
+        expect($transition.transitionEndEventName).toMatch(/transitionend$/i);
+      });
+    });
+
     it('binds a transitionEnd handler to the element', function() {
       var element = angular.element('<div></div>');
       spyOn(element, 'bind');
@@ -62,13 +68,33 @@ describe('$transition', function() {
       expect(element.bind).toHaveBeenCalledWith($transition.transitionEndEventName, jasmine.any(Function));
     });
   
-    describe('transitionEndEventName', function() {
-      it('should be a string ending with transitionend', function() {
-        expect($transition.transitionEndEventName).toMatch(/transitionend$/i);
+    it('resolves the promise when the transitionEnd is triggered', function() {
+      var element = angular.element('<div></div>');
+      var triggerTransitionEnd;
+      var resolutionHandler = jasmine.createSpy('resolutionHandler');
+
+      // Mock up the element.bind method
+      spyOn(element, 'bind').andCallFake(function(element, handler) {
+        // Store the handler to be used to simulate the end of the transition later
+        triggerTransitionEnd = handler;
       });
+      // Run the transition
+      $transition(element, '').then(resolutionHandler);
+      // Simulate the end of transition event
+      triggerTransitionEnd();
+      // Run the digest to cause $q resolves to be processed
+      inject(function($rootScope) { $rootScope.$digest(); });
+
+      expect(resolutionHandler).toHaveBeenCalledWith(element);
     });
 
   } else {
+
+    describe('transitionEndEventName', function() {
+      it('should be undefined', function() {
+        expect($transition.transitionEndEventName).not.toBeDefined();
+      });
+    });
 
     it('does not bind a transitionEnd handler to the element', function() {
       var element = angular.element('<div></div>');
@@ -77,10 +103,12 @@ describe('$transition', function() {
       expect(element.bind).not.toHaveBeenCalledWith($transition.transitionEndEventName, jasmine.any(Function));
     });
 
-    describe('transitionEndEventName', function() {
-      it('should be undefined', function() {
-        expect($transition.transitionEndEventName).not.toBeDefined();
-      });
+    it('resolves the promise', function() {
+      var element = angular.element('<div></div>');
+      var transitionEndHandler = jasmine.createSpy('transitionEndHandler');
+      $transition(element, '').then(transitionEndHandler);
+      $timeout.flush();
+      expect(transitionEndHandler).toHaveBeenCalledWith(element);
     });
 
   }

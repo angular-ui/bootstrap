@@ -1,5 +1,14 @@
 angular.module('ui.bootstrap.transition', [])
 
+/**
+ * $transition service provides a consistent interface to trigger CSS 3 transitions and to be informed when they complete.
+ * @param  {DOMElement} element  The DOMElement that will be animated.
+ * @param  {string|object|function} trigger  The thing that will cause the transition to start:
+ *   - As a string, it represents the css class to be added to the element.
+ *   - As an object, it represents a hash of style attributes to be applied to the element.
+ *   - As a function, it represents a function to be called that will cause the transition to occur.
+ * @return {Promise}  A promise that is resolved when the transition finishes.
+ */
 .factory('$transition', ['$q', '$timeout', function($q, $timeout) {
 
   var $transition = function(element, trigger) {
@@ -10,11 +19,12 @@ angular.module('ui.bootstrap.transition', [])
       deferred.resolve(element);
     };
 
-
+    // Only bind if the browser supports transitions
     if ( $transition.transitionEndEventName ) {
       element.bind($transition.transitionEndEventName, transitionEndHandler);
     }
 
+    // Wrap in a timeout to allow the browser time to update the DOM before the transition is to occur
     $timeout(function() {
       if ( angular.isString(trigger) ) {
         element.addClass(trigger);
@@ -24,6 +34,7 @@ angular.module('ui.bootstrap.transition', [])
         element.css(trigger);
       }
 
+      // If the browser doesn't support transitions then we immediately resolve the event
       if ( !$transition.transitionEndEventName ) {
         deferred.resolve(element);
       }
