@@ -9,15 +9,14 @@ angular.module('ui.bootstrap.transition', [])
  *   - As a function, it represents a function to be called that will cause the transition to occur.
  * @return {Promise}  A promise that is resolved when the transition finishes.
  */
-.factory('$transition', ['$q', '$timeout', function($q, $timeout) {
+.factory('$transition', ['$q', '$timeout', '$rootScope', function($q, $timeout, $rootScope) {
 
   var $transition = function(element, trigger) {
-    
+
     var deferred = $q.defer();
     var transitionEndHandler = function(event) {
+      $rootScope.$apply(function() {
       element.unbind($transition.transitionEndEventName, transitionEndHandler);
-      // Run a $digest (could be done with $rootScope but this seems reasonable)
-      $timeout(function() {
         deferred.resolve(element);
       });
     };
@@ -42,6 +41,16 @@ angular.module('ui.bootstrap.transition', [])
         deferred.resolve(element);
       }
     });
+
+    // Add out custom cancel function to the promise that is returned
+    // We can call this if we are about to run a new transition, which we know will prevent this transition from ending,
+    // i.e. it will therefore never raise a transitionEnd event for that transition
+    deferred.promise.cancel = function() {
+      if ( $transition.transitionEndEventName ) {
+        element.unbind($transition.transitionEndEventName, transitionEndHandler);
+      }
+      deferred.reject('Transition cancelled');
+    };
 
     return deferred.promise;
   };

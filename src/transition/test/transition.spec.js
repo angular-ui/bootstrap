@@ -21,9 +21,11 @@ describe('$transition', function() {
     $timeout = _$timeout_;
   }));
 
-  it('returns a promise', function() {
+  it('returns our custom promise', function() {
     var element = angular.element('<div></div>');
-    expect($transition(element, '').then).toBeDefined();
+    var promise = $transition(element, '');
+    expect(promise.then).toEqual(jasmine.any(Function));
+    expect(promise.cancel).toEqual(jasmine.any(Function));
   });
 
   it('changes the css if passed a string', function() {
@@ -54,39 +56,58 @@ describe('$transition', function() {
 
   // Versions of Internet Explorer before version 10 do not have CSS transitions
   if ( !ie  || ie > 9 ) {
+    describe('transitionEnd event', function() {
+      var element, triggerTransitionEnd;
 
-    describe('transitionEndEventName', function() {
-      it('should be a string ending with transitionend', function() {
-        expect($transition.transitionEndEventName).toMatch(/transitionend$/i);
+      beforeEach(function() {
+        element = angular.element('<div></div>');
+        // Mock up the element.bind method
+        spyOn(element, 'bind').andCallFake(function(element, handler) {
+          // Store the handler to be used to simulate the end of the transition later
+          triggerTransitionEnd = handler;
+        });
+        // Mock up the element.unbind method
+        spyOn(element, 'unbind');
+      });
+
+      describe('transitionEndEventName', function() {
+        it('should be a string ending with transitionend', function() {
+          expect($transition.transitionEndEventName).toMatch(/transitionend$/i);
+        });
+      });
+
+      it('binds a transitionEnd handler to the element', function() {
+        $transition(element, '');
+        expect(element.bind).toHaveBeenCalledWith($transition.transitionEndEventName, jasmine.any(Function));
+      });
+    
+      it('resolves the promise when the transitionEnd is triggered', function() {
+        var resolutionHandler = jasmine.createSpy('resolutionHandler');
+
+        // Run the transition
+        $transition(element, '').then(resolutionHandler);
+
+        // Simulate the end of transition event
+        triggerTransitionEnd();
+        $timeout.flush();
+
+        expect(resolutionHandler).toHaveBeenCalledWith(element);
+      });
+
+      it('rejects the promise if transition is cancelled', function() {
+        var rejectionHandler = jasmine.createSpy('rejectionHandler');
+
+        var promise = $transition(element, '');
+        promise.then(null, rejectionHandler);
+
+        promise.cancel();
+        inject(function($rootScope) {
+          $rootScope.$digest();
+        });
+        expect(rejectionHandler).toHaveBeenCalledWith(jasmine.any(String));
+        expect(element.unbind).toHaveBeenCalledWith($transition.transitionEndEventName, jasmine.any(Function));
       });
     });
-
-    it('binds a transitionEnd handler to the element', function() {
-      var element = angular.element('<div></div>');
-      spyOn(element, 'bind');
-      $transition(element, '');
-      expect(element.bind).toHaveBeenCalledWith($transition.transitionEndEventName, jasmine.any(Function));
-    });
-  
-    it('resolves the promise when the transitionEnd is triggered', function() {
-      var element = angular.element('<div></div>');
-      var triggerTransitionEnd;
-      var resolutionHandler = jasmine.createSpy('resolutionHandler');
-
-      // Mock up the element.bind method
-      spyOn(element, 'bind').andCallFake(function(element, handler) {
-        // Store the handler to be used to simulate the end of the transition later
-        triggerTransitionEnd = handler;
-      });
-      // Run the transition
-      $transition(element, '').then(resolutionHandler);
-      // Simulate the end of transition event
-      triggerTransitionEnd();
-      $timeout.flush();
-
-      expect(resolutionHandler).toHaveBeenCalledWith(element);
-    });
-
   } else {
 
     describe('transitionEndEventName', function() {
