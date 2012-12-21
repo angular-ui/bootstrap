@@ -1,13 +1,20 @@
-<div ng-controller="AccordionDemoCtrl">
-  <accordion>
-    <accordion-group heading="staticTitle">Static content</accordion-group>
-    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">{{group.content}}</accordion-group>
-  </accordion>
-  <hr>
-  <accordion close-others="false">
-    <accordion-group title="Title 1"><strong>Content 1</strong></accordion-group>
-    <accordion-group title="Title 2"><strong>Content 2</strong></accordion-group>
-    <accordion-group title="Title 3"><strong>Content 3</strong></accordion-group>
-    <accordion-group title="Title 4"><strong>Content 4</strong></accordion-group>
+<div ng-controller="AccordionDemoCtrl" class="well">
+  <label class="checkbox">
+    <input type="checkbox" ng-model="oneAtATime">
+    Open one at a time
+  </label>
+  
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="Static Header">
+      This content is straight in the template.
+    </accordion-group>
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      {{group.content}}
+    </accordion-group>
+    <button ng-click="addItem()">Add Item</button>
+    <accordion-group heading="Dynamic Body Content">
+      <p>The body of the accordion group grows to fit the contents.</p>
+      <div ng-repeat="item in items">{{item}}</div>
+    </accordion-group>
   </accordion>
 </div>
