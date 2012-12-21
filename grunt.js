@@ -1,3 +1,6 @@
+var fs = require('fs');
+var markdown = require('node-markdown').Markdown;
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -7,7 +10,7 @@ module.exports = function(grunt) {
       banner: 'angular.module("ui.bootstrap", [<%= modules %>]);'
     },
     lint: {
-      files: ['grunt.js', 'src/**/*.js']
+      files: ['grunt.js','src/**/*.js']
     },
     watch: {
       files: '<config:lint.files>',
@@ -16,7 +19,7 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: ['<banner>', 'src/*/*.js'],
-        dest: 'dist/angular-ui-bootstrap.js' 
+        dest: 'dist/ui-bootstrap.js'
       }
     },
     html2js: {
@@ -39,18 +42,56 @@ module.exports = function(grunt) {
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', 'lint html2js');
   grunt.registerTask('after-test', 'find-modules concat');
+  grunt.registerTask('demo', 'before-test after-test build-demo');
 
   // Default task.
-  grunt.registerTask('default', 'before-test test after-test');
+  grunt.registerTask('default', 'before-test test after-test demo');
 
   //Common ui.bootstrap module containing all modules
   grunt.registerTask('find-modules', 'Generate ui.bootstrap module depending on all existing directives', function() {
-    var modules = [];
-    grunt.file.expandDirs('src/*').forEach(function(dir) {
-      var moduleName = dir.split("/")[1];
-      modules.push('"ui.bootstrap.' + moduleName + '"');
+    var modules = grunt.file.expandDirs('src/*').map(function(dir) {
+      return '"ui.bootstrap.' + dir.split("/")[1] + '"';
     });
     grunt.config('modules', modules);
+  });
+
+  grunt.registerTask('build-demo', 'Create grunt demo.html from every module\'s files', function() {
+    this.requires('find-modules concat html2js');
+
+    var modules = grunt.file.expandDirs('src/*').map(function(dir) {
+      var moduleName = dir.split("/")[1];
+      if (fs.existsSync(dir + "docs")) {
+        return {
+          name: moduleName,
+          js: grunt.file.expand(dir + "docs/*.js").map(grunt.file.read).join(''),
+          html: grunt.file.expand(dir + "docs/*.html").map(grunt.file.read).join(''),
+          description: grunt.file.expand(dir + "docs/*.md").map(grunt.file.read).map(markdown).join('')
+        };
+      }
+      return {
+        name: moduleName,
+        js: moduleName,
+        html: moduleName,
+        description: moduleName
+      };
+    });
+
+    var templateFiles = grunt.file.expand("template/**/*.html.js");
+    
+    grunt.file.write(
+      'dist/demo.html',
+      grunt.template.process(grunt.file.read('misc/demo-template.html'), {
+        modules: modules,
+        templateModules: templateFiles.map(function(fileName) {
+          return "'"+fileName.substr(0, fileName.length - 3)+"'";
+        }),
+        templates: templateFiles.map(grunt.file.read).join('')
+      })
+    );
+    
+    grunt.file.expand('misc/demo-assets/*').forEach(function(path) {
+      grunt.file.copy(path, 'dist/assets/' + path.replace('misc/demo-assets/',''));
+    });
   });
 
   //Html templates to $templateCache for tests
@@ -60,14 +101,14 @@ module.exports = function(grunt) {
       '  $templateCache.put("<%= file %>",\n    "<%= content %>");\n' +
       '});\n';
     var files = grunt._watch_changed_files || grunt.file.expand(this.data);
-  
+
     function escapeContent(content) {
       return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "').replace(/\r/g, '');
     }
     files.forEach(function(file) {
       grunt.file.write(file + ".js", grunt.template.process(TPL, {
-        file: file,
-        content: escapeContent(grunt.file.read(file))
+            file: file,
+            content: escapeContent(grunt.file.read(file))
       }));
     });
   });
@@ -78,8 +119,8 @@ module.exports = function(grunt) {
     var args = [command].concat(options);
     var done = grunt.task.current.async();
     var child = grunt.utils.spawn({
-      cmd: testacularCmd,
-      args: args
+        cmd: testacularCmd,
+        args: args
     }, function(err, result, code) {
       if (code) {
         done(false);
@@ -116,4 +157,4 @@ module.exports = function(grunt) {
     var options = ['--no-single-run', '--auto-watch'].concat(this.args);
     runTestacular('start', options);
   });
-};
+  };

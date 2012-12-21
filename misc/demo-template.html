@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bootstrapDemoApp" id="top">
+<head>
+	<title>Bootstrap for AngularUI</title>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+  <script src="ui-bootstrap.js"></script>
+  <script>
+    angular.module('bootstrapDemoApp', ['ui.bootstrap', <%= templateModules %>]);
+  </script>
+  <script>
+    <%= templates %>
+  </script>
+  <link rel="stylesheet" href="assets/bootstrap.css" />
+  <link rel="stylesheet" href="assets/rainbow.css" />
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="demo.html">ui-bootstrap</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <% modules.forEach(function(module) {  %>
+            <li><a href="#<%= module.name %>"><%= module.name %></a></li>
+          <% });  %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+<div style="margin: 32px;"></div>
+<div role="main">
+  <div class="container">
+    <% modules.forEach(function(module) { %>
+      <section id="<%= module.name %>">
+				<div class="page-header">
+          <h1><%= module.name %></h1>
+				</div>
+				<div class="row">
+					<div class="span6">
+            <%= module.html %>
+					</div>
+					<div class="span6">
+            <%= module.description %>
+					</div>
+				</div>
+        <div class="row">
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre>
+          </div>
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="javascript"><%- module.js %></code></pre>
+          </div>
+        </div>
+      </section>
+      <script><%= module.js %></script>
+    <% }); %>
+  </div>
+</div>
+<script src="assets/rainbow.js"></script>
+<script src="assets/rainbow-generic.js"></script>
+<script src="assets/rainbow-javascript.js"></script>
+<script src="assets/rainbow-html.js"></script>
+</body>
+</html>

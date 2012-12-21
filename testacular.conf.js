@@ -6,10 +6,10 @@ basePath = '.';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-  'test/lib/jquery-1.8.2.min.js',
-  'test/lib/angular-1.0.2.js',
-  'test/lib/angular-1.0.2-mocks.js',
-  'test/lib/helpers.js',
+  'misc/test-lib/jquery-1.8.2.min.js',
+  'misc/test-lib/angular-1.0.2.js',
+  'misc/test-lib/angular-1.0.2-mocks.js',
+  'misc/test-lib/helpers.js',
   'src/**/*.js',
   'template/**/*.js'
 ];
@@ -25,7 +25,7 @@ exclude = [
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = ['Chrome'];
+browsers = [];
 
 // test results reporter to use
 // possible values: dots || progress
@@ -50,3 +50,4 @@ autoWatch = true;
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
 singleRun = false;
+
