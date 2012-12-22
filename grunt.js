@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       files: ['grunt.js','src/**/*.js']
     },
     watch: {
-      files: '<config:lint.files>',
+      files: ['<config:lint.files>', 'template/**/*.html'],
       tasks: 'before-test test-run'
     },
     concat: {
