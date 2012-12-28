@@ -79,7 +79,7 @@ module.exports = function(grunt) {
     var templateFiles = grunt.file.expand("template/**/*.html.js");
     
     grunt.file.write(
-      'dist/demo.html',
+      'dist/index.html',
       grunt.template.process(grunt.file.read('misc/demo-template.html'), {
         modules: modules,
         templateModules: templateFiles.map(function(fileName) {
