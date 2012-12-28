@@ -76,11 +76,22 @@ describe('$transition', function() {
         });
       });
 
+      describe('animationEndEventName', function() {
+        it('should be a string ending with animationend', function() {
+          expect($transition.animationEndEventName).toMatch(/animationend$/i);
+        });
+      });
+
       it('binds a transitionEnd handler to the element', function() {
         $transition(element, '');
         expect(element.bind).toHaveBeenCalledWith($transition.transitionEndEventName, jasmine.any(Function));
       });
-    
+
+      it('binds an animationEnd handler to the element if option is given', function() {
+        $transition(element, '', {animation: true});
+        expect(element.bind).toHaveBeenCalledWith($transition.animationEndEventName, jasmine.any(Function));
+      });
+
       it('resolves the promise when the transitionEnd is triggered', function() {
         var resolutionHandler = jasmine.createSpy('resolutionHandler');
 

@@ -11,19 +11,20 @@ angular.module('ui.bootstrap.transition', [])
  */
 .factory('$transition', ['$q', '$timeout', '$rootScope', function($q, $timeout, $rootScope) {
 
-  var $transition = function(element, trigger) {
-
+  var $transition = function(element, trigger, options) {
+    options = options || {};
     var deferred = $q.defer();
+    var endEventName = $transition[options.animation ? "animationEndEventName" : "transitionEndEventName"];
+
     var transitionEndHandler = function(event) {
       $rootScope.$apply(function() {
-      element.unbind($transition.transitionEndEventName, transitionEndHandler);
+        element.unbind(endEventName, transitionEndHandler);
         deferred.resolve(element);
       });
     };
 
-    // Only bind if the browser supports transitions
-    if ( $transition.transitionEndEventName ) {
-      element.bind($transition.transitionEndEventName, transitionEndHandler);
+    if (endEventName) {
+      element.bind(endEventName, transitionEndHandler);
     }
 
     // Wrap in a timeout to allow the browser time to update the DOM before the transition is to occur
@@ -35,19 +36,18 @@ angular.module('ui.bootstrap.transition', [])
       } else if ( angular.isObject(trigger) ) {
         element.css(trigger);
       }
-
-      // If the browser doesn't support transitions then we immediately resolve the event
-      if ( !$transition.transitionEndEventName ) {
+      //If browser does not support transitions, instantly resolve
+      if ( !endEventName ) {
         deferred.resolve(element);
       }
     });
 
-    // Add out custom cancel function to the promise that is returned
+    // Add our custom cancel function to the promise that is returned
     // We can call this if we are about to run a new transition, which we know will prevent this transition from ending,
     // i.e. it will therefore never raise a transitionEnd event for that transition
     deferred.promise.cancel = function() {
-      if ( $transition.transitionEndEventName ) {
-        element.unbind($transition.transitionEndEventName, transitionEndHandler);
+      if ( endEventName ) {
+        element.unbind(endEventName, transitionEndHandler);
       }
       deferred.reject('Transition cancelled');
     };
@@ -64,10 +64,21 @@ angular.module('ui.bootstrap.transition', [])
     'msTransition': 'MSTransitionEnd',
     'transition': 'transitionend'
   };
-  for (var name in transitionEndEventNames){
-    if (transElement.style[name] !== undefined) {
-      $transition.transitionEndEventName = transitionEndEventNames[name];
+  var animationEndEventNames = {
+    'WebkitTransition': 'webkitAnimationEnd',
+    'MozTransition': 'animationend',
+    'OTransition': 'oAnimationEnd',
+    'msTransition': 'MSAnimationEnd',
+    'transition': 'animationend'
+  };
+  function findEndEventName(endEventNames) {
+    for (var name in endEventNames){
+      if (transElement.style[name] !== undefined) {
+        return endEventNames[name];
+      }
     }
   }
+  $transition.transitionEndEventName = findEndEventName(transitionEndEventNames);
+  $transition.animationEndEventName = findEndEventName(animationEndEventNames);
   return $transition;
 }]);
