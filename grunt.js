@@ -41,11 +41,10 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', 'lint html2js');
-  grunt.registerTask('after-test', 'find-modules concat');
-  grunt.registerTask('demo', 'before-test after-test build-demo');
+  grunt.registerTask('after-test', 'find-modules concat site');
 
   // Default task.
-  grunt.registerTask('default', 'before-test test after-test demo');
+  grunt.registerTask('default', 'before-test test after-test');
 
   //Common ui.bootstrap module containing all modules
   grunt.registerTask('find-modules', 'Generate ui.bootstrap module depending on all existing directives', function() {
@@ -55,7 +54,7 @@ module.exports = function(grunt) {
     grunt.config('modules', modules);
   });
 
-  grunt.registerTask('build-demo', 'Create grunt demo.html from every module\'s files', function() {
+  grunt.registerTask('site', 'Create grunt demo site from every module\'s files', function() {
     this.requires('find-modules concat html2js');
 
     var modules = grunt.file.expandDirs('src/*').map(function(dir) {
