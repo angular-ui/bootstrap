@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="bootstrapDemoApp" id="top">
 <head>
-	<title>Bootstrap for AngularUI</title>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
-  <script src="ui-bootstrap.js"></script>
-  <script>
-    angular.module('bootstrapDemoApp', ['ui.bootstrap', <%= templateModules %>]);
-  </script>
-  <script>
-    <%= templates %>
-  </script>
-  <link rel="stylesheet" href="assets/bootstrap.css" />
-  <link rel="stylesheet" href="assets/rainbow.css" />
+    <title>Bootstrap for AngularUI</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+    <script src="ui-bootstrap.js"></script>
+    <script>
+        angular.module('bootstrapDemoApp', ['ui.bootstrap', < %= templateModules % >]);
+    </script>
+    <script>
+        <%= templates % >
+    </script>
+    <link rel="stylesheet" href="assets/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/rainbow.css"/>
 </head>
 <body>
 <header class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
+    <a href="https://github.com/angular-ui/bootstrap">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
+    </a>
+    <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="demo.html">ui-bootstrap</a>
+      <a class="brand" href="#">ui-bootstrap</a>
       <div class="nav-collapse">
         <ul class="nav">
           <% modules.forEach(function(module) {  %>
