@@ -1,0 +1,1 @@
+AngularJS version of the tabs directive.
