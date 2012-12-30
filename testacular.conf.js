@@ -7,8 +7,8 @@ files = [
   JASMINE,
   JASMINE_ADAPTER,
   'misc/test-lib/jquery-1.8.2.min.js',
-  'misc/test-lib/angular-1.0.2.js',
-  'misc/test-lib/angular-1.0.2-mocks.js',
+  'misc/test-lib/angular.js',
+  'misc/test-lib/angular-mocks.js',
   'misc/test-lib/helpers.js',
   'src/**/*.js',
   'template/**/*.js'
