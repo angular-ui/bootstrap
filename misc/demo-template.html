@@ -34,17 +34,18 @@
   <div class="container">
     <% modules.forEach(function(module) { %>
       <section id="<%= module.name %>">
-				<div class="page-header">
+        <div class="page-header">
           <h1><%= module.name %></h1>
-				</div>
-				<div class="row">
-					<div class="span6">
-            <%= module.html %>
-					</div>
-					<div class="span6">
-            <%= module.description %>
-					</div>
-				</div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <%= module.html %>
+            </div>
+            <div class="span6">
+                <%= module.description %>
+            </div>
+        </div>
+        <hr>
         <div class="row">
           <div class="span6">
             <pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre>

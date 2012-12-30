@@ -58,6 +58,7 @@ module.exports = function(grunt) {
     this.requires('find-modules concat html2js');
 
     var modules = grunt.file.expandDirs('src/*').map(function(dir) {
+
       var moduleName = dir.split("/")[1];
       if (fs.existsSync(dir + "docs")) {
         return {
@@ -67,12 +68,8 @@ module.exports = function(grunt) {
           description: grunt.file.expand(dir + "docs/*.md").map(grunt.file.read).map(markdown).join('')
         };
       }
-      return {
-        name: moduleName,
-        js: moduleName,
-        html: moduleName,
-        description: moduleName
-      };
+    }).filter(function(module){
+       return module !== undefined;
     });
 
     var templateFiles = grunt.file.expand("template/**/*.html.js");
