@@ -1,0 +1,14 @@
+<div ng-controller="ModalDemoCtrl">
+    <button class="btn" ng-click="open()">Open me!</button>
+    <div modal="shouldBeOpen" close="close()">
+        <div class="modal-header">
+            <h4>I'm a modal!</h4>
+        </div>
+        <div class="modal-body">
+            with some content...
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning cancel" ng-click="close()">Cancel</button>
+        </div>
+    </div>
+</div>
