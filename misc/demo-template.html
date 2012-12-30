@@ -5,10 +5,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
     <script src="ui-bootstrap.js"></script>
     <script>
-        angular.module('bootstrapDemoApp', ['ui.bootstrap', < %= templateModules % >]);
+        angular.module('bootstrapDemoApp', ['ui.bootstrap', <%= templateModules %>]);
     </script>
     <script>
-        <%= templates % >
+        <%= templates %>
     </script>
     <link rel="stylesheet" href="assets/bootstrap.css"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
