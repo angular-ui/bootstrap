@@ -62,8 +62,8 @@ describe('accordion', function () {
       beforeEach(function () {
         var tpl =
           "<accordion>" +
-            "<accordion-group title=\"'title 1'\">Content 1</accordion-group>" +
-            "<accordion-group title=\"'title 2'\">Content 2</accordion-group>" +
+            "<accordion-group title=\"title 1\">Content 1</accordion-group>" +
+            "<accordion-group title=\"title 2\">Content 2</accordion-group>" +
             "</accordion>";
         element = angular.element(tpl);
         $compile(element)(scope);
@@ -105,7 +105,7 @@ describe('accordion', function () {
       beforeEach(function () {
         var tpl =
           "<accordion>" +
-            "<accordion-group ng-repeat='group in groups' title='group.name'>{{group.content}}</accordion-group>" +
+            "<accordion-group ng-repeat='group in groups' title='{{group.name}}'>{{group.content}}</accordion-group>" +
             "</accordion>";
         element = angular.element(tpl);
         model = [
