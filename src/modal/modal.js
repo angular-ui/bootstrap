@@ -6,7 +6,7 @@ angular.module('ui.bootstrap.modal', []).directive('modal', ['$parse',function($
     escape: true
   };
   return {
-    restrict: 'ECA',
+    restrict: 'EA',
     link: function(scope, elm, attrs) {
       var opts = angular.extend(defaultOpts, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
       var shownExpr = attrs.modal || attrs.show;
