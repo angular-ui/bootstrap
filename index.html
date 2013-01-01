@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bootstrapDemoApp" id="top">
+<head>
+    <title>Bootstrap for AngularUI</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script src="ui-bootstrap.js"></script>
+    <script>
+        angular.module('bootstrapDemoApp', ['ui.bootstrap', 'template/accordion/accordion-group.html','template/accordion/accordion.html','template/pagination/pagination.html','template/tabs/pane.html','template/tabs/tabs.html']);
+    </script>
+    <script>
+        angular.module("template/accordion/accordion-group.html", []).run(function($templateCache){
+  $templateCache.put("template/accordion/accordion-group.html",
+    "<div class=\"accordion-group\">" +
+    "    <div class=\"accordion-heading\">" +
+    "        <a class=\"accordion-toggle\" ng-click=\"toggle()\">{{heading}}</a>" +
+    "    </div>" +
+    "    <div class=\"accordion-body collapse\" ng-class=\"{in : selected}\">" +
+    "        <div class=\"accordion-inner\" ng-transclude></div>" +
+    "    </div>" +
+    "</div>");
+});
+angular.module("template/accordion/accordion.html", []).run(function($templateCache){
+  $templateCache.put("template/accordion/accordion.html",
+    "<div class=\"accordion\" ng-transclude></div>");
+});
+angular.module("template/pagination/pagination.html", []).run(function($templateCache){
+  $templateCache.put("template/pagination/pagination.html",
+    "<div class=\"pagination\"><ul>" +
+    "  <li ng-class=\"{disabled: noPrevious()}\"><a ng-click=\"selectPrevious()\">Previous</a></li>" +
+    "  <li ng-repeat=\"page in pages\" ng-class=\"{active: isActive(page)}\"><a ng-click=\"selectPage(page)\">{{page}}</a></li>" +
+    "  <li ng-class=\"{disabled: noNext()}\"><a ng-click=\"selectNext()\">Next</a></li>" +
+    "  </ul>" +
+    "</div>" +
+    "");
+});
+angular.module("template/tabs/pane.html", []).run(function($templateCache){
+  $templateCache.put("template/tabs/pane.html",
+    "<div class=\"tab-pane\" ng-class=\"{active: selected}\" ng-show=\"selected\" ng-transclude></div>" +
+    "");
+});
+angular.module("template/tabs/tabs.html", []).run(function($templateCache){
+  $templateCache.put("template/tabs/tabs.html",
+    "<div class=\"tabbable\">" +
+    "  <ul class=\"nav nav-tabs\">" +
+    "    <li ng-repeat=\"pane in panes\" ng-class=\"{active:pane.selected}\">" +
+    "      <a href=\"\" ng-click=\"select(pane)\">{{pane.heading}}</a>" +
+    "    </li>" +
+    "  </ul>" +
+    "  <div class=\"tab-content\" ng-transclude></div>" +
+    "</div>" +
+    "");
+});
+
+    </script>
+    <link rel="stylesheet" href="assets/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/rainbow.css"/>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <a href="https://github.com/angular-ui/bootstrap">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
+    </a>
+    <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">ui-bootstrap</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          
+            <li><a href="#accordion">accordion</a></li>
+          
+            <li><a href="#dropdownToggle">dropdownToggle</a></li>
+          
+            <li><a href="#modal">modal</a></li>
+          
+            <li><a href="#pagination">pagination</a></li>
+          
+            <li><a href="#tabs">tabs</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+<div style="margin: 32px;"></div>
+<div role="main">
+  <div class="container">
+    
+      <section id="accordion">
+        <div class="page-header">
+          <h1>accordion</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="AccordionDemoCtrl">
+  <accordion>
+    <accordion-group heading="staticTitle">Static content</accordion-group>
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">{{group.content}}</accordion-group>
+  </accordion>
+</div>
+            </div>
+            <div class="span6">
+                <p>Accordion is an AngularJS-version of bootstrap's accordion.</p>
+
+<p>This directive can be used to quickly generate collapsible accordion both statically (from a template) and from the dynamic model data (using the <code>ng-repeat</code> directive);</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
+  &lt;accordion&gt;
+    &lt;accordion-group heading=&quot;staticTitle&quot;&gt;Static content&lt;&#x2F;accordion-group&gt;
+    &lt;accordion-group heading=&quot;{{group.title}}&quot; ng-repeat=&quot;group in groups&quot;&gt;{{group.content}}&lt;&#x2F;accordion-group&gt;
+  &lt;&#x2F;accordion&gt;
+&lt;&#x2F;div&gt;</code></pre>
+          </div>
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="javascript">function AccordionDemoCtrl($scope) {
+  $scope.staticTitle = &quot;Static Title&quot;;
+
+  $scope.groups = [
+    { title: &quot;Dynamic Title 1&quot;, content: &quot;Dynamic content 1&quot; }, 
+    { title: &quot;Dynamic Title 2&quot;, content: &quot;Dynamic content 2&quot; }
+  ];
+}</code></pre>
+          </div>
+        </div>
+      </section>
+      <script>function AccordionDemoCtrl($scope) {
+  $scope.staticTitle = "Static Title";
+
+  $scope.groups = [
+    { title: "Dynamic Title 1", content: "Dynamic content 1" }, 
+    { title: "Dynamic Title 2", content: "Dynamic content 2" }
+  ];
+}</script>
+    
+      <section id="dropdownToggle">
+        <div class="page-header">
+          <h1>dropdownToggle</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <li class="dropdown" ng-controller="DropdownCtrl">
+  <a class="dropdown-toggle">
+    Click me for a dropdown, yo!
+  </a>
+  <ul class="dropdown-menu">
+    <li ng-repeat="choice in items">
+      <a>{{choice}}</a>
+    </li>
+  </ul>
+</li>
+
+            </div>
+            <div class="span6">
+                <p>DropdownToggle is a simple directive which will toggle a dropdown link on click.  Simply put it on the <code>&lt;a&gt;</code> tag of the toggler-element, and it will find the nearest dropdown menu and toggle it when the <code>&lt;a dropdown-toggle&gt;</code> is clicked.</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
+  &lt;a class=&quot;dropdown-toggle&quot;&gt;
+    Click me for a dropdown, yo!
+  &lt;&#x2F;a&gt;
+  &lt;ul class=&quot;dropdown-menu&quot;&gt;
+    &lt;li ng-repeat=&quot;choice in items&quot;&gt;
+      &lt;a&gt;{{choice}}&lt;&#x2F;a&gt;
+    &lt;&#x2F;li&gt;
+  &lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+</code></pre>
+          </div>
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="javascript">function DropdownCtrl($scope) {
+  $scope.items = [
+    &quot;The first choice!&quot;,
+    &quot;And another choice for you.&quot;,
+    &quot;but wait! A third!&quot;
+  ];
+}
+</code></pre>
+          </div>
+        </div>
+      </section>
+      <script>function DropdownCtrl($scope) {
+  $scope.items = [
+    "The first choice!",
+    "And another choice for you.",
+    "but wait! A third!"
+  ];
+}
+</script>
+    
+      <section id="modal">
+        <div class="page-header">
+          <h1>modal</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="ModalDemoCtrl">
+    <button class="btn" ng-click="open()">Open me!</button>
+    <div modal="shouldBeOpen" close="close()">
+        <div class="modal-header">
+            <h4>I'm a modal!</h4>
+        </div>
+        <div class="modal-body">
+            with some content...
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning cancel" ng-click="close()">Cancel</button>
+        </div>
+    </div>
+</div>
+            </div>
+            <div class="span6">
+                <p>Bootstrap's modal directive.</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
+    &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;Open me!&lt;&#x2F;button&gt;
+    &lt;div modal=&quot;shouldBeOpen&quot; close=&quot;close()&quot;&gt;
+        &lt;div class=&quot;modal-header&quot;&gt;
+            &lt;h4&gt;I&#x27;m a modal!&lt;&#x2F;h4&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div class=&quot;modal-body&quot;&gt;
+            with some content...
+        &lt;&#x2F;div&gt;
+        &lt;div class=&quot;modal-footer&quot;&gt;
+            &lt;button class=&quot;btn btn-warning cancel&quot; ng-click=&quot;close()&quot;&gt;Cancel&lt;&#x2F;button&gt;
+        &lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;</code></pre>
+          </div>
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope) {
+
+  $scope.open = function () {
+    $scope.shouldBeOpen = true;
+  };
+
+  $scope.close = function () {
+    $scope.closeMsg = &#x27;I was closed at: &#x27; + new Date();
+    $scope.shouldBeOpen = false;
+  };
+};</code></pre>
+          </div>
+        </div>
+      </section>
+      <script>var ModalDemoCtrl = function ($scope) {
+
+  $scope.open = function () {
+    $scope.shouldBeOpen = true;
+  };
+
+  $scope.close = function () {
+    $scope.closeMsg = 'I was closed at: ' + new Date();
+    $scope.shouldBeOpen = false;
+  };
+};</script>
+    
+      <section id="pagination">
+        <div class="page-header">
+          <h1>pagination</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="PaginationDemoCtrl">
+    <pagination num-pages="noOfPages" current-page="currentPage"></pagination>
+    <button ng-click="setPage(3)">Set current page to: 3</button>
+    The selected page no: {{currentPage}}
+</div>
+            </div>
+            <div class="span6">
+                <p>A lightweight pagination directive that is focused on ... providing pagination!</p>
+
+<p>It will take care of visualising a pagination bar and make sure that the state (enabled / disabled) of prev / next buttons is maintained correctly.</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
+    &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;&#x2F;pagination&gt;
+    &lt;button ng-click=&quot;setPage(3)&quot;&gt;Set current page to: 3&lt;&#x2F;button&gt;
+    The selected page no: {{currentPage}}
+&lt;&#x2F;div&gt;</code></pre>
+          </div>
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
+  $scope.noOfPages = 6;
+  $scope.currentPage = 4;
+
+  $scope.setPage = function (pageNo) {
+    $scope.currentPage = pageNo;
+  };
+};</code></pre>
+          </div>
+        </div>
+      </section>
+      <script>var PaginationDemoCtrl = function ($scope) {
+  $scope.noOfPages = 6;
+  $scope.currentPage = 4;
+
+  $scope.setPage = function (pageNo) {
+    $scope.currentPage = pageNo;
+  };
+};</script>
+    
+      <section id="tabs">
+        <div class="page-header">
+          <h1>tabs</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="TabsDemoCtrl">
+    <tabs>
+        <pane heading="Static title">Static content</pane>
+        <pane ng-repeat="pane in panes" heading="{{pane.title}}">{{pane.content}}</pane>
+    </tabs>
+</div>
+            </div>
+            <div class="span6">
+                <p>AngularJS version of the tabs directive.</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
+    &lt;tabs&gt;
+        &lt;pane heading=&quot;Static title&quot;&gt;Static content&lt;&#x2F;pane&gt;
+        &lt;pane ng-repeat=&quot;pane in panes&quot; heading=&quot;{{pane.title}}&quot;&gt;{{pane.content}}&lt;&#x2F;pane&gt;
+    &lt;&#x2F;tabs&gt;
+&lt;&#x2F;div&gt;</code></pre>
+          </div>
+          <div class="span6">
+            <pre ng-non-bindable><code data-language="javascript">var TabsDemoCtrl = function ($scope) {
+  $scope.panes = [
+    { title:&quot;Dynamic Title 1&quot;, content:&quot;Dynamic content 1&quot; },
+    { title:&quot;Dynamic Title 2&quot;, content:&quot;Dynamic content 2&quot; }
+  ];
+};</code></pre>
+          </div>
+        </div>
+      </section>
+      <script>var TabsDemoCtrl = function ($scope) {
+  $scope.panes = [
+    { title:"Dynamic Title 1", content:"Dynamic content 1" },
+    { title:"Dynamic Title 2", content:"Dynamic content 2" }
+  ];
+};</script>
+    
+  </div>
+</div>
+<script src="assets/rainbow.js"></script>
+<script src="assets/rainbow-generic.js"></script>
+<script src="assets/rainbow-javascript.js"></script>
+<script src="assets/rainbow-html.js"></script>
+</body>
+</html>
