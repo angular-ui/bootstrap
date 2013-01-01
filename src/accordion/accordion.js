@@ -55,7 +55,7 @@ angular.module('ui.bootstrap.accordion').directive('accordionGroup', function ()
     restrict:'E',
     transclude:true,
     scope:{
-      title:'@'
+      heading:'@'
     },
     link: function(scope, element, attrs, accordionCtrl) {
 

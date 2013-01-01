@@ -12,10 +12,10 @@ describe('tabs', function() {
     elm = angular.element(
       '<div>' +
         '<tabs>' +
-          '<pane title="First Tab">' +
+          '<pane heading="First Tab">' +
             'first content is {{first}}' +
           '</pane>' +
-          '<pane title="Second Tab">' +
+          '<pane heading="Second Tab">' +
             'second content is {{second}}' +
           '</pane>' +
         '</tabs>' +
@@ -168,7 +168,7 @@ describe('remove tabs', function() {
 
   it('should remove title panes when elements are destroyed and change selection', inject(function($controller, $compile, $rootScope) {
     var scope = $rootScope;
-    var elm = $compile("<tabs><pane title='1'>Hello</pane><pane ng-repeat='i in list' title='tab {{i}}'>content {{i}}</pane></tabs>")(scope);
+    var elm = $compile("<tabs><pane heading='1'>Hello</pane><pane ng-repeat='i in list' heading='tab {{i}}'>content {{i}}</pane></tabs>")(scope);
     scope.$apply();
   
     function titles() {

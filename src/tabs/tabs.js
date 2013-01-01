@@ -40,7 +40,9 @@ angular.module('ui.bootstrap.tabs', [])
     require: '^tabs',
     restrict: 'E',
     transclude: true,
-    scope: { title: '@' },
+    scope:{
+      heading:'@'
+    },
     link: function(scope, element, attrs, tabsCtrl) {
       tabsCtrl.addPane(scope);
       scope.$on('$destroy', function() {

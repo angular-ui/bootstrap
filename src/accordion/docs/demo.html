@@ -1,6 +1,6 @@
 <div ng-controller="AccordionDemoCtrl">
   <accordion>
-    <accordion-group title="staticTitle">Static content</accordion-group>
-    <accordion-group title="{{group.title}}" ng-repeat="group in groups">{{group.content}}</accordion-group>
+    <accordion-group heading="staticTitle">Static content</accordion-group>
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">{{group.content}}</accordion-group>
   </accordion>
 </div>
