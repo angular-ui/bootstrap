@@ -170,28 +170,33 @@ describe('remove tabs', function() {
     var scope = $rootScope;
     var elm = $compile("<tabs><pane heading='1'>Hello</pane><pane ng-repeat='i in list' heading='tab {{i}}'>content {{i}}</pane></tabs>")(scope);
     scope.$apply();
-  
+
     function titles() {
       return elm.find('ul.nav-tabs li');
     }
     function panes() {
       return elm.find('div.tab-pane');
-    }   
-  
+    }
+
     expect(titles().length).toBe(1);
     expect(panes().length).toBe(1);
+
     scope.$apply('list = [1,2,3]');
-    waits(100);
     expect(titles().length).toBe(4);
     expect(panes().length).toBe(4);
     titles().find('a').eq(3).click();
     expect(panes().eq(3)).toHaveClass('active');
+    expect(panes().eq(3).text().trim()).toBe('content 3');
     expect(titles().eq(3)).toHaveClass('active');
+    expect(titles().eq(3).text().trim()).toBe('tab 3');
+
     scope.$apply('list = [1,2]');
     expect(panes().length).toBe(3);
     expect(titles().length).toBe(3);
     expect(panes().eq(2)).toHaveClass('active');
+    expect(panes().eq(2).text().trim()).toBe('content 2');
     expect(titles().eq(2)).toHaveClass('active');
+    expect(titles().eq(2).text().trim()).toBe('tab 2');
   }));
 
 });
