@@ -52,12 +52,16 @@
         </div>
         <hr>
         <div class="row">
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre>
-          </div>
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="javascript"><%- module.js %></code></pre>
-          </div>
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre>
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript"><%- module.js %></code></pre>
+                    </pane>
+                </tabs>
+            </div>
         </div>
       </section>
       <script><%= module.js %></script>
