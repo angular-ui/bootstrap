@@ -1,5 +1,5 @@
 var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 6;
+  $scope.noOfPages = 5;
   $scope.currentPage = 4;
 
   $scope.setPage = function (pageNo) {
