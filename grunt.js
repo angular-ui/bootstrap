@@ -6,8 +6,11 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     modules: '', //to be filled in by find-modules task
+    tplModules: '', //to be filled in by find-templates task
     meta: {
-      banner: 'angular.module("ui.bootstrap", [<%= modules %>]);'
+      modules: 'angular.module("ui.bootstrap", [<%= modules %>]);',
+      tplmodules: 'angular.module("ui.bootstrap.tpls", [<%= tplModules %>]);',
+      all: 'angular.module("ui.bootstrap", ["ui.bootstrap.tpls", <%= modules %>]);'
     },
     lint: {
       files: ['grunt.js','src/**/*.js']
@@ -18,14 +21,22 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['<banner>', 'src/*/*.js'],
+        src: ['<banner:meta.modules>', 'src/*/*.js'],
         dest: 'dist/ui-bootstrap.js'
+      },
+      dist_tpls: {
+        src: ['<banner:meta.all>', 'src/*/*.js', '<banner:meta.tplmodules>', 'template/**/*.html.js'],
+        dest: 'dist/ui-bootstrap-tpls.js'
       }
     },
     min: {
       dist:{
         src:['dist/ui-bootstrap.js'],
         dest:'dist/ui-bootstrap.min.js'
+      },
+      dist_tpls:{
+        src:['dist/ui-bootstrap-tpls.js'],
+        dest:'dist/ui-bootstrap-tpls.min.js'
       }
     },
     html2js: {
@@ -47,7 +58,7 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', 'lint html2js');
-  grunt.registerTask('after-test', 'find-modules concat min site');
+  grunt.registerTask('after-test', 'find-modules find-templates concat min site');
 
   // Default task.
   grunt.registerTask('default', 'before-test test after-test');
@@ -58,6 +69,13 @@ module.exports = function(grunt) {
       return '"ui.bootstrap.' + dir.split("/")[1] + '"';
     });
     grunt.config('modules', modules);
+  });
+
+  grunt.registerTask('find-templates', 'Generate template modules depending on all existing directives', function() {
+    var tplModules = grunt.file.expand('template/**/*.html').map(function(file) {
+       return '"'+file+'"';
+    });
+    grunt.config('tplModules', tplModules);
   });
 
   grunt.registerTask('site', 'Create grunt demo site from every module\'s files', function() {
@@ -99,9 +117,9 @@ module.exports = function(grunt) {
   //Html templates to $templateCache for tests
   grunt.registerMultiTask('html2js', 'Generate js versions of html template', function() {
     //Put templates on ng's run function so they are global
-    var TPL='angular.module("<%= file %>", []).run(function($templateCache){\n' +
+    var TPL='angular.module("<%= file %>", []).run(["$templateCache", function($templateCache){\n' +
       '  $templateCache.put("<%= file %>",\n    "<%= content %>");\n' +
-      '});\n';
+      '}]);\n';
     var files = grunt._watch_changed_files || grunt.file.expand(this.data);
 
     function escapeContent(content) {
