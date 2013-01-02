@@ -22,6 +22,12 @@ module.exports = function(grunt) {
         dest: 'dist/ui-bootstrap.js'
       }
     },
+    min: {
+      dist:{
+        src:['dist/ui-bootstrap.js'],
+        dest:'dist/ui-bootstrap.min.js'
+      }
+    },
     html2js: {
       src: ['template/**/*.html']
     },
@@ -41,7 +47,7 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', 'lint html2js');
-  grunt.registerTask('after-test', 'find-modules concat site');
+  grunt.registerTask('after-test', 'find-modules concat min site');
 
   // Default task.
   grunt.registerTask('default', 'before-test test after-test');
