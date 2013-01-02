@@ -81,12 +81,25 @@ module.exports = function(grunt) {
   grunt.registerTask('site', 'Create grunt demo site from every module\'s files', function() {
     this.requires('find-modules concat html2js');
 
+    function breakup(text, separator) {
+      return text.replace(/[A-Z]/g, function (match) {
+        return separator + match;
+      });
+    }
+
+    function ucwords(text) {
+      return text.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+        return $1.toUpperCase();
+      });
+    }
+
     var modules = grunt.file.expandDirs('src/*').map(function(dir) {
 
       var moduleName = dir.split("/")[1];
       if (fs.existsSync(dir + "docs")) {
         return {
           name: moduleName,
+          displayName: ucwords(breakup(moduleName, ' ')),
           js: grunt.file.expand(dir + "docs/*.js").map(grunt.file.read).join(''),
           html: grunt.file.expand(dir + "docs/*.html").map(grunt.file.read).join(''),
           description: grunt.file.expand(dir + "docs/*.md").map(grunt.file.read).map(markdown).join('')

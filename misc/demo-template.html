@@ -22,7 +22,7 @@
       <div class="nav-collapse">
         <ul class="nav">
           <% modules.forEach(function(module) {  %>
-            <li><a href="#<%= module.name %>"><%= module.name %></a></li>
+            <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
           <% });  %>
         </ul>
       </div>
@@ -35,7 +35,7 @@
     <% modules.forEach(function(module) { %>
       <section id="<%= module.name %>">
         <div class="page-header">
-          <h1><%= module.name %></h1>
+          <h1><%= module.displayName %></h1>
         </div>
         <div class="row">
             <div class="span6">
