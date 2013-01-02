@@ -1,0 +1,15 @@
+<div ng-controller="CarouselDemoCtrl">
+  <carousel current-index="selected" interval="5000">
+    <slide ng-repeat="s in slides" active="s.active">
+      <img ng-src="{{s.image}}" style="margin:auto;">
+      <div class="carousel-caption">
+        <h4>Slide {{$index}}</h4>
+        <p>{{s.text}}</p>
+      </div>
+    </slide>
+  </carousel>
+  Select slide:
+  <a ng-repeat="i in slides" ng-click="selectSlide($index)">
+    {{$index}}
+  </a>
+</div>
