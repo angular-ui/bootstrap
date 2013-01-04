@@ -1,0 +1,10 @@
+body {
+    opacity: 1;
+    -webkit-transition: opacity 1s ease;
+    -moz-transition: opacity 1s ease;
+    transition: opacity 1s;
+}
+
+.ng-cloak {
+    opacity: 0;
+}

@@ -3,59 +3,15 @@
 <head>
     <title>Bootstrap for AngularUI</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-    <script src="ui-bootstrap.js"></script>
+    <script src="ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js"></script>
     <script>
-        angular.module('bootstrapDemoApp', ['ui.bootstrap', 'template/accordion/accordion-group.html','template/accordion/accordion.html','template/pagination/pagination.html','template/tabs/pane.html','template/tabs/tabs.html']);
-    </script>
-    <script>
-        angular.module("template/accordion/accordion-group.html", []).run(function($templateCache){
-  $templateCache.put("template/accordion/accordion-group.html",
-    "<div class=\"accordion-group\">" +
-    "    <div class=\"accordion-heading\">" +
-    "        <a class=\"accordion-toggle\" ng-click=\"toggle()\">{{heading}}</a>" +
-    "    </div>" +
-    "    <div class=\"accordion-body collapse\" ng-class=\"{in : selected}\">" +
-    "        <div class=\"accordion-inner\" ng-transclude></div>" +
-    "    </div>" +
-    "</div>");
-});
-angular.module("template/accordion/accordion.html", []).run(function($templateCache){
-  $templateCache.put("template/accordion/accordion.html",
-    "<div class=\"accordion\" ng-transclude></div>");
-});
-angular.module("template/pagination/pagination.html", []).run(function($templateCache){
-  $templateCache.put("template/pagination/pagination.html",
-    "<div class=\"pagination\"><ul>" +
-    "  <li ng-class=\"{disabled: noPrevious()}\"><a ng-click=\"selectPrevious()\">Previous</a></li>" +
-    "  <li ng-repeat=\"page in pages\" ng-class=\"{active: isActive(page)}\"><a ng-click=\"selectPage(page)\">{{page}}</a></li>" +
-    "  <li ng-class=\"{disabled: noNext()}\"><a ng-click=\"selectNext()\">Next</a></li>" +
-    "  </ul>" +
-    "</div>" +
-    "");
-});
-angular.module("template/tabs/pane.html", []).run(function($templateCache){
-  $templateCache.put("template/tabs/pane.html",
-    "<div class=\"tab-pane\" ng-class=\"{active: selected}\" ng-show=\"selected\" ng-transclude></div>" +
-    "");
-});
-angular.module("template/tabs/tabs.html", []).run(function($templateCache){
-  $templateCache.put("template/tabs/tabs.html",
-    "<div class=\"tabbable\">" +
-    "  <ul class=\"nav nav-tabs\">" +
-    "    <li ng-repeat=\"pane in panes\" ng-class=\"{active:pane.selected}\">" +
-    "      <a href=\"\" ng-click=\"select(pane)\">{{pane.heading}}</a>" +
-    "    </li>" +
-    "  </ul>" +
-    "  <div class=\"tab-content\" ng-transclude></div>" +
-    "</div>" +
-    "");
-});
-
+        angular.module('bootstrapDemoApp', ['ui.bootstrap']);
     </script>
     <link rel="stylesheet" href="assets/bootstrap.css"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
+    <link rel="stylesheet" href="assets/demo.css"/>
 </head>
-<body>
+<body ng-cloak>
 <header class="navbar navbar-fixed-top">
     <a href="https://github.com/angular-ui/bootstrap">
         <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
@@ -66,15 +22,17 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
       <div class="nav-collapse">
         <ul class="nav">
           
-            <li><a href="#accordion">accordion</a></li>
+            <li><a href="#accordion">Accordion</a></li>
           
-            <li><a href="#dropdownToggle">dropdownToggle</a></li>
+            <li><a href="#carousel">Carousel</a></li>
           
-            <li><a href="#modal">modal</a></li>
+            <li><a href="#dropdownToggle">Dropdown Toggle</a></li>
           
-            <li><a href="#pagination">pagination</a></li>
+            <li><a href="#modal">Modal</a></li>
           
-            <li><a href="#tabs">tabs</a></li>
+            <li><a href="#pagination">Pagination</a></li>
+          
+            <li><a href="#tabs">Tabs</a></li>
           
         </ul>
       </div>
@@ -87,7 +45,7 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
     
       <section id="accordion">
         <div class="page-header">
-          <h1>accordion</h1>
+          <h1>Accordion</h1>
         </div>
         <div class="row">
             <div class="span6">
@@ -102,20 +60,25 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
                 <p>Accordion is an AngularJS-version of bootstrap's accordion.</p>
 
 <p>This directive can be used to quickly generate collapsible accordion both statically (from a template) and from the dynamic model data (using the <code>ng-repeat</code> directive);</p>
+                <section>
+                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/accordion">ui.bootstrap.accordion</a>
+                </section>
             </div>
         </div>
         <hr>
         <div class="row">
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
   &lt;accordion&gt;
     &lt;accordion-group heading=&quot;staticTitle&quot;&gt;Static content&lt;&#x2F;accordion-group&gt;
     &lt;accordion-group heading=&quot;{{group.title}}&quot; ng-repeat=&quot;group in groups&quot;&gt;{{group.content}}&lt;&#x2F;accordion-group&gt;
   &lt;&#x2F;accordion&gt;
 &lt;&#x2F;div&gt;</code></pre>
-          </div>
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="javascript">function AccordionDemoCtrl($scope) {
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript">function AccordionDemoCtrl($scope) {
   $scope.staticTitle = &quot;Static Title&quot;;
 
   $scope.groups = [
@@ -123,7 +86,9 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
     { title: &quot;Dynamic Title 2&quot;, content: &quot;Dynamic content 2&quot; }
   ];
 }</code></pre>
-          </div>
+                    </pane>
+                </tabs>
+            </div>
         </div>
       </section>
       <script>function AccordionDemoCtrl($scope) {
@@ -135,9 +100,94 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
   ];
 }</script>
     
+      <section id="carousel">
+        <div class="page-header">
+          <h1>Carousel</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="CarouselDemoCtrl">
+  <carousel current-index="selected" interval="5000">
+    <slide ng-repeat="s in slides" active="s.active">
+      <img ng-src="{{s.image}}" style="margin:auto;">
+      <div class="carousel-caption">
+        <h4>Slide {{$index}}</h4>
+        <p>{{s.text}}</p>
+      </div>
+    </slide>
+  </carousel>
+  Select slide:
+  <a ng-repeat="i in slides" ng-click="selectSlide($index)">
+    {{$index}}
+  </a>
+</div>
+
+            </div>
+            <div class="span6">
+                <p>Carousel creates a carousel similar to bootstrap's image carousel.</p>
+
+<p>Use a <code>&lt;carousel&gt;</code> element with <code>&lt;slide&gt;</code> elements inside it.  It will automatically cycle through the slides at a given rate, and a current-index variable will be kept in sync with the currently visible slide.</p>
+                <section>
+                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/carousel">ui.bootstrap.carousel</a>
+                </section>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
+  &lt;carousel current-index=&quot;selected&quot; interval=&quot;5000&quot;&gt;
+    &lt;slide ng-repeat=&quot;s in slides&quot; active=&quot;s.active&quot;&gt;
+      &lt;img ng-src=&quot;{{s.image}}&quot; style=&quot;margin:auto;&quot;&gt;
+      &lt;div class=&quot;carousel-caption&quot;&gt;
+        &lt;h4&gt;Slide {{$index}}&lt;&#x2F;h4&gt;
+        &lt;p&gt;{{s.text}}&lt;&#x2F;p&gt;
+      &lt;&#x2F;div&gt;
+    &lt;&#x2F;slide&gt;
+  &lt;&#x2F;carousel&gt;
+  Select slide:
+  &lt;a ng-repeat=&quot;i in slides&quot; ng-click=&quot;selectSlide($index)&quot;&gt;
+    {{$index}}
+  &lt;&#x2F;a&gt;
+&lt;&#x2F;div&gt;
+</code></pre>
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript">function CarouselDemoCtrl($scope) {
+  $scope.slides = [
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;325&#x2F;200&#x27;,text: &#x27;Kitten.&#x27;},
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;275&#x2F;200&#x27;,text: &#x27;Kitty!&#x27;},
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;375&#x2F;200&#x27;,text: &#x27;Cat.&#x27;},
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;250&#x2F;200&#x27;,text: &#x27;Feline!&#x27;}
+  ];
+  $scope.selectSlide = function(i) {
+    $scope.selected = i;
+  };
+}
+</code></pre>
+                    </pane>
+                </tabs>
+            </div>
+        </div>
+      </section>
+      <script>function CarouselDemoCtrl($scope) {
+  $scope.slides = [
+    {image: 'http://placekitten.com/325/200',text: 'Kitten.'},
+    {image: 'http://placekitten.com/275/200',text: 'Kitty!'},
+    {image: 'http://placekitten.com/375/200',text: 'Cat.'},
+    {image: 'http://placekitten.com/250/200',text: 'Feline!'}
+  ];
+  $scope.selectSlide = function(i) {
+    $scope.selected = i;
+  };
+}
+</script>
+    
       <section id="dropdownToggle">
         <div class="page-header">
-          <h1>dropdownToggle</h1>
+          <h1>Dropdown Toggle</h1>
         </div>
         <div class="row">
             <div class="span6">
@@ -155,12 +205,17 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
             </div>
             <div class="span6">
                 <p>DropdownToggle is a simple directive which will toggle a dropdown link on click.  Simply put it on the <code>&lt;a&gt;</code> tag of the toggler-element, and it will find the nearest dropdown menu and toggle it when the <code>&lt;a dropdown-toggle&gt;</code> is clicked.</p>
+                <section>
+                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/dropdownToggle">ui.bootstrap.dropdownToggle</a>
+                </section>
             </div>
         </div>
         <hr>
         <div class="row">
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
   &lt;a class=&quot;dropdown-toggle&quot;&gt;
     Click me for a dropdown, yo!
   &lt;&#x2F;a&gt;
@@ -171,9 +226,9 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
   &lt;&#x2F;ul&gt;
 &lt;&#x2F;li&gt;
 </code></pre>
-          </div>
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="javascript">function DropdownCtrl($scope) {
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript">function DropdownCtrl($scope) {
   $scope.items = [
     &quot;The first choice!&quot;,
     &quot;And another choice for you.&quot;,
@@ -181,7 +236,9 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
   ];
 }
 </code></pre>
-          </div>
+                    </pane>
+                </tabs>
+            </div>
         </div>
       </section>
       <script>function DropdownCtrl($scope) {
@@ -195,7 +252,7 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
     
       <section id="modal">
         <div class="page-header">
-          <h1>modal</h1>
+          <h1>Modal</h1>
         </div>
         <div class="row">
             <div class="span6">
@@ -216,12 +273,17 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
             </div>
             <div class="span6">
                 <p>Bootstrap's modal directive.</p>
+                <section>
+                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/modal">ui.bootstrap.modal</a>
+                </section>
             </div>
         </div>
         <hr>
         <div class="row">
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
     &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;Open me!&lt;&#x2F;button&gt;
     &lt;div modal=&quot;shouldBeOpen&quot; close=&quot;close()&quot;&gt;
         &lt;div class=&quot;modal-header&quot;&gt;
@@ -235,9 +297,9 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
         &lt;&#x2F;div&gt;
     &lt;&#x2F;div&gt;
 &lt;&#x2F;div&gt;</code></pre>
-          </div>
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope) {
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope) {
 
   $scope.open = function () {
     $scope.shouldBeOpen = true;
@@ -248,7 +310,9 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
     $scope.shouldBeOpen = false;
   };
 };</code></pre>
-          </div>
+                    </pane>
+                </tabs>
+            </div>
         </div>
       </section>
       <script>var ModalDemoCtrl = function ($scope) {
@@ -265,45 +329,58 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
     
       <section id="pagination">
         <div class="page-header">
-          <h1>pagination</h1>
+          <h1>Pagination</h1>
         </div>
         <div class="row">
             <div class="span6">
                 <div ng-controller="PaginationDemoCtrl">
+    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-large"></pagination>
     <pagination num-pages="noOfPages" current-page="currentPage"></pagination>
-    <button ng-click="setPage(3)">Set current page to: 3</button>
+    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-small"></pagination>
+    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-mini"></pagination>
+    <button class="btn" ng-click="setPage(3)">Set current page to: 3</button>
     The selected page no: {{currentPage}}
 </div>
             </div>
             <div class="span6">
                 <p>A lightweight pagination directive that is focused on ... providing pagination!</p>
 
-<p>It will take care of visualising a pagination bar and make sure that the state (enabled / disabled) of prev / next buttons is maintained correctly.</p>
+<p>It will take care of visualising a pagination bar. Additionally it will make sure that the state (enabled / disabled) of the Previous / Next buttons is maintained correctly.</p>
+                <section>
+                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/pagination">ui.bootstrap.pagination</a>
+                </section>
             </div>
         </div>
         <hr>
         <div class="row">
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
+    &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-large&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;&#x2F;pagination&gt;
-    &lt;button ng-click=&quot;setPage(3)&quot;&gt;Set current page to: 3&lt;&#x2F;button&gt;
+    &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-small&quot;&gt;&lt;&#x2F;pagination&gt;
+    &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-mini&quot;&gt;&lt;&#x2F;pagination&gt;
+    &lt;button class=&quot;btn&quot; ng-click=&quot;setPage(3)&quot;&gt;Set current page to: 3&lt;&#x2F;button&gt;
     The selected page no: {{currentPage}}
 &lt;&#x2F;div&gt;</code></pre>
-          </div>
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 6;
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
+  $scope.noOfPages = 5;
   $scope.currentPage = 4;
 
   $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
   };
 };</code></pre>
-          </div>
+                    </pane>
+                </tabs>
+            </div>
         </div>
       </section>
       <script>var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 6;
+  $scope.noOfPages = 5;
   $scope.currentPage = 4;
 
   $scope.setPage = function (pageNo) {
@@ -313,7 +390,7 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
     
       <section id="tabs">
         <div class="page-header">
-          <h1>tabs</h1>
+          <h1>Tabs</h1>
         </div>
         <div class="row">
             <div class="span6">
@@ -326,26 +403,33 @@ angular.module("template/tabs/tabs.html", []).run(function($templateCache){
             </div>
             <div class="span6">
                 <p>AngularJS version of the tabs directive.</p>
+                <section>
+                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/tabs">ui.bootstrap.tabs</a>
+                </section>
             </div>
         </div>
         <hr>
         <div class="row">
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
+            <div class="span12">
+                <tabs>
+                    <pane heading="Markup">
+                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
     &lt;tabs&gt;
         &lt;pane heading=&quot;Static title&quot;&gt;Static content&lt;&#x2F;pane&gt;
         &lt;pane ng-repeat=&quot;pane in panes&quot; heading=&quot;{{pane.title}}&quot;&gt;{{pane.content}}&lt;&#x2F;pane&gt;
     &lt;&#x2F;tabs&gt;
 &lt;&#x2F;div&gt;</code></pre>
-          </div>
-          <div class="span6">
-            <pre ng-non-bindable><code data-language="javascript">var TabsDemoCtrl = function ($scope) {
+                    </pane>
+                    <pane heading="JavaScript">
+                        <pre ng-non-bindable><code data-language="javascript">var TabsDemoCtrl = function ($scope) {
   $scope.panes = [
     { title:&quot;Dynamic Title 1&quot;, content:&quot;Dynamic content 1&quot; },
     { title:&quot;Dynamic Title 2&quot;, content:&quot;Dynamic content 2&quot; }
   ];
 };</code></pre>
-          </div>
+                    </pane>
+                </tabs>
+            </div>
         </div>
       </section>
       <script>var TabsDemoCtrl = function ($scope) {
