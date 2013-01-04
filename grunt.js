@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     modules: '', //to be filled in by find-modules task
     tplModules: '', //to be filled in by find-templates task
+    pkg:'<json:package.json>',
     meta: {
       modules: 'angular.module("ui.bootstrap", [<%= modules %>]);',
       tplmodules: 'angular.module("ui.bootstrap.tpls", [<%= tplModules %>]);',
@@ -22,21 +23,21 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: ['<banner:meta.modules>', 'src/*/*.js'],
-        dest: 'dist/ui-bootstrap.js'
+        dest: 'dist/ui-bootstrap-<%= pkg.version %>.js'
       },
       dist_tpls: {
         src: ['<banner:meta.all>', 'src/*/*.js', '<banner:meta.tplmodules>', 'template/**/*.html.js'],
-        dest: 'dist/ui-bootstrap-tpls.js'
+        dest: 'dist/ui-bootstrap-tpls-<%= pkg.version %>.js'
       }
     },
     min: {
       dist:{
-        src:['dist/ui-bootstrap.js'],
-        dest:'dist/ui-bootstrap.min.js'
+        src:['dist/ui-bootstrap-<%= pkg.version %>.js'],
+        dest:'dist/ui-bootstrap-<%= pkg.version %>.min.js'
       },
       dist_tpls:{
-        src:['dist/ui-bootstrap-tpls.js'],
-        dest:'dist/ui-bootstrap-tpls.min.js'
+        src:['dist/ui-bootstrap-tpls-<%= pkg.version %>.js'],
+        dest:'dist/ui-bootstrap-tpls-<%= pkg.version %>.min.js'
       }
     },
     html2js: {
