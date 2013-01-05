@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="bootstrapDemoApp" id="top">
 <head>
-    <title>Bootstrap for AngularUI</title>
+    <meta charset="utf-8">
+    <title>AngularJS directives for Twitter's bootstrap</title>
+    <meta name="description" content="AngularJS native directives for Twitter Bootstrap">
+
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
     <script src="ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js"></script>
+    <script src="assets/plunker.js"></script>
     <script>
-        angular.module('bootstrapDemoApp', ['ui.bootstrap']);
+        angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
     </script>
     <link rel="stylesheet" href="assets/bootstrap.css"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
+
+    <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
 <body ng-cloak>
 <header class="navbar navbar-fixed-top">
@@ -67,26 +73,25 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'accordion')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
   &lt;accordion&gt;
     &lt;accordion-group heading=&quot;staticTitle&quot;&gt;Static content&lt;&#x2F;accordion-group&gt;
     &lt;accordion-group heading=&quot;{{group.title}}&quot; ng-repeat=&quot;group in groups&quot;&gt;{{group.content}}&lt;&#x2F;accordion-group&gt;
   &lt;&#x2F;accordion&gt;
-&lt;&#x2F;div&gt;</code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript">function AccordionDemoCtrl($scope) {
+&lt;&#x2F;div&gt;</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function AccordionDemoCtrl($scope) {
   $scope.staticTitle = &quot;Static Title&quot;;
 
   $scope.groups = [
     { title: &quot;Dynamic Title 1&quot;, content: &quot;Dynamic content 1&quot; }, 
     { title: &quot;Dynamic Title 2&quot;, content: &quot;Dynamic content 2&quot; }
   ];
-}</code></pre>
-                    </pane>
+}</code></pre></pane>
                 </tabs>
             </div>
         </div>
@@ -134,10 +139,12 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'carousel')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
   &lt;carousel current-index=&quot;selected&quot; interval=&quot;5000&quot;&gt;
     &lt;slide ng-repeat=&quot;s in slides&quot; active=&quot;s.active&quot;&gt;
       &lt;img ng-src=&quot;{{s.image}}&quot; style=&quot;margin:auto;&quot;&gt;
@@ -152,10 +159,8 @@
     {{$index}}
   &lt;&#x2F;a&gt;
 &lt;&#x2F;div&gt;
-</code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript">function CarouselDemoCtrl($scope) {
+</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function CarouselDemoCtrl($scope) {
   $scope.slides = [
     {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;325&#x2F;200&#x27;,text: &#x27;Kitten.&#x27;},
     {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;275&#x2F;200&#x27;,text: &#x27;Kitty!&#x27;},
@@ -166,8 +171,7 @@
     $scope.selected = i;
   };
 }
-</code></pre>
-                    </pane>
+</code></pre></pane>
                 </tabs>
             </div>
         </div>
@@ -212,10 +216,12 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'dropdownToggle')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
   &lt;a class=&quot;dropdown-toggle&quot;&gt;
     Click me for a dropdown, yo!
   &lt;&#x2F;a&gt;
@@ -225,18 +231,15 @@
     &lt;&#x2F;li&gt;
   &lt;&#x2F;ul&gt;
 &lt;&#x2F;li&gt;
-</code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript">function DropdownCtrl($scope) {
+</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function DropdownCtrl($scope) {
   $scope.items = [
     &quot;The first choice!&quot;,
     &quot;And another choice for you.&quot;,
     &quot;but wait! A third!&quot;
   ];
 }
-</code></pre>
-                    </pane>
+</code></pre></pane>
                 </tabs>
             </div>
         </div>
@@ -280,10 +283,12 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'modal')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
     &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;Open me!&lt;&#x2F;button&gt;
     &lt;div modal=&quot;shouldBeOpen&quot; close=&quot;close()&quot;&gt;
         &lt;div class=&quot;modal-header&quot;&gt;
@@ -296,10 +301,8 @@
             &lt;button class=&quot;btn btn-warning cancel&quot; ng-click=&quot;close()&quot;&gt;Cancel&lt;&#x2F;button&gt;
         &lt;&#x2F;div&gt;
     &lt;&#x2F;div&gt;
-&lt;&#x2F;div&gt;</code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope) {
+&lt;&#x2F;div&gt;</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope) {
 
   $scope.open = function () {
     $scope.shouldBeOpen = true;
@@ -309,8 +312,7 @@
     $scope.closeMsg = &#x27;I was closed at: &#x27; + new Date();
     $scope.shouldBeOpen = false;
   };
-};</code></pre>
-                    </pane>
+};</code></pre></pane>
                 </tabs>
             </div>
         </div>
@@ -353,28 +355,27 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'pagination')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-large&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-small&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-mini&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;button class=&quot;btn&quot; ng-click=&quot;setPage(3)&quot;&gt;Set current page to: 3&lt;&#x2F;button&gt;
     The selected page no: {{currentPage}}
-&lt;&#x2F;div&gt;</code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
+&lt;&#x2F;div&gt;</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
   $scope.noOfPages = 5;
   $scope.currentPage = 4;
 
   $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
   };
-};</code></pre>
-                    </pane>
+};</code></pre></pane>
                 </tabs>
             </div>
         </div>
@@ -410,24 +411,23 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'tabs')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
     &lt;tabs&gt;
         &lt;pane heading=&quot;Static title&quot;&gt;Static content&lt;&#x2F;pane&gt;
         &lt;pane ng-repeat=&quot;pane in panes&quot; heading=&quot;{{pane.title}}&quot;&gt;{{pane.content}}&lt;&#x2F;pane&gt;
     &lt;&#x2F;tabs&gt;
-&lt;&#x2F;div&gt;</code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript">var TabsDemoCtrl = function ($scope) {
+&lt;&#x2F;div&gt;</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var TabsDemoCtrl = function ($scope) {
   $scope.panes = [
     { title:&quot;Dynamic Title 1&quot;, content:&quot;Dynamic content 1&quot; },
     { title:&quot;Dynamic Title 2&quot;, content:&quot;Dynamic content 2&quot; }
   ];
-};</code></pre>
-                    </pane>
+};</code></pre></pane>
                 </tabs>
             </div>
         </div>
