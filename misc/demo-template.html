@@ -5,10 +5,11 @@
     <title>AngularJS directives for Twitter's bootstrap</title>
     <meta name="description" content="AngularJS native directives for Twitter Bootstrap">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-    <script src="ui-bootstrap-tpls-<%= grunt.config.get('pkg.version') %>.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion%>/angular.min.js"></script>
+    <script src="ui-bootstrap-tpls-<%= version%>.min.js"></script>
+    <script src="assets/plunker.js"></script>
     <script>
-        angular.module('bootstrapDemoApp', ['ui.bootstrap']);
+        angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
     </script>
     <link rel="stylesheet" href="assets/bootstrap.css"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
@@ -55,14 +56,13 @@
         </div>
         <hr>
         <div class="row">
-            <div class="span12">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" ng-click="edit('<%= version%>', '<%= module.name %>')">Edit in plunker</button>
+                </div>
                 <tabs>
-                    <pane heading="Markup">
-                        <pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre>
-                    </pane>
-                    <pane heading="JavaScript">
-                        <pre ng-non-bindable><code data-language="javascript"><%- module.js %></code></pre>
-                    </pane>
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript"><%- module.js %></code></pre></pane>
                 </tabs>
             </div>
         </div>

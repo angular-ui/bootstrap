@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     modules: '', //to be filled in by find-modules task
     tplModules: '', //to be filled in by find-templates task
+    ngversion: '1.0.3',
     pkg:'<json:package.json>',
     meta: {
       modules: 'angular.module("ui.bootstrap", [<%= modules %>]);',
@@ -119,7 +120,9 @@ module.exports = function(grunt) {
         templateModules: templateFiles.map(function(fileName) {
           return "'"+fileName.substr(0, fileName.length - 3)+"'";
         }),
-        templates: templateFiles.map(grunt.file.read).join('')
+        templates: templateFiles.map(grunt.file.read).join(''),
+        version : grunt.config('pkg.version'),
+        ngversion: grunt.config('ngversion')
       })
     );
     
