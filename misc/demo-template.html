@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>AngularJS directives for Twitter's bootstrap</title>
     <meta name="description" content="AngularJS native directives for Twitter Bootstrap">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion%>/angular.min.js"></script>
     <script src="ui-bootstrap-tpls-<%= version%>.min.js"></script>
@@ -12,12 +13,13 @@
         angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
     </script>
     <link rel="stylesheet" href="assets/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/bootstrap-responsive.css"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
 
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
-<body ng-cloak>
+<body class="ng-cloak">
 <header class="navbar navbar-fixed-top">
     <a href="https://github.com/angular-ui/bootstrap">
         <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
@@ -37,28 +39,28 @@
 </header>
 <div style="margin: 32px;"></div>
 <div role="main">
-  <div class="container">
+  <div class="container container-fluid">
     <% modules.forEach(function(module) { %>
       <section id="<%= module.name %>">
         <div class="page-header">
           <h1><%= module.displayName %></h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <%= module.html %>
             </div>
             <div class="span6">
                 <%= module.description %>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('<%= version%>', '<%= module.name %>')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= version%>', '<%= module.name %>')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre></pane>
