@@ -6,18 +6,36 @@ angular.module('ui.bootstrap.pagination', [])
     scope: {
       numPages: '=',
       currentPage: '=',
+      maxSize: '=',
       onSelectPage: '&'
     },
     templateUrl: 'template/pagination/pagination.html',
     replace: true,
     link: function(scope) {
-      scope.$watch('numPages', function(value) {
+      scope.$watch('numPages + currentPage + maxSize', function() {
         scope.pages = [];
-        for(var i=1;i<=value;i++) {
-          scope.pages.push(i);
+        
+        if(angular.isDefined(scope.maxSize) && scope.maxSize > scope.numPages) {
+            scope.maxSize = scope.numPages;
         }
-        if ( scope.currentPage > value ) {
-          scope.selectPage(value);
+
+        //set the default maxSize to numPages
+        var maxSize = scope.maxSize ? scope.maxSize : scope.numPages;
+        var startPage = scope.currentPage - Math.floor(maxSize/2);        
+        
+        //adjust the startPage within boundary
+        if(startPage < 1) {
+            startPage = 1;
+        }
+        if ((startPage + maxSize - 1) > scope.numPages) {
+            startPage = startPage - ((startPage + maxSize - 1) - scope.numPages );
+        }
+
+        for(var i=0; i < maxSize && i < scope.numPages ;i++) {
+          scope.pages.push(startPage + i);
+        }
+        if ( scope.currentPage > scope.numPages ) {
+          scope.selectPage(scope.numPages);
         }
       });
       scope.noPrevious = function() {

@@ -116,3 +116,73 @@ describe('pagination directive', function () {
     expect($rootScope.selectPageHandler).toHaveBeenCalledWith(2);
   });
 });
+
+describe('pagination directive with max size option', function () {
+  var $rootScope, element;
+  beforeEach(module('ui.bootstrap.pagination'));
+  beforeEach(module('template/pagination/pagination.html'));
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
+    $compile = _$compile_;
+    $rootScope = _$rootScope_;
+    $rootScope.numPages = 10;
+    $rootScope.currentPage = 3;
+    $rootScope.maxSize = 5;
+    element = $compile('<pagination num-pages="numPages" current-page="currentPage" max-size="maxSize"></pagination>')($rootScope);
+    $rootScope.$digest();
+  }));
+  
+  it('contains one ul and maxsize + 2 li elements', function() {
+    expect(element.find('ul').length).toBe(1);
+    expect(element.find('li').length).toBe($rootScope.maxSize + 2);
+    expect(element.find('li').eq(0).text()).toBe('Previous');
+    expect(element.find('li').eq(-1).text()).toBe('Next');
+  });
+
+  it('shows the page number even if it can\'t be shown in the middle', function() {
+    $rootScope.currentPage = 1;
+    $rootScope.$digest();
+    var currentPageItem = element.find('li').eq(1);
+    expect(currentPageItem.hasClass('active')).toBe(true);
+    
+    $rootScope.currentPage = 10;
+    $rootScope.$digest();
+    currentPageItem = element.find('li').eq(-2);
+    expect(currentPageItem.hasClass('active')).toBe(true);
+  });
+  
+  it('shows the page number in middle after the next link is clicked', function() {
+    $rootScope.currentPage = 6;
+    $rootScope.$digest();
+    var next = element.find('li').eq(-1).find('a').eq(0);
+    next.click();
+    expect($rootScope.currentPage).toBe(7);
+    var currentPageItem = element.find('li').eq(3);
+    expect(currentPageItem.hasClass('active')).toBe(true);
+    expect(parseInt(currentPageItem.text(), 10)).toBe($rootScope.currentPage);
+  });
+  
+  it('shows the page number in middle after the prev link is clicked', function() {
+    $rootScope.currentPage = 7;
+    $rootScope.$digest();
+    var prev = element.find('li').eq(0).find('a').eq(0);
+    prev.click();
+    expect($rootScope.currentPage).toBe(6);
+    var currentPageItem = element.find('li').eq(3);
+    expect(currentPageItem.hasClass('active')).toBe(true);
+    expect(parseInt(currentPageItem.text(), 10)).toBe($rootScope.currentPage);
+  });
+  
+  it('changes pagination bar size when max-size value changed', function() {
+    $rootScope.maxSize = 7;
+    $rootScope.$digest();
+    expect(element.find('li').length).toBe(9);
+  });  
+
+  it('sets the pagination bar size to num-pages, if max-size is greater than num-pages ', function() {
+    $rootScope.maxSize = 15;
+    $rootScope.$digest();
+    expect(element.find('li').length).toBe(12);
+    expect($rootScope.maxSize).toBe(10);
+  });
+
+});  
