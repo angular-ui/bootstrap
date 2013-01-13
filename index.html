@@ -32,6 +32,8 @@
           
             <li><a href="#accordion">Accordion</a></li>
           
+            <li><a href="#alert">Alert</a></li>
+          
             <li><a href="#carousel">Carousel</a></li>
           
             <li><a href="#dropdownToggle">Dropdown Toggle</a></li>
@@ -107,6 +109,72 @@
     { title: "Dynamic Title 1", content: "Dynamic content 1" }, 
     { title: "Dynamic Title 2", content: "Dynamic content 2" }
   ];
+}</script>
+    
+      <section id="alert">
+        <div class="page-header">
+          <h1>Alert</h1>
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <div ng-controller="AlertDemoCtrl">
+  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+  <button class='btn' ng-click="addAlert()">Add Alert</button>
+</div>
+            </div>
+            <div class="span6">
+                <p>Alert is an AngularJS-version of bootstrap's alert.</p>
+
+<p>This directive can be used to generate alerts from the dynamic model data (using the ng-repeat directive);</p>
+                <section>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/alert">ui.bootstrap.alert</a>
+                </section>
+            </div>
+        </div>
+        <hr>
+        <div class="row-fluid">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'alert')">Edit in plunker</button>
+                </div>
+                <tabs>
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AlertDemoCtrl&quot;&gt;
+  &lt;alert ng-repeat=&quot;alert in alerts&quot; type=&quot;alert.type&quot; close=&quot;closeAlert($index)&quot;&gt;{{alert.msg}}&lt;&#x2F;alert&gt;
+  &lt;button class=&#x27;btn&#x27; ng-click=&quot;addAlert()&quot;&gt;Add Alert&lt;&#x2F;button&gt;
+&lt;&#x2F;div&gt;</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function AlertDemoCtrl($scope) {
+  $scope.alerts = [
+    { type: &#x27;error&#x27;, msg: &#x27;Oh snap! Change a few things up and try submitting again.&#x27; }, 
+    { type: &#x27;success&#x27;, msg: &#x27;Well done! You successfully read this important alert message.&#x27; }
+  ];
+
+  $scope.addAlert = function() {
+    $scope.alerts.push({msg: &quot;Another alert!&quot;});
+  };
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+}</code></pre></pane>
+                </tabs>
+            </div>
+        </div>
+      </section>
+      <script>function AlertDemoCtrl($scope) {
+  $scope.alerts = [
+    { type: 'error', msg: 'Oh snap! Change a few things up and try submitting again.' }, 
+    { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+  ];
+
+  $scope.addAlert = function() {
+    $scope.alerts.push({msg: "Another alert!"});
+  };
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
 }</script>
     
       <section id="carousel">

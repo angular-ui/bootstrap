@@ -1,4 +1,4 @@
-angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.accordion","ui.bootstrap.carousel","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
+angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.carousel","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
 
 angular.module('ui.bootstrap.accordion', []);
 angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', function ($scope) {
@@ -79,6 +79,25 @@ angular.module('ui.bootstrap.accordion').directive('accordionGroup', function ()
     replace:true
   };
 });
+
+angular.module("ui.bootstrap.alert", []).directive('alert', function () {
+  return {
+    restrict:'E',
+    templateUrl:'template/alert/alert.html',
+    transclude:true,
+    scope:{
+      type:'=',
+      close:'&'
+    },
+    link:function (scope, element, attrs) {
+      scope.type = scope.type || 'info';
+      scope.dismiss = function () {
+        scope.close();
+      };
+    }
+  };
+});
+
 
 /*
 *
@@ -721,7 +740,7 @@ angular.module('ui.bootstrap.transition', [])
   }
   return $transition;
 }]);
-angular.module("ui.bootstrap.tpls", ["template/accordion/accordion-group.html","template/accordion/accordion.html","template/carousel/carousel.html","template/carousel/slide.html","template/pagination/pagination.html","template/tabs/pane.html","template/tabs/tabs.html","template/tooltip/tooltip-popup.html"]);
+angular.module("ui.bootstrap.tpls", ["template/accordion/accordion-group.html","template/accordion/accordion.html","template/alert/alert.html","template/carousel/carousel.html","template/carousel/slide.html","template/pagination/pagination.html","template/tabs/pane.html","template/tabs/tabs.html","template/tooltip/tooltip-popup.html"]);
 
 angular.module("template/accordion/accordion-group.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/accordion/accordion-group.html",
@@ -738,6 +757,14 @@ angular.module("template/accordion/accordion-group.html", []).run(["$templateCac
 angular.module("template/accordion/accordion.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/accordion/accordion.html",
     "<div class=\"accordion\" ng-transclude></div>");
+}]);
+
+angular.module("template/alert/alert.html", []).run(["$templateCache", function($templateCache){
+  $templateCache.put("template/alert/alert.html",
+    "<div class='alert alert-block' ng-class=\"'alert-' + type\">" +
+    "  <button type='button' class='cclose' ng-click='dismiss()'>&times;</button>" +
+    "  <div ng-transclude></div>" +
+    "</div>");
 }]);
 
 angular.module("template/carousel/carousel.html", []).run(["$templateCache", function($templateCache){

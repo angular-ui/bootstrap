@@ -1,4 +1,4 @@
-angular.module("ui.bootstrap", ["ui.bootstrap.accordion","ui.bootstrap.carousel","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
+angular.module("ui.bootstrap", ["ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.carousel","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
 
 angular.module('ui.bootstrap.accordion', []);
 angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', function ($scope) {
@@ -79,6 +79,25 @@ angular.module('ui.bootstrap.accordion').directive('accordionGroup', function ()
     replace:true
   };
 });
+
+angular.module("ui.bootstrap.alert", []).directive('alert', function () {
+  return {
+    restrict:'E',
+    templateUrl:'template/alert/alert.html',
+    transclude:true,
+    scope:{
+      type:'=',
+      close:'&'
+    },
+    link:function (scope, element, attrs) {
+      scope.type = scope.type || 'info';
+      scope.dismiss = function () {
+        scope.close();
+      };
+    }
+  };
+});
+
 
 /*
 *
