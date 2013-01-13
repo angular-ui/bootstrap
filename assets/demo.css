@@ -8,3 +8,11 @@ body {
 .ng-cloak {
     opacity: 0;
 }
+
+/* Not enough room on mobile for markup tab, js tab, and plunk btn. 
+  And no one cares about plunk button on a phone anyway */
+@media only screen and (max-device-width: 480px) {
+  #plunk-btn {
+    display: none;
+  }
+}

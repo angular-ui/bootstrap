@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>AngularJS directives for Twitter's bootstrap</title>
     <meta name="description" content="AngularJS native directives for Twitter Bootstrap">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
     <script src="ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js"></script>
@@ -12,12 +13,13 @@
         angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
     </script>
     <link rel="stylesheet" href="assets/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/bootstrap-responsive.css"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
 
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
-<body ng-cloak>
+<body class="ng-cloak">
 <header class="navbar navbar-fixed-top">
     <a href="https://github.com/angular-ui/bootstrap">
         <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
@@ -40,6 +42,8 @@
           
             <li><a href="#tabs">Tabs</a></li>
           
+            <li><a href="#tooltip">Tooltip</a></li>
+          
         </ul>
       </div>
     </div>
@@ -47,13 +51,13 @@
 </header>
 <div style="margin: 32px;"></div>
 <div role="main">
-  <div class="container">
+  <div class="container container-fluid">
     
       <section id="accordion">
         <div class="page-header">
           <h1>Accordion</h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="AccordionDemoCtrl">
   <accordion>
@@ -67,15 +71,15 @@
 
 <p>This directive can be used to quickly generate collapsible accordion both statically (from a template) and from the dynamic model data (using the <code>ng-repeat</code> directive);</p>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/accordion">ui.bootstrap.accordion</a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/accordion">ui.bootstrap.accordion</a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'accordion')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'accordion')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
@@ -109,7 +113,7 @@
         <div class="page-header">
           <h1>Carousel</h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="CarouselDemoCtrl">
   <carousel current-index="selected" interval="5000">
@@ -133,15 +137,15 @@
 
 <p>Use a <code>&lt;carousel&gt;</code> element with <code>&lt;slide&gt;</code> elements inside it.  It will automatically cycle through the slides at a given rate, and a current-index variable will be kept in sync with the currently visible slide.</p>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/carousel">ui.bootstrap.carousel</a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/carousel">ui.bootstrap.carousel</a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'carousel')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'carousel')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
@@ -193,7 +197,7 @@
         <div class="page-header">
           <h1>Dropdown Toggle</h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <li class="dropdown" ng-controller="DropdownCtrl">
   <a class="dropdown-toggle">
@@ -210,15 +214,15 @@
             <div class="span6">
                 <p>DropdownToggle is a simple directive which will toggle a dropdown link on click.  Simply put it on the <code>&lt;a&gt;</code> tag of the toggler-element, and it will find the nearest dropdown menu and toggle it when the <code>&lt;a dropdown-toggle&gt;</code> is clicked.</p>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/dropdownToggle">ui.bootstrap.dropdownToggle</a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/dropdownToggle">ui.bootstrap.dropdownToggle</a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'dropdownToggle')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'dropdownToggle')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
@@ -257,7 +261,7 @@
         <div class="page-header">
           <h1>Modal</h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="ModalDemoCtrl">
     <button class="btn" ng-click="open()">Open me!</button>
@@ -277,15 +281,15 @@
             <div class="span6">
                 <p>Bootstrap's modal directive.</p>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/modal">ui.bootstrap.modal</a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/modal">ui.bootstrap.modal</a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'modal')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'modal')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
@@ -333,13 +337,14 @@
         <div class="page-header">
           <h1>Pagination</h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="PaginationDemoCtrl">
     <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-large"></pagination>
     <pagination num-pages="noOfPages" current-page="currentPage"></pagination>
     <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-small"></pagination>
     <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-mini"></pagination>
+    <pagination num-pages="noOfPages" current-page="currentPage"  max-size="maxSize"></pagination>
     <button class="btn" ng-click="setPage(3)">Set current page to: 3</button>
     The selected page no: {{currentPage}}
 </div>
@@ -348,16 +353,18 @@
                 <p>A lightweight pagination directive that is focused on ... providing pagination!</p>
 
 <p>It will take care of visualising a pagination bar. Additionally it will make sure that the state (enabled / disabled) of the Previous / Next buttons is maintained correctly.</p>
+
+<p>It also provides optional attribute max-size to limit the size of pagination bar.</p>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/pagination">ui.bootstrap.pagination</a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/pagination">ui.bootstrap.pagination</a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'pagination')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'pagination')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
@@ -365,35 +372,40 @@
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-small&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-mini&quot;&gt;&lt;&#x2F;pagination&gt;
+    &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;  max-size=&quot;maxSize&quot;&gt;&lt;&#x2F;pagination&gt;
     &lt;button class=&quot;btn&quot; ng-click=&quot;setPage(3)&quot;&gt;Set current page to: 3&lt;&#x2F;button&gt;
     The selected page no: {{currentPage}}
 &lt;&#x2F;div&gt;</code></pre></pane>
                     <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 5;
+  $scope.noOfPages = 7;
   $scope.currentPage = 4;
-
+  $scope.maxSize = 5;
+  
   $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
   };
-};</code></pre></pane>
+};
+</code></pre></pane>
                 </tabs>
             </div>
         </div>
       </section>
       <script>var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 5;
+  $scope.noOfPages = 7;
   $scope.currentPage = 4;
-
+  $scope.maxSize = 5;
+  
   $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
   };
-};</script>
+};
+</script>
     
       <section id="tabs">
         <div class="page-header">
           <h1>Tabs</h1>
         </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="TabsDemoCtrl">
     <tabs>
@@ -405,15 +417,15 @@
             <div class="span6">
                 <p>AngularJS version of the tabs directive.</p>
                 <section>
-                Directive in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/tabs">ui.bootstrap.tabs</a>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/tabs">ui.bootstrap.tabs</a>
                 </section>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" ng-click="edit('0.1.0-SNAPSHOT', 'tabs')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'tabs')">Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
@@ -438,6 +450,81 @@
     { title:"Dynamic Title 2", content:"Dynamic content 2" }
   ];
 };</script>
+    
+      <section id="tooltip">
+        <div class="page-header">
+          <h1>Tooltip</h1>
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <div ng-controller="TooltipDemoCtrl">
+  <div class="well">
+    <div>Dynamic Tooltip Text: <input ng-model="dynamicTooltip"></input></div>
+    <p>
+      Pellentesque <a><span tooltip="{{dynamicTooltip}}">dynamic</span></a>,
+      sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
+      aliquam. Tincidunt lobortis feugiat vivamus at 
+      <a><span tooltip-placement="left" tooltip="On the Left!">left</span></a> eget
+      arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
+      <a><span tooltip-placement="right" tooltip="On the Right!">right</span></a> 
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
+      <a><span tooltip-placement="bottom" tooltip="On the Bottom!">bottom</span></a> 
+      pharetra convallis posuere morbi leo urna, 
+      <a><span tooltip-animation="true" tooltip="I fade in and out!">fading</span></a> 
+      at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus 
+      turpis massa tincidunt dui ut.
+    </p>
+  </div>
+</div>
+
+            </div>
+            <div class="span6">
+                <p>A lightweight, extensible directive for fancy tooltip creation. The tooltip
+directive supports multiple placements, optional transition animation, and more.</p>
+                <section>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/tooltip">ui.bootstrap.tooltip</a>
+                </section>
+            </div>
+        </div>
+        <hr>
+        <div class="row-fluid">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'tooltip')">Edit in plunker</button>
+                </div>
+                <tabs>
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TooltipDemoCtrl&quot;&gt;
+  &lt;div class=&quot;well&quot;&gt;
+    &lt;div&gt;Dynamic Tooltip Text: &lt;input ng-model=&quot;dynamicTooltip&quot;&gt;&lt;&#x2F;input&gt;&lt;&#x2F;div&gt;
+    &lt;p&gt;
+      Pellentesque &lt;a&gt;&lt;span tooltip=&quot;{{dynamicTooltip}}&quot;&gt;dynamic&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;,
+      sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
+      aliquam. Tincidunt lobortis feugiat vivamus at 
+      &lt;a&gt;&lt;span tooltip-placement=&quot;left&quot; tooltip=&quot;On the Left!&quot;&gt;left&lt;&#x2F;span&gt;&lt;&#x2F;a&gt; eget
+      arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
+      &lt;a&gt;&lt;span tooltip-placement=&quot;right&quot; tooltip=&quot;On the Right!&quot;&gt;right&lt;&#x2F;span&gt;&lt;&#x2F;a&gt; 
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
+      &lt;a&gt;&lt;span tooltip-placement=&quot;bottom&quot; tooltip=&quot;On the Bottom!&quot;&gt;bottom&lt;&#x2F;span&gt;&lt;&#x2F;a&gt; 
+      pharetra convallis posuere morbi leo urna, 
+      &lt;a&gt;&lt;span tooltip-animation=&quot;true&quot; tooltip=&quot;I fade in and out!&quot;&gt;fading&lt;&#x2F;span&gt;&lt;&#x2F;a&gt; 
+      at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus 
+      turpis massa tincidunt dui ut.
+    &lt;&#x2F;p&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var TooltipDemoCtrl = function ($scope) {
+  $scope.dynamicTooltip = &quot;Hello, World!&quot;;
+};
+</code></pre></pane>
+                </tabs>
+            </div>
+        </div>
+      </section>
+      <script>var TooltipDemoCtrl = function ($scope) {
+  $scope.dynamicTooltip = "Hello, World!";
+};
+</script>
     
   </div>
 </div>
