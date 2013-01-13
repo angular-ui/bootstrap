@@ -2,13 +2,12 @@ describe('carousel', function() {
   beforeEach(module('ui.bootstrap.carousel'));
   beforeEach(module('template/carousel/carousel.html', 'template/carousel/slide.html'));
   
-  var $rootScope, elm, $compile, $controller, $timeout, $transition;
-  beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$timeout_, _$transition_) {
+  var $rootScope, elm, $compile, $controller, $timeout;
+  beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$timeout_) {
     $rootScope = _$rootScope_;
     $compile = _$compile_;
     $controller = _$controller_;
     $timeout = _$timeout_;
-    $transition = _$transition_;
   }));
 
   describe('basics', function() {
@@ -122,6 +121,27 @@ describe('carousel', function() {
       elm.trigger('mouseleave');
       $timeout.flush();
       testSlideActive(2);
+    });
+
+    it('should remove slide from dom and change active slide', function() {
+      scope.$apply('selector = 1');
+      testSlideActive(1);
+      scope.$apply('slides.splice(1,1)');
+      expect(elm.find('div.item').length).toBe(2);
+      testSlideActive(1);
+      scope.$apply('slides.splice(1,1)');
+      expect(elm.find('div.item').length).toBe(1);
+      testSlideActive(0);
+    });
+
+    it('should change dom when you reassign ng-repeat slides array', function() {
+      scope.slides=[{content:'new1'},{content:'new2'},{content:'new3'}];
+      scope.$apply();
+      var contents = elm.find('div.item');
+      expect(contents.length).toBe(3);
+      expect(contents.eq(0).text()).toBe('new1');
+      expect(contents.eq(1).text()).toBe('new2');
+      expect(contents.eq(2).text()).toBe('new3');
     });
   });
 

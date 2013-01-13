@@ -19,7 +19,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   /* direction: "prev" or "next" */
   self.select = function(index, direction) {
     var nextSlide = slides[index];
-    if (nextSlide && index != self.selectedIndex) {
+    if (nextSlide && nextSlide !== currentSlide) {
       if ($scope.$currentTransition) {
         $scope.$currentTransition.cancel();
         //Timeout so ng-class in template has time to fix classes for finished slide
@@ -165,7 +165,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     link: function (scope, element, attrs, carouselCtrl) {
       carouselCtrl.addSlide(scope, element);
       //the scope is destroyed then remove the slide from the current slides array
-      scope.$on('$destroy', function (event) {
+      scope.$on('$destroy', function() {
         carouselCtrl.removeSlide(scope);
       });
     }

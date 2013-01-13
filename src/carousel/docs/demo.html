@@ -9,7 +9,6 @@
     </slide>
   </carousel>
   Select slide:
-  <a ng-repeat="i in slides" ng-click="selectSlide($index)">
-    {{$index}}
-  </a>
+  <a ng-repeat="i in slides" ng-click="selectSlide($index)" class="btn btn-mini">{{$index}}</a>
+  <br /><a class="btn btn-primary" ng-click="addSlide()">Add Slide</a>
 </div>
