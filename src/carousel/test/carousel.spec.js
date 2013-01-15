@@ -20,13 +20,14 @@ describe('carousel', function() {
         {active:false,content:'three'}
       ];
       elm = $compile(
-        '<carousel current-index="selector" interval="2500" playing="shouldPlay" no-transition="true">' +
+        '<carousel interval="interval" no-transition="true">' +
           '<slide ng-repeat="slide in slides" active="slide.active">' +
             '{{slide.content}}' +
           '</slide>' +
         '</carousel>' 
       )(scope);
       carouselScope = elm.scope();
+      scope.interval = 5000;
       scope.$apply();
     });
     afterEach(function() {
@@ -36,9 +37,7 @@ describe('carousel', function() {
     function testSlideActive(slideIndex) {
       for (var i=0; i<scope.slides.length; i++) {
         if (i == slideIndex) {
-          expect(carouselScope.currentIndex).toBe(slideIndex);
-          expect(scope.selector).toBe(slideIndex);
-          expect(scope.slides[slideIndex].active).toBe(true);
+          expect(scope.slides[i].active).toBe(true);
         } else {
           expect(scope.slides[i].active).not.toBe(true);
         }
@@ -48,7 +47,7 @@ describe('carousel', function() {
     it('should set the selected slide to active = true', function() {
       expect(scope.slides[0].content).toBe('one');
       testSlideActive(0);
-      scope.$apply('selector = 1');
+      scope.$apply('slides[1].active=true');
       testSlideActive(1);
     });
 
@@ -80,6 +79,21 @@ describe('carousel', function() {
       testSlideActive(1);
       navPrev.click();
       testSlideActive(0);
+    });
+
+    it('shouldnt go forward if interval is NaN or negative', function() {
+      testSlideActive(0);
+      scope.$apply('interval = -1');
+      //no timeout to flush, interval watch doesn't make a new one when interval is invalid
+      testSlideActive(0);
+      scope.$apply('interval = 1000');
+      $timeout.flush();
+      testSlideActive(1);
+      scope.$apply('interval = false');
+      testSlideActive(1);
+      scope.$apply('interval = 1000');
+      $timeout.flush();
+      testSlideActive(2);
     });
 
     it('should bind the content to slides', function() {
@@ -124,7 +138,7 @@ describe('carousel', function() {
     });
 
     it('should remove slide from dom and change active slide', function() {
-      scope.$apply('selector = 1');
+      scope.$apply('slides[1].active = true');
       testSlideActive(1);
       scope.$apply('slides.splice(1,1)');
       expect(elm.find('div.item').length).toBe(2);
@@ -142,13 +156,19 @@ describe('carousel', function() {
       expect(contents.eq(0).text()).toBe('new1');
       expect(contents.eq(1).text()).toBe('new2');
       expect(contents.eq(2).text()).toBe('new3');
+      scope.$apply('slides.splice(0,1)');
+      contents = elm.find('div.item');
+      expect(contents.length).toBe(2);
+      expect(contents.eq(0).text()).toBe('new2');
+      expect(contents.eq(0)).toHaveClass('active');
+      expect(contents.eq(1).text()).toBe('new3');
     });
   });
 
   describe('controller', function() {
     var scope, ctrl;
     //create an array of slides and add to the scope
-    var slides = [{'active': false,'content': 123},{'active': false,'content': 456}];
+    var slides = [{'content': 1},{'content': 2},{'content':3},{'content':4}];
 
     beforeEach(function() {
       scope = $rootScope.$new();
@@ -162,46 +182,46 @@ describe('carousel', function() {
     });
 
     describe('addSlide', function() {
-      it('should set first slide to active = true', function() {
-        expect(scope.slides[0].content).toBe(123);
-        expect(scope.slides[0].active).toBe(true);
-        expect(scope.slides[1].active).not.toBe(true);
-      });
-
-      it('should have two slides in the scope', function() {
-        expect(scope.slides).toEqual([slides[0], slides[1]]);
+      it('should set first slide to active = true and the rest to false', function() {
+        angular.forEach(ctrl.slides, function(slide, i) {
+          if (i !== 0) { 
+            expect(slide.active).not.toBe(true); 
+          } else {
+            expect(slide.active).toBe(true);
+          }
+        });
       });
 
       it('should add new slide and change active to true if active is true on the added slide', function() { 
-        var newslide = {active: true};
-        expect(scope.slides.length).toBe(2);
-        ctrl.addSlide(newslide);
-        expect(scope.slides.length).toBe(3);
-        expect(scope.slides[2].active).toBe(true);
-        expect(scope.slides[0].active).toBe(false);
+        var newSlide = {active: true};
+        expect(ctrl.slides.length).toBe(4);
+        ctrl.addSlide(newSlide);
+        expect(ctrl.slides.length).toBe(5);
+        expect(ctrl.slides[4].active).toBe(true);
+        expect(ctrl.slides[0].active).toBe(false);
       });
 
       it('should add a new slide and not change the active slide', function() { 
-        var newslide = {active: false};
-        expect(scope.slides.length).toBe(2);
-        ctrl.addSlide(newslide);
-        expect(scope.slides.length).toBe(3);
-        expect(scope.slides[2].active).toBe(false);
-        expect(scope.slides[0].active).toBe(true);
+        var newSlide = {active: false};
+        expect(ctrl.slides.length).toBe(4);
+        ctrl.addSlide(newSlide);
+        expect(ctrl.slides.length).toBe(5);
+        expect(ctrl.slides[4].active).toBe(false);
+        expect(ctrl.slides[0].active).toBe(true);
       });
 
       it('should remove slide and change active slide if needed', function() {
-        var newslide = {};
-        ctrl.addSlide(newslide);
-        expect(scope.slides.length).toBe(3);
-        expect(ctrl.selectedIndex).toBe(0);
-        ctrl.removeSlide(slides[0]);
-        expect(scope.slides.length).toBe(2);
-        expect(ctrl.selectedIndex).toBe(0);
-        ctrl.select(1);
-        ctrl.removeSlide(newslide);
-        expect(scope.slides.length).toBe(1);
-        expect(ctrl.selectedIndex).toBe(0);
+        expect(ctrl.slides.length).toBe(4);
+        ctrl.removeSlide(ctrl.slides[0]);
+        expect(ctrl.slides.length).toBe(3);
+        expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
+        ctrl.select(ctrl.slides[2]);
+        ctrl.removeSlide(ctrl.slides[2]);
+        expect(ctrl.slides.length).toBe(2);
+        expect(ctrl.currentSlide).toBe(ctrl.slides[1]);
+        ctrl.removeSlide(ctrl.slides[0]);
+        expect(ctrl.slides.length).toBe(1);
+        expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
       });
     });
   });

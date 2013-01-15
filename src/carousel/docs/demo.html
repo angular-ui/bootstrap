@@ -1,14 +1,28 @@
 <div ng-controller="CarouselDemoCtrl">
-  <carousel current-index="selected" interval="5000">
-    <slide ng-repeat="s in slides" active="s.active">
-      <img ng-src="{{s.image}}" style="margin:auto;">
+  <carousel interval="myInterval">
+    <slide ng-repeat="slide in slides" active="slide.active">
+      <img ng-src="{{slide.image}}" style="margin:auto;">
       <div class="carousel-caption">
         <h4>Slide {{$index}}</h4>
-        <p>{{s.text}}</p>
+        <p>{{slide.text}}</p>
       </div>
     </slide>
   </carousel>
-  Select slide:
-  <a ng-repeat="i in slides" ng-click="selectSlide($index)" class="btn btn-mini">{{$index}}</a>
-  <br /><a class="btn btn-primary" ng-click="addSlide()">Add Slide</a>
+  <div class="row-fluid">
+    <div class="span6">
+      <ul>
+        <li><a class="btn btn-primary" ng-click="addSlide()">Add Slide</a></li>
+        <li ng-repeat="slide in slides">
+          {{$index}}: {{slide.text}}
+          <a ng-click="slide.active = true">[select]</a>
+          <a ng-click="slides.splice($index, 1)">[remove]</a>
+          <span ng-show="slide.active" style="color:green;">&#10003;</a>
+        </li>
+      </ul>
+    </div>
+    <div class="span6">
+      Interval, in milliseconds: <input ng-model="myInterval">
+      <br />Enter a negative or non-number to stop the interval.
+    </div>
+  </div>
 </div>

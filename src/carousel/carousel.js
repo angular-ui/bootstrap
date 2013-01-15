@@ -4,22 +4,27 @@
 *
 *      The carousel has all of the function that the original Bootstrap carousel has, except for animations.
 *      
-*      For no interval set the interval to non-number
-*      Template: <carousel interval="none"><slide active="slide.active">{{anything}}</slide></carousel>
-*      To change the carousel from outside the carousel itself add in the current-index attribute
-*      Template: <carousel interval="none" current-index="int"><slide active="slide.active">{{anything}}</slide></carousel>
+*      For no interval set the interval to non-number, or milliseconds of desired interval
+*      Template: <carousel interval="none"><slide>{{anything}}</slide></carousel>
+*      To change the carousel's active slide set the active attribute to true
+*      Template: <carousel interval="none"><slide active="someModel">{{anything}}</slide></carousel>
 */
 angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 .controller('CarouselController', ['$scope', '$timeout', '$transition', '$q', function ($scope, $timeout, $transition, $q) {
-  var slides = $scope.slides = [],
-    self = this,
-    currentTimeout, currentSlide, isPlaying;
-  $scope.currentIndex = -1;
+  var self = this,
+    slides = self.slides = [],
+    currentIndex = -1,
+    currentTimeout, isPlaying;
+  self.currentSlide = null;
 
   /* direction: "prev" or "next" */
-  self.select = function(index, direction) {
-    var nextSlide = slides[index];
-    if (nextSlide && nextSlide !== currentSlide) {
+  self.select = function(nextSlide, direction) {
+    var nextIndex = slides.indexOf(nextSlide);
+    //Decide direction if it's not given
+    if (direction === undefined) {
+      direction = nextIndex > currentIndex ? "next" : "prev";
+    }
+    if (nextSlide && nextSlide !== self.currentSlide) {
       if ($scope.$currentTransition) {
         $scope.$currentTransition.cancel();
         //Timeout so ng-class in template has time to fix classes for finished slide
@@ -30,63 +35,73 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     }
     function goNext() {
       //If we have a slide to transition from and we have a transition type and we're allowed, go
-      if (currentSlide && angular.isString(direction) && !$scope.noTransition) { 
+      if (self.currentSlide && angular.isString(direction) && !$scope.noTransition && nextSlide.$element) { 
         //We shouldn't do class manip in here, but it's the same weird thing bootstrap does. need to fix sometime
         nextSlide.$element.addClass(direction);
         nextSlide.$element[0].offsetWidth = nextSlide.$element[0].offsetWidth; //force reflow
-        angular.extend(nextSlide, {direction: direction, sliding: true});
-        angular.extend(currentSlide||{}, {direction: direction});
+
+        //Set all other slides to stop doing their stuff for the new transition
+        angular.forEach(slides, function(slide) {
+          angular.extend(slide, {direction: '', entering: false, leaving: false, active: false});
+        });
+        angular.extend(nextSlide, {direction: direction, active: true, entering: true});
+        angular.extend(self.currentSlide||{}, {direction: direction, leaving: true});
 
         $scope.$currentTransition = $transition(nextSlide.$element, {});
-        //We have to create new pointers inside a closure so next/current don't change
+        //We have to create new pointers inside a closure since next & current will change
         (function(next,current) {
           $scope.$currentTransition.then(
             function(){ transitionDone(next, current); },
             function(){ transitionDone(next, current); }
           );
-        }(nextSlide, currentSlide));
+        }(nextSlide, self.currentSlide));
       } else {
-        transitionDone(nextSlide, currentSlide);
+        transitionDone(nextSlide, self.currentSlide);
       }
-      currentSlide = nextSlide;
-      $scope.currentIndex = self.selectedIndex = index;
+      self.currentSlide = nextSlide;
+      currentIndex = nextIndex;
       //every time you change slides, reset the timer
       restartTimer();
     }
     function transitionDone(next, current) {
-      angular.extend(next, {active: true, sliding: false, direction: null});
-      angular.extend(current||{}, {active: false, direction: null});
+      angular.extend(next, {direction: '', active: true, leaving: false, entering: false});
+      angular.extend(current||{}, {direction: '', active: false, leaving: false, entering: false});
       $scope.$currentTransition = null;
     }
   };
 
+  /* Allow outside people to call indexOf on slides array */
+  self.indexOfSlide = function(slide) {
+    return slides.indexOf(slide);
+  };
+
   $scope.next = function() {
-    var newIndex = ($scope.currentIndex + 1) % slides.length;
-    return self.select(newIndex, 'next');
+    var newIndex = (currentIndex + 1) % slides.length;
+    return self.select(slides[newIndex], 'next');
   };
 
   $scope.prev = function() {
-    var newIndex = $scope.currentIndex - 1 < 0 ? slides.length - 1 : $scope.currentIndex - 1;
-    return self.select(newIndex, 'prev');
+    var newIndex = currentIndex - 1 < 0 ? slides.length - 1 : currentIndex - 1;
+    return self.select(slides[newIndex], 'prev');
   };
 
-  function getInterval() {
-    var i = +$scope.interval;
-    return (isNaN(i) || i<=0) ? 5000 : i;
-  }
-  function playCarousel() {
-    if (isPlaying) {
-      $scope.next();
-      restartTimer();
-    } else {
-      $scope.pause();
-    }
-  }
+  $scope.$watch('interval', restartTimer);
   function restartTimer() {
     if (currentTimeout) {
       $timeout.cancel(currentTimeout);
     }
-    currentTimeout = $timeout(playCarousel, getInterval());
+    function go() {
+      if (isPlaying) {
+        $scope.next();
+        restartTimer();
+      } else {
+        $scope.pause();
+      }
+    }
+    var interval = +$scope.interval;
+    if (!isNaN(interval) && interval>=0) {
+      currentTimeout = $timeout(go, interval);
+    }
   }
   $scope.play = function() {
     if (!isPlaying) {
@@ -102,11 +117,11 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   };
 
   self.addSlide = function(slide, element) {
-    angular.extend(slide, {$element: element});
+    slide.$element = element;
     slides.push(slide);
     //if this is the first slide or the slide is set to active, select it
     if(slides.length === 1 || slide.active) {
-      self.select(slides.length - 1);
+      self.select(slides[slides.length-1]);
       if (slides.length == 1) {
         $scope.play();
       }
@@ -121,9 +136,9 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     slides.splice(index, 1);
     if (slides.length > 0 && slide.active) {
       if (index >= slides.length) {
-        self.select(index - 1);
+        self.select(slides[index-1]);
       } else {
-        self.select(index);
+        self.select(slides[index]);
       }
     }
   };
@@ -137,18 +152,8 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     require: 'carousel',
     templateUrl: 'template/carousel/carousel.html',
     scope: {
-      currentIndex: '=',
       interval: '=',
-      noTransition: '=' //This really exists so unit tests can test without transitions
-    },
-    link: function(scope, elm, attrs, carouselCtrl) {
-      scope.$watch('currentIndex', function(idx) {
-        //If it's a number and it's not same as current selection, change selection
-        if (+idx == idx && idx != carouselCtrl.selectedIndex) {
-          var selected = carouselCtrl.selectedIndex;
-          carouselCtrl.select(idx, idx > selected ? "next" : "prev");
-        }
-      });
+      noTransition: '='
     }
   };
 }])
@@ -160,13 +165,19 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     replace: true,
     templateUrl: 'template/carousel/slide.html',
     scope: {
-      active:'='
+      active: '='
     },
     link: function (scope, element, attrs, carouselCtrl) {
       carouselCtrl.addSlide(scope, element);
-      //the scope is destroyed then remove the slide from the current slides array
+      //when the scope is destroyed then remove the slide from the current slides array
       scope.$on('$destroy', function() {
         carouselCtrl.removeSlide(scope);
+      });
+
+      scope.$watch('active', function(active) {
+        if (active) {
+          carouselCtrl.select(scope);
+        }
       });
     }
   };
