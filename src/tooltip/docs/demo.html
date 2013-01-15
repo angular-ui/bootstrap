@@ -1,8 +1,9 @@
 <div ng-controller="TooltipDemoCtrl">
   <div class="well">
-    <div>Dynamic Tooltip Text: <input ng-model="dynamicTooltip"></input></div>
+    <div>Dynamic Tooltip Text: <input ng-model="dynamicTooltipText"></input></div>
+    <div>Dynamic Tooltip Popup Text: <input ng-model="dynamicTooltip"></input></div>
     <p>
-      Pellentesque <a><span tooltip="{{dynamicTooltip}}">dynamic</span></a>,
+      Pellentesque <a><span tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</span></a>,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
       aliquam. Tincidunt lobortis feugiat vivamus at 
       <a><span tooltip-placement="left" tooltip="On the Left!">left</span></a> eget

@@ -17,7 +17,13 @@ angular.module( 'ui.bootstrap.tooltip', [] )
     '<tooltip-popup></tooltip-popup>';
   
   return {
+    transclude: true,
     scope: { tooltipTitle: '@tooltip', placement: '@tooltipPlacement', animation: '&tooltipAnimation' },
+    controller: ['$transclude', '$element', function($transclude, $element) {
+      $transclude(function(clone) {
+        $element.append(clone);
+      });
+    }],
     link: function ( scope, element, attr ) {
       var tooltip = $compile( template )( scope ), 
           transitionTimeout;

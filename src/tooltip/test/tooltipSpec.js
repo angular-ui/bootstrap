@@ -60,6 +60,35 @@ describe('tooltip', function() {
     expect( elmScope.placement ).toBe( "bottom" );
   }));
 
+  it('should work inside an ngRepeat', inject( function( $compile ) {
+
+    elm = $compile( angular.element( 
+      '<ul>'+
+        '<li ng-repeat="item in items">'+
+          '<span id="selector" tooltip="{{item.tooltip}}">{{item.name}}</span>'+
+        '</li>'+
+      '</ul>'
+    ) )( scope );
+
+    scope.items = [
+      { name: "One", tooltip: "First Tooltip" }
+    ];
+    
+    scope.$digest();
+    
+    var tt = angular.element( elm.find("li > span")[0] );
+    
+    tt.trigger( 'mouseenter' );
+
+    // Due to the transclusion, the contents of the element are in a span, so
+    // we select the tooltip's child and ensure its content matches.
+    expect( tt.children().text() ).toBe( scope.items[0].name );
+
+    // And the tooltip text should still match.
+    expect( tt.scope().tooltipTitle ).toBe( scope.items[0].tooltip );
+
+    tt.trigger( 'mouseleave' );
+  }));
 });
 
     
