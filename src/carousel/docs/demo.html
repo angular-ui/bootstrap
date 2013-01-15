@@ -15,7 +15,6 @@
         <li ng-repeat="slide in slides">
           {{$index}}: {{slide.text}}
           <a ng-click="slide.active = true">[select]</a>
-          <a ng-click="slides.splice($index, 1)">[remove]</a>
           <span ng-show="slide.active" style="color:green;">&#10003;</a>
         </li>
       </ul>
