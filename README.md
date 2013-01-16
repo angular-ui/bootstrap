@@ -8,7 +8,7 @@
 
 ### Native, lightweight directives
 
-Wa are aiming at providing a set of AngularJS directives based on Twitter's bootstrap markup and CSS. The goal is to provide **native AngularJS directives** without any dependency on jQquery or Bootstrap's JavaScript.
+We are aiming at providing a set of AngularJS directives based on Twitter Bootstrap's markup and CSS. The goal is to provide **native AngularJS directives** without any dependency on jQuery or Bootstrap's JavaScript.
 It is often better to rewrite an existing JavaScript code and create a new, pure AngularJS directive. Most of the time the resulting directive is smaller as compared to the orginal JavaScript code size and better integrated into the AngularJS ecosystem.
 
 ### Customizability
@@ -26,7 +26,7 @@ In fact we are fortunate enough to **benefit from the same testing infrastructur
 
 ## Contributing to the project
 
- We are always looking for the quality contributions! Please check the [CONTRIBUTING.md](bootstrap/blob/master/CONTRIBUTING.md) for the contribution guidelines.
+We are always looking for the quality contributions! Please check the [CONTRIBUTING.md](bootstrap/blob/master/CONTRIBUTING.md) for the contribution guidelines.
 
 ### Development
 #### Prepare your environment
