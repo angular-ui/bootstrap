@@ -62,38 +62,35 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', 'lint html2js');
-  grunt.registerTask('after-test', 'find-modules build min site');
+  grunt.registerTask('after-test', 'find-modules build site');
 
   // Default task.
   grunt.registerTask('default', 'before-test test after-test');
 
   //Common ui.bootstrap module containing all modules for src and templates
-  grunt.registerTask('find-modules', 'Generate ui.bootstrap and template modules depending on all existing directives', function() {
-    grunt.file.expandDirs('src/*').forEach(function(dir) {
-      findModule(dir.split('/')[1]);
-    });
-  });
-
-  //Adds a given module to config
+  //findModule: Adds a given module to config
   function findModule(name) {
     function enquote(str) {
       return '"' + str + '"';
     }
-    var tplBase = 'template/' + name + '/*.html',
-      srcBase = 'src/' + name + '/*.js',
-      tplModules = grunt.config('tplModules'),
-      srcModules = grunt.config('srcModules');
+    var tplModules = grunt.config('tplModules');
+    var srcModules = grunt.config('srcModules');
 
-    grunt.file.expand(tplBase).map(function(file) {
+    grunt.file.expand('template/' + name + '/*.html').map(function(file) {
       tplModules.push(enquote(file));
     });
-    grunt.file.expand(srcBase).forEach(function(file) {
+    grunt.file.expand('src/' + name + '/*.js').forEach(function(file) {
       srcModules.push(enquote('ui.bootstrap.' + name));
     });
 
     grunt.config('tplModules', tplModules);
     grunt.config('srcModules', srcModules);
   }
+  grunt.registerTask('find-modules', 'Generate ui.bootstrap and template modules depending on all existing directives', function() {
+    grunt.file.expandDirs('src/*').forEach(function(dir) {
+      findModule(dir.split('/')[1]);
+    });
+  });
 
   grunt.registerTask('dist', 'Override dist directory', function() {
     var dir = this.args[0];
@@ -108,6 +105,7 @@ module.exports = function(grunt) {
         return 'src/' + name + '/*.js';
       });
       tplFiles = this.args.map(function(name) {
+        grunt.file.expand('template/' + name + '/*.html').forEach(html2js);
         return 'template/' + name + '/*.html.js';
       });
       grunt.config('filename', grunt.config('filename')+'-custom');
@@ -119,7 +117,7 @@ module.exports = function(grunt) {
                  grunt.config('concat.dist.src').concat(srcFiles));
     grunt.config('concat.dist_tpls.src',
                  grunt.config('concat.dist_tpls.src').concat(srcFiles).concat(tplFiles));
-    grunt.task.run('concat');
+    grunt.task.run('concat min');
   });
 
   grunt.registerTask('site', 'Create grunt demo site from every module\'s files', function() {
@@ -138,7 +136,6 @@ module.exports = function(grunt) {
     }
 
     var modules = grunt.file.expandDirs('src/*').map(function(dir) {
-
       var moduleName = dir.split("/")[1];
       if (fs.existsSync(dir + "docs")) {
         return {
@@ -174,24 +171,21 @@ module.exports = function(grunt) {
   });
 
   //Html templates to $templateCache for tests
-  //@return filename of js file
-  function html2js(file) {
-    return htmljsName;
+  var TPL='angular.module("<%= file %>", []).run(["$templateCache", function($templateCache){\n' +
+    '  $templateCache.put("<%= file %>",\n    "<%= content %>");\n' +
+    '}]);\n';
+  function escapeContent(content) {
+    return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "').replace(/\r/g, '');
+  }
+  function html2js(template) {
+    grunt.file.write(template + ".js", grunt.template.process(TPL, {
+      file: template,
+      content: escapeContent(grunt.file.read(template))
+    }));
   }
   grunt.registerMultiTask('html2js', 'Generate js versions of html template', function() {
     var files = grunt._watch_changed_files || grunt.file.expand(this.data);
-    files.forEach(function(file) {
-      var TPL='angular.module("<%= file %>", []).run(["$templateCache", function($templateCache){\n' +
-        '  $templateCache.put("<%= file %>",\n    "<%= content %>");\n' +
-        '}]);\n';
-      grunt.file.write(file + ".js", grunt.template.process(TPL, {
-        file: file,
-        content: escapeContent(grunt.file.read(file))
-      }));
-    });
-    function escapeContent(content) {
-      return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "').replace(/\r/g, '');
-    }
+    files.forEach(html2js);
   });
 
   // Testacular configuration
