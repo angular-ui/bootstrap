@@ -21,9 +21,6 @@
 </head>
 <body class="ng-cloak">
 <header class="navbar navbar-fixed-top">
-    <!-- <a href="https://github.com/angular-ui/bootstrap">
-        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
-    </a> -->
     <div class="navbar-inner">
     <div class="container">
       <a class="brand" href="#">ui-bootstrap</a>
@@ -35,6 +32,8 @@
             <li><a href="#alert">Alert</a></li>
           
             <li><a href="#carousel">Carousel</a></li>
+          
+            <li><a href="#dialog">Dialog</a></li>
           
             <li><a href="#dropdownToggle">Dropdown Toggle</a></li>
           
@@ -54,51 +53,68 @@
 <div style="margin: 32px;"></div>
 <div role="main">
 
-
     <header class="hero-unit" id="overview">
-      <div class="container">
-        <h1>
-          UI Bootstrap
-        </h1>
-        <p>Bootstrap for <strong><a href="http://angularjs.org">AngularJS</a></strong> by the <strong><a href="http://angular-ui.github.com">AngularUI Team</a></strong></p>
-        <p class="btn-group">
-          <a class="btn btn-large" href="https://github.com/angular-ui/bootstrap"><!-- <i class="icon-github"></i> --> Code on Github</a><a class="btn btn-large btn-primary" href="https://github.com/angular-ui/bootstrap/tags"><!-- <i class="icon-download-alt icon-white"></i> --> Download</a>
-        </p>
-      </div>
-      <div class="bs-docs-social">
         <div class="container">
-          <ul class="bs-docs-social-buttons">
-            <li>
-              <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=watch&count=true"
-    allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-            </li>
-            <li>
-              <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=fork&count=true"
-    allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
-            </li>
-            <li>
-              <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="angularjs">Tweet</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-            </li>
-            <li>
-              <!-- Place this tag where you want the +1 button to render. -->
-              <div class="g-plusone" data-size="medium"></div>
+            <h1>
+                UI Bootstrap
+            </h1>
 
-              <!-- Place this tag after the last +1 button tag. -->
-              <script type="text/javascript">
-                (function() {
-                  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                  po.src = 'https://apis.google.com/js/plusone.js';
-                  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                })();
-              </script>
-            </li>
-          </ul>
+            <p>Bootstrap for <strong><a href="http://angularjs.org">AngularJS</a></strong> by the <strong><a
+                    href="http://angular-ui.github.com">AngularUI Team</a></strong></p>
+
+            <p class="btn-group">
+                <a class="btn btn-large" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
+                <a class="btn btn-large btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
+                    <i class="icon-download-alt icon-white"></i>Download <small>(0.1.0-SNAPSHOT)</small>
+                </a>
+            </p>
         </div>
-      </div>
+        <div class="bs-docs-social">
+            <div class="container">
+                <ul class="bs-docs-social-buttons">
+                    <li>
+                        <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=watch&count=true"
+                                allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+                    </li>
+                    <li>
+                        <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=fork&count=true"
+                                allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/share" class="twitter-share-button"
+                           data-hashtags="angularjs">Tweet</a>
+                        <script>!function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "//platform.twitter.com/widgets.js";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, "script", "twitter-wjs");</script>
+                    </li>
+                    <li>
+                        <!-- Place this tag where you want the +1 button to render. -->
+                        <div class="g-plusone" data-size="medium"></div>
+
+                        <!-- Place this tag after the last +1 button tag. -->
+                        <script type="text/javascript">
+                            (function () {
+                                var po = document.createElement('script');
+                                po.type = 'text/javascript';
+                                po.async = true;
+                                po.src = 'https://apis.google.com/js/plusone.js';
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(po, s);
+                            })();
+                        </script>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </header>
 
-  <div class="container container-fluid">
+    <div class="container container-fluid">
     
       <section id="accordion">
         <div class="page-header">
@@ -229,19 +245,31 @@
         <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="CarouselDemoCtrl">
-  <carousel current-index="selected" interval="5000">
-    <slide ng-repeat="s in slides" active="s.active">
-      <img ng-src="{{s.image}}" style="margin:auto;">
+  <carousel interval="myInterval">
+    <slide ng-repeat="slide in slides" active="slide.active">
+      <img ng-src="{{slide.image}}" style="margin:auto;">
       <div class="carousel-caption">
         <h4>Slide {{$index}}</h4>
-        <p>{{s.text}}</p>
+        <p>{{slide.text}}</p>
       </div>
     </slide>
   </carousel>
-  Select slide:
-  <a ng-repeat="i in slides" ng-click="selectSlide($index)">
-    {{$index}}
-  </a>
+  <div class="row-fluid">
+    <div class="span6">
+      <ul>
+        <li><a class="btn btn-primary" ng-click="addSlide()">Add Slide</a></li>
+        <li ng-repeat="slide in slides">
+          {{$index}}: {{slide.text}}
+          <a ng-click="slide.active = true">[select]</a>
+          <span ng-show="slide.active" style="color:green;">&#10003;</a>
+        </li>
+      </ul>
+    </div>
+    <div class="span6">
+      Interval, in milliseconds: <input ng-model="myInterval">
+      <br />Enter a negative or non-number to stop the interval.
+    </div>
+  </div>
 </div>
 
             </div>
@@ -262,30 +290,47 @@
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
-  &lt;carousel current-index=&quot;selected&quot; interval=&quot;5000&quot;&gt;
-    &lt;slide ng-repeat=&quot;s in slides&quot; active=&quot;s.active&quot;&gt;
-      &lt;img ng-src=&quot;{{s.image}}&quot; style=&quot;margin:auto;&quot;&gt;
+  &lt;carousel interval=&quot;myInterval&quot;&gt;
+    &lt;slide ng-repeat=&quot;slide in slides&quot; active=&quot;slide.active&quot;&gt;
+      &lt;img ng-src=&quot;{{slide.image}}&quot; style=&quot;margin:auto;&quot;&gt;
       &lt;div class=&quot;carousel-caption&quot;&gt;
         &lt;h4&gt;Slide {{$index}}&lt;&#x2F;h4&gt;
-        &lt;p&gt;{{s.text}}&lt;&#x2F;p&gt;
+        &lt;p&gt;{{slide.text}}&lt;&#x2F;p&gt;
       &lt;&#x2F;div&gt;
     &lt;&#x2F;slide&gt;
   &lt;&#x2F;carousel&gt;
-  Select slide:
-  &lt;a ng-repeat=&quot;i in slides&quot; ng-click=&quot;selectSlide($index)&quot;&gt;
-    {{$index}}
-  &lt;&#x2F;a&gt;
+  &lt;div class=&quot;row-fluid&quot;&gt;
+    &lt;div class=&quot;span6&quot;&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a class=&quot;btn btn-primary&quot; ng-click=&quot;addSlide()&quot;&gt;Add Slide&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+        &lt;li ng-repeat=&quot;slide in slides&quot;&gt;
+          {{$index}}: {{slide.text}}
+          &lt;a ng-click=&quot;slide.active = true&quot;&gt;[select]&lt;&#x2F;a&gt;
+          &lt;span ng-show=&quot;slide.active&quot; style=&quot;color:green;&quot;&gt;&amp;#10003;&lt;&#x2F;a&gt;
+        &lt;&#x2F;li&gt;
+      &lt;&#x2F;ul&gt;
+    &lt;&#x2F;div&gt;
+    &lt;div class=&quot;span6&quot;&gt;
+      Interval, in milliseconds: &lt;input ng-model=&quot;myInterval&quot;&gt;
+      &lt;br &#x2F;&gt;Enter a negative or non-number to stop the interval.
+    &lt;&#x2F;div&gt;
+  &lt;&#x2F;div&gt;
 &lt;&#x2F;div&gt;
 </code></pre></pane>
                     <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function CarouselDemoCtrl($scope) {
+  $scope.myInterval = 5000;
   $scope.slides = [
-    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;325&#x2F;200&#x27;,text: &#x27;Kitten.&#x27;},
-    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;275&#x2F;200&#x27;,text: &#x27;Kitty!&#x27;},
-    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;375&#x2F;200&#x27;,text: &#x27;Cat.&#x27;},
-    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;250&#x2F;200&#x27;,text: &#x27;Feline!&#x27;}
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;200&#x2F;200&#x27;,text: &#x27;Kitten.&#x27;},
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;225&#x2F;200&#x27;,text: &#x27;Kitty!&#x27;},
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;250&#x2F;200&#x27;,text: &#x27;Cat.&#x27;},
+    {image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;275&#x2F;200&#x27;,text: &#x27;Feline!&#x27;}
   ];
-  $scope.selectSlide = function(i) {
-    $scope.selected = i;
+  $scope.addSlide = function() {
+    $scope.slides.push({
+      image: &#x27;http:&#x2F;&#x2F;placekitten.com&#x2F;&#x27;+(200+25*Math.floor(Math.random()*4))+&#x27;&#x2F;200&#x27;,
+      text: [&#x27;More&#x27;,&#x27;Extra&#x27;,&#x27;Lots of&#x27;,&#x27;Surplus&#x27;][Math.floor(Math.random()*4)] + &#x27; &#x27; +
+        [&#x27;Cats&#x27;, &#x27;Kittys&#x27;, &#x27;Felines&#x27;, &#x27;Cutes&#x27;][Math.floor(Math.random()*4)]
+    });
   };
 }
 </code></pre></pane>
@@ -294,14 +339,192 @@
         </div>
       </section>
       <script>function CarouselDemoCtrl($scope) {
+  $scope.myInterval = 5000;
   $scope.slides = [
-    {image: 'http://placekitten.com/325/200',text: 'Kitten.'},
-    {image: 'http://placekitten.com/275/200',text: 'Kitty!'},
-    {image: 'http://placekitten.com/375/200',text: 'Cat.'},
-    {image: 'http://placekitten.com/250/200',text: 'Feline!'}
+    {image: 'http://placekitten.com/200/200',text: 'Kitten.'},
+    {image: 'http://placekitten.com/225/200',text: 'Kitty!'},
+    {image: 'http://placekitten.com/250/200',text: 'Cat.'},
+    {image: 'http://placekitten.com/275/200',text: 'Feline!'}
   ];
-  $scope.selectSlide = function(i) {
-    $scope.selected = i;
+  $scope.addSlide = function() {
+    $scope.slides.push({
+      image: 'http://placekitten.com/'+(200+25*Math.floor(Math.random()*4))+'/200',
+      text: ['More','Extra','Lots of','Surplus'][Math.floor(Math.random()*4)] + ' ' +
+        ['Cats', 'Kittys', 'Felines', 'Cutes'][Math.floor(Math.random()*4)]
+    });
+  };
+}
+</script>
+    
+      <section id="dialog">
+        <div class="page-header">
+          <h1>Dialog</h1>
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <div ng-controller="DialogDemoCtrl">
+    <div class="row-fluid">
+        <div class="span6">
+            <label class="checkbox"><input type=checkbox ng-model="opts.backdrop">Show backdrop</label>
+            <label class="checkbox"><input type=checkbox ng-model="opts.modalFade">Fade modal dialog </label>
+            <label class="checkbox"><input type=checkbox ng-disabled="!opts.backdrop" ng-model="opts.backdropFade">Fade Backdrop</label>
+            <hr>
+            <label class="checkbox"><input type=checkbox ng-model="opts.keyboard">Close on Escape</label>
+            <label class="checkbox"><input type=checkbox ng-disabled="!opts.backdrop" ng-model="opts.backdropClick">Close on backdrop click</label>
+        </div>
+        <div class="span6">
+            <p>Change options at will and press the open dialog button below!</p>
+            <p><button class="btn btn-primary" ng-click="openDialog()">Open Dialog</button></p>
+
+            <p>Alternatively open a simple message box:</p>
+            <p><button class="btn btn-primary" ng-click="openMessageBox()">Open Message Box</button></p>
+        </div>
+    </div>
+</div>
+
+            </div>
+            <div class="span6">
+                <p>The <code>$dialog</code> service allows you to open dialogs and message boxes from within your controllers. Very useful in case loading dialog content in the DOM up-front is tedious or not desired.</p>
+
+<p>Creating custom dialogs is straightforward: create a partial view, its controller and reference them when using the service.
+Generic message boxes (title, message and buttons) are also provided for your convenience.</p>
+
+<p>For more information, see the <a href="https://github.com/angular-ui/bootstrap/src/dialog/README.md">dialog readme</a> on github.</p>
+                <section>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/dialog">ui.bootstrap.dialog</a>
+                </section>
+            </div>
+        </div>
+        <hr>
+        <div class="row-fluid">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'dialog')">Edit in plunker</button>
+                </div>
+                <tabs>
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;DialogDemoCtrl&quot;&gt;
+    &lt;div class=&quot;row-fluid&quot;&gt;
+        &lt;div class=&quot;span6&quot;&gt;
+            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-model=&quot;opts.backdrop&quot;&gt;Show backdrop&lt;&#x2F;label&gt;
+            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-model=&quot;opts.modalFade&quot;&gt;Fade modal dialog &lt;&#x2F;label&gt;
+            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-disabled=&quot;!opts.backdrop&quot; ng-model=&quot;opts.backdropFade&quot;&gt;Fade Backdrop&lt;&#x2F;label&gt;
+            &lt;hr&gt;
+            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-model=&quot;opts.keyboard&quot;&gt;Close on Escape&lt;&#x2F;label&gt;
+            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-disabled=&quot;!opts.backdrop&quot; ng-model=&quot;opts.backdropClick&quot;&gt;Close on backdrop click&lt;&#x2F;label&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div class=&quot;span6&quot;&gt;
+            &lt;p&gt;Change options at will and press the open dialog button below!&lt;&#x2F;p&gt;
+            &lt;p&gt;&lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;openDialog()&quot;&gt;Open Dialog&lt;&#x2F;button&gt;&lt;&#x2F;p&gt;
+
+            &lt;p&gt;Alternatively open a simple message box:&lt;&#x2F;p&gt;
+            &lt;p&gt;&lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;openMessageBox()&quot;&gt;Open Message Box&lt;&#x2F;button&gt;&lt;&#x2F;p&gt;
+        &lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function DialogDemoCtrl($scope, $dialog){
+
+  &#x2F;&#x2F; Inlined template for demo
+  var t = &#x27;&lt;div class=&quot;modal-header&quot;&gt;&#x27;+
+          &#x27;&lt;h1&gt;This is the title&lt;&#x2F;h1&gt;&#x27;+
+          &#x27;&lt;&#x2F;div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;modal-body&quot;&gt;&#x27;+
+          &#x27;&lt;p&gt;Enter a value to pass to &lt;code&gt;close&lt;&#x2F;code&gt; as the result: &lt;input ng-model=&quot;result&quot; &#x2F;&gt;&lt;&#x2F;p&gt;&#x27;+
+          &#x27;&lt;&#x2F;div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;modal-footer&quot;&gt;&#x27;+
+          &#x27;&lt;button ng-click=&quot;close(result)&quot; class=&quot;btn btn-primary&quot; &gt;Close&lt;&#x2F;button&gt;&#x27;+
+          &#x27;&lt;&#x2F;div&gt;&#x27;;
+
+  $scope.opts = {
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    template:  t, &#x2F;&#x2F; OR: templateUrl: &#x27;path&#x2F;to&#x2F;view.html&#x27;,
+    controller: &#x27;TestDialogController&#x27;
+  };
+
+  $scope.openDialog = function(){
+    var d = $dialog.dialog($scope.opts);
+    d.open().then(function(result){
+      if(result)
+      {
+        alert(&#x27;dialog closed with result: &#x27; + result);
+      }
+    });
+  };
+
+  $scope.openMessageBox = function(){
+    var title = &#x27;This is a message box&#x27;;
+    var msg = &#x27;This is the content of the message box&#x27;;
+    var btns = [{result:&#x27;cancel&#x27;, label: &#x27;Cancel&#x27;}, {result:&#x27;ok&#x27;, label: &#x27;OK&#x27;, cssClass: &#x27;btn-primary&#x27;}];
+
+    $dialog.messageBox(title, msg, btns)
+      .open()
+      .then(function(result){
+        alert(&#x27;dialog closed with result: &#x27; + result);
+    });
+  };
+}
+
+&#x2F;&#x2F; the dialog is injected in the specified controller
+function TestDialogController($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result);
+  };
+}
+</code></pre></pane>
+                </tabs>
+            </div>
+        </div>
+      </section>
+      <script>function DialogDemoCtrl($scope, $dialog){
+
+  // Inlined template for demo
+  var t = '<div class="modal-header">'+
+          '<h1>This is the title</h1>'+
+          '</div>'+
+          '<div class="modal-body">'+
+          '<p>Enter a value to pass to <code>close</code> as the result: <input ng-model="result" /></p>'+
+          '</div>'+
+          '<div class="modal-footer">'+
+          '<button ng-click="close(result)" class="btn btn-primary" >Close</button>'+
+          '</div>';
+
+  $scope.opts = {
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    template:  t, // OR: templateUrl: 'path/to/view.html',
+    controller: 'TestDialogController'
+  };
+
+  $scope.openDialog = function(){
+    var d = $dialog.dialog($scope.opts);
+    d.open().then(function(result){
+      if(result)
+      {
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.openMessageBox = function(){
+    var title = 'This is a message box';
+    var msg = 'This is the content of the message box';
+    var btns = [{result:'cancel', label: 'Cancel'}, {result:'ok', label: 'OK', cssClass: 'btn-primary'}];
+
+    $dialog.messageBox(title, msg, btns)
+      .open()
+      .then(function(result){
+        alert('dialog closed with result: ' + result);
+    });
+  };
+}
+
+// the dialog is injected in the specified controller
+function TestDialogController($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result);
   };
 }
 </script>
