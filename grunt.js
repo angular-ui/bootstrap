@@ -126,8 +126,12 @@ module.exports = function(grunt) {
       })
     );
     
-    grunt.file.expand('misc/demo-assets/*').forEach(function(path) {
+    grunt.file.expand('misc/demo-assets/*.*').forEach(function(path) {
       grunt.file.copy(path, 'dist/assets/' + path.replace('misc/demo-assets/',''));
+    });
+
+    grunt.file.expand('misc/demo-assets/img/*.*').forEach(function(path) {
+      grunt.file.copy(path, 'dist/' + path.replace('misc/demo-assets/',''));
     });
   });
 
