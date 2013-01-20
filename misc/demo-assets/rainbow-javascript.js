@@ -72,7 +72,7 @@ Rainbow.extend('javascript', [
                 'name': 'constant.regexp.escape',
                 'pattern': /\\(.){1}/g
             },
-            3: 'string.regexp.close',
+            3: 'string.regexp.cclose',
             4: 'string.regexp.modifier'
         },
         'pattern': /(\/)(?!\*)(.+)(\/)([igm]{0,3})/g
