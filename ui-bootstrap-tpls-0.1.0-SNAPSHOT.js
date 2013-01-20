@@ -1041,7 +1041,7 @@ angular.module("template/accordion/accordion.html", []).run(["$templateCache", f
 angular.module("template/alert/alert.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/alert/alert.html",
     "<div class='alert alert-block' ng-class=\"'alert-' + type\">" +
-    "  <button type='button' class='cclose' ng-click='dismiss()'>&times;</button>" +
+    "  <button type='button' class='close' ng-click='dismiss()'>&times;</button>" +
     "  <div ng-transclude></div>" +
     "</div>");
 }]);

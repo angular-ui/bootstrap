@@ -39,7 +39,7 @@ Rainbow.extend('html', [
     {
         'matches': {
             1: 'support.tag.open',
-            2: 'support.tag.close'
+            2: 'support.tag.cclose'
         },
         'pattern': /(&lt;)|(\/?\??&gt;)/g
     },
