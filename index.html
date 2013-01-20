@@ -142,7 +142,7 @@
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'accordion')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
@@ -196,7 +196,7 @@
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'alert')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AlertDemoCtrl&quot;&gt;
@@ -286,7 +286,7 @@
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'carousel')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
@@ -399,7 +399,7 @@ Generic message boxes (title, message and buttons) are also provided for your co
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'dialog')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'dialog')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;DialogDemoCtrl&quot;&gt;
@@ -558,7 +558,7 @@ function TestDialogController($scope, dialog){
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'dropdownToggle')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;li class=&quot;dropdown&quot; ng-controller=&quot;DropdownCtrl&quot;&gt;
@@ -625,7 +625,7 @@ function TestDialogController($scope, dialog){
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'modal')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
@@ -700,7 +700,7 @@ function TestDialogController($scope, dialog){
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'pagination')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot;&gt;
@@ -761,7 +761,7 @@ function TestDialogController($scope, dialog){
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'tabs')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
@@ -795,9 +795,10 @@ function TestDialogController($scope, dialog){
             <div class="span6">
                 <div ng-controller="TooltipDemoCtrl">
   <div class="well">
-    <div>Dynamic Tooltip Text: <input ng-model="dynamicTooltip"></input></div>
+    <div>Dynamic Tooltip Text: <input ng-model="dynamicTooltipText"></input></div>
+    <div>Dynamic Tooltip Popup Text: <input ng-model="dynamicTooltip"></input></div>
     <p>
-      Pellentesque <a><span tooltip="{{dynamicTooltip}}">dynamic</span></a>,
+      Pellentesque <a><span tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</span></a>,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
       aliquam. Tincidunt lobortis feugiat vivamus at 
       <a><span tooltip-placement="left" tooltip="On the Left!">left</span></a> eget
@@ -826,14 +827,15 @@ directive supports multiple placements, optional transition animation, and more.
         <div class="row-fluid">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'tooltip')">Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('0.1.0-SNAPSHOT', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TooltipDemoCtrl&quot;&gt;
   &lt;div class=&quot;well&quot;&gt;
-    &lt;div&gt;Dynamic Tooltip Text: &lt;input ng-model=&quot;dynamicTooltip&quot;&gt;&lt;&#x2F;input&gt;&lt;&#x2F;div&gt;
+    &lt;div&gt;Dynamic Tooltip Text: &lt;input ng-model=&quot;dynamicTooltipText&quot;&gt;&lt;&#x2F;input&gt;&lt;&#x2F;div&gt;
+    &lt;div&gt;Dynamic Tooltip Popup Text: &lt;input ng-model=&quot;dynamicTooltip&quot;&gt;&lt;&#x2F;input&gt;&lt;&#x2F;div&gt;
     &lt;p&gt;
-      Pellentesque &lt;a&gt;&lt;span tooltip=&quot;{{dynamicTooltip}}&quot;&gt;dynamic&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;,
+      Pellentesque &lt;a&gt;&lt;span tooltip=&quot;{{dynamicTooltip}}&quot;&gt;{{dynamicTooltipText}}&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
       aliquam. Tincidunt lobortis feugiat vivamus at 
       &lt;a&gt;&lt;span tooltip-placement=&quot;left&quot; tooltip=&quot;On the Left!&quot;&gt;left&lt;&#x2F;span&gt;&lt;&#x2F;a&gt; eget
@@ -851,6 +853,7 @@ directive supports multiple placements, optional transition animation, and more.
 </code></pre></pane>
                     <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var TooltipDemoCtrl = function ($scope) {
   $scope.dynamicTooltip = &quot;Hello, World!&quot;;
+  $scope.dynamicTooltipText = &quot;dynamic&quot;;
 };
 </code></pre></pane>
                 </tabs>
@@ -859,6 +862,7 @@ directive supports multiple placements, optional transition animation, and more.
       </section>
       <script>var TooltipDemoCtrl = function ($scope) {
   $scope.dynamicTooltip = "Hello, World!";
+  $scope.dynamicTooltipText = "dynamic";
 };
 </script>
     
