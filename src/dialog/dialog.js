@@ -175,10 +175,6 @@ dialogModule.provider("$dialog", function(){
       return elements;
     };
 
-    Dialog.prototype._fadingEnabled = function(){
-      return this.options.modalFade || this.options.backdropFade;
-    };
-
     Dialog.prototype._bindEvents = function() {
       if(this.options.keyboard){ body.bind('keydown', this.handledEscapeKey); }
       if(this.options.backdrop && this.options.backdropClick){ this.backdropEl.bind('click', this.handleBackDropClick); }
@@ -194,10 +190,6 @@ dialogModule.provider("$dialog", function(){
       this._unbindEvents();
 
       this.deferred.resolve(result);
-
-      if(this._fadingEnabled()){
-        this.$scope.$apply();
-      }
     };
 
     Dialog.prototype._addElementsToDom = function(){
@@ -214,11 +206,12 @@ dialogModule.provider("$dialog", function(){
 
     // Loads all `options.resolve` members to be used as locals for the controller associated with the dialog.
     Dialog.prototype._loadResolves = function(){
-      var values = [], keys = [], template, self = this;
+      var values = [], keys = [], templatePromise, self = this;
 
-      if (template = this.options.template) {
-      } else if (template = this.options.templateUrl) {
-        template = $http.get(this.options.templateUrl, {cache:$templateCache})
+      if (this.options.template) {
+        templatePromise = $q.when(this.options.template);
+      } else if (this.options.templateUrl) {
+        templatePromise = $http.get(this.options.templateUrl, {cache:$templateCache})
         .then(function(response) { return response.data; });
       }
 
@@ -228,7 +221,7 @@ dialogModule.provider("$dialog", function(){
       });
 
       keys.push('$template');
-      values.push(template);
+      values.push(templatePromise);
 
       return $q.all(values).then(function(values) {
         var locals = {};
@@ -247,9 +240,9 @@ dialogModule.provider("$dialog", function(){
         return new Dialog(opts);
       },
       // creates a new `Dialog` tied to the default message box template and controller.
-      // 
+      //
       // Arguments `title` and `message` are rendered in the modal header and body sections respectively.
-      // The `buttons` array holds an object with the following members for each button to include in the 
+      // The `buttons` array holds an object with the following members for each button to include in the
       // modal footer section:
       //
       // * `result`: the result to pass to the `close` method of the dialog when the button is clicked
