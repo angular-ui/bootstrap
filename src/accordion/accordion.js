@@ -1,11 +1,18 @@
-angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse']);
-angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', '$attrs', function ($scope, $attrs) {
+angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
+
+.constant('accordionConfig', {
+  closeOthers: true
+})
+
+.controller('AccordionController', ['$scope', '$attrs', 'accordionConfig', function ($scope, $attrs, accordionConfig) {
+  
   // This array keeps track of the accordion groups
   this.groups = [];
 
   // Ensure that all the groups in this accordion are closed, unless close-others explicitly says not to
   this.closeOthers = function(openGroup) {
-    if ( angular.isUndefined($attrs.closeOthers) || $scope.$eval($attrs.closeOthers) ) {
+    var closeOthers = angular.isDefined($attrs.closeOthers) ? $scope.$eval($attrs.closeOthers) : accordionConfig.closeOthers;
+    if ( closeOthers ) {
       angular.forEach(this.groups, function (group) {
         if ( group !== openGroup ) {
           group.isOpen = false;

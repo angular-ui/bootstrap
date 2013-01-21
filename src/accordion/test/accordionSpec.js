@@ -50,12 +50,32 @@ describe('accordion', function () {
         expect(group2.isOpen).toBe(false);
         expect(group3.isOpen).toBe(true);
       });
+
       it('should not close other groups if close-others attribute is false', function() {
         $attrs.closeOthers = 'false';
         ctrl.closeOthers(group2);
         expect(group1.isOpen).toBe(true);
         expect(group2.isOpen).toBe(true);
         expect(group3.isOpen).toBe(true);
+      });
+
+      describe('setting accordionConfig', function() {
+        var originalCloseOthers;
+        beforeEach(inject(function(accordionConfig) {
+          originalCloseOthers = accordionConfig.closeOthers;
+          accordionConfig.closeOthers = false;
+        }));
+        afterEach(inject(function(accordionConfig) {
+          // return it to the original value
+          accordionConfig.closeOthers = originalCloseOthers;
+        }));
+
+        it('should not close other groups if accordionConfig.closeOthers is false', function() {
+          ctrl.closeOthers(group2);
+          expect(group1.isOpen).toBe(true);
+          expect(group2.isOpen).toBe(true);
+          expect(group3.isOpen).toBe(true);
+        });
       });
     });
 
