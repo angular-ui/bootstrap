@@ -11,17 +11,16 @@
   <div class="row-fluid">
     <div class="span6">
       <ul>
-        <li><a class="btn btn-primary" ng-click="addSlide()">Add Slide</a></li>
         <li ng-repeat="slide in slides">
+          <button class="btn btn-mini" ng-class="{'btn-info': !slide.active, 'btn-success': slide.active}" ng-disabled="slide.active" ng-click="slide.active = true">select</button>
           {{$index}}: {{slide.text}}
-          <a ng-click="slide.active = true">[select]</a>
-          <span ng-show="slide.active" style="color:green;">&#10003;</a>
         </li>
       </ul>
+      <a class="btn" ng-click="addSlide()">Add Slide</a>
     </div>
     <div class="span6">
-      Interval, in milliseconds: <input ng-model="myInterval">
-      <br />Enter a negative or non-number to stop the interval.
+      Interval, in milliseconds: <input type="number" ng-model="myInterval">
+      <br />Enter a negative number to stop the interval.
     </div>
   </div>
 </div>

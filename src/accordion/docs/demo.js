@@ -9,10 +9,6 @@ function AccordionDemoCtrl($scope) {
     {
       title: "Dynamic Group Header - 2",
       content: "Dynamic Group Body - 2"
-    },
-    {
-      title: "Dynamic Group Header - 3",
-      content: "Dynamic Group Body - 3"
     }
   ];
 
