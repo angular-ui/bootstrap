@@ -123,16 +123,34 @@
         <div class="row-fluid">
             <div class="span6">
                 <div ng-controller="AccordionDemoCtrl">
-  <accordion>
-    <accordion-group heading="staticTitle">Static content</accordion-group>
-    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">{{group.content}}</accordion-group>
+  <label class="checkbox">
+    <input type="checkbox" ng-model="oneAtATime">
+    Open only one at a time
+  </label>
+
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="Static Header">
+      This content is straight in the template.
+    </accordion-group>
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      {{group.content}}
+    </accordion-group>
+    <accordion-group heading="Dynamic Body Content">
+      <p>The body of the accordion group grows to fit the contents</p>
+        <button class="btn btn-small" ng-click="addItem()">Add Item</button>
+        <div ng-repeat="item in items">{{item}}</div>
+    </accordion-group>
   </accordion>
 </div>
             </div>
             <div class="span6">
-                <p>Accordion is an AngularJS-version of bootstrap's accordion.</p>
+                <h3>Description</h3>
 
-<p>This directive can be used to quickly generate collapsible accordion both statically (from a template) and from the dynamic model data (using the <code>ng-repeat</code> directive);</p>
+<p>The <strong>accordion directive</strong> builds on top of the collapse directive to provide a list of items, with collapsible bodies that are collapsed or expanded by clicking on the item's header.</p>
+
+<p>We can control whether expanding an item will cause the other items to close, using the <code>close-others</code> attribute on accordion.</p>
+
+<p>The body of each accordion group is transcluded in to the body of the collapsible element.</p>
                 <section>
                 Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/accordion">ui.bootstrap.accordion</a>
                 </section>
@@ -146,30 +164,68 @@
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;AccordionDemoCtrl&quot;&gt;
-  &lt;accordion&gt;
-    &lt;accordion-group heading=&quot;staticTitle&quot;&gt;Static content&lt;&#x2F;accordion-group&gt;
-    &lt;accordion-group heading=&quot;{{group.title}}&quot; ng-repeat=&quot;group in groups&quot;&gt;{{group.content}}&lt;&#x2F;accordion-group&gt;
+  &lt;label class=&quot;checkbox&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; ng-model=&quot;oneAtATime&quot;&gt;
+    Open only one at a time
+  &lt;&#x2F;label&gt;
+
+  &lt;accordion close-others=&quot;oneAtATime&quot;&gt;
+    &lt;accordion-group heading=&quot;Static Header&quot;&gt;
+      This content is straight in the template.
+    &lt;&#x2F;accordion-group&gt;
+    &lt;accordion-group heading=&quot;{{group.title}}&quot; ng-repeat=&quot;group in groups&quot;&gt;
+      {{group.content}}
+    &lt;&#x2F;accordion-group&gt;
+    &lt;accordion-group heading=&quot;Dynamic Body Content&quot;&gt;
+      &lt;p&gt;The body of the accordion group grows to fit the contents&lt;&#x2F;p&gt;
+        &lt;button class=&quot;btn btn-small&quot; ng-click=&quot;addItem()&quot;&gt;Add Item&lt;&#x2F;button&gt;
+        &lt;div ng-repeat=&quot;item in items&quot;&gt;{{item}}&lt;&#x2F;div&gt;
+    &lt;&#x2F;accordion-group&gt;
   &lt;&#x2F;accordion&gt;
 &lt;&#x2F;div&gt;</code></pre></pane>
                     <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">function AccordionDemoCtrl($scope) {
-  $scope.staticTitle = &quot;Static Title&quot;;
+  $scope.oneAtATime = true;
 
   $scope.groups = [
-    { title: &quot;Dynamic Title 1&quot;, content: &quot;Dynamic content 1&quot; }, 
-    { title: &quot;Dynamic Title 2&quot;, content: &quot;Dynamic content 2&quot; }
+    {
+      title: &quot;Dynamic Group Header - 1&quot;,
+      content: &quot;Dynamic Group Body - 1&quot;
+    },
+    {
+      title: &quot;Dynamic Group Header - 2&quot;,
+      content: &quot;Dynamic Group Body - 2&quot;
+    }
   ];
+
+  $scope.items = [&#x27;Item 1&#x27;, &#x27;Item 2&#x27;, &#x27;Item 3&#x27;];
+
+  $scope.addItem = function() {
+    $scope.items.push(&#x27;Item &#x27; + $scope.items.length);
+  };
 }</code></pre></pane>
                 </tabs>
             </div>
         </div>
       </section>
       <script>function AccordionDemoCtrl($scope) {
-  $scope.staticTitle = "Static Title";
+  $scope.oneAtATime = true;
 
   $scope.groups = [
-    { title: "Dynamic Title 1", content: "Dynamic content 1" }, 
-    { title: "Dynamic Title 2", content: "Dynamic content 2" }
+    {
+      title: "Dynamic Group Header - 1",
+      content: "Dynamic Group Body - 1"
+    },
+    {
+      title: "Dynamic Group Header - 2",
+      content: "Dynamic Group Body - 2"
+    }
   ];
+
+  $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+
+  $scope.addItem = function() {
+    $scope.items.push('Item ' + $scope.items.length);
+  };
 }</script>
     
       <section id="alert">
@@ -257,17 +313,16 @@
   <div class="row-fluid">
     <div class="span6">
       <ul>
-        <li><a class="btn btn-primary" ng-click="addSlide()">Add Slide</a></li>
         <li ng-repeat="slide in slides">
+          <button class="btn btn-mini" ng-class="{'btn-info': !slide.active, 'btn-success': slide.active}" ng-disabled="slide.active" ng-click="slide.active = true">select</button>
           {{$index}}: {{slide.text}}
-          <a ng-click="slide.active = true">[select]</a>
-          <span ng-show="slide.active" style="color:green;">&#10003;</a>
         </li>
       </ul>
+      <a class="btn" ng-click="addSlide()">Add Slide</a>
     </div>
     <div class="span6">
-      Interval, in milliseconds: <input ng-model="myInterval">
-      <br />Enter a negative or non-number to stop the interval.
+      Interval, in milliseconds: <input type="number" ng-model="myInterval">
+      <br />Enter a negative number to stop the interval.
     </div>
   </div>
 </div>
@@ -302,17 +357,16 @@
   &lt;div class=&quot;row-fluid&quot;&gt;
     &lt;div class=&quot;span6&quot;&gt;
       &lt;ul&gt;
-        &lt;li&gt;&lt;a class=&quot;btn btn-primary&quot; ng-click=&quot;addSlide()&quot;&gt;Add Slide&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
         &lt;li ng-repeat=&quot;slide in slides&quot;&gt;
+          &lt;button class=&quot;btn btn-mini&quot; ng-class=&quot;{&#x27;btn-info&#x27;: !slide.active, &#x27;btn-success&#x27;: slide.active}&quot; ng-disabled=&quot;slide.active&quot; ng-click=&quot;slide.active = true&quot;&gt;select&lt;&#x2F;button&gt;
           {{$index}}: {{slide.text}}
-          &lt;a ng-click=&quot;slide.active = true&quot;&gt;[select]&lt;&#x2F;a&gt;
-          &lt;span ng-show=&quot;slide.active&quot; style=&quot;color:green;&quot;&gt;&amp;#10003;&lt;&#x2F;a&gt;
         &lt;&#x2F;li&gt;
       &lt;&#x2F;ul&gt;
+      &lt;a class=&quot;btn&quot; ng-click=&quot;addSlide()&quot;&gt;Add Slide&lt;&#x2F;a&gt;
     &lt;&#x2F;div&gt;
     &lt;div class=&quot;span6&quot;&gt;
-      Interval, in milliseconds: &lt;input ng-model=&quot;myInterval&quot;&gt;
-      &lt;br &#x2F;&gt;Enter a negative or non-number to stop the interval.
+      Interval, in milliseconds: &lt;input type=&quot;number&quot; ng-model=&quot;myInterval&quot;&gt;
+      &lt;br &#x2F;&gt;Enter a negative number to stop the interval.
     &lt;&#x2F;div&gt;
   &lt;&#x2F;div&gt;
 &lt;&#x2F;div&gt;
@@ -795,8 +849,8 @@ function TestDialogController($scope, dialog){
             <div class="span6">
                 <div ng-controller="TooltipDemoCtrl">
   <div class="well">
-    <div>Dynamic Tooltip Text: <input ng-model="dynamicTooltipText"></input></div>
-    <div>Dynamic Tooltip Popup Text: <input ng-model="dynamicTooltip"></input></div>
+    <div>Dynamic Tooltip Text: <input type="text" ng-model="dynamicTooltipText"></div>
+    <div>Dynamic Tooltip Popup Text: <input type="text" ng-model="dynamicTooltip"></div>
     <p>
       Pellentesque <a><span tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</span></a>,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
@@ -832,8 +886,8 @@ directive supports multiple placements, optional transition animation, and more.
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TooltipDemoCtrl&quot;&gt;
   &lt;div class=&quot;well&quot;&gt;
-    &lt;div&gt;Dynamic Tooltip Text: &lt;input ng-model=&quot;dynamicTooltipText&quot;&gt;&lt;&#x2F;input&gt;&lt;&#x2F;div&gt;
-    &lt;div&gt;Dynamic Tooltip Popup Text: &lt;input ng-model=&quot;dynamicTooltip&quot;&gt;&lt;&#x2F;input&gt;&lt;&#x2F;div&gt;
+    &lt;div&gt;Dynamic Tooltip Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicTooltipText&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;div&gt;Dynamic Tooltip Popup Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicTooltip&quot;&gt;&lt;&#x2F;div&gt;
     &lt;p&gt;
       Pellentesque &lt;a&gt;&lt;span tooltip=&quot;{{dynamicTooltip}}&quot;&gt;{{dynamicTooltipText}}&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in

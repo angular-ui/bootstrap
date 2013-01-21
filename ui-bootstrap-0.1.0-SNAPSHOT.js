@@ -1,84 +1,93 @@
-angular.module("ui.bootstrap", ["ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.carousel","ui.bootstrap.dialog","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
+angular.module("ui.bootstrap", ["ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.carousel","ui.bootstrap.collapse","ui.bootstrap.dialog","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
 
-angular.module('ui.bootstrap.accordion', []);
-angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', function ($scope) {
+angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse']);
+angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', '$attrs', function ($scope, $attrs) {
+  // This array keeps track of the accordion groups
+  this.groups = [];
 
-  var groups = $scope.groups = [];
+  // Ensure that all the groups in this accordion are closed, unless close-others explicitly says not to
+  this.closeOthers = function(openGroup) {
+    if ( angular.isUndefined($attrs.closeOthers) || $scope.$eval($attrs.closeOthers) ) {
+      angular.forEach(this.groups, function (group) {
+        if ( group !== openGroup ) {
+          group.isOpen = false;
+        }
+      });
+    }
+  };
+  
+  // This is called from the accordion-group directive to add itself to the accordion
+  this.addGroup = function(groupScope) {
+    var that = this;
+    this.groups.push(groupScope);
 
-  this.select = function(group) {
-    angular.forEach(groups, function (group) {
-      group.selected = false;
+    groupScope.$on('$destroy', function (event) {
+      that.removeGroup(groupScope);
     });
-    group.selected = true;
   };
 
-  this.toggle = function(group) {
-    if (group.selected) {
-      group.selected = false;
-    } else {
-      this.select(group);
-    }
-  };
-
-  this.addGroup = function(group) {
-    groups.push(group);
-    if(group.selected) {
-      this.select(group);
-    }
-  };
-
+  // This is called from the accordion-group directive when to remove itself
   this.removeGroup = function(group) {
-    groups.splice(groups.indexOf(group), 1);
+    var index = this.groups.indexOf(group);
+    if ( index !== -1 ) {
+      this.groups.splice(this.groups.indexOf(group), 1);
+    }
   };
 
 }]);
 
-/* accordion: Bootstrap accordion implementation
- * @example
- <accordion>
-   <accordion-group title="sth">Static content</accordion-group>
-   <accordion-group title="sth">Static content - is it? {{sth}}</accordion-group>
-   <accordion-group title="group.title" ng-repeat="group in groups">{{group.content}}</accordion-group>
- </accordion>
- */
+// The accordion directive simply sets up the directive controller
+// and adds an accordion CSS class to itself element.
 angular.module('ui.bootstrap.accordion').directive('accordion', function () {
   return {
     restrict:'E',
-    transclude:true,
-    scope:{},
     controller:'AccordionController',
-    templateUrl:'template/accordion/accordion.html'
+    transclude: true,
+    replace: false,
+    templateUrl: 'template/accordion/accordion.html'
   };
 });
 
-angular.module('ui.bootstrap.accordion').directive('accordionGroup', function () {
+// The accordion-group directive indicates a block of html that will expand and collapse in an accordion
+angular.module('ui.bootstrap.accordion').directive('accordionGroup', ['$parse', '$transition', '$timeout', function($parse, $transition, $timeout) {
   return {
-    require:'^accordion',
-    restrict:'E',
-    transclude:true,
-    scope:{
-      heading:'@'
-    },
+    require:'^accordion',         // We need this directive to be inside an accordion
+    restrict:'E',                 // It will be an element
+    transclude:true,              // It transcludes the contents of the directive into the template
+    replace: true,                // The element containing the directive will be replaced with the template
+    templateUrl:'template/accordion/accordion-group.html',
+    scope:{ heading:'@' },        // Create an isolated scope and interpolate the heading attribute onto this scope
     link: function(scope, element, attrs, accordionCtrl) {
+      var getIsOpen, setIsOpen;
 
       accordionCtrl.addGroup(scope);
 
-      scope.select = function() {
-        accordionCtrl.select(scope);
-      };
+      scope.isOpen = false;
+      
+      if ( attrs.isOpen ) {
+        getIsOpen = $parse(attrs.isOpen);
+        setIsOpen = getIsOpen.assign;
 
-      scope.toggle = function() {
-        accordionCtrl.toggle(scope);
-      };
+        scope.$watch(
+          function watchIsOpen() { return getIsOpen(scope.$parent); },
+          function updateOpen(value) { scope.isOpen = value; }
+        );
+        
+        scope.isOpen = getIsOpen ? getIsOpen(scope.$parent) : false;
+      }
 
-      scope.$on('$destroy', function (event) {
-        accordionCtrl.removeGroup(scope);
+      scope.$watch('isOpen', function(value) {
+        if ( value ) {
+          accordionCtrl.closeOthers(scope);
+        }
+        if ( setIsOpen ) {
+          setIsOpen(scope.$parent, value);
+        }
       });
-    },
-    templateUrl:'template/accordion/accordion-group.html',
-    replace:true
+
+    }
   };
-});
+}]);
 
 angular.module("ui.bootstrap.alert", []).directive('alert', function () {
   return {
@@ -284,6 +293,73 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   };
 }]);
 
+angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
+
+// The collapsible directive indicates a block of html that will expand and collapse
+.directive('collapse', ['$transition', function($transition) {
+  // CSS transitions don't work with height: auto, so we have to manually change the height to a
+  // specific value and then once the animation completes, we can reset the height to auto.
+  // Unfortunately if you do this while the CSS transitions are specified (i.e. in the CSS class
+  // "collapse") then you trigger a change to height 0 in between.
+  // The fix is to remove the "collapse" CSS class while changing the height back to auto - phew!
+  var fixUpHeight = function(scope, element, height) {
+    // We remove the collapse CSS class to prevent a transition when we change to height: auto
+    element.removeClass('collapse');
+    element.css({ height: height });
+    // It appears that  reading offsetWidth makes the browser realise that we have changed the
+    // height already :-/
+    var x = element[0].offsetWidth;
+    element.addClass('collapse');
+  };
+
+  return {
+    link: function(scope, element, attrs) {
+
+      var isCollapsed;
+
+      scope.$watch(attrs.collapse, function(value) {
+        if (value) {
+          collapse();
+        } else {
+          expand();
+        }
+      });
+      
+
+      var currentTransition;
+      var doTransition = function(change) {
+        if ( currentTransition ) {
+          currentTransition.cancel();
+        }
+        currentTransition = $transition(element,change);
+        currentTransition.then(
+          function() { currentTransition = undefined; },
+          function() { currentTransition = undefined; }
+        );
+        return currentTransition;
+      };
+
+      var expand = function() {
+        doTransition({ height : element[0].scrollHeight + 'px' })
+        .then(function() {
+          // This check ensures that we don't accidentally update the height if the user has closed
+          // the group while the animation was still running
+          if ( !isCollapsed ) {
+            fixUpHeight(scope, element, 'auto');
+          }
+        });
+        isCollapsed = false;
+      };
+      
+      var collapse = function() {
+        isCollapsed = true;
+        fixUpHeight(scope, element, element[0].scrollHeight + 'px');
+        doTransition({'height':'0'});
+      };
+    }
+  };
+}]);
+
 // The `$dialogProvider` can be used to configure global defaults for your
 // `$dialog` service.
 var dialogModule = angular.module('ui.bootstrap.dialog', ['ui.bootstrap.transition']);
@@ -461,10 +537,6 @@ dialogModule.provider("$dialog", function(){
       return elements;
     };
 
-    Dialog.prototype._fadingEnabled = function(){
-      return this.options.modalFade || this.options.backdropFade;
-    };
-
     Dialog.prototype._bindEvents = function() {
       if(this.options.keyboard){ body.bind('keydown', this.handledEscapeKey); }
       if(this.options.backdrop && this.options.backdropClick){ this.backdropEl.bind('click', this.handleBackDropClick); }
@@ -480,10 +552,6 @@ dialogModule.provider("$dialog", function(){
       this._unbindEvents();
 
       this.deferred.resolve(result);
-
-      if(this._fadingEnabled()){
-        this.$scope.$apply();
-      }
     };
 
     Dialog.prototype._addElementsToDom = function(){
@@ -500,11 +568,12 @@ dialogModule.provider("$dialog", function(){
 
     // Loads all `options.resolve` members to be used as locals for the controller associated with the dialog.
     Dialog.prototype._loadResolves = function(){
-      var values = [], keys = [], template, self = this;
+      var values = [], keys = [], templatePromise, self = this;
 
-      if (template = this.options.template) {
-      } else if (template = this.options.templateUrl) {
-        template = $http.get(this.options.templateUrl, {cache:$templateCache})
+      if (this.options.template) {
+        templatePromise = $q.when(this.options.template);
+      } else if (this.options.templateUrl) {
+        templatePromise = $http.get(this.options.templateUrl, {cache:$templateCache})
         .then(function(response) { return response.data; });
       }
 
@@ -514,7 +583,7 @@ dialogModule.provider("$dialog", function(){
       });
 
       keys.push('$template');
-      values.push(template);
+      values.push(templatePromise);
 
       return $q.all(values).then(function(values) {
         var locals = {};
@@ -533,9 +602,9 @@ dialogModule.provider("$dialog", function(){
         return new Dialog(opts);
       },
       // creates a new `Dialog` tied to the default message box template and controller.
-      // 
+      //
       // Arguments `title` and `message` are rendered in the modal header and body sections respectively.
-      // The `buttons` array holds an object with the following members for each button to include in the 
+      // The `buttons` array holds an object with the following members for each button to include in the
       // modal footer section:
       //
       // * `result`: the result to pass to the `close` method of the dialog when the button is clicked
