@@ -1,7 +1,5 @@
 angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse']);
-angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-  $element.addClass('accordion');
-
+angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', '$attrs', function ($scope, $attrs) {
   // This array keeps track of the accordion groups
   this.groups = [];
 
@@ -41,7 +39,10 @@ angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$sc
 angular.module('ui.bootstrap.accordion').directive('accordion', function () {
   return {
     restrict:'E',
-    controller:'AccordionController'
+    controller:'AccordionController',
+    transclude: true,
+    replace: false,
+    templateUrl: 'template/accordion/accordion.html'
   };
 });
 
