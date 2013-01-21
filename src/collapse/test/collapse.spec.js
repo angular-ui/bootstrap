@@ -1,8 +1,8 @@
-describe('collapsible directive', function () {
+describe('collapse directive', function () {
 
   var scope, $compile, $timeout, $transition;
 
-  beforeEach(module('ui.bootstrap.collapsible'));
+  beforeEach(module('ui.bootstrap.collapse'));
   beforeEach(inject(function(_$rootScope_, _$compile_, _$timeout_, _$transition_) {
     scope = _$rootScope_;
     $compile = _$compile_;
@@ -13,7 +13,7 @@ describe('collapsible directive', function () {
   var element;
 
   beforeEach(function() {
-    element = $compile('<div collapsible is-collapsed="isCollapsed">Some Content</div>')(scope);
+    element = $compile('<div collapse="isCollapsed">Some Content</div>')(scope);
     angular.element(document.body).append(element);
   });
 

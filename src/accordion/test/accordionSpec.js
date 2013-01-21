@@ -1,13 +1,6 @@
-// Mock up $transition service
-angular.module('mockTransition', []).factory('$transition', function() {
-  $transition = jasmine.createSpy('$transition').andReturn( jasmine.createSpyObj('transition promise', ['then', 'cancel'])).andCallThrough();
-  return $transition;
-});
-
 describe('accordion', function () {
   var $scope;
 
-  beforeEach(module('mockTransition'));
   beforeEach(module('ui.bootstrap.accordion'));
   beforeEach(module('template/accordion/accordion-group.html'));
 
@@ -17,10 +10,18 @@ describe('accordion', function () {
 
   describe('controller', function () {
 
-    var ctrl;
+    var ctrl, $element, $attrs;
     beforeEach(inject(function($controller) {
-      ctrl = $controller('AccordionController', { $scope: $scope });
+      $element = jasmine.createSpyObj('$element', ['addClass']);
+      $attrs = {};
+      ctrl = $controller('AccordionController', { $scope: $scope, $element: $element, $attrs: $attrs });
     }));
+
+    describe('CSS class', function() {
+      it('should add accordion CSS class to the element', function() {
+        expect($element.addClass).toHaveBeenCalledWith('accordion');
+      });
+    });
 
     describe('addGroup', function() {
       it('adds a the specified group to the collection', function() {
@@ -34,15 +35,33 @@ describe('accordion', function () {
     });
 
     describe('closeOthers', function() {
-      it('should close other groups', function() {
-        var group1, group2, group3;
-        ctrl.addGroup(group1 = jasmine.createSpyObj('group1', ['close', '$on']));
-        ctrl.addGroup(group2 = jasmine.createSpyObj('group2', ['close', '$on']));
-        ctrl.addGroup(group3 = jasmine.createSpyObj('group3', ['close', '$on']));
+      var group1, group2, group3;
+      beforeEach(function() {
+        ctrl.addGroup(group1 = { isOpen: true, $on : angular.noop });
+        ctrl.addGroup(group2 = { isOpen: true, $on : angular.noop });
+        ctrl.addGroup(group3 = { isOpen: true, $on : angular.noop });
+      });
+      it('should close other groups if close-others attribute is not defined', function() {
+        delete $attrs.closeOthers;
         ctrl.closeOthers(group2);
-        expect(group1.close).toHaveBeenCalled();
-        expect(group2.close).not.toHaveBeenCalled();
-        expect(group3.close).toHaveBeenCalled();
+        expect(group1.isOpen).toBe(false);
+        expect(group2.isOpen).toBe(true);
+        expect(group3.isOpen).toBe(false);
+      });
+
+      it('should close other groups if close-others attribute is true', function() {
+        $attrs.closeOthers = 'true';
+        ctrl.closeOthers(group3);
+        expect(group1.isOpen).toBe(false);
+        expect(group2.isOpen).toBe(false);
+        expect(group3.isOpen).toBe(true);
+      });
+      it('should not close other groups if close-others attribute is false', function() {
+        $attrs.closeOthers = 'false';
+        ctrl.closeOthers(group2);
+        expect(group1.isOpen).toBe(true);
+        expect(group2.isOpen).toBe(true);
+        expect(group3.isOpen).toBe(true);
       });
     });
 
@@ -70,12 +89,11 @@ describe('accordion', function () {
 
   describe('accordion-group', function () {
 
-    var scope, $compile, $timeout, $transition;
+    var scope, $compile;
 
-    beforeEach(inject(function(_$rootScope_, _$compile_, _$timeout_) {
+    beforeEach(inject(function(_$rootScope_, _$compile_) {
       scope = _$rootScope_;
       $compile = _$compile_;
-      $timeout = _$timeout_;
     }));
 
     var element, groups;
@@ -113,26 +131,22 @@ describe('accordion', function () {
 
       it('should change selected element on click', function () {
         findGroupLink(0).click();
-        $timeout.flush();
         scope.$digest();
-        expect(findGroupBody(0).height()).toBeGreaterThan(0);
+        expect(findGroupBody(0).scope().isOpen).toBe(true);
 
         findGroupLink(1).click();
-        $timeout.flush();
         scope.$digest();
-        expect(findGroupBody(1).height()).toBeGreaterThan(0);
-        expect(findGroupBody(0).height()).toBe(0);
+        expect(findGroupBody(0).scope().isOpen).toBe(false);
+        expect(findGroupBody(1).scope().isOpen).toBe(true);
       });
 
       it('should toggle element on click', function() {
         findGroupLink(0).click();
-        $timeout.flush();
         scope.$digest();
-        expect(findGroupBody(0).height()).toBeGreaterThan(0);
+        expect(findGroupBody(0).scope().isOpen).toBe(true);
         findGroupLink(0).click();
-        $timeout.flush();
         scope.$digest();
-        expect(findGroupBody(0).height()).toBe(0);
+        expect(findGroupBody(0).scope().isOpen).toBe(false);
       });
     });
 
@@ -182,7 +196,7 @@ describe('accordion', function () {
       });
     });
 
-    describe('isOpen attribute', function() {
+    describe('is-open attribute', function() {
       beforeEach(function () {
         var tpl =
           "<accordion>" +
@@ -194,7 +208,6 @@ describe('accordion', function () {
         scope.open2 = true;
         $compile(element)(scope);
         scope.$digest();
-        $timeout.flush();
         groups = element.find('.accordion-group');
       });
 
@@ -203,6 +216,5 @@ describe('accordion', function () {
         expect(findGroupBody(1).scope().isOpen).toBe(true);
        });
     });
-
   });
 });

@@ -3,4 +3,11 @@
     <accordion-group heading="staticTitle">Static content</accordion-group>
     <accordion-group heading="{{group.title}}" ng-repeat="group in groups">{{group.content}}</accordion-group>
   </accordion>
+  <hr>
+  <accordion close-others="false">
+    <accordion-group title="Title 1"><strong>Content 1</strong></accordion-group>
+    <accordion-group title="Title 2"><strong>Content 2</strong></accordion-group>
+    <accordion-group title="Title 3"><strong>Content 3</strong></accordion-group>
+    <accordion-group title="Title 4"><strong>Content 4</strong></accordion-group>
+  </accordion>
 </div>

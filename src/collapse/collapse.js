@@ -1,7 +1,7 @@
-angular.module('ui.bootstrap.collapsible',['ui.bootstrap.transition'])
+angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
 
 // The collapsible directive indicates a block of html that will expand and collapse
-.directive('collapsible', ['$parse', '$transition', '$timeout', function($parse, $transition, $timeout) {
+.directive('collapse', ['$transition', function($transition) {
   // CSS transitions don't work with height: auto, so we have to manually change the height to a
   // specific value and then once the animation completes, we can reset the height to auto.
   // Unfortunately if you do this while the CSS transitions are specified (i.e. in the CSS class
@@ -22,13 +22,14 @@ angular.module('ui.bootstrap.collapsible',['ui.bootstrap.transition'])
 
       var isCollapsed;
 
-      scope.$watch(attrs.isCollapsed, function(value) {
+      scope.$watch(attrs.collapse, function(value) {
         if (value) {
           collapse();
         } else {
           expand();
         }
       });
+      
 
       var currentTransition;
       var doTransition = function(change) {
@@ -55,12 +56,10 @@ angular.module('ui.bootstrap.collapsible',['ui.bootstrap.transition'])
         isCollapsed = false;
       };
       
-      collapse = function() {
-        if ( !isCollapsed ) {
-          isCollapsed = true;
-          fixUpHeight(scope, element, element[0].scrollHeight + 'px');
-          doTransition({'height':'0'});
-        }
+      var collapse = function() {
+        isCollapsed = true;
+        fixUpHeight(scope, element, element[0].scrollHeight + 'px');
+        doTransition({'height':'0'});
       };
     }
   };
