@@ -13,7 +13,7 @@ describe('accordion', function () {
 
     var ctrl, $element, $attrs;
     beforeEach(inject(function($controller) {
-      $attrs = {}, $element = {};
+      $attrs = {}; $element = {};
       ctrl = $controller('AccordionController', { $scope: $scope, $element: $element, $attrs: $attrs });
     }));
 
