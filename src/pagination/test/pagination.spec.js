@@ -182,7 +182,12 @@ describe('pagination directive with max size option', function () {
     $rootScope.maxSize = 15;
     $rootScope.$digest();
     expect(element.find('li').length).toBe(12);
-    expect($rootScope.maxSize).toBe(10);
+  });
+
+  it('should not change value of max-size expression, if max-size is greater than num-pages ', function() {
+    $rootScope.maxSize = 15;
+    $rootScope.$digest();
+    expect($rootScope.maxSize).toBe(15);
   });
 
 });  
