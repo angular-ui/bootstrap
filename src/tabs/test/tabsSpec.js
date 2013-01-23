@@ -88,6 +88,60 @@ describe('tabs', function() {
 });
 
 
+describe('remote selection', function() {
+  var elm, scope;
+
+  // load the tabs code
+  beforeEach(module('ui.bootstrap.tabs'));
+
+  // load the templates
+  beforeEach(module('template/tabs/tabs.html', 'template/tabs/pane.html'));
+
+  beforeEach(inject(function($rootScope, $compile) {
+    // we might move this tpl into an html file as well...
+    elm = angular.element(
+      '<div>' +
+        '<tabs>' +
+          '<pane ng-repeat="pane in panes" active="pane.active" heading="pane.title">' +
+            '{{pane.content}}}' +
+          '</pane>' +
+        '</tabs>' +
+      '</div>'
+    );
+    scope = $rootScope;
+    scope.panes = [
+      { title:"Dynamic Title 1", content:"Dynamic content 1", active:true},
+      { title:"Dynamic Title 2", content:"Dynamic content 2" }
+    ];
+
+    $compile(elm)(scope);
+    scope.$digest();
+  }));
+
+  it('should handle select attribute when select/deselect', function() {
+    var titles = elm.find('ul.nav-tabs li');
+    scope.$apply('panes[1].active=true');
+    expect(titles.eq(1)).toHaveClass('active');
+
+    titles.eq(0).find('a').click();
+    
+    expect(scope.panes[1].active).toBe(false);
+  });
+
+  it('should select last active tab when multiple panes evaluate to active=true', function() {
+    var titles = elm.find('ul.nav-tabs li');
+    scope.$apply('panes[0].active=true;panes[1].active=true');
+    expect(titles.eq(1)).toHaveClass('active');
+  });
+
+  it('should deselect all panes when all atrributes set to false', function() {
+    var titles = elm.find('ul.nav-tabs li');
+    scope.$apply('panes[0].active=false');
+    expect(titles.eq(0)).not.toHaveClass('active');
+    expect(titles.eq(1)).not.toHaveClass('active');
+  });
+});
+
 describe('tabs controller', function() {
   var scope, ctrl;
 

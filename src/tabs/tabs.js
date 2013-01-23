@@ -2,7 +2,7 @@ angular.module('ui.bootstrap.tabs', [])
 .controller('TabsController', ['$scope', '$element', function($scope, $element) {
   var panes = $scope.panes = [];
 
-  $scope.select = function selectPane(pane) {
+  this.select = $scope.select = function selectPane(pane) {
     angular.forEach(panes, function(pane) {
       pane.selected = false;
     });
@@ -35,7 +35,7 @@ angular.module('ui.bootstrap.tabs', [])
     replace: true
   };
 })
-.directive('pane', function() {
+.directive('pane', ['$parse', function($parse) {
   return {
     require: '^tabs',
     restrict: 'EA',
@@ -44,6 +44,26 @@ angular.module('ui.bootstrap.tabs', [])
       heading:'@'
     },
     link: function(scope, element, attrs, tabsCtrl) {
+      var getSelected, setSelected;
+      scope.selected = false;
+      if (attrs.active) {
+        getSelected = $parse(attrs.active);
+        setSelected = getSelected.assign;
+        scope.$watch(
+          function watchSelected() {return getSelected(scope.$parent);},
+          function updateSelected(value) {scope.selected = value;}
+        );
+        scope.selected = getSelected ? getSelected(scope.$parent) : false;
+      }
+      scope.$watch('selected', function(selected) {
+        if(selected) {
+          tabsCtrl.select(scope);
+        }
+        if(setSelected) {
+          setSelected(scope.$parent, selected);
+        }
+      });
+
       tabsCtrl.addPane(scope);
       scope.$on('$destroy', function() {
         tabsCtrl.removePane(scope);
@@ -52,4 +72,4 @@ angular.module('ui.bootstrap.tabs', [])
     templateUrl: 'template/tabs/pane.html',
     replace: true
   };
-});
+}]);
