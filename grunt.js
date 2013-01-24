@@ -97,14 +97,42 @@ module.exports = function(grunt) {
     if (dir) { grunt.config('dist', dir); }
   });
 
-  grunt.registerTask('build', 'Build custom bootstrap file', function() {
-    var srcFiles, tplFiles;
+  function dependenciesForModule(name) {
+    var deps = [];
+    grunt.file.expand('src/' + name + '/*.js')
+    .map(grunt.file.read)
+    .forEach(function(contents) {
+      //Strategy: find where module is declared,
+      //and from there get everything inside the [] and split them by comma
+      var moduleDeclIndex = contents.indexOf('angular.module(');
+      var depArrayStart = contents.indexOf('[', moduleDeclIndex);
+      var depArrayEnd = contents.indexOf(']', depArrayStart);
+      var dependencies = contents.substring(depArrayStart + 1, depArrayEnd);
+      dependencies.split(',').forEach(function(dep) {
+        if (dep.indexOf('ui.bootstrap.') > -1) {
+          var depName = dep.trim().replace('ui.bootstrap.','').replace(/['"]/g,'');
+          if (deps.indexOf(depName) < 0) {
+            deps.push(depName);
+            //Get dependencies for this new dependency
+            deps = deps.concat(dependenciesForModule(depName));
+          }
+        }
+      });
+    });
+    return deps;
+  }
+  grunt.registerTask('build', 'Create bootstrap build files', function() {
+    var srcFiles = [], tplFiles = [];
     if (this.args.length) {
-      this.args.forEach(findModule);
-      srcFiles = this.args.map(function(name) {
+      var modules = [].concat(this.args);
+      //Find dependencies
+      this.args.forEach(function(name) {
+        modules = modules.concat(dependenciesForModule(name));
+      });
+      srcFiles = modules.map(function(name) {
         return 'src/' + name + '/*.js';
       });
-      tplFiles = this.args.map(function(name) {
+      tplFiles = modules.map(function(name) {
         grunt.file.expand('template/' + name + '/*.html').forEach(html2js);
         return 'template/' + name + '/*.html.js';
       });
