@@ -7,7 +7,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     modules: '', //to be filled in by find-modules task
     tplModules: '', //to be filled in by find-templates task
-    ngversion: '1.0.3',
+    ngversion: '1.0.4',
     pkg:'<json:package.json>',
     meta: {
       modules: 'angular.module("ui.bootstrap", [<%= modules %>]);',

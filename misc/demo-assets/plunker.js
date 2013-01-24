@@ -2,7 +2,7 @@ angular.module('plunker', [])
 
   .factory('plunkGenerator', function ($document) {
 
-    return function (version, module, content) {
+    return function (ngVersion, version, module, content) {
 
       var form = angular.element('<form style="display: none;" method="post" action="http://plnkr.co/edit/?p=preview" target="_blank"></form>');
       var addField = function (name, value) {
@@ -15,7 +15,7 @@ angular.module('plunker', [])
         return '<!doctype html>\n' +
           '<html ng-app="plunker">\n' +
           '  <head>\n' +
-          '    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.js"></script>\n' +
+          '    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
           '    <script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-'+version+'.js"></script>\n' +
           '    <script src="example.js"></script>\n' +
           '    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">\n' +
@@ -44,8 +44,8 @@ angular.module('plunker', [])
 
     $scope.content = {};
 
-    $scope.edit = function (version, module, plunker) {
-      plunkGenerator(version, module, $scope.content);
+    $scope.edit = function (ngVersion, version, module) {
+      plunkGenerator(ngVersion, version, module, $scope.content);
     };
   })
 
