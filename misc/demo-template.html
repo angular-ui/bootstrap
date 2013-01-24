@@ -6,20 +6,21 @@
     <meta name="description" content="AngularJS native directives for Twitter Bootstrap">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <script src="assets/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
     <script src="ui-bootstrap-tpls-<%= version%>.min.js"></script>
+    <script src="assets/select2.js"></script>
+    <script src="assets/ui-select2.js"></script>
     <script src="assets/plunker.js"></script>
-    <script>
-        angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
-    </script>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/bootstrap-responsive.css"/>
+    <script src="assets/app.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
+    <link rel="stylesheet" href="assets/select2.css"/>
 
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
-<body class="ng-cloak">
+<body class="ng-cloak" ng-controller="MainCtrl">
 <header class="navbar navbar-fixed-top">
     <div class="navbar-inner">
     <div class="container">
@@ -51,6 +52,7 @@
                 <a class="btn btn-large btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
                     <i class="icon-download-alt icon-white"></i>Download <small>(<%= version%>)</small>
                 </a>
+                <a class="btn btn-large" ng-click="showBuildModal()">Create a Build</a>
             </p>
         </div>
         <div class="bs-docs-social">
@@ -136,5 +138,27 @@
 <script src="assets/rainbow-generic.js"></script>
 <script src="assets/rainbow-javascript.js"></script>
 <script src="assets/rainbow-html.js"></script>
+<div modal="buildModalShown" class="fade">
+  <div class="modal-header"><h2>Create a Custom Build</h2></div>
+  <div class="modal-body">
+    <div ng-show="buildErrorText">
+      <h3 style="text-align: center;">{{buildErrorText}}</h3>
+    </div>
+    <div ng-hide="buildErrorText">
+      <h3 style="text-align: center;">Select the modules you wish to download:</h3>
+      <select style="width: 100%;" ui-select2 multiple 
+        ui-options="{multiple: true}"
+        ng-model="selectedModules">
+        <% modules.forEach(function(module) { %>
+          <option value="<%= module.name %>"><%= module.displayName %></option>
+        <% }); %>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()"><i class="icon-download-alt icon-white"></i> Download {{selectedModules.length}} Modules</a>
+    <a class="btn" ng-click="buildModalShown = false">Cancel</a>
+  </div>
+</div>
 </body>
 </html>
