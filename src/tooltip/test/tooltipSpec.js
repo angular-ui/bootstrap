@@ -23,7 +23,7 @@ describe('tooltip', function() {
   }));
 
   it('should not be open initially', inject(function() {
-    expect( elmScope.isOpen ).toBe( false );
+    expect( elmScope.tt_isOpen ).toBe( false );
     
     // We can only test *that* the tooltip-popup element wasn't created as the
     // implementation is templated and replaced.
@@ -32,7 +32,7 @@ describe('tooltip', function() {
 
   it('should open on mouseenter', inject(function() {
     elm.trigger( 'mouseenter' );
-    expect( elmScope.isOpen ).toBe( true );
+    expect( elmScope.tt_isOpen ).toBe( true );
 
     // We can only test *that* the tooltip-popup element was created as the
     // implementation is templated and replaced.
@@ -42,12 +42,12 @@ describe('tooltip', function() {
   it('should close on mouseleave', inject(function() {
     elm.trigger( 'mouseenter' );
     elm.trigger( 'mouseleave' );
-    expect( elmScope.isOpen ).toBe( false );
+    expect( elmScope.tt_isOpen ).toBe( false );
   }));
 
   it('should have default placement of "top"', inject(function() {
     elm.trigger( 'mouseenter' );
-    expect( elmScope.placement ).toBe( "top" );
+    expect( elmScope.tt_placement ).toBe( "top" );
   }));
 
   it('should allow specification of placement', inject( function( $compile ) {
@@ -57,7 +57,7 @@ describe('tooltip', function() {
     elmScope = elm.scope();
 
     elm.trigger( 'mouseenter' );
-    expect( elmScope.placement ).toBe( "bottom" );
+    expect( elmScope.tt_placement ).toBe( "bottom" );
   }));
 
   it('should work inside an ngRepeat', inject( function( $compile ) {
@@ -65,7 +65,7 @@ describe('tooltip', function() {
     elm = $compile( angular.element( 
       '<ul>'+
         '<li ng-repeat="item in items">'+
-          '<span id="selector" tooltip="{{item.tooltip}}">{{item.name}}</span>'+
+          '<span tooltip="{{item.tooltip}}">{{item.name}}</span>'+
         '</li>'+
       '</ul>'
     ) )( scope );
@@ -80,15 +80,37 @@ describe('tooltip', function() {
     
     tt.trigger( 'mouseenter' );
 
-    // Due to the transclusion, the contents of the element are in a span, so
-    // we select the tooltip's child and ensure its content matches.
-    expect( tt.children().text() ).toBe( scope.items[0].name );
-
-    // And the tooltip text should still match.
-    expect( tt.scope().tooltipTitle ).toBe( scope.items[0].tooltip );
+    expect( tt.text() ).toBe( scope.items[0].name );
+    expect( tt.scope().tt_tooltip ).toBe( scope.items[0].tooltip );
 
     tt.trigger( 'mouseleave' );
   }));
+
+  it('should only have an isolate scope on the popup', inject( function ( $compile ) {
+    var ttScope;
+
+    scope.tooltipMsg = "Tooltip Text";
+    scope.alt = "Alt Message";
+
+    elmBody = $compile( angular.element( 
+      '<div><span alt={{alt}} tooltip="{{tooltipMsg}}">Selector Text</span></div>' 
+    ) )( scope );
+
+    $compile( elmBody )( scope );
+    scope.$digest();
+    elm = elmBody.find( 'span' );
+    elmScope = elm.scope();
+    
+    elm.trigger( 'mouseenter' );
+    expect( elm.attr( 'alt' ) ).toBe( scope.alt );
+
+    ttScope = angular.element( elmBody.children()[1] ).scope();
+    expect( ttScope.placement ).toBe( 'top' );
+    expect( ttScope.tooltipTitle ).toBe( scope.tooltipMsg );
+
+    elm.trigger( 'mouseleave' );
+  }));
+
 });
 
     
