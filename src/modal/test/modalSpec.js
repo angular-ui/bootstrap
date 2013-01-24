@@ -54,6 +54,13 @@ describe('modal', function() {
     $(".modal-backdrop").click();
     expect(elm).toHaveClass('in');
   });
+  
+  it('should not close on backdrop click if option is "static"', function() {
+    var elm = modal({backdrop:"static"});
+    scope.$apply('modalShown = true');
+    $(".modal-backdrop").click();
+    expect(elm).toHaveClass('in');
+  });
 
   it('should work with expression instead of variable', function() {
     scope.foo = true;

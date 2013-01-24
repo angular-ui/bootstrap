@@ -57,7 +57,9 @@ angular.module('ui.bootstrap.modal', []).directive('modal', ['$parse',function($
         if (opts.escape) { body.bind('keyup', escapeClose); }
         if (opts.backdrop) {
           backdropEl.css('display', 'block').addClass('in');
-          backdropEl.bind('click', clickClose);
+          if(opts.backdrop != "static") {
+            backdropEl.bind('click', clickClose);
+          }
         }
         elm.css('display', 'block').addClass('in');
         body.addClass('modal-open');
