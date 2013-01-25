@@ -9,6 +9,17 @@ body {
     opacity: 0;
 }
 
+section {
+    padding-top: 30px;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 70px;
+    border-top: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+}
 
 .hero-unit {
     position: relative;
