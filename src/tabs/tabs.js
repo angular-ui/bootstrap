@@ -27,7 +27,7 @@ angular.module('ui.bootstrap.tabs', [])
 }])
 .directive('tabs', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     transclude: true,
     scope: {},
     controller: 'TabsController',
@@ -38,7 +38,7 @@ angular.module('ui.bootstrap.tabs', [])
 .directive('pane', function() {
   return {
     require: '^tabs',
-    restrict: 'E',
+    restrict: 'EA',
     transclude: true,
     scope:{
       heading:'@'

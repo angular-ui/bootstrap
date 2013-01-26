@@ -1,6 +1,6 @@
 angular.module("ui.bootstrap.alert", []).directive('alert', function () {
   return {
-    restrict:'E',
+    restrict:'EA',
     templateUrl:'template/alert/alert.html',
     transclude:true,
     scope:{

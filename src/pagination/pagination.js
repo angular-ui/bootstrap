@@ -2,7 +2,7 @@ angular.module('ui.bootstrap.pagination', [])
 
 .directive('pagination', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     scope: {
       numPages: '=',
       currentPage: '=',

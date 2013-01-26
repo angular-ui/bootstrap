@@ -6,7 +6,7 @@
 angular.module( 'ui.bootstrap.tooltip', [] )
 .directive( 'tooltipPopup', function () {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     scope: { tooltipTitle: '@', placement: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-popup.html'
