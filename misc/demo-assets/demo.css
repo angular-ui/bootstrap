@@ -70,6 +70,12 @@ section {
     line-height: 1;
 }
 
+.icon-github {
+    background: no-repeat url('github-16px.png');
+    width: 16px;
+    height: 16px;
+}
+
 /* Not enough room on mobile for markup tab, js tab, and plunk btn. 
   And no one cares about plunk button on a phone anyway */
 @media only screen and (max-device-width: 480px) {
