@@ -1,13 +1,22 @@
 angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.carousel","ui.bootstrap.collapse","ui.bootstrap.dialog","ui.bootstrap.dropdownToggle","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tabs","ui.bootstrap.tooltip","ui.bootstrap.transition"]);
 
-angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse']);
-angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$scope', '$attrs', function ($scope, $attrs) {
+angular.module("ui.bootstrap.tpls", ["template/accordion/accordion-group.html","template/accordion/accordion.html","template/alert/alert.html","template/carousel/carousel.html","template/carousel/slide.html","template/dialog/message.html","template/pagination/pagination.html","template/tabs/pane.html","template/tabs/tabs.html","template/tooltip/tooltip-popup.html"]);
+
+angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
+
+.constant('accordionConfig', {
+  closeOthers: true
+})
+
+.controller('AccordionController', ['$scope', '$attrs', 'accordionConfig', function ($scope, $attrs, accordionConfig) {
+  
   // This array keeps track of the accordion groups
   this.groups = [];
 
   // Ensure that all the groups in this accordion are closed, unless close-others explicitly says not to
   this.closeOthers = function(openGroup) {
-    if ( angular.isUndefined($attrs.closeOthers) || $scope.$eval($attrs.closeOthers) ) {
+    var closeOthers = angular.isDefined($attrs.closeOthers) ? $scope.$eval($attrs.closeOthers) : accordionConfig.closeOthers;
+    if ( closeOthers ) {
       angular.forEach(this.groups, function (group) {
         if ( group !== openGroup ) {
           group.isOpen = false;
@@ -40,7 +49,7 @@ angular.module('ui.bootstrap.accordion').controller('AccordionController', ['$sc
 // and adds an accordion CSS class to itself element.
 angular.module('ui.bootstrap.accordion').directive('accordion', function () {
   return {
-    restrict:'E',
+    restrict:'EA',
     controller:'AccordionController',
     transclude: true,
     replace: false,
@@ -52,7 +61,7 @@ angular.module('ui.bootstrap.accordion').directive('accordion', function () {
 angular.module('ui.bootstrap.accordion').directive('accordionGroup', ['$parse', '$transition', '$timeout', function($parse, $transition, $timeout) {
   return {
     require:'^accordion',         // We need this directive to be inside an accordion
-    restrict:'E',                 // It will be an element
+    restrict:'EA',
     transclude:true,              // It transcludes the contents of the directive into the template
     replace: true,                // The element containing the directive will be replaced with the template
     templateUrl:'template/accordion/accordion-group.html',
@@ -91,7 +100,7 @@ angular.module('ui.bootstrap.accordion').directive('accordionGroup', ['$parse', 
 
 angular.module("ui.bootstrap.alert", []).directive('alert', function () {
   return {
-    restrict:'E',
+    restrict:'EA',
     templateUrl:'template/alert/alert.html',
     transclude:true,
     scope:{
@@ -741,7 +750,9 @@ angular.module('ui.bootstrap.modal', []).directive('modal', ['$parse',function($
         if (opts.escape) { body.bind('keyup', escapeClose); }
         if (opts.backdrop) {
           backdropEl.css('display', 'block').addClass('in');
-          backdropEl.bind('click', clickClose);
+          if(opts.backdrop != "static") {
+            backdropEl.bind('click', clickClose);
+          }
         }
         elm.css('display', 'block').addClass('in');
         body.addClass('modal-open');
@@ -762,7 +773,7 @@ angular.module('ui.bootstrap.pagination', [])
 
 .directive('pagination', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     scope: {
       numPages: '=',
       currentPage: '=',
@@ -775,13 +786,9 @@ angular.module('ui.bootstrap.pagination', [])
       scope.$watch('numPages + currentPage + maxSize', function() {
         scope.pages = [];
         
-        if(angular.isDefined(scope.maxSize) && scope.maxSize > scope.numPages) {
-            scope.maxSize = scope.numPages;
-        }
-
         //set the default maxSize to numPages
-        var maxSize = scope.maxSize ? scope.maxSize : scope.numPages;
-        var startPage = scope.currentPage - Math.floor(maxSize/2);        
+        var maxSize = ( scope.maxSize && scope.maxSize < scope.numPages ) ? scope.maxSize : scope.numPages;
+        var startPage = scope.currentPage - Math.floor(maxSize/2);
         
         //adjust the startPage within boundary
         if(startPage < 1) {
@@ -857,7 +864,7 @@ angular.module('ui.bootstrap.tabs', [])
 }])
 .directive('tabs', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     transclude: true,
     scope: {},
     controller: 'TabsController',
@@ -868,7 +875,7 @@ angular.module('ui.bootstrap.tabs', [])
 .directive('pane', function() {
   return {
     require: '^tabs',
-    restrict: 'E',
+    restrict: 'EA',
     transclude: true,
     scope:{
       heading:'@'
@@ -892,30 +899,44 @@ angular.module('ui.bootstrap.tabs', [])
 angular.module( 'ui.bootstrap.tooltip', [] )
 .directive( 'tooltipPopup', function () {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
+    scope: { tooltipTitle: '@', placement: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-popup.html'
   };
 })
-.directive( 'tooltip', [ '$compile', '$timeout', function ( $compile, $timeout ) {
+.directive( 'tooltip', [ '$compile', '$timeout', '$parse', function ( $compile, $timeout, $parse ) {
   
   var template = 
-    '<tooltip-popup></tooltip-popup>';
+    '<tooltip-popup '+
+      'tooltip-title="{{tt_tooltip}}" '+
+      'placement="{{tt_placement}}" '+
+      'animation="tt_animation()" '+
+      'is-open="tt_isOpen"'+
+      '>'+
+    '</tooltip-popup>';
   
   return {
-    transclude: true,
-    scope: { tooltipTitle: '@tooltip', placement: '@tooltipPlacement', animation: '&tooltipAnimation' },
-    controller: ['$transclude', '$element', function($transclude, $element) {
-      $transclude(function(clone) {
-        $element.append(clone);
-      });
-    }],
+    scope: true,
     link: function ( scope, element, attr ) {
       var tooltip = $compile( template )( scope ), 
           transitionTimeout;
 
+      attr.$observe( 'tooltip', function ( val ) {
+        scope.tt_tooltip = val;
+      });
+
+      attr.$observe( 'tooltipPlacement', function ( val ) {
+        // If no placement was provided, default to 'top'.
+        scope.tt_placement = val || 'top';
+      });
+
+      attr.$observe( 'tooltipAnimation', function ( val ) {
+        scope.tt_animation = $parse( val );
+      });
+
       // By default, the tooltip is not open.
-      scope.isOpen = false;
+      scope.tt_isOpen = false;
       
       // Calculate the current position and size of the directive element.
       function getPosition() {
@@ -934,9 +955,6 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             ttHeight,
             ttPosition;
           
-        // If no placement was provided, default to 'top'.
-        scope.placement = scope.placement || 'top';
-        
         // If there is a pending remove transition, we must cancel it, lest the
         // toolip be mysteriously removed.
         if ( transitionTimeout ) {
@@ -959,7 +977,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
         
         // Calculate the tooltip's top and left coordinates to center it with
         // this directive.
-        switch ( scope.placement ) {
+        switch ( scope.tt_placement ) {
           case 'right':
             ttPosition = {
               top: (position.top + position.height / 2 - ttHeight / 2) + 'px',
@@ -990,19 +1008,19 @@ angular.module( 'ui.bootstrap.tooltip', [] )
         tooltip.css( ttPosition );
           
         // And show the tooltip.
-        scope.isOpen = true;
+        scope.tt_isOpen = true;
       }
       
       // Hide the tooltip popup element.
       function hide() {
         // First things first: we don't show it anymore.
         //tooltip.removeClass( 'in' );
-        scope.isOpen = false;
+        scope.tt_isOpen = false;
         
         // And now we remove it from the DOM. However, if we have animation, we 
         // need to wait for it to expire beforehand.
         // FIXME: this is a placeholder for a port of the transitions library.
-        if ( angular.isDefined( scope.animation ) && scope.animation() ) {
+        if ( angular.isDefined( scope.tt_animation ) && scope.tt_animation() ) {
           transitionTimeout = $timeout( function () { tooltip.remove(); }, 500 );
         } else {
           tooltip.remove();
@@ -1094,8 +1112,6 @@ angular.module('ui.bootstrap.transition', [])
   }
   return $transition;
 }]);
-angular.module("ui.bootstrap.tpls", ["template/accordion/accordion-group.html","template/accordion/accordion.html","template/alert/alert.html","template/carousel/carousel.html","template/carousel/slide.html","template/dialog/message.html","template/pagination/pagination.html","template/tabs/pane.html","template/tabs/tabs.html","template/tooltip/tooltip-popup.html"]);
-
 angular.module("template/accordion/accordion-group.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/accordion/accordion-group.html",
     "<div class=\"accordion-group\">" +
@@ -1186,7 +1202,7 @@ angular.module("template/tabs/tabs.html", []).run(["$templateCache", function($t
 
 angular.module("template/tooltip/tooltip-popup.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/tooltip/tooltip-popup.html",
-    "<div class=\"tooltip {{placement}}\" ng-class=\"{ in: isOpen, fade: animation() }\">" +
+    "<div class=\"tooltip {{placement}}\" ng-class=\"{ in: isOpen(), fade: animation() }\">" +
     "  <div class=\"tooltip-arrow\"></div>" +
     "  <div class=\"tooltip-inner\" ng-bind=\"tooltipTitle\"></div>" +
     "</div>" +
