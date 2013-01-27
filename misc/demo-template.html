@@ -24,12 +24,20 @@
 <header class="navbar navbar-fixed-top">
     <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">ui-bootstrap</a>
+      <a class="brand" href="#">UI Bootstrap</a>
       <div class="nav-collapse">
         <ul class="nav">
-          <% modules.forEach(function(module) {  %>
-            <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
-          <% });  %>
+           <li>
+               <a href="#" role="button" class="dropdown-toggle">
+                   Directives <b class="caret"></b>
+               </a>
+               <ul class="dropdown-menu">
+                   <% modules.forEach(function(module) {  %>
+                   <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
+                   <% });  %>
+               </ul>
+           </li>
+           <li><a href="#getting_started">Getting started</a></li>
         </ul>
       </div>
     </div>
@@ -101,6 +109,38 @@
     </header>
 
     <div class="container container-fluid">
+
+        <section id="getting_started">
+            <div class="page-header">
+                <h1>Getting started</h1>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <h3>Dependencies</h3>
+                    <p>
+                        This repository contains a set of <strong>native AngularJS directives</strong> based on
+                        Twitter Bootstrap's markup and CSS. As a result no dependency on jQuery or Bootstrap's
+                        JavaScript is required. The <strong>only required dependencies</strong> are:
+                    </p>
+                    <ul>
+                        <li>AngularJS (minimal version 1.0.4 or 1.1.2)</li>
+                        <li>Bootstrap CSS</li>
+                    </ul>
+                    <h3>Files to download</h3>
+                    <p>
+                        Build files for all directives are distributed in several flavours: minified for production usage, un-minified
+                        for development, with or without templates. All the options are described and can be
+                        <a href="https://github.com/angular-ui/bootstrap/tree/gh-pages">downloaded from here</a>.
+                    </p>
+                    <p>Alternativelly, if you are only interested in a subset of directives, you can
+                        <a ng-click="showBuildModal()">create your own build</a>.
+                    </p>
+                    <p>Whichever method you choose the good news that the overall size of a download is very small:
+                       &lt;20kB for all directives (~5kB with gzip compression!)</p>
+                </div>
+            </div>
+        </section>
+
     <% modules.forEach(function(module) { %>
       <section id="<%= module.name %>">
         <div class="page-header">
@@ -152,14 +192,14 @@
       <h3 style="text-align: center;">{{buildErrorText}}</h3>
     </div>
     <div ng-hide="buildErrorText">
-      <h3 style="text-align: center;">Select the modules you wish to download:</h3>
+      <label>Select the modules you wish to download:
       <select style="width: 100%;" ui-select2 multiple 
         ui-options="{multiple: true}"
         ng-model="selectedModules">
         <% modules.forEach(function(module) { %>
           <option value="<%= module.name %>"><%= module.displayName %></option>
         <% }); %>
-      </select>
+      </select></label>
     </div>
   </div>
   <div class="modal-footer">
