@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', 'lint html2js');
-  grunt.registerTask('after-test', 'find-modules build site');
+  grunt.registerTask('after-test', 'build site');
 
   // Default task.
   grunt.registerTask('default', 'before-test test after-test');
@@ -86,11 +86,6 @@ module.exports = function(grunt) {
     grunt.config('tplModules', tplModules);
     grunt.config('srcModules', srcModules);
   }
-  grunt.registerTask('find-modules', 'Generate ui.bootstrap and template modules depending on all existing directives', function() {
-    grunt.file.expandDirs('src/*').forEach(function(dir) {
-      findModule(dir.split('/')[1]);
-    });
-  });
 
   grunt.registerTask('dist', 'Override dist directory', function() {
     var dir = this.args[0];
@@ -122,12 +117,14 @@ module.exports = function(grunt) {
     return deps;
   }
   grunt.registerTask('build', 'Create bootstrap build files', function() {
+
     var srcFiles = [], tplFiles = [];
     if (this.args.length) {
       var modules = [].concat(this.args);
       //Find dependencies
-      this.args.forEach(function(name) {
-        modules = modules.concat(dependenciesForModule(name));
+      this.args.forEach(function(moduleName) {
+        modules = modules.concat(dependenciesForModule(moduleName));
+        findModule(moduleName);
       });
       srcFiles = modules.map(function(name) {
         return 'src/' + name + '/*.js';
@@ -137,19 +134,23 @@ module.exports = function(grunt) {
         return 'template/' + name + '/*.html.js';
       });
       grunt.config('filename', grunt.config('filename')+'-custom');
+
     } else {
       srcFiles = ['src/*/*.js'];
       tplFiles = ['template/*/*.html.js'];
+
+      grunt.file.expandDirs('src/*').forEach(function(dir) {
+        findModule(dir.split('/')[1]);
+      });
     }
-    grunt.config('concat.dist.src', 
-                 grunt.config('concat.dist.src').concat(srcFiles));
-    grunt.config('concat.dist_tpls.src',
-                 grunt.config('concat.dist_tpls.src').concat(srcFiles).concat(tplFiles));
+    grunt.config('concat.dist.src', grunt.config('concat.dist.src').concat(srcFiles));
+    grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src').concat(srcFiles).concat(tplFiles));
+
     grunt.task.run('concat min');
   });
 
   grunt.registerTask('site', 'Create grunt demo site from every module\'s files', function() {
-    this.requires('find-modules concat html2js');
+    this.requires('concat html2js');
 
     function breakup(text, separator) {
       return text.replace(/[A-Z]/g, function (match) {
