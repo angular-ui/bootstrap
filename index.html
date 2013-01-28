@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>AngularJS directives for Twitter's bootstrap</title>
     <meta name="description" content="AngularJS native directives for Twitter Bootstrap">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
@@ -13,7 +12,7 @@
     <script src="assets/ui-select2.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"/>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
     <link rel="stylesheet" href="assets/select2.css"/>
@@ -124,13 +123,13 @@
         </div>
     </header>
 
-    <div class="container container-fluid">
+    <div class="container">
 
         <section id="getting_started">
             <div class="page-header">
                 <h1>Getting started</h1>
             </div>
-            <div class="row-fluid">
+            <div class="row">
                 <div class="span12">
                     <h3>Dependencies</h3>
                     <p>
@@ -162,7 +161,7 @@
         <div class="page-header">
           <h1>Accordion</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="AccordionDemoCtrl">
   <label class="checkbox">
@@ -199,7 +198,7 @@
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -274,7 +273,7 @@
         <div class="page-header">
           <h1>Alert</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="AlertDemoCtrl">
   <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -291,7 +290,7 @@
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -340,7 +339,7 @@
         <div class="page-header">
           <h1>Carousel</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="CarouselDemoCtrl">
   <carousel interval="myInterval">
@@ -380,7 +379,7 @@
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -456,7 +455,7 @@
         <div class="page-header">
           <h1>Dialog</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="DialogDemoCtrl">
     <div class="row-fluid">
@@ -492,7 +491,7 @@ Generic message boxes (title, message and buttons) are also provided for your co
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'dialog')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -629,7 +628,7 @@ function TestDialogController($scope, dialog){
         <div class="page-header">
           <h1>Dropdown Toggle</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <li class="dropdown" ng-controller="DropdownCtrl">
   <a class="dropdown-toggle">
@@ -651,7 +650,7 @@ function TestDialogController($scope, dialog){
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -693,7 +692,7 @@ function TestDialogController($scope, dialog){
         <div class="page-header">
           <h1>Modal</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="ModalDemoCtrl">
     <button class="btn" ng-click="open()">Open me!</button>
@@ -718,7 +717,7 @@ function TestDialogController($scope, dialog){
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -769,7 +768,7 @@ function TestDialogController($scope, dialog){
         <div class="page-header">
           <h1>Pagination</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="PaginationDemoCtrl">
     <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-large"></pagination>
@@ -793,7 +792,7 @@ function TestDialogController($scope, dialog){
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -837,13 +836,17 @@ function TestDialogController($scope, dialog){
         <div class="page-header">
           <h1>Tabs</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="TabsDemoCtrl">
     <tabs>
         <pane heading="Static title">Static content</pane>
-        <pane ng-repeat="pane in panes" heading="{{pane.title}}">{{pane.content}}</pane>
+        <pane ng-repeat="pane in panes" heading="{{pane.title}}" active="pane.active">{{pane.content}}</pane>
     </tabs>
+    <div class="row-fluid">
+        <button class="btn" ng-click="panes[0].active = true">Select second tab</button>
+        <button class="btn" ng-click="panes[1].active = true">Select third tab</button>
+    </div>
 </div>
             </div>
             <div class="span6">
@@ -854,7 +857,7 @@ function TestDialogController($scope, dialog){
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
@@ -863,8 +866,12 @@ function TestDialogController($scope, dialog){
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TabsDemoCtrl&quot;&gt;
     &lt;tabs&gt;
         &lt;pane heading=&quot;Static title&quot;&gt;Static content&lt;&#x2F;pane&gt;
-        &lt;pane ng-repeat=&quot;pane in panes&quot; heading=&quot;{{pane.title}}&quot;&gt;{{pane.content}}&lt;&#x2F;pane&gt;
+        &lt;pane ng-repeat=&quot;pane in panes&quot; heading=&quot;{{pane.title}}&quot; active=&quot;pane.active&quot;&gt;{{pane.content}}&lt;&#x2F;pane&gt;
     &lt;&#x2F;tabs&gt;
+    &lt;div class=&quot;row-fluid&quot;&gt;
+        &lt;button class=&quot;btn&quot; ng-click=&quot;panes[0].active = true&quot;&gt;Select second tab&lt;&#x2F;button&gt;
+        &lt;button class=&quot;btn&quot; ng-click=&quot;panes[1].active = true&quot;&gt;Select third tab&lt;&#x2F;button&gt;
+    &lt;&#x2F;div&gt;
 &lt;&#x2F;div&gt;</code></pre></pane>
                     <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var TabsDemoCtrl = function ($scope) {
   $scope.panes = [
@@ -887,7 +894,7 @@ function TestDialogController($scope, dialog){
         <div class="page-header">
           <h1>Tooltip</h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span6">
                 <div ng-controller="TooltipDemoCtrl">
   <div class="well">
@@ -920,7 +927,7 @@ directive supports multiple placements, optional transition animation, and more.
             </div>
         </div>
         <hr>
-        <div class="row-fluid">
+        <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
                     <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
