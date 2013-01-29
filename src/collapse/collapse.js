@@ -21,7 +21,20 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
     link: function(scope, element, attrs) {
 
       var isCollapsed;
-
+      var initialAnimSkip = true;
+      scope.$watch(function (){ return element[0].scrollHeight; }, function (value) {
+        //The listener is called when scollHeight changes
+        //It actually does on 2 scenarios: 
+        // 1. Parent is set to display none
+        // 2. angular bindings inside are resolved
+        //When we have a change of scrollHeight we are setting again the correct height if the group is opened
+        if (element[0].scrollHeight !== 0) {
+          if (!isCollapsed) {
+            fixUpHeight(scope, element, element[0].scrollHeight + 'px');
+          }
+        }
+      });
+      
       scope.$watch(attrs.collapse, function(value) {
         if (value) {
           collapse();
@@ -45,21 +58,33 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
       };
 
       var expand = function() {
-        doTransition({ height : element[0].scrollHeight + 'px' })
-        .then(function() {
-          // This check ensures that we don't accidentally update the height if the user has closed
-          // the group while the animation was still running
+        if (initialAnimSkip) {
+          initialAnimSkip = false;
           if ( !isCollapsed ) {
             fixUpHeight(scope, element, 'auto');
           }
-        });
+        } else {
+          doTransition({ height : element[0].scrollHeight + 'px' })
+          .then(function() {
+            // This check ensures that we don't accidentally update the height if the user has closed
+            // the group while the animation was still running
+            if ( !isCollapsed ) {
+              fixUpHeight(scope, element, 'auto');
+            }
+          });
+        }
         isCollapsed = false;
       };
       
       var collapse = function() {
         isCollapsed = true;
-        fixUpHeight(scope, element, element[0].scrollHeight + 'px');
-        doTransition({'height':'0'});
+        if (initialAnimSkip) {
+          initialAnimSkip = false;
+          fixUpHeight(scope, element, 0);
+        } else {
+          fixUpHeight(scope, element, element[0].scrollHeight + 'px');
+          doTransition({'height':'0'});
+        }
       };
     }
   };
