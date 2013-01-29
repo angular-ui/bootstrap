@@ -190,4 +190,24 @@ describe('pagination directive with max size option', function () {
     expect($rootScope.maxSize).toBe(15);
   });
 
-});  
+});
+
+describe('pagination custom', function () {
+  var $rootScope, element;
+  beforeEach(module('ui.bootstrap.pagination'));
+  beforeEach(module('template/pagination/pagination.html'));
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
+    $compile = _$compile_;
+    $rootScope = _$rootScope_;
+    $rootScope.numPages = 5;
+    $rootScope.currentPage = 3;
+    element = $compile('<pagination previous-text="<<" next-text=">>" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
+    $rootScope.$digest();
+  }));
+
+  it('should change paging text from attribute', function () {
+    expect(element.find('li').eq(0).text()).toBe('<<');
+    expect(element.find('li').eq(-1).text()).toBe('>>');
+  });
+
+});

@@ -7,7 +7,9 @@ angular.module('ui.bootstrap.pagination', [])
       numPages: '=',
       currentPage: '=',
       maxSize: '=',
-      onSelectPage: '&'
+      onSelectPage: '&',
+      nextText: '@',
+      previousText: '@'
     },
     templateUrl: 'template/pagination/pagination.html',
     replace: true,
