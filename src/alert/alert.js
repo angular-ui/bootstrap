@@ -3,16 +3,15 @@ angular.module("ui.bootstrap.alert", []).directive('alert', function () {
     restrict:'EA',
     templateUrl:'template/alert/alert.html',
     transclude:true,
+    replace:true,
     scope:{
       type:'=',
       close:'&'
     },
     link:function (scope, element, attrs) {
-      scope.type = scope.type || 'info';
       scope.dismiss = function () {
         scope.close();
       };
     }
   };
 });
-
