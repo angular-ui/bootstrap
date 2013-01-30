@@ -49,9 +49,10 @@ describe("alert", function () {
   });
 
   it('it should be possible to add additional classes for alert', function () {
-    var element = $compile('<alert class="alert-block">Default alert!</alert>')(scope);
+    var element = $compile('<alert class="alert-block" type="\'info\'">Default alert!</alert>')(scope);
     scope.$digest();
     expect(element).toHaveClass('alert-block');
+    expect(element).toHaveClass('alert-info');
   });
 
   it("should fire callback when closed", function () {
