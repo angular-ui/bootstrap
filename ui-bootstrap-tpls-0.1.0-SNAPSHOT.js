@@ -103,20 +103,13 @@ angular.module("ui.bootstrap.alert", []).directive('alert', function () {
     restrict:'EA',
     templateUrl:'template/alert/alert.html',
     transclude:true,
+    replace:true,
     scope:{
       type:'=',
       close:'&'
-    },
-    link:function (scope, element, attrs) {
-      scope.type = scope.type || 'info';
-      scope.dismiss = function () {
-        scope.close();
-      };
     }
   };
 });
-
-
 /*
 *
 *    Angular Bootstrap Carousel 
@@ -778,7 +771,9 @@ angular.module('ui.bootstrap.pagination', [])
       numPages: '=',
       currentPage: '=',
       maxSize: '=',
-      onSelectPage: '&'
+      onSelectPage: '&',
+      nextText: '@',
+      previousText: '@'
     },
     templateUrl: 'template/pagination/pagination.html',
     replace: true,
@@ -839,7 +834,7 @@ angular.module('ui.bootstrap.tabs', [])
 .controller('TabsController', ['$scope', '$element', function($scope, $element) {
   var panes = $scope.panes = [];
 
-  $scope.select = function selectPane(pane) {
+  this.select = $scope.select = function selectPane(pane) {
     angular.forEach(panes, function(pane) {
       pane.selected = false;
     });
@@ -872,7 +867,7 @@ angular.module('ui.bootstrap.tabs', [])
     replace: true
   };
 })
-.directive('pane', function() {
+.directive('pane', ['$parse', function($parse) {
   return {
     require: '^tabs',
     restrict: 'EA',
@@ -881,6 +876,26 @@ angular.module('ui.bootstrap.tabs', [])
       heading:'@'
     },
     link: function(scope, element, attrs, tabsCtrl) {
+      var getSelected, setSelected;
+      scope.selected = false;
+      if (attrs.active) {
+        getSelected = $parse(attrs.active);
+        setSelected = getSelected.assign;
+        scope.$watch(
+          function watchSelected() {return getSelected(scope.$parent);},
+          function updateSelected(value) {scope.selected = value;}
+        );
+        scope.selected = getSelected ? getSelected(scope.$parent) : false;
+      }
+      scope.$watch('selected', function(selected) {
+        if(selected) {
+          tabsCtrl.select(scope);
+        }
+        if(setSelected) {
+          setSelected(scope.$parent, selected);
+        }
+      });
+
       tabsCtrl.addPane(scope);
       scope.$on('$destroy', function() {
         tabsCtrl.removePane(scope);
@@ -889,7 +904,7 @@ angular.module('ui.bootstrap.tabs', [])
     templateUrl: 'template/tabs/pane.html',
     replace: true
   };
-});
+}]);
 
 /**
  * The following features are still outstanding: popup delay, animation as a
@@ -1052,19 +1067,20 @@ angular.module('ui.bootstrap.transition', [])
  */
 .factory('$transition', ['$q', '$timeout', '$rootScope', function($q, $timeout, $rootScope) {
 
-  var $transition = function(element, trigger) {
-
+  var $transition = function(element, trigger, options) {
+    options = options || {};
     var deferred = $q.defer();
+    var endEventName = $transition[options.animation ? "animationEndEventName" : "transitionEndEventName"];
+
     var transitionEndHandler = function(event) {
       $rootScope.$apply(function() {
-      element.unbind($transition.transitionEndEventName, transitionEndHandler);
+        element.unbind(endEventName, transitionEndHandler);
         deferred.resolve(element);
       });
     };
 
-    // Only bind if the browser supports transitions
-    if ( $transition.transitionEndEventName ) {
-      element.bind($transition.transitionEndEventName, transitionEndHandler);
+    if (endEventName) {
+      element.bind(endEventName, transitionEndHandler);
     }
 
     // Wrap in a timeout to allow the browser time to update the DOM before the transition is to occur
@@ -1076,19 +1092,18 @@ angular.module('ui.bootstrap.transition', [])
       } else if ( angular.isObject(trigger) ) {
         element.css(trigger);
       }
-
-      // If the browser doesn't support transitions then we immediately resolve the event
-      if ( !$transition.transitionEndEventName ) {
+      //If browser does not support transitions, instantly resolve
+      if ( !endEventName ) {
         deferred.resolve(element);
       }
     });
 
-    // Add out custom cancel function to the promise that is returned
+    // Add our custom cancel function to the promise that is returned
     // We can call this if we are about to run a new transition, which we know will prevent this transition from ending,
     // i.e. it will therefore never raise a transitionEnd event for that transition
     deferred.promise.cancel = function() {
-      if ( $transition.transitionEndEventName ) {
-        element.unbind($transition.transitionEndEventName, transitionEndHandler);
+      if ( endEventName ) {
+        element.unbind(endEventName, transitionEndHandler);
       }
       deferred.reject('Transition cancelled');
     };
@@ -1105,13 +1120,25 @@ angular.module('ui.bootstrap.transition', [])
     'msTransition': 'MSTransitionEnd',
     'transition': 'transitionend'
   };
-  for (var name in transitionEndEventNames){
-    if (transElement.style[name] !== undefined) {
-      $transition.transitionEndEventName = transitionEndEventNames[name];
+  var animationEndEventNames = {
+    'WebkitTransition': 'webkitAnimationEnd',
+    'MozTransition': 'animationend',
+    'OTransition': 'oAnimationEnd',
+    'msTransition': 'MSAnimationEnd',
+    'transition': 'animationend'
+  };
+  function findEndEventName(endEventNames) {
+    for (var name in endEventNames){
+      if (transElement.style[name] !== undefined) {
+        return endEventNames[name];
+      }
     }
   }
+  $transition.transitionEndEventName = findEndEventName(transitionEndEventNames);
+  $transition.animationEndEventName = findEndEventName(animationEndEventNames);
   return $transition;
 }]);
+
 angular.module("template/accordion/accordion-group.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/accordion/accordion-group.html",
     "<div class=\"accordion-group\">" +
@@ -1128,9 +1155,9 @@ angular.module("template/accordion/accordion.html", []).run(["$templateCache", f
 
 angular.module("template/alert/alert.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/alert/alert.html",
-    "<div class='alert alert-block' ng-class=\"'alert-' + type\">" +
-    "  <button type='button' class='close' ng-click='dismiss()'>&times;</button>" +
-    "  <div ng-transclude></div>" +
+    "<div class='alert' ng-class='type && \"alert-\" + type'>" +
+    "    <button type='button' class='close' ng-click='close()'>&times;</button>" +
+    "    <div ng-transclude></div>" +
     "</div>");
 }]);
 
@@ -1173,9 +1200,9 @@ angular.module("template/dialog/message.html", []).run(["$templateCache", functi
 angular.module("template/pagination/pagination.html", []).run(["$templateCache", function($templateCache){
   $templateCache.put("template/pagination/pagination.html",
     "<div class=\"pagination\"><ul>" +
-    "  <li ng-class=\"{disabled: noPrevious()}\"><a ng-click=\"selectPrevious()\">Previous</a></li>" +
+    "  <li ng-class=\"{disabled: noPrevious()}\"><a ng-click=\"selectPrevious()\">{{previousText || 'Previous'}}</a></li>" +
     "  <li ng-repeat=\"page in pages\" ng-class=\"{active: isActive(page)}\"><a ng-click=\"selectPage(page)\">{{page}}</a></li>" +
-    "  <li ng-class=\"{disabled: noNext()}\"><a ng-click=\"selectNext()\">Next</a></li>" +
+    "  <li ng-class=\"{disabled: noNext()}\"><a ng-click=\"selectNext()\">{{nextText || 'Next'}}</a></li>" +
     "  </ul>" +
     "</div>" +
     "");
