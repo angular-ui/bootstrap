@@ -60,6 +60,8 @@
                    
                    <li><a href="#pagination">Pagination</a></li>
                    
+                   <li><a href="#popover">Popover</a></li>
+                   
                    <li><a href="#tabs">Tabs</a></li>
                    
                    <li><a href="#tooltip">Tooltip</a></li>
@@ -846,6 +848,93 @@ function TestDialogController($scope, dialog){
 };
 </script>
     
+      <section id="popover">
+        <div class="page-header">
+          <h1>Popover</h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="PopoverDemoCtrl">
+  <div class="well">
+    <div>
+      <h4>Dynamic</h4>
+      <div>Dynamic Popover : <input type="text" ng-model="dynamicPopoverText"></div>
+      <div>Dynamic Popover Popup Text: <input type="text" ng-model="dynamicPopover"></div>
+      <div>Dynamic Popover Popup Title: <input type="text" ng-model="dynamicPopoverTitle"></div>
+      <div><button popover="{{dynamicPopover}}" popover-title="{{dynamicPopoverTitle}}" class="btn">{{dynamicPopoverText}}</button></div>
+    </div>
+    <div>
+      <h4>Positional</h4>
+      <button popover-placement="top" popover="On the Top!" class="btn">Top</button>
+      <button popover-placement="left" popover="On the Left!" class="btn">Left</button>
+      <button popover-placement="right" popover="On the Right!" class="btn">Right</button>
+      <button popover-placement="bottom" popover="On the Bottom!" class="btn">Bottom</button>
+    </div>
+    <div>
+      <h4>Other</h4>
+      <button Popover-animation="true" popover="I fade in and out!" class="btn">fading</button>
+      <button popover="I have a title!" popover-title="The title." class="btn">title</button>
+    </div>
+  </div>
+</div>
+
+            </div>
+            <div class="span6">
+                <p>A lightweight, extensible directive for fancy popover creation. The popover
+directive supports multiple placements, optional transition animation, and more.</p>
+                <section>
+                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/popover">ui.bootstrap.popover</a>
+                </section>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.4', '0.1.0-SNAPSHOT', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                </div>
+                <tabs>
+                    <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PopoverDemoCtrl&quot;&gt;
+  &lt;div class=&quot;well&quot;&gt;
+    &lt;div&gt;
+      &lt;h4&gt;Dynamic&lt;&#x2F;h4&gt;
+      &lt;div&gt;Dynamic Popover : &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopoverText&quot;&gt;&lt;&#x2F;div&gt;
+      &lt;div&gt;Dynamic Popover Popup Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopover&quot;&gt;&lt;&#x2F;div&gt;
+      &lt;div&gt;Dynamic Popover Popup Title: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopoverTitle&quot;&gt;&lt;&#x2F;div&gt;
+      &lt;div&gt;&lt;button popover=&quot;{{dynamicPopover}}&quot; popover-title=&quot;{{dynamicPopoverTitle}}&quot; class=&quot;btn&quot;&gt;{{dynamicPopoverText}}&lt;&#x2F;button&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+    &lt;div&gt;
+      &lt;h4&gt;Positional&lt;&#x2F;h4&gt;
+      &lt;button popover-placement=&quot;top&quot; popover=&quot;On the Top!&quot; class=&quot;btn&quot;&gt;Top&lt;&#x2F;button&gt;
+      &lt;button popover-placement=&quot;left&quot; popover=&quot;On the Left!&quot; class=&quot;btn&quot;&gt;Left&lt;&#x2F;button&gt;
+      &lt;button popover-placement=&quot;right&quot; popover=&quot;On the Right!&quot; class=&quot;btn&quot;&gt;Right&lt;&#x2F;button&gt;
+      &lt;button popover-placement=&quot;bottom&quot; popover=&quot;On the Bottom!&quot; class=&quot;btn&quot;&gt;Bottom&lt;&#x2F;button&gt;
+    &lt;&#x2F;div&gt;
+    &lt;div&gt;
+      &lt;h4&gt;Other&lt;&#x2F;h4&gt;
+      &lt;button Popover-animation=&quot;true&quot; popover=&quot;I fade in and out!&quot; class=&quot;btn&quot;&gt;fading&lt;&#x2F;button&gt;
+      &lt;button popover=&quot;I have a title!&quot; popover-title=&quot;The title.&quot; class=&quot;btn&quot;&gt;title&lt;&#x2F;button&gt;
+    &lt;&#x2F;div&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+</code></pre></pane>
+                    <pane heading="JavaScript" plunker-content="javascript"><pre ng-non-bindable><code data-language="javascript">var PopoverDemoCtrl = function ($scope) {
+  $scope.dynamicPopover = &quot;Hello, World!&quot;;
+  $scope.dynamicPopoverText = &quot;dynamic&quot;;
+  $scope.dynamicPopoverTitle = &quot;Title&quot;;
+};
+</code></pre></pane>
+                </tabs>
+            </div>
+        </div>
+      </section>
+      <script>var PopoverDemoCtrl = function ($scope) {
+  $scope.dynamicPopover = "Hello, World!";
+  $scope.dynamicPopoverText = "dynamic";
+  $scope.dynamicPopoverTitle = "Title";
+};
+</script>
+    
       <section id="tabs">
         <div class="page-header">
           <h1>Tabs</h1>
@@ -1021,6 +1110,8 @@ directive supports multiple placements, optional transition animation, and more.
           <option value="modal">Modal</option>
         
           <option value="pagination">Pagination</option>
+        
+          <option value="popover">Popover</option>
         
           <option value="tabs">Tabs</option>
         
