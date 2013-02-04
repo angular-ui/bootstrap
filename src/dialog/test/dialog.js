@@ -122,7 +122,7 @@ describe('Given ui.bootstrap.dialog', function(){
 			});
 		});
 
-		/* 
+		/*
 		describe('modalFade:true, backdropFade:true', function(){
 			useDialogWithGlobalOption({modalFade:true, backdropFade:true});
 
@@ -167,7 +167,7 @@ describe('Given ui.bootstrap.dialog', function(){
 
 	describe('When opening a dialog with resolves', function(){
 
-		var resolvedFoo, resolvedBar, deferred;
+		var resolvedFoo, resolvedBar, deferred, resolveObj;
 		function Ctrl(foo, bar){
 			resolvedFoo = foo;
 			resolvedBar = bar;
@@ -175,7 +175,12 @@ describe('Given ui.bootstrap.dialog', function(){
 
 		beforeEach(function(){
 			deferred = q.defer();
-			createDialog({template:template, resolve: {foo: 'foo', bar: deferred.promise}, controller: Ctrl});
+			resolveObj = {
+				foo: function(){return 'foo';},
+				bar: function(){return deferred.promise;}
+			};
+
+			createDialog({template:template, resolve: resolveObj, controller: Ctrl});
 			deferred.resolve('bar');
 			openDialog();
 		});

@@ -41,8 +41,8 @@ dialogModule.provider("$dialog", function(){
 	};
 
   // Returns the actual `$dialog` service that is injected in controllers
-	this.$get = ["$http", "$document", "$compile", "$rootScope", "$controller", "$templateCache", "$q", "$transition",
-  function ($http, $document, $compile, $rootScope, $controller, $templateCache, $q, $transition) {
+	this.$get = ["$http", "$document", "$compile", "$rootScope", "$controller", "$templateCache", "$q", "$transition", "$injector",
+  function ($http, $document, $compile, $rootScope, $controller, $templateCache, $q, $transition, $injector) {
 
 		var body = $document.find('body');
 
@@ -54,9 +54,9 @@ dialogModule.provider("$dialog", function(){
 
     // The `Dialog` class represents a modal dialog. The dialog class can be invoked by providing an options object
     // containing at lest template or templateUrl and controller:
-    // 
+    //
     //     var d = new Dialog({templateUrl: 'foo.html', controller: 'BarController'});
-    // 
+    //
     // Dialogs can also be created using templateUrl and controller as distinct arguments:
     //
     //     var d = new Dialog('path/to/dialog.html', MyDialogController);
@@ -107,7 +107,7 @@ dialogModule.provider("$dialog", function(){
       if(controller){
         options.controller = controller;
       }
-      
+
       if(!(options.template || options.templateUrl)) {
         throw new Error('Dialog.open expected template or templateUrl, neither found. Use options or open method to specify them.');
       }
@@ -217,7 +217,7 @@ dialogModule.provider("$dialog", function(){
 
       angular.forEach(this.options.resolve || [], function(value, key) {
         keys.push(key);
-        values.push(value);
+        values.push(angular.isString(value) ? $injector.get(value) : $injector.invoke(value));
       });
 
       keys.push('$template');
