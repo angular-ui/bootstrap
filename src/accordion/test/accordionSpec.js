@@ -230,5 +230,32 @@ describe('accordion', function () {
         expect(findGroupBody(1).scope().isOpen).toBe(true);
        });
     });
+
+    describe('is-open attribute with dynamic content', function() {
+      beforeEach(function () {
+        var tpl =
+          "<accordion>" +
+            "<accordion-group heading=\"title 1\" is-open=\"open1\"><div ng-repeat='item in items'>{{item}}</div></accordion-group>" +
+            "<accordion-group heading=\"title 2\" is-open=\"open2\">Static content</accordion-group>" +
+            "</accordion>";
+        element = angular.element(tpl);
+        scope.items = ['Item 1', 'Item 2', 'Item 3'];
+        scope.open1 = true;
+        scope.open2 = false;
+        angular.element(document.body).append(element);
+        $compile(element)(scope);
+        scope.$digest();
+        groups = element.find('.accordion-group');
+      });
+
+      afterEach(function() {
+        element.remove();
+      });
+
+      it('should have visible group body when the group with isOpen set to true', function () {
+        expect(findGroupBody(0)[0].clientHeight).not.toBe(0);
+        expect(findGroupBody(1)[0].clientHeight).toBe(0);
+      });
+    });
   });
 });
