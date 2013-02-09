@@ -91,5 +91,15 @@ describe('modal', function() {
     $(".modal-backdrop").click();
     expect(elm).not.toHaveClass('in');
   });
+
+  describe('global config options', function () {
+
+    it('should allow seting global configuration options', inject(function (modalConfig) {
+      modalConfig.backdrop = false;
+      var elm = $compile("<div modal='true'></div>")(scope);
+      scope.$digest();
+      expect($(".modal-backdrop").length).toBe(0);
+    }));
+  });
 });
 
