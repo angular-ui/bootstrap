@@ -249,11 +249,15 @@ dialogModule.provider("$dialog", function(){
       // * `label`: the label of the button
       // * `cssClass`: additional css class(es) to apply to the button for styling
       messageBox: function(title, message, buttons){
-        return new Dialog({templateUrl: 'template/dialog/message.html', controller: 'MessageBoxController', resolve: {model: {
-          title: title,
-          message: message,
-          buttons: buttons
-        }}});
+        return new Dialog({templateUrl: 'template/dialog/message.html', controller: 'MessageBoxController', resolve:
+          {model: function() {
+            return {
+              title: title,
+              message: message,
+              buttons: buttons
+            };
+          }
+        }});
       }
     };
   }];
