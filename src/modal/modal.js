@@ -1,14 +1,15 @@
-angular.module('ui.bootstrap.modal', []).directive('modal', ['$parse',function($parse) {
+angular.module('ui.bootstrap.modal', [])
+.constant('modalConfig', {
+  backdrop: true,
+  escape: true
+})
+.directive('modal', ['$parse', 'modalConfig', function($parse, modalConfig) {
   var backdropEl;
   var body = angular.element(document.getElementsByTagName('body')[0]);
-  var defaultOpts = {
-    backdrop: true,
-    escape: true
-  };
   return {
     restrict: 'EA',
     link: function(scope, elm, attrs) {
-      var opts = angular.extend(defaultOpts, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
+      var opts = angular.extend({}, modalConfig, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
       var shownExpr = attrs.modal || attrs.show;
       var setClosed;
 
