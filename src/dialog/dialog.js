@@ -122,7 +122,7 @@ dialogModule.provider("$dialog", function(){
           self.modalEl.contents().data('ngControllerController', ctrl);
         }
 
-        $compile(self.modalEl.contents())($scope);
+        $compile(self.modalEl)($scope);
         self._addElementsToDom();
 
         // trigger tranisitions
