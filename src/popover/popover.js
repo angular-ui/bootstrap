@@ -12,7 +12,7 @@ angular.module( 'ui.bootstrap.popover', [] )
     templateUrl: 'template/popover/popover.html'
   };
 })
-.directive( 'popover', [ '$compile', '$timeout', '$parse', function ( $compile, $timeout, $parse ) {
+.directive( 'popover', [ '$compile', '$timeout', '$parse', '$window', function ( $compile, $timeout, $parse, $window ) {
   
   var template = 
     '<popover-popup '+
@@ -52,15 +52,15 @@ angular.module( 'ui.bootstrap.popover', [] )
       
       // Calculate the current position and size of the directive element.
       function getPosition() {
+        var boundingClientRect = element[0].getBoundingClientRect();
         return {
           width: element.prop( 'offsetWidth' ),
           height: element.prop( 'offsetHeight' ),
-          top: element.prop( 'offsetTop' ),
-          left: element.prop( 'offsetLeft' )
+          top: boundingClientRect.top + $window.pageYOffset,
+          left: boundingClientRect.left + $window.pageXOffset
         };
       }
-      
-      // Show the popover popup element.
+
       function show() {
         var position,
             ttWidth,

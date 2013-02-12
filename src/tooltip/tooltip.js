@@ -12,7 +12,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
     templateUrl: 'template/tooltip/tooltip-popup.html'
   };
 })
-.directive( 'tooltip', [ '$compile', '$timeout', '$parse', function ( $compile, $timeout, $parse ) {
+.directive( 'tooltip', [ '$compile', '$timeout', '$parse', '$window', function ( $compile, $timeout, $parse, $window) {
   
   var template = 
     '<tooltip-popup '+
@@ -47,11 +47,12 @@ angular.module( 'ui.bootstrap.tooltip', [] )
       
       // Calculate the current position and size of the directive element.
       function getPosition() {
+        var boundingClientRect = element[0].getBoundingClientRect();
         return {
           width: element.prop( 'offsetWidth' ),
           height: element.prop( 'offsetHeight' ),
-          top: element.prop( 'offsetTop' ),
-          left: element.prop( 'offsetLeft' )
+          top: boundingClientRect.top + $window.pageYOffset,
+          left: boundingClientRect.left + $window.pageXOffset
         };
       }
       
@@ -82,7 +83,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
         
         // Get the position of the directive element.
         position = getPosition();
-        
+
         // Get the height and width of the tooltip so we can center it.
         ttWidth = tooltip.prop( 'offsetWidth' );
         ttHeight = tooltip.prop( 'offsetHeight' );
