@@ -26,7 +26,7 @@ In fact we are fortunate enough to **benefit from the same testing infrastructur
 
 ## Contributing to the project
 
-We are always looking for the quality contributions! Please check the [CONTRIBUTING.md](bootstrap/blob/master/CONTRIBUTING.md) for the contribution guidelines.
+We are always looking for the quality contributions! Please check the [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution guidelines.
 
 ### Development
 #### Prepare your environment
