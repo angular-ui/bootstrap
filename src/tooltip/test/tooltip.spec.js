@@ -111,6 +111,16 @@ describe('tooltip', function() {
     elm.trigger( 'mouseleave' );
   }));
 
+  it('should not show tooltips if there is nothing to show - issue #129', inject(function ($compile) {
+
+    elmBody = $compile(angular.element(
+      '<div><span tooltip="">Selector Text</span></div>'
+    ))(scope);
+    scope.$digest();
+    elmBody.find('span').trigger('mouseenter');
+
+    expect(elmBody.children().length).toBe(1);
+  }));
 });
 
     

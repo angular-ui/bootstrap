@@ -61,7 +61,12 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             ttWidth,
             ttHeight,
             ttPosition;
-          
+
+        //don't show empty tooltips
+        if (!scope.tt_tooltip) {
+          return;
+        }
+
         // If there is a pending remove transition, we must cancel it, lest the
         // toolip be mysteriously removed.
         if ( transitionTimeout ) {
