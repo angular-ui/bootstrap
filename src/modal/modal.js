@@ -1,76 +1,47 @@
-angular.module('ui.bootstrap.modal', [])
-.constant('modalConfig', {
-  backdrop: true,
-  escape: true
-})
-.directive('modal', ['$parse', 'modalConfig', function($parse, modalConfig) {
+angular.module('ui.bootstrap.modal', ['ui.bootstrap.dialog'])
+.directive('modal', ['$parse', '$dialog', function($parse, $dialog) {
   var backdropEl;
   var body = angular.element(document.getElementsByTagName('body')[0]);
   return {
     restrict: 'EA',
+    terminal: true,
     link: function(scope, elm, attrs) {
-      var opts = angular.extend({}, modalConfig, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
+      var opts = angular.extend({}, scope.$eval(attrs.uiOptions || attrs.bsOptions || attrs.options));
       var shownExpr = attrs.modal || attrs.show;
       var setClosed;
 
+      // Create a dialog with the template as the contents of the directive
+      // Add the current scope as the resolve in order to make the directive scope as a dialog controller scope
+      opts = angular.extend(opts, {
+        template: elm.html(), 
+        resolve: { $scope: function() { return scope; } }
+      });
+      var dialog = $dialog.dialog(opts);
+
+      elm.remove();
+
       if (attrs.close) {
         setClosed = function() {
-          scope.$apply(attrs.close);
+          $parse(attrs.close)(scope);
         };
       } else {
-        setClosed = function() {
-          scope.$apply(function() {
-            $parse(shownExpr).assign(scope, false);
-          });
-        };
-      }
-      elm.addClass('modal');
-
-      if (opts.backdrop && !backdropEl) {
-        backdropEl = angular.element('<div class="modal-backdrop"></div>');
-        backdropEl.css('display','none');
-        body.append(backdropEl);
-      }
-      
-      function setShown(shown) {
-        scope.$apply(function() {
-          model.assign(scope, shown);
-        });
-      }
-
-      function escapeClose(evt) {
-        if (evt.which === 27) { setClosed(); }
-      }
-      function clickClose() { 
-        setClosed();
-      }
-      
-      function close() {
-        if (opts.escape) { body.unbind('keyup', escapeClose); }
-        if (opts.backdrop) {
-          backdropEl.css('display', 'none').removeClass('in');
-          backdropEl.unbind('click', clickClose);
-        }
-        elm.css('display', 'none').removeClass('in');
-        body.removeClass('modal-open');
-      }
-      function open() {
-        if (opts.escape) { body.bind('keyup', escapeClose); }
-        if (opts.backdrop) {
-          backdropEl.css('display', 'block').addClass('in');
-          if(opts.backdrop != "static") {
-            backdropEl.bind('click', clickClose);
+        setClosed = function() {         
+          if (angular.isFunction($parse(shownExpr).assign)) {
+            $parse(shownExpr).assign(scope, false); 
           }
-        }
-        elm.css('display', 'block').addClass('in');
-        body.addClass('modal-open');
+        };
       }
 
       scope.$watch(shownExpr, function(isShown, oldShown) {
         if (isShown) {
-          open();
+          dialog.open().then(function(){
+            setClosed();
+          });
         } else {
-          close();
+          //Make sure it is not opened
+          if (dialog.isOpen()){
+            dialog.close();
+          }
         }
       });
     }

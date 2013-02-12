@@ -42,7 +42,7 @@ describe('Given ui.bootstrap.dialog', function(){
 
 	var openDialog = function(templateUrl, controller){
 		dialog.open(templateUrl, controller);
-		$rootScope.$apply();
+		$scope.$apply();
 	};
 
 	var closeDialog = function(result){
@@ -110,8 +110,8 @@ describe('Given ui.bootstrap.dialog', function(){
 			});
 		});
 
-		describe('modalClass:foo, backdropClass:bar', function(){
-			useDialogWithGlobalOption({modalClass: 'foo', backdropClass: 'bar'});
+		describe('dialogClass:foo, backdropClass:bar', function(){
+			useDialogWithGlobalOption({dialogClass: 'foo', backdropClass: 'bar'});
 
 			it('backdrop class should be changed', function(){
 				expect($document.find('body > div.bar').length).toBe(1);
@@ -123,8 +123,8 @@ describe('Given ui.bootstrap.dialog', function(){
 		});
 
 		/*
-		describe('modalFade:true, backdropFade:true', function(){
-			useDialogWithGlobalOption({modalFade:true, backdropFade:true});
+		describe('dialogFade:true, backdropFade:true', function(){
+			useDialogWithGlobalOption({dialogFade:true, backdropFade:true});
 
 			it('backdrop class should be changed', function(){
 				expect($document.find('body > div.modal.fade').length).toBe(1);

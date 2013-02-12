@@ -8,4 +8,12 @@ var ModalDemoCtrl = function ($scope) {
     $scope.closeMsg = 'I was closed at: ' + new Date();
     $scope.shouldBeOpen = false;
   };
+
+  $scope.items = ['item1', 'item2'];
+
+  $scope.opts = {
+    backdropFade: true,
+    dialogFade:true
+  };
+
 };

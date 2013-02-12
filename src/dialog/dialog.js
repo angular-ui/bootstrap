@@ -14,21 +14,24 @@ dialogModule.controller('MessageBoxController', ['$scope', 'dialog', 'model', fu
 dialogModule.provider("$dialog", function(){
 
   // The default options for all dialogs.
-	var defaults = {
-		backdrop: true,
-		modalClass: 'modal',
-		backdropClass: 'modal-backdrop',
+  var defaults = {
+    backdrop: true,
+    dialogClass: 'modal',
+    backdropClass: 'modal-backdrop',
     transitionClass: 'fade',
     triggerClass: 'in',
-		resolve:{},
-		backdropFade: false,
-		modalFade:false,
-		keyboard: true, // close with esc key
-		backdropClick: true // only in conjunction with backdrop=true
+    dialogOpenClass: 'modal-open',  
+    resolve:{},
+    backdropFade: false,
+    dialogFade:false,
+    keyboard: true, // close with esc key
+    backdropClick: true // only in conjunction with backdrop=true
     /* other options: template, templateUrl, controller */
 	};
 
 	var globalOptions = {};
+
+  var activeBackdrops = {value : 0};
 
   // The `options({})` allows global configuration of all dialogs in the application.
   //
@@ -70,8 +73,8 @@ dialogModule.provider("$dialog", function(){
         this.backdropEl.removeClass(options.triggerClass);
       }
 
-      this.modalEl = createElement(options.modalClass);
-      if(options.modalFade){
+      this.modalEl = createElement(options.dialogClass);
+      if(options.dialogFade){
         this.modalEl.addClass(options.transitionClass);
         this.modalEl.removeClass(options.triggerClass);
       }
@@ -113,7 +116,7 @@ dialogModule.provider("$dialog", function(){
       }
 
       this._loadResolves().then(function(locals) {
-        var $scope = locals.$scope = self.$scope = $rootScope.$new();
+        var $scope = locals.$scope = self.$scope = locals.$scope ? locals.$scope : $rootScope.$new();
 
         self.modalEl.html(locals.$template);
 
@@ -124,10 +127,11 @@ dialogModule.provider("$dialog", function(){
 
         $compile(self.modalEl)($scope);
         self._addElementsToDom();
+        body.addClass(self.options.dialogOpenClass);
 
         // trigger tranisitions
         setTimeout(function(){
-          if(self.options.modalFade){ self.modalEl.addClass(self.options.triggerClass); }
+          if(self.options.dialogFade){ self.modalEl.addClass(self.options.triggerClass); }
           if(self.options.backdropFade){ self.backdropEl.addClass(self.options.triggerClass); }
         });
 
@@ -143,6 +147,7 @@ dialogModule.provider("$dialog", function(){
       var self = this;
       var fadingElements = this._getFadingElements();
 
+      body.removeClass(self.options.dialogOpenClass);
       if(fadingElements.length > 0){
         for (var i = fadingElements.length - 1; i >= 0; i--) {
           $transition(fadingElements[i], removeTriggerClass).then(onCloseComplete);
@@ -165,7 +170,7 @@ dialogModule.provider("$dialog", function(){
 
     Dialog.prototype._getFadingElements = function(){
       var elements = [];
-      if(this.options.modalFade){
+      if(this.options.dialogFade){
         elements.push(this.modalEl);
       }
       if(this.options.backdropFade){
@@ -194,13 +199,26 @@ dialogModule.provider("$dialog", function(){
 
     Dialog.prototype._addElementsToDom = function(){
       body.append(this.modalEl);
-      if(this.options.backdrop) { body.append(this.backdropEl); }
+
+      if(this.options.backdrop) { 
+        if (activeBackdrops.value === 0) {
+          body.append(this.backdropEl); 
+        }
+        activeBackdrops.value++;
+      }
+
       this._open = true;
     };
 
     Dialog.prototype._removeElementsFromDom = function(){
       this.modalEl.remove();
-      if(this.options.backdrop) { this.backdropEl.remove(); }
+
+      if(this.options.backdrop) { 
+        activeBackdrops.value--;
+        if (activeBackdrops.value === 0) {
+          this.backdropEl.remove(); 
+        }
+      }
       this._open = false;
     };
 
