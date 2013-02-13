@@ -30,7 +30,11 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
         //When we have a change of scrollHeight we are setting again the correct height if the group is opened
         if (element[0].scrollHeight !== 0) {
           if (!isCollapsed) {
-            fixUpHeight(scope, element, element[0].scrollHeight + 'px');
+            if (initialAnimSkip) {
+              fixUpHeight(scope, element, element[0].scrollHeight + 'px');
+            } else {
+              fixUpHeight(scope, element, 'auto');
+            }
           }
         }
       });

@@ -54,4 +54,53 @@ describe('collapse directive', function () {
     $timeout.flush();
     expect(element.height()).not.toBe(0);
   });
+
+  describe('dynamic content', function() {
+    beforeEach(function() {
+      element = angular.element('<div collapse="isCollapsed"><p>Initial content</p><div ng-show="exp">Additional content</div></div>');
+      $compile(element)(scope);
+      angular.element(document.body).append(element);
+    });
+
+    afterEach(function() {
+      element.remove();
+    });
+
+    it('should grow accordingly when content size inside collapse increases', function() {
+      scope.exp = false;
+      scope.isCollapsed = false;
+      scope.$digest();
+      var collapseHeight = element.height();
+      scope.exp = true;
+      scope.$digest();
+      expect(element.height()).toBeGreaterThan(collapseHeight);
+    });
+
+    it('should shrink accordingly when content size inside collapse decreases', function() {
+      scope.exp = true;
+      scope.isCollapsed = false;
+      scope.$digest();
+      var collapseHeight = element.height();
+      scope.exp = false;
+      scope.$digest();
+      expect(element.height()).toBeLessThan(collapseHeight);
+    });
+
+    it('should shrink accordingly when content size inside collapse decreases on subsequent use', function() {
+      scope.isCollapsed = false;
+      scope.exp = false;
+      scope.$digest();
+      scope.isCollapsed = true;
+      scope.$digest();
+      scope.isCollapsed = false;
+      scope.$digest();
+      $timeout.flush();
+      scope.exp = true;
+      scope.$digest();
+      var collapseHeight = element.height();
+      scope.exp = false;
+      scope.$digest();
+      expect(element.height()).toBeLessThan(collapseHeight);
+    });
+  });
 });
