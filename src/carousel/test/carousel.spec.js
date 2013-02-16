@@ -59,6 +59,11 @@ describe('carousel', function() {
       expect(navNext.length).toBe(1);
     });
 
+    it('should display clickable slide indicators', function () {
+      var indicators = elm.find('ol.carousel-indicators > li');
+      expect(indicators.length).toBe(3);
+    });
+
     it('should go to next when clicking next button', function() {
       var navNext = elm.find('a.right');
       testSlideActive(0);
@@ -79,6 +84,12 @@ describe('carousel', function() {
       testSlideActive(1);
       navPrev.click();
       testSlideActive(0);
+    });
+
+    it('should select a slide when clicking on slide indicators', function () {
+      var indicators = elm.find('ol.carousel-indicators > li');
+      indicators.eq(1).click();
+      testSlideActive(1);
     });
 
     it('shouldnt go forward if interval is NaN or negative', function() {

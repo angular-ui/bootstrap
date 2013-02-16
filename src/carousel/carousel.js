@@ -85,6 +85,18 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     return self.select(slides[newIndex], 'prev');
   };
 
+  $scope.select = function(slide) {
+    self.select(slide);
+  };
+
+  $scope.isActive = function(slide) {
+     return self.currentSlide === slide;
+  };
+
+  $scope.slides = function() {
+    return slides;
+  };
+
   $scope.$watch('interval', restartTimer);
   function restartTimer() {
     if (currentTimeout) {
