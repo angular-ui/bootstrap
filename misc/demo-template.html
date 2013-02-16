@@ -12,7 +12,7 @@
     <script src="assets/ui-select2.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
     <link rel="stylesheet" href="assets/select2.css"/>
@@ -180,7 +180,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= version%>', '<%= module.name %>')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= version%>', '<%= module.name %>')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabs>
                     <pane heading="Markup" plunker-content="markup"><pre ng-non-bindable><code data-language="html"><%- module.html %></code></pre></pane>

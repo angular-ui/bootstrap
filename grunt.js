@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     ngversion: '1.0.4',
+    bsversion: '2.3.0',
     srcModules: [], //to be filled in by find-modules task
     tplModules: [], 
     pkg:'<json:package.json>',
@@ -190,7 +191,8 @@ module.exports = function(grunt) {
         }),
         templates: templateFiles.map(grunt.file.read).join(''),
         version : grunt.config('pkg.version'),
-        ngversion: grunt.config('ngversion')
+        ngversion: grunt.config('ngversion'),
+        bsversion: grunt.config('bsversion')
       })
     );
     
