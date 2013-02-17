@@ -104,12 +104,6 @@ describe('accordion', function () {
   describe('accordion-group', function () {
 
     var scope, $compile;
-
-    beforeEach(inject(function(_$rootScope_, _$compile_) {
-      scope = _$rootScope_;
-      $compile = _$compile_;
-    }));
-
     var element, groups;
     var findGroupLink = function (index) {
       return groups.eq(index).find('a').eq(0);
@@ -117,6 +111,16 @@ describe('accordion', function () {
     var findGroupBody = function (index) {
       return groups.eq(index).find('.accordion-body').eq(0);
     };
+
+
+    beforeEach(inject(function(_$rootScope_, _$compile_) {
+      scope = _$rootScope_;
+      $compile = _$compile_;
+    }));
+
+    afterEach(function () {
+      element = groups = scope = $compile = undefined;
+    });
 
     describe('with static groups', function () {
       beforeEach(function () {
@@ -255,6 +259,40 @@ describe('accordion', function () {
       it('should have visible group body when the group with isOpen set to true', function () {
         expect(findGroupBody(0)[0].clientHeight).not.toBe(0);
         expect(findGroupBody(1)[0].clientHeight).toBe(0);
+      });
+    });
+
+    describe('accordion-heading element', function() {
+      beforeEach(function() {
+        var tpl = 
+          '<accordion ng-init="a = [1,2,3]">' +
+            '<accordion-group heading="I get overridden">' +
+              '<accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </accordion-heading>' +
+              'Body' +
+            '</accordion-group>' +
+          '</accordion>';
+        element = $compile(tpl)(scope);
+        scope.$digest();
+        groups = element.find('.accordion-group');
+      });
+      it('transcludes the <accordion-heading> content into the heading link', function() {
+        expect(findGroupLink(0).text()).toBe('Heading Element 123 ');
+      });
+      it('attaches the same scope to the transcluded heading and body', function() {
+        expect(findGroupLink(0).find('span').scope().$id).toBe(findGroupBody(0).find('span').scope().$id);
+      });
+
+    });
+
+    describe('accordion-heading, with repeating accordion-groups', function() {
+      it('should clone the accordion-heading for each group', function() {
+        element = $compile('<accordion><accordion-group ng-repeat="x in [1,2,3]"><accordion-heading>{{x}}</accordion-heading></accordion-group></accordion>')(scope);
+        scope.$digest();
+        groups = element.find('.accordion-group');
+        expect(groups.length).toBe(3);
+        expect(findGroupLink(0).text()).toBe('1');
+        expect(findGroupLink(1).text()).toBe('2');
+        expect(findGroupLink(2).text()).toBe('3');
       });
     });
   });
