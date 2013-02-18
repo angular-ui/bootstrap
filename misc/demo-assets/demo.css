@@ -13,6 +13,13 @@ section {
     padding-top: 30px;
 }
 
+.page-header h1 > small > a {
+    color: #999;
+}
+.page-header h1 > small > a:hover {
+    text-decoration: none;
+}
+
 .footer {
     text-align: center;
     padding: 30px 0;

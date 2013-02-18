@@ -164,7 +164,9 @@
     <% modules.forEach(function(module) { %>
       <section id="<%= module.name %>">
         <div class="page-header">
-          <h1><%= module.displayName %></h1>
+          <h1><%= module.displayName %><small>
+              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>)
+          </small></h1>
         </div>
         <div class="row">
             <div class="span6">
@@ -172,9 +174,6 @@
             </div>
             <div class="span6">
                 <%= module.description %>
-                <section>
-                Directive is found in the module <a href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>
-                </section>
             </div>
         </div>
         <hr>
