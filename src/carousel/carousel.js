@@ -1,8 +1,8 @@
 /*
 *
-*    Angular Bootstrap Carousel 
+*    AngularJS Bootstrap Carousel 
 *
-*      The carousel has all of the function that the original Bootstrap carousel has, except for animations.
+*      A pure AngularJS carousel.
 *      
 *      For no interval set the interval to non-number, or milliseconds of desired interval
 *      Template: <carousel interval="none"><slide>{{anything}}</slide></carousel>
