@@ -70,7 +70,7 @@ Example:
 
     app.controller('MainCtrl', function($dialog, $scope) {
         $scope.deleteItem = function(item){
-            var msgbox = $dialog.messageBox('Delete Item', 'Are you sure?', [{label:'Yes, I'm sure, result: 'yes'},{label:'Nope', result: 'no'}]);
+            var msgbox = $dialog.messageBox('Delete Item', 'Are you sure?', [{label:'Yes, I\'m sure', result: 'yes'},{label:'Nope', result: 'no'}]);
             msgbox.open().then(function(result){
                 if(result === 'yes') {deleteItem(item);}
             });
