@@ -1,6 +1,4 @@
 <div class="pagination"><ul>
-  <li ng-class="{disabled: noPrevious()}"><a ng-click="selectPrevious()">{{previousText || 'Previous'}}</a></li>
-  <li ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a ng-click="selectPage(page)">{{page}}</a></li>
-  <li ng-class="{disabled: noNext()}"><a ng-click="selectNext()">{{nextText || 'Next'}}</a></li>
+  <li ng-repeat="page in pages" ng-class="{active: page.active, disabled: page.disabled}"><a ng-click="selectPage(page.number)">{{page.text}}</a></li>
   </ul>
 </div>

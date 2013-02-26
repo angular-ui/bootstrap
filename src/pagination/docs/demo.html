@@ -1,8 +1,9 @@
 <div ng-controller="PaginationDemoCtrl">
     <pagination num-pages="noOfPages" current-page="currentPage"></pagination>
-    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-small"></pagination>
-    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-mini"></pagination>
+    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></pagination>
+    <pagination boundary-links="true" num-pages="noOfPages" current-page="currentPage" max-size="maxSize"></pagination>
     <pagination num-pages="noOfPages" current-page="currentPage"  max-size="maxSize"></pagination>
+    <pagination direction-links="false" num-pages="noOfPages" current-page="currentPage"></pagination>
     <button class="btn" ng-click="setPage(3)">Set current page to: 3</button>
     The selected page no: {{currentPage}}
 </div>
