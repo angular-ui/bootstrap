@@ -62,11 +62,11 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     replace: true,                // The element containing the directive will be replaced with the template
     templateUrl:'template/accordion/accordion-group.html',
     scope:{ heading:'@' },        // Create an isolated scope and interpolate the heading attribute onto this scope
-    controller: function($scope) {
+    controller: ['$scope', function($scope) {
       this.setHeading = function(element) {
         this.heading = element;
       };
-    },
+    }],
     link: function(scope, element, attrs, accordionCtrl) {
       var getIsOpen, setIsOpen;
 
