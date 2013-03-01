@@ -5,8 +5,8 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    ngversion: '1.0.4',
-    bsversion: '2.3.0',
+    ngversion: '1.0.5',
+    bsversion: '2.3.1',
     srcModules: [], //to be filled in by find-modules task
     tplModules: [], 
     pkg:'<json:package.json>',
