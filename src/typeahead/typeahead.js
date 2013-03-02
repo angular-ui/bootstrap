@@ -100,7 +100,6 @@ angular.module('ui.bootstrap.typeahead', [])
 
         resetMatches();
         if (selected) {
-          selected = undefined;
           return inputValue;
         } else {
           if (inputValue && inputValue.length >= minSearch) {
@@ -111,21 +110,19 @@ angular.module('ui.bootstrap.typeahead', [])
         return undefined;
       });
 
-      modelCtrl.$render = function() {
+      modelCtrl.$render = function () {
         var locals = {};
-        if (modelCtrl.$viewValue) {
-          locals[parserResult.itemName] = modelCtrl.$viewValue;
-          element.val(parserResult.viewMapper(scope, locals));
-        }
+        locals[parserResult.itemName] = selected;
+        element.val(parserResult.viewMapper(scope, locals) || modelCtrl.$viewValue);
+        selected = undefined;
       };
 
       scope.select = function (activeIdx) {
         //called from within the $digest() cycle
         var locals = {};
-        locals[parserResult.itemName] = scope.matches[activeIdx].model;
+        locals[parserResult.itemName] = selected = scope.matches[activeIdx].model;
 
-        selected = parserResult.modelMapper(scope, locals);
-        modelCtrl.$setViewValue(selected);
+        modelCtrl.$setViewValue(parserResult.modelMapper(scope, locals));
         modelCtrl.$render();
       };
 

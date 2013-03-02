@@ -260,7 +260,6 @@ describe('typeahead tests', function () {
         var matchHighlight = findMatches(element).find('a').html();
         expect(matchHighlight).toEqual('prefix<strong>fo</strong>o');
       });
-
     });
 
     describe('selecting a match', function () {
@@ -302,6 +301,20 @@ describe('typeahead tests', function () {
 
         expect($scope.result).toEqual('baz');
         expect(inputEl.val()).toEqual('baz');
+      });
+
+      it('should correctly update inputs value on mapping where label is not derived from the model', function () {
+
+        $scope.states = [{code: 'AL', name: 'Alaska'}, {code: 'CL', name: 'California'}];
+
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='state.code as state.name for state in states | filter:$viewValue'></div>");
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alas');
+        triggerKeyDown(element, 13);
+
+        expect($scope.result).toEqual('AL');
+        expect(inputEl.val()).toEqual('Alaska');
       });
     });
 
