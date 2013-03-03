@@ -1,7 +1,7 @@
 {
   "author": "https://github.com/angular-ui/bootstrap/graphs/contributors",
   "name": "angular-ui-bootstrap",
-  "version": "0.1.1-SNAPSHOT",
+  "version": "0.2.0",
   "dependencies": {},
   "devDependencies": {
     "node-markdown": "*",
