@@ -81,7 +81,7 @@ describe('popover', function() {
     tt.trigger( 'click' );
 
     expect( tt.text() ).toBe( scope.items[0].name );
-    expect( tt.scope().tt_popover ).toBe( scope.items[0].popover );
+    expect( tt.scope().tt_content ).toBe( scope.items[0].popover );
 
     tt.trigger( 'click' );
   }));
@@ -89,12 +89,12 @@ describe('popover', function() {
   it('should only have an isolate scope on the popup', inject( function ( $compile ) {
     var ttScope;
 
-    scope.popoverMsg = "popover Text";
-    scope.popoverTitle = "popover Text";
+    scope.popoverContent = "Popover Content";
+    scope.popoverTitle = "Popover Title";
     scope.alt = "Alt Message";
 
     elmBody = $compile( angular.element( 
-      '<div><span alt={{alt}} popover="{{popoverMsg}}" popover-title="{{popoverTitle}}">Selector Text</span></div>'
+      '<div><span alt={{alt}} popover="{{popoverContent}}" popover-title="{{popoverTitle}}">Selector Text</span></div>'
     ) )( scope );
 
     $compile( elmBody )( scope );
@@ -107,8 +107,8 @@ describe('popover', function() {
 
     ttScope = angular.element( elmBody.children()[1] ).scope();
     expect( ttScope.placement ).toBe( 'top' );
-    expect( ttScope.popoverTitle ).toBe( scope.popoverTitle );
-    expect( ttScope.popoverContent ).toBe( scope.popoverMsg );
+    expect( ttScope.title ).toBe( scope.popoverTitle );
+    expect( ttScope.content ).toBe( scope.popoverContent );
 
     elm.trigger( 'click' );
   }));

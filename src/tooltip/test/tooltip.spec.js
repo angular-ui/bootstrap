@@ -81,7 +81,7 @@ describe('tooltip', function() {
     tt.trigger( 'mouseenter' );
 
     expect( tt.text() ).toBe( scope.items[0].name );
-    expect( tt.scope().tt_tooltip ).toBe( scope.items[0].tooltip );
+    expect( tt.scope().tt_content ).toBe( scope.items[0].tooltip );
 
     tt.trigger( 'mouseleave' );
   }));
@@ -106,7 +106,7 @@ describe('tooltip', function() {
 
     ttScope = angular.element( elmBody.children()[1] ).scope();
     expect( ttScope.placement ).toBe( 'top' );
-    expect( ttScope.tooltipTitle ).toBe( scope.tooltipMsg );
+    expect( ttScope.content ).toBe( scope.tooltipMsg );
 
     elm.trigger( 'mouseleave' );
   }));
