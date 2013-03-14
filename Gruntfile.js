@@ -2,6 +2,7 @@ var markdown = require('node-markdown').Markdown;
 
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -22,7 +23,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['<%= jshint.files %>', 'template/**/*.html'],
-      tasks: 'before-test test-run'
+      tasks: ['before-test', 'test-run']
     },
     concat: {
       dist: {
