@@ -45,7 +45,7 @@ Example:
 
     app.controller('MainCtrl', function($dialog, $scope) {
         $scope.openItemEditor = function(item){
-            var d = $dialog.dialog({modalFade: false, resolve: {item: angular.copy(item) }});
+            var d = $dialog.dialog({modalFade: false, resolve: {item: function(){ angular.copy(item)} }});
             d.open('dialogs/item-editor.html', 'EditItemController');
         };
     });
