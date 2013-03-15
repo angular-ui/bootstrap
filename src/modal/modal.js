@@ -1,7 +1,5 @@
 angular.module('ui.bootstrap.modal', ['ui.bootstrap.dialog'])
 .directive('modal', ['$parse', '$dialog', function($parse, $dialog) {
-  var backdropEl;
-  var body = angular.element(document.getElementsByTagName('body')[0]);
   return {
     restrict: 'EA',
     terminal: true,
