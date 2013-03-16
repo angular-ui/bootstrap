@@ -4,6 +4,10 @@
 
 [![Build Status](https://secure.travis-ci.org/angular-ui/bootstrap.png)](http://travis-ci.org/angular-ui/bootstrap)
 
+## Demo
+
+What to see directives in action? Visit https://github.com/angular-ui/bootstrap!
+
 ## Project philosophy
 
 ### Native, lightweight directives
@@ -34,12 +38,14 @@ We are always looking for the quality contributions! Please check the [CONTRIBUT
 * Install global dev dependencies: `npm install -g grunt-cli testacular`
 * Instal local dev dependencies: `npm install` while current directory is bootstrap repo
 
-#### Run unit tests
+#### Build
+* Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
+
+Check the Grunt build file for other tasks that are defined for this project
+
+#### TDD
 * Start testacular server: `grunt server`
 * Run test: `grunt test-run`
-
-#### Before commit
-* Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
 
 ### Release
 * Bump up version number in `package.json`
