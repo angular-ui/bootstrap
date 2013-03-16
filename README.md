@@ -6,7 +6,7 @@
 
 ## Demo
 
-What to see directives in action? Visit https://github.com/angular-ui/bootstrap!
+Do you want to see directives in action? Visit http://angular-ui.github.com/bootstrap/!
 
 ## Project philosophy
 
