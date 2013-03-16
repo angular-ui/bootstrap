@@ -144,14 +144,14 @@ describe('typeahead tests', function () {
 
   describe('typeahead', function () {
 
-    var $scope, $compile;
+    var $scope, $compile, $document;
     var changeInputValueTo;
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, $sniffer) {
+    beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, $sniffer) {
       $scope = _$rootScope_;
       $scope.source = ['foo', 'bar', 'baz'];
       $compile = _$compile_;
-
+      $document = _$document_;
       changeInputValueTo = function (element, value) {
         var inputEl = findInput(element);
         inputEl.val(value);
@@ -315,6 +315,22 @@ describe('typeahead tests', function () {
 
         expect($scope.result).toEqual('AL');
         expect(inputEl.val()).toEqual('Alaska');
+      });
+    });
+
+    describe('regressions tests', function () {
+
+      it('issue 231 - closes matches popup on click outside typeahead', function () {
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue'></div>");
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'b');
+        var dropdown = findDropDown(element);
+
+        $document.find('body').click();
+        $scope.$digest();
+
+        expect(dropdown).not.toHaveClass('open');
       });
     });
 

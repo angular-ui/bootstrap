@@ -30,7 +30,7 @@ angular.module('ui.bootstrap.typeahead', [])
 }])
 
   //options - min length
-  .directive('typeahead', ['$compile', '$q', 'typeaheadParser', function ($compile, $q, typeaheadParser) {
+  .directive('typeahead', ['$compile', '$q', '$document', 'typeaheadParser', function ($compile, $q, $document, typeaheadParser) {
 
   var HOT_KEYS = [9, 13, 27, 38, 40];
 
@@ -153,6 +153,11 @@ angular.module('ui.bootstrap.typeahead', [])
           scope.matches = [];
           scope.$digest();
         }
+      });
+
+      $document.find('body').bind('click', function(){
+        scope.matches = [];
+        scope.$digest();
       });
 
       var tplElCompiled = $compile("<typeahead-popup matches='matches' active='activeIdx' select='select(activeIdx)' "+
