@@ -8,6 +8,23 @@
 
 Do you want to see directives in action? Visit http://angular-ui.github.com/bootstrap/!
 
+## Installation
+
+Installation is easy as angular-ui-bootstrap has minimal dependencies - only the AngularJS and Bootstrap's CSS are required.
+After downloading dependencies (or better yet, referencing them from your favourite CDN) you need to download build version of this project. All the files and their purposes are described here: 
+https://github.com/angular-ui/bootstrap/tree/gh-pages#build-files
+Don't worry, if you are not sure which file to take, opt for `ui-bootstrap-tpls-[version].min.js`.
+
+When you are done downloading all the dependencies and project files the only remaining part is to add dependencies on the `ui.bootstrap` AngularJS module:
+
+```javascript
+angular.module('myModule', ['ui.bootstrap']);
+```
+
+Project files are also available through your favourite package manager:
+* **Bower**: `bower install angular-bootstrap`
+* **NuGet**: https://nuget.org/packages/Angular.UI.Bootstrap/
+
 ## Project philosophy
 
 ### Native, lightweight directives
@@ -58,5 +75,6 @@ Check the Grunt build file for other tasks that are defined for this project
 * push changes
 * switch back to the `main branch` and modify `package.json` to bump up version for the next iteration
 * commit (`chore(release): starting [versio number]`) and push
+* publish Bower and NuGet packages
 
 Well done! (If you don't like repeating yourself open a PR with a grunt task taking care of the above!)
