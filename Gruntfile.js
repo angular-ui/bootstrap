@@ -149,7 +149,9 @@ module.exports = function(grunt) {
       srcFiles = ['src/*/*.js'];
       tplFiles = ['template/*/*.html.js'];
 
-      grunt.file.expand({filter: 'isDirectory'}, 'src/*').forEach(function(dir) {
+      var folders = grunt.file.expand({filter: 'isDirectory', cwd: '.'}, 'src/*');
+
+      folders.forEach(function(dir) {
         findModule(dir.split('/')[1]);
       });
     }
