@@ -126,7 +126,7 @@ angular.module('ui.bootstrap.typeahead', [])
         modelCtrl.$render();
       };
 
-      //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(9)
+      //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(27)
       element.bind('keydown', function (evt) {
 
         //typeahead is open and an "interesting" key was pressed
@@ -150,6 +150,7 @@ angular.module('ui.bootstrap.typeahead', [])
           });
 
         } else if (evt.which === 27) {
+          evt.stopPropagation();
           scope.matches = [];
           scope.$digest();
         }
