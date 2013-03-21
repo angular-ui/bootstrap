@@ -1,7 +1,7 @@
 describe('popover', function() {
-  var elm, 
+  var elm,
       elmBody,
-      scope, 
+      scope,
       elmScope;
 
   // load the popover code
@@ -11,8 +11,8 @@ describe('popover', function() {
   beforeEach(module('template/popover/popover.html'));
 
   beforeEach(inject(function($rootScope, $compile) {
-    elmBody = angular.element( 
-      '<div><span popover="popover text">Selector Text</span></div>' 
+    elmBody = angular.element(
+      '<div><span popover="popover text">Selector Text</span></div>'
     );
 
     scope = $rootScope;
@@ -24,7 +24,7 @@ describe('popover', function() {
 
   it('should not be open initially', inject(function() {
     expect( elmScope.tt_isOpen ).toBe( false );
-    
+
     // We can only test *that* the popover-popup element wasn't created as the
     // implementation is templated and replaced.
     expect( elmBody.children().length ).toBe( 1 );
@@ -51,8 +51,8 @@ describe('popover', function() {
   }));
 
   it('should allow specification of placement', inject( function( $compile ) {
-    elm = $compile( angular.element( 
-      '<span popover="popover text" popover-placement="bottom">Selector Text</span>' 
+    elm = $compile( angular.element(
+      '<span popover="popover text" popover-placement="bottom">Selector Text</span>'
     ) )( scope );
     elmScope = elm.scope();
 
@@ -62,7 +62,7 @@ describe('popover', function() {
 
   it('should work inside an ngRepeat', inject( function( $compile ) {
 
-    elm = $compile( angular.element( 
+    elm = $compile( angular.element(
       '<ul>'+
         '<li ng-repeat="item in items">'+
           '<span popover="{{item.popover}}">{{item.name}}</span>'+
@@ -73,11 +73,11 @@ describe('popover', function() {
     scope.items = [
       { name: "One", popover: "First popover" }
     ];
-    
+
     scope.$digest();
-    
+
     var tt = angular.element( elm.find("li > span")[0] );
-    
+
     tt.trigger( 'click' );
 
     expect( tt.text() ).toBe( scope.items[0].name );
@@ -93,7 +93,7 @@ describe('popover', function() {
     scope.popoverTitle = "Popover Title";
     scope.alt = "Alt Message";
 
-    elmBody = $compile( angular.element( 
+    elmBody = $compile( angular.element(
       '<div><span alt={{alt}} popover="{{popoverContent}}" popover-title="{{popoverTitle}}">Selector Text</span></div>'
     ) )( scope );
 
@@ -101,7 +101,7 @@ describe('popover', function() {
     scope.$digest();
     elm = elmBody.find( 'span' );
     elmScope = elm.scope();
-    
+
     elm.trigger( 'click' );
     expect( elm.attr( 'alt' ) ).toBe( scope.alt );
 
@@ -112,6 +112,23 @@ describe('popover', function() {
 
     elm.trigger( 'click' );
   }));
+
+
+  it( 'should allow specification of delay', inject( function ($timeout, $compile) {
+
+    elm = $compile( angular.element(
+      '<span popover="popover text" popover-popup-delay="1000">Selector Text</span>'
+    ) )( scope );
+    elmScope = elm.scope();
+    scope.$digest();
+
+    elm.trigger( 'click' );
+    expect( elmScope.tt_isOpen ).toBe( false );
+
+    $timeout.flush();
+    expect( elmScope.tt_isOpen ).toBe( true );
+
+  } ) );
 
 });
 

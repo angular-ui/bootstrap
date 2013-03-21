@@ -1,5 +1,5 @@
 /**
- * The following features are still outstanding: popup delay, animation as a
+ * The following features are still outstanding: animation as a
  * function, placement as a function, inside, support for more triggers than
  * just mouse enter/leave, html tooltips, and selector delegation.
  */
@@ -13,7 +13,8 @@ angular.module( 'ui.bootstrap.tooltip', [] )
   // The default options tooltip and popover.
   var defaultOptions = {
     placement: 'top',
-    animation: true
+    animation: true,
+    popupDelay: 0
   };
 
   // The options specified to the provider globally.
@@ -66,7 +67,8 @@ angular.module( 'ui.bootstrap.tooltip', [] )
         scope: true,
         link: function link ( scope, element, attrs ) {
           var tooltip = $compile( template )( scope ), 
-              transitionTimeout;
+              transitionTimeout,
+              popupTimeout;
 
           attrs.$observe( type, function ( val ) {
             scope.tt_content = val;
@@ -84,9 +86,23 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             scope.tt_animation = angular.isDefined( val ) ? $parse( val ) : function(){ return options.animation; };
           });
 
+          attrs.$observe( type+'PopupDelay', function ( val ) {
+            var delay = parseInt( val, 10 );
+            scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
+          });
+
           // By default, the tooltip is not open.
           // TODO add ability to start tooltip opened
           scope.tt_isOpen = false;
+
+          //show the tooltip with delay if specified, otherwise show it immediately
+          function showWithDelay() {
+            if( scope.tt_popupDelay ){
+              popupTimeout = $timeout( show, scope.tt_popupDelay );
+            }else {
+              scope.$apply( show );
+            }
+          }
           
           // Show the tooltip popup element.
           function show() {
@@ -101,7 +117,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             }
 
             // If there is a pending remove transition, we must cancel it, lest the
-            // toolip be mysteriously removed.
+            // tooltip be mysteriously removed.
             if ( transitionTimeout ) {
               $timeout.cancel( transitionTimeout );
             }
@@ -161,6 +177,9 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             // First things first: we don't show it anymore.
             //tooltip.removeClass( 'in' );
             scope.tt_isOpen = false;
+
+            //if tooltip is going to be shown after delay, we must cancel this
+            $timeout.cancel( popupTimeout );
             
             // And now we remove it from the DOM. However, if we have animation, we 
             // need to wait for it to expire beforehand.
@@ -178,14 +197,14 @@ angular.module( 'ui.bootstrap.tooltip', [] )
           if ( ! angular.isDefined( defaultTriggerHide ) ) {
             element.bind( defaultTriggerShow, function toggleTooltipBind () {
               if ( ! scope.tt_isOpen ) {
-                scope.$apply( show );
+                showWithDelay();
               } else {
                 scope.$apply( hide );
               }
             });
           } else {
             element.bind( defaultTriggerShow, function showTooltipBind() {
-              scope.$apply( show );
+              showWithDelay();
             });
             element.bind( defaultTriggerHide, function hideTooltipBind() {
               scope.$apply( hide );
