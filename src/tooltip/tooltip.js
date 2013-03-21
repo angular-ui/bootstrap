@@ -20,7 +20,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
   var globalOptions = {};
   
   /**
-   * The `options({})` allows global configuration of all dialogs in the
+   * `options({})` allows global configuration of all tooltips in the
    * application.
    *
    *   var app = angular.module( 'App', ['ui.bootstrap.tooltip'], function( $tooltipProvider ) {
@@ -36,7 +36,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
    * Returns the actual instance of the $tooltip service.
    * TODO support multiple triggers
    */
-  this.$get = [ '$window', '$compile', '$timeout', '$parse', function ( $window, $compile, $timeout, $parse ) {
+  this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', function ( $window, $compile, $timeout, $parse, $document ) {
     return function $tooltip ( type, defaultTriggerShow, defaultTriggerHide ) {
       var options = angular.extend( {}, defaultOptions, globalOptions );
 
@@ -65,8 +65,9 @@ angular.module( 'ui.bootstrap.tooltip', [] )
         restrict: 'EA',
         scope: true,
         link: function link ( scope, element, attrs ) {
-          var tooltip = $compile( template )( scope ), 
-              transitionTimeout;
+          var tooltip = $compile( template )( scope );
+          var transitionTimeout;
+          var $body;
 
           attrs.$observe( type, function ( val ) {
             scope.tt_content = val;
@@ -111,7 +112,12 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             
             // Now we add it to the DOM because need some info about it. But it's not 
             // visible yet anyway.
-            element.after( tooltip );
+            if ( options.appendToBody ) {
+                $body = $body || $document.find( 'body' );
+                $body.append( tooltip );
+            } else {
+              element.after( tooltip );
+            }
             
             // Get the position of the directive element.
             position = getPosition( element );

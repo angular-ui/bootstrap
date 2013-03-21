@@ -123,4 +123,43 @@ describe('tooltip', function() {
   }));
 });
 
-    
+describe('$tooltipProvider', function() {
+  var elm, 
+      elmBody,
+      scope, 
+      elmScope,
+      body;
+
+  // load the tooltip code
+  beforeEach(module('ui.bootstrap.tooltip'));
+
+  // load the template
+  beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+  it( 'should not be open initially', function() {
+    module( function ( $tooltipProvider ) {
+      $tooltipProvider.options({ appendToBody: true });
+    });
+
+    inject( function( $rootScope, $compile, $document ) {
+      $body = $document.find( 'body' );
+      elmBody = angular.element( 
+        '<div><span tooltip="tooltip text">Selector Text</span></div>' 
+      );
+
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+
+      var bodyLength = $body.children().length;
+      elm.trigger( 'mouseenter' );
+      
+      expect( elmScope.tt_isOpen ).toBe( true );
+      expect( elmBody.children().length ).toBe( 1 );
+      expect( $body.children().length ).toEqual( bodyLength + 1 );
+    });
+  });
+});
+
