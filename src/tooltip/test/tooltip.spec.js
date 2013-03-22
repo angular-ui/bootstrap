@@ -163,42 +163,79 @@ describe('tooltip', function() {
 
 });
 
-describe('tooltip with popup delay configured through provider', function(){
+describe( '$tooltipProvider', function() {
 
-  var elm,
-    elmBody,
-    scope,
-    elmScope;
+  describe( 'popupDelay', function() {
+    var elm,
+      elmBody,
+      scope,
+      elmScope;
 
-  beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
-    $tooltipProvider.options({popupDelay: 1000});
-  }));
+    beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
+      $tooltipProvider.options({popupDelay: 1000});
+    }));
 
-  // load the template
-  beforeEach(module('template/tooltip/tooltip-popup.html'));
+    // load the template
+    beforeEach(module('template/tooltip/tooltip-popup.html'));
 
-  beforeEach(inject(function($rootScope, $compile) {
-    elmBody = angular.element(
-      '<div><span tooltip="tooltip text">Selector Text</span></div>'
-    );
+    beforeEach(inject(function($rootScope, $compile) {
+      elmBody = angular.element(
+        '<div><span tooltip="tooltip text">Selector Text</span></div>'
+      );
 
-    scope = $rootScope;
-    $compile(elmBody)(scope);
-    scope.$digest();
-    elm = elmBody.find('span');
-    elmScope = elm.scope();
-  }));
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+    }));
 
-  it('should open after timeout', inject(function($timeout) {
+    it('should open after timeout', inject(function($timeout) {
 
-    elm.trigger( 'mouseenter' );
-    expect( elmScope.tt_isOpen ).toBe( false );
+      elm.trigger( 'mouseenter' );
+      expect( elmScope.tt_isOpen ).toBe( false );
 
-    $timeout.flush();
-    expect( elmScope.tt_isOpen ).toBe( true );
+      $timeout.flush();
+      expect( elmScope.tt_isOpen ).toBe( true );
 
-  }));
+    }));
 
+  });
+
+  describe('appendToBody', function() {
+    var elm, 
+        elmBody,
+        scope, 
+        elmScope,
+        body;
+
+    // load the tooltip code
+    beforeEach(module('ui.bootstrap.tooltip', function ( $tooltipProvider ) {
+        $tooltipProvider.options({ appendToBody: true });
+    }));
+
+    // load the template
+    beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+    it( 'should append to the body', inject( function( $rootScope, $compile, $document ) {
+      $body = $document.find( 'body' );
+      elmBody = angular.element( 
+        '<div><span tooltip="tooltip text">Selector Text</span></div>' 
+      );
+
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+
+      var bodyLength = $body.children().length;
+      elm.trigger( 'mouseenter' );
+      
+      expect( elmScope.tt_isOpen ).toBe( true );
+      expect( elmBody.children().length ).toBe( 1 );
+      expect( $body.children().length ).toEqual( bodyLength + 1 );
+    }));
+  });
 });
 
-    
