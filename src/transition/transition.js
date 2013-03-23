@@ -61,14 +61,12 @@ angular.module('ui.bootstrap.transition', [])
     'WebkitTransition': 'webkitTransitionEnd',
     'MozTransition': 'transitionend',
     'OTransition': 'oTransitionEnd',
-    'msTransition': 'MSTransitionEnd',
     'transition': 'transitionend'
   };
   var animationEndEventNames = {
     'WebkitTransition': 'webkitAnimationEnd',
     'MozTransition': 'animationend',
     'OTransition': 'oAnimationEnd',
-    'msTransition': 'MSAnimationEnd',
     'transition': 'animationend'
   };
   function findEndEventName(endEventNames) {
