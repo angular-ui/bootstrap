@@ -217,6 +217,17 @@ describe('typeahead tests', function () {
         expect(element).toBeClosed();
       });
 
+      it('should correctly render initial state if the "as" keyword is used', function () {
+
+        $scope.states = [{code: 'AL', name: 'Alaska'}, {code: 'CL', name: 'California'}];
+        $scope.result = $scope.states[0];
+
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='state as state.name for state in states'></div>");
+        var inputEl = findInput(element);
+
+        expect(inputEl.val()).toEqual('Alaska');
+      });
+
       it('should not get open on model change', function () {
         var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source'></div>");
         $scope.$apply(function(){

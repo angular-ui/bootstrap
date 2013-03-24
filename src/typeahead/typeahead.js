@@ -38,7 +38,7 @@ angular.module('ui.bootstrap.typeahead', [])
     require:'ngModel',
     link:function (originalScope, element, attrs, modelCtrl) {
 
-      var selected = modelCtrl.$modelValue;
+      var selected;
 
       //minimal no of characters that needs to be entered before typeahead kicks-in
       var minSearch = originalScope.$eval(attrs.typeaheadMinLength) || 1;
@@ -95,7 +95,7 @@ angular.module('ui.bootstrap.typeahead', [])
       scope.query = undefined;
 
       //plug into $parsers pipeline to open a typeahead on view changes initiated from DOM
-      //$parsers kick-in on all the changes coming from the vview as well as manually triggered by $setViewValue
+      //$parsers kick-in on all the changes coming from the view as well as manually triggered by $setViewValue
       modelCtrl.$parsers.push(function (inputValue) {
 
         resetMatches();
@@ -112,7 +112,7 @@ angular.module('ui.bootstrap.typeahead', [])
 
       modelCtrl.$render = function () {
         var locals = {};
-        locals[parserResult.itemName] = selected;
+        locals[parserResult.itemName] = selected || modelCtrl.$viewValue;
         element.val(parserResult.viewMapper(scope, locals) || modelCtrl.$viewValue);
         selected = undefined;
       };
