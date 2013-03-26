@@ -46,6 +46,9 @@ angular.module('ui.bootstrap.typeahead', [])
       //expressions used by typeahead
       var parserResult = typeaheadParser.parse(attrs.typeahead);
 
+      //should it restrict model values to the ones selected from the popup only?
+      var isEditable = originalScope.$eval(attrs.typeaheadEditable) !== false;
+
       //create a child scope for the typeahead directive so we are not polluting original scope
       //with typeahead-specific data (matches, query etc.)
       var scope = originalScope.$new();
@@ -107,7 +110,7 @@ angular.module('ui.bootstrap.typeahead', [])
           }
         }
 
-        return undefined;
+        return isEditable ? inputValue : undefined;
       });
 
       modelCtrl.$render = function () {
@@ -151,13 +154,15 @@ angular.module('ui.bootstrap.typeahead', [])
 
         } else if (evt.which === 27) {
           evt.stopPropagation();
-          scope.matches = [];
+
+          resetMatches();
           scope.$digest();
         }
       });
 
       $document.find('body').bind('click', function(){
-        scope.matches = [];
+
+        resetMatches();
         scope.$digest();
       });
 

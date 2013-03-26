@@ -271,6 +271,18 @@ describe('typeahead tests', function () {
         var matchHighlight = findMatches(element).find('a').html();
         expect(matchHighlight).toEqual('prefix<strong>fo</strong>o');
       });
+
+      it('should by default bind view value to model even if not part of matches', function () {
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue'></div>");
+        changeInputValueTo(element, 'not in matches');
+        expect($scope.result).toEqual('not in matches');
+      });
+
+      it('should support the editable property to limit model bindings to matches only', function () {
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-editable='false'></div>");
+        changeInputValueTo(element, 'not in matches');
+        expect($scope.result).toEqual(undefined);
+      });
     });
 
     describe('selecting a match', function () {
