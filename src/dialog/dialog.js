@@ -66,6 +66,7 @@ dialogModule.provider("$dialog", function(){
 		function Dialog(opts) {
 
       var self = this, options = this.options = angular.extend({}, defaults, globalOptions, opts);
+      this._open = false;
 
       this.backdropEl = createElement(options.backdropClass);
       if(options.backdropFade){
