@@ -12,47 +12,35 @@
    </li>
  */
 
-angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', 
-['$document', '$location', '$window', function ($document, $location, $window) {
-  var openElement = null, close;
+angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle',
+  ['$document', '$location', '$window', function ($document, $location, $window) {
+  var openElement = null,
+      closeMenu   = angular.noop;
   return {
     restrict: 'CA',
     link: function(scope, element, attrs) {
-      scope.$watch(function dropdownTogglePathWatch(){return $location.path();}, function dropdownTogglePathWatchAction() {
-        if (close) { close(); }
-      });
-
-      element.parent().bind('click', function(event) {
-        if (close) { close(); }
-      });
-
+      scope.$watch('$location.path', function() { closeMenu(); });
+      element.parent().bind('click', function() { closeMenu(); });
       element.bind('click', function(event) {
         event.preventDefault();
         event.stopPropagation();
-
-        var iWasOpen = false;
-
-        if (openElement) {
-          iWasOpen = openElement === element;
-          close();
-        }
-
-        if (!iWasOpen){
+        var elementWasOpen = (element === openElement);
+        if (!!openElement) {
+          closeMenu(); }
+        if (!elementWasOpen){
           element.parent().addClass('open');
           openElement = element;
-
-          close = function (event) {
+          closeMenu = function (event) {
             if (event) {
               event.preventDefault();
               event.stopPropagation();
             }
-            $document.unbind('click', close);
+            $document.unbind('click', closeMenu);
             element.parent().removeClass('open');
-            close = null;
+            closeMenu   = angular.noop;
             openElement = null;
           };
-
-          $document.bind('click', close);
+          $document.bind('click', closeMenu);
         }
       });
     }
