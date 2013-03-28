@@ -4,9 +4,12 @@ angular.module("ui.bootstrap.alert", []).directive('alert', function () {
     templateUrl:'template/alert/alert.html',
     transclude:true,
     replace:true,
-    scope:{
-      type:'=',
-      close:'&'
+    scope: {
+      type: '=',
+      close: '&'
+    },
+    link: function(scope, iElement, iAttrs, controller) {
+      scope.closeable = "close" in iAttrs;
     }
   };
 });

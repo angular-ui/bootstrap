@@ -1,4 +1,5 @@
 describe("alert", function () {
+
   var scope, ctrl, model, $compile;
   var element;
 
@@ -11,14 +12,16 @@ describe("alert", function () {
     $compile = _$compile_;
 
     element = angular.element(
-        "<div><alert ng-repeat='alert in alerts' type='alert.type'" +
-        "close='removeAlert($index)'>{{alert.msg}}" +
-        "</alert></div>");
+        "<div>" + 
+          "<alert ng-repeat='alert in alerts' type='alert.type'" +
+            "close='removeAlert($index)'>{{alert.msg}}" +
+          "</alert>" +
+        "</div>");
 
     scope.alerts = [
       { msg:'foo', type:'success'},
       { msg:'bar', type:'error'},
-      { msg:'baz' }
+      { msg:'baz'}
     ];
   }));
 
@@ -48,13 +51,6 @@ describe("alert", function () {
     expect(alerts.eq(2)).not.toHaveClass('alert-block');
   });
 
-  it('it should be possible to add additional classes for alert', function () {
-    var element = $compile('<alert class="alert-block" type="\'info\'">Default alert!</alert>')(scope);
-    scope.$digest();
-    expect(element).toHaveClass('alert-block');
-    expect(element).toHaveClass('alert-info');
-  });
-
   it("should fire callback when closed", function () {
 
     var alerts = createAlerts();
@@ -65,6 +61,19 @@ describe("alert", function () {
 
     findCloseButton(1).click();
     expect(scope.removeAlert).toHaveBeenCalledWith(1);
+  });
+
+  it('should not show close buttons if no close callback specified', function () {
+    var element = $compile('<alert>No close</alert>')(scope);
+    scope.$digest();
+    expect(findCloseButton(0).length).toEqual(0);
+  });
+
+  it('it should be possible to add additional classes for alert', function () {
+    var element = $compile('<alert class="alert-block" type="\'info\'">Default alert!</alert>')(scope);
+    scope.$digest();
+    expect(element).toHaveClass('alert-block');
+    expect(element).toHaveClass('alert-info');
   });
 
 });
