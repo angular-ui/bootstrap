@@ -1,10 +1,23 @@
 <div ng-controller="TabsDemoCtrl">
-    <tabs>
-        <pane heading="Static title">Static content</pane>
-        <pane ng-repeat="pane in panes" heading="{{pane.title}}" active="pane.active">{{pane.content}}</pane>
-    </tabs>
-    <div class="row-fluid">
-        <button class="btn" ng-click="panes[0].active = true">Select second tab</button>
-        <button class="btn" ng-click="panes[1].active = true">Select third tab</button>
-    </div>
+  Select a tab by setting active binding to true:
+  <br />
+  <button class="btn" ng-click="tabs[0].active = true">
+    Select second tab
+  </button>
+  <button class="btn" ng-click="tabs[1].active = true">
+    Select third tab
+  </button>
+  <br /><br />
+  <tabset>
+    <tab heading="Static title">Static content</tab>
+    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active">
+      {{tab.content}}
+    </tab>
+    <tab select="alertMe()">
+      <tab-heading>
+        <i class="icon-bell"></i> Select me for alert!
+      </tab-heading>
+      I've got an HTML heading, and a select callback. Pretty cool!
+    </tab>
+  </tabset>
 </div>

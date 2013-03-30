@@ -1,0 +1,12 @@
+
+<div class="tabbable">
+  <ul class="nav nav-tabs" ng-transclude>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane" 
+         ng-repeat="tab in tabs" 
+         ng-class="{active: tab.active}"
+         tab-content-transclude="tab" tt="tab">
+    </div>
+  </div>
+</div>
