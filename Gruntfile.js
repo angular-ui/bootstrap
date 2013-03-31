@@ -22,8 +22,17 @@ module.exports = function(grunt) {
       all: 'angular.module("ui.bootstrap", ["ui.bootstrap.tpls", <%= srcModules %>]);'
     },
     watch: {
-      files: ['<%= jshint.files %>', 'template/**/*.html'],
-      tasks: ['before-test', 'test-run']
+      html: {
+        files: ['template/**/*.html'],
+        tasks: ['html2js']
+      },
+      js: {
+        //nospawn makes the tests start faster
+        nospawn: true,
+        files: ['src/**/*.js'],
+        //we don't need to jshint here, it slows down everything else
+        tasks: ['test-run']
+      }
     },
     concat: {
       dist: {
