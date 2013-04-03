@@ -163,6 +163,44 @@ describe('tooltip', function() {
 
 });
 
+describe( 'tooltipHtmlUnsafe', function() {
+  var elm, elmBody, scope;
+
+  // load the tooltip code
+  beforeEach(module('ui.bootstrap.tooltip', function ( $tooltipProvider ) {
+    $tooltipProvider.options({ animation: false });
+  }));
+
+  // load the template
+  beforeEach(module('template/tooltip/tooltip-html-unsafe-popup.html'));
+
+  beforeEach(inject(function($rootScope, $compile) {
+    scope = $rootScope;
+    scope.html = 'I say: <strong class="hello">Hello!</strong>';
+
+    elmBody = $compile( angular.element(
+      '<div><span tooltip-html-unsafe="{{html}}">Selector Text</span></div>'
+    ))( scope );
+    scope.$digest();
+    elm = elmBody.find('span');
+    elmScope = elm.scope();
+  }));
+
+  it( 'should show on mouseenter and hide on mouseleave', inject( function () {
+    expect( elmScope.tt_isOpen ).toBe( false );
+
+    elm.trigger( 'mouseenter' );
+    expect( elmScope.tt_isOpen ).toBe( true );
+    expect( elmBody.children().length ).toBe( 2 );
+
+    expect( elmScope.tt_content ).toEqual( scope.html );
+
+    elm.trigger( 'mouseleave' );
+    expect( elmScope.tt_isOpen ).toBe( false );
+    expect( elmBody.children().length ).toBe( 1 );
+  }));
+});
+
 describe( '$tooltipProvider', function() {
 
   describe( 'popupDelay', function() {

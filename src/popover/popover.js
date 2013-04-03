@@ -13,6 +13,6 @@ angular.module( 'ui.bootstrap.popover', [ 'ui.bootstrap.tooltip' ] )
   };
 })
 .directive( 'popover', [ '$compile', '$timeout', '$parse', '$window', '$tooltip', function ( $compile, $timeout, $parse, $window, $tooltip ) {
-  return $tooltip( 'popover', 'click' );
+  return $tooltip( 'popover', 'popover', 'click' );
 }]);
 

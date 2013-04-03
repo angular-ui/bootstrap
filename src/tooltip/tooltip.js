@@ -34,22 +34,34 @@ angular.module( 'ui.bootstrap.tooltip', [] )
 	};
 
   /**
+   * This is a helper function for translating camel-case to snake-case.
+   */
+  function snake_case(name){
+    var regexp = /[A-Z]/g;
+    var separator = '-';
+    return name.replace(regexp, function(letter, pos) {
+      return (pos ? separator : '') + letter.toLowerCase();
+    });
+  }
+
+  /**
    * Returns the actual instance of the $tooltip service.
    * TODO support multiple triggers
    */
   this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', function ( $window, $compile, $timeout, $parse, $document ) {
-    return function $tooltip ( type, defaultTriggerShow, defaultTriggerHide ) {
+    return function $tooltip ( type, prefix, defaultTriggerShow, defaultTriggerHide ) {
       var options = angular.extend( {}, defaultOptions, globalOptions );
+      var directiveName = snake_case( type );
 
       var template = 
-        '<'+ type +'-popup '+
+        '<'+ directiveName +'-popup '+
           'title="{{tt_title}}" '+
           'content="{{tt_content}}" '+
           'placement="{{tt_placement}}" '+
           'animation="tt_animation()" '+
           'is-open="tt_isOpen"'+
           '>'+
-        '</'+ type +'-popup>';
+        '</'+ directiveName +'-popup>';
 
       // Calculate the current position and size of the directive element.
       function getPosition( element ) {
@@ -75,19 +87,19 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             scope.tt_content = val;
           });
 
-          attrs.$observe( type+'Title', function ( val ) {
+          attrs.$observe( prefix+'Title', function ( val ) {
             scope.tt_title = val;
           });
 
-          attrs.$observe( type+'Placement', function ( val ) {
+          attrs.$observe( prefix+'Placement', function ( val ) {
             scope.tt_placement = angular.isDefined( val ) ? val : options.placement;
           });
 
-          attrs.$observe( type+'Animation', function ( val ) {
+          attrs.$observe( prefix+'Animation', function ( val ) {
             scope.tt_animation = angular.isDefined( val ) ? $parse( val ) : function(){ return options.animation; };
           });
 
-          attrs.$observe( type+'PopupDelay', function ( val ) {
+          attrs.$observe( prefix+'PopupDelay', function ( val ) {
             var delay = parseInt( val, 10 );
             scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
           });
@@ -232,6 +244,21 @@ angular.module( 'ui.bootstrap.tooltip', [] )
 })
 
 .directive( 'tooltip', [ '$tooltip', function ( $tooltip ) {
-  return $tooltip( 'tooltip', 'mouseenter', 'mouseleave' );
-}]);
+  return $tooltip( 'tooltip', 'tooltip', 'mouseenter', 'mouseleave' );
+}])
+
+.directive( 'tooltipHtmlUnsafePopup', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
+    templateUrl: 'template/tooltip/tooltip-html-unsafe-popup.html'
+  };
+})
+
+.directive( 'tooltipHtmlUnsafe', [ '$tooltip', function ( $tooltip ) {
+  return $tooltip( 'tooltipHtmlUnsafe', 'tooltip', 'mouseenter', 'mouseleave' );
+}])
+
+;
 
