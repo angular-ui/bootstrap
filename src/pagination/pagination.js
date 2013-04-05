@@ -52,7 +52,7 @@ angular.module('ui.bootstrap.pagination', [])
             startPage = 1;
         }
         if ((startPage + maxSize - 1) > scope.numPages) {
-            startPage = startPage - ((startPage + maxSize - 1) - scope.numPages );
+            startPage = scope.numPages - maxSize + 1;
         }
 
         // Add page number links
