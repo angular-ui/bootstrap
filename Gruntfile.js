@@ -4,18 +4,20 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy'); 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-html2js');
 
   // Project configuration.
   grunt.initConfig({
     ngversion: '1.0.5',
     bsversion: '2.3.1',
-    srcModules: [], //to be filled in by find-modules task
-    tplModules: [], 
+    modules: [],//to be filled in by build task
     pkg: grunt.file.readJSON('package.json'),
     dist: 'dist',
     filename: 'ui-bootstrap',
+    filenamecustom: '<%= filename %>-custom',
     meta: {
       modules: 'angular.module("ui.bootstrap", [<%= srcModules %>]);',
       tplmodules: 'angular.module("ui.bootstrap.tpls", [<%= tplModules %>]);',
@@ -39,15 +41,38 @@ module.exports = function(grunt) {
         options: {
           banner: '<%= meta.modules %>\n'
         },
-        src: [],
+        src: [], //src filled in by build task
         dest: '<%= dist %>/<%= filename %>-<%= pkg.version %>.js'
       },
       dist_tpls: {
         options: {
           banner: '<%= meta.all %>\n<%= meta.tplmodules %>\n'
         },
-        src: [],
+        src: [], //src filled in by build task
         dest: '<%= dist %>/<%= filename %>-tpls-<%= pkg.version %>.js'
+      }
+    },
+    copy: {
+      demohtml: {
+        options: {
+          //process html files with gruntfile config
+          processContent: grunt.template.process
+        },
+        files: [{
+          expand: true,
+          src: ["**/*.html"],
+          cwd: "misc/demo/",
+          dest: "dist/"
+        }]
+      },
+      demoassets: {
+        files: [{
+          expand: true,
+          //Don't re-copy html files, we process those
+          src: ["**/**/*", "!**/*.html"],
+          cwd: "misc/demo",
+          dest: "dist/"
+        }]
       }
     },
     uglify: {
@@ -61,7 +86,17 @@ module.exports = function(grunt) {
       }
     },
     html2js: {
-      src: ['template/**/*.html']
+      dist: {
+        options: {
+          module: null, // no bundle module for all the html2js templates
+          base: '.'
+        },
+        files: [{
+          expand: true,
+          src: ['template/**/*.html'],
+          ext: '.html.js'
+        }]
+      }
     },
     jshint: {
       files: ['Gruntfile.js','src/**/*.js'],
@@ -82,7 +117,7 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli options on the goole's CI server
   grunt.registerTask('before-test', ['jshint', 'html2js']);
-  grunt.registerTask('after-test', ['build', 'site']);
+  grunt.registerTask('after-test', ['build', 'copy']);
 
   // Default task.
   grunt.registerTask('default', ['before-test', 'test', 'after-test']);
@@ -90,27 +125,41 @@ module.exports = function(grunt) {
   //Common ui.bootstrap module containing all modules for src and templates
   //findModule: Adds a given module to config
   function findModule(name) {
+    function breakup(text, separator) {
+      return text.replace(/[A-Z]/g, function (match) {
+        return separator + match;
+      });
+    }
+    function ucwords(text) {
+      return text.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+        return $1.toUpperCase();
+      });
+    }
     function enquote(str) {
       return '"' + str + '"';
     }
-    var tplModules = grunt.config('tplModules');
-    var srcModules = grunt.config('srcModules');
 
-    grunt.file.expand('template/' + name + '/*.html').map(function(file) {
-      tplModules.push(enquote(file));
-    });
-    grunt.file.expand('src/' + name + '/*.js').forEach(function(file) {
-      srcModules.push(enquote('ui.bootstrap.' + name));
-    });
-
-    grunt.config('tplModules', tplModules);
-    grunt.config('srcModules', srcModules);
+    var module = {
+      name: name,
+      moduleName: enquote('ui.bootstrap.' + name),
+      displayName: ucwords(breakup(name, ' ')),
+      srcFiles: grunt.file.expand("src/"+name+"/*.js"),
+      tplFiles: grunt.file.expand("template/"+name+"/*.html"),
+      tpljsFiles: grunt.file.expand("template/"+name+"/*.html.js"),
+      tplModules: grunt.file.expand("template/"+name+"/*.html").map(enquote),
+      dependencies: dependenciesForModule(name),
+      docs: {
+        md: grunt.file.expand("src/"+name+"/docs/*.md")
+          .map(grunt.file.read).join("\n"),
+        js: grunt.file.expand("src/"+name+"/docs/*.js")
+          .map(grunt.file.read).join("\n"),
+        html: grunt.file.expand("src/"+name+"/docs/*.html")
+          .map(grunt.file.read).join("\n")
+      }
+    };
+    module.dependencies.forEach(findModule);
+    grunt.config('modules', grunt.config('modules').concat(module));
   }
-
-  grunt.registerTask('dist', 'Override dist directory', function() {
-    var dir = this.args[0];
-    if (dir) { grunt.config('dist', dir); }
-  });
 
   function dependenciesForModule(name) {
     var deps = [];
@@ -136,140 +185,56 @@ module.exports = function(grunt) {
     });
     return deps;
   }
+
+  grunt.registerTask('dist', 'Override dist directory', function() {
+    var dir = this.args[0];
+    if (dir) { grunt.config('dist', dir); }
+  });
+
   grunt.registerTask('build', 'Create bootstrap build files', function() {
-
-    var srcFiles = [], tplFiles = [];
+    //If arguments define what modules to build, build those. Else, everything
     if (this.args.length) {
-      var modules = [].concat(this.args);
-      //Find dependencies
-      this.args.forEach(function(moduleName) {
-        modules = modules.concat(dependenciesForModule(moduleName));
-        findModule(moduleName);
-      });
-      srcFiles = modules.map(function(name) {
-        return 'src/' + name + '/*.js';
-      });
-      tplFiles = modules.map(function(name) {
-        grunt.file.expand('template/' + name + '/*.html').forEach(html2js);
-        return 'template/' + name + '/*.html.js';
-      });
-      grunt.config('filename', grunt.config('filename')+'-custom');
-
+      this.args.forEach(findModule);
+      grunt.config('filename', grunt.config('filenamecustom'));
     } else {
-      srcFiles = ['src/*/*.js'];
-      tplFiles = ['template/*/*.html.js'];
-
-      var folders = grunt.file.expand({filter: 'isDirectory', cwd: '.'}, 'src/*');
-
-      folders.forEach(function(dir) {
+      grunt.file.expand({
+        filter: 'isDirectory', cwd: '.'
+      }, 'src/*').forEach(function(dir) {
         findModule(dir.split('/')[1]);
       });
     }
-    grunt.config('concat.dist.src', grunt.config('concat.dist.src').concat(srcFiles));
-    grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src').concat(srcFiles).concat(tplFiles));
+    
+    //Pluck will take an array of objects, and map the given key to a new array
+    //@example: expect( pluck([{a:1},{a:2}], 'a') ).toBe([1,2])
+    function pluck(array, key) {
+      return array.map(function(obj) {
+        return obj[key];
+      });
+    }
+
+    var modules = grunt.config('modules');
+    grunt.config('srcModules', pluck(modules, 'moduleName'));
+    grunt.config('tplModules', pluck(modules, 'tplModules'));
+    grunt.config('demoModules', modules.filter(function(module) {
+      return module.docs.md && module.docs.js && module.docs.html;
+    }));
+
+    var srcFiles = pluck(modules, 'srcFiles');
+    var tpljsFiles = pluck(modules, 'tpljsFiles');
+    //Set the concat task to concatenate the given src modules
+    grunt.config('concat.dist.src', grunt.config('concat.dist.src')
+                 .concat(srcFiles));
+    //Set the concat-with-templates task to concat the given src & tpl modules
+    grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
+                 .concat(srcFiles).concat(tpljsFiles));
 
     grunt.task.run(['concat', 'uglify']);
   });
 
-  grunt.registerTask('site', 'Create grunt demo site from every module\'s files', function() {
-
-    function breakup(text, separator) {
-      return text.replace(/[A-Z]/g, function (match) {
-        return separator + match;
-      });
-    }
-
-    function ucwords(text) {
-      return text.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
-        return $1.toUpperCase();
-      });
-    }
-
-    var modules = grunt.file.expand({filter: 'isDirectory'}, 'src/*').map(function(dir) {
-      var moduleName = dir.split("/")[1];
-      if (grunt.file.isDir(dir + "/docs")) {
-        return {
-          name: moduleName,
-          displayName: ucwords(breakup(moduleName, ' ')),
-          js: grunt.file.expand(dir + "/docs/*.js").map(grunt.file.read).join(''),
-          html: grunt.file.expand(dir + "/docs/*.html").map(grunt.file.read).join(''),
-          description: grunt.file.expand(dir + "/docs/*.md").map(grunt.file.read).map(markdown).join('')
-        };
-      }
-    }).filter(function(module){
-       return module !== undefined;
-    });
-
-    var templateFiles = grunt.file.expand("template/**/*.html.js");
-
-    grunt.file.write(
-      'dist/index.html',
-      grunt.template.process(grunt.file.read('misc/demo-template.html'), {data: {
-        modules: modules,
-        templateModules: templateFiles.map(function(fileName) {
-          return "'"+fileName.substr(0, fileName.length - 3)+"'";
-        }),
-        templates: templateFiles.map(grunt.file.read).join(''),
-        version : grunt.config('pkg.version'),
-        ngversion: grunt.config('ngversion'),
-        bsversion: grunt.config('bsversion')
-      }})
-    );
-    
-    grunt.file.expand('misc/demo-assets/*.*').forEach(function(path) {
-      grunt.file.copy(path, 'dist/assets/' + path.replace('misc/demo-assets/',''));
-    });
-
-    grunt.file.expand('misc/demo-assets/img/*.*').forEach(function(path) {
-      grunt.file.copy(path, 'dist/' + path.replace('misc/demo-assets/',''));
-    });
-  });
-
-  //Html templates to $templateCache for tests
-  var TPL='angular.module("<%= file %>", []).run(["$templateCache", function($templateCache){\n' +
-    '  $templateCache.put("<%= file %>",\n    "<%= content %>");\n' +
-    '}]);\n';
-  function escapeContent(content) {
-    return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "').replace(/\r/g, '');
-  }
-  function html2js(template) {
-    grunt.file.write(template + ".js", grunt.template.process(TPL, {data: {
-      file: template,
-      content: escapeContent(grunt.file.read(template))
-    }}));
-  }
-  grunt.registerMultiTask('html2js', 'Generate js versions of html template', function() {
-    var files = grunt._watch_changed_files || grunt.file.expand(this.data);
-    files.forEach(html2js);
-  });
-
-  // Karma configuration
-  function runKarma(command, options) {
-    var karmaCmd = process.platform === 'win32' ? 'karma.cmd' : 'karma';
-    var args = [command].concat(options);
-    var done = grunt.task.current.async();
-    var child = grunt.util.spawn({
-        cmd: karmaCmd,
-        args: args
-    }, function(err, result, code) {
-      if (code) {
-        done(false);
-      } else {
-        done();
-      }
-    });
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-  }
-
   grunt.registerTask('test', 'run tests on single-run server', function() {
-    var options = ['--single-run', '--no-auto-watch', '--log-level=warn'];
-    if (process.env.TRAVIS) {
-      options =  options.concat(['--browsers=Firefox']);
-    } else {
-      //Can augment options with command line arguments
-      options =  options.concat(this.args);
-    }
+    var options = ['--single-run', '--no-auto-watch', '--log-level=warn']
+      .concat(this.args) //Let user augment test args with command line args
+      .concat(process.env.TRAVIS ? '--browsers=Firefox' : '');
     runKarma('start', options);
   });
 
@@ -352,6 +317,25 @@ module.exports = function(grunt) {
       }
     });
   });
+
+  // Karma configuration
+  function runKarma(command, options) {
+    var karmaCmd = process.platform === 'win32' ? 'karma.cmd' : 'karma';
+    var args = [command].concat(options);
+    var done = grunt.task.current.async();
+    var child = grunt.util.spawn({
+        cmd: karmaCmd,
+        args: args
+    }, function(err, result, code) {
+      if (code) {
+        done(false);
+      } else {
+        done();
+      }
+    });
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+  }
   
   return grunt;
 };
