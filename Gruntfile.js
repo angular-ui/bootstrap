@@ -243,13 +243,13 @@ module.exports = function(grunt) {
     files.forEach(html2js);
   });
 
-  // Testacular configuration
-  function runTestacular(command, options) {
-    var testacularCmd = process.platform === 'win32' ? 'testacular.cmd' : 'testacular';
+  // Karma configuration
+  function runKarma(command, options) {
+    var karmaCmd = process.platform === 'win32' ? 'karma.cmd' : 'karma';
     var args = [command].concat(options);
     var done = grunt.task.current.async();
     var child = grunt.util.spawn({
-        cmd: testacularCmd,
+        cmd: karmaCmd,
         args: args
     }, function(err, result, code) {
       if (code) {
@@ -270,22 +270,22 @@ module.exports = function(grunt) {
       //Can augment options with command line arguments
       options =  options.concat(this.args);
     }
-    runTestacular('start', options);
+    runKarma('start', options);
   });
 
-  grunt.registerTask('server', 'start testacular server', function() {
+  grunt.registerTask('server', 'start karma server', function() {
     var options = ['--no-single-run', '--no-auto-watch'].concat(this.args);
-    runTestacular('start', options);
+    runKarma('start', options);
   });
 
-  grunt.registerTask('test-run', 'run tests against continuous testacular server', function() {
+  grunt.registerTask('test-run', 'run tests against continuous karma server', function() {
     var options = ['--single-run', '--no-auto-watch'].concat(this.args);
-    runTestacular('run', options);
+    runKarma('run', options);
   });
 
-  grunt.registerTask('test-watch', 'start testacular server, watch & execute tests', function() {
+  grunt.registerTask('test-watch', 'start karma server, watch & execute tests', function() {
     var options = ['--no-single-run', '--auto-watch'].concat(this.args);
-    runTestacular('start', options);
+    runKarma('start', options);
   });
 
   //changelog generation
