@@ -1,4 +1,4 @@
-# bootstrap - [AngularJS](http://angularjs.org/) directives specific to [twitter bootstrap](http://twitter.github.com/bootstrap/)
+# bootstrap - [AngularJS](http://angularjs.org/) directives specific to [twitter bootstrap](http://twitter.github.io/bootstrap/)
 
 ***
 
@@ -6,7 +6,7 @@
 
 ## Demo
 
-Do you want to see directives in action? Visit http://angular-ui.github.com/bootstrap/!
+Do you want to see directives in action? Visit http://angular-ui.github.io/bootstrap/!
 
 ## Installation
 
