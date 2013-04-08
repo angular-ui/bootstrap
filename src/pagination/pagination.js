@@ -43,20 +43,23 @@ angular.module('ui.bootstrap.pagination', [])
       scope.$watch('numPages + currentPage + maxSize', function() {
         scope.pages = [];
         
-        //set the default maxSize to numPages
-        var maxSize = ( scope.maxSize && scope.maxSize < scope.numPages ) ? scope.maxSize : scope.numPages;
-        var startPage = scope.currentPage - Math.floor(maxSize/2);
-        
-        //adjust the startPage within boundary
-        if(startPage < 1) {
-            startPage = 1;
-        }
-        if ((startPage + maxSize - 1) > scope.numPages) {
-            startPage = scope.numPages - maxSize + 1;
+        // Default page limits
+        var startPage = 1, endPage = scope.numPages;
+
+        // recompute if maxSize
+        if ( scope.maxSize && scope.maxSize < scope.numPages ) {
+          startPage = Math.max(scope.currentPage - Math.floor(scope.maxSize/2), 1);
+          endPage   = startPage + scope.maxSize - 1;
+
+          // Adjust if limit is exceeded
+          if (endPage > scope.numPages) {
+            endPage   = scope.numPages;
+            startPage = endPage - scope.maxSize + 1;
+          }
         }
 
         // Add page number links
-        for (var number = startPage, max = startPage + maxSize; number < max; number++) {
+        for (var number = startPage; number <= endPage; number++) {
           var page = makePage(number, number, scope.isActive(number), false);
           scope.pages.push(page);
         }
