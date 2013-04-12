@@ -207,7 +207,12 @@ angular.module('ui.bootstrap.typeahead', [])
   })
 
   .filter('typeaheadHighlight', function() {
+
+    function escapeRegexp(queryToEscape) {
+      return queryToEscape.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+    }
+
     return function(matchItem, query) {
-      return (query) ? matchItem.replace(new RegExp(query, 'gi'), '<strong>$&</strong>') : query;
+      return query ? matchItem.replace(new RegExp(escapeRegexp(query), 'gi'), '<strong>$&</strong>') : query;
     };
   });
