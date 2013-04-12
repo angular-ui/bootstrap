@@ -311,6 +311,21 @@ describe('typeahead tests', function () {
         changeInputValueTo(element, 'not in matches');
         expect($scope.result).toEqual(undefined);
       });
+
+      it('should bind loading indicator expression', inject(function ($timeout) {
+
+        $scope.isLoading = false;
+        $scope.loadMatches = function(viewValue) {
+          return $timeout(function() { return [];}, 1000);
+        };
+
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in loadMatches()' typeahead-loading='isLoading'></div>");
+        changeInputValueTo(element, 'foo');
+
+        expect($scope.isLoading).toBeTruthy();
+        $timeout.flush();
+        expect($scope.isLoading).toBeFalsy();
+      }));
     });
 
     describe('selecting a match', function () {

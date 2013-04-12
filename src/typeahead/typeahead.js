@@ -30,7 +30,7 @@ angular.module('ui.bootstrap.typeahead', [])
 }])
 
   //options - min length
-  .directive('typeahead', ['$compile', '$q', '$document', 'typeaheadParser', function ($compile, $q, $document, typeaheadParser) {
+  .directive('typeahead', ['$compile', '$parse', '$q', '$document', 'typeaheadParser', function ($compile, $parse, $q, $document, typeaheadParser) {
 
   var HOT_KEYS = [9, 13, 27, 38, 40];
 
@@ -49,6 +49,8 @@ angular.module('ui.bootstrap.typeahead', [])
       //should it restrict model values to the ones selected from the popup only?
       var isEditable = originalScope.$eval(attrs.typeaheadEditable) !== false;
 
+      var isLoadingSetter = $parse(attrs.typeaheadLoading).assign || angular.noop;
+
       //create a child scope for the typeahead directive so we are not polluting original scope
       //with typeahead-specific data (matches, query etc.)
       var scope = originalScope.$new();
@@ -64,6 +66,7 @@ angular.module('ui.bootstrap.typeahead', [])
       var getMatchesAsync = function(inputValue) {
 
         var locals = {$viewValue: inputValue};
+        isLoadingSetter(originalScope, true);
         $q.when(parserResult.source(scope, locals)).then(function(matches) {
 
           //it might happen that several async queries were in progress if a user were typing fast
@@ -88,8 +91,12 @@ angular.module('ui.bootstrap.typeahead', [])
             } else {
               resetMatches();
             }
+            isLoadingSetter(originalScope, false);
           }
-        }, resetMatches);
+        }, function(){
+          resetMatches();
+          isLoadingSetter(originalScope, false);
+        });
       };
 
       resetMatches();
