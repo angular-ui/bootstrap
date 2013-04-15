@@ -200,7 +200,7 @@ describe('typeahead tests', function () {
     };
 
     var findDropDown = function(element) {
-      return element.find('div.dropdown');
+      return element.find('ul.typeahead');
     };
 
     var findMatches = function(element) {
@@ -222,7 +222,7 @@ describe('typeahead tests', function () {
           this.message = function() {
             return "Expected '" + angular.mock.dump(this.actual) + "' to be closed.";
           };
-          return !typeaheadEl.hasClass('open') && findMatches(this.actual).length === 0;
+          return typeaheadEl.css('display')==='none' && findMatches(this.actual).length === 0;
 
         }, toBeOpenWithActive: function(noOfMatches, activeIdx) {
 
@@ -232,7 +232,7 @@ describe('typeahead tests', function () {
           this.message = function() {
             return "Expected '" + angular.mock.dump(this.actual) + "' to be opened.";
           };
-          return typeaheadEl.hasClass('open') && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
+          return typeaheadEl.css('display')==='block' && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
         }
       });
     });
@@ -391,12 +391,11 @@ describe('typeahead tests', function () {
         var inputEl = findInput(element);
 
         changeInputValueTo(element, 'b');
-        var dropdown = findDropDown(element);
 
         $document.find('body').click();
         $scope.$digest();
 
-        expect(dropdown).not.toHaveClass('open');
+        expect(element).toBeClosed();
       });
     });
 
