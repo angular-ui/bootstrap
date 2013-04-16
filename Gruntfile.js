@@ -296,15 +296,26 @@ module.exports = function(grunt) {
     var done = grunt.task.current.async();
     var child = grunt.util.spawn({
       cmd:process.platform === 'win32' ? 'git.cmd' : 'git',
-      args:['log', changeFrom + '..' + changeTo, '--oneline']
+      args: [
+        'log',
+        changeFrom + '..' + changeTo,
+        '--format=%H%n%s%n%b%n==END=='
+      ]
     }, function (err, result, code) {
 
-      var changelog = {
-        chore: {}, demo: {}, docs: {}, feat: {}, fix: {}, refactor: {}, style: {}, test: {}
-      };
+      var changelog = {};
+      function addChange(changeType, component, change) {
+        if (!changelog[changeType]) {
+          changelog[changeType] = {};
+        }
+        if (!changelog[changeType][component]) {
+          changelog[changeType][component] = [];
+        }
+        changelog[changeType][component].push(change);
+      }
 
       var COMMIT_MSG_REGEXP = /^(chore|demo|docs|feat|fix|refactor|style|test)\((.+)\):? (.+)$/;
-      var gitlog = ('' + result).split('\n').reverse();
+      var gitlog = result.toString().split('\n==END==\n').reverse();
 
       if (code) {
         grunt.log.error(err);
@@ -312,18 +323,23 @@ module.exports = function(grunt) {
       } else {
 
         gitlog.forEach(function (logItem) {
-          var sha1 = logItem.slice(0, 7);
-          var fullMsg = logItem.slice(8);
+          var lines = logItem.split('\n');
+          var sha1 = lines.shift().substr(0,8); //Only first 7 of sha1
+          var subject = lines.shift();
 
-          var msgMatches = fullMsg.match(COMMIT_MSG_REGEXP);
+          var msgMatches = subject.match(COMMIT_MSG_REGEXP);
           var changeType = msgMatches[1];
-          var directive = msgMatches[2];
-          var directiveMsg = msgMatches[3];
+          var component = msgMatches[2];
+          var componentMsg = msgMatches[3];
 
-          if (!changelog[changeType][directive]) {
-            changelog[changeType][directive] = [];
+          var breaking = logItem.match(/BREAKING CHANGE:([\s\S]*)/);
+          if (breaking) {
+            addChange('breaking', component, {
+              sha1: sha1,
+              msg: breaking[1]
+            });
           }
-          changelog[changeType][directive].push({sha1:sha1, msg:directiveMsg});
+          addChange(changeType, component, {sha1:sha1, msg:componentMsg});
         });
 
         console.log(grunt.template.process(grunt.file.read('misc/changelog.tpl.md'), {data: {
