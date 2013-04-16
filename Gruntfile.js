@@ -124,7 +124,11 @@ module.exports = function(grunt) {
 
   //Common ui.bootstrap module containing all modules for src and templates
   //findModule: Adds a given module to config
+  var foundModules = {};
   function findModule(name) {
+    if (foundModules[name]) { return; }
+    foundModules[name] = true;
+
     function breakup(text, separator) {
       return text.replace(/[A-Z]/g, function (match) {
         return separator + match;
@@ -150,7 +154,7 @@ module.exports = function(grunt) {
       dependencies: dependenciesForModule(name),
       docs: {
         md: grunt.file.expand("src/"+name+"/docs/*.md")
-          .map(grunt.file.read).join("\n"),
+          .map(grunt.file.read).map(markdown).join("\n"),
         js: grunt.file.expand("src/"+name+"/docs/*.js")
           .map(grunt.file.read).join("\n"),
         html: grunt.file.expand("src/"+name+"/docs/*.html")
