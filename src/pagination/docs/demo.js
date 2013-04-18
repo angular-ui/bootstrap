@@ -6,4 +6,7 @@ var PaginationDemoCtrl = function ($scope) {
   $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
   };
+
+  $scope.bigNoOfPages = 18;
+  $scope.bigCurrentPage = 1;
 };
