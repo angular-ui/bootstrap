@@ -1,7 +1,7 @@
 describe('Given ui.bootstrap.dialog', function(){
 
 	var $document, $compile, $scope, $rootScope, $dialog, q, provider;
-	var template = '<div>I\'m a template</div>';
+	var template = '<div>I\'m a template</div> ';
 
 	beforeEach(module('ui.bootstrap.dialog'));
 	beforeEach(module('template/dialog/message.html'));
@@ -286,5 +286,23 @@ describe('Given ui.bootstrap.dialog', function(){
 		it('should use the specified template', function(){
 			expect($document.find('body > div.modal > div.modal-header').length).toBe(1);
 		});
+	});
+
+	describe('when opening it with a template containing white-space', function(){
+
+		var controllerIsCreated;
+		function Controller($scope, dialog){
+			controllerIsCreated = true;
+		}
+
+		beforeEach(function(){
+			createDialog({
+				template:' <div>Has whitespace that IE8 does not like assigning data() to</div> ',
+				controller: Controller
+			});
+			openDialog();
+		});
+
+		dialogShouldBeOpen();
 	});
 });

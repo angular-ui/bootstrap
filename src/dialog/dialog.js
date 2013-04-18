@@ -123,7 +123,7 @@ dialogModule.provider("$dialog", function(){
 
         if (self.options.controller) {
           var ctrl = $controller(self.options.controller, locals);
-          self.modalEl.contents().data('ngControllerController', ctrl);
+          self.modalEl.children().data('ngControllerController', ctrl);
         }
 
         $compile(self.modalEl)($scope);
