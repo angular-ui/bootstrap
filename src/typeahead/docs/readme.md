@@ -4,5 +4,5 @@ This directive can be used to quickly create elegant typeheads with any form tex
 
 It is very well integrated into the AngularJS as:
 
-* it uses the same, flexible syntax as the `select` directive (http://docs.angularjs.org/api/ng.directive:select)
+* it uses the same, flexible syntax as the [select directive](http://docs.angularjs.org/api/ng.directive:select)
 * works with promises and it means that you can retrieve matches using the `$http` service with minimal effort
