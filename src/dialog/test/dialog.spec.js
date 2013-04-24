@@ -59,6 +59,11 @@ describe('Given ui.bootstrap.dialog', function(){
 	var clearGlobalOptions = function(){
 		provider.options({});
 	};
+	
+	var changeLocation = function() {
+		$rootScope.$broadcast('$locationChangeSuccess');
+		$rootScope.$apply();
+	};
 
 	var dialogShouldBeClosed = function(){
 		it('should not include a backdrop in the DOM', function(){
@@ -286,6 +291,16 @@ describe('Given ui.bootstrap.dialog', function(){
 		it('should use the specified template', function(){
 			expect($document.find('body > div.modal > div.modal-header').length).toBe(1);
 		});
+	});
+	
+	describe('When dialog is open and location changes', function(){
+		beforeEach(function(){
+			createDialog({template:template});
+			openDialog();
+			changeLocation();
+		});
+
+		dialogShouldBeClosed();
 	});
 
 	describe('when opening it with a template containing white-space', function(){
