@@ -91,3 +91,7 @@ The dialog object returned by the `$dialog` service methods `open` and `message`
 
 Closes the dialog. Optionally a result can be specified. The result is used to resolve the promise returned by the `open` method.
 
+#### `isOpen`
+
+Returns true if the dialog is shown, else returns false.
+
