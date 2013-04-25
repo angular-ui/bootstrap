@@ -96,7 +96,6 @@ dialogModule.provider("$dialog", function(){
 
       this.handleLocationChange = function() {
         self.close();
-        self.$scope.$apply();
       };
     }
 

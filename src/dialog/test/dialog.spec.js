@@ -60,10 +60,6 @@ describe('Given ui.bootstrap.dialog', function(){
 		provider.options({});
 	};
 	
-	var changeLocation = function() {
-		$rootScope.$broadcast('$locationChangeSuccess');
-		$rootScope.$apply();
-	};
 
 	var dialogShouldBeClosed = function(){
 		it('should not include a backdrop in the DOM', function(){
@@ -75,7 +71,7 @@ describe('Given ui.bootstrap.dialog', function(){
 		});
 
 		it('should return false for isOpen()', function(){
-			expect(dialog.isOpen()).toBe(false);
+			expect(dialog.isOpen()).toBeFalsy();
 		});
 	};
 
@@ -292,16 +288,23 @@ describe('Given ui.bootstrap.dialog', function(){
 			expect($document.find('body > div.modal > div.modal-header').length).toBe(1);
 		});
 	});
-	
-	describe('When dialog is open and location changes', function(){
-		beforeEach(function(){
-			createDialog({template:template});
-			openDialog();
-			changeLocation();
-		});
 
-		dialogShouldBeClosed();
-	});
+  describe('When dialog is open and location changes', function () {
+
+    var changeLocation = function () {
+      $rootScope.$apply(function(){
+        $rootScope.$broadcast('$locationChangeSuccess');
+      });
+    };
+
+    beforeEach(function () {
+      createDialog({template: template});
+      openDialog();
+      changeLocation();
+    });
+
+    dialogShouldBeClosed();
+  });
 
 	describe('when opening it with a template containing white-space', function(){
 
