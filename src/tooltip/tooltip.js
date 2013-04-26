@@ -3,7 +3,7 @@
  * function, placement as a function, inside, support for more triggers than
  * just mouse enter/leave, html tooltips, and selector delegation.
  */
-angular.module( 'ui.bootstrap.tooltip', [] )
+angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
 
 /**
  * The $tooltip service creates tooltip- and popover-like directives as well as
@@ -48,7 +48,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
    * Returns the actual instance of the $tooltip service.
    * TODO support multiple triggers
    */
-  this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', function ( $window, $compile, $timeout, $parse, $document ) {
+  this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', '$position', function ( $window, $compile, $timeout, $parse, $document, $position ) {
     return function $tooltip ( type, prefix, defaultTriggerShow, defaultTriggerHide ) {
       var options = angular.extend( {}, defaultOptions, globalOptions );
       var directiveName = snake_case( type );
@@ -63,17 +63,6 @@ angular.module( 'ui.bootstrap.tooltip', [] )
           '>'+
         '</'+ directiveName +'-popup>';
 
-      // Calculate the current position and size of the directive element.
-      function getPosition( element ) {
-        var boundingClientRect = element[0].getBoundingClientRect();
-        return {
-          width: element.prop( 'offsetWidth' ),
-          height: element.prop( 'offsetHeight' ),
-          top: boundingClientRect.top + $window.pageYOffset,
-          left: boundingClientRect.left + $window.pageXOffset
-        };
-      }
-          
       return {
         restrict: 'EA',
         scope: true,
@@ -148,7 +137,7 @@ angular.module( 'ui.bootstrap.tooltip', [] )
             }
             
             // Get the position of the directive element.
-            position = getPosition( element );
+            position = $position.position( element );
 
             // Get the height and width of the tooltip so we can center it.
             ttWidth = tooltip.prop( 'offsetWidth' );

@@ -16,3 +16,5 @@ will display:
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
 
+The tooltip directives require the `$position` service.
+

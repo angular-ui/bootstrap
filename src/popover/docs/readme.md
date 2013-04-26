@@ -14,3 +14,5 @@ will display:
 - `popover-popup-delay`: For how long should the user have to have the mouse
   over the element before the popover shows (in milliseconds)? Defaults to 0.
 
+The popover directives require the `$position` service.
+
