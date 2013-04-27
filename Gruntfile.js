@@ -218,7 +218,7 @@ module.exports = function(grunt) {
 
     var modules = grunt.config('modules');
     grunt.config('srcModules', pluck(modules, 'moduleName'));
-    grunt.config('tplModules', pluck(modules, 'tplModules'));
+    grunt.config('tplModules', pluck(modules, 'tplModules').filter(function(tpls) { return tpls.length > 0;} ));
     grunt.config('demoModules', modules.filter(function(module) {
       return module.docs.md && module.docs.js && module.docs.html;
     }));
