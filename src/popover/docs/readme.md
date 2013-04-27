@@ -13,6 +13,8 @@ will display:
 - `popover-animation`: Should it fade in and out? Defaults to "true".
 - `popover-popup-delay`: For how long should the user have to have the mouse
   over the element before the popover shows (in milliseconds)? Defaults to 0.
+- `popover-trigger`: What should trigger the show of the popover? See the
+  `tooltip` directive for supported values.
 
 The popover directives require the `$position` service.
 

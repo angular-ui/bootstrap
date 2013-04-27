@@ -17,6 +17,13 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
     popupDelay: 0
   };
 
+  // Default hide triggers for each show trigger
+  var triggerMap = {
+    'mouseenter': 'mouseleave',
+    'click': 'click',
+    'focus': 'blur'
+  };
+
   // The options specified to the provider globally.
   var globalOptions = {};
   
@@ -49,9 +56,41 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
    * TODO support multiple triggers
    */
   this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', '$position', function ( $window, $compile, $timeout, $parse, $document, $position ) {
-    return function $tooltip ( type, prefix, defaultTriggerShow, defaultTriggerHide ) {
+    return function $tooltip ( type, prefix, defaultTriggerShow ) {
       var options = angular.extend( {}, defaultOptions, globalOptions );
+
+      /**
+       * Returns an object of show and hide triggers.
+       *
+       * If a trigger is supplied,
+       * it is used to show the tooltip; otherwise, it will use the `trigger`
+       * option passed to the `$tooltipProvider.options` method; else it will
+       * default to the trigger supplied to this directive factory.
+       *
+       * The hide trigger is based on the show trigger. If the `trigger` option
+       * was passed to the `$tooltipProvider.options` method, it will use the
+       * mapped trigger from `triggerMap` or the passed trigger if the map is
+       * undefined; otherwise, it uses the `triggerMap` value of the show
+       * trigger; else it will just use the show trigger.
+       */
+      function setTriggers ( trigger ) {
+        var show, hide;
+       
+        show = trigger || options.trigger || defaultTriggerShow;
+        if ( angular.isDefined ( options.trigger ) ) {
+          hide = triggerMap[options.trigger] || show;
+        } else {
+          hide = triggerMap[show] || show;
+        }
+
+        return {
+          show: show,
+          hide: hide
+        };
+      }
+
       var directiveName = snake_case( type );
+      var triggers = setTriggers( undefined );
 
       var template = 
         '<'+ directiveName +'-popup '+
@@ -72,38 +111,31 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           var popupTimeout;
           var $body;
 
-          attrs.$observe( type, function ( val ) {
-            scope.tt_content = val;
-          });
-
-          attrs.$observe( prefix+'Title', function ( val ) {
-            scope.tt_title = val;
-          });
-
-          attrs.$observe( prefix+'Placement', function ( val ) {
-            scope.tt_placement = angular.isDefined( val ) ? val : options.placement;
-          });
-
-          attrs.$observe( prefix+'Animation', function ( val ) {
-            scope.tt_animation = angular.isDefined( val ) ? $parse( val ) : function(){ return options.animation; };
-          });
-
-          attrs.$observe( prefix+'PopupDelay', function ( val ) {
-            var delay = parseInt( val, 10 );
-            scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
-          });
-
           // By default, the tooltip is not open.
           // TODO add ability to start tooltip opened
           scope.tt_isOpen = false;
 
-          //show the tooltip with delay if specified, otherwise show it immediately
-          function showWithDelay() {
-            if( scope.tt_popupDelay ){
+          function toggleTooltipBind () {
+            if ( ! scope.tt_isOpen ) {
+              showTooltipBind();
+            } else {
+              hideTooltipBind();
+            }
+          }
+          
+          // Show the tooltip with delay if specified, otherwise show it immediately
+          function showTooltipBind() {
+            if ( scope.tt_popupDelay ) {
               popupTimeout = $timeout( show, scope.tt_popupDelay );
-            }else {
+            } else {
               scope.$apply( show );
             }
+          }
+
+          function hideTooltipBind () {
+            scope.$apply(function () {
+              hide();
+            });
           }
           
           // Show the tooltip popup element.
@@ -182,7 +214,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           // Hide the tooltip popup element.
           function hide() {
             // First things first: we don't show it anymore.
-            //tooltip.removeClass( 'in' );
             scope.tt_isOpen = false;
 
             //if tooltip is going to be shown after delay, we must cancel this
@@ -198,25 +229,43 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             }
           }
 
-          // Register the event listeners. If only one event listener was
-          // supplied, we use the same event listener for showing and hiding.
-          // TODO add ability to customize event triggers
-          if ( ! angular.isDefined( defaultTriggerHide ) ) {
-            element.bind( defaultTriggerShow, function toggleTooltipBind () {
-              if ( ! scope.tt_isOpen ) {
-                showWithDelay();
-              } else {
-                scope.$apply( hide );
-              }
-            });
-          } else {
-            element.bind( defaultTriggerShow, function showTooltipBind() {
-              showWithDelay();
-            });
-            element.bind( defaultTriggerHide, function hideTooltipBind() {
-              scope.$apply( hide );
-            });
-          }
+          /**
+           * Observe the relevant attributes.
+           */
+          attrs.$observe( type, function ( val ) {
+            scope.tt_content = val;
+          });
+
+          attrs.$observe( prefix+'Title', function ( val ) {
+            scope.tt_title = val;
+          });
+
+          attrs.$observe( prefix+'Placement', function ( val ) {
+            scope.tt_placement = angular.isDefined( val ) ? val : options.placement;
+          });
+
+          attrs.$observe( prefix+'Animation', function ( val ) {
+            scope.tt_animation = angular.isDefined( val ) ? $parse( val ) : function(){ return options.animation; };
+          });
+
+          attrs.$observe( prefix+'PopupDelay', function ( val ) {
+            var delay = parseInt( val, 10 );
+            scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
+          });
+
+          attrs.$observe( prefix+'Trigger', function ( val ) {
+            element.unbind( triggers.show );
+            element.unbind( triggers.hide );
+
+            triggers = setTriggers( val );
+
+            if ( triggers.show === triggers.hide ) {
+              element.bind( triggers.show, toggleTooltipBind );
+            } else {
+              element.bind( triggers.show, showTooltipBind );
+              element.bind( triggers.hide, hideTooltipBind );
+            }
+          });
         }
       };
     };
@@ -233,7 +282,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
 })
 
 .directive( 'tooltip', [ '$tooltip', function ( $tooltip ) {
-  return $tooltip( 'tooltip', 'tooltip', 'mouseenter', 'mouseleave' );
+  return $tooltip( 'tooltip', 'tooltip', 'mouseenter' );
 }])
 
 .directive( 'tooltipHtmlUnsafePopup', function () {
@@ -246,7 +295,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
 })
 
 .directive( 'tooltipHtmlUnsafe', [ '$tooltip', function ( $tooltip ) {
-  return $tooltip( 'tooltipHtmlUnsafe', 'tooltip', 'mouseenter', 'mouseleave' );
+  return $tooltip( 'tooltipHtmlUnsafe', 'tooltip', 'mouseenter' );
 }])
 
 ;

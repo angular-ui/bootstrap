@@ -20,5 +20,12 @@
     <p>
       I can even contain HTML. <a><span tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</span></a>
     </p>
+    <p>
+      Or use custom triggers, like focus: 
+      <input type="text" value="Click me!"
+        tooltip="See? Now click away..." 
+        tooltip-trigger="focus"
+        tooltip-placement="right" />
+    </p>
   </div>
 </div>

@@ -15,6 +15,19 @@ will display:
 - `tooltip-animation`: Should it fade in and out? Defaults to "true".
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
+- `tooltip-trigger`: What should trigger a show of the tooltip?
 
 The tooltip directives require the `$position` service.
+
+**Triggers**
+
+The following show triggers are supported out of the box, along with their
+provided hide triggers:
+
+- `mouseenter`: `mouseleave`
+- `click`: `click`
+- `focus`: `blur`
+
+For any non-supported value, the trigger will be used to both show and hide the
+tooltip.
 

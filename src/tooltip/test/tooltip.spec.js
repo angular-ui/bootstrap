@@ -54,6 +54,7 @@ describe('tooltip', function() {
     elm = $compile( angular.element( 
       '<span tooltip="tooltip text" tooltip-placement="bottom">Selector Text</span>' 
     ) )( scope );
+    scope.$apply();
     elmScope = elm.scope();
 
     elm.trigger( 'mouseenter' );
@@ -161,6 +162,46 @@ describe('tooltip', function() {
 
   });
 
+  describe( 'with a trigger attribute', function() {
+    var scope, elmBody, elm, elmScope;
+
+    beforeEach( inject( function( $rootScope ) {
+      scope = $rootScope;
+    }));
+
+    it( 'should use it to show but set the hide trigger based on the map for mapped triggers', inject( function( $compile ) {
+      elmBody = angular.element(
+        '<div><input tooltip="Hello!" tooltip-trigger="focus" /></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$apply();
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+
+      expect( elmScope.tt_isOpen ).toBeFalsy();
+      elm.trigger('focus');
+      expect( elmScope.tt_isOpen ).toBeTruthy();
+      elm.trigger('blur');
+      expect( elmScope.tt_isOpen ).toBeFalsy();
+    }));
+
+    it( 'should use it as both the show and hide triggers for unmapped triggers', inject( function( $compile ) {
+      elmBody = angular.element(
+        '<div><input tooltip="Hello!" tooltip-trigger="fakeTriggerAttr" /></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$apply();
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+
+      expect( elmScope.tt_isOpen ).toBeFalsy();
+      elm.trigger('fakeTriggerAttr');
+      expect( elmScope.tt_isOpen ).toBeTruthy();
+      elm.trigger('fakeTriggerAttr');
+      expect( elmScope.tt_isOpen ).toBeFalsy();
+    }));
+  });
+
 });
 
 describe( 'tooltipHtmlUnsafe', function() {
@@ -202,13 +243,13 @@ describe( 'tooltipHtmlUnsafe', function() {
 });
 
 describe( '$tooltipProvider', function() {
+  var elm, 
+      elmBody,
+      scope, 
+      elmScope,
+      body;
 
   describe( 'popupDelay', function() {
-    var elm,
-      elmBody,
-      scope,
-      elmScope;
-
     beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
       $tooltipProvider.options({popupDelay: 1000});
     }));
@@ -241,12 +282,6 @@ describe( '$tooltipProvider', function() {
   });
 
   describe('appendToBody', function() {
-    var elm, 
-        elmBody,
-        scope, 
-        elmScope,
-        body;
-
     // load the tooltip code
     beforeEach(module('ui.bootstrap.tooltip', function ( $tooltipProvider ) {
         $tooltipProvider.options({ appendToBody: true });
@@ -274,6 +309,62 @@ describe( '$tooltipProvider', function() {
       expect( elmBody.children().length ).toBe( 1 );
       expect( $body.children().length ).toEqual( bodyLength + 1 );
     }));
+  });
+
+  describe( 'triggers', function() {
+    describe( 'triggers with a mapped value', function() {
+      beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
+        $tooltipProvider.options({trigger: 'focus'});
+      }));
+
+      // load the template
+      beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+      it( 'should use the show trigger and the mapped value for the hide trigger', inject( function ( $rootScope, $compile ) {
+        elmBody = angular.element(
+          '<div><input tooltip="tooltip text" /></div>'
+        );
+        
+        scope = $rootScope;
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('input');
+        elmScope = elm.scope();
+
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+        elm.trigger('focus');
+        expect( elmScope.tt_isOpen ).toBeTruthy();
+        elm.trigger('blur');
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+      }));
+    });
+
+    describe( 'triggers without a mapped value', function() {
+      beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
+        $tooltipProvider.options({trigger: 'fakeTrigger'});
+      }));
+
+      // load the template
+      beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+      it( 'should use the show trigger to hide', inject( function ( $rootScope, $compile ) {
+        elmBody = angular.element(
+          '<div><span tooltip="tooltip text">Selector Text</span></div>'
+        );
+        
+        scope = $rootScope;
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('span');
+        elmScope = elm.scope();
+
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+        elm.trigger('fakeTrigger');
+        expect( elmScope.tt_isOpen ).toBeTruthy();
+        elm.trigger('fakeTrigger');
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+      }));
+    });
   });
 });
 
