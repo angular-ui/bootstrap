@@ -266,6 +266,11 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
               element.bind( triggers.hide, hideTooltipBind );
             }
           });
+
+          //if a tooltip is attached to <body> we need to remove it on location change
+          if ( options.appendToBody ) {
+            scope.$on('$locationChangeSuccess', hide);
+          }
         }
       };
     };
@@ -296,7 +301,4 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
 
 .directive( 'tooltipHtmlUnsafe', [ '$tooltip', function ( $tooltip ) {
   return $tooltip( 'tooltipHtmlUnsafe', 'tooltip', 'mouseenter' );
-}])
-
-;
-
+}]);

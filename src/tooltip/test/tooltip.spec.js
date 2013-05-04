@@ -309,6 +309,26 @@ describe( '$tooltipProvider', function() {
       expect( elmBody.children().length ).toBe( 1 );
       expect( $body.children().length ).toEqual( bodyLength + 1 );
     }));
+
+    it('should close on location change', inject( function( $rootScope, $compile) {
+
+      elmBody = angular.element(
+        '<div><span tooltip="tooltip text">Selector Text</span></div>'
+      );
+
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+
+      elm.trigger( 'mouseenter' );
+      expect( elmScope.tt_isOpen ).toBe( true );
+
+      scope.$broadcast('$locationChangeSuccess');
+      scope.$digest();
+      expect( elmScope.tt_isOpen ).toBe( false );
+    }));
   });
 
   describe( 'triggers', function() {
