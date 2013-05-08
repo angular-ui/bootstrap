@@ -8,6 +8,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-karma');
 
   // Project configuration.
   grunt.initConfig({
@@ -23,17 +24,15 @@ module.exports = function(grunt) {
       tplmodules: 'angular.module("ui.bootstrap.tpls", [<%= tplModules %>]);',
       all: 'angular.module("ui.bootstrap", ["ui.bootstrap.tpls", <%= srcModules %>]);'
     },
-    watch: {
+    delta: {
       html: {
         files: ['template/**/*.html'],
-        tasks: ['html2js']
+        tasks: ['html2js', 'karma:watch:run']
       },
       js: {
-        //nospawn makes the tests start faster
-        nospawn: true,
         files: ['src/**/*.js'],
         //we don't need to jshint here, it slows down everything else
-        tasks: ['test-run']
+        tasks: ['karma:watch:run']
       }
     },
     concat: {
@@ -112,12 +111,33 @@ module.exports = function(grunt) {
           angular: true
         }
       }
+    },
+    karma: {
+      options: {
+        configFile: 'karma.conf.js'
+      },
+      watch: {
+        background: true
+      },
+      continuous: {
+        singleRun: true
+      },
+      travis: {
+        singleRun: true,
+        browsers: ['Firefox']
+      }
     }
   });
 
-  //register before and after test tasks so we've don't have to change cli options on the goole's CI server
+  //register before and after test tasks so we've don't have to change cli 
+  //options on the goole's CI server
   grunt.registerTask('before-test', ['jshint', 'html2js']);
   grunt.registerTask('after-test', ['build', 'copy']);
+
+  //Rename our watch task to 'delta', then make actual 'watch'
+  //task build things, then start test server
+  grunt.renameTask('watch', 'delta');
+  grunt.registerTask('watch', ['before-test', 'after-test', 'karma:watch', 'delta']);
 
   // Default task.
   grunt.registerTask('default', ['before-test', 'test', 'after-test']);
@@ -235,26 +255,8 @@ module.exports = function(grunt) {
     grunt.task.run(['concat', 'uglify']);
   });
 
-  grunt.registerTask('test', 'run tests on single-run server', function() {
-    var options = ['--single-run', '--no-auto-watch', '--log-level=warn']
-      .concat(this.args) //Let user augment test args with command line args
-      .concat(process.env.TRAVIS ? '--browsers=Firefox' : '');
-    runKarma('start', options);
-  });
-
-  grunt.registerTask('server', 'start karma server', function() {
-    var options = ['--no-single-run', '--no-auto-watch'].concat(this.args);
-    runKarma('start', options);
-  });
-
-  grunt.registerTask('test-run', 'run tests against continuous karma server', function() {
-    var options = ['--single-run', '--no-auto-watch'].concat(this.args);
-    runKarma('run', options);
-  });
-
-  grunt.registerTask('test-watch', 'start karma server, watch & execute tests', function() {
-    var options = ['--no-single-run', '--auto-watch'].concat(this.args);
-    runKarma('start', options);
+  grunt.registerTask('test', 'Run tests on singleRun karma server', function() {
+    grunt.task.run(process.env.TRAVIS ? 'karma:travis' : 'karma:continuous');
   });
 
   //changelog generation
@@ -322,24 +324,5 @@ module.exports = function(grunt) {
     });
   });
 
-  // Karma configuration
-  function runKarma(command, options) {
-    var karmaCmd = process.platform === 'win32' ? 'karma.cmd' : 'karma';
-    var args = [command].concat(options);
-    var done = grunt.task.current.async();
-    var child = grunt.util.spawn({
-        cmd: karmaCmd,
-        args: args
-    }, function(err, result, code) {
-      if (code) {
-        done(false);
-      } else {
-        done();
-      }
-    });
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-  }
-  
   return grunt;
 };
