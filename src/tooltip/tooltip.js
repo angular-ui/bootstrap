@@ -267,10 +267,24 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             }
           });
 
-          //if a tooltip is attached to <body> we need to remove it on location change
+          // if a tooltip is attached to <body> we need to remove it on
+          // location change as its parent scope will probably not be destroyed
+          // by the change.
           if ( options.appendToBody ) {
-            scope.$on('$locationChangeSuccess', hide);
+            scope.$on('$locationChangeSuccess', function closeTooltipOnLocationChangeSuccess () {
+            if ( scope.tt_isOpen ) {
+              hide();
+            }
+          });
           }
+          
+          // if this trigger element is destroyed while the tooltip is open, we
+          // need to close the tooltip.
+          scope.$on('$destroy', function closeTooltipOnDestroy () {
+            if ( scope.tt_isOpen ) {
+              hide();
+            }
+          });
         }
       };
     };

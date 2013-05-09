@@ -12,7 +12,7 @@ describe('tooltip', function() {
 
   beforeEach(inject(function($rootScope, $compile) {
     elmBody = angular.element( 
-      '<div><span tooltip="tooltip text">Selector Text</span></div>' 
+      '<div><span tooltip="tooltip text" tooltip-animation="false">Selector Text</span></div>' 
     );
 
     scope = $rootScope;
@@ -121,6 +121,15 @@ describe('tooltip', function() {
     elmBody.find('span').trigger('mouseenter');
 
     expect(elmBody.children().length).toBe(1);
+  }));
+
+  it( 'should close the tooltip when its trigger element is destroyed', inject( function() {
+    elm.trigger( 'mouseenter' );
+    expect( elmScope.tt_isOpen ).toBe( true );
+
+    elm.remove();
+    elmScope.$destroy();
+    expect( elmBody.children().length ).toBe( 0 );
   }));
 
   describe('with specified popup delay', function () {
