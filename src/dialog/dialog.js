@@ -20,7 +20,6 @@ dialogModule.provider("$dialog", function(){
     backdropClass: 'modal-backdrop',
     transitionClass: 'fade',
     triggerClass: 'in',
-    dialogOpenClass: 'modal-open',  
     resolve:{},
     backdropFade: false,
     dialogFade:false,
@@ -132,7 +131,6 @@ dialogModule.provider("$dialog", function(){
 
         $compile(self.modalEl)($scope);
         self._addElementsToDom();
-        body.addClass(self.options.dialogOpenClass);
 
         // trigger tranisitions
         setTimeout(function(){
@@ -152,7 +150,6 @@ dialogModule.provider("$dialog", function(){
       var self = this;
       var fadingElements = this._getFadingElements();
 
-      body.removeClass(self.options.dialogOpenClass);
       if(fadingElements.length > 0){
         for (var i = fadingElements.length - 1; i >= 0; i--) {
           $transition(fadingElements[i], removeTriggerClass).then(onCloseComplete);
