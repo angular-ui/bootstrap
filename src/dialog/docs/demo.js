@@ -2,7 +2,7 @@ function DialogDemoCtrl($scope, $dialog){
 
   // Inlined template for demo
   var t = '<div class="modal-header">'+
-          '<h1>This is the title</h1>'+
+          '<h3>This is the title</h3>'+
           '</div>'+
           '<div class="modal-body">'+
           '<p>Enter a value to pass to <code>close</code> as the result: <input ng-model="result" /></p>'+
