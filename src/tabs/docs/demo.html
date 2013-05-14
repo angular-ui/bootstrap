@@ -1,16 +1,14 @@
 <div ng-controller="TabsDemoCtrl">
   Select a tab by setting active binding to true:
   <br />
-  <button class="btn" ng-click="tabs[0].active = true">
-    Select second tab
-  </button>
-  <button class="btn" ng-click="tabs[1].active = true">
-    Select third tab
-  </button>
-  <br /><br />
+  <button class="btn btn-small" ng-click="tabs[0].active = true">Select second tab</button>
+  <button class="btn btn-small" ng-click="tabs[1].active = true">Select third tab</button>
+  <button class="btn btn-small" ng-click="tabs[1].disabled = ! tabs[1].disabled">Enable / Disable third tab</button>
+  <hr />
+
   <tabset>
     <tab heading="Static title">Static content</tab>
-    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active">
+    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
       {{tab.content}}
     </tab>
     <tab select="alertMe()">

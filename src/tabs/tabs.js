@@ -71,7 +71,11 @@ function($parse, $http, $templateCache, $compile) {
           getActive = $parse(attrs.active);
           setActive = getActive.assign;
           scope.$parent.$watch(getActive, function updateActive(value) {
-            scope.active = !!value;
+            if ( !!value && scope.disabled ) {
+              setActive(scope.$parent, false); // Prevent active assignment
+            } else {
+              scope.active = !!value;
+            }
           });
         } else {
           setActive = getActive = angular.noop;
@@ -85,8 +89,17 @@ function($parse, $http, $templateCache, $compile) {
           }
         });
 
+        scope.disabled = false;
+        if ( attrs.disabled ) {
+          scope.$parent.$watch($parse(attrs.disabled), function(value) {
+            scope.disabled = !! value;
+          });
+        }
+
         scope.select = function() {
-          scope.active = true;
+          if ( ! scope.disabled ) {
+            scope.active = true;
+          }
         };
 
         tabsetCtrl.addTab(scope);

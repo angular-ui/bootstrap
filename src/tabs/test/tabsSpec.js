@@ -378,4 +378,80 @@ describe('tabs', function() {
       expect(contents().eq(2)).toHaveClass('active');
     }));
   });
+
+  describe('disabled', function() {
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+
+      function makeTab(disabled) {
+        return {
+          active: false,
+          select: jasmine.createSpy(),
+          disabled: disabled
+        };
+      }
+      scope.tabs = [
+        makeTab(false), makeTab(true), makeTab(false), makeTab(true)
+      ];
+      elm = $compile([
+        '<tabset>',
+        '  <tab ng-repeat="t in tabs" active="t.active" select="t.select()" disabled="t.disabled">',
+        '    <tab-heading><b>heading</b> {{index}}</tab-heading>',
+        '    content {{$index}}',
+        '  </tab>',
+        '</tabset>'
+      ].join('\n'))(scope);
+      scope.$apply();
+    }));
+
+    function titles() {
+      return elm.find('ul.nav-tabs li');
+    }
+    function contents() {
+      return elm.find('div.tab-content div.tab-pane');
+    }
+
+    function expectTabActive(activeTab) {
+      var _titles = titles();
+      angular.forEach(scope.tabs, function(tab, i) {
+        if (activeTab === tab) {
+          expect(tab.active).toBe(true);
+          expect(tab.select.callCount).toBe( (tab.disabled) ? 0 : 1 );
+          expect(_titles.eq(i)).toHaveClass('active');
+          expect(contents().eq(i).text().trim()).toBe('content ' + i);
+          expect(contents().eq(i)).toHaveClass('active');
+        } else {
+          expect(tab.active).toBe(false);
+          expect(_titles.eq(i)).not.toHaveClass('active');
+        }
+      });
+    }
+
+    it('should not switch active when clicking on title', function() {
+      titles().eq(2).find('a').click();
+      expectTabActive(scope.tabs[2]);
+
+      titles().eq(3).find('a').click();
+      expectTabActive(scope.tabs[2]);
+    });
+
+    it('should not switch active when setting active=true', function() {
+      scope.$apply('tabs[2].active = true');
+      expectTabActive(scope.tabs[2]);
+
+      scope.$apply('tabs[3].active = true');
+      expectTabActive(scope.tabs[2]);
+    });
+
+    it('should toggle between states', function() {
+      expect(titles().eq(3)).toHaveClass('disabled');
+      scope.$apply('tabs[3].disabled = false');
+      expect(titles().eq(3)).not.toHaveClass('disabled');
+
+      expect(titles().eq(2)).not.toHaveClass('disabled');
+      scope.$apply('tabs[2].disabled = true');
+      expect(titles().eq(2)).toHaveClass('disabled');
+    });
+  });
+
 });
