@@ -11,6 +11,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
 
   // Project configuration.
+  grunt.util.linefeed = '\n';
+
   grunt.initConfig({
     ngversion: '1.0.5',
     bsversion: '2.3.1',
