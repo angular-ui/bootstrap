@@ -205,6 +205,21 @@ describe('carousel', function() {
       expect(contents.eq(0)).toHaveClass('active');
       expect(contents.eq(1).text()).toBe('new3');
     });
+
+    it('should not change if next is clicked while transitioning', function() {
+      var carouselScope = elm.children().scope();
+      var next = elm.find('a.right');
+
+      testSlideActive(0);
+      carouselScope.$currentTransition = true;
+      next.click();
+
+      testSlideActive(0);
+
+      carouselScope.$currentTransition = null;
+      next.click();
+      testSlideActive(1);
+    });
   });
 
   describe('controller', function() {
