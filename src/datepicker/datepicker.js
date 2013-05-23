@@ -12,7 +12,7 @@ angular.module('ui.bootstrap.datepicker', [])
   yearRange: 20
 })
 
-.directive( 'datepicker', ['$filter', '$parse', 'datepickerConfig', function ($filter, $parse, datepickerConfig) {
+.directive( 'datepicker', ['dateFilter', '$parse', 'datepickerConfig', function (dateFilter, $parse, datepickerConfig) {
   return {
     restrict: 'EA',
     replace: true,
@@ -101,7 +101,7 @@ angular.module('ui.bootstrap.datepicker', [])
 
           function addDays( dt, n, isCurrentMonth ) {
             for (var i =0; i < n; i ++) {
-              days.push( {date: new Date(dt), isCurrent: isCurrentMonth, isSelected: isSelected(dt), label: $filter('date')(dt, format.day), disabled: isDisabled(dt) } );
+              days.push( {date: new Date(dt), isCurrent: isCurrentMonth, isSelected: isSelected(dt), label: dateFilter(dt, format.day), disabled: isDisabled(dt) } );
               dt.setDate( dt.getDate() + 1 );
             }
             lastDate = dt;
@@ -122,23 +122,23 @@ angular.module('ui.bootstrap.datepicker', [])
 
           // Day labels
           for (i = 0; i < 7; i++) {
-            labels.push(   $filter('date')(days[i].date, format.dayHeader) );
+            labels.push(  dateFilter(days[i].date, format.dayHeader) );
           }
-          updateCalendar( split( days, 7 ), labels, $filter('date')(selected, format.dayTitle) );
+          updateCalendar( split( days, 7 ), labels, dateFilter(selected, format.dayTitle) );
         },
         month: function() {
           var months = [], i = 0, year = selected.getFullYear();
           while ( i < 12 ) {
             var dt = new Date(year, i++, 1);
-            months.push( {date: dt, isCurrent: true, isSelected: isSelected(dt), label: $filter('date')(dt, format.month), disabled: isDisabled(dt)} );
+            months.push( {date: dt, isCurrent: true, isSelected: isSelected(dt), label: dateFilter(dt, format.month), disabled: isDisabled(dt)} );
           }
-          updateCalendar( split( months, 3 ), [], $filter('date')(selected, format.monthTitle) );
+          updateCalendar( split( months, 3 ), [], dateFilter(selected, format.monthTitle) );
         },
         year: function() {
           var years = [], year = parseInt((selected.getFullYear() - 1) / yearRange, 10) * yearRange + 1;
           for ( var i = 0; i < yearRange; i++ ) {
             var dt = new Date(year + i, 0, 1);
-            years.push( {date: dt, isCurrent: true, isSelected: isSelected(dt), label: $filter('date')(dt, format.year), disabled: isDisabled(dt)} );
+            years.push( {date: dt, isCurrent: true, isSelected: isSelected(dt), label: dateFilter(dt, format.year), disabled: isDisabled(dt)} );
           }
           var title = years[0].label + ' - ' + years[years.length - 1].label;
           updateCalendar( split( years, 5 ), [], title );
