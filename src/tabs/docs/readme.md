@@ -1,5 +1,27 @@
 AngularJS version of the tabs directive.
 
-Allows a `select` callback attribute, `active` binding attribute and `disabled` binding attribute.
+### Settings ###
 
-Allows either `heading` text-heading as an attribute, or a `<tab-heading>` element inside as the heading.
+#### `<tabset>` ####
+
+ * `vertical`
+ 	_(Defaults: false)_ :
+ 	Whether tabs appear vertically stacked.
+
+#### `<tab>` ####
+
+ * `heading` or `<tab-heading>`
+ 	:
+ 	Heading text or HTML markup.
+
+ * `active` <i class="icon-eye-open"></i>
+ 	_(Defaults: false)_ :
+ 	Whether tab is currently selected.
+
+ * `disabled` <i class="icon-eye-open"></i>
+ 	_(Defaults: false)_ :
+ 	Whether tab is clickable and can be activated.
+
+ * `select()`
+ 	_(Defaults: null)_ :
+ 	An optional expression called when tab is activated.

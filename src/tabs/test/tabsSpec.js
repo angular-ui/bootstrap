@@ -404,13 +404,6 @@ describe('tabs', function() {
       scope.$apply();
     }));
 
-    function titles() {
-      return elm.find('ul.nav-tabs li');
-    }
-    function contents() {
-      return elm.find('div.tab-content div.tab-pane');
-    }
-
     function expectTabActive(activeTab) {
       var _titles = titles();
       angular.forEach(scope.tabs, function(tab, i) {
@@ -451,6 +444,19 @@ describe('tabs', function() {
       expect(titles().eq(2)).not.toHaveClass('disabled');
       scope.$apply('tabs[2].disabled = true');
       expect(titles().eq(2)).toHaveClass('disabled');
+    });
+  });
+
+  describe('vertical', function() {
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+
+      elm = $compile('<tabset vertical="true"></tabset>')(scope);
+      scope.$apply();
+    }));
+
+    it('to stack tabs', function() {
+      expect(elm.find('ul.nav-tabs')).toHaveClass('nav-stacked');
     });
   });
 

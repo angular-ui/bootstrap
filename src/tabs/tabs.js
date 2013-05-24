@@ -43,7 +43,10 @@ function TabsetCtrl($scope, $element) {
     transclude: true,
     scope: {},
     controller: 'TabsetController',
-    templateUrl: 'template/tabs/tabset.html'
+    templateUrl: 'template/tabs/tabset.html',
+    link: function(scope, element, attrs) {
+      scope.vertical = angular.isDefined(attrs.vertical) ? scope.$eval(attrs.vertical) : false;
+    }
   };
 })
 
