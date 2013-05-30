@@ -26,10 +26,10 @@ angular.module('ui.bootstrap.pagination', [])
       // Setup configuration parameters
       var boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$eval(attrs.boundaryLinks) : paginationConfig.boundaryLinks;
       var directionLinks = angular.isDefined(attrs.directionLinks) ? scope.$eval(attrs.directionLinks) : paginationConfig.directionLinks;
-      var firstText = angular.isDefined(attrs.firstText) ? attrs.firstText : paginationConfig.firstText;
-      var previousText = angular.isDefined(attrs.previousText) ? attrs.previousText : paginationConfig.previousText;
-      var nextText = angular.isDefined(attrs.nextText) ? attrs.nextText : paginationConfig.nextText;
-      var lastText = angular.isDefined(attrs.lastText) ? attrs.lastText : paginationConfig.lastText;
+      var firstText = angular.isDefined(attrs.firstText) ? scope.$parent.$eval(attrs.firstText) : paginationConfig.firstText;
+      var previousText = angular.isDefined(attrs.previousText) ? scope.$parent.$eval(attrs.previousText) : paginationConfig.previousText;
+      var nextText = angular.isDefined(attrs.nextText) ? scope.$parent.$eval(attrs.nextText) : paginationConfig.nextText;
+      var lastText = angular.isDefined(attrs.lastText) ? scope.$parent.$eval(attrs.lastText) : paginationConfig.lastText;
       var rotate = angular.isDefined(attrs.rotate) ? scope.$eval(attrs.rotate) : paginationConfig.rotate;
 
       // Create page object used in template

@@ -353,7 +353,7 @@ describe('pagination directive with added first & last links', function () {
   });
 
   it('changes "first" & "last" text from attributes', function() {
-    element = $compile('<pagination boundary-links="true" first-text="<<<" last-text=">>>" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
+    element = $compile('<pagination boundary-links="true" first-text="\'<<<\'" last-text="\'>>>\'" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
     $rootScope.$digest();
 
     expect(element.find('li').eq(0).text()).toBe('<<<');
@@ -361,7 +361,27 @@ describe('pagination directive with added first & last links', function () {
   });
 
   it('changes "previous" & "next" text from attributes', function() {
-    element = $compile('<pagination boundary-links="true" previous-text="<<" next-text=">>" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
+    element = $compile('<pagination boundary-links="true" previous-text="\'<<\'" next-text="\'>>\'" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
+    $rootScope.$digest();
+
+    expect(element.find('li').eq(1).text()).toBe('<<');
+    expect(element.find('li').eq(-2).text()).toBe('>>');
+  });
+
+  it('changes "first" & "last" text from attribute variables', function() {
+    $rootScope.myfirstText = '<<<';
+    $rootScope.mylastText = '>>>';
+    element = $compile('<pagination boundary-links="true" first-text="myfirstText" last-text="mylastText" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
+    $rootScope.$digest();
+
+    expect(element.find('li').eq(0).text()).toBe('<<<');
+    expect(element.find('li').eq(-1).text()).toBe('>>>');
+  });
+
+  it('changes "previous" & "next" text from attribute variables', function() {
+    $rootScope.previousText = '<<';
+    $rootScope.nextText = '>>';
+    element = $compile('<pagination boundary-links="true" previous-text="previousText" next-text="nextText" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
     $rootScope.$digest();
 
     expect(element.find('li').eq(1).text()).toBe('<<');
@@ -566,7 +586,7 @@ describe('pagination bypass configuration from attributes', function () {
     $rootScope = _$rootScope_;
     $rootScope.numPages = 5;
     $rootScope.currentPage = 3;
-    element = $compile('<pagination boundary-links="true" first-text="<<" previous-text="<" next-text=">" last-text=">>" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
+    element = $compile('<pagination boundary-links="true" first-text="\'<<\'" previous-text="\'<\'" next-text="\'>\'" last-text="\'>>\'" num-pages="numPages" current-page="currentPage"></pagination>')($rootScope);
     $rootScope.$digest();
   }));
 
