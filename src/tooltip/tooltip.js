@@ -303,12 +303,13 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             }
           });
           }
-          
-          // if this trigger element is destroyed while the tooltip is open, we
-          // need to close the tooltip.
-          scope.$on('$destroy', function closeTooltipOnDestroy () {
+
+          // Make sure tooltip is destroyed and removed.
+          scope.$on('$destroy', function onDestroyTooltip() {
             if ( scope.tt_isOpen ) {
               hide();
+            } else {
+              tooltip.remove();
             }
           });
         }

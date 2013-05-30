@@ -238,6 +238,46 @@ describe('tooltip', function() {
     }));
   });
 
+  describe('cleanup', function () {
+    var elmBody, elm, elmScope, tooltipScope;
+
+    function inCache() {
+      var match = false;
+
+      angular.forEach(angular.element.cache, function (item) {
+        if (item.data && item.data.$scope === tooltipScope) {
+          match = true;
+        }
+      });
+
+      return match;
+    }
+
+    beforeEach(inject(function ( $compile, $rootScope ) {
+      elmBody = angular.element('<div><input tooltip="Hello!" tooltip-trigger="fooTrigger" /></div>');
+
+      $compile(elmBody)($rootScope);
+      $rootScope.$apply();
+
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+    }));
+
+    it( 'should not contain a cached reference', function() {
+      expect( inCache() ).toBeTruthy();
+      elmScope.$destroy();
+      expect( inCache() ).toBeFalsy();
+    });
+
+    it( 'should not contain a cached reference when visible', inject( function( $timeout ) {
+      expect( inCache() ).toBeTruthy();
+      elm.trigger('fooTrigger');
+      elmScope.$destroy();
+      $timeout.flush();
+      expect( inCache() ).toBeFalsy();
+    }));
+  });
 });
 
 describe('tooltipWithDifferentSymbols', function() {
