@@ -9,6 +9,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-conventional-changelog');
 
   // Project configuration.
   grunt.util.linefeed = '\n';
@@ -128,6 +129,24 @@ module.exports = function(grunt) {
         singleRun: true,
         browsers: ['Firefox']
       }
+    },
+    changelog: {
+      options: {
+        dest: 'CHANGELOG.md'
+      }
+    },
+    shell: {
+      //We use %version% and evluate it at run-time, because <%= pkg.version %>
+      //is only evaluated once
+      release: [
+        'grunt before-test after-test',
+        'grunt version', //remove "-SNAPSHOT"
+        'grunt changelog',
+        'git commit CHANGELOG.md package.json -m "chore(release): v%version%"',
+        'git tag %version%',
+        'grunt version:minor:"SNAPSHOT"',
+        'git commit package.json -m "chore(): Starting v%version%"'
+      ]
     }
   });
 
@@ -218,6 +237,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', 'Create bootstrap build files', function() {
+    var _ = grunt.util._;
+
     //If arguments define what modules to build, build those. Else, everything
     if (this.args.length) {
       this.args.forEach(findModule);
@@ -229,24 +250,16 @@ module.exports = function(grunt) {
         findModule(dir.split('/')[1]);
       });
     }
-    
-    //Pluck will take an array of objects, and map the given key to a new array
-    //@example: expect( pluck([{a:1},{a:2}], 'a') ).toBe([1,2])
-    function pluck(array, key) {
-      return array.map(function(obj) {
-        return obj[key];
-      });
-    }
 
     var modules = grunt.config('modules');
-    grunt.config('srcModules', pluck(modules, 'moduleName'));
-    grunt.config('tplModules', pluck(modules, 'tplModules').filter(function(tpls) { return tpls.length > 0;} ));
+    grunt.config('srcModules', _.pluck(modules, 'moduleName'));
+    grunt.config('tplModules', _.pluck(modules, 'tplModules').filter(function(tpls) { return tpls.length > 0;} ));
     grunt.config('demoModules', modules.filter(function(module) {
       return module.docs.md && module.docs.js && module.docs.html;
     }));
 
-    var srcFiles = pluck(modules, 'srcFiles');
-    var tpljsFiles = pluck(modules, 'tpljsFiles');
+    var srcFiles = _.pluck(modules, 'srcFiles');
+    var tpljsFiles = _.pluck(modules, 'tpljsFiles');
     //Set the concat task to concatenate the given src modules
     grunt.config('concat.dist.src', grunt.config('concat.dist.src')
                  .concat(srcFiles));
@@ -261,67 +274,40 @@ module.exports = function(grunt) {
     grunt.task.run(process.env.TRAVIS ? 'karma:travis' : 'karma:continuous');
   });
 
-  //changelog generation
-  grunt.registerTask('changelog', 'generates changelog markdown from git commits', function () {
-
-    var changeFrom = this.args[0], changeTo = this.args[1] || 'HEAD';
-
-    var done = grunt.task.current.async();
-    var child = grunt.util.spawn({
-      cmd:process.platform === 'win32' ? 'git.cmd' : 'git',
-      args: [
-        'log',
-        changeFrom + '..' + changeTo,
-        '--format=%H%n%s%n%b%n==END=='
-      ]
-    }, function (err, result, code) {
-
-      var changelog = {};
-      function addChange(changeType, component, change) {
-        if (!changelog[changeType]) {
-          changelog[changeType] = {};
-        }
-        if (!changelog[changeType][component]) {
-          changelog[changeType][component] = [];
-        }
-        changelog[changeType][component].push(change);
+  function setVersion(type, suffix) {
+    var file = 'package.json';
+    var VERSION_REGEX = /([\'|\"]version[\'|\"][ ]*:[ ]*[\'|\"])([\d|.]*)(-\w+)*([\'|\"])/;
+    var contents = grunt.file.read(file);
+    var version;
+    contents = contents.replace(VERSION_REGEX, function(match, left, center) {
+      version = center;
+      if (type) {
+        version = require('semver').inc(version, type);
       }
+      //semver.inc strips our suffix if it existed
+      if (suffix) {
+        version += '-' + suffix;
+      }
+      return left + version + '"';
+    });
+    grunt.log.ok('Version set to ' + version.cyan);
+    grunt.file.write(file, contents);
+    return version;
+  }
 
-      var COMMIT_MSG_REGEXP = /^(chore|demo|docs|feat|fix|refactor|style|test)\((.+)\):? (.+)$/;
-      var gitlog = result.toString().split('\n==END==\n').reverse();
+  grunt.registerTask('version', 'Set version. If no arguments, it just takes off suffix', function() {
+    setVersion(this.args[0], this.args[1]);
+  });
 
-      if (code) {
-        grunt.log.error(err);
-        done(false);
-      } else {
-
-        gitlog.forEach(function (logItem) {
-          var lines = logItem.split('\n');
-          var sha1 = lines.shift().substr(0,8); //Only first 7 of sha1
-          var subject = lines.shift();
-
-          var msgMatches = subject.match(COMMIT_MSG_REGEXP);
-          var changeType = msgMatches[1];
-          var component = msgMatches[2];
-          var componentMsg = msgMatches[3];
-
-          var breaking = logItem.match(/BREAKING CHANGE:([\s\S]*)/);
-          if (breaking) {
-            addChange('breaking', component, {
-              sha1: sha1,
-              msg: breaking[1]
-            });
-          }
-          addChange(changeType, component, {sha1:sha1, msg:componentMsg});
-        });
-
-        console.log(grunt.template.process(grunt.file.read('misc/changelog.tpl.md'), {data: {
-          changelog: changelog,
-          today: grunt.template.today('yyyy-mm-dd'),
-          version : grunt.config('pkg.version')
-        }}));
-
-        done();
+  grunt.registerMultiTask('shell', 'run shell commands', function() {
+    var self = this;
+    var sh = require('shelljs');
+    self.data.forEach(function(cmd) {
+      cmd = cmd.replace('%version%', grunt.file.readJSON('package.json').version);
+      grunt.log.ok(cmd);
+      var result = sh.exec(cmd,{silent:true});
+      if (result.code !== 0) {
+        grunt.fatal(result.output);
       }
     });
   });
