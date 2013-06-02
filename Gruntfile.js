@@ -10,6 +10,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-conventional-changelog');
+  grunt.loadNpmTasks('grunt-ngdocs');
 
   // Project configuration.
   grunt.util.linefeed = '\n';
@@ -147,6 +148,25 @@ module.exports = function(grunt) {
         'grunt version:minor:"SNAPSHOT"',
         'git commit package.json -m "chore(): Starting v%version%"'
       ]
+    },
+    ngdocs: {
+      options: {
+        dest: 'dist/docs',
+        scripts: [
+          'angular.js', 
+          '<%= concat.dist_tpls.dest %>'
+        ],
+        styles: [
+          'docs/css/style.css'
+        ],
+        navTemplate: 'docs/nav.html',
+        title: 'ui-bootstrap',
+        html5Mode: false
+      },
+      api: {
+        src: ["src/**/*.js", "src/**/*.ngdoc"],
+        title: "API Documentation"
+      }
     }
   });
 

@@ -14,6 +14,7 @@
     "grunt-html2js": "~0.1.3",
     "grunt-karma": "~0.4.4",
     "semver": "~1.1.4",
-    "shelljs": "~0.1.4"
+    "shelljs": "~0.1.4",
+    "grunt-ngdocs": "git://github.com/m7r/grunt-ngdocs"
   }
 }
