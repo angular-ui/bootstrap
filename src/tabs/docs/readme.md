@@ -8,6 +8,10 @@ AngularJS version of the tabs directive.
  	_(Defaults: false)_ :
  	Whether tabs appear vertically stacked.
 
+ * `type`
+ 	_(Defaults: 'tabs')_ :
+ 	Navigation type. Possible values are 'tabs' and 'pills'.
+
 #### `<tab>` ####
 
  * `heading` or `<tab-heading>`

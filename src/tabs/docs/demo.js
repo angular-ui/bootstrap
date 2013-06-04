@@ -9,4 +9,6 @@ var TabsDemoCtrl = function ($scope) {
       alert("You've selected the alert tab!");
     });
   };
+
+  $scope.navType = 'pills';
 };

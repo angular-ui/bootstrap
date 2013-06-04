@@ -46,6 +46,7 @@ function TabsetCtrl($scope, $element) {
     templateUrl: 'template/tabs/tabset.html',
     link: function(scope, element, attrs) {
       scope.vertical = angular.isDefined(attrs.vertical) ? scope.$eval(attrs.vertical) : false;
+      scope.type = angular.isDefined(attrs.type) ? scope.$parent.$eval(attrs.type) : 'tabs';
     }
   };
 })

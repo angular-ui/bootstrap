@@ -460,4 +460,19 @@ describe('tabs', function() {
     });
   });
 
+  describe('type', function() {
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+      scope.navType = 'pills';
+
+      elm = $compile('<tabset type="navType"></tabset>')(scope);
+      scope.$apply();
+    }));
+
+    it('to show pills', function() {
+      expect(elm.find('ul')).toHaveClass('nav-pills');
+      expect(elm.find('ul')).not.toHaveClass('nav-tabs');
+    });
+  });
+
 });
