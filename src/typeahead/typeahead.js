@@ -152,12 +152,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         model = parserResult.modelMapper(scope, locals);
         modelCtrl.$setViewValue(model);
         modelCtrl.$render();
-
         onSelectCallback(scope, {
           $item: item,
           $model: model,
           $label: parserResult.viewMapper(scope, locals)
         });
+
+        element[0].focus();
       };
 
       //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(27)
