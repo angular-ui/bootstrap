@@ -5,7 +5,8 @@
 *      A pure AngularJS carousel.
 *      
 *      For no interval set the interval to non-number, or milliseconds of desired interval
-*      Template: <carousel interval="none"><slide>{{anything}}</slide></carousel>
+*      To prevent pause upon mouseover set the nopause attribute to a truthy value
+*      Template: <carousel interval="none" nopause="someValue"><slide>{{anything}}</slide></carousel>
 *      To change the carousel's active slide set the active attribute to true
 *      Template: <carousel interval="none"><slide active="someModel">{{anything}}</slide></carousel>
 */
@@ -130,9 +131,11 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     }
   };
   $scope.pause = function() {
-    isPlaying = false;
-    if (currentTimeout) {
-      $timeout.cancel(currentTimeout);
+    if (!$scope.noPause) {
+      isPlaying = false;
+      if (currentTimeout) {
+        $timeout.cancel(currentTimeout);
+      }
     }
   };
 
@@ -173,7 +176,8 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     templateUrl: 'template/carousel/carousel.html',
     scope: {
       interval: '=',
-      noTransition: '='
+      noTransition: '=',
+      noPause: '='
     }
   };
 }])

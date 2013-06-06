@@ -20,7 +20,7 @@ describe('carousel', function() {
         {active:false,content:'three'}
       ];
       elm = $compile(
-        '<carousel interval="interval" no-transition="true">' +
+        '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
           '<slide ng-repeat="slide in slides" active="slide.active">' +
             '{{slide.content}}' +
           '</slide>' +
@@ -28,6 +28,7 @@ describe('carousel', function() {
       )(scope);
       carouselScope = elm.scope();
       scope.interval = 5000;
+      scope.nopause = undefined;
       scope.$apply();
     });
     afterEach(function() {
@@ -178,6 +179,17 @@ describe('carousel', function() {
       $timeout.flush();
       testSlideActive(2);
     });
+    
+    it('should not pause on mouseover if noPause', function() {
+      scope.$apply('nopause = true');
+      testSlideActive(0);
+      elm.trigger('mouseenter');
+      $timeout.flush();
+      testSlideActive(1);
+      elm.trigger('mouseleave');
+      $timeout.flush();
+      testSlideActive(2);
+    });    
 
     it('should remove slide from dom and change active slide', function() {
       scope.$apply('slides[1].active = true');
