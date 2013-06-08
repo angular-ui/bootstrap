@@ -53,14 +53,14 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       var onSelectCallback = $parse(attrs.typeaheadOnSelect);
 
       //pop-up element used to display matches
-      var popUpEl = angular.element(
-        "<typeahead-popup " +
-          "matches='matches' " +
-          "active='activeIdx' " +
-          "select='select(activeIdx)' "+
-          "query='query' "+
-          "position='position'>"+
-        "</typeahead-popup>");
+      var popUpEl = angular.element('<typeahead-popup></typeahead-popup>');
+      popUpEl.attr({
+        matches: 'matches',
+        active: 'activeIdx',
+        select: 'select(activeIdx)',
+        query: 'query',
+        position: 'position'
+      });
 
       //create a child scope for the typeahead directive so we are not polluting original scope
       //with typeahead-specific data (matches, query etc.)
