@@ -50,6 +50,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
 
       var isLoadingSetter = $parse(attrs.typeaheadLoading).assign || angular.noop;
 
+      var onSelectCallback = $parse(attrs.typeaheadOnSelect);
+
       //pop-up element used to display matches
       var popUpEl = angular.element(
         "<typeahead-popup " +
@@ -144,10 +146,18 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       scope.select = function (activeIdx) {
         //called from within the $digest() cycle
         var locals = {};
-        locals[parserResult.itemName] = selected = scope.matches[activeIdx].model;
+        var model, item;
+        locals[parserResult.itemName] = item = selected = scope.matches[activeIdx].model;
 
-        modelCtrl.$setViewValue(parserResult.modelMapper(scope, locals));
+        model = parserResult.modelMapper(scope, locals);
+        modelCtrl.$setViewValue(model);
         modelCtrl.$render();
+
+        onSelectCallback(scope, {
+          $item: item,
+          $model: model,
+          $label: parserResult.viewMapper(scope, locals)
+        });
       };
 
       //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(27)

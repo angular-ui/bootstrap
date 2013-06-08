@@ -369,6 +369,29 @@ describe('typeahead tests', function () {
         expect(inputEl.val()).toEqual('baz');
       });
 
+      it('should invoke select callback on select', function () {
+
+        $scope.states = [
+          {code: 'AL', name: 'Alaska'},
+          {code: 'CL', name: 'California'}
+        ];
+        $scope.onSelect = function ($item, $model, $label) {
+          $scope.$item = $item;
+          $scope.$model = $model;
+          $scope.$label = $label;
+        };
+        var element = prepareInputEl("<div><input ng-model='result' typeahead-on-select='onSelect($item, $model, $label)' typeahead='state.code as state.name for state in states | filter:$viewValue'></div>");
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alas');
+        triggerKeyDown(element, 13);
+
+        expect($scope.result).toEqual('AL');
+        expect($scope.$item).toEqual($scope.states[0]);
+        expect($scope.$model).toEqual('AL');
+        expect($scope.$label).toEqual('Alaska');
+      });
+
       it('should correctly update inputs value on mapping where label is not derived from the model', function () {
 
         $scope.states = [{code: 'AL', name: 'Alaska'}, {code: 'CL', name: 'California'}];
