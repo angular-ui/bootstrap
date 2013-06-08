@@ -133,7 +133,8 @@ module.exports = function(grunt) {
     },
     changelog: {
       options: {
-        dest: 'CHANGELOG.md'
+        dest: 'CHANGELOG.md',
+        templateFile: 'misc/changelog.tpl.md'
       }
     },
     shell: {
@@ -172,7 +173,7 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli 
   //options on the goole's CI server
-  grunt.registerTask('before-test', ['jshint', 'html2js']);
+  grunt.registerTask('before-test', ['enforce', 'jshint', 'html2js']);
   grunt.registerTask('after-test', ['build', 'copy']);
 
   //Rename our watch task to 'delta', then make actual 'watch'
@@ -182,6 +183,13 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['before-test', 'test', 'after-test']);
+
+  grunt.registerTask('enforce', 'Install commit message enforce script if it doesn\'t exist', function() {
+    if (!grunt.file.exists('.git/hooks/commit-msg')) {
+      grunt.file.copy('misc/validate-commit-msg.js', '.git/hooks/commit-msg');
+      require('fs').chmodSync('.git/hooks/commit-msg', '0755');
+    }
+  });
 
   //Common ui.bootstrap module containing all modules for src and templates
   //findModule: Adds a given module to config
