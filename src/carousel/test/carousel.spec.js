@@ -192,11 +192,13 @@ describe('carousel', function() {
     });    
 
     it('should remove slide from dom and change active slide', function() {
-      scope.$apply('slides[1].active = true');
-      testSlideActive(1);
-      scope.$apply('slides.splice(1,1)');
+      scope.$apply('slides[2].active = true');
+      testSlideActive(2);
+      scope.$apply('slides.splice(0,1)');
       expect(elm.find('div.item').length).toBe(2);
       testSlideActive(1);
+      $timeout.flush();
+      testSlideActive(0);
       scope.$apply('slides.splice(1,1)');
       expect(elm.find('div.item').length).toBe(1);
       testSlideActive(0);
