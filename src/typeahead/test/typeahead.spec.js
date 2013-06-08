@@ -326,6 +326,16 @@ describe('typeahead tests', function () {
         $timeout.flush();
         expect($scope.isLoading).toBeFalsy();
       }));
+
+      it('should support timeout before trying to match $viewValue', inject(function ($timeout) {
+
+        var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-wait-ms='200'></div>");
+        changeInputValueTo(element, 'foo');
+        expect(element).toBeClosed();
+
+        $timeout.flush();
+        expect(element).toBeOpenWithActive(1, 0);
+      }));
     });
 
     describe('selecting a match', function () {
