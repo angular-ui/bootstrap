@@ -289,23 +289,6 @@ describe('Given ui.bootstrap.dialog', function(){
 		});
 	});
 
-  describe('When dialog is open and location changes', function () {
-
-    var changeLocation = function () {
-      $rootScope.$apply(function(){
-        $rootScope.$broadcast('$locationChangeSuccess');
-      });
-    };
-
-    beforeEach(function () {
-      createDialog({template: template});
-      openDialog();
-      changeLocation();
-    });
-
-    dialogShouldBeClosed();
-  });
-
 	describe('when opening it with a template containing white-space', function(){
 
 		var controllerIsCreated;

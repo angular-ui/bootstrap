@@ -167,12 +167,5 @@ describe('Give ui.boostrap.modal', function() {
 			$scope.$digest();
 			expect($scope.modalShown).not.toBeTruthy();
 		});
-
-    it('should update the model if the location change is successful', function () {
-      $rootScope.$apply(function(){
-        $rootScope.$broadcast('$locationChangeSuccess');
-      });
-      expect($scope.modalShown).toBeFalsy();
-    });
-	});		
+	});
 });
