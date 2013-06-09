@@ -12,8 +12,7 @@
    </li>
  */
 
-angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle',
-  ['$document', '$location', '$window', function ($document, $location, $window) {
+angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['$document', '$location', function ($document, $location) {
   var openElement = null,
       closeMenu   = angular.noop;
   return {
@@ -21,13 +20,18 @@ angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle',
     link: function(scope, element, attrs) {
       scope.$watch('$location.path', function() { closeMenu(); });
       element.parent().bind('click', function() { closeMenu(); });
-      element.bind('click', function(event) {
+      element.bind('click', function (event) {
+
+        var elementWasOpen = (element === openElement);
+
         event.preventDefault();
         event.stopPropagation();
-        var elementWasOpen = (element === openElement);
+
         if (!!openElement) {
-          closeMenu(); }
-        if (!elementWasOpen){
+          closeMenu();
+        }
+
+        if (!elementWasOpen) {
           element.parent().addClass('open');
           openElement = element;
           closeMenu = function (event) {
@@ -37,7 +41,7 @@ angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle',
             }
             $document.unbind('click', closeMenu);
             element.parent().removeClass('open');
-            closeMenu   = angular.noop;
+            closeMenu = angular.noop;
             openElement = null;
           };
           $document.bind('click', closeMenu);
