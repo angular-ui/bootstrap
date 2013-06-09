@@ -61,8 +61,9 @@ We are always looking for the quality contributions! Please check the [CONTRIBUT
 Check the Grunt build file for other tasks that are defined for this project
 
 #### TDD
-* Start karma server: `grunt server`
-* Run test: `grunt test-run`
+* Run test: `grunt watch`
+ 
+This will start Karma server and will continously watch files in the project, executing tests upon every change.
 
 ### Release
 * Bump up version number in `package.json`
