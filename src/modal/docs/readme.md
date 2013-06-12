@@ -1,5 +1,18 @@
-`modal` is a directive that reuses `$dialog` service to provide simple creation of modals that are already in your DOM without the hassle of creating partial views and controllers.
+`$modal` is a s service to quickly create AngularJS-powered modal windows.
+Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
 
-The directive shares `$dialog` global options.
+The `$modal` service has only one method: `open(options)` where available options are like follows:
 
-For more information, see the [dialog readme](https://github.com/angular-ui/bootstrap/blob/master/src/dialog/README.md) on github.
+* `templateUrl` - a path to a template representing modal's content
+* `scope` - a scope instance to be used for the modal's content (actually the `$modal` service is going to create a child scope of a a provided scope). Defaults to `$rootScope`
+* `controller` - a controller for a modal instance - it can initialize scope used by modal. A controller can be injected with `$modalInstance`
+* `resolve` - members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property for AngularJS routes
+* `backdrop` - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), `'static'` - backdrop is present but modal window is not closed when clicking outside of the modal window.
+* `keyboard` - indicates whether the dialog should be closable by hitting the ESC key, defaults to true
+
+The `open` method returns a modal instance, an object with the following properties:
+
+* `close(result)` - a method that can be used to close a modal, passing a result
+* `dismiss(reason)` - a method that can be used to dismiss a modal, passing a reason
+* `result` - a promise that is resolved when a modal is closed and rejected when a modal is dismissed
+* `opened` - a promise that is resolved when a modal gets opened after downloading content's template and resolving all variables
