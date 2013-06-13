@@ -8,7 +8,9 @@ angular.module('ui.bootstrap.rating', [])
   return {
     restrict: 'EA',
     scope: {
-      value: '='
+      value: '=',
+      onHover: '&',
+      onLeave: '&'
     },
     templateUrl: 'template/rating/rating.html',
     replace: true,
@@ -31,10 +33,12 @@ angular.module('ui.bootstrap.rating', [])
           if ( ! scope.readonly ) {
               scope.val = value;
           }
+          scope.onHover({value: value});
       };
 
       scope.reset = function() {
           scope.val = angular.copy(scope.value);
+          scope.onLeave();
       };
       scope.reset();
 

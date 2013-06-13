@@ -27,7 +27,7 @@ describe('rating directive', function () {
     expect(getState(stars)).toEqual([true, true, true, false, false]);
   });
 
-  it('handles correcty the click event', function() {
+  it('handles correctly the click event', function() {
     var stars = element.find('i');
 
     var star2 = stars.eq(1);
@@ -43,7 +43,7 @@ describe('rating directive', function () {
     expect($rootScope.rate).toBe(5);
   });
 
-  it('handles correcty the hover event', function() {
+  it('handles correctly the hover event', function() {
     var stars = element.find('i');
 
     var star2 = stars.eq(1);
@@ -99,6 +99,28 @@ describe('rating directive', function () {
     expect(getState(stars)).toEqual([true, true, true, true, true]);
   });
 
+  it('should fire onHover', function() {
+    $rootScope.hoveringOver = jasmine.createSpy('hoveringOver');
+
+    element = $compile('<rating value="rate" on-hover="hoveringOver(value)"></rating>')($rootScope);
+    $rootScope.$digest();
+
+    var star3 = element.find('i').eq(2);
+    star3.trigger('mouseover');
+    $rootScope.$digest();
+    expect($rootScope.hoveringOver).toHaveBeenCalledWith(3);
+  });
+
+  it('should fire onLeave', function() {
+    $rootScope.leaving = jasmine.createSpy('leaving');
+
+    element = $compile('<rating value="rate" on-leave="leaving()"></rating>')($rootScope);
+    $rootScope.$digest();
+
+    element.trigger('mouseleave');
+    $rootScope.$digest();
+    expect($rootScope.leaving).toHaveBeenCalled();
+  });
 });
 
 describe('setting ratingConfig', function() {
@@ -123,6 +145,4 @@ describe('setting ratingConfig', function() {
   it('should change number of icon elements', function () {
     expect(element.find('i').length).toBe(10);
   });
-
 });
-
