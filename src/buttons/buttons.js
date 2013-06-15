@@ -14,11 +14,9 @@ angular.module('ui.bootstrap.buttons', [])
     require:'ngModel',
     link:function (scope, element, attrs, ngModelCtrl) {
 
-      var value = scope.$eval(attrs.btnRadio);
-
       //model -> UI
       ngModelCtrl.$render = function () {
-        if (angular.equals(ngModelCtrl.$modelValue, value)){
+        if (angular.equals(ngModelCtrl.$modelValue, scope.$eval(attrs.btnRadio))){
           element.addClass(activeClass);
         } else {
           element.removeClass(activeClass);
@@ -29,7 +27,7 @@ angular.module('ui.bootstrap.buttons', [])
       element.bind(toggleEvent, function () {
         if (!element.hasClass(activeClass)) {
           scope.$apply(function () {
-            ngModelCtrl.$setViewValue(value);
+            ngModelCtrl.$setViewValue(scope.$eval(attrs.btnRadio));
             ngModelCtrl.$render();
           });
         }
