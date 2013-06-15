@@ -17,21 +17,20 @@ angular.module('ui.bootstrap.buttons', [])
       var value = scope.$eval(attrs.btnRadio);
 
       //model -> UI
-      scope.$watch(function () {
-        return ngModelCtrl.$modelValue;
-      }, function (modelValue) {
-        if (angular.equals(modelValue, value)){
+      ngModelCtrl.$render = function () {
+        if (angular.equals(ngModelCtrl.$modelValue, value)){
           element.addClass(activeClass);
         } else {
           element.removeClass(activeClass);
         }
-      });
+      };
 
       //ui->model
       element.bind(toggleEvent, function () {
         if (!element.hasClass(activeClass)) {
           scope.$apply(function () {
             ngModelCtrl.$setViewValue(value);
+            ngModelCtrl.$render();
           });
         }
       });
@@ -55,20 +54,19 @@ angular.module('ui.bootstrap.buttons', [])
       falseValue = angular.isDefined(falseValue) ? falseValue : false;
 
       //model -> UI
-      scope.$watch(function () {
-        return ngModelCtrl.$modelValue;
-      }, function (modelValue) {
-        if (angular.equals(modelValue, trueValue)) {
+      ngModelCtrl.$render = function () {
+        if (angular.equals(ngModelCtrl.$modelValue, trueValue)) {
           element.addClass(activeClass);
         } else {
           element.removeClass(activeClass);
         }
-      });
+      };
 
       //ui->model
       element.bind(toggleEvent, function () {
         scope.$apply(function () {
           ngModelCtrl.$setViewValue(element.hasClass(activeClass) ? falseValue : trueValue);
+          ngModelCtrl.$render();
         });
       });
     }

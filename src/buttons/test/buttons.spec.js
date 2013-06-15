@@ -44,8 +44,11 @@ describe('buttons', function () {
 
       btn.click();
       expect($scope.model).toEqual(true);
+      expect(btn).toHaveClass('active');
+
       btn.click();
       expect($scope.model).toEqual(false);
+      expect(btn).not.toHaveClass('active');
     });
 
     it('should toggle custom model values on click', function () {
@@ -54,8 +57,11 @@ describe('buttons', function () {
 
       btn.click();
       expect($scope.model).toEqual(1);
+      expect(btn).toHaveClass('active');
+
       btn.click();
       expect($scope.model).toEqual(0);
+      expect(btn).not.toHaveClass('active');
     });
   });
 
@@ -86,9 +92,13 @@ describe('buttons', function () {
 
       btns.eq(0).click();
       expect($scope.model).toEqual(1);
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
 
       btns.eq(1).click();
       expect($scope.model).toEqual(2);
+      expect(btns.eq(1)).toHaveClass('active');
+      expect(btns.eq(0)).not.toHaveClass('active');
     });
   });
 });
