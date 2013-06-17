@@ -1,7 +1,7 @@
 
 A lightweight pagination directive that is focused on ... providing pagination & will take care of visualising a pagination bar and enable / disable buttons correctly!
 
-### Settings ###
+### Pagination Settings ###
 
 Settings can be provided as attributes in the `<pagination>` or globally configured through the `paginationConfig`.
 
@@ -49,3 +49,19 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  	_(Default: 'Last')_ :
  	Text for Last button.
 
+### Pager Settings ###
+
+Settings can be provided as attributes in the `<pager>` or globally configured through the `pagerConfig`.  
+For `num-pages`,  `current-page` and `on-select-page (page)` see pagination settings. Other settings are:
+
+ * `align`
+ 	_(Default: true)_ :
+ 	Whether to align each link to the sides.
+
+ * `previous-text`
+ 	_(Default: '« Previous')_ :
+ 	Text for Previous button.
+
+ * `next-text`
+ 	_(Default: 'Next »')_ :
+ 	Text for Next button.

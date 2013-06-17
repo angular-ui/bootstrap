@@ -1,5 +1,26 @@
 angular.module('ui.bootstrap.pagination', [])
 
+.controller('PaginationController', ['$scope', function (scope) {
+
+  scope.noPrevious = function() {
+    return scope.currentPage === 1;
+  };
+  scope.noNext = function() {
+    return scope.currentPage === scope.numPages;
+  };
+
+  scope.isActive = function(page) {
+    return scope.currentPage === page;
+  };
+
+  scope.selectPage = function(page) {
+    if ( ! scope.isActive(page) && page > 0 && page <= scope.numPages) {
+      scope.currentPage = page;
+      scope.onSelectPage({ page: page });
+    }
+  };
+}])
+
 .constant('paginationConfig', {
   boundaryLinks: false,
   directionLinks: true,
@@ -19,6 +40,7 @@ angular.module('ui.bootstrap.pagination', [])
       maxSize: '=',
       onSelectPage: '&'
     },
+    controller: 'PaginationController',
     templateUrl: 'template/pagination/pagination.html',
     replace: true,
     link: function(scope, element, attrs) {
@@ -111,22 +133,59 @@ angular.module('ui.bootstrap.pagination', [])
           scope.selectPage(scope.numPages);
         }
       });
-      scope.noPrevious = function() {
-        return scope.currentPage === 1;
-      };
-      scope.noNext = function() {
-        return scope.currentPage === scope.numPages;
-      };
-      scope.isActive = function(page) {
-        return scope.currentPage === page;
-      };
+    }
+  };
+}])
 
-      scope.selectPage = function(page) {
-        if ( ! scope.isActive(page) && page > 0 && page <= scope.numPages) {
-          scope.currentPage = page;
-          scope.onSelectPage({ page: page });
+.constant('pagerConfig', {
+  previousText: '« Previous',
+  nextText: 'Next »',
+  align: true
+})
+
+.directive('pager', ['pagerConfig', function(config) {
+  return {
+    restrict: 'EA',
+    scope: {
+      numPages: '=',
+      currentPage: '=',
+      onSelectPage: '&'
+    },
+    controller: 'PaginationController',
+    templateUrl: 'template/pagination/pager.html',
+    replace: true,
+    link: function(scope, element, attrs, paginationCtrl) {
+
+      // Setup configuration parameters
+      var previousText = angular.isDefined(attrs.previousText) ? scope.$parent.$eval(attrs.previousText) : config.previousText;
+      var nextText = angular.isDefined(attrs.nextText) ? scope.$parent.$eval(attrs.nextText) : config.nextText;
+      var align = angular.isDefined(attrs.align) ? scope.$parent.$eval(attrs.align) : config.align;
+
+      // Create page object used in template
+      function makePage(number, text, isDisabled, isPrevious, isNext) {
+        return {
+          number: number,
+          text: text,
+          disabled: isDisabled,
+          previous: ( align && isPrevious ),
+          next: ( align && isNext )
+        };
+      }
+
+      scope.$watch('numPages + currentPage', function() {
+        scope.pages = [];
+
+        // Add previous & next links
+        var previousPage = makePage(scope.currentPage - 1, previousText, scope.noPrevious(), true, false);
+        scope.pages.unshift(previousPage);
+
+        var nextPage = makePage(scope.currentPage + 1, nextText, scope.noNext(), false, true);
+        scope.pages.push(nextPage);
+
+        if ( scope.currentPage > scope.numPages ) {
+          scope.selectPage(scope.numPages);
         }
-      };
+      });
     }
   };
 }]);
