@@ -213,6 +213,40 @@ describe('tooltip', function() {
 
 });
 
+describe('tooltipWithDifferentSymbols', function() {
+    var elm, 
+        elmBody,
+        scope, 
+        elmScope;
+
+    // load the tooltip code
+    beforeEach(module('ui.bootstrap.tooltip'));
+
+    // load the template
+    beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+    // configure interpolate provider to use [[ ]] instead of {{ }}
+    beforeEach(module( function($interpolateProvider) {
+        $interpolateProvider.startSymbol('[[');
+        $interpolateProvider.startSymbol(']]');
+      }));
+
+    it( 'should show the correct tooltip text', inject( function ( $compile, $rootScope ) {
+
+      elmBody = angular.element(
+        '<div><input type="text" tooltip="My tooltip" tooltip-trigger="focus" tooltip-placement="right" /></div>'
+      );
+      $compile(elmBody)($rootScope);
+      $rootScope.$apply();
+      elmInput = elmBody.find('input');
+      elmInput.trigger('focus');
+
+      expect( elmInput.next().find('div').next().html() ).toBe('My tooltip');
+
+    }));
+
+});
+
 describe( 'tooltipHtmlUnsafe', function() {
   var elm, elmBody, scope;
 

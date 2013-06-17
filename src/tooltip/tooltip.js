@@ -55,7 +55,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
    * Returns the actual instance of the $tooltip service.
    * TODO support multiple triggers
    */
-  this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', '$position', function ( $window, $compile, $timeout, $parse, $document, $position ) {
+  this.$get = [ '$window', '$compile', '$timeout', '$parse', '$document', '$position', '$interpolate', function ( $window, $compile, $timeout, $parse, $document, $position, $interpolate ) {
     return function $tooltip ( type, prefix, defaultTriggerShow ) {
       var options = angular.extend( {}, defaultOptions, globalOptions );
 
@@ -92,11 +92,13 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
       var directiveName = snake_case( type );
       var triggers = setTriggers( undefined );
 
+      var startSym = $interpolate.startSymbol();
+      var endSym = $interpolate.endSymbol();
       var template = 
         '<'+ directiveName +'-popup '+
-          'title="{{tt_title}}" '+
-          'content="{{tt_content}}" '+
-          'placement="{{tt_placement}}" '+
+          'title="'+startSym+'tt_title'+endSym+'" '+
+          'content="'+startSym+'tt_content'+endSym+'" '+
+          'placement="'+startSym+'tt_placement'+endSym+'" '+
           'animation="tt_animation()" '+
           'is-open="tt_isOpen"'+
           '>'+
