@@ -5,7 +5,7 @@ describe('progressbar directive with no binding', function () {
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    element = $compile('<progress value="22" animate="false"></progress>')($rootScope);
+    element = $compile('<progress percent="22" animate="false"></progress>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -31,7 +31,7 @@ describe('progressbar directive with data-binding', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.percent = 33;
-    element = $compile('<progress value="percent" animate="false"></progress>')($rootScope);
+    element = $compile('<progress percent="percent" animate="false"></progress>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -90,7 +90,7 @@ describe('stacked progressbar directive', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.stacked = [12, 22, 33];
-    element = $compile('<progress value="stacked" animate="false"></progress>')($rootScope);
+    element = $compile('<progress percent="stacked" animate="false"></progress>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -205,7 +205,7 @@ describe('stacked progressbar directive handlers', function () {
     $rootScope.stacked = [20, 30, 40]; // total: 90
     $rootScope.fullHandler = jasmine.createSpy('fullHandler');
     $rootScope.emptyHandler = jasmine.createSpy('emptyHandler');
-    element = $compile('<progress value="stacked" on-full="fullHandler()" on-empty="emptyHandler()" animate="false"></progress>')($rootScope);
+    element = $compile('<progress percent="stacked" on-full="fullHandler()" on-empty="emptyHandler()" animate="false"></progress>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -242,7 +242,7 @@ describe('stacked progressbar directive with auto-types', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.stacked = [12, 22, {value: 33}, {value: 5}, 11];
-    element = $compile('<progress value="stacked" animate="false" auto-type="true"></progress>')($rootScope);
+    element = $compile('<progress percent="stacked" animate="false" auto-type="true"></progress>')($rootScope);
     $rootScope.$digest();
 
     angular.extend(config, progressConfig);
@@ -311,7 +311,7 @@ describe('stacked progressbar directive with auto-types', function () {
   });
 
   it('can bypass default configuration for stacked classes from attribute', function() {
-    element = $compile('<progress value="stacked" stacked-types="\'danger\', \'warning\', \'success\'" auto-type="true" animate="false"></progress>')($rootScope);
+    element = $compile('<progress percent="stacked" stacked-types="\'danger\', \'warning\', \'success\'" auto-type="true" animate="false"></progress>')($rootScope);
     $rootScope.$digest();
 
     var stackedTypes = config.stackedTypes;

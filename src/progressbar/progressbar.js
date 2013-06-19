@@ -49,7 +49,7 @@ angular.module('ui.bootstrap.progressbar', ['ui.bootstrap.transition'])
         replace: true,
         controller: 'ProgressBarController',
         scope: {
-            value: '=',
+            value: '=percent',
             onFull: '&',
             onEmpty: '&'
         },
