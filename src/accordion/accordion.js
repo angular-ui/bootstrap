@@ -104,7 +104,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 // </accordion-group>
 .directive('accordionHeading', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     transclude: true,   // Grab the contents to be used as the heading
     template: '',       // In effect remove this element!
     replace: true,
