@@ -134,7 +134,8 @@ module.exports = function(grunt) {
     changelog: {
       options: {
         dest: 'CHANGELOG.md',
-        templateFile: 'misc/changelog.tpl.md'
+        templateFile: 'misc/changelog.tpl.md',
+        github: 'angular-ui/bootstrap'
       }
     },
     shell: {
