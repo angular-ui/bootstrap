@@ -189,9 +189,21 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     replace: true,
     templateUrl: 'template/carousel/slide.html',
     scope: {
-      active: '='
     },
     link: function (scope, element, attrs, carouselCtrl) {
+      //Set up optional 'active' = binding
+      scope.active = false; // default value
+      if (attrs.active) {
+        var getActive = $parse(attrs.active);
+        var setActive = getActive.assign;
+        scope.$parent.$watch(getActive, function updateActive(value) {
+          scope.active = !!value;
+        });
+        scope.$watch(getActive, function(value) {
+          setActive(scope.$parent, !!value);
+        });
+      }
+
       carouselCtrl.addSlide(scope, element);
       //when the scope is destroyed then remove the slide from the current slides array
       scope.$on('$destroy', function() {
