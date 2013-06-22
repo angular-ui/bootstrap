@@ -292,15 +292,24 @@ function CarouselDemoCtrl($scope) {
     },
     link: function (scope, element, attrs, carouselCtrl) {
       //Set up optional 'active' = binding
-      scope.active = false; // default value
       if (attrs.active) {
         var getActive = $parse(attrs.active);
         var setActive = getActive.assign;
-        scope.$parent.$watch(getActive, function updateActive(value) {
-          scope.active = !!value;
-        });
-        scope.$watch(getActive, function(value) {
-          setActive(scope.$parent, !!value);
+        var lastValue = scope.active = getActive(scope.$parent);
+        scope.$watch(function parentActiveWatch() {
+          var parentActive = getActive(scope.$parent);
+          
+          if (parentActive !== scope.active) {
+            // we are out of sync and need to copy
+            if (parentActive !== lastValue) {
+              // parent changed and it has precedence
+              lastValue = scope.active = parentActive;
+            } else {
+              // if the parent can be assigned then do so
+              setActive(scope.$parent, parentActive = lastValue = scope.active);
+            }
+          }
+          return parentActive;
         });
       }
 

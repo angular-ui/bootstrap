@@ -9,5 +9,7 @@ function CarouselDemoCtrl($scope) {
         ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
     });
   };
-  for (var i=0; i<4; i++) $scope.addSlide();
+  for (var i=0; i<4; i++) {
+    $scope.addSlide();
+  }
 }
