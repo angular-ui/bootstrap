@@ -211,6 +211,33 @@ describe('tooltip', function() {
     }));
   });
 
+  describe( 'with an append-to-body attribute', function() {
+    var scope, elmBody, elm, elmScope;
+
+    beforeEach( inject( function( $rootScope ) {
+      scope = $rootScope;
+    }));
+
+    it( 'should append to the body', inject( function( $compile, $document ) {
+      $body = $document.find( 'body' );
+      elmBody = angular.element( 
+        '<div><span tooltip="tooltip text" tooltip-append-to-body="true">Selector Text</span></div>' 
+      );
+
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+
+      var bodyLength = $body.children().length;
+      elm.trigger( 'mouseenter' );
+      
+      expect( elmScope.tt_isOpen ).toBe( true );
+      expect( elmBody.children().length ).toBe( 1 );
+      expect( $body.children().length ).toEqual( bodyLength + 1 );
+    }));
+  });
+
 });
 
 describe('tooltipWithDifferentSymbols', function() {

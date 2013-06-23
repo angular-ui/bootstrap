@@ -112,6 +112,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           var transitionTimeout;
           var popupTimeout;
           var $body;
+          var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
 
           // By default, the tooltip is not open.
           // TODO add ability to start tooltip opened
@@ -163,7 +164,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             
             // Now we add it to the DOM because need some info about it. But it's not 
             // visible yet anyway.
-            if ( options.appendToBody ) {
+            if ( appendToBody ) {
                 $body = $body || $document.find( 'body' );
                 $body.append( tooltip );
             } else {
@@ -279,10 +280,14 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             }
           });
 
+          attrs.$observe( prefix+'AppendToBody', function ( val ) {
+            appendToBody = angular.isDefined( val ) ? $parse( val )( scope ) : appendToBody;
+          });
+
           // if a tooltip is attached to <body> we need to remove it on
           // location change as its parent scope will probably not be destroyed
           // by the change.
-          if ( options.appendToBody ) {
+          if ( appendToBody ) {
             scope.$on('$locationChangeSuccess', function closeTooltipOnLocationChangeSuccess () {
             if ( scope.tt_isOpen ) {
               hide();

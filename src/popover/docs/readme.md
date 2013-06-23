@@ -15,6 +15,8 @@ will display:
   over the element before the popover shows (in milliseconds)? Defaults to 0.
 - `popover-trigger`: What should trigger the show of the popover? See the
   `tooltip` directive for supported values.
+- `popover-append-to-body`: Should the tooltip be appended to `$body` instead of
+  the parent element?
 
 The popover directives require the `$position` service.
 
