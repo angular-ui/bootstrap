@@ -429,6 +429,34 @@ describe( '$tooltipProvider', function() {
       }));
     });
 
+    describe( 'triggers with a custom mapped value', function() {
+      beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
+        $tooltipProvider.setTriggers({ 'customOpenTrigger': 'customCloseTrigger' });
+        $tooltipProvider.options({trigger: 'customOpenTrigger'});
+      }));
+
+      // load the template
+      beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+      it( 'should use the show trigger and the mapped value for the hide trigger', inject( function ( $rootScope, $compile ) {
+        elmBody = angular.element(
+          '<div><input tooltip="tooltip text" /></div>'
+        );
+        
+        scope = $rootScope;
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('input');
+        elmScope = elm.scope();
+
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+        elm.trigger('customOpenTrigger');
+        expect( elmScope.tt_isOpen ).toBeTruthy();
+        elm.trigger('customCloseTrigger');
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+      }));
+    });
+
     describe( 'triggers without a mapped value', function() {
       beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
         $tooltipProvider.options({trigger: 'fakeTrigger'});
