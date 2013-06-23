@@ -9,7 +9,7 @@ will display:
 
 - `popover-title`: A string to display as a fancy title.
 - `popover-placement`: Where to place it? Defaults to "top", but also accepts
-  "bottom", "left", or "right".
+  "bottom", "left", "right", or "mouse".
 - `popover-animation`: Should it fade in and out? Defaults to "true".
 - `popover-popup-delay`: For how long should the user have to have the mouse
   over the element before the popover shows (in milliseconds)? Defaults to 0.

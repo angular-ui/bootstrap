@@ -8,6 +8,13 @@ angular.module('ui.bootstrap.position', [])
  */
   .factory('$position', ['$document', '$window', function ($document, $window) {
 
+    var mouseX, mouseY;
+
+    $document.bind('mousemove', function mouseMoved(event) {
+      mouseX = event.pageX;
+      mouseY = event.pageY;
+    });
+
     function getStyle(el, cssprop) {
       if (el.currentStyle) { //IE
         return el.currentStyle[cssprop];
@@ -74,6 +81,13 @@ angular.module('ui.bootstrap.position', [])
           top: boundingClientRect.top + ($window.pageYOffset || $document[0].body.scrollTop),
           left: boundingClientRect.left + ($window.pageXOffset || $document[0].body.scrollLeft)
         };
+      },
+
+      /**
+       * Provides the coordinates of the mouse
+       */
+      mouse: function () {
+        return {x: mouseX, y: mouseY};
       }
     };
   }]);

@@ -180,32 +180,42 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             // Calculate the tooltip's top and left coordinates to center it with
             // this directive.
             switch ( scope.tt_placement ) {
+              case 'mouse':
+                var mousePos = $position.mouse();
+                ttPosition = {
+                  top: mousePos.y,
+                  left: mousePos.x
+                };
+                break;
               case 'right':
                 ttPosition = {
-                  top: (position.top + position.height / 2 - ttHeight / 2) + 'px',
-                  left: (position.left + position.width) + 'px'
+                  top: position.top + position.height / 2 - ttHeight / 2,
+                  left: position.left + position.width
                 };
                 break;
               case 'bottom':
                 ttPosition = {
-                  top: (position.top + position.height) + 'px',
-                  left: (position.left + position.width / 2 - ttWidth / 2) + 'px'
+                  top: position.top + position.height,
+                  left: position.left + position.width / 2 - ttWidth / 2
                 };
                 break;
               case 'left':
                 ttPosition = {
-                  top: (position.top + position.height / 2 - ttHeight / 2) + 'px',
-                  left: (position.left - ttWidth) + 'px'
+                  top: position.top + position.height / 2 - ttHeight / 2,
+                  left: position.left - ttWidth
                 };
                 break;
               default:
                 ttPosition = {
-                  top: (position.top - ttHeight) + 'px',
-                  left: (position.left + position.width / 2 - ttWidth / 2) + 'px'
+                  top: position.top - ttHeight,
+                  left: position.left + position.width / 2 - ttWidth / 2
                 };
                 break;
             }
-            
+
+            ttPosition.top += 'px';
+            ttPosition.left += 'px';
+
             // Now set the calculated positioning.
             tooltip.css( ttPosition );
               
