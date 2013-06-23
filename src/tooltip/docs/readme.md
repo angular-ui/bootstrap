@@ -33,3 +33,22 @@ provided hide triggers:
 For any non-supported value, the trigger will be used to both show and hide the
 tooltip.
 
+**$tooltipProvider**
+
+Through the `$tooltipProvider`, you can change the way tooltips and popovers
+behave by default; the attributes above always take precedence. The following
+methods are available:
+
+- `setTriggers( obj )`: Extends the default trigger mappings mentioned above
+  with mappings of your own. E.g. `{ 'openTrigger': 'closeTrigger' }`.
+- `options( obj )`: Provide a set of defaults for certain tooltip and popover
+  attributes. Currently supports 'placement', 'animation', 'popupDelay', and
+  `appendToBody`. Here are the defaults:
+
+  <pre>
+  placement: 'top',
+  animation: true,
+  popupDelay: 0,
+  appendToBody: false
+  </pre>
+

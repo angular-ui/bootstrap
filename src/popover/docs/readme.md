@@ -20,3 +20,6 @@ will display:
 
 The popover directives require the `$position` service.
 
+The popover directive also supports various default configurations through the
+$tooltipProvider. See the [tooltip](#tooltip) section for more information.
+
