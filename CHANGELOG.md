@@ -59,14 +59,14 @@
 
   Before:
       
-    ```
-    <pagination first-text="<<" ...></pagination>
+    ```html
+    <pagination first-text="<<"></pagination>
     ```
 
   After:
     
-    ```
-    <pagination first-text="'<<'" ...></pagination>
+    ```html
+    <pagination first-text="'<<'"></pagination>
     ```
 
 - **progressbar:** 
@@ -74,13 +74,13 @@
 
   Before:
     
-    ```
+    ```html
     <progress value="..."></progress>
     ```
 
   After:
     
-    ```
+    ```html
     <progress percent="..."></progress>
     ```
 
@@ -92,7 +92,7 @@
 
   Before:
 
-    ```
+    ```html
     <tabs>
       <pane heading="one">
         First Content
@@ -105,7 +105,7 @@
 
   After:
 
-    ```
+    ```html
     <tabset>
       <tab heading="one">
         First Content
