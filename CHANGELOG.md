@@ -58,23 +58,31 @@
   To migrate your code, surround the text of these attributes with quotes.
 
   Before:
-
-  <pagination first-text="<<" ...></pagination>
+      
+    ```
+    <pagination first-text="<<" ...></pagination>
+    ```
 
   After:
-
-  <pagination first-text="'<<'" ...></pagination>
+    
+    ```
+    <pagination first-text="'<<'" ...></pagination>
+    ```
 
 - **progressbar:** 
  The 'value' is replaced by 'percent'.
 
   Before:
-
-  <progress value="..."></progress>
+    
+    ```
+    <progress value="..."></progress>
+    ```
 
   After:
-
-  <progress percent="..."></progress>
+    
+    ```
+    <progress percent="..."></progress>
+    ```
 
 - **tabs:** 
  The 'tabs' directive has been renamed to 'tabset', and
@@ -82,8 +90,9 @@
 
     To migrate your code, follow the example below.
 
-    Before:
+  Before:
 
+    ```
     <tabs>
       <pane heading="one">
         First Content
@@ -92,9 +101,11 @@
         {{apple.content}}
       </pane>
     </tabs>
+    ```
 
-    After:
+  After:
 
+    ```
     <tabset>
       <tab heading="one">
         First Content
@@ -103,6 +114,8 @@
         {{apple.content}}
       </tab>
     </tabset>
+    ```
+
  
 # 0.3.0 (2013-04-30)
 
