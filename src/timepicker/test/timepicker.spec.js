@@ -215,7 +215,7 @@ describe('timepicker directive', function () {
     expect(getModelState()).toEqual([23, 0]);
   });
 
-  it('changes only the time part', function() {
+  it('changes only the time part when hours change', function() {
     $rootScope.time = newTime(23, 50);
     $rootScope.$digest();
 
@@ -225,6 +225,30 @@ describe('timepicker directive', function () {
 
     expect(getTimeState()).toEqual(['12', '50', 'AM']);
     expect(getModelState()).toEqual([0, 50]);
+    expect(date).toEqual($rootScope.time.getDate());
+  });
+
+  it('changes only the time part when minutes change', function() {
+    element = $compile('<timepicker ng-model="time" minute-step="15"></timepicker>')($rootScope);
+    $rootScope.time = newTime(0, 0);
+    $rootScope.$digest();
+
+    var date =  $rootScope.time.getDate();
+    var up = getMinutesButton(true);
+    doClick(up, 2);
+    expect(getTimeState()).toEqual(['12', '30', 'AM']);
+    expect(getModelState()).toEqual([0, 30]);
+    expect(date).toEqual($rootScope.time.getDate());
+
+    var down = getMinutesButton(false);
+    doClick(down, 2);
+    expect(getTimeState()).toEqual(['12', '00', 'AM']);
+    expect(getModelState()).toEqual([0, 0]);
+    expect(date).toEqual($rootScope.time.getDate());
+
+    doClick(down, 2);
+    expect(getTimeState()).toEqual(['11', '30', 'PM']);
+    expect(getModelState()).toEqual([23, 30]);
     expect(date).toEqual($rootScope.time.getDate());
   });
 
