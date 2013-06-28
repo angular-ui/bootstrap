@@ -17,6 +17,11 @@ angular.module('ui.bootstrap.tabs', [])
 
 .controller('TabsetController', ['$scope', '$element', 
 function TabsetCtrl($scope, $element) {
+
+  //Expose the outer scope for tab content compiling, so it can compile
+  //on outer scope like it should
+  this.$outerScope = $scope.$parent;
+   
   var ctrl = this,
     tabs = ctrl.tabs = $scope.tabs = [];
 
@@ -280,15 +285,17 @@ function($parse, $http, $templateCache, $compile) {
   };
 }])
 
-.directive('tabContentTransclude', ['$parse', function($parse) {
+.directive('tabContentTransclude', ['$compile', '$parse', function($compile, $parse) {
   return {
     restrict: 'A',
     require: '^tabset',
     link: function(scope, elm, attrs, tabsetCtrl) {
+      var outerScope = tabsetCtrl.$outerScope;
       scope.$watch($parse(attrs.tabContentTransclude), function(tab) {
         elm.html('');
         if (tab) {
           elm.append(tab.contentElement);
+          $compile(tab.contentElement)(outerScope);
         }
       });
     }

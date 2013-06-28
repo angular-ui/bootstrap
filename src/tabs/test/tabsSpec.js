@@ -475,4 +475,18 @@ describe('tabs', function() {
     });
   });
 
+  //https://github.com/angular-ui/bootstrap/issues/524
+  describe('child compilation', function() {
+
+    var elm;
+    beforeEach(inject(function($compile, $rootScope) {
+      elm = $compile('<tabset><tab><div></div></tab></tabset></div>')($rootScope.$new());
+      $rootScope.$apply();
+    }));
+
+    it('should hookup the tab\'s children to the tab with $compile', function() {
+      var tabChild = $('.tab-pane', elm).children().first();
+      expect(tabChild.inheritedData('$tabsetController')).toBeTruthy();
+    });
+  });
 });
