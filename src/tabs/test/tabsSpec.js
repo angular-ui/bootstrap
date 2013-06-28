@@ -36,7 +36,7 @@ describe('tabs', function() {
       scope.selectSecond = jasmine.createSpy(); 
       elm = $compile([
         '<div>',
-        '  <tabset>',
+        '  <tabset class="hello" data-pizza="pepperoni">',
         '    <tab heading="First Tab {{first}}" active="actives.one" select="selectFirst()">',
         '      first content is {{first}}',
         '    </tab>',
@@ -50,6 +50,12 @@ describe('tabs', function() {
       scope.$apply();
       return elm;
     }));
+
+    it('should pass class and other attributes on to tab template', function() {
+      var tabbable = elm.find('.tabbable');
+      expect(tabbable).toHaveClass('hello');
+      expect(tabbable.attr('data-pizza')).toBe('pepperoni');
+    });
 
     it('should create clickable titles', function() {
       var t = titles();

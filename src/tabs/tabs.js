@@ -80,6 +80,7 @@ function TabsetCtrl($scope, $element) {
   return {
     restrict: 'EA',
     transclude: true,
+    replace: true,
     scope: {},
     controller: 'TabsetController',
     templateUrl: 'template/tabs/tabset.html',
