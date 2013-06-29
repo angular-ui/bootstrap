@@ -20,6 +20,10 @@ describe('typeahead tests', function () {
   beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, $sniffer) {
     $scope = _$rootScope_;
     $scope.source = ['foo', 'bar', 'baz'];
+    $scope.states = [
+      {code: 'AL', name: 'Alaska'},
+      {code: 'CL', name: 'California'}
+    ];
     $compile = _$compile_;
     $document = _$document_;
     changeInputValueTo = function (element, value) {
@@ -89,10 +93,6 @@ describe('typeahead tests', function () {
 
     it('should correctly render initial state if the "as" keyword is used', function () {
 
-      $scope.states = [
-        {code: 'AL', name: 'Alaska'},
-        {code: 'CL', name: 'California'}
-      ];
       $scope.result = $scope.states[0];
 
       var element = prepareInputEl("<div><input ng-model='result' typeahead='state as state.name for state in states'></div>");
@@ -228,10 +228,6 @@ describe('typeahead tests', function () {
 
     it('should invoke select callback on select', function () {
 
-      $scope.states = [
-        {code: 'AL', name: 'Alaska'},
-        {code: 'CL', name: 'California'}
-      ];
       $scope.onSelect = function ($item, $model, $label) {
         $scope.$item = $item;
         $scope.$model = $model;
@@ -250,11 +246,6 @@ describe('typeahead tests', function () {
     });
 
     xit('should correctly update inputs value on mapping where label is not derived from the model', function () {
-
-      $scope.states = [
-        {code: 'AL', name: 'Alaska'},
-        {code: 'CL', name: 'California'}
-      ];
 
       var element = prepareInputEl("<div><input ng-model='result' typeahead='state.code as state.name for state in states | filter:$viewValue'></div>");
       var inputEl = findInput(element);
@@ -280,16 +271,18 @@ describe('typeahead tests', function () {
 
       expect(element).toBeClosed();
     });
+
+    it('issue 591 - initial formatting for un-selected match and complex label expression', function () {
+
+      var inputEl = findInput(prepareInputEl("<div><input ng-model='result' typeahead='state as state.name + \" \" + state.code for state in states | filter:$viewValue'></div>"));
+      expect(inputEl.val()).toEqual('');
+    });
   });
 
   describe('integration with existing formatters', function () {
 
     it('should co-operate with existing formatters', function () {
 
-      $scope.states = [
-        {code: 'AL', name: 'Alaska'},
-        {code: 'CL', name: 'California'}
-      ];
       $scope.result = $scope.states[0];
 
       var element = prepareInputEl("<div><input ng-model='result.name' formatter typeahead='state.name for state in states | filter:$viewValue'></div>"),
@@ -298,4 +291,5 @@ describe('typeahead tests', function () {
       expect(inputEl.val()).toEqual('formatted' + $scope.result.name);
     });
   });
+
 });

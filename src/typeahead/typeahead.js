@@ -147,12 +147,16 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       });
 
       modelCtrl.$formatters.push(function (modelValue) {
-        var locals = {}, viewValue;
+        var candidateViewValue, emptyViewValue;
+        var locals = {};
         locals[parserResult.itemName] = modelValue;
 
-        viewValue = parserResult.viewMapper(originalScope, locals);
+        //it might happen that we don't have enough info to properly render input value
+        //we need to check for this
+        candidateViewValue = parserResult.viewMapper(originalScope, locals);
+        emptyViewValue = parserResult.viewMapper(originalScope, {});
 
-        return viewValue ? viewValue : modelValue;
+        return candidateViewValue!== emptyViewValue ? candidateViewValue : modelValue;
       });
 
       scope.select = function (activeIdx) {
