@@ -77,6 +77,13 @@ describe('rating directive', function () {
     expect(getStars().length).toBe(7);
   });
 
+  it('shows different number of icons when `max` attribute is from scope variable', function() {
+    $rootScope.max = 15;
+    element = $compile('<rating value="rate" max="max"></rating>')($rootScope);
+    $rootScope.$digest();
+    expect(getStars().length).toBe(15);
+  });
+
   it('handles readonly attribute', function() {
     $rootScope.isReadonly = true;
     element = $compile('<rating value="rate" readonly="isReadonly"></rating>')($rootScope);

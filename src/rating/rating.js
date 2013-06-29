@@ -16,7 +16,7 @@ angular.module('ui.bootstrap.rating', [])
     replace: true,
     link: function(scope, element, attrs) {
 
-      var maxRange = angular.isDefined(attrs.max) ? scope.$eval(attrs.max) : ratingConfig.max;
+      var maxRange = angular.isDefined(attrs.max) ? scope.$parent.$eval(attrs.max) : ratingConfig.max;
 
       scope.range = [];
       for (var i = 1; i <= maxRange; i++) {
