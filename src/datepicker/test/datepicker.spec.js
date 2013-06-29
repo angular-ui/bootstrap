@@ -507,6 +507,20 @@ describe('datepicker directive', function () {
         }
       }
     });
+
+    it('enables everything before if it is cleared', function() {
+      $rootScope.mindate = null;
+      $rootScope.date = new Date("December 20, 1949");
+      $rootScope.$digest();
+
+      clickTitleButton();
+      for (var i = 0; i < 4; i ++) {
+        for (var j = 0; j < 3; j ++) {
+          expect(getOptionsEl(i, j).find('button').prop('disabled')).toBe( false );
+        }
+      }
+    });
+
   });
 
   describe('max attribute', function () {
@@ -577,6 +591,16 @@ describe('datepicker directive', function () {
       for (var i = 0; i < 4; i ++) {
         for (var j = 0; j < 3; j ++) {
           expect(getOptionsEl(i, j).find('button').prop('disabled')).toBe( true );
+        }
+      }
+    });
+
+    it('enables everything after if it is cleared', function() {
+      $rootScope.maxdate = null;
+      $rootScope.$digest();
+      for (var i = 0; i < 5; i ++) {
+        for (var j = 0; j < 7; j ++) {
+          expect(getOptionsEl(i, j).find('button').prop('disabled')).toBe( false );
         }
       }
     });

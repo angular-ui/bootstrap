@@ -47,13 +47,13 @@ angular.module('ui.bootstrap.datepicker', [])
 
       if (attrs.min) {
         scope.$parent.$watch($parse(attrs.min), function(value) {
-          minDate = new Date(value);
+          minDate = value ? new Date(value) : null;
           refill();
         });
       }
       if (attrs.max) {
         scope.$parent.$watch($parse(attrs.max), function(value) {
-          maxDate = new Date(value);
+          maxDate = value ? new Date(value) : null;
           refill();
         });
       }
@@ -161,7 +161,7 @@ angular.module('ui.bootstrap.datepicker', [])
 
       scope.$watch('model', function ( dt, olddt ) {
         if ( angular.isDate(dt) ) {
-          selected = angular.copy(dt);
+          selected = new Date(dt);
         }
 
         if ( ! angular.equals(dt, olddt) ) {
