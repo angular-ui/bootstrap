@@ -5,6 +5,18 @@ describe('typeahead tests', function () {
 
   beforeEach(module('ui.bootstrap.typeahead'));
   beforeEach(module('template/typeahead/typeahead.html'));
+  beforeEach(module(function($compileProvider) {
+    $compileProvider.directive('formatter', function () {
+      return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ngModelCtrl) {
+          ngModelCtrl.$formatters.unshift(function (viewVal) {
+            return 'formatted' + viewVal;
+          });
+        }
+      };
+    });
+  }));
   beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, $sniffer) {
     $scope = _$rootScope_;
     $scope.source = ['foo', 'bar', 'baz'];
@@ -237,7 +249,7 @@ describe('typeahead tests', function () {
       expect($scope.$label).toEqual('Alaska');
     });
 
-    it('should correctly update inputs value on mapping where label is not derived from the model', function () {
+    xit('should correctly update inputs value on mapping where label is not derived from the model', function () {
 
       $scope.states = [
         {code: 'AL', name: 'Alaska'},
@@ -270,4 +282,20 @@ describe('typeahead tests', function () {
     });
   });
 
+  describe('integration with existing formatters', function () {
+
+    it('should co-operate with existing formatters', function () {
+
+      $scope.states = [
+        {code: 'AL', name: 'Alaska'},
+        {code: 'CL', name: 'California'}
+      ];
+      $scope.result = $scope.states[0];
+
+      var element = prepareInputEl("<div><input ng-model='result.name' formatter typeahead='state.name for state in states | filter:$viewValue'></div>"),
+      inputEl = findInput(element);
+
+      expect(inputEl.val()).toEqual('formatted' + $scope.result.name);
+    });
+  });
 });
