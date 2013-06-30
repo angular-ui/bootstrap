@@ -126,6 +126,12 @@ module.exports = function(grunt) {
       continuous: {
         singleRun: true
       },
+      jenkins: {
+        singleRun: true,
+        colors: false,
+        reporter: ['dots', 'junit'],
+        browsers: ['Chrome', 'ChromeCanary', 'Firefox', 'Opera', '/Users/jenkins/bin/safari.sh', '/Users/jenkins/bin/ie9.sh' ,'/Users/jenkins/bin/ie10.sh']
+      },
       travis: {
         singleRun: true,
         browsers: ['Firefox']
@@ -304,7 +310,13 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('test', 'Run tests on singleRun karma server', function() {
-    grunt.task.run(process.env.TRAVIS ? 'karma:travis' : 'karma:continuous');
+    //this task can be executed in 3 different environments: local, Travis-CI and Jenkins-CI
+    //we need to take settings for each one into account
+    if (process.env.TRAVIS) {
+      grunt.task.run('karma:travis');
+    } else {
+      grunt.task.run(this.args.length ? 'karma:jenkins' : 'karma:continuous');
+    }
   });
 
   function setVersion(type, suffix) {
