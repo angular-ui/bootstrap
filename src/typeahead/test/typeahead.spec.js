@@ -245,7 +245,7 @@ describe('typeahead tests', function () {
       expect($scope.$label).toEqual('Alaska');
     });
 
-    xit('should correctly update inputs value on mapping where label is not derived from the model', function () {
+    it('should correctly update inputs value on mapping where label is not derived from the model', function () {
 
       var element = prepareInputEl("<div><input ng-model='result' typeahead='state.code as state.name for state in states | filter:$viewValue'></div>");
       var inputEl = findInput(element);
@@ -254,7 +254,7 @@ describe('typeahead tests', function () {
       triggerKeyDown(element, 13);
 
       expect($scope.result).toEqual('AL');
-      expect(inputEl.val()).toEqual('Alaska');
+      expect(inputEl.val()).toEqual('AL');
     });
   });
 
