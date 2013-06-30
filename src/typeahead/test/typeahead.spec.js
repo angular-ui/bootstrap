@@ -279,7 +279,7 @@ describe('typeahead tests', function () {
     });
   });
 
-  describe('integration with existing formatters', function () {
+  describe('input formatting', function () {
 
     it('should co-operate with existing formatters', function () {
 
@@ -289,6 +289,20 @@ describe('typeahead tests', function () {
       inputEl = findInput(element);
 
       expect(inputEl.val()).toEqual('formatted' + $scope.result.name);
+    });
+
+    it('should support a custom input formatting function', function () {
+
+      $scope.result = $scope.states[0];
+      $scope.formatInput = function($model) {
+        return $model.code;
+      };
+
+      var element = prepareInputEl("<div><input ng-model='result' typeahead-input-formatter='formatInput($model)' typeahead='state as state.name for state in states | filter:$viewValue'></div>"),
+      inputEl = findInput(element);
+
+      expect(inputEl.val()).toEqual('AL');
+      expect($scope.result).toEqual($scope.states[0]);
     });
   });
 

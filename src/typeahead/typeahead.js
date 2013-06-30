@@ -37,7 +37,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     require:'ngModel',
     link:function (originalScope, element, attrs, modelCtrl) {
 
-      var $setModelValue = $parse(attrs.ngModel).assign;
+      //SUPPORTED ATTRIBUTES (OPTIONS)
 
       //minimal no of characters that needs to be entered before typeahead kicks-in
       var minSearch = originalScope.$eval(attrs.typeaheadMinLength) || 1;
@@ -45,15 +45,25 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       //minimal wait time after last character typed before typehead kicks-in
       var waitTime = originalScope.$eval(attrs.typeaheadWaitMs) || 0;
 
-      //expressions used by typeahead
-      var parserResult = typeaheadParser.parse(attrs.typeahead);
-
       //should it restrict model values to the ones selected from the popup only?
       var isEditable = originalScope.$eval(attrs.typeaheadEditable) !== false;
 
+      //binding to a variable that indicates if matches are being retrieved asynchronously
       var isLoadingSetter = $parse(attrs.typeaheadLoading).assign || angular.noop;
 
+      //a callback executed when a match is selected
       var onSelectCallback = $parse(attrs.typeaheadOnSelect);
+
+      var inputFormatter = attrs.typeaheadInputFormatter ? $parse(attrs.typeaheadInputFormatter) : undefined;
+
+      //INTERNAL VARIABLES
+
+      //model setter executed upon match selection
+      var $setModelValue = $parse(attrs.ngModel).assign;
+
+      //expressions used by typeahead
+      var parserResult = typeaheadParser.parse(attrs.typeahead);
+
 
       //pop-up element used to display matches
       var popUpEl = angular.element('<typeahead-popup></typeahead-popup>');
@@ -147,16 +157,25 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       });
 
       modelCtrl.$formatters.push(function (modelValue) {
+
         var candidateViewValue, emptyViewValue;
         var locals = {};
-        locals[parserResult.itemName] = modelValue;
 
-        //it might happen that we don't have enough info to properly render input value
-        //we need to check for this
-        candidateViewValue = parserResult.viewMapper(originalScope, locals);
-        emptyViewValue = parserResult.viewMapper(originalScope, {});
+        if (inputFormatter) {
 
-        return candidateViewValue!== emptyViewValue ? candidateViewValue : modelValue;
+          locals['$model'] = modelValue;
+          return inputFormatter(originalScope, locals);
+
+        } else {
+          locals[parserResult.itemName] = modelValue;
+
+          //it might happen that we don't have enough info to properly render input value
+          //we need to check for this situation and simply return model value if we can't apply custom formatting
+          candidateViewValue = parserResult.viewMapper(originalScope, locals);
+          emptyViewValue = parserResult.viewMapper(originalScope, {});
+
+          return candidateViewValue!== emptyViewValue ? candidateViewValue : modelValue;
+        }
       });
 
       scope.select = function (activeIdx) {
