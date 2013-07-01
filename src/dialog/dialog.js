@@ -20,6 +20,7 @@ dialogModule.provider("$dialog", function(){
     backdropClass: 'modal-backdrop',
     transitionClass: 'fade',
     triggerClass: 'in',
+    dialogOpenClass: 'modal-open',
     resolve:{},
     backdropFade: false,
     dialogFade:false,
@@ -133,7 +134,7 @@ dialogModule.provider("$dialog", function(){
           if(self.options.dialogFade){ self.modalEl.addClass(self.options.triggerClass); }
           if(self.options.backdropFade){ self.backdropEl.addClass(self.options.triggerClass); }
         });
-
+        body.addClass(defaults.dialogOpenClass);
         self._bindEvents();
       });
 
@@ -191,7 +192,7 @@ dialogModule.provider("$dialog", function(){
     Dialog.prototype._onCloseComplete = function(result) {
       this._removeElementsFromDom();
       this._unbindEvents();
-
+      body.removeClass(defaults.dialogOpenClass);
       this.deferred.resolve(result);
     };
 
