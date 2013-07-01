@@ -183,6 +183,41 @@ describe('typeahead tests', function () {
       $timeout.flush();
       expect(element).toBeOpenWithActive(1, 0);
     }));
+
+    it('should cancel old timeouts when something is typed within waitTime', inject(function ($timeout) {
+      var values = [];
+      $scope.loadMatches = function(viewValue) {
+        values.push(viewValue);
+        return $scope.source;
+      };
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in loadMatches($viewValue) | filter:$viewValue' typeahead-wait-ms='200'></div>");
+      changeInputValueTo(element, 'first');
+      changeInputValueTo(element, 'second');
+
+      $timeout.flush();
+
+      expect(values).not.toContain('first');
+    }));
+
+    it('should allow timeouts when something is typed after waitTime has passed', inject(function ($timeout) {
+      var values = [];
+
+      $scope.loadMatches = function(viewValue) {
+        values.push(viewValue);
+        return $scope.source;
+      };
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in loadMatches($viewValue) | filter:$viewValue' typeahead-wait-ms='200'></div>");
+      
+      changeInputValueTo(element, 'first');
+      $timeout.flush();
+
+      expect(values).toContain('first');
+
+      changeInputValueTo(element, 'second');
+      $timeout.flush();
+
+      expect(values).toContain('second');
+    }));
   });
 
   describe('selecting a match', function () {
