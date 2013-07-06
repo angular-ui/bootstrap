@@ -232,6 +232,7 @@ describe('typeahead tests', function () {
 
       expect($scope.result).toEqual('bar');
       expect(inputEl.val()).toEqual('bar');
+      expect(element).toBeClosed();
     });
 
     it('should select a match on tab', function () {
@@ -244,6 +245,7 @@ describe('typeahead tests', function () {
 
       expect($scope.result).toEqual('bar');
       expect(inputEl.val()).toEqual('bar');
+      expect(element).toBeClosed();
     });
 
     it('should select match on click', function () {
@@ -259,6 +261,7 @@ describe('typeahead tests', function () {
 
       expect($scope.result).toEqual('baz');
       expect(inputEl.val()).toEqual('baz');
+      expect(element).toBeClosed();
     });
 
     it('should invoke select callback on select', function () {

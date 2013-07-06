@@ -195,6 +195,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         });
 
         //return focus to the input element if a mach was selected via a mouse click event
+        resetMatches();
         element[0].focus();
       };
 
