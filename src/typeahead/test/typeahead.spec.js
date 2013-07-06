@@ -4,7 +4,8 @@ describe('typeahead tests', function () {
   var changeInputValueTo;
 
   beforeEach(module('ui.bootstrap.typeahead'));
-  beforeEach(module('template/typeahead/typeahead.html'));
+  beforeEach(module('template/typeahead/typeahead-popup.html'));
+  beforeEach(module('template/typeahead/typeahead-match.html'));
   beforeEach(module(function($compileProvider) {
     $compileProvider.directive('formatter', function () {
       return {
@@ -217,6 +218,18 @@ describe('typeahead tests', function () {
       $timeout.flush();
 
       expect(values).toContain('second');
+    }));
+
+    it('should support custom templates for matched items', inject(function ($templateCache) {
+
+      $templateCache.put('custom.html', '<p>{{ match.label }}</p>');
+
+      var element = prepareInputEl("<div><input ng-model='result' typeahead-template-url='custom.html' typeahead='state as state.name for state in states | filter:$viewValue'></div>");
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'Al');
+
+      expect(findMatches(element).eq(0).find('p').text()).toEqual('Alaska');
     }));
   });
 
