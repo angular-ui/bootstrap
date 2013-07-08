@@ -15,20 +15,16 @@ angular.module('ui.bootstrap.tabs', [])
   };
 })
 
-.controller('TabsetController', ['$scope', '$element', 
+.controller('TabsetController', ['$scope', '$element',
 function TabsetCtrl($scope, $element) {
 
-  //Expose the outer scope for tab content compiling, so it can compile
-  //on outer scope like it should
-  this.$outerScope = $scope.$parent;
-   
   var ctrl = this,
     tabs = ctrl.tabs = $scope.tabs = [];
 
   ctrl.select = function(tab) {
     angular.forEach(tabs, function(tab) {
       tab.active = false;
-    });  
+    });
     tab.active = true;
   };
 
@@ -39,7 +35,7 @@ function TabsetCtrl($scope, $element) {
     }
   };
 
-  ctrl.removeTab = function removeTab(tab) { 
+  ctrl.removeTab = function removeTab(tab) {
     var index = tabs.indexOf(tab);
     //Select a new tab if the tab to be removed is selected
     if (tab.active && tabs.length > 1) {
@@ -101,7 +97,7 @@ function TabsetCtrl($scope, $element) {
  * @param {boolean=} active A binding, telling whether or not this tab is selected.
  * @param {boolean=} disabled A binding, telling whether or not this tab is disabled.
  *
- * @description 
+ * @description
  * Creates a tab with a heading and content. Must be placed within a {@link ui.bootstrap.tabs.directive:tabset tabset}.
  *
  * @example
@@ -235,37 +231,11 @@ function($parse, $http, $templateCache, $compile) {
         //value won't overwrite what is initially set by the tabset
         if (scope.active) {
           setActive(scope.$parent, true);
-        } 
+        }
 
-        //Transclude the collection of sibling elements. Use forEach to find
-        //the heading if it exists. We don't use a directive for tab-heading
-        //because it is problematic. Discussion @ http://git.io/MSNPwQ
-        transclude(scope.$parent, function(clone) {
-          //Look at every element in the clone collection. If it's tab-heading,
-          //mark it as that.  If it's not tab-heading, mark it as tab contents
-          var contents = [], heading;
-          angular.forEach(clone, function(el) {
-            //See if it's a tab-heading attr or element directive
-            //First make sure it's a normal element, one that has a tagName
-            if (el.tagName &&
-                (el.hasAttribute("tab-heading") || 
-                 el.hasAttribute("data-tab-heading") ||
-                 el.tagName.toLowerCase() == "tab-heading" ||
-                 el.tagName.toLowerCase() == "data-tab-heading"
-                )) {
-              heading = el;
-            } else {
-              contents.push(el);
-            }
-          });
-          //Share what we found on the scope, so our tabHeadingTransclude and
-          //tabContentTransclude directives can find out what the heading and
-          //contents are.
-          if (heading) { 
-            scope.headingElement = angular.element(heading);
-          }
-          scope.contentElement = angular.element(contents);
-        });
+        //We need to transclude later, once the content container is ready.
+        //when this link happens, we're inside a tab heading. 
+        scope.$transcludeFn = transclude;
       };
     }
   };
@@ -274,7 +244,7 @@ function($parse, $http, $templateCache, $compile) {
 .directive('tabHeadingTransclude', [function() {
   return {
     restrict: 'A',
-    require: '^tab', 
+    require: '^tab',
     link: function(scope, elm, attrs, tabCtrl) {
       scope.$watch('headingElement', function updateHeadingElement(heading) {
         if (heading) {
@@ -290,17 +260,31 @@ function($parse, $http, $templateCache, $compile) {
   return {
     restrict: 'A',
     require: '^tabset',
-    link: function(scope, elm, attrs, tabsetCtrl) {
-      var outerScope = tabsetCtrl.$outerScope;
-      scope.$watch($parse(attrs.tabContentTransclude), function(tab) {
-        elm.html('');
-        if (tab) {
-          elm.append(tab.contentElement);
-          $compile(tab.contentElement)(outerScope);
-        }
+    link: function(scope, elm, attrs) {
+      var tab = scope.$eval(attrs.tabContentTransclude);
+
+      //Now our tab is ready to be transcluded: both the tab heading area
+      //and the tab content area are loaded.  Transclude 'em both.
+      tab.$transcludeFn(tab.$parent, function(contents) {
+        angular.forEach(contents, function(node) {
+          if (isTabHeading(node)) {
+            //Let tabHeadingTransclude know.
+            tab.headingElement = node;
+          } else {
+            elm.append(node);
+          }
+        });
       });
     }
   };
+  function isTabHeading(node) {
+    return node.tagName &&  (
+      node.hasAttribute('tab-heading') ||
+      node.hasAttribute('data-tab-heading') ||
+      node.tagName.toLowerCase() === 'tab-heading' ||
+      node.tagName.toLowerCase() === 'data-tab-heading'
+    );
+  }
 }])
 
 ;

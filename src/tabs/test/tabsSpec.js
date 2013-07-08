@@ -495,4 +495,43 @@ describe('tabs', function() {
       expect(tabChild.inheritedData('$tabsetController')).toBeTruthy();
     });
   });
+
+  //https://github.com/angular-ui/bootstrap/issues/631
+  describe('ng-options in content', function() {
+    var elm;
+    it('should render correct amount of options', inject(function($compile, $rootScope) {
+      var scope = $rootScope.$new();
+      elm = $compile('<tabset><tab><select ng-model="foo" ng-options="i for i in [1,2,3]"></tab>')(scope);
+      scope.$apply();
+
+      var select = elm.find('select');
+      scope.$apply();
+      expect(select.children().length).toBe(4);
+    }));
+  });
+
+  //https://github.com/angular-ui/bootstrap/issues/599
+  describe('ng-repeat in content', function() {
+    var elm;
+    it('should render ng-repeat', inject(function($compile, $rootScope) {
+      var scope = $rootScope.$new();
+      scope.tabs = [
+        {title:'a', array:[1,2,3]},
+        {title:'b', array:[2,3,4]},
+        {title:'c', array:[3,4,5]}
+      ];
+      elm = $compile('<div><tabset>' +
+        '<tab ng-repeat="tab in tabs" heading="{{tab.title}}">' +
+          '<tab-heading>{{$index}}</tab-heading>' +
+          '<span ng-repeat="a in tab.array">{{a}},</span>' +
+        '</tab>' +
+      '</tabset></div>')(scope);
+      scope.$apply();
+
+      var contents = elm.find('.tab-pane');
+      expect(contents.eq(0).text().trim()).toEqual('1,2,3,');
+      expect(contents.eq(1).text().trim()).toEqual('2,3,4,');
+      expect(contents.eq(2).text().trim()).toEqual('3,4,5,');
+    }));
+  });
 });
