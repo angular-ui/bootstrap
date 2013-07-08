@@ -30,7 +30,7 @@ function TabsetCtrl($scope, $element) {
 
   ctrl.addTab = function addTab(tab) {
     tabs.push(tab);
-    if (tabs.length == 1) {
+    if (tabs.length == 1 || tab.active) {
       ctrl.select(tab);
     }
   };
@@ -186,16 +186,11 @@ function($parse, $http, $templateCache, $compile) {
     compile: function(elm, attrs, transclude) {
       return function postLink(scope, elm, attrs, tabsetCtrl) {
         var getActive, setActive;
-        scope.active = false; // default value
         if (attrs.active) {
           getActive = $parse(attrs.active);
           setActive = getActive.assign;
           scope.$parent.$watch(getActive, function updateActive(value) {
-            if ( !!value && scope.disabled ) {
-              setActive(scope.$parent, false); // Prevent active assignment
-            } else {
-              scope.active = !!value;
-            }
+            scope.active = !!value;
           });
         } else {
           setActive = getActive = angular.noop;
@@ -226,12 +221,10 @@ function($parse, $http, $templateCache, $compile) {
         scope.$on('$destroy', function() {
           tabsetCtrl.removeTab(scope);
         });
-        //If the tabset sets this tab to active, set the parent scope's active
-        //binding too.  We do this so the watch for the parent's initial active
-        //value won't overwrite what is initially set by the tabset
         if (scope.active) {
           setActive(scope.$parent, true);
         }
+
 
         //We need to transclude later, once the content container is ready.
         //when this link happens, we're inside a tab heading. 

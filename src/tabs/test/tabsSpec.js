@@ -284,8 +284,8 @@ describe('tabs', function() {
   });
 
   describe('tabset controller', function() {
-    function mockTab() {
-      return { active: false };
+    function mockTab(isActive) {
+      return { active: !!isActive };
     }
 
     var ctrl;
@@ -354,6 +354,16 @@ describe('tabs', function() {
 
         ctrl.addTab(tab2);
         expect(tab1.active).toBe(true);
+      });
+
+      it('should select a tab added that\'s already active', function() {
+        var tab1 = mockTab(), tab2 = mockTab(true);
+        ctrl.addTab(tab1);
+        expect(tab1.active).toBe(true);
+
+        ctrl.addTab(tab2);
+        expect(tab1.active).toBe(false);
+        expect(tab2.active).toBe(true);
       });
     });
   });
@@ -431,14 +441,6 @@ describe('tabs', function() {
       expectTabActive(scope.tabs[2]);
 
       titles().eq(3).find('a').click();
-      expectTabActive(scope.tabs[2]);
-    });
-
-    it('should not switch active when setting active=true', function() {
-      scope.$apply('tabs[2].active = true');
-      expectTabActive(scope.tabs[2]);
-
-      scope.$apply('tabs[3].active = true');
       expectTabActive(scope.tabs[2]);
     });
 
