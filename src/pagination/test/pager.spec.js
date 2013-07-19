@@ -101,6 +101,18 @@ describe('pager directive with default configuration', function () {
     expect($rootScope.currentPage).toBe(2);
     expect($rootScope.selectPageHandler).toHaveBeenCalledWith(2);
   });
+
+  describe('when `current-page` is not a number', function () {
+    it('handles string', function() {
+      $rootScope.currentPage = '1';
+      $rootScope.$digest();
+      expect(element.find('li').eq(0).hasClass('disabled')).toBe(true);
+
+      $rootScope.currentPage = '05';
+      $rootScope.$digest();
+      expect(element.find('li').eq(-1).hasClass('disabled')).toBe(true);
+    });
+  });
 });
 
 describe('setting pagerConfig', function() {
