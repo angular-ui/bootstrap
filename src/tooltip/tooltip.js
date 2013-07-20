@@ -276,8 +276,8 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           });
 
           attrs.$observe( prefix+'Trigger', function ( val ) {
-            element.unbind( triggers.show );
-            element.unbind( triggers.hide );
+            element.unbind( triggers.show, showTooltipBind );
+            element.unbind( triggers.hide, hideTooltipBind );
 
             triggers = setTriggers( val );
 
