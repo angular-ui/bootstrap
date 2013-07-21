@@ -82,16 +82,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
        * undefined; otherwise, it uses the `triggerMap` value of the show
        * trigger; else it will just use the show trigger.
        */
-      function setTriggers ( trigger ) {
-        var show, hide;
-       
-        show = trigger || options.trigger || defaultTriggerShow;
-        if ( angular.isDefined ( options.trigger ) ) {
-          hide = triggerMap[options.trigger] || show;
-        } else {
-          hide = triggerMap[show] || show;
-        }
-
+      function getTriggers ( trigger ) {
+        var show = trigger || options.trigger || defaultTriggerShow;
+        var hide = triggerMap[show] || show;
         return {
           show: show,
           hide: hide
@@ -121,7 +114,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           var popupTimeout;
           var $body;
           var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
-          var triggers = setTriggers( undefined );
+          var triggers = getTriggers( undefined );
           var hasRegisteredTriggers = false;
 
           // By default, the tooltip is not open.
@@ -283,7 +276,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
               element.unbind( triggers.hide, hideTooltipBind );
             }
 
-            triggers = setTriggers( val );
+            triggers = getTriggers( val );
 
             if ( triggers.show === triggers.hide ) {
               element.bind( triggers.show, toggleTooltipBind );

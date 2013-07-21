@@ -493,6 +493,24 @@ describe( '$tooltipProvider', function() {
         elm.trigger('blur');
         expect( elmScope.tt_isOpen ).toBeFalsy();
       }));
+
+      it( 'should override the show and hide triggers if there is an attribute', inject( function ( $rootScope, $compile ) {
+        elmBody = angular.element(
+          '<div><input tooltip="tooltip text" tooltip-trigger="mouseenter"/></div>'
+        );
+
+        scope = $rootScope;
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('input');
+        elmScope = elm.scope();
+
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+        elm.trigger('mouseenter');
+        expect( elmScope.tt_isOpen ).toBeTruthy();
+        elm.trigger('mouseleave');
+        expect( elmScope.tt_isOpen ).toBeFalsy();
+      }));
     });
 
     describe( 'triggers with a custom mapped value', function() {
