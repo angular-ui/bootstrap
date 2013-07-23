@@ -15,6 +15,15 @@ angular.module('ui.bootstrap.pagination', [])
     return this.currentPage === page;
   };
 
+  this.reset = function() {
+    $scope.pages = [];
+    this.currentPage = parseInt($scope.currentPage, 10);
+
+    if ( this.currentPage > $scope.numPages ) {
+      $scope.selectPage($scope.numPages);
+    }
+  };
+
   var self = this;
   $scope.selectPage = function(page) {
     if ( ! self.isActive(page) && page > 0 && page <= $scope.numPages) {
@@ -68,8 +77,7 @@ angular.module('ui.bootstrap.pagination', [])
       }
 
       scope.$watch('numPages + currentPage + maxSize', function() {
-        scope.pages = [];
-        paginationCtrl.currentPage = parseInt(scope.currentPage, 10);
+        paginationCtrl.reset();
 
         // Default page limits
         var startPage = 1, endPage = scope.numPages;
@@ -132,10 +140,6 @@ angular.module('ui.bootstrap.pagination', [])
           var lastPage = makePage(scope.numPages, lastText, false, paginationCtrl.noNext());
           scope.pages.push(lastPage);
         }
-
-        if ( paginationCtrl.currentPage > scope.numPages ) {
-          scope.selectPage(scope.numPages);
-        }
       });
     }
   };
@@ -177,8 +181,7 @@ angular.module('ui.bootstrap.pagination', [])
       }
 
       scope.$watch('numPages + currentPage', function() {
-        scope.pages = [];
-        paginationCtrl.currentPage = parseInt(scope.currentPage, 10);
+        paginationCtrl.reset();
 
         // Add previous & next links
         var previousPage = makePage(paginationCtrl.currentPage - 1, previousText, paginationCtrl.noPrevious(), true, false);
@@ -186,10 +189,6 @@ angular.module('ui.bootstrap.pagination', [])
 
         var nextPage = makePage(paginationCtrl.currentPage + 1, nextText, paginationCtrl.noNext(), false, true);
         scope.pages.push(nextPage);
-
-        if ( paginationCtrl.currentPage > scope.numPages ) {
-          scope.selectPage(scope.numPages);
-        }
       });
     }
   };
