@@ -181,7 +181,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             }
 
             // Get the position of the directive element.
-            position = options.appendToBody ? $position.offset( element ) : $position.position( element );
+            position = appendToBody ? $position.offset( element ) : $position.position( element );
 
             // Get the height and width of the tooltip so we can center it.
             ttWidth = tooltip.prop( 'offsetWidth' );
