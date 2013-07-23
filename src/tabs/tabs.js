@@ -177,8 +177,9 @@ function($parse, $http, $templateCache, $compile) {
     transclude: true,
     scope: {
       heading: '@',
-      onSelect: '&select' //This callback is called in contentHeadingTransclude
+      onSelect: '&select', //This callback is called in contentHeadingTransclude
                           //once it inserts the tab's content into the dom
+      onDeselect: '&deselect'
     },
     controller: function() {
       //Empty controller so other directives can require being 'under' a tab
@@ -201,6 +202,9 @@ function($parse, $http, $templateCache, $compile) {
           if (active) {
             tabsetCtrl.select(scope);
             scope.onSelect();
+          }
+          else {
+            scope.onDeselect();
           }
         });
 
@@ -227,7 +231,7 @@ function($parse, $http, $templateCache, $compile) {
 
 
         //We need to transclude later, once the content container is ready.
-        //when this link happens, we're inside a tab heading. 
+        //when this link happens, we're inside a tab heading.
         scope.$transcludeFn = transclude;
       };
     }

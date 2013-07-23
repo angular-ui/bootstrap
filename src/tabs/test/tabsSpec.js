@@ -24,7 +24,7 @@ describe('tabs', function() {
     }
   }
 
-  
+
   describe('basics', function() {
 
     beforeEach(inject(function($compile, $rootScope) {
@@ -33,14 +33,16 @@ describe('tabs', function() {
       scope.second = '2';
       scope.actives = {};
       scope.selectFirst = jasmine.createSpy();
-      scope.selectSecond = jasmine.createSpy(); 
+      scope.selectSecond = jasmine.createSpy();
+      scope.deselectFirst = jasmine.createSpy();
+      scope.deselectSecond = jasmine.createSpy();
       elm = $compile([
         '<div>',
         '  <tabset class="hello" data-pizza="pepperoni">',
-        '    <tab heading="First Tab {{first}}" active="actives.one" select="selectFirst()">',
+        '    <tab heading="First Tab {{first}}" active="actives.one" select="selectFirst()" deselect="deselectFirst()">',
         '      first content is {{first}}',
         '    </tab>',
-        '    <tab active="actives.two" select="selectSecond()">',
+        '    <tab active="actives.two" select="selectSecond()" deselect="deselectSecond()">',
         '      <tab-heading><b>Second</b> Tab {{second}}</tab-heading>',
         '      second content is {{second}}',
         '    </tab>',
@@ -88,6 +90,14 @@ describe('tabs', function() {
       expect(scope.selectSecond).toHaveBeenCalled();
       titles().eq(0).find('a').click();
       expect(scope.selectFirst).toHaveBeenCalled();
+    });
+
+    it('should call deselect callback on deselect', function() {
+      titles().eq(1).find('a').click();
+      titles().eq(0).find('a').click();
+      expect(scope.deselectSecond).toHaveBeenCalled();
+      titles().eq(1).find('a').click();
+      expect(scope.deselectFirst).toHaveBeenCalled();
     });
 
   });
@@ -208,7 +218,7 @@ describe('tabs', function() {
       expect(heading().eq(2).text()).toBe('2');
       expect(heading().eq(3).text()).toBe('3');
     });
-    
+
   });
 
   //Tests that http://git.io/lG6I9Q is fixed
