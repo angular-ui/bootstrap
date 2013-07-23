@@ -9,6 +9,10 @@ body {
     opacity: 0;
 }
 
+.ng-invalid {
+    border: 1px solid red !important;
+}
+
 section {
     padding-top: 30px;
 }

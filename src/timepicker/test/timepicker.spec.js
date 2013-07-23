@@ -8,7 +8,7 @@ describe('timepicker directive', function () {
     $rootScope = _$rootScope_;
     $rootScope.time = newTime(14, 40);
 
-    element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
+    element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -80,6 +80,15 @@ describe('timepicker directive', function () {
   it('has initially the correct time & meridian', function() {
     expect(getTimeState()).toEqual(['02', '40', 'PM']);
     expect(getModelState()).toEqual([14, 40]);
+  });
+
+  it('has `selected` current time when model is initially cleared', function() {
+    $rootScope.time = null;
+    element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+    $rootScope.$digest();
+
+    expect($rootScope.time).toBe(null);
+    expect(getTimeState()).not.toEqual(['', '', '']);
   });
 
   it('changes inputs when model changes value', function() {
@@ -235,7 +244,7 @@ describe('timepicker directive', function () {
   });
 
   it('changes only the time part when minutes change', function() {
-    element = $compile('<timepicker ng-model="time" minute-step="15"></timepicker>')($rootScope);
+    element = $compile('<timepicker ng-model="$parent.time" minute-step="15"></timepicker>')($rootScope);
     $rootScope.time = newTime(0, 0);
     $rootScope.$digest();
 
@@ -367,7 +376,7 @@ describe('timepicker directive', function () {
       $rootScope.hstep = 2;
       $rootScope.mstep = 30;
       $rootScope.time = newTime(14, 0);
-      element = $compile('<timepicker ng-model="time" hour-step="hstep" minute-step="mstep"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="$parent.time" hour-step="hstep" minute-step="mstep"></timepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -530,7 +539,7 @@ describe('timepicker directive', function () {
     beforeEach(function() {
       $rootScope.meridian = false;
       $rootScope.time = newTime(14, 10);
-      element = $compile('<timepicker ng-model="time" show-meridian="meridian"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="$parent.time" show-meridian="meridian"></timepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -559,6 +568,14 @@ describe('timepicker directive', function () {
       expect(getModelState()).toEqual([14, 10]);
       expect(getMeridianTd().css('display')).toBe('none');
     });
+
+    it('handles correctly initially empty model on parent element', function() {
+      $rootScope.time = null;
+      element = $compile('<span ng-model="time"><timepicker show-meridian="meridian"></timepicker></span>')($rootScope);
+      $rootScope.$digest();
+
+      expect($rootScope.time).toBe(null);
+    });
   });
 
   describe('setting timepickerConfig steps', function() {
@@ -568,7 +585,7 @@ describe('timepicker directive', function () {
       timepickerConfig.hourStep = 2;
       timepickerConfig.minuteStep = 10;
       timepickerConfig.showMeridian = false;
-      element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(timepickerConfig) {
@@ -614,7 +631,7 @@ describe('timepicker directive', function () {
       angular.extend(originalConfig, timepickerConfig);
       timepickerConfig.meridians = ['π.μ.', 'μ.μ.'];
       timepickerConfig.showMeridian = true;
-      element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(timepickerConfig) {
@@ -637,10 +654,9 @@ describe('timepicker directive', function () {
   });
 
   describe('user input validation', function () {
-
     var changeInputValueTo;
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, $sniffer) {
+    beforeEach(inject(function($sniffer) {
       changeInputValueTo = function (inputEl, value) {
         inputEl.val(value);
         inputEl.trigger($sniffer.hasEvent('input') ? 'input' : 'change');
@@ -661,7 +677,7 @@ describe('timepicker directive', function () {
       expect(getModelState()).toEqual([14, 40]);
     });
 
-    it('updates hours & pads on input blur', function() {
+    it('updates hours & pads on input change & pads on blur', function() {
       var el = getHoursInputEl();
 
       changeInputValueTo(el, 5);
@@ -673,7 +689,7 @@ describe('timepicker directive', function () {
       expect(getModelState()).toEqual([17, 40]);
     });
 
-    it('updates minutes & pads on input blur', function() {
+    it('updates minutes & pads on input change & pads on blur', function() {
       var el = getMinutesInputEl();
 
       changeInputValueTo(el, 9);
@@ -691,6 +707,7 @@ describe('timepicker directive', function () {
       changeInputValueTo(el, 'pizza');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 8);
       el.blur();
@@ -698,6 +715,7 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['08', '40', 'PM']);
       expect(getModelState()).toEqual([20, 40]);
       expect(el.parent().hasClass('error')).toBe(false);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
     it('clears model when input minutes is invalid & alerts the UI', function() {
@@ -706,16 +724,18 @@ describe('timepicker directive', function () {
       changeInputValueTo(el, 'pizza');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 22);
       expect(getTimeState()).toEqual(['02', '22', 'PM']);
       expect(getModelState()).toEqual([14, 22]);
       expect(el.parent().hasClass('error')).toBe(false);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
     it('handles 12/24H mode change', function() {
       $rootScope.meridian = true;
-      element = $compile('<timepicker ng-model="time" show-meridian="meridian"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="$parent.time" show-meridian="meridian"></timepicker>')($rootScope);
       $rootScope.$digest();
 
       var el = getHoursInputEl();
@@ -723,11 +743,111 @@ describe('timepicker directive', function () {
       changeInputValueTo(el, '16');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       $rootScope.meridian = false;
       $rootScope.$digest();
       expect(getTimeState(true)).toEqual(['16', '40']);
       expect(getModelState()).toEqual([16, 40]);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+  });
+
+  describe('when model is not a Date', function() {
+    beforeEach(inject(function() {
+      eelement = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+    }));
+
+    it('should not be invalid when the model is null', function() {
+      $rootScope.time = null;
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+
+    it('should not be invalid when the model is undefined', function() {
+      $rootScope.time = undefined;
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+
+    it('should not be invalid when the model is a valid string date representation', function() {
+      $rootScope.time = 'September 30, 2010 15:30:00';
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+      expect(getTimeState()).toEqual(['03', '30', 'PM']);
+    });
+
+    it('should be invalid when the model is not a valid string date representation', function() {
+      $rootScope.time = 'pizza';
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+    });
+
+    it('should return valid when the model becomes valid', function() {
+      $rootScope.time = 'pizza';
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+
+      $rootScope.time = new Date();
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+
+    it('should return valid when the model is cleared', function() {
+      $rootScope.time = 'pizza';
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+
+      $rootScope.time = null;
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+  });
+
+  describe('use with `ng-required` directive', function() {
+    beforeEach(inject(function() {
+      $rootScope.time = null;
+      element = $compile('<timepicker ng-model="$parent.time" ng-required="true"></timepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('should be invalid initially', function() {
+      expect(element.hasClass('ng-invalid')).toBe(true);
+    });
+
+    it('should be valid if model has been specified', function() {
+      $rootScope.time = new Date();
+      $rootScope.$digest();
+      expect(element.hasClass('ng-invalid')).toBe(false);
+    });
+  });
+
+  describe('use with `ng-change` directive', function() {
+    beforeEach(inject(function() {
+      $rootScope.changeHandler = jasmine.createSpy('changeHandler');
+      $rootScope.time = new Date();
+      element = $compile('<timepicker ng-model="$parent.time" ng-change="$parent.changeHandler()"></timepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('should not be called initially', function() {
+      expect($rootScope.changeHandler).not.toHaveBeenCalled();
+    });
+
+    it('should be called when hours / minutes buttons clicked', function() {
+      var btn1 = getHoursButton(true);
+      var btn2 = getMinutesButton(false);
+
+      doClick(btn1, 2);
+      doClick(btn2, 3);
+      $rootScope.$digest();
+      expect($rootScope.changeHandler.callCount).toBe(5);
+    });
+
+    it('should not be called when model changes programatically', function() {
+      $rootScope.time = new Date();
+      $rootScope.$digest();
+      expect($rootScope.changeHandler).not.toHaveBeenCalled();
     });
   });
 

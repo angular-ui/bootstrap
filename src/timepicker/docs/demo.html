@@ -1,5 +1,7 @@
 <div ng-controller="TimepickerDemoCtrl">
-  <timepicker ng-model="mytime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  <div ng-model="mytime" ng-change="changed()" class="well well-small" style="display:inline-block;">
+    <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  </div>
 
   <pre>Time is: {{mytime | date:'shortTime' }}</pre>
 
