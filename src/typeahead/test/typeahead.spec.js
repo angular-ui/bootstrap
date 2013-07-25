@@ -102,6 +102,16 @@ describe('typeahead tests', function () {
       expect(inputEl.val()).toEqual('Alaska');
     });
 
+    it('should default to bound model for initial rendering if there is not enough info to render label', function () {
+
+      $scope.result = $scope.states[0].code;
+
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='state.code as state.name + state.code for state in states'></div>");
+      var inputEl = findInput(element);
+
+      expect(inputEl.val()).toEqual('AL');
+    });
+
     it('should not get open on model change', function () {
       var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source'></div>");
       $scope.$apply(function () {
