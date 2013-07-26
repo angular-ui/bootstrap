@@ -284,6 +284,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     return {
       restrict:'E',
       scope:{
+        index:'=',
         match:'=',
         query:'='
       },
