@@ -1,6 +1,6 @@
 angular.module('ui.bootstrap.pagination', [])
 
-.controller('PaginationController', ['$scope', function ($scope) {
+.controller('PaginationController', ['$scope', '$interpolate', function ($scope, $interpolate) {
 
   this.currentPage = 1;
 
@@ -31,6 +31,10 @@ angular.module('ui.bootstrap.pagination', [])
       $scope.onSelectPage({ page: page });
     }
   };
+
+  this.getAttributeValue = function(attribute, defaultValue, interpolate) {
+    return angular.isDefined(attribute) ? (interpolate ? $interpolate(attribute)($scope.$parent) : $scope.$parent.$eval(attribute)) : defaultValue;
+  };
 }])
 
 .constant('paginationConfig', {
@@ -43,7 +47,7 @@ angular.module('ui.bootstrap.pagination', [])
   rotate: true
 })
 
-.directive('pagination', ['paginationConfig', function(paginationConfig) {
+.directive('pagination', ['paginationConfig', function(config) {
   return {
     restrict: 'EA',
     scope: {
@@ -58,13 +62,13 @@ angular.module('ui.bootstrap.pagination', [])
     link: function(scope, element, attrs, paginationCtrl) {
 
       // Setup configuration parameters
-      var boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$eval(attrs.boundaryLinks) : paginationConfig.boundaryLinks;
-      var directionLinks = angular.isDefined(attrs.directionLinks) ? scope.$eval(attrs.directionLinks) : paginationConfig.directionLinks;
-      var firstText = angular.isDefined(attrs.firstText) ? scope.$parent.$eval(attrs.firstText) : paginationConfig.firstText;
-      var previousText = angular.isDefined(attrs.previousText) ? scope.$parent.$eval(attrs.previousText) : paginationConfig.previousText;
-      var nextText = angular.isDefined(attrs.nextText) ? scope.$parent.$eval(attrs.nextText) : paginationConfig.nextText;
-      var lastText = angular.isDefined(attrs.lastText) ? scope.$parent.$eval(attrs.lastText) : paginationConfig.lastText;
-      var rotate = angular.isDefined(attrs.rotate) ? scope.$eval(attrs.rotate) : paginationConfig.rotate;
+      var boundaryLinks = paginationCtrl.getAttributeValue(attrs.boundaryLinks,  config.boundaryLinks      ),
+      directionLinks    = paginationCtrl.getAttributeValue(attrs.directionLinks, config.directionLinks     ),
+      firstText         = paginationCtrl.getAttributeValue(attrs.firstText,      config.firstText,     true),
+      previousText      = paginationCtrl.getAttributeValue(attrs.previousText,   config.previousText,  true),
+      nextText          = paginationCtrl.getAttributeValue(attrs.nextText,       config.nextText,      true),
+      lastText          = paginationCtrl.getAttributeValue(attrs.lastText,       config.lastText,      true),
+      rotate            = paginationCtrl.getAttributeValue(attrs.rotate,         config.rotate);
 
       // Create page object used in template
       function makePage(number, text, isActive, isDisabled) {
@@ -165,9 +169,9 @@ angular.module('ui.bootstrap.pagination', [])
     link: function(scope, element, attrs, paginationCtrl) {
 
       // Setup configuration parameters
-      var previousText = angular.isDefined(attrs.previousText) ? scope.$parent.$eval(attrs.previousText) : config.previousText;
-      var nextText = angular.isDefined(attrs.nextText) ? scope.$parent.$eval(attrs.nextText) : config.nextText;
-      var align = angular.isDefined(attrs.align) ? scope.$parent.$eval(attrs.align) : config.align;
+      var previousText = paginationCtrl.getAttributeValue(attrs.previousText, config.previousText, true),
+      nextText         = paginationCtrl.getAttributeValue(attrs.nextText,     config.nextText,     true),
+      align            = paginationCtrl.getAttributeValue(attrs.align,        config.align);
 
       // Create page object used in template
       function makePage(number, text, isDisabled, isPrevious, isNext) {
