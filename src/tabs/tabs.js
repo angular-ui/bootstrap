@@ -30,7 +30,7 @@ function TabsetCtrl($scope, $element) {
 
   ctrl.addTab = function addTab(tab) {
     tabs.push(tab);
-    if (tabs.length == 1 || tab.active) {
+    if (tabs.length === 1 || tab.active) {
       ctrl.select(tab);
     }
   };
@@ -202,6 +202,7 @@ function($parse, $http, $templateCache, $compile) {
           scope.$parent.$watch(getActive, function updateActive(value) {
             scope.active = !!value;
           });
+          scope.active = getActive(scope.$parent);
         } else {
           setActive = getActive = angular.noop;
         }
@@ -211,8 +212,7 @@ function($parse, $http, $templateCache, $compile) {
           if (active) {
             tabsetCtrl.select(scope);
             scope.onSelect();
-          }
-          else {
+          } else {
             scope.onDeselect();
           }
         });

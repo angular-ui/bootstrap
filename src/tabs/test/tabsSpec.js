@@ -107,14 +107,14 @@ describe('tabs', function() {
     beforeEach(inject(function($compile, $rootScope) {
       scope = $rootScope.$new();
 
-      function makeTab() {
+      function makeTab(active) {
         return {
-          active: false,
+          active: !!active,
           select: jasmine.createSpy()
         };
       }
       scope.tabs = [
-        makeTab(), makeTab(), makeTab(), makeTab()
+        makeTab(), makeTab(), makeTab(true), makeTab()
       ];
       elm = $compile([
         '<tabset>',
@@ -140,7 +140,7 @@ describe('tabs', function() {
         if (activeTab === tab) {
           expect(tab.active).toBe(true);
           //It should only call select ONCE for each select
-          expect(tab.select.callCount).toBe(1);
+          expect(tab.select).toHaveBeenCalled();
           expect(_titles.eq(i)).toHaveClass('active');
           expect(contents().eq(i).text().trim()).toBe('content ' + i);
           expect(contents().eq(i)).toHaveClass('active');
@@ -151,9 +151,9 @@ describe('tabs', function() {
       });
     }
 
-    it('should make tab titles with first content and first active', function() {
+    it('should make tab titles and set active tab active', function() {
       expect(titles().length).toBe(scope.tabs.length);
-      expectTabActive(scope.tabs[0]);
+      expectTabActive(scope.tabs[2]);
     });
 
     it('should switch active when clicking', function() {
