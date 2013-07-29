@@ -10,51 +10,49 @@
     <script src="ui-bootstrap-tpls-<%= pkg.version%>.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.css" rel="stylesheet"/>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/<%= faversion %>/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
-
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
 <body class="ng-cloak" ng-controller="MainCtrl">
 <header class="navbar navbar-fixed-top">
     <div class="navbar-inner">
     <div class="container">
-      <div class="dropdown pull-left">
-        <a class="brand dropdown-toggle" role="button" data-toggle="dropdown" href="#"> 
-          UI Bootstrap
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="https://github.com/angular-ui/"><strong>Related Projects:</strong></a></li>
-          <li class="divider"></li>
-          <li><a href="http://angular-ui.github.io/">AngularUI</a></li>
-          <li><a href="http://angular-ui.github.io/ng-grid/">Grid</a></li>
-          <li><a href="https://github.com/angular-ui/AngularJs.tmbundle">AngularJS.tmbundle</a></li>
-          <li><a href="https://github.com/angular-ui/ui-router">Router <span class="label label-success">New!</span></a></li>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="navbar-brand dropdown-toggle">
+                    UI Bootstrap <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a href="https://github.com/angular-ui/"><strong>Related Projects:</strong></a></li>
+                    <li class="divider"></li>
+                    <li><a href="http://angular-ui.github.io/">AngularUI</a></li>
+                    <li><a href="http://angular-ui.github.io/ng-grid/">Grid</a></li>
+                    <li><a href="https://github.com/angular-ui/AngularJs.tmbundle">AngularJS.tmbundle</a></li>
+                    <li><a href="https://github.com/angular-ui/ui-router">Router <span class="label label-success">New!</span></a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" role="button" class="dropdown-toggle">
+                    Directives <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <% demoModules.forEach(function(module) {  %>
+                        <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
+                    <% }); %>
+                </ul>
+            </li>
+            <li><a href="#getting_started">Getting started</a></li>
         </ul>
-      </div>
-      <div class="nav-collapse">
-        <ul class="nav">
-           <li>
-               <a href="#" role="button" class="dropdown-toggle">
-                   Directives <b class="caret"></b>
-               </a>
-               <ul class="dropdown-menu">
-                   <% demoModules.forEach(function(module) {  %>
-                   <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
-                   <% });  %>
-               </ul>
-           </li>
-           <li><a href="#getting_started">Getting started</a></li>
-        </ul>
-      </div>
     </div>
   </div>
 </header>
-<div style="margin: 32px;"></div>
+<div class="header-placeholder"></div>
 <div role="main">
-
     <header class="hero-unit" id="overview">
         <div class="container">
             <h1>
@@ -116,15 +114,13 @@
             </div>
         </div>
     </header>
-
     <div class="container">
-
-        <section id="getting_started">
-            <div class="page-header">
-                <h1>Getting started</h1>
-            </div>
-            <div class="row">
-                <div class="span12">
+        <section id="getting_started" class="row">
+            <div class="col-12">
+                <div class="page-header">
+                    <h1>Getting started</h1>
+                </div>
+                <div>
                     <h3>Dependencies</h3>
                     <p>
                         This repository contains a set of <strong>native AngularJS directives</strong> based on
@@ -166,47 +162,48 @@
                 </div>
             </div>
         </section>
-
-    <% demoModules.forEach(function(module) { %>
-      <section id="<%= module.name %>">
-        <div class="page-header">
-          <h1><%= module.displayName %><small>
-              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>)
-          </small></h1>
-        </div>
-        <div class="row">
-            <div class="span6">
-                <%= module.docs.html %>
-            </div>
-            <div class="span6">
-                <%= module.docs.md %>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="span12" ng-controller="PlunkerCtrl">
-                <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+        <% demoModules.forEach(function(module) { %>
+            <section id="<%= module.name %>" class="row">
+                <div class="col-12">
+                    <div class="page-header">
+                      <h1><%= module.displayName %><small>
+                          (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>)
+                      </small></h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <%= module.docs.html %>
+                        </div>
+                        <div class="col-6">
+                            <%= module.docs.md %>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12" ng-controller="PlunkerCtrl">
+                            <div class="pull-right">
+                                <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                            </div>
+                            <tabset>
+                                <tab heading="Markup">
+                                    <div plunker-content="markup">
+                                        <pre ng-non-bindable><code data-language="html"><%- module.docs.html %></code></pre>
+                                    </div>
+                                </tab>
+                                <tab heading="JavaScript">
+                                    <div plunker-content="javascript">
+                                        <pre ng-non-bindable><code data-language="javascript"><%- module.docs.js %></code></pre>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
                 </div>
-                <tabset>
-                    <tab heading="Markup">
-                        <div plunker-content="markup">
-                            <pre ng-non-bindable><code data-language="html"><%- module.docs.html %></code></pre>
-                        </div>
-                    </tab>
-                    <tab heading="JavaScript">
-                        <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript"><%- module.docs.js %></code></pre>
-                        </div>
-                    </tab>
-                </tabset>
-            </div>
-        </div>
-      </section>
-      <script><%= module.docs.js %></script>
-    <% }); %>
-  </div>
-</div>
+            </section>
+            <script><%= module.docs.js %></script>
+        <% }); %>
+    </div><!-- /.container -->
+</div><!-- /.main -->
 <footer class="footer">
     <div class="container">
         <p>Designed and built by <a href="https://github.com/angular-ui?tab=members" target="_blank">Angular-UI team</a> and <a href="https://github.com/angular-ui/bootstrap/graphs/contributors" target="_blank">contributors</a>.</p>
