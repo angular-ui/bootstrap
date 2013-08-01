@@ -1,20 +1,38 @@
-<table class="form-inline">
-	<tr class="text-center">
-		<td><a ng-click="incrementHours()" class="btn btn-link"><i class="icon-chevron-up"></i></a></td>
-		<td>&nbsp;</td>
-		<td><a ng-click="incrementMinutes()" class="btn btn-link"><i class="icon-chevron-up"></i></a></td>
-		<td ng-show="showMeridian"></td>
-	</tr>
-	<tr>
-		<td class="control-group" ng-class="{'error': invalidHours}"><input type="text" ng-model="hours" ng-change="updateHours()" class="span1 text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2"></td>
-		<td>:</td>
-		<td class="control-group" ng-class="{'error': invalidMinutes}"><input type="text" ng-model="minutes" ng-change="updateMinutes()" class="span1 text-center" ng-readonly="readonlyInput" maxlength="2"></td>
-		<td ng-show="showMeridian"><button type="button" ng-click="toggleMeridian()" class="btn text-center">{{meridian}}</button></td>
-	</tr>
-	<tr class="text-center">
-		<td><a ng-click="decrementHours()" class="btn btn-link"><i class="icon-chevron-down"></i></a></td>
-		<td>&nbsp;</td>
-		<td><a ng-click="decrementMinutes()" class="btn btn-link"><i class="icon-chevron-down"></i></a></td>
-		<td ng-show="showMeridian"></td>
-	</tr>
-</table>
+<span>
+    <div class="row">
+        <div class="col-xs-4 text-center">
+            <a ng-click="incrementHours()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-up"></i></a>
+        </div>
+        <div class="col-xs-6 text-center">
+            <a ng-click="incrementMinutes()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-up"></i></a>
+        </div>
+        <div class="col-xs-2"> </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group" ng-class="{'has-error': invalidHours}" style="margin-bottom: 0px">
+                <input type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2"> 
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="input-group" ng-class="{'has-error': invalidMinutes}">
+                <span class="input-group-addon">:</span>
+                <input type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2">
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <button ng-click="toggleMeridian()" class="btn btn-default text-center" ng-show="showMeridian">{{meridian}}</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 text-center">
+            <a ng-click="decrementHours()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-down"></i></a>
+        </div>
+        <div class="col-xs-6 text-center">
+            <a ng-click="decrementMinutes()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-down"></i></a>
+        </div>
+        <div class="col-xs-2"> </div>
+    </div>
+</span>

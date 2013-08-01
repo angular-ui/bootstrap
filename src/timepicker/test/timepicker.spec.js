@@ -1,3 +1,5 @@
+
+
 describe('timepicker directive', function () {
   var $rootScope, element;
 
@@ -37,7 +39,7 @@ describe('timepicker directive', function () {
   }
 
   function getArrow(isUp, tdIndex) {
-    return element.find('tr').eq( (isUp) ? 0 : 2 ).find('td').eq( tdIndex ).find('a').eq(0);
+    return element.children('div').eq( (isUp) ? 0 : 2 ).find('div').eq( tdIndex ).find('a').eq(0);
   }
 
   function getHoursButton(isUp) {
@@ -45,7 +47,7 @@ describe('timepicker directive', function () {
   }
 
   function getMinutesButton(isUp) {
-    return getArrow(isUp, 2);
+    return getArrow(isUp, 1);
   }
 
   function getMeridianButton() {
@@ -71,8 +73,7 @@ describe('timepicker directive', function () {
     return e;
   }
 
-  it('contains three row & three input elements', function() {
-    expect(element.find('tr').length).toBe(3);
+  it('contains three input elements and one button', function() {
     expect(element.find('input').length).toBe(2);
     expect(element.find('button').length).toBe(1);
   });
@@ -321,7 +322,9 @@ describe('timepicker directive', function () {
 
   it('responds properly on "wheel" events', function() {
     var inputs = element.find('input');
-    var hoursEl = inputs.eq(0), minutesEl = inputs.eq(1);
+    var hoursEl = inputs.eq(0), 
+        minutesEl = inputs.eq(1);
+
     var upMouseWheelEvent = wheelThatOtherMouse(-1);
     var downMouseWheelEvent = wheelThatOtherMouse(1);
 
@@ -550,7 +553,7 @@ describe('timepicker directive', function () {
     it('initially displays correct time when `show-meridian` is false', function() {
       expect(getTimeState(true)).toEqual(['14', '10']);
       expect(getModelState()).toEqual([14, 10]);
-      expect(getMeridianTd().css('display')).toBe('none');
+      expect(getMeridianButton().css('display')).toBe('none');
     });
 
     it('toggles correctly between different modes', function() {
@@ -566,7 +569,7 @@ describe('timepicker directive', function () {
       $rootScope.$digest();
       expect(getTimeState(true)).toEqual(['14', '10']);
       expect(getModelState()).toEqual([14, 10]);
-      expect(getMeridianTd().css('display')).toBe('none');
+      expect(getMeridianButton().css('display')).toBe('none');
     });
 
     it('handles correctly initially empty model on parent element', function() {
@@ -724,7 +727,8 @@ describe('timepicker directive', function () {
 
       changeInputValueTo(el, 'pizza');
       expect($rootScope.time).toBe(null);
-      expect(el.parent().hasClass('error')).toBe(true);
+
+      expect(el.parent().hasClass('has-error')).toBe(true);
       expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 8);
@@ -732,7 +736,8 @@ describe('timepicker directive', function () {
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['08', '40', 'PM']);
       expect(getModelState()).toEqual([20, 40]);
-      expect(el.parent().hasClass('error')).toBe(false);
+
+      expect(el.parent().hasClass('has-error')).toBe(false);
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
@@ -741,13 +746,15 @@ describe('timepicker directive', function () {
 
       changeInputValueTo(el, 'pizza');
       expect($rootScope.time).toBe(null);
-      expect(el.parent().hasClass('error')).toBe(true);
+
+      expect(el.parent().hasClass('has-error')).toBe(true);
       expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 22);
       expect(getTimeState()).toEqual(['02', '22', 'PM']);
       expect(getModelState()).toEqual([14, 22]);
-      expect(el.parent().hasClass('error')).toBe(false);
+
+      expect(el.parent().hasClass('has-error')).toBe(false);
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
@@ -760,7 +767,8 @@ describe('timepicker directive', function () {
 
       changeInputValueTo(el, '16');
       expect($rootScope.time).toBe(null);
-      expect(el.parent().hasClass('error')).toBe(true);
+
+      expect(el.parent().hasClass('has-error')).toBe(true);
       expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       $rootScope.meridian = false;
@@ -870,4 +878,5 @@ describe('timepicker directive', function () {
   });
 
 });
+
 
