@@ -209,6 +209,32 @@ describe('tooltip', function() {
       elm.trigger('fakeTriggerAttr');
       expect( elmScope.tt_isOpen ).toBeFalsy();
     }));
+
+    it('should not share triggers among different element instances - issue 692', inject( function ($compile) {
+
+      scope.test = true;
+      elmBody = angular.element(
+        '<div>' +
+          '<input tooltip="Hello!" tooltip-trigger="{{ (test && \'mouseenter\' || \'click\') }}" />' +
+          '<input tooltip="Hello!" tooltip-trigger="{{ (test && \'mouseenter\' || \'click\') }}" />' +
+        '</div>'
+      );
+
+      $compile(elmBody)(scope);
+      scope.$apply();
+      var elm1 = elmBody.find('input').eq(0);
+      var elm2 = elmBody.find('input').eq(1);
+      var elmScope1 = elm1.scope();
+      var elmScope2 = elm2.scope();
+
+      scope.$apply('test = false');
+
+      elm2.trigger('mouseenter');
+      expect( elmScope2.tt_isOpen ).toBeFalsy();
+
+      elm2.click();
+      expect( elmScope2.tt_isOpen ).toBeTruthy();
+    }));
   });
 
   describe( 'with an append-to-body attribute', function() {

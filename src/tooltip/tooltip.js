@@ -99,7 +99,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
       }
 
       var directiveName = snake_case( type );
-      var triggers = setTriggers( undefined );
 
       var startSym = $interpolate.startSymbol();
       var endSym = $interpolate.endSymbol();
@@ -122,6 +121,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           var popupTimeout;
           var $body;
           var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
+          var triggers = setTriggers( undefined );
 
           // By default, the tooltip is not open.
           // TODO add ability to start tooltip opened
