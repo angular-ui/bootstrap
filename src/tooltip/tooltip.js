@@ -122,6 +122,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           var $body;
           var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
           var triggers = setTriggers( undefined );
+          var hasRegisteredTriggers = false;
 
           // By default, the tooltip is not open.
           // TODO add ability to start tooltip opened
@@ -276,8 +277,11 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
           });
 
           attrs.$observe( prefix+'Trigger', function ( val ) {
-            element.unbind( triggers.show, showTooltipBind );
-            element.unbind( triggers.hide, hideTooltipBind );
+
+            if (hasRegisteredTriggers) {
+              element.unbind( triggers.show, showTooltipBind );
+              element.unbind( triggers.hide, hideTooltipBind );
+            }
 
             triggers = setTriggers( val );
 
@@ -287,6 +291,8 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
               element.bind( triggers.show, showTooltipBind );
               element.bind( triggers.hide, hideTooltipBind );
             }
+
+            hasRegisteredTriggers = true;
           });
 
           attrs.$observe( prefix+'AppendToBody', function ( val ) {
