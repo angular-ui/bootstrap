@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Angular directives for Twitter's Bootstrap</title>
-    <meta name="description" content="AngularJS (Angular) native directives for Twitter Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Collapse, Accordion, Alert, Buttons, Carousel, Datepicker, Dialog, Dropdown Toggle, Modal, Pagination, Tooltip, Popover, Progressbar, Rating, Tabs, Timepicker, Typeahead, ">
+    <meta name="description" content="AngularJS (Angular) native directives for Twitter Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Accordion, Alert, Buttons, Carousel, Collapse, Datepicker, Dialog, Dropdown Toggle, Modal, Pagination, Popover, Progressbar, Rating, Tabs, Timepicker, Tooltip, Typeahead, ">
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
-    <script src="ui-bootstrap-tpls-0.4.0.js"></script>
+    <script src="ui-bootstrap-tpls-0.5.0.js"></script>
     <script src="assets/select2.js"></script>
     <script src="assets/ui-select2.js"></script>
     <script src="assets/plunker.js"></script>
@@ -46,8 +46,6 @@
                </a>
                <ul class="dropdown-menu">
                    
-                   <li><a href="#collapse">Collapse</a></li>
-                   
                    <li><a href="#accordion">Accordion</a></li>
                    
                    <li><a href="#alert">Alert</a></li>
@@ -55,6 +53,8 @@
                    <li><a href="#buttons">Buttons</a></li>
                    
                    <li><a href="#carousel">Carousel</a></li>
+                   
+                   <li><a href="#collapse">Collapse</a></li>
                    
                    <li><a href="#datepicker">Datepicker</a></li>
                    
@@ -66,8 +66,6 @@
                    
                    <li><a href="#pagination">Pagination</a></li>
                    
-                   <li><a href="#tooltip">Tooltip</a></li>
-                   
                    <li><a href="#popover">Popover</a></li>
                    
                    <li><a href="#progressbar">Progressbar</a></li>
@@ -77,6 +75,8 @@
                    <li><a href="#tabs">Tabs</a></li>
                    
                    <li><a href="#timepicker">Timepicker</a></li>
+                   
+                   <li><a href="#tooltip">Tooltip</a></li>
                    
                    <li><a href="#typeahead">Typeahead</a></li>
                    
@@ -103,7 +103,7 @@
             <p class="btn-group">
                 <a class="btn" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i> Code on Github</a>
                 <a class="btn btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
-                    <i class="icon-download-alt icon-white"></i> Download <small>(0.4.0)</small>
+                    <i class="icon-download-alt icon-white"></i> Download <small>(0.5.0)</small>
                 </a>
                 <a class="btn" ng-click="showBuildModal()"><i class="icon-wrench"></i> Create a Build</a>
             </p>
@@ -193,62 +193,6 @@
         </section>
 
     
-      <section id="collapse">
-        <div class="page-header">
-          <h1>Collapse<small>
-              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/collapse">ui.bootstrap.collapse</a>)
-          </small></h1>
-        </div>
-        <div class="row">
-            <div class="span6">
-                <div ng-controller="CollapseDemoCtrl">
-	<button class="btn" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
-	<hr>
-	<div collapse="isCollapsed">
-		<div class="well well-large">Some content</div> 
-	</div>
-</div>
-            </div>
-            <div class="span6">
-                <p>AngularJS version of twitter's collapse plugin. 
-Provides a simple way to hide and show an element with a css transition</p>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="span12" ng-controller="PlunkerCtrl">
-                <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'collapse')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
-                </div>
-                <tabset>
-                    <tab heading="Markup">
-                        <div plunker-content="markup">
-                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CollapseDemoCtrl&quot;&gt;
-	&lt;button class=&quot;btn&quot; ng-click=&quot;isCollapsed = !isCollapsed&quot;&gt;Toggle collapse&lt;/button&gt;
-	&lt;hr&gt;
-	&lt;div collapse=&quot;isCollapsed&quot;&gt;
-		&lt;div class=&quot;well well-large&quot;&gt;Some content&lt;/div&gt; 
-	&lt;/div&gt;
-&lt;/div&gt;</code></pre>
-                        </div>
-                    </tab>
-                    <tab heading="JavaScript">
-                        <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">function CollapseDemoCtrl($scope) {
-  $scope.isCollapsed = false;
-}
-</code></pre>
-                        </div>
-                    </tab>
-                </tabset>
-            </div>
-        </div>
-      </section>
-      <script>function CollapseDemoCtrl($scope) {
-  $scope.isCollapsed = false;
-}
-</script>
-    
       <section id="accordion">
         <div class="page-header">
           <h1>Accordion<small>
@@ -275,6 +219,12 @@ Provides a simple way to hide and show an element with a css transition</p>
         <button class="btn btn-small" ng-click="addItem()">Add Item</button>
         <div ng-repeat="item in items">{{item}}</div>
     </accordion-group>
+    <accordion-group>
+        <accordion-heading>
+            I can have markup, too! <i class="icon-check"></i>
+        </accordion-heading>
+        This is just some content to illustrate fancy headings.
+    </accordion-group>
   </accordion>
 </div>
             </div>
@@ -290,7 +240,7 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -312,6 +262,12 @@ Provides a simple way to hide and show an element with a css transition</p>
       &lt;p&gt;The body of the accordion group grows to fit the contents&lt;/p&gt;
         &lt;button class=&quot;btn btn-small&quot; ng-click=&quot;addItem()&quot;&gt;Add Item&lt;/button&gt;
         &lt;div ng-repeat=&quot;item in items&quot;&gt;{{item}}&lt;/div&gt;
+    &lt;/accordion-group&gt;
+    &lt;accordion-group&gt;
+        &lt;accordion-heading&gt;
+            I can have markup, too! &lt;i class=&quot;icon-check&quot;&gt;&lt;/i&gt;
+        &lt;/accordion-heading&gt;
+        This is just some content to illustrate fancy headings.
     &lt;/accordion-group&gt;
   &lt;/accordion&gt;
 &lt;/div&gt;</code></pre>
@@ -396,7 +352,7 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -485,7 +441,7 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'buttons')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'buttons')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -592,7 +548,7 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -667,6 +623,62 @@ Provides a simple way to hide and show an element with a css transition</p>
 }
 </script>
     
+      <section id="collapse">
+        <div class="page-header">
+          <h1>Collapse<small>
+              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/collapse">ui.bootstrap.collapse</a>)
+          </small></h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="CollapseDemoCtrl">
+	<button class="btn" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
+	<hr>
+	<div collapse="isCollapsed">
+		<div class="well well-large">Some content</div> 
+	</div>
+</div>
+            </div>
+            <div class="span6">
+                <p>AngularJS version of twitter's collapse plugin. 
+Provides a simple way to hide and show an element with a css transition</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'collapse')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                </div>
+                <tabset>
+                    <tab heading="Markup">
+                        <div plunker-content="markup">
+                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CollapseDemoCtrl&quot;&gt;
+	&lt;button class=&quot;btn&quot; ng-click=&quot;isCollapsed = !isCollapsed&quot;&gt;Toggle collapse&lt;/button&gt;
+	&lt;hr&gt;
+	&lt;div collapse=&quot;isCollapsed&quot;&gt;
+		&lt;div class=&quot;well well-large&quot;&gt;Some content&lt;/div&gt; 
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </tab>
+                    <tab heading="JavaScript">
+                        <div plunker-content="javascript">
+                            <pre ng-non-bindable><code data-language="javascript">function CollapseDemoCtrl($scope) {
+  $scope.isCollapsed = false;
+}
+</code></pre>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+      </section>
+      <script>function CollapseDemoCtrl($scope) {
+  $scope.isCollapsed = false;
+}
+</script>
+    
       <section id="datepicker">
         <div class="page-header">
           <h1>Datepicker<small>
@@ -676,13 +688,23 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span6">
                 <div ng-controller="DatepickerDemoCtrl">
-    <datepicker ng-model="dt" show-weeks="showWeeks" starting-day="1" date-disabled="disabled(date, mode)" min="minDate" max="'2015-06-22'"></datepicker>
     <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
+    <div class="well well-small pull-left" ng-model="dt">
+        <datepicker min="minDate" show-weeks="showWeeks"></datepciker>
+    </div>
+
+    <div class="form-horizontal">
+        <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+        <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+    </div>
+
+    <hr />
     <button class="btn btn-small btn-inverse" ng-click="today()">Today</button>
-    <button class="btn btn-small btn-success" ng-click="toggleWeeks()">Toggle Weeks</button>
+    <button class="btn btn-small btn-inverse" ng-click="dt = '2009-08-24'">2009-08-24</button>
+    <button class="btn btn-small btn-success" ng-click="toggleWeeks()" tooltip="For inline datepicker">Toggle Weeks</button>
     <button class="btn btn-small btn-danger" ng-click="clear()">Clear</button>
-    <button class="btn btn-small" ng-click="toggleMin()">After today restriction</button>
+    <button class="btn btn-small" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
 </div>
             </div>
             <div class="span6">
@@ -744,25 +766,35 @@ The datepicker shows dates that come from other than the main month being displa
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'datepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'datepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;DatepickerDemoCtrl&quot;&gt;
-    &lt;datepicker ng-model=&quot;dt&quot; show-weeks=&quot;showWeeks&quot; starting-day=&quot;1&quot; date-disabled=&quot;disabled(date, mode)&quot; min=&quot;minDate&quot; max=&quot;&#x27;2015-06-22&#x27;&quot;&gt;&lt;/datepicker&gt;
     &lt;pre&gt;Selected date is: &lt;em&gt;{{dt | date:&#x27;fullDate&#x27; }}&lt;/em&gt;&lt;/pre&gt;
 
+    &lt;div class=&quot;well well-small pull-left&quot; ng-model=&quot;dt&quot;&gt;
+        &lt;datepicker min=&quot;minDate&quot; show-weeks=&quot;showWeeks&quot;&gt;&lt;/datepciker&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;form-horizontal&quot;&gt;
+        &lt;input type=&quot;text&quot; datepicker-popup=&quot;dd-MMMM-yyyy&quot; ng-model=&quot;dt&quot; open=&quot;opened&quot; min=&quot;minDate&quot; max=&quot;&#x27;2015-06-22&#x27;&quot; datepicker-options=&quot;dateOptions&quot; date-disabled=&quot;disabled(date, mode)&quot; ng-required=&quot;true&quot; /&gt;
+        &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;&lt;i class=&quot;icon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;hr /&gt;
     &lt;button class=&quot;btn btn-small btn-inverse&quot; ng-click=&quot;today()&quot;&gt;Today&lt;/button&gt;
-    &lt;button class=&quot;btn btn-small btn-success&quot; ng-click=&quot;toggleWeeks()&quot;&gt;Toggle Weeks&lt;/button&gt;
+    &lt;button class=&quot;btn btn-small btn-inverse&quot; ng-click=&quot;dt = &#x27;2009-08-24&#x27;&quot;&gt;2009-08-24&lt;/button&gt;
+    &lt;button class=&quot;btn btn-small btn-success&quot; ng-click=&quot;toggleWeeks()&quot; tooltip=&quot;For inline datepicker&quot;&gt;Toggle Weeks&lt;/button&gt;
     &lt;button class=&quot;btn btn-small btn-danger&quot; ng-click=&quot;clear()&quot;&gt;Clear&lt;/button&gt;
-    &lt;button class=&quot;btn btn-small&quot; ng-click=&quot;toggleMin()&quot;&gt;After today restriction&lt;/button&gt;
+    &lt;button class=&quot;btn btn-small&quot; ng-click=&quot;toggleMin()&quot; tooltip=&quot;After today restriction&quot;&gt;Min date&lt;/button&gt;
 &lt;/div&gt;</code></pre>
                         </div>
                     </tab>
                     <tab heading="JavaScript">
                         <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">var DatepickerDemoCtrl = function ($scope) {
+                            <pre ng-non-bindable><code data-language="javascript">var DatepickerDemoCtrl = function ($scope, $timeout) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -786,6 +818,17 @@ The datepicker shows dates that come from other than the main month being displa
     $scope.minDate = ( $scope.minDate ) ? null : new Date();
   };
   $scope.toggleMin();
+
+  $scope.open = function() {
+    $timeout(function() {
+      $scope.opened = true;
+    });
+  };
+
+  $scope.dateOptions = {
+    &#x27;year-format&#x27;: &quot;&#x27;yy&#x27;&quot;,
+    &#x27;starting-day&#x27;: 1
+  };
 };
 </code></pre>
                         </div>
@@ -794,7 +837,7 @@ The datepicker shows dates that come from other than the main month being displa
             </div>
         </div>
       </section>
-      <script>var DatepickerDemoCtrl = function ($scope) {
+      <script>var DatepickerDemoCtrl = function ($scope, $timeout) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -818,6 +861,17 @@ The datepicker shows dates that come from other than the main month being displa
     $scope.minDate = ( $scope.minDate ) ? null : new Date();
   };
   $scope.toggleMin();
+
+  $scope.open = function() {
+    $timeout(function() {
+      $scope.opened = true;
+    });
+  };
+
+  $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+  };
 };
 </script>
     
@@ -863,7 +917,7 @@ Generic message boxes (title, message and buttons) are also provided for your co
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'dialog')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'dialog')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1029,7 +1083,7 @@ function TestDialogController($scope, dialog){
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1109,7 +1163,7 @@ function TestDialogController($scope, dialog){
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1191,7 +1245,7 @@ function TestDialogController($scope, dialog){
     <h4>Default</h4>
 
     <pagination num-pages="noOfPages" current-page="currentPage"></pagination>
-    <pagination boundary-links="true" num-pages="noOfPages" current-page="currentPage" class="pagination-small" previous-text="'&lsaquo;'" next-text="'&rsaquo;'" first-text="'&laquo;'" last-text="'&raquo;'"></pagination>
+    <pagination boundary-links="true" num-pages="noOfPages" current-page="currentPage" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
     <pagination direction-links="false" boundary-links="true" num-pages="noOfPages" current-page="currentPage"></pagination>
     <pagination direction-links="false" num-pages="noOfPages" current-page="currentPage"></pagination>
 
@@ -1204,8 +1258,8 @@ function TestDialogController($scope, dialog){
 
     <hr />
     <h4>Limit the maximimum visible page-buttons</h4>
-    <pagination num-pages="bigNoOfPages" current-page="bigCurrentPage" max-size="maxSize" class="pagination-mini" boundary-links="true"></pagination>
-    <pagination rotate="false" num-pages="bigNoOfPages" current-page="bigCurrentPage" max-size="maxSize" class="pagination-mini" boundary-links="true"></pagination>
+    <pagination num-pages="bigNoOfPages" current-page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true"></pagination>
+    <pagination rotate="false" num-pages="bigNoOfPages" current-page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true"></pagination>
 </div>
 
             </div>
@@ -1274,7 +1328,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1283,7 +1337,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
     &lt;h4&gt;Default&lt;/h4&gt;
 
     &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
-    &lt;pagination boundary-links=&quot;true&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-small&quot; previous-text=&quot;&#x27;&amp;lsaquo;&#x27;&quot; next-text=&quot;&#x27;&amp;rsaquo;&#x27;&quot; first-text=&quot;&#x27;&amp;laquo;&#x27;&quot; last-text=&quot;&#x27;&amp;raquo;&#x27;&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination boundary-links=&quot;true&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-small&quot; previous-text=&quot;&amp;lsaquo;&quot; next-text=&quot;&amp;rsaquo;&quot; first-text=&quot;&amp;laquo;&quot; last-text=&quot;&amp;raquo;&quot;&gt;&lt;/pagination&gt;
     &lt;pagination direction-links=&quot;false&quot; boundary-links=&quot;true&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
     &lt;pagination direction-links=&quot;false&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
 
@@ -1296,8 +1350,8 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
 
     &lt;hr /&gt;
     &lt;h4&gt;Limit the maximimum visible page-buttons&lt;/h4&gt;
-    &lt;pagination num-pages=&quot;bigNoOfPages&quot; current-page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-mini&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
-    &lt;pagination rotate=&quot;false&quot; num-pages=&quot;bigNoOfPages&quot; current-page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-mini&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination num-pages=&quot;bigNoOfPages&quot; current-page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination rotate=&quot;false&quot; num-pages=&quot;bigNoOfPages&quot; current-page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
 &lt;/div&gt;
 </code></pre>
                         </div>
@@ -1334,177 +1388,6 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
 
   $scope.bigNoOfPages = 18;
   $scope.bigCurrentPage = 1;
-};
-</script>
-    
-      <section id="tooltip">
-        <div class="page-header">
-          <h1>Tooltip<small>
-              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/tooltip">ui.bootstrap.tooltip</a>)
-          </small></h1>
-        </div>
-        <div class="row">
-            <div class="span6">
-                <div ng-controller="TooltipDemoCtrl">
-  <div class="well">
-    <div>Dynamic Tooltip Text: <input type="text" ng-model="dynamicTooltipText"></div>
-    <div>Dynamic Tooltip Popup Text: <input type="text" ng-model="dynamicTooltip"></div>
-    <p>
-      Pellentesque <a><span tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</span></a>,
-      sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
-      aliquam. Tincidunt lobortis feugiat vivamus at 
-      <a><span tooltip-placement="left" tooltip="On the Left!">left</span></a> eget
-      arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
-      <a><span tooltip-placement="right" tooltip="On the Right!">right</span></a> 
-      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
-      <a><span tooltip-placement="bottom" tooltip="On the Bottom!">bottom</span></a> 
-      pharetra convallis posuere morbi leo urna, 
-      <a><span tooltip-placement="mouse" tooltip="relative to mouse">mouse</span></a> 
-      blah blah blah, 
-      <a><span tooltip-animation="false" tooltip="I don't fade. :-(">fading</span></a> 
-      at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
-      <a><span tooltip-popup-delay='1000' tooltip='appears with delay'>delayed</span></a> turpis massa tincidunt dui ut.
-    </p>
-
-    <p>
-      I can even contain HTML. <a><span tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</span></a>
-    </p>
-    <p>
-      Or use custom triggers, like focus: 
-      <input type="text" value="Click me!"
-        tooltip="See? Now click away..." 
-        tooltip-trigger="focus"
-        tooltip-placement="right" />
-    </p>
-  </div>
-</div>
-
-            </div>
-            <div class="span6">
-                <p>A lightweight, extensible directive for fancy tooltip creation. The tooltip
-directive supports multiple placements, optional transition animation, and more.</p>
-
-<p>There are two versions of the tooltip: <code>tooltip</code> and <code>tooltip-html-unsafe</code>. The
-former takes text only and will escape any HTML provided. The latter takes
-whatever HTML is provided and displays it in a tooltip; it called "unsafe"
-because the HTML is not sanitized. <em>The user is responsible for ensuring the
-content is safe to put into the DOM!</em></p>
-
-<p>The tooltip directives provide several optional attributes to control how they
-will display:</p>
-
-<ul>
-<li><code>tooltip-placement</code>: Where to place it? Defaults to "top", but also accepts
-"bottom", "left", "right", or "mouse".</li>
-<li><code>tooltip-animation</code>: Should it fade in and out? Defaults to "true".</li>
-<li><code>tooltip-popup-delay</code>: For how long should the user have to have the mouse
-over the element before the tooltip shows (in milliseconds)? Defaults to 0.</li>
-<li><code>tooltip-trigger</code>: What should trigger a show of the tooltip?</li>
-<li><code>tooltip-append-to-body</code>: Should the tooltip be appended to <code>$body</code> instead of
-the parent element?</li>
-</ul>
-
-<p>The tooltip directives require the <code>$position</code> service.</p>
-
-<p><strong>Triggers</strong></p>
-
-<p>The following show triggers are supported out of the box, along with their
-provided hide triggers:</p>
-
-<ul>
-<li><code>mouseenter</code>: <code>mouseleave</code></li>
-<li><code>click</code>: <code>click</code></li>
-<li><code>focus</code>: <code>blur</code></li>
-</ul>
-
-<p>For any non-supported value, the trigger will be used to both show and hide the
-tooltip.</p>
-
-<p><strong>$tooltipProvider</strong></p>
-
-<p>Through the <code>$tooltipProvider</code>, you can change the way tooltips and popovers
-behave by default; the attributes above always take precedence. The following
-methods are available:</p>
-
-<ul>
-<li><code>setTriggers( obj )</code>: Extends the default trigger mappings mentioned above
-with mappings of your own. E.g. <code>{ 'openTrigger': 'closeTrigger' }</code>.</li>
-<li><p><code>options( obj )</code>: Provide a set of defaults for certain tooltip and popover
-attributes. Currently supports 'placement', 'animation', 'popupDelay', and
-<code>appendToBody</code>. Here are the defaults:</p>
-
-<pre>
-placement: 'top',
-animation: true,
-popupDelay: 0,
-appendToBody: false
-</pre></li>
-</ul>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="span12" ng-controller="PlunkerCtrl">
-                <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
-                </div>
-                <tabset>
-                    <tab heading="Markup">
-                        <div plunker-content="markup">
-                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TooltipDemoCtrl&quot;&gt;
-  &lt;div class=&quot;well&quot;&gt;
-    &lt;div&gt;Dynamic Tooltip Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicTooltipText&quot;&gt;&lt;/div&gt;
-    &lt;div&gt;Dynamic Tooltip Popup Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicTooltip&quot;&gt;&lt;/div&gt;
-    &lt;p&gt;
-      Pellentesque &lt;a&gt;&lt;span tooltip=&quot;{{dynamicTooltip}}&quot;&gt;{{dynamicTooltipText}}&lt;/span&gt;&lt;/a&gt;,
-      sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
-      aliquam. Tincidunt lobortis feugiat vivamus at 
-      &lt;a&gt;&lt;span tooltip-placement=&quot;left&quot; tooltip=&quot;On the Left!&quot;&gt;left&lt;/span&gt;&lt;/a&gt; eget
-      arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
-      &lt;a&gt;&lt;span tooltip-placement=&quot;right&quot; tooltip=&quot;On the Right!&quot;&gt;right&lt;/span&gt;&lt;/a&gt; 
-      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
-      &lt;a&gt;&lt;span tooltip-placement=&quot;bottom&quot; tooltip=&quot;On the Bottom!&quot;&gt;bottom&lt;/span&gt;&lt;/a&gt; 
-      pharetra convallis posuere morbi leo urna, 
-      &lt;a&gt;&lt;span tooltip-placement=&quot;mouse&quot; tooltip=&quot;relative to mouse&quot;&gt;mouse&lt;/span&gt;&lt;/a&gt; 
-      blah blah blah, 
-      &lt;a&gt;&lt;span tooltip-animation=&quot;false&quot; tooltip=&quot;I don&#x27;t fade. :-(&quot;&gt;fading&lt;/span&gt;&lt;/a&gt; 
-      at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
-      &lt;a&gt;&lt;span tooltip-popup-delay=&#x27;1000&#x27; tooltip=&#x27;appears with delay&#x27;&gt;delayed&lt;/span&gt;&lt;/a&gt; turpis massa tincidunt dui ut.
-    &lt;/p&gt;
-
-    &lt;p&gt;
-      I can even contain HTML. &lt;a&gt;&lt;span tooltip-html-unsafe=&quot;{{htmlTooltip}}&quot;&gt;Check me out!&lt;/span&gt;&lt;/a&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      Or use custom triggers, like focus: 
-      &lt;input type=&quot;text&quot; value=&quot;Click me!&quot;
-        tooltip=&quot;See? Now click away...&quot; 
-        tooltip-trigger=&quot;focus&quot;
-        tooltip-placement=&quot;right&quot; /&gt;
-    &lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-                        </div>
-                    </tab>
-                    <tab heading="JavaScript">
-                        <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">var TooltipDemoCtrl = function ($scope) {
-  $scope.dynamicTooltip = &quot;Hello, World!&quot;;
-  $scope.dynamicTooltipText = &quot;dynamic&quot;;
-  $scope.htmlTooltip = &quot;I&#x27;ve been made &lt;b&gt;bold&lt;/b&gt;!&quot;;
-};
-</code></pre>
-                        </div>
-                    </tab>
-                </tabset>
-            </div>
-        </div>
-      </section>
-      <script>var TooltipDemoCtrl = function ($scope) {
-  $scope.dynamicTooltip = "Hello, World!";
-  $scope.dynamicTooltipText = "dynamic";
-  $scope.htmlTooltip = "I've been made <b>bold</b>!";
 };
 </script>
     
@@ -1582,7 +1465,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1688,7 +1571,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'progressbar')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'progressbar')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1830,10 +1713,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span6">
                 <div ng-controller="RatingDemoCtrl">
-    <rating value="rate" max="10" readonly="isReadonly"></rating>
+    <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+    <span class="badge badge-inverse" ng-show="overStar && !isReadonly">{{overStar}} / {{max}}</span>
 
     <hr/>
-    <pre>Rate: <b>{{rate}}</b>  - Readonly is: <i>{{isReadonly}}</i></pre>
+    <pre>Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
     <hr/>
     <button class="btn btn-small btn-danger" ng-click="rate = 0" ng-disabled="isReadonly">Clear</button>
@@ -1843,23 +1727,24 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
             <div class="span6">
                 <p>Rating directive that will take care of visualising a star rating bar.</p>
 
-<p>It also provides optional attribute <code>max</code> to vary the number of stars and <code>readonly</code> attribute to diasble user's interaction.</p>
+<p>It also provides optional attributes: <code>max</code> to vary the number of stars, <code>readonly</code> to disable user's interaction, <code>on-hover</code> to signal when the user's mouse is over a particular star, and <code>on-leave</code> to signal when the mouse leaves the control altogether.</p>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'rating')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'rating')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;RatingDemoCtrl&quot;&gt;
-    &lt;rating value=&quot;rate&quot; max=&quot;10&quot; readonly=&quot;isReadonly&quot;&gt;&lt;/rating&gt;
+    &lt;rating value=&quot;rate&quot; max=&quot;max&quot; readonly=&quot;isReadonly&quot; on-hover=&quot;hoveringOver(value)&quot; on-leave=&quot;overStar = null&quot;&gt;&lt;/rating&gt;
+    &lt;span class=&quot;badge badge-inverse&quot; ng-show=&quot;overStar &amp;&amp; !isReadonly&quot;&gt;{{overStar}} / {{max}}&lt;/span&gt;
 
     &lt;hr/&gt;
-    &lt;pre&gt;Rate: &lt;b&gt;{{rate}}&lt;/b&gt;  - Readonly is: &lt;i&gt;{{isReadonly}}&lt;/i&gt;&lt;/pre&gt;
+    &lt;pre&gt;Rate: &lt;b&gt;{{rate}}&lt;/b&gt; - Readonly is: &lt;i&gt;{{isReadonly}}&lt;/i&gt; - Hovering over: &lt;b&gt;{{overStar || &quot;none&quot;}}&lt;/b&gt;&lt;/pre&gt;
 
     &lt;hr/&gt;
     &lt;button class=&quot;btn btn-small btn-danger&quot; ng-click=&quot;rate = 0&quot; ng-disabled=&quot;isReadonly&quot;&gt;Clear&lt;/button&gt;
@@ -1871,7 +1756,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div plunker-content="javascript">
                             <pre ng-non-bindable><code data-language="javascript">var RatingDemoCtrl = function ($scope) {
   $scope.rate = 7;
+  $scope.max = 10;
   $scope.isReadonly = false;
+  $scope.hoveringOver = function(value) {
+    $scope.overStar = value;
+  };
 };
 </code></pre>
                         </div>
@@ -1882,7 +1771,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
       </section>
       <script>var RatingDemoCtrl = function ($scope) {
   $scope.rate = 7;
+  $scope.max = 10;
   $scope.isReadonly = false;
+  $scope.hoveringOver = function(value) {
+    $scope.overStar = value;
+  };
 };
 </script>
     
@@ -1962,7 +1855,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -2094,7 +1987,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'timepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'timepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -2178,6 +2071,177 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 };
 </script>
     
+      <section id="tooltip">
+        <div class="page-header">
+          <h1>Tooltip<small>
+              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/tooltip">ui.bootstrap.tooltip</a>)
+          </small></h1>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div ng-controller="TooltipDemoCtrl">
+  <div class="well">
+    <div>Dynamic Tooltip Text: <input type="text" ng-model="dynamicTooltipText"></div>
+    <div>Dynamic Tooltip Popup Text: <input type="text" ng-model="dynamicTooltip"></div>
+    <p>
+      Pellentesque <a><span tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</span></a>,
+      sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
+      aliquam. Tincidunt lobortis feugiat vivamus at 
+      <a><span tooltip-placement="left" tooltip="On the Left!">left</span></a> eget
+      arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
+      <a><span tooltip-placement="right" tooltip="On the Right!">right</span></a> 
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
+      <a><span tooltip-placement="bottom" tooltip="On the Bottom!">bottom</span></a> 
+      pharetra convallis posuere morbi leo urna, 
+      <a><span tooltip-placement="mouse" tooltip="relative to mouse">mouse</span></a> 
+      blah blah blah, 
+      <a><span tooltip-animation="false" tooltip="I don't fade. :-(">fading</span></a> 
+      at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
+      <a><span tooltip-popup-delay='1000' tooltip='appears with delay'>delayed</span></a> turpis massa tincidunt dui ut.
+    </p>
+
+    <p>
+      I can even contain HTML. <a><span tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</span></a>
+    </p>
+    <p>
+      Or use custom triggers, like focus: 
+      <input type="text" value="Click me!"
+        tooltip="See? Now click away..." 
+        tooltip-trigger="focus"
+        tooltip-placement="right" />
+    </p>
+  </div>
+</div>
+
+            </div>
+            <div class="span6">
+                <p>A lightweight, extensible directive for fancy tooltip creation. The tooltip
+directive supports multiple placements, optional transition animation, and more.</p>
+
+<p>There are two versions of the tooltip: <code>tooltip</code> and <code>tooltip-html-unsafe</code>. The
+former takes text only and will escape any HTML provided. The latter takes
+whatever HTML is provided and displays it in a tooltip; it called "unsafe"
+because the HTML is not sanitized. <em>The user is responsible for ensuring the
+content is safe to put into the DOM!</em></p>
+
+<p>The tooltip directives provide several optional attributes to control how they
+will display:</p>
+
+<ul>
+<li><code>tooltip-placement</code>: Where to place it? Defaults to "top", but also accepts
+"bottom", "left", "right", or "mouse".</li>
+<li><code>tooltip-animation</code>: Should it fade in and out? Defaults to "true".</li>
+<li><code>tooltip-popup-delay</code>: For how long should the user have to have the mouse
+over the element before the tooltip shows (in milliseconds)? Defaults to 0.</li>
+<li><code>tooltip-trigger</code>: What should trigger a show of the tooltip?</li>
+<li><code>tooltip-append-to-body</code>: Should the tooltip be appended to <code>$body</code> instead of
+the parent element?</li>
+</ul>
+
+<p>The tooltip directives require the <code>$position</code> service.</p>
+
+<p><strong>Triggers</strong></p>
+
+<p>The following show triggers are supported out of the box, along with their
+provided hide triggers:</p>
+
+<ul>
+<li><code>mouseenter</code>: <code>mouseleave</code></li>
+<li><code>click</code>: <code>click</code></li>
+<li><code>focus</code>: <code>blur</code></li>
+</ul>
+
+<p>For any non-supported value, the trigger will be used to both show and hide the
+tooltip.</p>
+
+<p><strong>$tooltipProvider</strong></p>
+
+<p>Through the <code>$tooltipProvider</code>, you can change the way tooltips and popovers
+behave by default; the attributes above always take precedence. The following
+methods are available:</p>
+
+<ul>
+<li><code>setTriggers( obj )</code>: Extends the default trigger mappings mentioned above
+with mappings of your own. E.g. <code>{ 'openTrigger': 'closeTrigger' }</code>.</li>
+<li><p><code>options( obj )</code>: Provide a set of defaults for certain tooltip and popover
+attributes. Currently supports 'placement', 'animation', 'popupDelay', and
+<code>appendToBody</code>. Here are the defaults:</p>
+
+<pre>
+placement: 'top',
+animation: true,
+popupDelay: 0,
+appendToBody: false
+</pre></li>
+</ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="span12" ng-controller="PlunkerCtrl">
+                <div class="pull-right">
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                </div>
+                <tabset>
+                    <tab heading="Markup">
+                        <div plunker-content="markup">
+                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TooltipDemoCtrl&quot;&gt;
+  &lt;div class=&quot;well&quot;&gt;
+    &lt;div&gt;Dynamic Tooltip Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicTooltipText&quot;&gt;&lt;/div&gt;
+    &lt;div&gt;Dynamic Tooltip Popup Text: &lt;input type=&quot;text&quot; ng-model=&quot;dynamicTooltip&quot;&gt;&lt;/div&gt;
+    &lt;p&gt;
+      Pellentesque &lt;a&gt;&lt;span tooltip=&quot;{{dynamicTooltip}}&quot;&gt;{{dynamicTooltipText}}&lt;/span&gt;&lt;/a&gt;,
+      sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
+      aliquam. Tincidunt lobortis feugiat vivamus at 
+      &lt;a&gt;&lt;span tooltip-placement=&quot;left&quot; tooltip=&quot;On the Left!&quot;&gt;left&lt;/span&gt;&lt;/a&gt; eget
+      arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
+      &lt;a&gt;&lt;span tooltip-placement=&quot;right&quot; tooltip=&quot;On the Right!&quot;&gt;right&lt;/span&gt;&lt;/a&gt; 
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
+      &lt;a&gt;&lt;span tooltip-placement=&quot;bottom&quot; tooltip=&quot;On the Bottom!&quot;&gt;bottom&lt;/span&gt;&lt;/a&gt; 
+      pharetra convallis posuere morbi leo urna, 
+      &lt;a&gt;&lt;span tooltip-placement=&quot;mouse&quot; tooltip=&quot;relative to mouse&quot;&gt;mouse&lt;/span&gt;&lt;/a&gt; 
+      blah blah blah, 
+      &lt;a&gt;&lt;span tooltip-animation=&quot;false&quot; tooltip=&quot;I don&#x27;t fade. :-(&quot;&gt;fading&lt;/span&gt;&lt;/a&gt; 
+      at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
+      &lt;a&gt;&lt;span tooltip-popup-delay=&#x27;1000&#x27; tooltip=&#x27;appears with delay&#x27;&gt;delayed&lt;/span&gt;&lt;/a&gt; turpis massa tincidunt dui ut.
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      I can even contain HTML. &lt;a&gt;&lt;span tooltip-html-unsafe=&quot;{{htmlTooltip}}&quot;&gt;Check me out!&lt;/span&gt;&lt;/a&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      Or use custom triggers, like focus: 
+      &lt;input type=&quot;text&quot; value=&quot;Click me!&quot;
+        tooltip=&quot;See? Now click away...&quot; 
+        tooltip-trigger=&quot;focus&quot;
+        tooltip-placement=&quot;right&quot; /&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                        </div>
+                    </tab>
+                    <tab heading="JavaScript">
+                        <div plunker-content="javascript">
+                            <pre ng-non-bindable><code data-language="javascript">var TooltipDemoCtrl = function ($scope) {
+  $scope.dynamicTooltip = &quot;Hello, World!&quot;;
+  $scope.dynamicTooltipText = &quot;dynamic&quot;;
+  $scope.htmlTooltip = &quot;I&#x27;ve been made &lt;b&gt;bold&lt;/b&gt;!&quot;;
+};
+</code></pre>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+      </section>
+      <script>var TooltipDemoCtrl = function ($scope) {
+  $scope.dynamicTooltip = "Hello, World!";
+  $scope.dynamicTooltipText = "dynamic";
+  $scope.htmlTooltip = "I've been made <b>bold</b>!";
+};
+</script>
+    
       <section id="typeahead">
         <div class="page-header">
           <h1>Typeahead<small>
@@ -2188,34 +2252,38 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
             <div class="span6">
                 <div class='container-fluid' ng-controller="TypeaheadCtrl">
     <pre>Model: {{selected| json}}</pre>
-    <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue">
+    <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8">
 </div>
             </div>
             <div class="span6">
-                <p>Typeahead is a AngularJS version of <a href="http://twitter.github.com/bootstrap/javascript.html#typeahead">Twitter Bootstrap typeahead plugin</a></p>
+                <p>Typeahead is a AngularJS version of <a href="http://twitter.github.com/bootstrap/javascript.html#typeahead">Twitter Bootstrap typeahead plugin</a>.
+This directive can be used to quickly create elegant typeheads with any form text input.</p>
 
-<p>This directive can be used to quickly create elegant typeheads with any form text input.</p>
-
-<p>It is very well integrated into the AngularJS as:</p>
+<p>It is very well integrated into the AngularJS as it uses subset of the
+<a href="http://docs.angularjs.org/api/ng.directive:select">select directive</a> syntax, which is very flexible. Supported expressions:</p>
 
 <ul>
-<li>it uses the same, flexible syntax as the <a href="http://docs.angularjs.org/api/ng.directive:select">select directive</a></li>
-<li>works with promises and it means that you can retrieve matches using the <code>$http</code> service with minimal effort</li>
+<li><em>label</em> for <em>value</em> in <em>sourceArray</em></li>
+<li><em>select</em> as <em>label</em> for <em>value</em> in <em>sourceArray</em></li>
 </ul>
+
+<p>The <code>sourceArray</code> expression can use a special <code>$viewValue</code> variable that corresponds to a value entered inside input by a user.</p>
+
+<p>Also this directive works with promises and it means that you can retrieve matches using the <code>$http</code> service with minimal effort.</p>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.4.0', 'typeahead')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'typeahead')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
                             <pre ng-non-bindable><code data-language="html">&lt;div class=&#x27;container-fluid&#x27; ng-controller=&quot;TypeaheadCtrl&quot;&gt;
     &lt;pre&gt;Model: {{selected| json}}&lt;/pre&gt;
-    &lt;input type=&quot;text&quot; ng-model=&quot;selected&quot; typeahead=&quot;state for state in states | filter:$viewValue&quot;&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;selected&quot; typeahead=&quot;state for state in states | filter:$viewValue | limitTo:8&quot;&gt;
 &lt;/div&gt;</code></pre>
                         </div>
                     </tab>
@@ -2275,6 +2343,8 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         
           <option value="carousel">Carousel</option>
         
+          <option value="position">Position</option>
+        
           <option value="datepicker">Datepicker</option>
         
           <option value="dialog">Dialog</option>
@@ -2284,8 +2354,6 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
           <option value="modal">Modal</option>
         
           <option value="pagination">Pagination</option>
-        
-          <option value="position">Position</option>
         
           <option value="tooltip">Tooltip</option>
         
