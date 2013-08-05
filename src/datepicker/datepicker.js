@@ -391,7 +391,7 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
           updatePosition();
           $document.bind('click', documentClickBind);
           element.unbind('focus', elementFocusBind);
-          element.focus();
+          element[0].focus();
         } else {
           $document.unbind('click', documentClickBind);
           element.bind('focus', elementFocusBind);
