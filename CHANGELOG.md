@@ -4,8 +4,8 @@
 
 - **buttons:** 
   - support dynamic true / false values in btn-checkbox ([3e30cd94](http://github.com/angular-ui/bootstrap/commit/3e30cd94))  
-- **datepikcer:** 
-  - `ngModelController` plug & new `datepikcerPopup` ([dab18336](http://github.com/angular-ui/bootstrap/commit/dab18336))  
+- **datepicker:** 
+  - `ngModelController` plug & new `datepickerPopup` ([dab18336](http://github.com/angular-ui/bootstrap/commit/dab18336))  
 - **rating:** 
   - added onHover and onLeave. ([5b1115e3](http://github.com/angular-ui/bootstrap/commit/5b1115e3))  
 - **tabs:** 
