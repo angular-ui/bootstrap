@@ -1029,7 +1029,7 @@ describe('datepicker directive', function () {
     describe('toggles programatically by `open` attribute', function () {
       beforeEach(inject(function() {
         $rootScope.open = true;
-        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup open="open"><div>')($rootScope);
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup is-open="open"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
       }));

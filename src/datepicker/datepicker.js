@@ -290,8 +290,8 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
       ngModel.$parsers.push(parseDate);
 
       var getIsOpen, setIsOpen;
-      if ( attrs.open ) {
-        getIsOpen = $parse(attrs.open);
+      if ( attrs.isOpen ) {
+        getIsOpen = $parse(attrs.isOpen);
         setIsOpen = getIsOpen.assign;
 
         originalScope.$watch(getIsOpen, function updateOpen(value) {
@@ -386,15 +386,22 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
         scope.position.top = scope.position.top + element.prop('offsetHeight');
       }
 
+      var documentBindingInitialized = false, elementFocusInitialized = false;
       scope.$watch('isOpen', function(value) {
         if (value) {
           updatePosition();
           $document.bind('click', documentClickBind);
-          element.unbind('focus', elementFocusBind);
+          if(elementFocusInitialized) {
+            element.unbind('focus', elementFocusBind);
+          }
           element[0].focus();
+          documentBindingInitialized = true;
         } else {
-          $document.unbind('click', documentClickBind);
+          if(documentBindingInitialized) {
+            $document.unbind('click', documentClickBind);
+          }
           element.bind('focus', elementFocusBind);
+          elementFocusInitialized = true;
         }
 
         if ( setIsOpen ) {
