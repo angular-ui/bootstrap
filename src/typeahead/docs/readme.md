@@ -22,7 +22,7 @@ The typeahead directives provide several attributes:
    Comprehension Angular expression (see [select directive](http://docs.angularjs.org/api/ng.directive:select))
 
 * `typeahead-editable` <i class="icon-eye-open"></i>
-   _(Defaults: false)_ :
+   _(Defaults: true)_ :
    Should it restrict model values to the ones selected from the popup only ?
 
 * `typeahead-input-formatter` <i class="icon-eye-open"></i>
