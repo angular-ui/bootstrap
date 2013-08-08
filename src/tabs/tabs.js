@@ -293,7 +293,7 @@ function($parse, $http, $templateCache, $compile) {
   }
 }])
 
-.directive('tabsetTitles', function($http) {
+.directive('tabsetTitles', ['$http', function($http) {
   return {
     restrict: 'A',
     require: '^tabset',
@@ -310,7 +310,7 @@ function($parse, $http, $templateCache, $compile) {
       }
     }
   };
-})
+}])
 
 ;
 
