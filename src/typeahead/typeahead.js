@@ -172,12 +172,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
           return inputFormatter(originalScope, locals);
 
         } else {
-          locals[parserResult.itemName] = modelValue;
 
           //it might happen that we don't have enough info to properly render input value
           //we need to check for this situation and simply return model value if we can't apply custom formatting
+          locals[parserResult.itemName] = modelValue;
           candidateViewValue = parserResult.viewMapper(originalScope, locals);
-          emptyViewValue = parserResult.viewMapper(originalScope, {});
+          locals[parserResult.itemName] = undefined;
+          emptyViewValue = parserResult.viewMapper(originalScope, locals);
 
           return candidateViewValue!== emptyViewValue ? candidateViewValue : modelValue;
         }

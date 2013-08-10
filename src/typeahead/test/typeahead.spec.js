@@ -338,6 +338,14 @@ describe('typeahead tests', function () {
       var inputEl = findInput(prepareInputEl("<div><input ng-model='result' typeahead='state as state.name + \" \" + state.code for state in states | filter:$viewValue'></div>"));
       expect(inputEl.val()).toEqual('');
     });
+
+    it('issue 786 - name of internal model should not conflict with scope model name', function () {
+      $scope.state = $scope.states[0];
+      var element = prepareInputEl("<div><input ng-model='state' typeahead='state as state.name for state in states | filter:$viewValue'></div>");
+      var inputEl = findInput(element);
+
+      expect(inputEl.val()).toEqual('Alaska');
+    });
   });
 
   describe('input formatting', function () {
