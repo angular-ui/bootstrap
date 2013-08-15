@@ -163,9 +163,26 @@ describe('typeahead tests', function () {
     });
 
     it('should support the editable property to limit model bindings to matches only', function () {
-      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-editable='false'></div>");
+      var element = prepareInputEl("<div>ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-editable='false'></div>");
       changeInputValueTo(element, 'not in matches');
       expect($scope.result).toEqual(undefined);
+    });
+
+    it('should set validation erros for non-editable inputs', function () {
+
+      var element = prepareInputEl(
+        "<div><form name='form'>" +
+          "<input name='input' ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-editable='false'>" +
+          "</form></div>");
+
+      changeInputValueTo(element, 'not in matches');
+      expect($scope.result).toEqual(undefined);
+      expect($scope.form.input.$error.editable).toBeTruthy();
+
+      changeInputValueTo(element, 'foo');
+      triggerKeyDown(element, 13);
+      expect($scope.result).toEqual('foo');
+      expect($scope.form.input.$error.editable).toBeFalsy();
     });
 
     it('should bind loading indicator expression', inject(function ($timeout) {
