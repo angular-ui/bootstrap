@@ -32,7 +32,7 @@ section {
     background-color: #f5f5f5;
 }
 
-.hero-unit {
+.jumbotron {
     position: relative;
     padding: 40px 0;
     color: #fff;
@@ -53,13 +53,6 @@ section {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
     -o-border-radius: 0;
-}
-.hero-unit .btn, .pagination-centered .btn {
-    float: none;
-    font-weight: normal;
-}
-.hero-unit p {
-    margin: 1em 0;
 }
 .bs-docs-social {
     margin-top: 1em;

@@ -11,14 +11,14 @@
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.css" rel="stylesheet"/>
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/<%= faversion %>/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
 <body class="ng-cloak" ng-controller="MainCtrl">
-<header class="navbar navbar-fixed-top">
+<header class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-inner">
     <div class="container">
         <ul class="nav navbar-nav">
@@ -53,7 +53,7 @@
 </header>
 <div class="header-placeholder"></div>
 <div role="main">
-    <header class="hero-unit" id="overview">
+    <header class="jumbotron text-center" id="overview">
         <div class="container">
             <h1>
                 UI Bootstrap
@@ -63,11 +63,11 @@
                     href="http://angular-ui.github.io">AngularUI Team</a></strong></p>
 
             <p class="btn-group">
-                <a class="btn" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i> Code on Github</a>
+                <a class="btn btn-default" href="https://github.com/angular-ui/bootstrap">Code on Github</a>
                 <a class="btn btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
-                    <i class="icon-download-alt icon-white"></i> Download <small>(<%= pkg.version%>)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(<%= pkg.version%>)</small>
                 </a>
-                <a class="btn" ng-click="showBuildModal()"><i class="icon-wrench"></i> Create a Build</a>
+                <a class="btn btn-default" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</a>
             </p>
         </div>
         <div class="bs-docs-social">
@@ -116,7 +116,7 @@
     </header>
     <div class="container">
         <section id="getting_started" class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="page-header">
                     <h1>Getting started</h1>
                 </div>
@@ -164,25 +164,25 @@
         </section>
         <% demoModules.forEach(function(module) { %>
             <section id="<%= module.name %>" class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="page-header">
                       <h1><%= module.displayName %><small>
                           (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>)
                       </small></h1>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <%= module.docs.html %>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <%= module.docs.md %>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-12" ng-controller="PlunkerCtrl">
+                        <div class="col-md-12" ng-controller="PlunkerCtrl">
                             <div class="pull-right">
-                                <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                                <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                             </div>
                             <tabset>
                                 <tab heading="Markup">
@@ -229,7 +229,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()"><i class="icon-download-alt icon-white"></i> Download {{selectedModules.length}} Modules</a>
+        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()"><i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules</a>
         <a class="btn" ng-click="cancel()">Cancel</a>
     </div>
 </script>
