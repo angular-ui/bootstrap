@@ -1,11 +1,12 @@
 
-angular.module('bootstrapDemoApp', ['ui.directives', 'ui.bootstrap', 'plunker']);
+angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
 
-function MainCtrl($scope, $http, orderByFilter) {
+function MainCtrl($scope, $http, $document, orderByFilter) {
   var url = "http://50.116.42.77:3001";
   $scope.selectedModules = [];
   //iFrame for downloading
-  var $iframe = $("<iframe>").css('display','none').appendTo(document.body);
+  var $iframe = angular.element('<iframe>').css('display','none');
+  $document.find('body').append($iframe);
 
   $scope.showBuildModal = function() {
     $scope.buildModalShown = true;
@@ -27,5 +28,13 @@ function MainCtrl($scope, $http, orderByFilter) {
     $iframe.attr('src','');
     $iframe.attr('src', downloadUrl);
     $scope.buildModalShown = false;
+  };
+
+  $scope.selectedChanged = function(module, selected) {
+    if (selected) {
+      $scope.selectedModules.push(module);
+    } else {
+      $scope.selectedModules.splice($scope.selectedModules.indexOf(module), 1);
+    }
   };
 }

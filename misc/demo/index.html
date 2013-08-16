@@ -6,17 +6,13 @@
     <meta name="description" content="AngularJS (Angular) native directives for Twitter Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: <% demoModules.forEach(function(module) { %><%= module.displayName %>, <% }); %>">
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
     <script src="ui-bootstrap-tpls-<%= pkg.version%>.js"></script>
-    <script src="assets/select2.js"></script>
-    <script src="assets/ui-select2.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
-    <link rel="stylesheet" href="assets/select2.css"/>
 
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
@@ -229,14 +225,10 @@
       <h3 style="text-align: center;">{{buildErrorText}}</h3>
     </div>
     <div ng-hide="buildErrorText">
-      <label>Select the modules you wish to download:
-      <select style="width: 100%;" ui-select2 multiple 
-        ui-options="{multiple: true}"
-        ng-model="selectedModules">
-        <% modules.forEach(function(module) { %>
-          <option value="<%= module.name %>"><%= module.displayName %></option>
-        <% }); %>
-      </select></label>
+      <label>Select the modules you wish to download:</label>
+      <% modules.forEach(function(module) { %>
+        <button type="button" class="btn" ng-class="{'btn-primary': module.<%= module.name %>}" style="width: 170px; margin-bottom: 3px;" ng-model="module.<%= module.name %>" btn-checkbox ng-change="selectedChanged('<%= module.name %>', module.<%= module.name %>)"><%= module.displayName %></button>
+      <% }); %>
     </div>
   </div>
   <div class="modal-footer">
