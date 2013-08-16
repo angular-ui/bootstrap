@@ -1,6 +1,6 @@
 <div ng-controller="RatingDemoCtrl">
     <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
-    <span class="badge badge-inverse" ng-show="overStar && !isReadonly">{{overStar}} / {{max}}</span>
+    <span class="badge" ng-class="{'badge-warning': percent<30, 'badge-info': percent>=30 && percent<70, 'badge-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
 
     <hr/>
     <pre>Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>

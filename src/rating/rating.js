@@ -4,7 +4,46 @@ angular.module('ui.bootstrap.rating', [])
   max: 5
 })
 
-.directive('rating', ['ratingConfig', '$parse', function(ratingConfig, $parse) {
+.controller('RatingController', ['$scope', '$attrs', '$parse', 'ratingConfig', function($scope, $attrs, $parse, ratingConfig) {
+
+  this.maxRange = angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max;
+
+  $scope.range = [];
+  for (var i = 1; i <= this.maxRange; i++) {
+    $scope.range.push(i);
+  }
+
+  $scope.rate = function(value) {
+    if ( ! $scope.readonly ) {
+      $scope.value = value;
+    }
+  };
+
+  $scope.enter = function(value) {
+    if ( ! $scope.readonly ) {
+      $scope.val = value;
+    }
+    $scope.onHover({value: value});
+  };
+
+  $scope.reset = function() {
+    $scope.val = angular.copy($scope.value);
+    $scope.onLeave();
+  };
+
+  $scope.$watch('value', function(value) {
+    $scope.val = value;
+  });
+
+  $scope.readonly = false;
+  if ($attrs.readonly) {
+    $scope.$parent.$watch($parse($attrs.readonly), function(value) {
+      $scope.readonly = !!value;
+    });
+  }
+}])
+
+.directive('rating', function() {
   return {
     restrict: 'EA',
     scope: {
@@ -12,46 +51,8 @@ angular.module('ui.bootstrap.rating', [])
       onHover: '&',
       onLeave: '&'
     },
+    controller: 'RatingController',
     templateUrl: 'template/rating/rating.html',
-    replace: true,
-    link: function(scope, element, attrs) {
-
-      var maxRange = angular.isDefined(attrs.max) ? scope.$parent.$eval(attrs.max) : ratingConfig.max;
-
-      scope.range = [];
-      for (var i = 1; i <= maxRange; i++) {
-          scope.range.push(i);
-      }
-
-      scope.rate = function(value) {
-          if ( ! scope.readonly ) {
-              scope.value = value;
-          }
-      };
-
-      scope.enter = function(value) {
-          if ( ! scope.readonly ) {
-              scope.val = value;
-          }
-          scope.onHover({value: value});
-      };
-
-      scope.reset = function() {
-          scope.val = angular.copy(scope.value);
-          scope.onLeave();
-      };
-      scope.reset();
-
-      scope.$watch('value', function(value) {
-          scope.val = value;
-      });
-
-      scope.readonly = false;
-      if (attrs.readonly) {
-          scope.$parent.$watch($parse(attrs.readonly), function(value) {
-              scope.readonly = !!value;
-          });
-      }
-    }
+    replace: true
   };
-}]);
+});
