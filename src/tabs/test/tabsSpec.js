@@ -102,6 +102,57 @@ describe('tabs', function() {
 
   });
 
+  describe('basics with initial active tab', function() {
+
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+
+      function makeTab(active) {
+        return {
+          active: !!active,
+          select: jasmine.createSpy()
+        };
+      }
+      scope.tabs = [
+        makeTab(), makeTab(), makeTab(true), makeTab()
+      ];
+      elm = $compile([
+        '<tabset>',
+        '  <tab active="tabs[0].active" select="tabs[0].select()">',
+        '  </tab>',
+        '  <tab active="tabs[1].active" select="tabs[1].select()">',
+        '  </tab>',
+        '  <tab active="tabs[2].active" select="tabs[2].select()">',
+        '  </tab>',
+        '  <tab active="tabs[3].active" select="tabs[3].select()">',
+        '  </tab>',
+        '</tabset>'
+      ].join('\n'))(scope);
+      scope.$apply();
+    }));
+
+    function expectTabActive(activeTab) {
+      var _titles = titles();
+      angular.forEach(scope.tabs, function(tab, i) {
+        if (activeTab === tab) {
+          expect(tab.active).toBe(true);
+          //It should only call select ONCE for each select
+          expect(tab.select).toHaveBeenCalled();
+          expect(_titles.eq(i)).toHaveClass('active');
+          expect(contents().eq(i)).toHaveClass('active');
+        } else {
+          expect(tab.active).toBe(false);
+          expect(_titles.eq(i)).not.toHaveClass('active');
+        }
+      });
+    }
+
+    it('should make tab titles and set active tab active', function() {
+      expect(titles().length).toBe(scope.tabs.length);
+      expectTabActive(scope.tabs[2]);
+    });
+  });
+
   describe('ng-repeat', function() {
 
     beforeEach(inject(function($compile, $rootScope) {
