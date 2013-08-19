@@ -18,11 +18,11 @@ describe('rating directive', function () {
     return getStars().eq( number - 1 );
   }
 
-  function getState() {
+  function getState(classOn, classOff) {
     var stars = getStars();
     var state = [];
     for (var i = 0, n = stars.length; i < n; i++) {
-      state.push( (stars.eq(i).hasClass('icon-star') && ! stars.eq(i).hasClass('icon-star-empty')) );
+      state.push( (stars.eq(i).hasClass(classOn || 'icon-star') && ! stars.eq(i).hasClass(classOff || 'icon-star-empty')) );
     }
     return state;
   }
@@ -124,12 +124,57 @@ describe('rating directive', function () {
     expect($rootScope.leaving).toHaveBeenCalled();
   });
 
+  describe('custom states', function() {
+    beforeEach(inject(function() {
+      $rootScope.classOn = 'icon-ok-sign';
+      $rootScope.classOff = 'icon-ok-circle';
+      element = $compile('<rating value="rate" state-on="classOn" state-off="classOff"></rating>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('changes the default icons', function() {
+      expect(getState($rootScope.classOn, $rootScope.classOff)).toEqual([true, true, true, false, false]);
+    });
+  });
+
+  describe('`rating-states`', function() {
+    beforeEach(inject(function() {
+      $rootScope.states = [
+        {stateOn: 'sign', stateOff: 'circle'},
+        {stateOn: 'heart', stateOff: 'ban'},
+        {stateOn: 'heart'},
+        {stateOff: 'off'}
+      ];
+      element = $compile('<rating value="rate" rating-states="states"></rating>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('should define number of icon elements', function () {
+      expect(getStars().length).toBe($rootScope.states.length);
+    });
+
+    it('handles each icon', function() {
+      var stars = getStars();
+
+      for (var i = 0; i < stars.length; i++) {
+        var star = stars.eq(i);
+        var state = $rootScope.states[i];
+        var isOn = i < $rootScope.rate;
+
+        expect(star.hasClass(state.stateOn)).toBe(isOn);
+        expect(star.hasClass(state.stateOff)).toBe(!isOn);
+      }
+    });
+  });
+
   describe('setting ratingConfig', function() {
     var originalConfig = {};
     beforeEach(inject(function(ratingConfig) {
       $rootScope.rate = 5;
       angular.extend(originalConfig, ratingConfig);
       ratingConfig.max = 10;
+      ratingConfig.stateOn = 'on';
+      ratingConfig.stateOff = 'off';
       element = $compile('<rating value="rate"></rating>')($rootScope);
       $rootScope.$digest();
     }));
@@ -140,6 +185,10 @@ describe('rating directive', function () {
 
     it('should change number of icon elements', function () {
       expect(getStars().length).toBe(10);
+    });
+
+    it('should change icon states', function () {
+      expect(getState('on', 'off')).toEqual([true, true, true, true, true, false, false, false, false, false]);
     });
   });
 });
