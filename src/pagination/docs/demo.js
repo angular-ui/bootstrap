@@ -1,5 +1,5 @@
 var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 7;
+  $scope.totalItems = 64;
   $scope.currentPage = 4;
   $scope.maxSize = 5;
   
@@ -7,6 +7,6 @@ var PaginationDemoCtrl = function ($scope) {
     $scope.currentPage = pageNo;
   };
 
-  $scope.bigNoOfPages = 18;
+  $scope.bigTotalItems = 175;
   $scope.bigCurrentPage = 1;
 };
