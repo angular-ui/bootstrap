@@ -57,7 +57,7 @@ angular.module('ui.bootstrap.modal', [])
 /**
  * A helper directive for the $modal service. It creates a backdrop element.
  */
-  .directive('modalBackdrop', ['$modalStack', '$timeout', function ($modalStack, $timeout) {
+  .directive('modalBackdrop', ['$timeout', function ($timeout) {
     return {
       restrict: 'EA',
       replace: true,
@@ -70,20 +70,11 @@ angular.module('ui.bootstrap.modal', [])
         $timeout(function () {
           scope.animate = true;
         });
-
-        scope.close = function (evt) {
-          var modal = $modalStack.getTop();
-          if (modal && modal.value.backdrop && modal.value.backdrop != 'static') {
-            evt.preventDefault();
-            evt.stopPropagation();
-            $modalStack.dismiss(modal.key, 'backdrop click');
-          }
-        };
       }
     };
   }])
 
-  .directive('modalWindow', ['$timeout', function ($timeout) {
+  .directive('modalWindow', ['$modalStack', '$timeout', function ($modalStack, $timeout) {
     return {
       restrict: 'EA',
       scope: {
@@ -95,13 +86,21 @@ angular.module('ui.bootstrap.modal', [])
       link: function (scope, element, attrs) {
         scope.windowClass = attrs.windowClass || '';
 
-        // focus a freshly-opened modal
-        element[0].focus();
-
         $timeout(function () {
           // trigger CSS transitions
           scope.animate = true;
+          // focus a freshly-opened modal
+          element[0].focus();
         });
+
+        scope.close = function (evt) {
+          var modal = $modalStack.getTop();
+          if (modal && modal.value.backdrop && modal.value.backdrop != 'static' && (evt.target === evt.currentTarget)) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            $modalStack.dismiss(modal.key, 'backdrop click');
+          }
+        };
       }
     };
   }])
@@ -195,9 +194,9 @@ angular.module('ui.bootstrap.modal', [])
       };
 
       $modalStack.close = function (modalInstance, result) {
-        var modal = openedWindows.get(modalInstance);
-        if (modal) {
-          modal.value.deferred.resolve(result);
+        var modalWindow = openedWindows.get(modalInstance).value;
+        if (modalWindow) {
+          modalWindow.deferred.resolve(result);
           removeModalWindow(modalInstance);
         }
       };

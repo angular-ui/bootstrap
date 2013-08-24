@@ -56,7 +56,7 @@ describe('$modal', function () {
 
       toHaveModalOpenWithContent: function(content, selector) {
 
-        var contentToCompare, modalDomEls = this.actual.find('body > div.modal');
+        var contentToCompare, modalDomEls = this.actual.find('body > div.modal > div.modal-dialog > div.modal-content');
 
         this.message = function() {
           return "Expected '" + angular.mock.dump(modalDomEls) + "' to be open with '" + content + "'.";
@@ -154,7 +154,7 @@ describe('$modal', function () {
       var modal = open({template: '<div>Content</div>'});
       expect($document).toHaveModalsOpen(1);
 
-      $document.find('body > div.modal-backdrop').click();
+      $document.find('body > div.modal').click();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
