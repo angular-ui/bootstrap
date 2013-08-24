@@ -12,6 +12,10 @@ AngularJS version of the tabs directive.
  	_(Defaults: 'tabs')_ :
  	Navigation type. Possible values are 'tabs' and 'pills'.
 
+ * `direction`
+ 	_(Defaults: null)_ :
+ 	What direction the tabs should be rendered. Available: 'right', 'left', 'below'.
+
 #### `<tab>` ####
 
  * `heading` or `<tab-heading>`

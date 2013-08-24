@@ -468,8 +468,8 @@ describe('tabs', function() {
   describe('vertical', function() {
     beforeEach(inject(function($compile, $rootScope) {
       scope = $rootScope.$new();
-
-      elm = $compile('<tabset vertical="true"></tabset>')(scope);
+      scope.vertical = true;
+      elm = $compile('<tabset vertical="vertical"></tabset>')(scope);
       scope.$apply();
     }));
 
