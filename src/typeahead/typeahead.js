@@ -143,7 +143,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
 
       //plug into $parsers pipeline to open a typeahead on view changes initiated from DOM
       //$parsers kick-in on all the changes coming from the view as well as manually triggered by $setViewValue
-      modelCtrl.$parsers.push(function (inputValue) {
+      modelCtrl.$parsers.unshift(function (inputValue) {
 
         resetMatches();
         if (inputValue && inputValue.length >= minSearch) {
