@@ -25,6 +25,24 @@ Project files are also available through your favourite package manager:
 * **Bower**: `bower install angular-bootstrap`
 * **NuGet**: https://nuget.org/packages/Angular.UI.Bootstrap/
 
+## Supported browsers
+
+Directives from this repository are automatically tested with the following browsers:
+* Chrome (stable and canary channel)
+* Firefox
+* IE 9 and 10
+* Opera
+* Safari
+
+Modern mobile browsers should work without problems.
+
+**IE 8 is not officially supported at the moment**. This project is run by volunteers and with the current number of commiters
+we are not in the position to guarantee IE8 support. If you need support for IE8 we would welcome a contributor who would like to take care about IE8.
+Alternativelly you could sponsor this project to guarantee IE8 support.
+
+We believe that most of the directives would work OK after including relevant shims and taking care of the steps described in
+http://docs.angularjs.org/guide/ie but we are simply not regularly testing against IE8.
+
 ## Project philosophy
 
 ### Native, lightweight directives
