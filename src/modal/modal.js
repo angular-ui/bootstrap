@@ -134,13 +134,14 @@ angular.module('ui.bootstrap.modal', [])
       $modalStack.open = function (modalInstance, modal) {
 
         var backdropDomEl;
-        var modalDomEl = $compile(angular.element('<modal-window>').html(modal.content))(modal.scope);
-        body.append(modalDomEl);
-
         if (modal.backdrop) {
           backdropDomEl = $compile(angular.element('<modal-backdrop>'))($rootScope);
           body.append(backdropDomEl);
         }
+        var modalDomEl = $compile(angular.element('<modal-window>').html(modal.content))(modal.scope);
+        body.append(modalDomEl);
+
+        
 
         openedWindows.add(modalInstance, {
           deferred: modal.deferred,
