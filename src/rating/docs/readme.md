@@ -25,12 +25,12 @@ Rating directive that will take care of visualising a star rating bar.
  	An optional expression called when user's mouse leaves the control altogether.
 
  * `state-on`
- 	_(Defaults: 'icon-star')_ :
- 	A variable used in default template to specify the class for selected icons.
+ 	_(Defaults: null)_ :
+ 	A variable used in template to specify the state (class, src, etc) for selected icons.
 
  * `state-off`
- 	_(Defaults: 'icon-star-empty')_ :
- 	A variable used in default template to specify the class for unselected icons.
+ 	_(Defaults: null)_ :
+ 	A variable used in template to specify the state for unselected icons.
 
  * `rating-states`
  	_(Defaults: null)_ :
