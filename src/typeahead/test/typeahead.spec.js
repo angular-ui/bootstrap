@@ -378,6 +378,23 @@ describe('typeahead tests', function () {
       expect($scope.email).toEqual('bar@host.com');
       expect(inputEl.val()).toEqual('bar@host.com');
     });
+
+    it('does not close matches popup on click in input', function () {
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue'></div>");
+      var inputEl = findInput(element);
+
+      // Note that this bug can only be found when element is in the document
+      $document.find('body').append(element);
+      // Extra teardown for this spec
+      this.after(function () { element.remove(); });
+
+      changeInputValueTo(element, 'b');
+
+      inputEl.click();
+      $scope.$digest();
+
+      expect(element).toBeOpenWithActive(2, 0);
+    });
   });
 
   describe('input formatting', function () {

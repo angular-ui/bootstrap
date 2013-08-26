@@ -243,9 +243,18 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         }
       });
 
-      $document.bind('click', function(){
-        resetMatches();
-        scope.$digest();
+      // Keep reference to click handler to unbind it.
+      var dismissClickHandler = function (evt) {
+        if (element[0] !== evt.target) {
+          resetMatches();
+          scope.$digest();
+        }
+      };
+
+      $document.bind('click', dismissClickHandler);
+
+      originalScope.$on('$destroy', function(){
+        $document.unbind('click', dismissClickHandler);
       });
 
       element.after($compile(popUpEl)(scope));
