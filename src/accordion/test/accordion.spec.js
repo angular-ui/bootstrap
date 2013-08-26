@@ -18,7 +18,7 @@ describe('accordion', function () {
     }));
 
     describe('addGroup', function() {
-      it('adds a the specified group to the collection', function() {
+      it('adds a the specified panel to the collection', function() {
         var group1, group2;
         ctrl.addGroup(group1 = $scope.$new());
         ctrl.addGroup(group2 = $scope.$new());
@@ -35,7 +35,7 @@ describe('accordion', function () {
         ctrl.addGroup(group2 = { isOpen: true, $on : angular.noop });
         ctrl.addGroup(group3 = { isOpen: true, $on : angular.noop });
       });
-      it('should close other groups if close-others attribute is not defined', function() {
+      it('should close other panels if close-others attribute is not defined', function() {
         delete $attrs.closeOthers;
         ctrl.closeOthers(group2);
         expect(group1.isOpen).toBe(false);
@@ -43,7 +43,7 @@ describe('accordion', function () {
         expect(group3.isOpen).toBe(false);
       });
 
-      it('should close other groups if close-others attribute is true', function() {
+      it('should close other panels if close-others attribute is true', function() {
         $attrs.closeOthers = 'true';
         ctrl.closeOthers(group3);
         expect(group1.isOpen).toBe(false);
@@ -51,7 +51,7 @@ describe('accordion', function () {
         expect(group3.isOpen).toBe(true);
       });
 
-      it('should not close other groups if close-others attribute is false', function() {
+      it('should not close other panels if close-others attribute is false', function() {
         $attrs.closeOthers = 'false';
         ctrl.closeOthers(group2);
         expect(group1.isOpen).toBe(true);
@@ -70,7 +70,7 @@ describe('accordion', function () {
           accordionConfig.closeOthers = originalCloseOthers;
         }));
 
-        it('should not close other groups if accordionConfig.closeOthers is false', function() {
+        it('should not close other panels if accordionConfig.closeOthers is false', function() {
           ctrl.closeOthers(group2);
           expect(group1.isOpen).toBe(true);
           expect(group2.isOpen).toBe(true);
@@ -80,7 +80,7 @@ describe('accordion', function () {
     });
 
     describe('removeGroup', function() {
-      it('should remove the specified group', function () {
+      it('should remove the specified panel', function () {
         var group1, group2, group3;
         ctrl.addGroup(group1 = $scope.$new());
         ctrl.addGroup(group2 = $scope.$new());
@@ -90,7 +90,7 @@ describe('accordion', function () {
         expect(ctrl.groups[0]).toBe(group1);
         expect(ctrl.groups[1]).toBe(group3);
       });
-      it('should ignore remove of non-existing group', function () {
+      it('should ignore remove of non-existing panel', function () {
         var group1, group2;
         ctrl.addGroup(group1 = $scope.$new());
         ctrl.addGroup(group2 = $scope.$new());
@@ -109,7 +109,7 @@ describe('accordion', function () {
       return groups.eq(index).find('a').eq(0);
     };
     var findGroupBody = function (index) {
-      return groups.eq(index).find('.accordion-body').eq(0);
+      return groups.eq(index).find('.panel-collapse').eq(0);
     };
 
 
@@ -122,7 +122,7 @@ describe('accordion', function () {
       element = groups = scope = $compile = undefined;
     });
 
-    describe('with static groups', function () {
+    describe('with static panels', function () {
       beforeEach(function () {
         var tpl =
           "<accordion>" +
@@ -133,13 +133,13 @@ describe('accordion', function () {
         angular.element(document.body).append(element);
         $compile(element)(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
       });
       afterEach(function() {
         element.remove();
       });
 
-      it('should create accordion groups with content', function () {
+      it('should create accordion panels with content', function () {
         expect(groups.length).toEqual(2);
         expect(findGroupLink(0).text()).toEqual('title 1');
         expect(findGroupBody(0).text().trim()).toEqual('Content 1');
@@ -168,7 +168,7 @@ describe('accordion', function () {
       });
     });
 
-    describe('with dynamic groups', function () {
+    describe('with dynamic panels', function () {
       var model;
       beforeEach(function () {
         var tpl =
@@ -185,15 +185,15 @@ describe('accordion', function () {
         scope.$digest();
       });
 
-      it('should have no groups initially', function () {
-        groups = element.find('.accordion-group');
+      it('should have no panels initially', function () {
+        groups = element.find('.panel');
         expect(groups.length).toEqual(0);
       });
 
-      it('should have a group for each model item', function() {
+      it('should have a panel for each model item', function() {
         scope.groups = model;
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
         expect(groups.length).toEqual(2);
         expect(findGroupLink(0).text()).toEqual('title 1');
         expect(findGroupBody(0).text().trim()).toEqual('Content 1');
@@ -204,12 +204,12 @@ describe('accordion', function () {
       it('should react properly on removing items from the model', function () {
         scope.groups = model;
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
         expect(groups.length).toEqual(2);
 
         scope.groups.splice(0,1);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
         expect(groups.length).toEqual(1);
       });
     });
@@ -225,10 +225,10 @@ describe('accordion', function () {
         scope.open = { first: false, second: true };
         $compile(element)(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
       });
 
-      it('should open the group with isOpen set to true', function () {
+      it('should open the panel with isOpen set to true', function () {
         expect(findGroupBody(0).scope().isOpen).toBe(false);
         expect(findGroupBody(1).scope().isOpen).toBe(true);
       });
@@ -258,14 +258,14 @@ describe('accordion', function () {
         angular.element(document.body).append(element);
         $compile(element)(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
       });
 
       afterEach(function() {
         element.remove();
       });
 
-      it('should have visible group body when the group with isOpen set to true', function () {
+      it('should have visible panel body when the group with isOpen set to true', function () {
         expect(findGroupBody(0)[0].clientHeight).not.toBe(0);
         expect(findGroupBody(1)[0].clientHeight).toBe(0);
       });
@@ -286,7 +286,7 @@ describe('accordion', function () {
         $compile(element)(scope);
         scope.$digest();
 
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
       });
 
       it('should have visible group body when the group with isOpen set to true', function () {
@@ -318,7 +318,7 @@ describe('accordion', function () {
           '</accordion>';
         element = $compile(tpl)(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
       });
       it('transcludes the <accordion-heading> content into the heading link', function() {
         expect(findGroupLink(0).text()).toBe('Heading Element 123 ');
@@ -340,7 +340,7 @@ describe('accordion', function () {
           '</accordion>';
         element = $compile(tpl)(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
       });
       it('transcludes the <accordion-heading> content into the heading link', function() {
         expect(findGroupLink(0).text()).toBe('Heading Element 123 ');
@@ -355,7 +355,7 @@ describe('accordion', function () {
       it('should clone the accordion-heading for each group', function() {
         element = $compile('<accordion><accordion-group ng-repeat="x in [1,2,3]"><accordion-heading>{{x}}</accordion-heading></accordion-group></accordion>')(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
         expect(groups.length).toBe(3);
         expect(findGroupLink(0).text()).toBe('1');
         expect(findGroupLink(1).text()).toBe('2');
@@ -368,7 +368,7 @@ describe('accordion', function () {
       it('should clone the accordion-heading for each group', function() {
         element = $compile('<accordion><accordion-group ng-repeat="x in [1,2,3]"><div accordion-heading>{{x}}</div></accordion-group></accordion>')(scope);
         scope.$digest();
-        groups = element.find('.accordion-group');
+        groups = element.find('.panel');
         expect(groups.length).toBe(3);
         expect(findGroupLink(0).text()).toBe('1');
         expect(findGroupLink(1).text()).toBe('2');

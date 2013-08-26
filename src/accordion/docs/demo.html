@@ -13,12 +13,12 @@
     </accordion-group>
     <accordion-group heading="Dynamic Body Content">
       <p>The body of the accordion group grows to fit the contents</p>
-        <button class="btn btn-small" ng-click="addItem()">Add Item</button>
+        <button class="btn btn-default btn-small" ng-click="addItem()">Add Item</button>
         <div ng-repeat="item in items">{{item}}</div>
     </accordion-group>
     <accordion-group is-open="isopen">
         <accordion-heading>
-            I can have markup, too! <i class="pull-right" ng-class="{'icon-chevron-down': isopen, 'icon-chevron-right': !isopen}"></i>
+            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
         </accordion-heading>
         This is just some content to illustrate fancy headings.
     </accordion-group>
