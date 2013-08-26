@@ -23,6 +23,12 @@ describe('typeaheadHighlight', function () {
     expect(highlightFilter('before match after', 'nomatch')).toEqual('before match after');
   });
 
+  it('should do nothing if no or empty query', function () {
+    expect(highlightFilter('before match after', '')).toEqual('before match after');
+    expect(highlightFilter('before match after', null)).toEqual('before match after');
+    expect(highlightFilter('before match after', undefined)).toEqual('before match after');
+  });
+
   it('issue 316 - should work correctly for regexp reserved words', function () {
     expect(highlightFilter('before (match after', '(match')).toEqual('before <strong>(match</strong> after');
   });
