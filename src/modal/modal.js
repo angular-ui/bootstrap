@@ -135,10 +135,10 @@ angular.module('ui.bootstrap.modal', [])
 
         var backdropDomEl;
         if (modal.backdrop) {
-          backdropDomEl = $compile(angular.element('<modal-backdrop>'))($rootScope);
+          backdropDomEl = $compile(angular.element('<div modal-backdrop></div>'))($rootScope);
           body.append(backdropDomEl);
         }
-        var modalDomEl = $compile(angular.element('<modal-window>').html(modal.content))(modal.scope);
+        var modalDomEl = $compile(angular.element('<div modal-window></div>').html(modal.content))(modal.scope);
         body.append(modalDomEl);
 
         
