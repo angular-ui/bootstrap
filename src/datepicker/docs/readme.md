@@ -5,7 +5,7 @@ The datepicker shows dates that come from other than the main month being displa
 
 Everything is formatted using the [date filter](http://docs.angularjs.org/api/ng.filter:date) and thus is also localized.
 
-### Settings ###
+### Datepicker Settings ###
 
 All settings can be provided as attributes in the `<datepicker>` or globally configured through the `datepickerConfig`.
 
@@ -60,3 +60,33 @@ All settings can be provided as attributes in the `<datepicker>` or globally con
  * `month-title-format`
  	_(Default: 'yyyy')_ :
  	Format of title when selecting month.
+
+
+### Popup Settings ###
+
+Options for datepicker can be passed as JSON using the `datepicker-options` attribute.
+Specific settings for the `datepicker-popup` are:
+
+ * `datepicker-popup`
+ 	_(Default: 'yyyy-MM-dd')_ :
+ 	The format for displayed dates.
+
+ * `current-text`
+ 	_(Default: 'Today')_ :
+ 	The text to display for the current day button.
+
+ * `toggle-weeks-text`
+ 	_(Default: 'Weeks')_ :
+ 	The text to display for the toggling week numbers button.
+
+ * `clear-text`
+ 	_(Default: 'Clear')_ :
+ 	The text to display for the clear button.
+
+ * `close-text`
+ 	_(Default: 'Done')_ :
+ 	The text to display for the close button.
+
+ * `close-on-date-selection`
+ 	_(Default: true)_ :
+ 	Whether to close calendar when a date is chosen.

@@ -1091,6 +1091,57 @@ describe('datepicker directive', function () {
       });
     });
 
+    describe('button bar', function() {
+      var buttons;
+      beforeEach(inject(function() {
+        assignButtons();
+      }));
+
+      function assignButtons() {
+        buttons = dropdownEl.find('li').eq(2).find('button');
+      }
+
+      it('should have four buttons', function() {
+        expect(buttons.length).toBe(4);
+
+        expect(buttons.eq(0).text()).toBe('Today');
+        expect(buttons.eq(1).text()).toBe('Weeks');
+        expect(buttons.eq(2).text()).toBe('Clear');
+        expect(buttons.eq(3).text()).toBe('Done');
+      });
+
+      it('should have a button to clear value', function() {
+        buttons.eq(2).click();
+        expect($rootScope.date).toBe(null);
+      });
+
+      it('should have a button to close calendar', function() {
+        inputEl.focus();
+        expect(dropdownEl.css('display')).not.toBe('none');
+
+        buttons.eq(3).click();
+        expect(dropdownEl.css('display')).toBe('none');
+      });
+
+      describe('customization', function() {
+        beforeEach(inject(function() {
+          $rootScope.clearText = 'Null it!';
+          $rootScope.close = 'Close';
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup current-text="Now" toggle-weeks-text="T.W." clear-text="{{clearText}}" close-text="{{close}}ME"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+          assignButtons();
+        }));
+
+        it('should change text from attributes', function() {
+          expect(buttons.eq(0).text()).toBe('Now');
+          expect(buttons.eq(1).text()).toBe('T.W.');
+          expect(buttons.eq(2).text()).toBe('Null it!');
+          expect(buttons.eq(3).text()).toBe('CloseME');
+        });
+      });
+    });
+
     describe('use with `ng-required` directive', function() {
       beforeEach(inject(function() {
         $rootScope.date = '';
