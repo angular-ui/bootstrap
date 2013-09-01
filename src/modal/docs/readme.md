@@ -9,6 +9,7 @@ The `$modal` service has only one method: `open(options)` where available option
 * `resolve` - members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property for AngularJS routes
 * `backdrop` - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), `'static'` - backdrop is present but modal window is not closed when clicking outside of the modal window.
 * `keyboard` - indicates whether the dialog should be closable by hitting the ESC key, defaults to true
+* `windowClass` - additional CSS class(es) to be added to a modal window template
 
 The `open` method returns a modal instance, an object with the following properties:
 

@@ -360,6 +360,18 @@ describe('$modal', function () {
         expect($document).toHaveBackdrop();
       });
     });
+
+    describe('custom window classes', function () {
+
+      it('should support additional window class as string', function () {
+        open({
+          template: '<div>With custom window class</div>',
+          windowClass: 'additional'
+        });
+
+        expect($document.find('div.modal')).toHaveClass('additional');
+      });
+    });
   });
 
   describe('multiple modals', function () {

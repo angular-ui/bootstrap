@@ -84,6 +84,8 @@ angular.module('ui.bootstrap.modal', [])
       transclude: true,
       templateUrl: 'template/modal/window.html',
       link: function (scope, element, attrs) {
+        scope.windowClass = attrs.windowClass || '';
+
         //trigger CSS transitions
         $timeout(function () {
           scope.animate = true;
@@ -138,10 +140,13 @@ angular.module('ui.bootstrap.modal', [])
           backdropDomEl = $compile(angular.element('<div modal-backdrop></div>'))($rootScope);
           body.append(backdropDomEl);
         }
-        var modalDomEl = $compile(angular.element('<div modal-window></div>').html(modal.content))(modal.scope);
-        body.append(modalDomEl);
 
-        
+        var angularDomEl = angular.element('<div modal-window></div>');
+        angularDomEl.attr('window-class', modal.windowClass);
+        angularDomEl.html(modal.content);
+
+        var modalDomEl = $compile(angularDomEl)(modal.scope);
+        body.append(modalDomEl);
 
         openedWindows.add(modalInstance, {
           deferred: modal.deferred,
@@ -266,7 +271,8 @@ angular.module('ui.bootstrap.modal', [])
                 deferred: modalResultDeferred,
                 content: tplAndVars[0],
                 backdrop: modalOptions.backdrop,
-                keyboard: modalOptions.keyboard
+                keyboard: modalOptions.keyboard,
+                windowClass: modalOptions.windowClass
               });
 
             }, function resolveError(reason) {
