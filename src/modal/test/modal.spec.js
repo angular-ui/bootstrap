@@ -399,5 +399,14 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(2);
     });
+
+    it('multiple modals should not interfere with default options', function () {
+
+      var modal1 = open({template: '<div>Modal1</div>', backdrop: false});
+      var modal2 = open({template: '<div>Modal2</div>'});
+      $rootScope.$digest();
+
+      expect($document).toHaveBackdrop();
+    });
   });
 });

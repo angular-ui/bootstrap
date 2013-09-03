@@ -231,7 +231,7 @@ angular.module('ui.bootstrap.modal', [])
             };
 
             //merge and clean up options
-            modalOptions = angular.extend(defaultOptions, modalOptions);
+            modalOptions = angular.extend({}, defaultOptions, modalOptions);
             modalOptions.resolve = modalOptions.resolve || {};
 
             //verify options
