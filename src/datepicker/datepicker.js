@@ -272,23 +272,6 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
         scope.$destroy();
       });
 
-      function formatDate(value) {
-        return (value) ? dateFilter(value, dateFormat) : null;
-      }
-      ngModel.$formatters.push(formatDate);
-
-      // TODO: reverse from dateFilter string to Date object
-      function parseDate(value) {
-        if ( value ) {
-          var date = new Date(value);
-          if (!isNaN(date)) {
-            return date;
-          }
-        }
-        return value;
-      }
-      ngModel.$parsers.push(parseDate);
-
       var getIsOpen, setIsOpen;
       if ( attrs.isOpen ) {
         getIsOpen = $parse(attrs.isOpen);
@@ -333,33 +316,58 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
         datepickerEl.attr(angular.extend({}, originalScope.$eval(attrs.datepickerOptions)));
       }
 
-      var $setModelValue = $parse(attrs.ngModel).assign;
+      // TODO: reverse from dateFilter string to Date object
+      function parseDate(viewValue) {
+        if (!viewValue) {
+          ngModel.$setValidity('date', true);
+          return null;
+        } else if (angular.isDate(viewValue)) {
+          ngModel.$setValidity('date', true);
+          return viewValue;
+        } else if (angular.isString(viewValue)) {
+          var date = new Date(viewValue);
+          if (isNaN(date)) {
+            ngModel.$setValidity('date', false);
+            return undefined;
+          } else {
+            ngModel.$setValidity('date', true);
+            return date;
+          }
+        } else {
+          ngModel.$setValidity('date', false);
+          return undefined;
+        }
+      }
+      ngModel.$parsers.unshift(parseDate);
 
       // Inner change
       scope.dateSelection = function() {
-        $setModelValue(originalScope, scope.date);
+        ngModel.$setViewValue(scope.date);
+        ngModel.$render();
+
         if (closeOnDateSelection) {
           setOpen( false );
         }
       };
 
-      // Outter change
-      scope.$watch(function() {
-        return ngModel.$modelValue;
-      }, function(value) {
-        if (angular.isString(value)) {
-          var date = parseDate(value);
-
-          if (value && !date) {
-            $setModelValue(originalScope, null);
-            throw new Error(value + ' cannot be parsed to a date object.');
-          } else {
-            value = date;
-          }
-        }
-        scope.date = value;
-        updatePosition();
+      element.bind('input change keyup', function() {
+        scope.$apply(function() {
+          updateCalendar();
+        });
       });
+
+      // Outter change
+      ngModel.$render = function() {
+        var date = ngModel.$viewValue ? dateFilter(ngModel.$viewValue, dateFormat) : '';
+        element.val(date);
+
+        updateCalendar();
+      };
+
+      function updateCalendar() {
+        scope.date = ngModel.$modelValue;
+        updatePosition();
+      }
 
       function addWatchableAttribute(attribute, scopeProperty, datepickerAttribute) {
         if (attribute) {
@@ -408,6 +416,8 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
           setIsOpen(originalScope, value);
         }
       });
+
+      var $setModelValue = $parse(attrs.ngModel).assign;
 
       scope.today = function() {
         $setModelValue(originalScope, new Date());

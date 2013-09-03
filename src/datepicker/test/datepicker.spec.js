@@ -1000,6 +1000,12 @@ describe('datepicker directive', function () {
       expect($rootScope.date).toEqual(new Date('September 15, 2010 15:30:00'));
     });
 
+    it('should mark the input field dirty when a day is clicked', function() {
+      expect(inputEl).toHaveClass('ng-pristine');
+      clickOption(2, 3);
+      expect(inputEl).toHaveClass('ng-dirty');
+    });
+
     it('updates the input correctly when model changes', function() {
       $rootScope.date = new Date("January 10, 1983 10:00:00");
       $rootScope.$digest();
@@ -1014,11 +1020,22 @@ describe('datepicker directive', function () {
       expect(dropdownEl.css('display')).toBe('none');
     });
 
-    it('updates the model when input value changes', function() {
+    it('updates the model & calendar when input value changes', function() {
       changeInputValueTo(inputEl, 'March 5, 1980');
+
       expect($rootScope.date.getFullYear()).toEqual(1980);
       expect($rootScope.date.getMonth()).toEqual(2);
       expect($rootScope.date.getDate()).toEqual(5);
+
+      expect(getOptions()).toEqual([
+        ['24', '25', '26', '27', '28', '29', '01'],
+        ['02', '03', '04', '05', '06', '07', '08'],
+        ['09', '10', '11', '12', '13', '14', '15'],
+        ['16', '17', '18', '19', '20', '21', '22'],
+        ['23', '24', '25', '26', '27', '28', '29'],
+        ['30', '31', '01', '02', '03', '04', '05']
+      ]);
+      expectSelectedElement( 1, 3 );
     });
 
     it('closes when click outside of calendar', function() {
@@ -1074,7 +1091,7 @@ describe('datepicker directive', function () {
       });
     });
 
-    describe('use with ng-required directive', function() {
+    describe('use with `ng-required` directive', function() {
       beforeEach(inject(function() {
         $rootScope.date = '';
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup ng-required="true"><div>')($rootScope);
@@ -1092,8 +1109,42 @@ describe('datepicker directive', function () {
       });
     });
 
-  });
+    describe('use with `ng-change` directive', function() {
+      beforeEach(inject(function() {
+        $rootScope.changeHandler = jasmine.createSpy('changeHandler');
+        $rootScope.date = new Date();
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup ng-required="true" ng-change="changeHandler()"><div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+      }));
 
+      it('should not be called initially', function() {
+        expect($rootScope.changeHandler).not.toHaveBeenCalled();
+      });
+
+      it('should be called when a day is clicked', function() {
+        clickOption(2, 3);
+        expect($rootScope.changeHandler).toHaveBeenCalled();
+      });
+
+      it('should not be called when model changes programatically', function() {
+        $rootScope.date = new Date();
+        $rootScope.$digest();
+        expect($rootScope.changeHandler).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('to invalid input', function() {
+      it('sets `ng-invalid`', function() {
+        changeInputValueTo(inputEl, 'pizza');
+
+        expect(inputEl).toHaveClass('ng-invalid');
+        expect(inputEl).toHaveClass('ng-invalid-date');
+        expect($rootScope.date).toBeUndefined();
+        expect(inputEl.val()).toBe('pizza');
+      });
+    });
+  });
 });
 
 describe('datepicker directive with empty initial state', function () {
