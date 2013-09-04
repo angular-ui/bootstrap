@@ -40,8 +40,11 @@ Modern mobile browsers should work without problems.
 we are not in the position to guarantee IE8 support. If you need support for IE8 we would welcome a contributor who would like to take care about IE8.
 Alternativelly you could sponsor this project to guarantee IE8 support.
 
-We believe that most of the directives would work OK after including relevant shims and taking care of the steps described in
-http://docs.angularjs.org/guide/ie but we are simply not regularly testing against IE8.
+We believe that most of the directives would work OK after:
+* including relevant shims (for ES5 we recommend https://github.com/kriskowal/es5-shim)
+* taking care of the steps described in http://docs.angularjs.org/guide/ie
+
+We are simply not regularly testing against IE8.
 
 ## Project philosophy
 
