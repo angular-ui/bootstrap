@@ -19,6 +19,13 @@ describe('stacked map', function () {
     expect(stackedMap.get('foo')).toBeUndefined();
   });
 
+  it('should support listing keys', function () {
+    stackedMap.add('foo', 'foo_value');
+    stackedMap.add('bar', 'bar_value');
+
+    expect(stackedMap.keys()).toEqual(['foo', 'bar']);
+  });
+
   it('should get topmost element', function () {
 
     stackedMap.add('foo', 'foo_value');
