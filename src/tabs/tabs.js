@@ -48,18 +48,23 @@ angular.module('ui.bootstrap.tabs', [])
  * Tabset is the outer container for the tabs directive
  *
  * @param {boolean=} vertical Whether or not to use vertical styling for the tabs.
+ * @param {boolean=} justified Whether or not to use justified styling for the tabs.
  *
  * @example
 <example module="ui.bootstrap">
   <file name="index.html">
     <tabset>
-      <tab heading="Vertical Tab 1"><b>First</b> Content!</tab>
-      <tab heading="Vertical Tab 2"><i>Second</i> Content!</tab>
+      <tab heading="Tab 1"><b>First</b> Content!</tab>
+      <tab heading="Tab 2"><i>Second</i> Content!</tab>
     </tabset>
     <hr />
     <tabset vertical="true">
       <tab heading="Vertical Tab 1"><b>First</b> Vertical Content!</tab>
       <tab heading="Vertical Tab 2"><i>Second</i> Vertical Content!</tab>
+    </tabset>
+    <tabset justified="true">
+      <tab heading="Justified Tab 1"><b>First</b> Justified Content!</tab>
+      <tab heading="Justified Tab 2"><i>Second</i> Justified Content!</tab>
     </tabset>
   </file>
 </example>
@@ -74,6 +79,7 @@ angular.module('ui.bootstrap.tabs', [])
     templateUrl: 'template/tabs/tabset.html',
     link: function(scope, element, attrs) {
       scope.vertical = angular.isDefined(attrs.vertical) ? scope.$parent.$eval(attrs.vertical) : false;
+      scope.justified = angular.isDefined(attrs.justified) ? scope.$parent.$eval(attrs.justified) : false;
       scope.type = angular.isDefined(attrs.type) ? scope.$parent.$eval(attrs.type) : 'tabs';
     }
   };

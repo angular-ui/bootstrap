@@ -546,6 +546,19 @@ describe('tabs', function() {
     });
   });
 
+  describe('justified', function() {
+      beforeEach(inject(function($compile, $rootScope) {
+          scope = $rootScope.$new();
+          scope.justified = true;
+          elm = $compile('<tabset justified="justified"></tabset>')(scope);
+          scope.$apply();
+      }));
+
+      it('to justify tabs', function() {
+          expect(elm.find('ul.nav-tabs')).toHaveClass('nav-justified');
+      });
+  });
+
   describe('type', function() {
     beforeEach(inject(function($compile, $rootScope) {
       scope = $rootScope.$new();

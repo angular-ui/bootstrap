@@ -8,6 +8,10 @@ AngularJS version of the tabs directive.
  	_(Defaults: false)_ :
  	Whether tabs appear vertically stacked.
 
+ * `justified`
+ 	_(Defaults: false)_ :
+ 	Whether tabs fill the container and have a consistent width.
+
  * `type`
  	_(Defaults: 'tabs')_ :
  	Navigation type. Possible values are 'tabs' and 'pills'.
