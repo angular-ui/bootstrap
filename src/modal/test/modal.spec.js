@@ -202,6 +202,18 @@ describe('$modal', function () {
       expect($document).toHaveModalOpenWithContent('Content', 'div');
       expect($document).not.toHaveBackdrop();
     });
+
+    it('should accept new objects with default options in a provider', function () {
+
+      $modalProvider.options = {
+        backdrop: false
+      };
+      var modal = open({template: '<div>Content</div>'});
+
+      expect($document).toHaveModalOpenWithContent('Content', 'div');
+      expect($document).not.toHaveBackdrop();
+    });
+
   });
 
   describe('option by option', function () {
