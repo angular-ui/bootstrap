@@ -1,3 +1,82 @@
+# 0.6.0 (2013-09-08)
+
+## Features
+
+- **modal:** 
+  - rewrite $dialog as $modal ([d7a48523](http://github.com/angular-ui/bootstrap/commit/d7a48523))  
+  - add support for custom window settings ([015625d1](http://github.com/angular-ui/bootstrap/commit/015625d1))  
+  - expose $close and $dismiss options on modal's scope ([8d153acb](http://github.com/angular-ui/bootstrap/commit/8d153acb))  
+- **pagination:** 
+  - `total-items` & optional `items-per-page` API ([e55d9063](http://github.com/angular-ui/bootstrap/commit/e55d9063))  
+- **rating:** 
+  - add support for custom icons per instance ([20ab01ad](http://github.com/angular-ui/bootstrap/commit/20ab01ad))  
+- **timepicker:** 
+  - plug into `ngModel` controller ([b08e993f](http://github.com/angular-ui/bootstrap/commit/b08e993f))   
+
+## Bug Fixes
+
+- **carousel:** 
+  - correct reflow triggering on FFox and Safari ([d34f2de1](http://github.com/angular-ui/bootstrap/commit/d34f2de1))  
+- **datepicker:** 
+  - correctly manage focus without jQuery present ([d474824b](http://github.com/angular-ui/bootstrap/commit/d474824b))  
+  - compatibility with angular 1.1.5 and no jquery ([bf30898d](http://github.com/angular-ui/bootstrap/commit/bf30898d))  
+  - use $setViewValue for inner changes ([dd99f35d](http://github.com/angular-ui/bootstrap/commit/dd99f35d))
+- **modal:**
+  - insert backdrop before modal window ([d870f212](http://github.com/angular-ui/bootstrap/commit/d870f212))
+  - ie8 fix after $modal rewrite ([ff9d969e](http://github.com/angular-ui/bootstrap/commit/ff9d969e))
+  - opening a modal should not change default options ([82532d1b](http://github.com/angular-ui/bootstrap/commit/82532d1b))
+  - backdrop should cover previously opened modals ([7fce2fe8](http://github.com/angular-ui/bootstrap/commit/7fce2fe8))
+  - allow replacing object with default options ([8e7fbf06](http://github.com/angular-ui/bootstrap/commit/8e7fbf06))
+- **position:**
+  - fallback for IE8's scrollTop/Left for offset ([9aecd4ed](http://github.com/angular-ui/bootstrap/commit/9aecd4ed))  
+- **tabs:** 
+  - add DI array-style annotations ([aac4a0dd](http://github.com/angular-ui/bootstrap/commit/aac4a0dd))  
+  - evaluate `vertical` on parent scope ([9af6f96e](http://github.com/angular-ui/bootstrap/commit/9af6f96e))  
+- **timepicker:** 
+  - add type attribute for meridian button ([1f89fd4b](http://github.com/angular-ui/bootstrap/commit/1f89fd4b))  
+- **tooltip:** 
+  - remove placement='mouse' option ([17163c22](http://github.com/angular-ui/bootstrap/commit/17163c22))  
+- **typeahead:** 
+  - fix label rendering for equal model and items names ([5de71216](http://github.com/angular-ui/bootstrap/commit/5de71216))  
+  - set validity flag for non-editable inputs ([366e0c8a](http://github.com/angular-ui/bootstrap/commit/366e0c8a))  
+  - plug in front of existing parsers ([80cef614](http://github.com/angular-ui/bootstrap/commit/80cef614))  
+  - highlight return match if no query ([45dd9be1](http://github.com/angular-ui/bootstrap/commit/45dd9be1))  
+  - keep pop-up on clicking input ([5f9e270d](http://github.com/angular-ui/bootstrap/commit/5f9e270d))  
+  - remove dependency on ng-bind-html-unsafe ([75893393](http://github.com/angular-ui/bootstrap/commit/75893393))   
+
+## Breaking Changes
+
+- **modal:**
+
+* `$dialog` service was refactored into `$modal`
+* `modal` directive was removed - use the `$modal` service instead
+
+Check the documentation for the `$modal` service to migrate from `$dialog`
+
+- **pagination:** 
+ API has undergone some changes in order to be easier to use.
+ * `current-page` is replaced from `page`.
+ * Number of pages is not defined by `num-pages`, but from `total-items` &
+  `items-per-page` instead. If `items-per-page` is missing, default is 10.
+ * `num-pages` still exists but is just readonly.
+
+  Before:
+
+```html
+  <pagination num-pages="10" ...></pagination>
+```
+
+  After:
+
+```html
+  <pagination total-items="100" ...></pagination>
+```
+
+- **tooltip:** 
+
+
+The placment='mouse' is gone with no equivalent
+ 
 # 0.5.0 (2013-08-04)
 
 ## Features
