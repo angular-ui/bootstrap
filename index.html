@@ -3,20 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>Angular directives for Twitter's Bootstrap</title>
-    <meta name="description" content="AngularJS (Angular) native directives for Twitter Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Accordion, Alert, Buttons, Carousel, Collapse, Datepicker, Dialog, Dropdown Toggle, Modal, Pagination, Popover, Progressbar, Rating, Tabs, Timepicker, Tooltip, Typeahead, ">
+    <meta name="description" content="AngularJS (Angular) native directives for Twitter Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Accordion, Alert, Buttons, Carousel, Collapse, Datepicker, Dropdown Toggle, Modal, Pagination, Popover, Progressbar, Rating, Tabs, Timepicker, Tooltip, Typeahead, ">
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
-    <script src="ui-bootstrap-tpls-0.5.0.js"></script>
-    <script src="assets/select2.js"></script>
-    <script src="assets/ui-select2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="ui-bootstrap-tpls-0.6.0.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
-    <link rel="stylesheet" href="assets/select2.css"/>
 
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
@@ -57,8 +53,6 @@
                    <li><a href="#collapse">Collapse</a></li>
                    
                    <li><a href="#datepicker">Datepicker</a></li>
-                   
-                   <li><a href="#dialog">Dialog</a></li>
                    
                    <li><a href="#dropdownToggle">Dropdown Toggle</a></li>
                    
@@ -103,7 +97,7 @@
             <p class="btn-group">
                 <a class="btn" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i> Code on Github</a>
                 <a class="btn btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
-                    <i class="icon-download-alt icon-white"></i> Download <small>(0.5.0)</small>
+                    <i class="icon-download-alt icon-white"></i> Download <small>(0.6.0)</small>
                 </a>
                 <a class="btn" ng-click="showBuildModal()"><i class="icon-wrench"></i> Create a Build</a>
             </p>
@@ -188,6 +182,17 @@
                        <code>angular.module('myModule', ['ui.bootstrap']);</code>
                     </p>
                     <p>You can fork one of the plunkers from this page to see a working example of what is described here.</p>
+                    <h3>CSS</h3>
+                    <p>Original Bootstrap's CSS depends on empty <code>href</code> attributes to style cursors for several components (pagination, tabs etc.).
+                       But in AngularJS adding empty <code>href</code> attributes to link tags will cause unwanted route changes.
+                       This is why we need to remove empty <code>href</code> attributes from directive templates and as a result
+                       styling is not applied correctly. The remedy is simple, just add the following styling to your application:
+                       <code>
+                           .nav, .pagination, .carousel a {
+                                cursor: pointer;
+                           }
+                       </code>
+                    </p>
                 </div>
             </div>
         </section>
@@ -240,7 +245,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -352,7 +357,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -441,7 +446,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'buttons')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'buttons')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -548,7 +553,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -648,7 +653,7 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'collapse')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'collapse')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -691,11 +696,11 @@ Provides a simple way to hide and show an element with a css transition</p>
     <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
     <div class="well well-small pull-left" ng-model="dt">
-        <datepicker min="minDate" show-weeks="showWeeks"></datepciker>
+        <datepicker min="minDate" show-weeks="showWeeks"></datepicker>
     </div>
 
     <div class="form-horizontal">
-        <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+        <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
         <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
     </div>
 
@@ -766,7 +771,7 @@ The datepicker shows dates that come from other than the main month being displa
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'datepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'datepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -775,11 +780,11 @@ The datepicker shows dates that come from other than the main month being displa
     &lt;pre&gt;Selected date is: &lt;em&gt;{{dt | date:&#x27;fullDate&#x27; }}&lt;/em&gt;&lt;/pre&gt;
 
     &lt;div class=&quot;well well-small pull-left&quot; ng-model=&quot;dt&quot;&gt;
-        &lt;datepicker min=&quot;minDate&quot; show-weeks=&quot;showWeeks&quot;&gt;&lt;/datepciker&gt;
+        &lt;datepicker min=&quot;minDate&quot; show-weeks=&quot;showWeeks&quot;&gt;&lt;/datepicker&gt;
     &lt;/div&gt;
 
     &lt;div class=&quot;form-horizontal&quot;&gt;
-        &lt;input type=&quot;text&quot; datepicker-popup=&quot;dd-MMMM-yyyy&quot; ng-model=&quot;dt&quot; open=&quot;opened&quot; min=&quot;minDate&quot; max=&quot;&#x27;2015-06-22&#x27;&quot; datepicker-options=&quot;dateOptions&quot; date-disabled=&quot;disabled(date, mode)&quot; ng-required=&quot;true&quot; /&gt;
+        &lt;input type=&quot;text&quot; datepicker-popup=&quot;dd-MMMM-yyyy&quot; ng-model=&quot;dt&quot; is-open=&quot;opened&quot; min=&quot;minDate&quot; max=&quot;&#x27;2015-06-22&#x27;&quot; datepicker-options=&quot;dateOptions&quot; date-disabled=&quot;disabled(date, mode)&quot; ng-required=&quot;true&quot; /&gt;
         &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;&lt;i class=&quot;icon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
     &lt;/div&gt;
 
@@ -875,186 +880,6 @@ The datepicker shows dates that come from other than the main month being displa
 };
 </script>
     
-      <section id="dialog">
-        <div class="page-header">
-          <h1>Dialog<small>
-              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/dialog">ui.bootstrap.dialog</a>)
-          </small></h1>
-        </div>
-        <div class="row">
-            <div class="span6">
-                <div ng-controller="DialogDemoCtrl">
-    <div class="row-fluid">
-        <div class="span6">
-            <label class="checkbox"><input type=checkbox ng-model="opts.backdrop">Show backdrop</label>
-            <label class="checkbox"><input type=checkbox ng-model="opts.dialogFade">Fade modal dialog </label>
-            <label class="checkbox"><input type=checkbox ng-disabled="!opts.backdrop" ng-model="opts.backdropFade">Fade Backdrop</label>
-            <hr>
-            <label class="checkbox"><input type=checkbox ng-model="opts.keyboard">Close on Escape</label>
-            <label class="checkbox"><input type=checkbox ng-disabled="!opts.backdrop" ng-model="opts.backdropClick">Close on backdrop click</label>
-        </div>
-        <div class="span6">
-            <p>Change options at will and press the open dialog button below!</p>
-            <p><button class="btn btn-primary" ng-click="openDialog()">Open Dialog</button></p>
-
-            <p>Alternatively open a simple message box:</p>
-            <p><button class="btn btn-primary" ng-click="openMessageBox()">Open Message Box</button></p>
-        </div>
-    </div>
-</div>
-
-            </div>
-            <div class="span6">
-                <p>The <code>$dialog</code> service allows you to open dialogs and message boxes from within your controllers. Very useful in case loading dialog content in the DOM up-front is tedious or not desired.</p>
-
-<p>Creating custom dialogs is straightforward: create a partial view, its controller and reference them when using the service.
-Generic message boxes (title, message and buttons) are also provided for your convenience.</p>
-
-<p>For more information, see the <a href="https://github.com/angular-ui/bootstrap/blob/master/src/dialog/README.md">dialog readme</a> on github.</p>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="span12" ng-controller="PlunkerCtrl">
-                <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'dialog')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
-                </div>
-                <tabset>
-                    <tab heading="Markup">
-                        <div plunker-content="markup">
-                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;DialogDemoCtrl&quot;&gt;
-    &lt;div class=&quot;row-fluid&quot;&gt;
-        &lt;div class=&quot;span6&quot;&gt;
-            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-model=&quot;opts.backdrop&quot;&gt;Show backdrop&lt;/label&gt;
-            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-model=&quot;opts.dialogFade&quot;&gt;Fade modal dialog &lt;/label&gt;
-            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-disabled=&quot;!opts.backdrop&quot; ng-model=&quot;opts.backdropFade&quot;&gt;Fade Backdrop&lt;/label&gt;
-            &lt;hr&gt;
-            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-model=&quot;opts.keyboard&quot;&gt;Close on Escape&lt;/label&gt;
-            &lt;label class=&quot;checkbox&quot;&gt;&lt;input type=checkbox ng-disabled=&quot;!opts.backdrop&quot; ng-model=&quot;opts.backdropClick&quot;&gt;Close on backdrop click&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;span6&quot;&gt;
-            &lt;p&gt;Change options at will and press the open dialog button below!&lt;/p&gt;
-            &lt;p&gt;&lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;openDialog()&quot;&gt;Open Dialog&lt;/button&gt;&lt;/p&gt;
-
-            &lt;p&gt;Alternatively open a simple message box:&lt;/p&gt;
-            &lt;p&gt;&lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;openMessageBox()&quot;&gt;Open Message Box&lt;/button&gt;&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-                        </div>
-                    </tab>
-                    <tab heading="JavaScript">
-                        <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">function DialogDemoCtrl($scope, $dialog){
-
-  // Inlined template for demo
-  var t = &#x27;&lt;div class=&quot;modal-header&quot;&gt;&#x27;+
-          &#x27;&lt;h3&gt;This is the title&lt;/h3&gt;&#x27;+
-          &#x27;&lt;/div&gt;&#x27;+
-          &#x27;&lt;div class=&quot;modal-body&quot;&gt;&#x27;+
-          &#x27;&lt;p&gt;Enter a value to pass to &lt;code&gt;close&lt;/code&gt; as the result: &lt;input ng-model=&quot;result&quot; /&gt;&lt;/p&gt;&#x27;+
-          &#x27;&lt;/div&gt;&#x27;+
-          &#x27;&lt;div class=&quot;modal-footer&quot;&gt;&#x27;+
-          &#x27;&lt;button ng-click=&quot;close(result)&quot; class=&quot;btn btn-primary&quot; &gt;Close&lt;/button&gt;&#x27;+
-          &#x27;&lt;/div&gt;&#x27;;
-
-  $scope.opts = {
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    template:  t, // OR: templateUrl: &#x27;path/to/view.html&#x27;,
-    controller: &#x27;TestDialogController&#x27;
-  };
-
-  $scope.openDialog = function(){
-    var d = $dialog.dialog($scope.opts);
-    d.open().then(function(result){
-      if(result)
-      {
-        alert(&#x27;dialog closed with result: &#x27; + result);
-      }
-    });
-  };
-
-  $scope.openMessageBox = function(){
-    var title = &#x27;This is a message box&#x27;;
-    var msg = &#x27;This is the content of the message box&#x27;;
-    var btns = [{result:&#x27;cancel&#x27;, label: &#x27;Cancel&#x27;}, {result:&#x27;ok&#x27;, label: &#x27;OK&#x27;, cssClass: &#x27;btn-primary&#x27;}];
-
-    $dialog.messageBox(title, msg, btns)
-      .open()
-      .then(function(result){
-        alert(&#x27;dialog closed with result: &#x27; + result);
-    });
-  };
-}
-
-// the dialog is injected in the specified controller
-function TestDialogController($scope, dialog){
-  $scope.close = function(result){
-    dialog.close(result);
-  };
-}
-</code></pre>
-                        </div>
-                    </tab>
-                </tabset>
-            </div>
-        </div>
-      </section>
-      <script>function DialogDemoCtrl($scope, $dialog){
-
-  // Inlined template for demo
-  var t = '<div class="modal-header">'+
-          '<h3>This is the title</h3>'+
-          '</div>'+
-          '<div class="modal-body">'+
-          '<p>Enter a value to pass to <code>close</code> as the result: <input ng-model="result" /></p>'+
-          '</div>'+
-          '<div class="modal-footer">'+
-          '<button ng-click="close(result)" class="btn btn-primary" >Close</button>'+
-          '</div>';
-
-  $scope.opts = {
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    template:  t, // OR: templateUrl: 'path/to/view.html',
-    controller: 'TestDialogController'
-  };
-
-  $scope.openDialog = function(){
-    var d = $dialog.dialog($scope.opts);
-    d.open().then(function(result){
-      if(result)
-      {
-        alert('dialog closed with result: ' + result);
-      }
-    });
-  };
-
-  $scope.openMessageBox = function(){
-    var title = 'This is a message box';
-    var msg = 'This is the content of the message box';
-    var btns = [{result:'cancel', label: 'Cancel'}, {result:'ok', label: 'OK', cssClass: 'btn-primary'}];
-
-    $dialog.messageBox(title, msg, btns)
-      .open()
-      .then(function(result){
-        alert('dialog closed with result: ' + result);
-    });
-  };
-}
-
-// the dialog is injected in the specified controller
-function TestDialogController($scope, dialog){
-  $scope.close = function(result){
-    dialog.close(result);
-  };
-}
-</script>
-    
       <section id="dropdownToggle">
         <div class="page-header">
           <h1>Dropdown Toggle<small>
@@ -1083,7 +908,7 @@ function TestDialogController($scope, dialog){
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1135,77 +960,132 @@ function TestDialogController($scope, dialog){
         <div class="row">
             <div class="span6">
                 <div ng-controller="ModalDemoCtrl">
-    <button class="btn" ng-click="open()">Open me!</button>
-    <div modal="shouldBeOpen" close="close()" options="opts">
+    <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3>I'm a modal!</h3>
         </div>
         <div class="modal-body">
             <ul>
-                <li ng-repeat="item in items">{{item}}</li>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
             </ul>
+            Selected: <b>{{ selected.item }}</b>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-warning cancel" ng-click="close()">Cancel</button>
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
-    </div>
+    </script>
+
+    <button class="btn" ng-click="open()">Open me!</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
 </div>
             </div>
             <div class="span6">
-                <p><code>modal</code> is a directive that reuses <code>$dialog</code> service to provide simple creation of modals that are already in your DOM without the hassle of creating partial views and controllers.</p>
+                <p><code>$modal</code> is a s service to quickly create AngularJS-powered modal windows.
+Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.</p>
 
-<p>The directive shares <code>$dialog</code> global options.</p>
+<p>The <code>$modal</code> service has only one method: <code>open(options)</code> where available options are like follows:</p>
 
-<p>For more information, see the <a href="https://github.com/angular-ui/bootstrap/blob/master/src/dialog/README.md">dialog readme</a> on github.</p>
+<ul>
+<li><code>templateUrl</code> - a path to a template representing modal's content</li>
+<li><code>scope</code> - a scope instance to be used for the modal's content (actually the <code>$modal</code> service is going to create a child scope of a a provided scope). Defaults to <code>$rootScope</code></li>
+<li><code>controller</code> - a controller for a modal instance - it can initialize scope used by modal. A controller can be injected with <code>$modalInstance</code></li>
+<li><code>resolve</code> - members that will be resolved and passed to the controller as locals; it is equivalent of the <code>resolve</code> property for AngularJS routes</li>
+<li><code>backdrop</code> - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), <code>'static'</code> - backdrop is present but modal window is not closed when clicking outside of the modal window.</li>
+<li><code>keyboard</code> - indicates whether the dialog should be closable by hitting the ESC key, defaults to true</li>
+<li><code>windowClass</code> - additional CSS class(es) to be added to a modal window template</li>
+</ul>
+
+<p>The <code>open</code> method returns a modal instance, an object with the following properties:</p>
+
+<ul>
+<li><code>close(result)</code> - a method that can be used to close a modal, passing a result</li>
+<li><code>dismiss(reason)</code> - a method that can be used to dismiss a modal, passing a reason</li>
+<li><code>result</code> - a promise that is resolved when a modal is closed and rejected when a modal is dismissed</li>
+<li><code>opened</code> - a promise that is resolved when a modal gets opened after downloading content's template and resolving all variables</li>
+</ul>
+
+<p>In addition the scope associated with modal's content is augmented with 2 methods:
+* <code>$close(result)</code>
+* <code>$dismiss(reason)</code>
+Those methods make it easy to close a modal window without a need to create a dedicated controller</p>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ModalDemoCtrl&quot;&gt;
-    &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;Open me!&lt;/button&gt;
-    &lt;div modal=&quot;shouldBeOpen&quot; close=&quot;close()&quot; options=&quot;opts&quot;&gt;
+    &lt;script type=&quot;text/ng-template&quot; id=&quot;myModalContent.html&quot;&gt;
         &lt;div class=&quot;modal-header&quot;&gt;
             &lt;h3&gt;I&#x27;m a modal!&lt;/h3&gt;
         &lt;/div&gt;
         &lt;div class=&quot;modal-body&quot;&gt;
             &lt;ul&gt;
-                &lt;li ng-repeat=&quot;item in items&quot;&gt;{{item}}&lt;/li&gt;
+                &lt;li ng-repeat=&quot;item in items&quot;&gt;
+                    &lt;a ng-click=&quot;selected.item = item&quot;&gt;{{ item }}&lt;/a&gt;
+                &lt;/li&gt;
             &lt;/ul&gt;
+            Selected: &lt;b&gt;{{ selected.item }}&lt;/b&gt;
         &lt;/div&gt;
         &lt;div class=&quot;modal-footer&quot;&gt;
-            &lt;button class=&quot;btn btn-warning cancel&quot; ng-click=&quot;close()&quot;&gt;Cancel&lt;/button&gt;
+            &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;ok()&quot;&gt;OK&lt;/button&gt;
+            &lt;button class=&quot;btn btn-warning&quot; ng-click=&quot;cancel()&quot;&gt;Cancel&lt;/button&gt;
         &lt;/div&gt;
-    &lt;/div&gt;
+    &lt;/script&gt;
+
+    &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;Open me!&lt;/button&gt;
+    &lt;div ng-show=&quot;selected&quot;&gt;Selection from a modal: {{ selected }}&lt;/div&gt;
 &lt;/div&gt;</code></pre>
                         </div>
                     </tab>
                     <tab heading="JavaScript">
                         <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope) {
+                            <pre ng-non-bindable><code data-language="javascript">var ModalDemoCtrl = function ($scope, $modal, $log) {
+
+  $scope.items = [&#x27;item1&#x27;, &#x27;item2&#x27;, &#x27;item3&#x27;];
 
   $scope.open = function () {
-    $scope.shouldBeOpen = true;
+
+    var modalInstance = $modal.open({
+      templateUrl: &#x27;myModalContent.html&#x27;,
+      controller: ModalInstanceCtrl,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info(&#x27;Modal dismissed at: &#x27; + new Date());
+    });
+  };
+};
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
   };
 
-  $scope.close = function () {
-    $scope.closeMsg = &#x27;I was closed at: &#x27; + new Date();
-    $scope.shouldBeOpen = false;
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected.item);
   };
 
-  $scope.items = [&#x27;item1&#x27;, &#x27;item2&#x27;];
-
-  $scope.opts = {
-    backdropFade: true,
-    dialogFade:true
+  $scope.cancel = function () {
+    $modalInstance.dismiss(&#x27;cancel&#x27;);
   };
-
 };</code></pre>
                         </div>
                     </tab>
@@ -1213,24 +1093,44 @@ function TestDialogController($scope, dialog){
             </div>
         </div>
       </section>
-      <script>var ModalDemoCtrl = function ($scope) {
+      <script>var ModalDemoCtrl = function ($scope, $modal, $log) {
+
+  $scope.items = ['item1', 'item2', 'item3'];
 
   $scope.open = function () {
-    $scope.shouldBeOpen = true;
+
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+};
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
   };
 
-  $scope.close = function () {
-    $scope.closeMsg = 'I was closed at: ' + new Date();
-    $scope.shouldBeOpen = false;
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected.item);
   };
 
-  $scope.items = ['item1', 'item2'];
-
-  $scope.opts = {
-    backdropFade: true,
-    dialogFade:true
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
   };
-
 };</script>
     
       <section id="pagination">
@@ -1244,22 +1144,24 @@ function TestDialogController($scope, dialog){
                 <div ng-controller="PaginationDemoCtrl" class="well well-small">
     <h4>Default</h4>
 
-    <pagination num-pages="noOfPages" current-page="currentPage"></pagination>
-    <pagination boundary-links="true" num-pages="noOfPages" current-page="currentPage" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-    <pagination direction-links="false" boundary-links="true" num-pages="noOfPages" current-page="currentPage"></pagination>
-    <pagination direction-links="false" num-pages="noOfPages" current-page="currentPage"></pagination>
+    <pagination total-items="totalItems" page="currentPage"></pagination>
+    <pagination boundary-links="true" total-items="totalItems" page="currentPage" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+    <pagination direction-links="false" boundary-links="true" total-items="totalItems" page="currentPage"></pagination>
+    <pagination direction-links="false" total-items="totalItems" page="currentPage" num-pages="smallnumPages"></pagination>
 
     <button class="btn" ng-click="setPage(3)">Set current page to: 3</button>
     The selected page no: {{currentPage}}
 
     <hr />
     <h4>Pager</h4>
-    <pager num-pages="noOfPages" current-page="currentPage"></pager>
+    <pager total-items="totalItems" page="currentPage"></pager>
 
     <hr />
-    <h4>Limit the maximimum visible page-buttons</h4>
-    <pagination num-pages="bigNoOfPages" current-page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true"></pagination>
-    <pagination rotate="false" num-pages="bigNoOfPages" current-page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true"></pagination>
+    <h4>Limit the maximimum visible buttons</h4>
+    <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true"></pagination>
+    <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+
+    <pre>Page: {{bigCurrentPage}} / {{numPages}}</pre>
 </div>
 
             </div>
@@ -1271,15 +1173,21 @@ function TestDialogController($scope, dialog){
 <p>Settings can be provided as attributes in the <code>&lt;pagination&gt;</code> or globally configured through the <code>paginationConfig</code>.</p>
 
 <ul>
-<li><p><code>num-pages</code> <i class="icon-eye-open"></i>
+<li><p><code>page</code> <i class="icon-eye-open"></i>
  :
- Number of total pages.</p></li>
-<li><p><code>current-page</code> <i class="icon-eye-open"></i>
+ Current page number. First page is 1.</p></li>
+<li><p><code>total-items</code> <i class="icon-eye-open"></i>
  :
- Current page number.</p></li>
+ Total number of items in all pages.</p></li>
+<li><p><code>items-per-page</code> <i class="icon-eye-open"></i>
+ <em>(Defaults: 10)</em> :
+ Maximum number of items per page. A value less than one indicates all items on one page.</p></li>
 <li><p><code>max-size</code> <i class="icon-eye-open"></i>
  <em>(Defaults: null)</em> :
  Limit number for pagination size.</p></li>
+<li><p><code>num-pages</code> <small class="badge">readonly</small>
+ :
+ Total number of pages to display.</p></li>
 <li><p><code>rotate</code>
  <em>(Defaults: true)</em> :
  Whether to keep current page in the middle of the visible ones.</p></li>
@@ -1309,7 +1217,7 @@ function TestDialogController($scope, dialog){
 <h3>Pager Settings</h3>
 
 <p>Settings can be provided as attributes in the <code>&lt;pager&gt;</code> or globally configured through the <code>pagerConfig</code>. <br />
-For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page (page)</code> see pagination settings. Other settings are:</p>
+For <code>page</code>, <code>total-items</code>, <code>items-per-page</code>, <code>num-pages</code> and <code>on-select-page (page)</code> see pagination settings. Other settings are:</p>
 
 <ul>
 <li><p><code>align</code>
@@ -1328,7 +1236,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1336,22 +1244,24 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;PaginationDemoCtrl&quot; class=&quot;well well-small&quot;&gt;
     &lt;h4&gt;Default&lt;/h4&gt;
 
-    &lt;pagination num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
-    &lt;pagination boundary-links=&quot;true&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot; class=&quot;pagination-small&quot; previous-text=&quot;&amp;lsaquo;&quot; next-text=&quot;&amp;rsaquo;&quot; first-text=&quot;&amp;laquo;&quot; last-text=&quot;&amp;raquo;&quot;&gt;&lt;/pagination&gt;
-    &lt;pagination direction-links=&quot;false&quot; boundary-links=&quot;true&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
-    &lt;pagination direction-links=&quot;false&quot; num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination total-items=&quot;totalItems&quot; page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination boundary-links=&quot;true&quot; total-items=&quot;totalItems&quot; page=&quot;currentPage&quot; class=&quot;pagination-small&quot; previous-text=&quot;&amp;lsaquo;&quot; next-text=&quot;&amp;rsaquo;&quot; first-text=&quot;&amp;laquo;&quot; last-text=&quot;&amp;raquo;&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination direction-links=&quot;false&quot; boundary-links=&quot;true&quot; total-items=&quot;totalItems&quot; page=&quot;currentPage&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination direction-links=&quot;false&quot; total-items=&quot;totalItems&quot; page=&quot;currentPage&quot; num-pages=&quot;smallnumPages&quot;&gt;&lt;/pagination&gt;
 
     &lt;button class=&quot;btn&quot; ng-click=&quot;setPage(3)&quot;&gt;Set current page to: 3&lt;/button&gt;
     The selected page no: {{currentPage}}
 
     &lt;hr /&gt;
     &lt;h4&gt;Pager&lt;/h4&gt;
-    &lt;pager num-pages=&quot;noOfPages&quot; current-page=&quot;currentPage&quot;&gt;&lt;/pager&gt;
+    &lt;pager total-items=&quot;totalItems&quot; page=&quot;currentPage&quot;&gt;&lt;/pager&gt;
 
     &lt;hr /&gt;
-    &lt;h4&gt;Limit the maximimum visible page-buttons&lt;/h4&gt;
-    &lt;pagination num-pages=&quot;bigNoOfPages&quot; current-page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
-    &lt;pagination rotate=&quot;false&quot; num-pages=&quot;bigNoOfPages&quot; current-page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
+    &lt;h4&gt;Limit the maximimum visible buttons&lt;/h4&gt;
+    &lt;pagination total-items=&quot;bigTotalItems&quot; page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
+    &lt;pagination total-items=&quot;bigTotalItems&quot; page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot; rotate=&quot;false&quot; num-pages=&quot;numPages&quot;&gt;&lt;/pagination&gt;
+
+    &lt;pre&gt;Page: {{bigCurrentPage}} / {{numPages}}&lt;/pre&gt;
 &lt;/div&gt;
 </code></pre>
                         </div>
@@ -1359,7 +1269,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
                     <tab heading="JavaScript">
                         <div plunker-content="javascript">
                             <pre ng-non-bindable><code data-language="javascript">var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 7;
+  $scope.totalItems = 64;
   $scope.currentPage = 4;
   $scope.maxSize = 5;
   
@@ -1367,7 +1277,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
     $scope.currentPage = pageNo;
   };
 
-  $scope.bigNoOfPages = 18;
+  $scope.bigTotalItems = 175;
   $scope.bigCurrentPage = 1;
 };
 </code></pre>
@@ -1378,7 +1288,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
         </div>
       </section>
       <script>var PaginationDemoCtrl = function ($scope) {
-  $scope.noOfPages = 7;
+  $scope.totalItems = 64;
   $scope.currentPage = 4;
   $scope.maxSize = 5;
   
@@ -1386,7 +1296,7 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
     $scope.currentPage = pageNo;
   };
 
-  $scope.bigNoOfPages = 18;
+  $scope.bigTotalItems = 175;
   $scope.bigCurrentPage = 1;
 };
 </script>
@@ -1414,7 +1324,6 @@ For <code>num-pages</code>,  <code>current-page</code> and <code>on-select-page 
       <button popover-placement="left" popover="On the Left!" class="btn">Left</button>
       <button popover-placement="right" popover="On the Right!" class="btn">Right</button>
       <button popover-placement="bottom" popover="On the Bottom!" class="btn">Bottom</button>
-      <button popover-placement="mouse" popover="relative to mouse" class="btn">Mouse</button>
     </div>
     <div>
       <h4>Triggers</h4>
@@ -1445,7 +1354,7 @@ will display:</p>
 <ul>
 <li><code>popover-title</code>: A string to display as a fancy title.</li>
 <li><code>popover-placement</code>: Where to place it? Defaults to "top", but also accepts
-"bottom", "left", "right", or "mouse".</li>
+"bottom", "left", "right".</li>
 <li><code>popover-animation</code>: Should it fade in and out? Defaults to "true".</li>
 <li><code>popover-popup-delay</code>: For how long should the user have to have the mouse
 over the element before the popover shows (in milliseconds)? Defaults to 0.</li>
@@ -1465,7 +1374,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1485,7 +1394,6 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
       &lt;button popover-placement=&quot;left&quot; popover=&quot;On the Left!&quot; class=&quot;btn&quot;&gt;Left&lt;/button&gt;
       &lt;button popover-placement=&quot;right&quot; popover=&quot;On the Right!&quot; class=&quot;btn&quot;&gt;Right&lt;/button&gt;
       &lt;button popover-placement=&quot;bottom&quot; popover=&quot;On the Bottom!&quot; class=&quot;btn&quot;&gt;Bottom&lt;/button&gt;
-      &lt;button popover-placement=&quot;mouse&quot; popover=&quot;relative to mouse&quot; class=&quot;btn&quot;&gt;Mouse&lt;/button&gt;
     &lt;/div&gt;
     &lt;div&gt;
       &lt;h4&gt;Triggers&lt;/h4&gt;
@@ -1571,7 +1479,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'progressbar')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'progressbar')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1712,43 +1620,80 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         </div>
         <div class="row">
             <div class="span6">
-                <div ng-controller="RatingDemoCtrl">
+                <div ng-controller="RatingDemoCtrl" class="well well-small">
+    <h4>Default</h4>
     <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
-    <span class="badge badge-inverse" ng-show="overStar && !isReadonly">{{overStar}} / {{max}}</span>
+    <span class="badge" ng-class="{'badge-warning': percent<30, 'badge-info': percent>=30 && percent<70, 'badge-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
 
-    <hr/>
-    <pre>Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
+    <pre style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
-    <hr/>
     <button class="btn btn-small btn-danger" ng-click="rate = 0" ng-disabled="isReadonly">Clear</button>
     <button class="btn btn-small" ng-click="isReadonly = ! isReadonly">Toggle Readonly</button>
+    <hr />
+
+    <h4>Custom icons</h4>
+    <div ng-init="x = 5"><rating value="x" max="15" state-on="'icon-ok-sign'" state-off="'icon-ok-circle'"></rating> <b>(<i>Rate:</i> {{x}})</b></div>
+    <div ng-init="y = 2"><rating value="y" rating-states="ratingStates"></rating> <b>(<i>Rate:</i> {{y}})</b></div>
 </div>
             </div>
             <div class="span6">
                 <p>Rating directive that will take care of visualising a star rating bar.</p>
 
-<p>It also provides optional attributes: <code>max</code> to vary the number of stars, <code>readonly</code> to disable user's interaction, <code>on-hover</code> to signal when the user's mouse is over a particular star, and <code>on-leave</code> to signal when the mouse leaves the control altogether.</p>
+<h3>Settings</h3>
+
+<h4><code>&lt;rating&gt;</code></h4>
+
+<ul>
+<li><p><code>value</code> <i class="icon-eye-open"></i>
+ :
+ The current rate.</p></li>
+<li><p><code>max</code>
+ <em>(Defaults: 5)</em> :
+ Changes the number of icons.</p></li>
+<li><p><code>readonly</code>
+ <em>(Defaults: false)</em> :
+ Prevent user's interaction.</p></li>
+<li><p><code>on-hover(value)</code>
+ :
+ An optional expression called when user's mouse is over a particular icon.</p></li>
+<li><p><code>on-leave()</code>
+ :
+ An optional expression called when user's mouse leaves the control altogether.</p></li>
+<li><p><code>state-on</code>
+ <em>(Defaults: null)</em> :
+ A variable used in template to specify the state (class, src, etc) for selected icons.</p></li>
+<li><p><code>state-off</code>
+ <em>(Defaults: null)</em> :
+ A variable used in template to specify the state for unselected icons.</p></li>
+<li><p><code>rating-states</code>
+ <em>(Defaults: null)</em> :
+ An array of objects defining properties for all icons. In default template, <code>stateOn</code> &amp; <code>stateOff</code> property is used to specify the icon's class.</p></li>
+</ul>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'rating')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'rating')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
-                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;RatingDemoCtrl&quot;&gt;
+                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;RatingDemoCtrl&quot; class=&quot;well well-small&quot;&gt;
+    &lt;h4&gt;Default&lt;/h4&gt;
     &lt;rating value=&quot;rate&quot; max=&quot;max&quot; readonly=&quot;isReadonly&quot; on-hover=&quot;hoveringOver(value)&quot; on-leave=&quot;overStar = null&quot;&gt;&lt;/rating&gt;
-    &lt;span class=&quot;badge badge-inverse&quot; ng-show=&quot;overStar &amp;&amp; !isReadonly&quot;&gt;{{overStar}} / {{max}}&lt;/span&gt;
+    &lt;span class=&quot;badge&quot; ng-class=&quot;{&#x27;badge-warning&#x27;: percent&lt;30, &#x27;badge-info&#x27;: percent&gt;=30 &amp;&amp; percent&lt;70, &#x27;badge-success&#x27;: percent&gt;=70}&quot; ng-show=&quot;overStar &amp;&amp; !isReadonly&quot;&gt;{{percent}}%&lt;/span&gt;
 
-    &lt;hr/&gt;
-    &lt;pre&gt;Rate: &lt;b&gt;{{rate}}&lt;/b&gt; - Readonly is: &lt;i&gt;{{isReadonly}}&lt;/i&gt; - Hovering over: &lt;b&gt;{{overStar || &quot;none&quot;}}&lt;/b&gt;&lt;/pre&gt;
+    &lt;pre style=&quot;margin:15px 0;&quot;&gt;Rate: &lt;b&gt;{{rate}}&lt;/b&gt; - Readonly is: &lt;i&gt;{{isReadonly}}&lt;/i&gt; - Hovering over: &lt;b&gt;{{overStar || &quot;none&quot;}}&lt;/b&gt;&lt;/pre&gt;
 
-    &lt;hr/&gt;
     &lt;button class=&quot;btn btn-small btn-danger&quot; ng-click=&quot;rate = 0&quot; ng-disabled=&quot;isReadonly&quot;&gt;Clear&lt;/button&gt;
     &lt;button class=&quot;btn btn-small&quot; ng-click=&quot;isReadonly = ! isReadonly&quot;&gt;Toggle Readonly&lt;/button&gt;
+    &lt;hr /&gt;
+
+    &lt;h4&gt;Custom icons&lt;/h4&gt;
+    &lt;div ng-init=&quot;x = 5&quot;&gt;&lt;rating value=&quot;x&quot; max=&quot;15&quot; state-on=&quot;&#x27;icon-ok-sign&#x27;&quot; state-off=&quot;&#x27;icon-ok-circle&#x27;&quot;&gt;&lt;/rating&gt; &lt;b&gt;(&lt;i&gt;Rate:&lt;/i&gt; {{x}})&lt;/b&gt;&lt;/div&gt;
+    &lt;div ng-init=&quot;y = 2&quot;&gt;&lt;rating value=&quot;y&quot; rating-states=&quot;ratingStates&quot;&gt;&lt;/rating&gt; &lt;b&gt;(&lt;i&gt;Rate:&lt;/i&gt; {{y}})&lt;/b&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
                         </div>
                     </tab>
@@ -1758,9 +1703,19 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
   $scope.rate = 7;
   $scope.max = 10;
   $scope.isReadonly = false;
+
   $scope.hoveringOver = function(value) {
     $scope.overStar = value;
+    $scope.percent = 100 * (value / $scope.max);
   };
+
+  $scope.ratingStates = [
+    {stateOn: &#x27;icon-ok-sign&#x27;, stateOff: &#x27;icon-ok-circle&#x27;},
+    {stateOn: &#x27;icon-star&#x27;, stateOff: &#x27;icon-star-empty&#x27;},
+    {stateOn: &#x27;icon-heart&#x27;, stateOff: &#x27;icon-ban-circle&#x27;},
+    {stateOn: &#x27;icon-heart&#x27;},
+    {stateOff: &#x27;icon-off&#x27;}
+  ];
 };
 </code></pre>
                         </div>
@@ -1773,9 +1728,19 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
   $scope.rate = 7;
   $scope.max = 10;
   $scope.isReadonly = false;
+
   $scope.hoveringOver = function(value) {
     $scope.overStar = value;
+    $scope.percent = 100 * (value / $scope.max);
   };
+
+  $scope.ratingStates = [
+    {stateOn: 'icon-ok-sign', stateOff: 'icon-ok-circle'},
+    {stateOn: 'icon-star', stateOff: 'icon-star-empty'},
+    {stateOn: 'icon-heart', stateOff: 'icon-ban-circle'},
+    {stateOn: 'icon-heart'},
+    {stateOff: 'icon-off'}
+  ];
 };
 </script>
     
@@ -1831,6 +1796,9 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 <li><p><code>type</code>
  <em>(Defaults: 'tabs')</em> :
  Navigation type. Possible values are 'tabs' and 'pills'.</p></li>
+<li><p><code>direction</code>
+ <em>(Defaults: null)</em> :
+ What direction the tabs should be rendered. Available: 'right', 'left', 'below'.</p></li>
 </ul>
 
 <h4><code>&lt;tab&gt;</code></h4>
@@ -1855,7 +1823,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1939,7 +1907,9 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span6">
                 <div ng-controller="TimepickerDemoCtrl">
-  <timepicker ng-model="mytime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  <div ng-model="mytime" ng-change="changed()" class="well well-small" style="display:inline-block;">
+    <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  </div>
 
   <pre>Time is: {{mytime | date:'shortTime' }}</pre>
 
@@ -1987,13 +1957,15 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'timepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'timepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;TimepickerDemoCtrl&quot;&gt;
-  &lt;timepicker ng-model=&quot;mytime&quot; hour-step=&quot;hstep&quot; minute-step=&quot;mstep&quot; show-meridian=&quot;ismeridian&quot;&gt;&lt;/timepicker&gt;
+  &lt;div ng-model=&quot;mytime&quot; ng-change=&quot;changed()&quot; class=&quot;well well-small&quot; style=&quot;display:inline-block;&quot;&gt;
+    &lt;timepicker hour-step=&quot;hstep&quot; minute-step=&quot;mstep&quot; show-meridian=&quot;ismeridian&quot;&gt;&lt;/timepicker&gt;
+  &lt;/div&gt;
 
   &lt;pre&gt;Time is: {{mytime | date:&#x27;shortTime&#x27; }}&lt;/pre&gt;
 
@@ -2031,6 +2003,10 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
     $scope.mytime = d;
   };
 
+  $scope.changed = function () {
+    console.log(&#x27;Time changed to: &#x27; + $scope.mytime);
+  };
+
   $scope.clear = function() {
     $scope.mytime = null;
   };
@@ -2065,6 +2041,10 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
     $scope.mytime = d;
   };
 
+  $scope.changed = function () {
+    console.log('Time changed to: ' + $scope.mytime);
+  };
+
   $scope.clear = function() {
     $scope.mytime = null;
   };
@@ -2093,9 +2073,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
       nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
       <a><span tooltip-placement="bottom" tooltip="On the Bottom!">bottom</span></a> 
       pharetra convallis posuere morbi leo urna, 
-      <a><span tooltip-placement="mouse" tooltip="relative to mouse">mouse</span></a> 
-      blah blah blah, 
-      <a><span tooltip-animation="false" tooltip="I don't fade. :-(">fading</span></a> 
+      <a><span tooltip-animation="false" tooltip="I don't fade. :-(">fading</span></a>
       at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
       <a><span tooltip-popup-delay='1000' tooltip='appears with delay'>delayed</span></a> turpis massa tincidunt dui ut.
     </p>
@@ -2129,7 +2107,7 @@ will display:</p>
 
 <ul>
 <li><code>tooltip-placement</code>: Where to place it? Defaults to "top", but also accepts
-"bottom", "left", "right", or "mouse".</li>
+"bottom", "left", "right".</li>
 <li><code>tooltip-animation</code>: Should it fade in and out? Defaults to "true".</li>
 <li><code>tooltip-popup-delay</code>: For how long should the user have to have the mouse
 over the element before the tooltip shows (in milliseconds)? Defaults to 0.</li>
@@ -2180,7 +2158,7 @@ appendToBody: false
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -2199,9 +2177,7 @@ appendToBody: false
       nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
       &lt;a&gt;&lt;span tooltip-placement=&quot;bottom&quot; tooltip=&quot;On the Bottom!&quot;&gt;bottom&lt;/span&gt;&lt;/a&gt; 
       pharetra convallis posuere morbi leo urna, 
-      &lt;a&gt;&lt;span tooltip-placement=&quot;mouse&quot; tooltip=&quot;relative to mouse&quot;&gt;mouse&lt;/span&gt;&lt;/a&gt; 
-      blah blah blah, 
-      &lt;a&gt;&lt;span tooltip-animation=&quot;false&quot; tooltip=&quot;I don&#x27;t fade. :-(&quot;&gt;fading&lt;/span&gt;&lt;/a&gt; 
+      &lt;a&gt;&lt;span tooltip-animation=&quot;false&quot; tooltip=&quot;I don&#x27;t fade. :-(&quot;&gt;fading&lt;/span&gt;&lt;/a&gt;
       at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
       &lt;a&gt;&lt;span tooltip-popup-delay=&#x27;1000&#x27; tooltip=&#x27;appears with delay&#x27;&gt;delayed&lt;/span&gt;&lt;/a&gt; turpis massa tincidunt dui ut.
     &lt;/p&gt;
@@ -2270,13 +2246,45 @@ This directive can be used to quickly create elegant typeheads with any form tex
 <p>The <code>sourceArray</code> expression can use a special <code>$viewValue</code> variable that corresponds to a value entered inside input by a user.</p>
 
 <p>Also this directive works with promises and it means that you can retrieve matches using the <code>$http</code> service with minimal effort.</p>
+
+<p>The typeahead directives provide several attributes:</p>
+
+<ul>
+<li><p><code>ng-model</code> <i class="icon-eye-open"></i>
+:
+Assignable angular expression to data-bind to</p></li>
+<li><p><code>typeahead</code> <i class="icon-eye-open"></i>
+:
+Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.directive:select">select directive</a>)</p></li>
+<li><p><code>typeahead-editable</code> <i class="icon-eye-open"></i>
+<em>(Defaults: true)</em> :
+Should it restrict model values to the ones selected from the popup only ?</p></li>
+<li><p><code>typeahead-input-formatter</code> <i class="icon-eye-open"></i>
+<em>(Defaults: undefined)</em> :
+Format the ng-model result after selection</p></li>
+<li><p><code>typeahead-loading</code> <i class="icon-eye-open"></i>
+<em>(Defaults: angular.noop)</em> :
+Binding to a variable that indicates if matches are being retrieved asynchronously</p></li>
+<li><p><code>typeahead-min-length</code> <i class="icon-eye-open"></i>
+<em>(Defaults: 1)</em> :
+Minimal no of characters that needs to be entered before typeahead kicks-in</p></li>
+<li><p><code>typeahead-on-select</code> <i class="icon-eye-open"></i>
+<em>(Defaults: null)</em> :
+A callback executed when a match is selected</p></li>
+<li><p><code>typeahead-template-url</code> <i class="icon-eye-open"></i>
+:
+Set custom item template</p></li>
+<li><p><code>typeahead-wait-ms</code> <i class="icon-eye-open"></i>
+<em>(Defaults: 0)</em> :
+Minimal wait time after last character typed before typehead kicks-in</p></li>
+</ul>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.5', '2.3.1', '0.5.0', 'typeahead')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.6.0', 'typeahead')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -2319,64 +2327,60 @@ This directive can be used to quickly create elegant typeheads with any form tex
 <script src="assets/rainbow-generic.js"></script>
 <script src="assets/rainbow-javascript.js"></script>
 <script src="assets/rainbow-html.js"></script>
-<div modal="buildModalShown" class="fade">
-  <div class="modal-header"><h2>Create a Custom Build</h2></div>
-  <div class="modal-body">
-    <div ng-show="buildErrorText">
-      <h3 style="text-align: center;">{{buildErrorText}}</h3>
+<script type="text/ng-template" id="buildModal.html">
+    <div class="modal-header"><h2>Create a Custom Build</h2></div>
+    <div class="modal-body">
+        <div ng-show="buildErrorText">
+            <h3 style="text-align: center;">{{buildErrorText}}</h3>
+        </div>
+        <div ng-hide="buildErrorText">
+            <label>Select the modules you wish to download:</label>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.transition}" style="width: 170px; margin-bottom: 3px;" ng-model="module.transition" btn-checkbox ng-change="selectedChanged('transition', module.transition)">Transition</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.collapse}" style="width: 170px; margin-bottom: 3px;" ng-model="module.collapse" btn-checkbox ng-change="selectedChanged('collapse', module.collapse)">Collapse</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.accordion}" style="width: 170px; margin-bottom: 3px;" ng-model="module.accordion" btn-checkbox ng-change="selectedChanged('accordion', module.accordion)">Accordion</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.alert}" style="width: 170px; margin-bottom: 3px;" ng-model="module.alert" btn-checkbox ng-change="selectedChanged('alert', module.alert)">Alert</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.bindHtml}" style="width: 170px; margin-bottom: 3px;" ng-model="module.bindHtml" btn-checkbox ng-change="selectedChanged('bindHtml', module.bindHtml)">Bind Html</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.buttons}" style="width: 170px; margin-bottom: 3px;" ng-model="module.buttons" btn-checkbox ng-change="selectedChanged('buttons', module.buttons)">Buttons</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.carousel}" style="width: 170px; margin-bottom: 3px;" ng-model="module.carousel" btn-checkbox ng-change="selectedChanged('carousel', module.carousel)">Carousel</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.position}" style="width: 170px; margin-bottom: 3px;" ng-model="module.position" btn-checkbox ng-change="selectedChanged('position', module.position)">Position</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.datepicker}" style="width: 170px; margin-bottom: 3px;" ng-model="module.datepicker" btn-checkbox ng-change="selectedChanged('datepicker', module.datepicker)">Datepicker</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.dropdownToggle}" style="width: 170px; margin-bottom: 3px;" ng-model="module.dropdownToggle" btn-checkbox ng-change="selectedChanged('dropdownToggle', module.dropdownToggle)">Dropdown Toggle</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.modal}" style="width: 170px; margin-bottom: 3px;" ng-model="module.modal" btn-checkbox ng-change="selectedChanged('modal', module.modal)">Modal</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.pagination}" style="width: 170px; margin-bottom: 3px;" ng-model="module.pagination" btn-checkbox ng-change="selectedChanged('pagination', module.pagination)">Pagination</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.tooltip}" style="width: 170px; margin-bottom: 3px;" ng-model="module.tooltip" btn-checkbox ng-change="selectedChanged('tooltip', module.tooltip)">Tooltip</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.popover}" style="width: 170px; margin-bottom: 3px;" ng-model="module.popover" btn-checkbox ng-change="selectedChanged('popover', module.popover)">Popover</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.progressbar}" style="width: 170px; margin-bottom: 3px;" ng-model="module.progressbar" btn-checkbox ng-change="selectedChanged('progressbar', module.progressbar)">Progressbar</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.rating}" style="width: 170px; margin-bottom: 3px;" ng-model="module.rating" btn-checkbox ng-change="selectedChanged('rating', module.rating)">Rating</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.tabs}" style="width: 170px; margin-bottom: 3px;" ng-model="module.tabs" btn-checkbox ng-change="selectedChanged('tabs', module.tabs)">Tabs</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.timepicker}" style="width: 170px; margin-bottom: 3px;" ng-model="module.timepicker" btn-checkbox ng-change="selectedChanged('timepicker', module.timepicker)">Timepicker</button>
+            
+            <button type="button" class="btn" ng-class="{'btn-primary': module.typeahead}" style="width: 170px; margin-bottom: 3px;" ng-model="module.typeahead" btn-checkbox ng-change="selectedChanged('typeahead', module.typeahead)">Typeahead</button>
+            
+        </div>
     </div>
-    <div ng-hide="buildErrorText">
-      <label>Select the modules you wish to download:
-      <select style="width: 100%;" ui-select2 multiple 
-        ui-options="{multiple: true}"
-        ng-model="selectedModules">
-        
-          <option value="transition">Transition</option>
-        
-          <option value="collapse">Collapse</option>
-        
-          <option value="accordion">Accordion</option>
-        
-          <option value="alert">Alert</option>
-        
-          <option value="buttons">Buttons</option>
-        
-          <option value="carousel">Carousel</option>
-        
-          <option value="position">Position</option>
-        
-          <option value="datepicker">Datepicker</option>
-        
-          <option value="dialog">Dialog</option>
-        
-          <option value="dropdownToggle">Dropdown Toggle</option>
-        
-          <option value="modal">Modal</option>
-        
-          <option value="pagination">Pagination</option>
-        
-          <option value="tooltip">Tooltip</option>
-        
-          <option value="popover">Popover</option>
-        
-          <option value="progressbar">Progressbar</option>
-        
-          <option value="rating">Rating</option>
-        
-          <option value="tabs">Tabs</option>
-        
-          <option value="timepicker">Timepicker</option>
-        
-          <option value="typeahead">Typeahead</option>
-        
-      </select></label>
+    <div class="modal-footer">
+        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()"><i class="icon-download-alt icon-white"></i> Download {{selectedModules.length}} Modules</a>
+        <a class="btn" ng-click="cancel()">Cancel</a>
     </div>
-  </div>
-  <div class="modal-footer">
-    <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()"><i class="icon-download-alt icon-white"></i> Download {{selectedModules.length}} Modules</a>
-    <a class="btn" ng-click="buildModalShown = false">Cancel</a>
-  </div>
-</div>
+</script>
 
 <script type="text/javascript">
 
