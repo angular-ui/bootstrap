@@ -363,6 +363,11 @@ describe( 'tooltipHtmlUnsafe', function() {
     elmScope = elm.scope();
   }));
 
+  it( 'should render html properly', inject( function () {
+    elm.trigger( 'mouseenter' );
+    expect( elmBody.find('.tooltip-inner').html() ).toBe( scope.html );
+  }));
+
   it( 'should show on mouseenter and hide on mouseleave', inject( function () {
     expect( elmScope.tt_isOpen ).toBe( false );
 
