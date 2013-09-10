@@ -22,8 +22,8 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  	Limit number for pagination size.
 
  * `num-pages` <small class="badge">readonly</small>
- 	:
- 	Total number of pages to display.
+ 	_(Defaults: angular.noop)_ :
+ 	An optional expression assigned the total number of pages to display.
 
  * `rotate`
  	_(Defaults: true)_ :

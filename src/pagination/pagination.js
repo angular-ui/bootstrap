@@ -1,7 +1,8 @@
 angular.module('ui.bootstrap.pagination', [])
 
 .controller('PaginationController', ['$scope', '$attrs', '$parse', '$interpolate', function ($scope, $attrs, $parse, $interpolate) {
-  var self = this;
+  var self = this,
+      setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
 
   this.init = function(defaultItemsPerPage) {
     if ($attrs.itemsPerPage) {
@@ -50,9 +51,7 @@ angular.module('ui.bootstrap.pagination', [])
   });
 
   $scope.$watch('totalPages', function(value) {
-    if ( $attrs.numPages ) {
-      $scope.numPages = value; // Readonly variable
-    }
+    setNumPages($scope.$parent, value); // Readonly variable
 
     if ( self.page > value ) {
       $scope.selectPage(value);
@@ -83,8 +82,7 @@ angular.module('ui.bootstrap.pagination', [])
     scope: {
       page: '=',
       totalItems: '=',
-      onSelectPage:' &',
-      numPages: '='
+      onSelectPage:' &'
     },
     controller: 'PaginationController',
     templateUrl: 'template/pagination/pagination.html',
@@ -204,8 +202,7 @@ angular.module('ui.bootstrap.pagination', [])
     scope: {
       page: '=',
       totalItems: '=',
-      onSelectPage:' &',
-      numPages: '='
+      onSelectPage:' &'
     },
     controller: 'PaginationController',
     templateUrl: 'template/pagination/pager.html',

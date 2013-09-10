@@ -480,6 +480,13 @@ describe('pagination directive', function () {
     it('equals to total number of pages', function() {
       expect($rootScope.numpg).toBe(5);
     });
+
+    it('changes when total number of pages change', function() {
+      $rootScope.total = 73; // 8 pages
+      $rootScope.$digest();
+      expect($rootScope.numpg).toBe(8);
+    });
+
   });
 
   describe('setting `paginationConfig`', function() {
