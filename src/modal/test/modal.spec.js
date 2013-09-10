@@ -351,12 +351,15 @@ describe('$modal', function () {
     describe('backdrop', function () {
 
       it('should not have any backdrop element if backdrop set to false', function () {
-        open({
+        var modal =open({
           template: '<div>No backdrop</div>',
           backdrop: false
         });
         expect($document).toHaveModalOpenWithContent('No backdrop', 'div');
         expect($document).not.toHaveBackdrop();
+
+        dismiss(modal);
+        expect($document).toHaveModalsOpen(0);
       });
 
       it('should not close modal on backdrop click if backdrop is specified as "static"', function () {

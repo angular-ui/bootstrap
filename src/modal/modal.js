@@ -136,7 +136,7 @@ angular.module('ui.bootstrap.modal', [])
         modalWindow.modalDomEl.remove();
 
         //remove backdrop if no longer needed
-        if (backdropIndex() == -1) {
+        if (backdropDomEl && backdropIndex() == -1) {
           backdropDomEl.remove();
           backdropDomEl = undefined;
         }
