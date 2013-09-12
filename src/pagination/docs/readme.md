@@ -5,7 +5,7 @@ A lightweight pagination directive that is focused on ... providing pagination &
 
 Settings can be provided as attributes in the `<pagination>` or globally configured through the `paginationConfig`.
 
- * `page` <i class="glyphicon glyphicon-eye-open"></i>
+ * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	Current page number. First page is 1.
 
@@ -28,10 +28,6 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  * `rotate`
  	_(Defaults: true)_ :
  	Whether to keep current page in the middle of the visible ones.
-
- * `on-select-page (page)`
- 	_(Default: null)_ :
- 	An optional expression called when a page is selected having the page number as argument.
 
  * `direction-links`
  	_(Default: true)_ :
@@ -60,7 +56,7 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
 ### Pager Settings ###
 
 Settings can be provided as attributes in the `<pager>` or globally configured through the `pagerConfig`.  
-For `page`, `total-items`, `items-per-page`, `num-pages` and `on-select-page (page)` see pagination settings. Other settings are:
+For `ng-model`, `total-items`, `items-per-page` and `num-pages` see pagination settings. Other settings are:
 
  * `align`
  	_(Default: true)_ :
