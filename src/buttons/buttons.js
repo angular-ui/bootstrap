@@ -1,18 +1,17 @@
 angular.module('ui.bootstrap.buttons', [])
 
-  .constant('buttonConfig', {
-    activeClass:'active',
-    toggleEvent:'click'
-  })
+.constant('buttonConfig', {
+  activeClass: 'active',
+  toggleEvent: 'click'
+})
 
-  .directive('btnRadio', ['buttonConfig', function (buttonConfig) {
+.directive('btnRadio', ['buttonConfig', function (buttonConfig) {
   var activeClass = buttonConfig.activeClass || 'active';
   var toggleEvent = buttonConfig.toggleEvent || 'click';
 
   return {
-
-    require:'ngModel',
-    link:function (scope, element, attrs, ngModelCtrl) {
+    require: 'ngModel',
+    link: function (scope, element, attrs, ngModelCtrl) {
 
       //model -> UI
       ngModelCtrl.$render = function () {
@@ -32,14 +31,13 @@ angular.module('ui.bootstrap.buttons', [])
   };
 }])
 
-  .directive('btnCheckbox', ['buttonConfig', function (buttonConfig) {
-
+.directive('btnCheckbox', ['buttonConfig', function (buttonConfig) {
   var activeClass = buttonConfig.activeClass || 'active';
   var toggleEvent = buttonConfig.toggleEvent || 'click';
 
   return {
-    require:'ngModel',
-    link:function (scope, element, attrs, ngModelCtrl) {
+    require: 'ngModel',
+    link: function (scope, element, attrs, ngModelCtrl) {
 
       function getTrueValue() {
         var trueValue = scope.$eval(attrs.btnCheckboxTrue);
