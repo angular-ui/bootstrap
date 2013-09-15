@@ -1240,6 +1240,25 @@ describe('datepicker directive', function () {
         expect(inputEl.val()).toBe('pizza');
       });
     });
+
+    describe('with an append-to-body attribute', function() {
+      beforeEach(inject(function($rootScope) {
+        $rootScope.date = new Date();
+      }));
+
+      it('should append to the body', function() {
+        var $body = $document.find('body'),
+            bodyLength = $body.children().length,
+            elm = angular.element(
+              '<div><input datepicker-popup ng-model="date" datepicker-append-to-body="true"></input></div>'
+            );
+        $compile(elm)($rootScope);
+        $rootScope.$digest();
+
+        expect($body.children().length).toEqual(bodyLength + 1);
+        expect(elm.children().length).toEqual(1);
+      });
+    });
   });
 });
 

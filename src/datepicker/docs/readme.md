@@ -7,8 +7,7 @@ Everything is formatted using the [date filter](http://docs.angularjs.org/api/ng
 
 ### Datepicker Settings ###
 
-All settings can be provided as attributes in the `<datepicker>` or globally configured through the `datepickerConfig`.
-
+All settings can be provided as attributes in the `<datepicker>` or globally configured through the `datepickerConfig`. `datepicker-popup` options may be provided as attributes in the `datepicker-popup`'s element, or globally configured through the `datepickerPopupConfig`.
  * `ng-model` <i class="icon-eye-open"></i>
  	:
  	The date object.
@@ -90,3 +89,7 @@ Specific settings for the `datepicker-popup` are:
  * `close-on-date-selection`
  	_(Default: true)_ :
  	Whether to close calendar when a date is chosen.
+ 
+ * `datepicker-append-to-body`
+  _(Default: false)_:
+  Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `datepickerPopupConfig.appendToBody`.
