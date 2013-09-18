@@ -185,6 +185,20 @@ describe('typeahead tests', function () {
       expect($scope.form.input.$error.editable).toBeFalsy();
     });
 
+    it('should not set editable validation error for empty input', function () {
+      var element = prepareInputEl(
+        "<div><form name='form'>" +
+          "<input name='input' ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-editable='false'>" +
+          "</form></div>");
+
+      changeInputValueTo(element, 'not in matches');
+      expect($scope.result).toEqual(undefined);
+      expect($scope.form.input.$error.editable).toBeTruthy();
+      changeInputValueTo(element, '');
+      expect($scope.result).toEqual('');
+      expect($scope.form.input.$error.editable).toBeFalsy();
+    });
+
     it('should bind loading indicator expression', inject(function ($timeout) {
 
       $scope.isLoading = false;
