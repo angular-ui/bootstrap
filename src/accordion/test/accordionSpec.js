@@ -232,7 +232,17 @@ describe('accordion', function () {
       it('should open the group with isOpen set to true', function () {
         expect(findGroupBody(0).scope().isOpen).toBe(false);
         expect(findGroupBody(1).scope().isOpen).toBe(true);
-       });
+      });
+
+      it('should toggle variable on element click', function() {
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(scope.open1).toBe(true);
+
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(scope.open1).toBe(false);
+      });
     });
 
     describe('is-open attribute with dynamic content', function() {

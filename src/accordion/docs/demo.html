@@ -5,7 +5,7 @@
   </label>
 
   <accordion close-others="oneAtATime">
-    <accordion-group heading="Static Header">
+    <accordion-group heading="Static Header, initially expanded" is-open="true">
       This content is straight in the template.
     </accordion-group>
     <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
@@ -16,9 +16,9 @@
         <button class="btn btn-small" ng-click="addItem()">Add Item</button>
         <div ng-repeat="item in items">{{item}}</div>
     </accordion-group>
-    <accordion-group>
+    <accordion-group is-open="isopen">
         <accordion-heading>
-            I can have markup, too! <i class="icon-check"></i>
+            I can have markup, too! <i class="pull-right" ng-class="{'icon-chevron-down': isopen, 'icon-chevron-right': !isopen}"></i>
         </accordion-heading>
         This is just some content to illustrate fancy headings.
     </accordion-group>
