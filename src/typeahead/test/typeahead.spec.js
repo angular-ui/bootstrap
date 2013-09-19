@@ -127,6 +127,9 @@ describe('typeahead tests', function () {
       var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue'></div>");
       changeInputValueTo(element, 'ba');
       expect(element).toBeOpenWithActive(2, 0);
+
+      changeInputValueTo(element, '');
+      expect(element).toBeClosed();
     });
 
     it('should not open typeahead if input value smaller than a defined threshold', function () {
