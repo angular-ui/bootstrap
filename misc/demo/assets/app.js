@@ -1,4 +1,6 @@
-angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker']);
+angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker'], function($httpProvider){
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});
 
 function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
   var url = "http://50.116.42.77:3001";
