@@ -65,6 +65,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       //expressions used by typeahead
       var parserResult = typeaheadParser.parse(attrs.typeahead);
 
+      var hasFocus;
 
       //pop-up element used to display matches
       var popUpEl = angular.element('<typeahead-popup></typeahead-popup>');
@@ -100,7 +101,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
           //it might happen that several async queries were in progress if a user were typing fast
           //but we are interested only in responses that correspond to the current view value
-          if (inputValue === modelCtrl.$viewValue) {
+          if (inputValue === modelCtrl.$viewValue && hasFocus) {
             if (matches.length > 0) {
 
               scope.activeIdx = 0;
@@ -144,6 +145,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       //plug into $parsers pipeline to open a typeahead on view changes initiated from DOM
       //$parsers kick-in on all the changes coming from the view as well as manually triggered by $setViewValue
       modelCtrl.$parsers.unshift(function (inputValue) {
+
+        hasFocus = true;
 
         if (inputValue && inputValue.length >= minSearch) {
           if (waitTime > 0) {
@@ -248,6 +251,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
           resetMatches();
           scope.$digest();
         }
+      });
+
+      element.bind('blur', function (evt) {
+        hasFocus = false;
       });
 
       // Keep reference to click handler to unbind it.

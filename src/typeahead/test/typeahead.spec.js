@@ -1,6 +1,6 @@
 describe('typeahead tests', function () {
 
-  var $scope, $compile, $document;
+  var $scope, $compile, $document, $timeout;
   var changeInputValueTo;
 
   beforeEach(module('ui.bootstrap.typeahead'));
@@ -18,7 +18,7 @@ describe('typeahead tests', function () {
       };
     });
   }));
-  beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, $sniffer) {
+  beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, _$timeout_, $sniffer) {
     $scope = _$rootScope_;
     $scope.source = ['foo', 'bar', 'baz'];
     $scope.states = [
@@ -27,6 +27,7 @@ describe('typeahead tests', function () {
     ];
     $compile = _$compile_;
     $document = _$document_;
+    $timeout = _$timeout_;
     changeInputValueTo = function (element, value) {
       var inputEl = findInput(element);
       inputEl.val(value);
@@ -394,6 +395,25 @@ describe('typeahead tests', function () {
 
       expect($scope.email).toEqual('bar@host.com');
       expect(inputEl.val()).toEqual('bar@host.com');
+    });
+
+    it('issue 964 - should not show popup with matches if an element is not focused', function () {
+
+      $scope.items = function(viewValue) {
+        return $timeout(function(){
+          return [viewValue];
+        });
+      };
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in items($viewValue)'></div>");
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'match');
+      $scope.$digest();
+
+      inputEl.blur();
+      $timeout.flush();
+
+      expect(element).toBeClosed();
     });
 
     it('does not close matches popup on click in input', function () {
