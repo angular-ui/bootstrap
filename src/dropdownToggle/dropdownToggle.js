@@ -31,7 +31,7 @@ angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['
           closeMenu();
         }
 
-        if (!elementWasOpen) {
+        if (!elementWasOpen && !element.hasClass('disabled') && !element.prop('disabled')) {
           element.parent().addClass('open');
           openElement = element;
           closeMenu = function (event) {
