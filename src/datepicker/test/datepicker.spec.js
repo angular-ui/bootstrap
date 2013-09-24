@@ -1091,6 +1091,51 @@ describe('datepicker directive', function () {
       });
     });
 
+    describe('dynamic custom format', function () {
+      beforeEach(inject(function() {
+        $rootScope.format = 'dd-MMMM-yyyy';
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="{{format}}"><div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+      }));
+
+      it('to display the correct value in input', function() {
+        expect(inputEl.val()).toBe('30-September-2010');
+      });
+
+      it('updates the input when a day is clicked', function() {
+        clickOption(2, 3);
+        expect(inputEl.val()).toBe('15-September-2010');
+        expect($rootScope.date).toEqual(new Date('September 15, 2010 15:30:00'));
+      });
+
+      it('updates the input correctly when model changes', function() {
+        $rootScope.date = new Date("August 11, 2013 09:09:00");
+        $rootScope.$digest();
+        expect(inputEl.val()).toBe('11-August-2013');
+      });
+
+      it('updates the input correctly when format changes', function() {
+        $rootScope.format = 'dd/MM/yyyy';
+        $rootScope.$digest();
+        expect(inputEl.val()).toBe('30/09/2010');
+      });
+    });
+
+    describe('`close-on-date-selection` attribute', function () {
+      beforeEach(inject(function() {
+        $rootScope.close = false;
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup close-on-date-selection="close" is-open="true"><div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+      }));
+
+      it('dpes not close the dropdown when a day is clicked', function() {
+        clickOption(2, 3);
+        expect(dropdownEl.css('display')).not.toBe('none');
+      });
+    });
+
     describe('button bar', function() {
       var buttons;
       beforeEach(inject(function() {

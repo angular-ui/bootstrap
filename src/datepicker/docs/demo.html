@@ -1,13 +1,18 @@
 <div ng-controller="DatepickerDemoCtrl">
     <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
-    <div class="well well-small pull-left" ng-model="dt">
+    <h4>Inline</h4>
+    <div class="well well-small" ng-model="dt" style="display:inline-block;">
         <datepicker min="minDate" show-weeks="showWeeks"></datepicker>
     </div>
 
+    <h4>Popup</h4>
     <div class="form-horizontal">
-        <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-        <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+        <p>
+            <input type="text" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+        </p>
+        <p><i>Format options:</i> <select ng-model="format" ng-options="f for f in formats"><option></option></select></p>
     </div>
 
     <hr />
