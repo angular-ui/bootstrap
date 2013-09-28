@@ -95,6 +95,14 @@ describe('pagination directive', function () {
     expect(getPaginationEl(-1).text()).toBe('Next');
   });
 
+  it('does not change the current page when `total-items` changes but is valid', function() {
+    $rootScope.currentPage = 1;
+    $rootScope.total = 18; // 2 pages
+    $rootScope.$digest();
+
+    expect($rootScope.currentPage).toBe(1);
+  });
+
   describe('`items-per-page`', function () {
     beforeEach(inject(function() {
       $rootScope.perpage = 5;
