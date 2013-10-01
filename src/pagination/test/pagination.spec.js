@@ -95,6 +95,26 @@ describe('pagination directive', function () {
     expect(getPaginationEl(-1).text()).toBe('Next');
   });
 
+  it('does not "break" when `total-items` is undefined', function() {
+    $rootScope.total = undefined;
+    $rootScope.$digest();
+
+    expect(getPaginationBarSize()).toBe(3); // Previous, 1, Next
+    expect(getPaginationEl(0)).toHaveClass('disabled');
+    expect(getPaginationEl(1)).toHaveClass('active');
+    expect(getPaginationEl(2)).toHaveClass('disabled');
+  });
+
+  it('does not "break" when `total-items` is negative', function() {
+    $rootScope.total = -1;
+    $rootScope.$digest();
+
+    expect(getPaginationBarSize()).toBe(3); // Previous, 1, Next
+    expect(getPaginationEl(0)).toHaveClass('disabled');
+    expect(getPaginationEl(1)).toHaveClass('active');
+    expect(getPaginationEl(2)).toHaveClass('disabled');
+  });
+
   it('does not change the current page when `total-items` changes but is valid', function() {
     $rootScope.currentPage = 1;
     $rootScope.total = 18; // 2 pages
@@ -495,6 +515,15 @@ describe('pagination directive', function () {
       expect($rootScope.numpg).toBe(8);
     });
 
+    it('shows minimun one page if total items are not defined and does not break binding', function() {
+      $rootScope.total = undefined;
+      $rootScope.$digest();
+      expect($rootScope.numpg).toBe(1);
+
+      $rootScope.total = 73; // 8 pages
+      $rootScope.$digest();
+      expect($rootScope.numpg).toBe(8);
+    });
   });
 
   describe('setting `paginationConfig`', function() {

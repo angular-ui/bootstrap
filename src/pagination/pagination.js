@@ -27,7 +27,8 @@ angular.module('ui.bootstrap.pagination', [])
   };
 
   this.calculateTotalPages = function() {
-    return this.itemsPerPage < 1 ? 1 : Math.ceil($scope.totalItems / this.itemsPerPage);
+    var totalPages = this.itemsPerPage < 1 ? 1 : Math.ceil($scope.totalItems / this.itemsPerPage);
+    return Math.max(totalPages || 0, 1);
   };
 
   this.getAttributeValue = function(attribute, defaultValue, interpolate) {
@@ -36,7 +37,9 @@ angular.module('ui.bootstrap.pagination', [])
 
   this.render = function() {
     this.page = parseInt($scope.page, 10) || 1;
-    $scope.pages = this.getPages(this.page, $scope.totalPages);
+    if (this.page > 0 && this.page <= $scope.totalPages) {
+      $scope.pages = this.getPages(this.page, $scope.totalPages);
+    }
   };
 
   $scope.selectPage = function(page) {
