@@ -78,8 +78,9 @@ We are always looking for the quality contributions! Please check the [CONTRIBUT
 
 #### Build
 * Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
+* To build modules, first run `grunt html2js` then `grunt build:module1:module2...:moduleN`
 
-Check the Grunt build file for other tasks that are defined for this project
+Check the Grunt build file for other tasks that are defined for this project.
 
 #### TDD
 * Run test: `grunt watch`
