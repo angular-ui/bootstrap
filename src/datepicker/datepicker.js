@@ -258,7 +258,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.position'])
   clearText: 'Clear',
   closeText: 'Done',
   closeOnDateSelection: true,
-  appendToBody: false
+  appendToBody: false,
+  showButtonBar: true
 })
 
 .directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', 'dateFilter', 'datepickerPopupConfig', 'datepickerConfig',
@@ -267,17 +268,17 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
     restrict: 'EA',
     require: 'ngModel',
     link: function(originalScope, element, attrs, ngModel) {
-      var dateFormat;
+      var scope = originalScope.$new(), // create a child scope so we are not polluting original one
+          dateFormat,
+          closeOnDateSelection = angular.isDefined(attrs.closeOnDateSelection) ? originalScope.$eval(attrs.closeOnDateSelection) : datepickerPopupConfig.closeOnDateSelection,
+          appendToBody = angular.isDefined(attrs.datepickerAppendToBody) ? originalScope.$eval(attrs.datepickerAppendToBody) : datepickerPopupConfig.appendToBody;
+
       attrs.$observe('datepickerPopup', function(value) {
           dateFormat = value || datepickerPopupConfig.dateFormat;
           ngModel.$render();
       });
 
-      var closeOnDateSelection = angular.isDefined(attrs.closeOnDateSelection) ? originalScope.$eval(attrs.closeOnDateSelection) : datepickerPopupConfig.closeOnDateSelection;
-      var appendToBody = angular.isDefined(attrs.datepickerAppendToBody) ? originalScope.$eval(attrs.datepickerAppendToBody) : datepickerPopupConfig.appendToBody;
-
-      // create a child scope for the datepicker directive so we are not polluting original scope
-      var scope = originalScope.$new();
+      scope.showButtonBar = angular.isDefined(attrs.showButtonBar) ? originalScope.$eval(attrs.showButtonBar) : datepickerPopupConfig.showButtonBar;
 
       originalScope.$on('$destroy', function() {
         scope.$destroy();

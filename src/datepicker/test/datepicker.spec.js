@@ -1137,14 +1137,19 @@ describe('datepicker directive', function () {
     });
 
     describe('button bar', function() {
-      var buttons;
+      var buttons, buttonBarElement;
       beforeEach(inject(function() {
-        assignButtons();
+        assignButtonBar();
       }));
 
-      function assignButtons() {
-        buttons = dropdownEl.find('li').eq(2).find('button');
+      function assignButtonBar() {
+        buttonBarElement = dropdownEl.find('li').eq(-1);
+        buttons = buttonBarElement.find('button');
       }
+
+      it('should be visible', function() {
+        expect(buttonBarElement.css('display')).not.toBe('none');
+      });
 
       it('should have four buttons', function() {
         expect(buttons.length).toBe(4);
@@ -1170,12 +1175,13 @@ describe('datepicker directive', function () {
 
       describe('customization', function() {
         beforeEach(inject(function() {
+          $rootScope.showBar = false;
           $rootScope.clearText = 'Null it!';
           $rootScope.close = 'Close';
-          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup current-text="Now" toggle-weeks-text="T.W." clear-text="{{clearText}}" close-text="{{close}}ME"><div>')($rootScope);
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup current-text="Now" toggle-weeks-text="T.W." clear-text="{{clearText}}" close-text="{{close}}ME" show-button-bar="showBar"><div>')($rootScope);
           $rootScope.$digest();
           assignElements(wrapElement);
-          assignButtons();
+          assignButtonBar();
         }));
 
         it('should change text from attributes', function() {
@@ -1183,6 +1189,10 @@ describe('datepicker directive', function () {
           expect(buttons.eq(1).text()).toBe('T.W.');
           expect(buttons.eq(2).text()).toBe('Null it!');
           expect(buttons.eq(3).text()).toBe('CloseME');
+        });
+
+        it('should hide bar', function() {
+          expect(buttonBarElement.css('display')).toBe('none');
         });
       });
     });
