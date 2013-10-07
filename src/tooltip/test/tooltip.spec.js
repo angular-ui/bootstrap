@@ -132,6 +132,38 @@ describe('tooltip', function() {
     expect( elmBody.children().length ).toBe( 0 );
   }));
 
+  describe('with specified enable expression', function() {
+
+    beforeEach(inject(function ($compile) {
+      scope.enable = false;
+      elmBody = $compile(angular.element(
+        '<div><span tooltip="tooltip text" tooltip-enable="enable">Selector Text</span></div>'
+      ))(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+
+    }));
+
+    it('should not open ', inject(function () {
+
+      elm.trigger('mouseenter');
+      expect(elmScope.tt_isOpen).toBeFalsy();
+      expect(elmBody.children().length).toBe(1);
+
+    }));
+
+    it('should open', inject(function () {
+
+      scope.enable = true;
+      scope.$digest();
+      elm.trigger('mouseenter');
+      expect(elmScope.tt_isOpen).toBeTruthy();
+      expect(elmBody.children().length).toBe(2);
+
+    }));
+  });
+
   describe('with specified popup delay', function () {
 
     beforeEach(inject(function ($compile) {
