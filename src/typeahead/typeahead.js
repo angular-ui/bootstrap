@@ -160,6 +160,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
             getMatchesAsync(inputValue);
           }
         } else {
+          isLoadingSetter(originalScope, false);
           resetMatches();
         }
 
