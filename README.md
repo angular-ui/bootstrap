@@ -87,6 +87,61 @@ Check the Grunt build file for other tasks that are defined for this project.
  
 This will start Karma server and will continously watch files in the project, executing tests upon every change.
 
+### Customize templates
+
+As mentioned directives from this repository have all the markup externalized in templates. You might want to customize default
+templates to match your desired look & feel, add new functionality etc.
+
+The easiest way to override an individual template is to use the <script> directive:
+
+```javascript
+<script id="template/alert/alert.html" type="text/ng-template">
+    <div class='alert' ng-class='type && "alert-" + type'>
+        <button ng-show='closeable' type='button' class='close' ng-click='close()'>Close</button>
+        <div ng-transclude></div>
+    </div>
+</script>
+```
+
+If you want to override more templates it makes sense to store them as individual files and feed the `$templateCache` from those partials.
+For people using Grunt as the build tool it can be easily done using the `grunt-html2js` plugin. You can also configure your own template url.
+Let's have a look:
+
+Your own template url is `views/partials/ui-bootstrap-tpls/alert/alert.html`.
+
+Add "html2js" task to your Gruntfile
+```
+html2js: {
+  options: {
+    base: '.',
+    module: 'ui-templates',
+    rename: function (modulePath) {
+      var moduleName = modulePath.replace('app/views/partials/ui-bootstrap-tpls/', '').replace('.html', '');
+      return 'template' + '/' + moduleName + '.html';
+    }
+  },
+  main: {
+    src: ['app/views/partials/ui-bootstrap-tpls/**/*.html'],
+    dest: '.tmp/ui-templates.js'
+  }
+}
+```
+
+Make sure to load your template.js file
+`<script src="/ui-templates.js"></script>`
+
+Inject the `ui-templates` module in your `app.js`
+```
+angular.module('myApp', [
+  'ui.bootstrap',
+  'ui-templates'
+]);
+```
+
+Then it will work fine!
+
+For more information visit: https://github.com/karlgoldstein/grunt-html2js
+
 ### Release
 * Bump up version number in `package.json`
 * Commit the version change with the following message: `chore(release): [version number]`
