@@ -1259,6 +1259,30 @@ describe('datepicker directive', function () {
         expect(elm.children().length).toEqual(1);
       });
     });
+    
+    describe('with setting datepickerConfig.showWeeks to false', function() {
+      var originalConfig = {};
+      beforeEach(inject(function(datepickerConfig) {
+        angular.extend(originalConfig, datepickerConfig);
+        datepickerConfig.showWeeks = false;
+        
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup><div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+      }));
+      afterEach(inject(function(datepickerConfig) {
+        // return it to the original state
+        angular.extend(datepickerConfig, originalConfig);
+      }));
+      
+      it('changes initial visibility for weeks', function() {
+        expect(getLabelsRow().find('th').eq(0).css('display')).toBe('none');
+        var tr = element.find('tbody').find('tr');
+        for (var i = 0; i < 5; i++) {
+          expect(tr.eq(i).find('td').eq(0).css('display')).toBe('none');
+        }
+      });
+    });
   });
 });
 
