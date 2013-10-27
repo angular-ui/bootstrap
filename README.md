@@ -92,7 +92,7 @@ This will start Karma server and will continously watch files in the project, ex
 As mentioned directives from this repository have all the markup externalized in templates. You might want to customize default
 templates to match your desired look & feel, add new functionality etc.
 
-The easiest way to override an individual template is to use the <script> directive:
+The easiest way to override an individual template is to use the `<script>` directive:
 
 ```javascript
 <script id="template/alert/alert.html" type="text/ng-template">
