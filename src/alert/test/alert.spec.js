@@ -1,6 +1,6 @@
 describe("alert", function () {
 
-  var scope, ctrl, model, $compile;
+  var scope, $compile;
   var element;
 
   beforeEach(module('ui.bootstrap.alert'));

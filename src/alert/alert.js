@@ -8,7 +8,7 @@ angular.module("ui.bootstrap.alert", []).directive('alert', function () {
       type: '=',
       close: '&'
     },
-    link: function(scope, iElement, iAttrs, controller) {
+    link: function(scope, iElement, iAttrs) {
       scope.closeable = "close" in iAttrs;
     }
   };
