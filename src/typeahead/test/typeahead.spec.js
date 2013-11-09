@@ -462,6 +462,18 @@ describe('typeahead tests', function () {
 
       expect(element).toBeOpenWithActive(2, 0);
     });
+
+    it('issue #1238 - allow names like "query" to be used inside "in" expressions ', function () {
+
+      $scope.query = function() {
+        return ['foo', 'bar'];
+      };
+
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in query($viewValue)'></div>");
+      changeInputValueTo(element, 'bar');
+
+      expect(element).toBeOpenWithActive(2, 0);
+    });
   });
 
   describe('input formatting', function () {
