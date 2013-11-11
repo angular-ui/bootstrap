@@ -50,6 +50,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
           initialAnimSkip = false;
           if ( !isCollapsed ) {
             fixUpHeight(scope, element, 'auto');
+            element.addClass('in');
           }
         } else {
           doTransition({ height : element[0].scrollHeight + 'px' })
@@ -58,6 +59,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
             // the group while the animation was still running
             if ( !isCollapsed ) {
               fixUpHeight(scope, element, 'auto');
+              element.addClass('in');
             }
           });
         }
@@ -66,6 +68,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
       
       var collapse = function() {
         isCollapsed = true;
+        element.removeClass('in');
         if (initialAnimSkip) {
           initialAnimSkip = false;
           fixUpHeight(scope, element, 0);
