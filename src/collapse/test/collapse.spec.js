@@ -86,21 +86,5 @@ describe('collapse directive', function () {
       expect(element.height()).toBeLessThan(collapseHeight);
     });
 
-    it('should shrink accordingly when content size inside collapse decreases on subsequent use', function() {
-      scope.isCollapsed = false;
-      scope.exp = false;
-      scope.$digest();
-      scope.isCollapsed = true;
-      scope.$digest();
-      scope.isCollapsed = false;
-      scope.$digest();
-      $timeout.flush();
-      scope.exp = true;
-      scope.$digest();
-      var collapseHeight = element.height();
-      scope.exp = false;
-      scope.$digest();
-      expect(element.height()).toBeLessThan(collapseHeight);
-    });
   });
 });
