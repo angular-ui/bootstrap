@@ -61,6 +61,10 @@ All the directives in this repository should have their markup externalized as t
 
 Each directive has its own AngularJS module without any dependencies on other modules or third-pary JavaScript code. In practice it means that you can **just grab the code for the directives you need** and you are not obliged to drag the whole repository.
 
+You can also make a custom build with the grunt command line. e.g:
+
+    grunt build:modal:tabs:alert:popover:dropdownToggle:buttons:progressbar
+
 ### Quality and stability
 
 Directives should work. All the time and in all browsers. This is why all the directives have a comprehensive suite of unit tests. All the automated tests are executed on each checkin in several browsers: Chrome, ChromeCanary, Firefox, Opera, Safari, IE9.
