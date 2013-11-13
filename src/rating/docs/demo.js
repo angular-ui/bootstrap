@@ -9,10 +9,10 @@ var RatingDemoCtrl = function ($scope) {
   };
 
   $scope.ratingStates = [
-    {stateOn: 'icon-ok-sign', stateOff: 'icon-ok-circle'},
-    {stateOn: 'icon-star', stateOff: 'icon-star-empty'},
-    {stateOn: 'icon-heart', stateOff: 'icon-ban-circle'},
-    {stateOn: 'icon-heart'},
-    {stateOff: 'icon-off'}
+    {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+    {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+    {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
+    {stateOn: 'glyphicon-heart'},
+    {stateOff: 'glyphicon-off'}
   ];
 };
