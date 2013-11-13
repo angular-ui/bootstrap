@@ -61,10 +61,6 @@ All the directives in this repository should have their markup externalized as t
 
 Each directive has its own AngularJS module without any dependencies on other modules or third-pary JavaScript code. In practice it means that you can **just grab the code for the directives you need** and you are not obliged to drag the whole repository.
 
-You can also make a custom build with the grunt command line. e.g:
-
-    grunt build:modal:tabs:alert:popover:dropdownToggle:buttons:progressbar
-
 ### Quality and stability
 
 Directives should work. All the time and in all browsers. This is why all the directives have a comprehensive suite of unit tests. All the automated tests are executed on each checkin in several browsers: Chrome, ChromeCanary, Firefox, Opera, Safari, IE9.
@@ -83,6 +79,13 @@ We are always looking for the quality contributions! Please check the [CONTRIBUT
 #### Build
 * Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
 * To build modules, first run `grunt html2js` then `grunt build:module1:module2...:moduleN`
+
+You can generate a custom build, containing only needed modules, from the project's homepage.
+Alternativelly you can run local Grunt build from the command line and list needed modules as shown below:
+
+```
+grunt build:modal:tabs:alert:popover:dropdownToggle:buttons:progressbar
+```
 
 Check the Grunt build file for other tasks that are defined for this project.
 
