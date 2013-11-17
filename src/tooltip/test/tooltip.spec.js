@@ -332,7 +332,6 @@ describe('tooltip', function() {
       expect( inCache() ).toBeTruthy();
       elm.trigger('fooTrigger');
       elmScope.$destroy();
-      $timeout.flush();
       expect( inCache() ).toBeFalsy();
     }));
   });

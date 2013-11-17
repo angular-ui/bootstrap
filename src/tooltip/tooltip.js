@@ -100,7 +100,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           'title="'+startSym+'tt_title'+endSym+'" '+
           'content="'+startSym+'tt_content'+endSym+'" '+
           'placement="'+startSym+'tt_placement'+endSym+'" '+
-          'animation="tt_animation()" '+
+          'animation="tt_animation" '+
           'is-open="tt_isOpen"'+
           '>'+
         '</'+ directiveName +'-popup>';
@@ -112,7 +112,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           var tooltip = $compile( template )( scope );
           var transitionTimeout;
           var popupTimeout;
-          var $body;
+          var $body = $document.find( 'body' );
           var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
           var triggers = getTriggers( undefined );
           var hasRegisteredTriggers = false;
@@ -172,7 +172,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             // Now we add it to the DOM because need some info about it. But it's not 
             // visible yet anyway.
             if ( appendToBody ) {
-                $body = $body || $document.find( 'body' );
                 $body.append( tooltip );
             } else {
               element.after( tooltip );
@@ -235,8 +234,10 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             // And now we remove it from the DOM. However, if we have animation, we 
             // need to wait for it to expire beforehand.
             // FIXME: this is a placeholder for a port of the transitions library.
-            if ( angular.isDefined( scope.tt_animation ) && scope.tt_animation() ) {
-              transitionTimeout = $timeout( function () { tooltip.remove(); }, 500 );
+            if ( scope.tt_animation ) {
+              transitionTimeout = $timeout(function () {
+                tooltip.remove();
+              }, 500);
             } else {
               tooltip.remove();
             }
@@ -263,8 +264,8 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             scope.tt_placement = angular.isDefined( val ) ? val : options.placement;
           });
 
-          attrs.$observe( prefix+'Animation', function ( val ) {
-            scope.tt_animation = angular.isDefined( val ) ? $parse( val ) : function(){ return options.animation; };
+          attrs.$observe(prefix + 'Animation', function (val) {
+            scope.tt_animation = angular.isDefined(val) ? !!val : options.animation;
           });
 
           attrs.$observe( prefix+'PopupDelay', function ( val ) {
@@ -308,11 +309,11 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
           // Make sure tooltip is destroyed and removed.
           scope.$on('$destroy', function onDestroyTooltip() {
-            if ( scope.tt_isOpen ) {
-              hide();
-            } else {
-              tooltip.remove();
-            }
+            $timeout.cancel( popupTimeout );
+            tooltip.remove();
+            tooltip.unbind();
+            tooltip = null;
+            $body = null;
           });
         }
       };
