@@ -375,6 +375,22 @@ describe('$modal', function () {
         expect($document).toHaveModalOpenWithContent('Static backdrop', 'div');
         expect($document).toHaveBackdrop();
       });
+
+      it('should animate backdrop on each modal opening', function () {
+
+        var modal = open({ template: '<div>With backdrop</div>' });
+        var backdropEl = $document.find('body > div.modal-backdrop');
+        expect(backdropEl).not.toHaveClass('in');
+
+        $timeout.flush();
+        expect(backdropEl).toHaveClass('in');
+
+        dismiss(modal);
+        modal = open({ template: '<div>With backdrop</div>' });
+        backdropEl = $document.find('body > div.modal-backdrop');
+        expect(backdropEl).not.toHaveClass('in');
+
+      });
     });
 
     describe('custom window classes', function () {
