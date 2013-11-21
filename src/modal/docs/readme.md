@@ -1,4 +1,4 @@
-`$modal` is a s service to quickly create AngularJS-powered modal windows.
+`$modal` is a service to quickly create AngularJS-powered modal windows.
 Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
 
 The `$modal` service has only one method: `open(options)` where available options are like follows:
