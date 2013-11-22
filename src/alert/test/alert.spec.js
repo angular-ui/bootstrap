@@ -32,7 +32,7 @@ describe("alert", function () {
   }
 
   function findCloseButton(index) {
-    return element.find('.alert button').eq(index);
+    return element.find('.close').eq(index);
   }
 
   it("should generate alerts using ng-repeat", function () {
@@ -64,9 +64,9 @@ describe("alert", function () {
   });
 
   it('should not show close buttons if no close callback specified', function () {
-    var element = $compile('<alert>No close</alert>')(scope);
+    element = $compile('<alert>No close</alert>')(scope);
     scope.$digest();
-    expect(findCloseButton(0).length).toEqual(0);
+    expect(findCloseButton(0).css('display')).toBe('none');
   });
 
   it('it should be possible to add additional classes for alert', function () {
