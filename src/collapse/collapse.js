@@ -75,7 +75,6 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             expand();
           }
         });
-
       }
     };
   }]);
