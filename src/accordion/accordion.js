@@ -9,9 +9,6 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
   // This array keeps track of the accordion groups
   this.groups = [];
 
-  // Keep reference to user's scope to properly assign `is-open`
-  this.scope = $scope;
-
   // Ensure that all the groups in this accordion are closed, unless close-others explicitly says not to
   this.closeOthers = function(openGroup) {
     var closeOthers = angular.isDefined($attrs.closeOthers) ? $scope.$eval($attrs.closeOthers) : accordionConfig.closeOthers;
@@ -81,7 +78,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
         getIsOpen = $parse(attrs.isOpen);
         setIsOpen = getIsOpen.assign;
 
-        accordionCtrl.scope.$watch(getIsOpen, function(value) {
+        scope.$parent.$watch(getIsOpen, function(value) {
           scope.isOpen = !!value;
         });
       }
@@ -91,7 +88,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
           accordionCtrl.closeOthers(scope);
         }
         if ( setIsOpen ) {
-          setIsOpen(accordionCtrl.scope, value);
+          setIsOpen(scope.$parent, value);
         }
       });
     }

@@ -217,13 +217,12 @@ describe('accordion', function () {
     describe('is-open attribute', function() {
       beforeEach(function () {
         var tpl =
-          "<accordion>" +
-            "<accordion-group heading=\"title 1\" is-open=\"open1\">Content 1</accordion-group>" +
-            "<accordion-group heading=\"title 2\" is-open=\"open2\">Content 2</accordion-group>" +
-            "</accordion>";
+          '<accordion>' +
+            '<accordion-group heading="title 1" is-open="open.first">Content 1</accordion-group>' +
+            '<accordion-group heading="title 2" is-open="open.second">Content 2</accordion-group>' +
+            '</accordion>';
         element = angular.element(tpl);
-        scope.open1 = false;
-        scope.open2 = true;
+        scope.open = { first: false, second: true };
         $compile(element)(scope);
         scope.$digest();
         groups = element.find('.accordion-group');
@@ -237,11 +236,11 @@ describe('accordion', function () {
       it('should toggle variable on element click', function() {
         findGroupLink(0).click();
         scope.$digest();
-        expect(scope.open1).toBe(true);
+        expect(scope.open.first).toBe(true);
 
         findGroupLink(0).click();
         scope.$digest();
-        expect(scope.open1).toBe(false);
+        expect(scope.open.second).toBe(false);
       });
     });
 
@@ -269,6 +268,42 @@ describe('accordion', function () {
       it('should have visible group body when the group with isOpen set to true', function () {
         expect(findGroupBody(0)[0].clientHeight).not.toBe(0);
         expect(findGroupBody(1)[0].clientHeight).toBe(0);
+      });
+    });
+
+    describe('is-open attribute with dynamic groups', function () {
+      var model;
+      beforeEach(function () {
+        var tpl =
+          '<accordion>' +
+            '<accordion-group ng-repeat="group in groups" heading="{{group.name}}" is-open="group.open">{{group.content}}</accordion-group>' +
+          '</accordion>';
+        element = angular.element(tpl);
+        scope.groups = [
+          {name: 'title 1', content: 'Content 1', open: false},
+          {name: 'title 2', content: 'Content 2', open: true}
+        ];
+        $compile(element)(scope);
+        scope.$digest();
+
+        groups = element.find('.accordion-group');
+      });
+
+      it('should have visible group body when the group with isOpen set to true', function () {
+        expect(findGroupBody(0).scope().isOpen).toBe(false);
+        expect(findGroupBody(1).scope().isOpen).toBe(true);
+      });
+
+      it('should toggle element on click', function() {
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(findGroupBody(0).scope().isOpen).toBe(true);
+        expect(scope.groups[0].open).toBe(true);
+
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(findGroupBody(0).scope().isOpen).toBe(false);
+        expect(scope.groups[0].open).toBe(false);
       });
     });
 
