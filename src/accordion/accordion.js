@@ -54,7 +54,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 })
 
 // The accordion-group directive indicates a block of html that will expand and collapse in an accordion
-.directive('accordionGroup', ['$parse', '$transition', '$timeout', function($parse, $transition, $timeout) {
+.directive('accordionGroup', ['$parse', function($parse) {
   return {
     require:'^accordion',         // We need this directive to be inside an accordion
     restrict:'EA',
@@ -62,11 +62,11 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     replace: true,                // The element containing the directive will be replaced with the template
     templateUrl:'template/accordion/accordion-group.html',
     scope:{ heading:'@' },        // Create an isolated scope and interpolate the heading attribute onto this scope
-    controller: ['$scope', function($scope) {
+    controller: function() {
       this.setHeading = function(element) {
         this.heading = element;
       };
-    }],
+    },
     link: function(scope, element, attrs, accordionCtrl) {
       var getIsOpen, setIsOpen;
 
