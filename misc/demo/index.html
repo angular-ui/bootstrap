@@ -1,17 +1,19 @@
-<!DOCTYPE html>
 <html lang="en" ng-app="bootstrapDemoApp" id="top">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Angular directives for Twitter's Bootstrap</title>
     <meta name="description" content="AngularJS (Angular) native directives for Twitter Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: <% demoModules.forEach(function(module) { %><%= module.displayName %>, <% }); %>">
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
     <script src="ui-bootstrap-tpls-<%= pkg.version%>.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
-    <link href="//netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/rainbow.css"/>
     <link rel="stylesheet" href="assets/demo.css"/>
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
@@ -19,107 +21,120 @@
 <body class="ng-cloak" ng-controller="MainCtrl">
 <header class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-inner">
-    <div class="container">
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a href="#" class="navbar-brand dropdown-toggle">
-                    UI Bootstrap <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li><a href="https://github.com/angular-ui/"><strong>Related Projects:</strong></a></li>
-                    <li class="divider"></li>
-                    <li><a href="http://angular-ui.github.io/">AngularUI</a></li>
-                    <li><a href="http://angular-ui.github.io/ng-grid/">Grid</a></li>
-                    <li><a href="https://github.com/angular-ui/AngularJs.tmbundle">AngularJS.tmbundle</a></li>
-                    <li><a href="https://github.com/angular-ui/ui-router">Router <span class="label label-success">New!</span></a></li>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand visible-xs" href="#">UI Bootstrap</a>
+            </div>
+            <nav class="hidden-xs">
+                <ul class="nav navbar-nav">
+                    <a href="#" role="button" class="navbar-brand">
+                        UI Bootstrap
+                    </a>
+                    <li class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle">
+                            Directives <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <% demoModules.forEach(function(module) {  %>
+                                <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
+                            <% }); %>
+                        </ul>
+                    </li>
+                    <li><a href="#getting_started">Getting started</a></li>
                 </ul>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" role="button" class="dropdown-toggle">
-                    Directives <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <% demoModules.forEach(function(module) {  %>
-                        <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
-                    <% }); %>
+            </nav>
+            <nav class="visible-xs" collapse="!isCollapsed">
+                <ul class="nav navbar-nav">
+                    <li><a href="#getting_started" ng-click="isCollapsed = !isCollapsed">Getting started</a></li>
+                    <li><a href="#directives_small" ng-click="isCollapsed = !isCollapsed">Directives</a></li>
                 </ul>
-            </li>
-            <li><a href="#getting_started">Getting started</a></li>
-        </ul>
+            </nav>
+        </div>
     </div>
-  </div>
 </header>
 <div class="header-placeholder"></div>
 <div role="main">
-    <header class="jumbotron text-center" id="overview">
+    <header class="bs-header text-center" id="overview">
         <div class="container">
             <h1>
                 UI Bootstrap
             </h1>
 
-            <p>Bootstrap components written in pure <strong><a href="http://angularjs.org">AngularJS</a></strong> by the <strong><a
-                    href="http://angular-ui.github.io">AngularUI Team</a></strong></p>
+            <p>Bootstrap components written in pure <a href="http://angularjs.org">AngularJS</a> by the <a
+                    href="http://angular-ui.github.io">AngularUI Team</a></p>
 
-            <p class="btn-group">
-                <a class="btn btn-default" href="https://github.com/angular-ui/bootstrap">Code on Github</a>
-                <a class="btn btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
+            <p>
+                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
+                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
                     <i class="glyphicon glyphicon-download-alt"></i> Download <small>(<%= pkg.version%>)</small>
                 </a>
-                <a class="btn btn-default" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</a>
+                <a class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</a>
             </p>
         </div>
-        <div class="bs-docs-social">
-            <div class="container">
-                <ul class="bs-docs-social-buttons">
-                    <li>
-                        <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=watch&count=true"
-                                allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-                    </li>
-                    <li>
-                        <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=fork&count=true"
-                                allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/share" class="twitter-share-button"
-                           data-hashtags="angularjs">Tweet</a>
-                        <script>!function (d, s, id) {
-                            var js, fjs = d.getElementsByTagName(s)[0];
-                            if (!d.getElementById(id)) {
-                                js = d.createElement(s);
-                                js.id = id;
-                                js.src = "//platform.twitter.com/widgets.js";
-                                fjs.parentNode.insertBefore(js, fjs);
-                            }
-                        }(document, "script", "twitter-wjs");</script>
-                    </li>
-                    <li>
-                        <!-- Place this tag where you want the +1 button to render. -->
-                        <div class="g-plusone" data-size="medium"></div>
+        <div class="bs-social container">
+            <ul class="bs-social-buttons">
+                <li>
+                    <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=watch&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+                </li>
+                <li>
+                    <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=fork&count=true"
+                            allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+                </li>
+                <li>
+                    <a href="https://twitter.com/share" class="twitter-share-button"
+                       data-hashtags="angularjs">Tweet</a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "//platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");</script>
+                </li>
+                <li>
+                    <!-- Place this tag where you want the +1 button to render. -->
+                    <div class="g-plusone" data-size="medium"></div>
 
-                        <!-- Place this tag after the last +1 button tag. -->
-                        <script type="text/javascript">
-                            (function () {
-                                var po = document.createElement('script');
-                                po.type = 'text/javascript';
-                                po.async = true;
-                                po.src = 'https://apis.google.com/js/plusone.js';
-                                var s = document.getElementsByTagName('script')[0];
-                                s.parentNode.insertBefore(po, s);
-                            })();
-                        </script>
-                    </li>
-                </ul>
-            </div>
+                    <!-- Place this tag after the last +1 button tag. -->
+                    <script type="text/javascript">
+                        (function () {
+                            var po = document.createElement('script');
+                            po.type = 'text/javascript';
+                            po.async = true;
+                            po.src = 'https://apis.google.com/js/plusone.js';
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
+                </li>
+            </ul>
         </div>
     </header>
     <div class="container">
-        <section id="getting_started" class="row">
+        <div class="row">
             <div class="col-md-12">
-                <div class="page-header">
-                    <h1>Getting started</h1>
-                </div>
-                <div>
+                <section class="bs-sidebar visible-xs" id="directives_small">
+                    <ul class="nav bs-sidenav">
+                        <li><a href="#"><strong>Directives</strong></a></li>
+                        <% demoModules.forEach(function(module) {  %>
+                            <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
+                        <% }); %>
+                    </ul>
+                </section>
+
+                <section id="getting_started">
+                    <div class="page-header">
+                        <h1>Getting started</h1>
+                    </div>
                     <h3>Dependencies</h3>
                     <p>
                         This repository contains a set of <strong>native AngularJS directives</strong> based on
@@ -127,8 +142,8 @@
                         JavaScript is required. The <strong>only required dependencies</strong> are:
                     </p>
                     <ul>
-                        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (minimal version 1.0.8 or 1.1.5)</li>
-                        <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (version 3.0)</li>
+                        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (minimal version 1.0.8)</li>
+                        <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version <%= bsversion %>)</li>
                     </ul>
                     <h3>Files to download</h3>
                     <p>
@@ -144,63 +159,54 @@
                     <h3>Installation</h3>
                     <p>As soon as you've got all the files downloaded and included in your page you just need to declare
                        a dependency on the <code>ui.bootstrap</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
-                       <code>angular.module('myModule', ['ui.bootstrap']);</code>
+                       <pre><code>angular.module('myModule', ['ui.bootstrap']);</code></pre>
                     </p>
                     <p>You can fork one of the plunkers from this page to see a working example of what is described here.</p>
                     <h3>CSS</h3>
                     <p>Original Bootstrap's CSS depends on empty <code>href</code> attributes to style cursors for several components (pagination, tabs etc.).
-                       But in AngularJS adding empty <code>href</code> attributes to link tags will cause unwanted route changes.
-                       This is why we need to remove empty <code>href</code> attributes from directive templates and as a result
-                       styling is not applied correctly. The remedy is simple, just add the following styling to your application:
-                       <code>
-                           .nav, .pagination, .carousel, .panel-title a {
-                                cursor: pointer;
-                           }
-                       </code>
+                    But in AngularJS adding empty <code>href</code> attributes to link tags will cause unwanted route changes. This is why we need to remove empty <code>href</code> attributes from directive templates and as a result styling is not applied correctly. The remedy is simple, just add the following styling to your application: <pre><code>.nav, .pagination, .carousel a { cursor: pointer; }</code></pre>
                     </p>
-                </div>
-            </div>
-        </section>
-        <% demoModules.forEach(function(module) { %>
-            <section id="<%= module.name %>" class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                      <h1><%= module.displayName %><small>
-                          (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>)
-                      </small></h1>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <%= module.docs.html %>
-                        </div>
-                        <div class="col-md-6">
-                            <%= module.docs.md %>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-12" ng-controller="PlunkerCtrl">
-                            <div class="pull-right">
-                                <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                </section>
+                <% demoModules.forEach(function(module) { %>
+                    <section id="<%= module.name %>">
+                        <div class="page-header">
+                          <h1><%= module.displayName %><small>
+                              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/<%= module.name %>">ui.bootstrap.<%= module.name %></a>)
+                          </small></h1>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 show-grid">
+                                <%= module.docs.html %>
                             </div>
-                            <tabset>
-                                <tab heading="Markup">
-                                    <div plunker-content="markup">
-                                        <pre ng-non-bindable><code data-language="html"><%- module.docs.html %></code></pre>
-                                    </div>
-                                </tab>
-                                <tab heading="JavaScript">
-                                    <div plunker-content="javascript">
-                                        <pre ng-non-bindable><code data-language="javascript"><%- module.docs.js %></code></pre>
-                                    </div>
-                                </tab>
-                            </tabset>
+                            <div class="col-md-6">
+                                <%= module.docs.md %>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-            <script><%= module.docs.js %></script>
-        <% }); %>
+                        <hr>
+                        <div class="row code">
+                            <div class="col-md-12" ng-controller="PlunkerCtrl">
+                                <div class="pull-right">
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                </div>
+                                <tabset>
+                                    <tab heading="Markup">
+                                        <div plunker-content="markup">
+                                            <pre ng-non-bindable><code data-language="html"><%- module.docs.html %></code></pre>
+                                        </div>
+                                    </tab>
+                                    <tab heading="JavaScript">
+                                        <div plunker-content="javascript">
+                                            <pre ng-non-bindable><code data-language="javascript"><%- module.docs.js %></code></pre>
+                                        </div>
+                                    </tab>
+                                </tabset>
+                            </div>
+                        </div>
+                    </section>
+                    <script><%= module.docs.js %></script>
+                <% }); %>
+            </div>
+        </div> 
     </div><!-- /.container -->
 </div><!-- /.main -->
 <footer class="footer">
@@ -215,20 +221,40 @@
 <script src="assets/rainbow-javascript.js"></script>
 <script src="assets/rainbow-html.js"></script>
 <script type="text/ng-template" id="buildModal.html">
-    <div class="modal-header"><h2>Create a Custom Build</h2></div>
+    <div class="modal-header">
+      <h4>
+      Create a Custom Build
+      <br>
+      <small>Select the modules you wish to download</small>
+      </h4>
+    </div>
     <div class="modal-body">
         <div ng-show="buildErrorText">
-            <h3 style="text-align: center;">{{buildErrorText}}</h3>
+            <h4 style="text-align: center;">{{buildErrorText}}</h4>
         </div>
         <div ng-hide="buildErrorText">
-            <label>Select the modules you wish to download:</label>
-            <% modules.forEach(function(module) { %>
-            <button type="button" class="btn" ng-class="{'btn-primary': module.<%= module.name %>}" style="width: 170px; margin-bottom: 3px;" ng-model="module.<%= module.name %>" btn-checkbox ng-change="selectedChanged('<%= module.name %>', module.<%= module.name %>)"><%= module.displayName %></button>
+            <% modules.forEach(function(module,i) { %>
+              <% if (i % 3 === 0) {%>
+                <div class="btn-group" style="width: 100%;">
+              <% } %>
+              <button type="button" class="btn btn-default" 
+               style="width: 33%; border-radius: 0;"
+               ng-class="{'btn-primary': module.<%= module.name %>}" 
+               ng-model="module.<%= module.name %>" 
+               btn-checkbox 
+               ng-change="selectedChanged('<%= module.name %>', module.<%= module.name %>)">
+                  <%= module.displayName %>
+              </button>
+              <% if ((i+1) % 3 === 0) { //end button group%>
+                </div>
+              <% } %>
             <% }); %>
         </div>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()"><i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules</a>
+        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()">
+            <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
+        </a>
         <a class="btn" ng-click="cancel()">Cancel</a>
     </div>
 </script>
@@ -246,5 +272,6 @@
     })();
 
 </script>
+<script src="assets/smoothscroll-angular-custom.js"></script>
 </body>
 </html>

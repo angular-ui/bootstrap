@@ -1,10 +1,6 @@
 <div ng-controller="PopoverDemoCtrl">
     <h4>Dynamic</h4>
     <div class="form-group">
-      <label>Popup Title:</label>
-      <input type="text" ng-model="dynamicPopoverText" class="form-control">
-    </div>
-    <div class="form-group">
       <label>Popup Text:</label>
       <input type="text" ng-model="dynamicPopover" class="form-control">
     </div>
@@ -12,7 +8,7 @@
       <label>Popup Title:</label>
       <input type="text" ng-model="dynamicPopoverTitle" class="form-control">
     </div>
-    <button popover="{{dynamicPopover}}" popover-title="{{dynamicPopoverTitle}}" class="btn btn-default">{{dynamicPopoverText}}</button>
+    <button popover="{{dynamicPopover}}" popover-title="{{dynamicPopoverTitle}}" class="btn btn-default">Dynamic Popover</button>
     
     <hr />
     <h4>Positional</h4>
