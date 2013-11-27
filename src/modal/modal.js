@@ -166,7 +166,13 @@ angular.module('ui.bootstrap.modal', [])
           backdrop: modal.backdrop,
           keyboard: modal.keyboard
         });
-
+          
+        if (backdropIndex() >= 0 && !backdropDomEl) {
+            backdropjqLiteEl = angular.element('<div modal-backdrop></div>');
+            backdropDomEl = $compile(backdropjqLiteEl)(backdropScope);
+            body.append(backdropDomEl);
+        }
+          
         var angularDomEl = angular.element('<div modal-window></div>');
         angularDomEl.attr('window-class', modal.windowClass);
         angularDomEl.attr('index', openedWindows.length() - 1);
@@ -175,12 +181,7 @@ angular.module('ui.bootstrap.modal', [])
         var modalDomEl = $compile(angularDomEl)(modal.scope);
         openedWindows.top().value.modalDomEl = modalDomEl;
         body.append(modalDomEl);
-
-        if (backdropIndex() >= 0 && !backdropDomEl) {
-            backdropjqLiteEl = angular.element('<div modal-backdrop></div>');
-            backdropDomEl = $compile(backdropjqLiteEl)(backdropScope);
-            body.append(backdropDomEl);
-        }
+       
       };
 
       $modalStack.close = function (modalInstance, result) {
