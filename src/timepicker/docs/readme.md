@@ -21,8 +21,8 @@ All settings can be provided as attributes in the `<timepicker>` or globally con
  	Whether to display 12H or 24H mode.
 
  * `meridians`
- 	_(Defaults: ['AM', 'PM'])_ :
- 	 Meridian labels
+ 	_(Defaults: null)_ :
+ 	 Meridian labels based on locale. To override you must supply an array like ['AM', 'PM'].
 
  * `readonly-input`
  	_(Defaults: false)_ :

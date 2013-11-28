@@ -4,12 +4,12 @@ angular.module('ui.bootstrap.timepicker', [])
   hourStep: 1,
   minuteStep: 1,
   showMeridian: true,
-  meridians: ['AM', 'PM'],
+  meridians: null,
   readonlyInput: false,
   mousewheel: true
 })
 
-.directive('timepicker', ['$parse', '$log', 'timepickerConfig', function ($parse, $log, timepickerConfig) {
+.directive('timepicker', ['$parse', '$log', 'timepickerConfig', '$locale', function ($parse, $log, timepickerConfig, $locale) {
   return {
     restrict: 'EA',
     require:'?^ngModel',
@@ -21,7 +21,8 @@ angular.module('ui.bootstrap.timepicker', [])
         return; // do nothing if no ng-model
       }
 
-      var selected = new Date(), meridians = timepickerConfig.meridians;
+      var selected = new Date(),
+          meridians = angular.isDefined(attrs.meridians) ? scope.$parent.$eval(attrs.meridians) : timepickerConfig.meridians || $locale.DATETIME_FORMATS.AMPMS;
 
       var hourStep = timepickerConfig.hourStep;
       if (attrs.hourStep) {

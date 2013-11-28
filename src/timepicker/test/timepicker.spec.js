@@ -578,6 +578,24 @@ describe('timepicker directive', function () {
     });
   });
 
+  describe('`meridians` attribute', function() {
+    beforeEach(inject(function() {
+      $rootScope.meridiansArray = ['am', 'pm'];
+      element = $compile('<timepicker ng-model="$parent.time" meridians="meridiansArray"></timepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('displays correctly', function () {
+      expect(getTimeState()[2]).toBe('pm');
+    });
+
+    it('toggles correctly', function () {
+      $rootScope.time = newTime(2, 40);
+      $rootScope.$digest();
+      expect(getTimeState()[2]).toBe('am');
+    });
+  });
+
   describe('setting timepickerConfig steps', function() {
     var originalConfig = {};
     beforeEach(inject(function(_$compile_, _$rootScope_, timepickerConfig) {
