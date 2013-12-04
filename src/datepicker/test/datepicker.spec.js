@@ -108,7 +108,7 @@ describe('datepicker directive', function () {
 
   describe('', function () {
     beforeEach(inject(function(_$compile_, _$rootScope_) {
-      element = $compile('<datepicker ng-model="$parent.date"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
       $rootScope.$digest();
     }));
 
@@ -445,7 +445,7 @@ describe('datepicker directive', function () {
   describe('attribute `starting-day`', function () {
     beforeEach(function() {
       $rootScope.startingDay = 1;
-      element = $compile('<datepicker ng-model="$parent.date" starting-day="startingDay"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date" starting-day="startingDay"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -472,7 +472,7 @@ describe('datepicker directive', function () {
     var weekHeader, weekElement;
     beforeEach(function() {
       $rootScope.showWeeks = false;
-      element = $compile('<datepicker ng-model="$parent.date" show-weeks="showWeeks"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date" show-weeks="showWeeks"></datepicker>')($rootScope);
       $rootScope.$digest();
 
       weekHeader = getLabelsRow().find('th').eq(0);
@@ -481,29 +481,29 @@ describe('datepicker directive', function () {
 
     it('hides week numbers based on variable', function() {
       expect(weekHeader.text()).toEqual('#');
-      expect(weekHeader.css('display')).toBe('none');
-      expect(weekElement.css('display')).toBe('none');
+      expect(weekHeader).toBeHidden();
+      expect(weekElement).toBeHidden();
     });
 
     it('toggles week numbers', function() {
       $rootScope.showWeeks = true;
       $rootScope.$digest();
       expect(weekHeader.text()).toEqual('#');
-      expect(weekHeader.css('display')).not.toBe('none');
-      expect(weekElement.css('display')).not.toBe('none');
+      expect(weekHeader).not.toBeHidden();
+      expect(weekElement).not.toBeHidden();
 
       $rootScope.showWeeks = false;
       $rootScope.$digest();
       expect(weekHeader.text()).toEqual('#');
-      expect(weekHeader.css('display')).toBe('none');
-      expect(weekElement.css('display')).toBe('none');
+      expect(weekHeader).toBeHidden();
+      expect(weekElement).toBeHidden();
     });
   });
 
   describe('min attribute', function () {
     beforeEach(function() {
       $rootScope.mindate = new Date("September 12, 2010");
-      element = $compile('<datepicker ng-model="$parent.date" min="mindate"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date" min="mindate"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -598,7 +598,7 @@ describe('datepicker directive', function () {
   describe('max attribute', function () {
     beforeEach(function() {
       $rootScope.maxdate = new Date("September 25, 2010");
-      element = $compile('<datepicker ng-model="$parent.date" max="maxdate"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date" max="maxdate"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -688,7 +688,7 @@ describe('datepicker directive', function () {
   describe('date-disabled expression', function () {
     beforeEach(function() {
       $rootScope.dateDisabledHandler = jasmine.createSpy('dateDisabledHandler');
-      element = $compile('<datepicker ng-model="$parent.date" date-disabled="dateDisabledHandler(date, mode)"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date" date-disabled="dateDisabledHandler(date, mode)"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -712,7 +712,7 @@ describe('datepicker directive', function () {
 
   describe('formatting attributes', function () {
     beforeEach(function() {
-      element = $compile('<datepicker ng-model="$parent.date" day-format="\'d\'" day-header-format="\'EEEE\'" day-title-format="\'MMMM, yy\'" month-format="\'MMM\'" month-title-format="\'yy\'" year-format="\'yy\'" year-range="10"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date" day-format="\'d\'" day-header-format="\'EEEE\'" day-title-format="\'MMMM, yy\'" month-format="\'MMM\'" month-title-format="\'yy\'" year-format="\'yy\'" year-range="10"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -771,7 +771,7 @@ describe('datepicker directive', function () {
       datepickerConfig.dayTitleFormat = 'MMMM, yy';
       datepickerConfig.monthTitleFormat = 'yy';
 
-      element = $compile('<datepicker ng-model="$parent.date"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(datepickerConfig) {
@@ -817,10 +817,10 @@ describe('datepicker directive', function () {
     });
 
     it('changes initial visibility for weeks', function() {
-      expect(getLabelsRow().find('th').eq(0).css('display')).toBe('none');
+      expect(getLabelsRow().find('th').eq(0)).toBeHidden();
       var tr = element.find('tbody').find('tr');
       for (var i = 0; i < 5; i++) {
-        expect(tr.eq(i).find('td').eq(0).css('display')).toBe('none');
+        expect(tr.eq(i).find('td').eq(0)).toBeHidden();
       }
     });
 
@@ -981,12 +981,12 @@ describe('datepicker directive', function () {
       });
 
       it('does not to display datepicker initially', function() {
-        expect(dropdownEl.css('display')).toBe('none');
+        expect(dropdownEl).toBeHidden();
       });
 
       it('displays datepicker on input focus', function() {
         inputEl.focus();
-        expect(dropdownEl.css('display')).not.toBe('none');
+        expect(dropdownEl).not.toBeHidden();
       });
 
       it('renders the calendar correctly', function() {
@@ -1216,7 +1216,7 @@ describe('datepicker directive', function () {
         });
 
         it('should hide bar', function() {
-          expect(buttonBarElement.css('display')).toBe('none');
+          expect(buttonBarElement).toBeHidden();
         });
       });
 
@@ -1342,10 +1342,10 @@ describe('datepicker directive', function () {
       }));
       
       it('changes initial visibility for weeks', function() {
-        expect(getLabelsRow().find('th').eq(0).css('display')).toBe('none');
+        expect(getLabelsRow().find('th').eq(0)).toBeHidden();
         var tr = element.find('tbody').find('tr');
         for (var i = 0; i < 5; i++) {
-          expect(tr.eq(i).find('td').eq(0).css('display')).toBe('none');
+          expect(tr.eq(i).find('td').eq(0)).toBeHidden();
         }
       });
     });
@@ -1354,7 +1354,7 @@ describe('datepicker directive', function () {
   describe('datepicker directive with empty initial state', function () {
     beforeEach(inject(function() {
       $rootScope.date = null;
-      element = $compile('<datepicker ng-model="$parent.date"></datepicker>')($rootScope);
+      element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
       $rootScope.$digest();
     }));
 
