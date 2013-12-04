@@ -8,7 +8,7 @@ describe('timepicker directive', function () {
     $rootScope = _$rootScope_;
     $rootScope.time = newTime(14, 40);
 
-    element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+    element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -84,7 +84,7 @@ describe('timepicker directive', function () {
 
   it('has `selected` current time when model is initially cleared', function() {
     $rootScope.time = null;
-    element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+    element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
     $rootScope.$digest();
 
     expect($rootScope.time).toBe(null);
@@ -249,7 +249,7 @@ describe('timepicker directive', function () {
   });
 
   it('changes only the time part when minutes change', function() {
-    element = $compile('<timepicker ng-model="$parent.time" minute-step="15"></timepicker>')($rootScope);
+    element = $compile('<timepicker ng-model="time" minute-step="15"></timepicker>')($rootScope);
     $rootScope.time = newTime(0, 0);
     $rootScope.$digest();
 
@@ -381,7 +381,7 @@ describe('timepicker directive', function () {
       $rootScope.hstep = 2;
       $rootScope.mstep = 30;
       $rootScope.time = newTime(14, 0);
-      element = $compile('<timepicker ng-model="$parent.time" hour-step="hstep" minute-step="mstep"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time" hour-step="hstep" minute-step="mstep"></timepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -544,7 +544,7 @@ describe('timepicker directive', function () {
     beforeEach(function() {
       $rootScope.meridian = false;
       $rootScope.time = newTime(14, 10);
-      element = $compile('<timepicker ng-model="$parent.time" show-meridian="meridian"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time" show-meridian="meridian"></timepicker>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -555,7 +555,7 @@ describe('timepicker directive', function () {
     it('initially displays correct time when `show-meridian` is false', function() {
       expect(getTimeState(true)).toEqual(['14', '10']);
       expect(getModelState()).toEqual([14, 10]);
-      expect(getMeridianTd().css('display')).toBe('none');
+      expect(getMeridianTd()).toBeHidden();
     });
 
     it('toggles correctly between different modes', function() {
@@ -565,13 +565,13 @@ describe('timepicker directive', function () {
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '10', 'PM']);
       expect(getModelState()).toEqual([14, 10]);
-      expect(getMeridianTd().css('display')).not.toBe('none');
+      expect(getMeridianTd()).not.toBeHidden();
 
       $rootScope.meridian = false;
       $rootScope.$digest();
       expect(getTimeState(true)).toEqual(['14', '10']);
       expect(getModelState()).toEqual([14, 10]);
-      expect(getMeridianTd().css('display')).toBe('none');
+      expect(getMeridianTd()).toBeHidden();
     });
 
     it('handles correctly initially empty model on parent element', function() {
@@ -586,7 +586,7 @@ describe('timepicker directive', function () {
   describe('`meridians` attribute', function() {
     beforeEach(inject(function() {
       $rootScope.meridiansArray = ['am', 'pm'];
-      element = $compile('<timepicker ng-model="$parent.time" meridians="meridiansArray"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time" meridians="meridiansArray"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
 
@@ -608,7 +608,7 @@ describe('timepicker directive', function () {
       timepickerConfig.hourStep = 2;
       timepickerConfig.minuteStep = 10;
       timepickerConfig.showMeridian = false;
-      element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(timepickerConfig) {
@@ -654,7 +654,7 @@ describe('timepicker directive', function () {
       angular.extend(originalConfig, timepickerConfig);
       timepickerConfig.meridians = ['π.μ.', 'μ.μ.'];
       timepickerConfig.showMeridian = true;
-      element = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(timepickerConfig) {
@@ -758,7 +758,7 @@ describe('timepicker directive', function () {
 
     it('handles 12/24H mode change', function() {
       $rootScope.meridian = true;
-      element = $compile('<timepicker ng-model="$parent.time" show-meridian="meridian"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time" show-meridian="meridian"></timepicker>')($rootScope);
       $rootScope.$digest();
 
       var el = getHoursInputEl();
@@ -778,7 +778,7 @@ describe('timepicker directive', function () {
 
   describe('when model is not a Date', function() {
     beforeEach(inject(function() {
-      eelement = $compile('<timepicker ng-model="$parent.time"></timepicker>')($rootScope);
+      eelement = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
     }));
 
     it('should not be invalid when the model is null', function() {
@@ -830,7 +830,7 @@ describe('timepicker directive', function () {
   describe('use with `ng-required` directive', function() {
     beforeEach(inject(function() {
       $rootScope.time = null;
-      element = $compile('<timepicker ng-model="$parent.time" ng-required="true"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time" ng-required="true"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
 
@@ -849,7 +849,7 @@ describe('timepicker directive', function () {
     beforeEach(inject(function() {
       $rootScope.changeHandler = jasmine.createSpy('changeHandler');
       $rootScope.time = new Date();
-      element = $compile('<timepicker ng-model="$parent.time" ng-change="$parent.changeHandler()"></timepicker>')($rootScope);
+      element = $compile('<timepicker ng-model="time" ng-change="changeHandler()"></timepicker>')($rootScope);
       $rootScope.$digest();
     }));
 
