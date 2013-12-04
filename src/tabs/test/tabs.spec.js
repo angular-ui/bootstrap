@@ -230,14 +230,14 @@ describe('tabs', function() {
   });
 
   describe('advanced tab-heading element', function() {
-    beforeEach(inject(function($compile, $rootScope) {
+    beforeEach(inject(function($compile, $rootScope, $sce) {
       scope = $rootScope.$new();
-      scope.myHtml = "<b>hello</b>, there!";
+      scope.myHtml = $sce.trustAsHtml("<b>hello</b>, there!");
       scope.value = true;
       elm = $compile([
         '<tabset>',
         '  <tab>',
-        '    <tab-heading ng-bind-html-unsafe="myHtml" ng-show="value">',
+        '    <tab-heading ng-bind-html="myHtml" ng-show="value">',
         '    </tab-heading>',
         '  </tab>',
         '  <tab><data-tab-heading>1</data-tab-heading></tab>',
@@ -257,11 +257,11 @@ describe('tabs', function() {
     });
 
     it('should hide and show the heading depending on value', function() {
-      expect(heading().eq(0).css('display')).not.toBe('none');
+      expect(heading().eq(0)).not.toBeHidden();
       scope.$apply('value = false');
-      expect(heading().eq(0).css('display')).toBe('none');
+      expect(heading().eq(0)).toBeHidden();
       scope.$apply('value = true');
-      expect(heading().eq(0).css('display')).not.toBe('none');
+      expect(heading().eq(0)).not.toBeHidden();
     });
 
     it('should have a tab-heading no matter what syntax was used', function() {
