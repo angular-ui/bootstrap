@@ -664,4 +664,113 @@ describe('tabs', function() {
       expect(contents.eq(2).text().trim()).toEqual('3,4,5,');
     }));
   });
+
+  //https://github.com/angular-ui/bootstrap/issues/783
+  describe('nested tabs', function() {
+    var elm;
+    it('should render without errors', inject(function($compile, $rootScope) {
+      var scope = $rootScope.$new();
+      elm = $compile([
+        '<div>',
+        '  <tabset>',
+        '    <tab heading="Tab 1">',
+        '      <tabset>',
+        '        <tab heading="Tab 1A">',
+        '        </tab>',
+        '      </tabset>',
+        '    </tab>',
+        '    <tab heading="Tab 2">',
+        '      <tabset>',
+        '        <tab heading="Tab 2A">',
+        '        </tab>',
+        '      </tabset>',
+        '    </tab>',
+        '  </tabset>',
+        '</div>'
+      ].join('\n'))(scope);
+      scope.$apply();
+
+      // 1 outside tabset, 2 nested tabsets
+      expect(elm.find('.tabbable').length).toEqual(3);
+    }));
+
+    it('should render with the correct scopes', inject(function($compile, $rootScope) {
+      var scope = $rootScope.$new();
+      scope.tab1Text = 'abc';
+      scope.tab1aText = '123';
+      scope.tab1aHead = '123';
+      scope.tab2aaText = '456';
+      elm = $compile([
+        '<div>',
+        '  <tabset>',
+        '    <tab heading="Tab 1">',
+        '      <tabset>',
+        '        <tab heading="{{ tab1aHead }}">',
+        '          {{ tab1aText }}',
+        '        </tab>',
+        '      </tabset>',
+        '      <span class="tab-1">{{ tab1Text }}</span>',
+        '    </tab>',
+        '    <tab heading="Tab 2">',
+        '      <tabset>',
+        '        <tab heading="Tab 2A">',
+        '          <tabset>',
+        '            <tab heading="Tab 2AA">',
+        '              <span class="tab-2aa">{{ tab2aaText }}</span>',
+        '            </tab>',
+        '          </tabset>',
+        '        </tab>',
+        '      </tabset>',
+        '    </tab>',
+        '  </tabset>',
+        '</div>'
+      ].join('\n'))(scope);
+      scope.$apply();
+
+      var outsideTabset = elm.find('.tabbable').eq(0);
+      var nestedTabset = outsideTabset.find('.tabbable');
+
+      expect(elm.find('.tabbable').length).toEqual(4);
+      expect(outsideTabset.find('.tab-pane').eq(0).find('.tab-1').text().trim()).toEqual(scope.tab1Text);
+      expect(nestedTabset.find('.tab-pane').eq(0).text().trim()).toEqual(scope.tab1aText);
+      expect(nestedTabset.find('ul.nav-tabs li').eq(0).text().trim()).toEqual(scope.tab1aHead);
+      expect(nestedTabset.eq(2).find('.tab-pane').eq(0).find('.tab-2aa').text().trim()).toEqual(scope.tab2aaText);
+    }));
+
+    it('ng-repeat works with nested tabs', inject(function($compile, $rootScope) {
+      var scope = $rootScope.$new();
+      scope.tabs = [
+        {
+          tabs: [
+          {
+            content: 'tab1a'
+          },
+          {
+            content: 'tab2a'
+          }
+          ],
+          content: 'tab1'
+        }
+      ];
+      elm = $compile([
+        '<div>',
+        '  <tabset>',
+        '    <tab ng-repeat="tab in tabs">',
+        '      <tabset>',
+        '        <tab ng-repeat="innerTab in tab.tabs">',
+        '          <span class="inner-tab-content">{{ innerTab.content }}</span>',
+        '        </tab>',
+        '      </tabset>',
+        '      <span class="outer-tab-content">{{ tab.content }}</span>',
+        '    </tab>',
+        '  </tabset>',
+        '</div>'
+      ].join('\n'))(scope);
+      scope.$apply();
+
+      expect(elm.find('.inner-tab-content').eq(0).text().trim()).toEqual(scope.tabs[0].tabs[0].content);
+      expect(elm.find('.inner-tab-content').eq(1).text().trim()).toEqual(scope.tabs[0].tabs[1].content);
+      expect(elm.find('.outer-tab-content').eq(0).text().trim()).toEqual(scope.tabs[0].content);
+    }));
+  });
 });
