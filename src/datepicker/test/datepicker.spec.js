@@ -1294,26 +1294,31 @@ describe('datepicker directive', function () {
       });
     });
   });
-});
 
-describe('datepicker directive with empty initial state', function () {
-  var $rootScope, element;
-  beforeEach(module('ui.bootstrap.datepicker'));
-  beforeEach(module('template/datepicker/datepicker.html'));
-  beforeEach(inject(function(_$compile_, _$rootScope_) {
-    $compile = _$compile_;
-    $rootScope = _$rootScope_;
-    $rootScope.date = null;
-    element = $compile('<datepicker ng-model="$parent.date"></datepicker>')($rootScope);
-    $rootScope.$digest();
-  }));
+  describe('datepicker directive with empty initial state', function () {
+    beforeEach(inject(function() {
+      $rootScope.date = null;
+      element = $compile('<datepicker ng-model="$parent.date"></datepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
 
-  it('is a `<table>` element', function() {
-    expect(element.prop('tagName')).toBe('TABLE');
-    expect(element.find('thead').find('tr').length).toBe(2);
-  });
+    it('is a `<table>` element', function() {
+      expect(element.prop('tagName')).toBe('TABLE');
+      expect(element.find('thead').find('tr').length).toBe(2);
+    });
 
-  it('is shows rows with days', function() {
-    expect(element.find('tbody').find('tr').length).toBeGreaterThan(3);
+    it('is shows rows with days', function() {
+      expect(element.find('tbody').find('tr').length).toBeGreaterThan(3);
+    });
+
+    it('sets default 00:00:00 time for selected date', function() {
+      $rootScope.date = new Date('August 1, 2013');
+      $rootScope.$digest();
+      $rootScope.date = null;
+      $rootScope.$digest();
+
+      clickOption(2, 0);
+      expect($rootScope.date).toEqual(new Date('August 11, 2013 00:00:00'));
+    });
   });
 });
