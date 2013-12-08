@@ -70,6 +70,17 @@ describe('tooltip directive', function () {
       $timeout.flush();
       expect(fragment).not.toHaveOpenTooltips();
     });
+
+    it('should update tooltip when its content becomes empty', function () {
+      $rootScope.content = 'some text';
+      var fragment = compileTooltip('<span tooltip="{{ content }}"></span>');
+
+      $rootScope.content = '';
+      $rootScope.$digest();
+
+      fragment.find('span').trigger( 'mouseenter' );
+      expect(fragment).not.toHaveOpenTooltips();
+    });
   });
 
   describe('option by option', function () {
