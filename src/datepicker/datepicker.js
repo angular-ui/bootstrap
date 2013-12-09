@@ -366,7 +366,10 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
       ngModel.$parsers.unshift(parseDate);
 
       // Inner change
-      scope.dateSelection = function() {
+      scope.dateSelection = function(dt) {
+        if (angular.isDefined(dt)) {
+          scope.date = dt;
+        }
         ngModel.$setViewValue(scope.date);
         ngModel.$render();
 
@@ -442,13 +445,11 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
         }
       });
 
-      var $setModelValue = $parse(attrs.ngModel).assign;
-
       scope.today = function() {
-        $setModelValue(originalScope, new Date());
+        scope.dateSelection(new Date());
       };
       scope.clear = function() {
-        $setModelValue(originalScope, null);
+        scope.dateSelection(null);
       };
 
       var $popup = $compile(popupEl)(scope);

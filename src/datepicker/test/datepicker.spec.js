@@ -1195,6 +1195,36 @@ describe('datepicker directive', function () {
           expect(buttonBarElement.css('display')).toBe('none');
         });
       });
+
+      describe('`ng-change`', function() {
+        beforeEach(inject(function() {
+          $rootScope.changeHandler = jasmine.createSpy('changeHandler');
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup ng-change="changeHandler()"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+          assignButtonBar();
+        }));
+
+        it('should be called when `today` is clicked', function() {
+          buttons.eq(0).click();
+          expect($rootScope.changeHandler).toHaveBeenCalled();
+        });
+
+        it('should not be called when `weeks` is clicked', function() {
+          buttons.eq(1).click();
+          expect($rootScope.changeHandler).not.toHaveBeenCalled();
+        });
+
+        it('should be called when `clear` is clicked', function() {
+          buttons.eq(2).click();
+          expect($rootScope.changeHandler).toHaveBeenCalled();
+        });
+
+        it('should not be called when `close` is clicked', function() {
+          buttons.eq(3).click();
+          expect($rootScope.changeHandler).not.toHaveBeenCalled();
+        });
+      });
     });
 
     describe('use with `ng-required` directive', function() {
