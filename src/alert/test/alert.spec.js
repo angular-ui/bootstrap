@@ -51,6 +51,14 @@ describe("alert", function () {
     expect(alerts.eq(2)).not.toHaveClass('alert-block');
   });
 
+  it("should show close buttons", function () {
+    var alerts = createAlerts();
+
+    for (var i = 0, n = alerts.length; i < n; i++) {
+      expect(findCloseButton(i).css('display')).not.toBe('none');
+    }
+  });
+
   it("should fire callback when closed", function () {
 
     var alerts = createAlerts();
@@ -59,7 +67,9 @@ describe("alert", function () {
       scope.removeAlert = jasmine.createSpy();
     });
 
+    expect(findCloseButton(0).css('display')).not.toBe('none');
     findCloseButton(1).click();
+
     expect(scope.removeAlert).toHaveBeenCalledWith(1);
   });
 
