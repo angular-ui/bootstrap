@@ -106,7 +106,6 @@ angular.module('ui.bootstrap.modal', [])
 
       var backdropjqLiteEl, backdropDomEl;
       var backdropScope = $rootScope.$new(true);
-      var body = $document.find('body').eq(0);
       var openedWindows = $$stackedMap.createNew();
       var $modalStack = {};
 
@@ -166,7 +165,9 @@ angular.module('ui.bootstrap.modal', [])
           backdrop: modal.backdrop,
           keyboard: modal.keyboard
         });
-          
+
+        var body = $document.find('body').eq(0);
+
         if (backdropIndex() >= 0 && !backdropDomEl) {
             backdropjqLiteEl = angular.element('<div modal-backdrop></div>');
             backdropDomEl = $compile(backdropjqLiteEl)(backdropScope);
