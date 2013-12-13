@@ -112,7 +112,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           var tooltip = $compile( template )( scope );
           var transitionTimeout;
           var popupTimeout;
-          var $body = $document.find( 'body' );
           var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
           var triggers = getTriggers( undefined );
           var hasRegisteredTriggers = false;
@@ -172,7 +171,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             // Now we add it to the DOM because need some info about it. But it's not 
             // visible yet anyway.
             if ( appendToBody ) {
-                $body.append( tooltip );
+                $document.find( 'body' ).append( tooltip );
             } else {
               element.after( tooltip );
             }
@@ -271,12 +270,15 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
           });
 
-          attrs.$observe( prefix+'Trigger', function ( val ) {
-
+          var unregisterTriggers = function() {
             if (hasRegisteredTriggers) {
               element.unbind( triggers.show, showTooltipBind );
               element.unbind( triggers.hide, hideTooltipBind );
             }
+          };
+
+          attrs.$observe( prefix+'Trigger', function ( val ) {
+            unregisterTriggers();
 
             triggers = getTriggers( val );
 
@@ -307,11 +309,12 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
           // Make sure tooltip is destroyed and removed.
           scope.$on('$destroy', function onDestroyTooltip() {
+            $timeout.cancel( transitionTimeout );
             $timeout.cancel( popupTimeout );
+            unregisterTriggers();
             tooltip.remove();
             tooltip.unbind();
             tooltip = null;
-            $body = null;
           });
         }
       };
