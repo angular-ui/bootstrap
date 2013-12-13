@@ -281,6 +281,7 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
       scope.showButtonBar = angular.isDefined(attrs.showButtonBar) ? originalScope.$eval(attrs.showButtonBar) : datepickerPopupConfig.showButtonBar;
 
       originalScope.$on('$destroy', function() {
+        $popup.remove();
         scope.$destroy();
       });
 

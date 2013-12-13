@@ -1298,6 +1298,19 @@ describe('datepicker directive', function () {
         expect($body.children().length).toEqual(bodyLength + 1);
         expect(elm.children().length).toEqual(1);
       });
+      it('should be removed on scope destroy', function() {
+        var $body = $document.find('body'),
+            bodyLength = $body.children().length,
+            isolatedScope = $rootScope.$new(),
+            elm = angular.element(
+              '<input datepicker-popup ng-model="date" datepicker-append-to-body="true"></input>'
+            );
+        $compile(elm)(isolatedScope);
+        isolatedScope.$digest();
+        expect($body.children().length).toEqual(bodyLength + 1);
+        isolatedScope.$destroy();
+        expect($body.children().length).toEqual(bodyLength);
+      });
     });
     
     describe('with setting datepickerConfig.showWeeks to false', function() {
