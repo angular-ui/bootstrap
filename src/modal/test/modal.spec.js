@@ -104,6 +104,7 @@ describe('$modal', function () {
 
   function dismiss(modal, reason) {
     modal.dismiss(reason);
+    $timeout.flush();
     $rootScope.$digest();
   }
 
@@ -120,6 +121,9 @@ describe('$modal', function () {
       dismiss(modal, 'closing in test');
 
       expect($document).toHaveModalsOpen(0);
+
+      // Backdrop animation
+      $timeout.flush();
       expect($document).not.toHaveBackdrop();
     });
 
@@ -135,6 +139,9 @@ describe('$modal', function () {
       dismiss(modal, 'closing in test');
 
       expect($document).toHaveModalsOpen(0);
+
+      // Backdrop animation
+      $timeout.flush();
       expect($document).not.toHaveBackdrop();
     });
 
@@ -144,6 +151,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
+      $timeout.flush();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
@@ -155,6 +163,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       $document.find('body > div.modal').click();
+      $timeout.flush();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
@@ -386,6 +395,9 @@ describe('$modal', function () {
         expect(backdropEl).toHaveClass('in');
 
         dismiss(modal);
+        // Backdrop animation
+        $timeout.flush();
+
         modal = open({ template: '<div>With backdrop</div>' });
         backdropEl = $document.find('body > div.modal-backdrop');
         expect(backdropEl).not.toHaveClass('in');

@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.modal', [])
+angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
 /**
  * A helper, internal data structure that acts as a map but also allows getting / removing
@@ -78,7 +78,8 @@ angular.module('ui.bootstrap.modal', [])
     return {
       restrict: 'EA',
       scope: {
-        index: '@'
+        index: '@',
+        animate: '='
       },
       replace: true,
       transclude: true,
@@ -105,8 +106,8 @@ angular.module('ui.bootstrap.modal', [])
     };
   }])
 
-  .factory('$modalStack', ['$document', '$compile', '$rootScope', '$$stackedMap',
-    function ($document, $compile, $rootScope, $$stackedMap) {
+  .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
+    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
@@ -140,20 +141,53 @@ angular.module('ui.bootstrap.modal', [])
         openedWindows.remove(modalInstance);
 
         //remove window DOM element
-        modalWindow.modalDomEl.remove();
+        removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, 300, checkRemoveBackdrop);
         body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
+      }
 
-        //remove backdrop if no longer needed
-        if (backdropDomEl && backdropIndex() == -1) {
-          backdropDomEl.remove();
-          backdropDomEl = undefined;
+      function checkRemoveBackdrop() {
+          //remove backdrop if no longer needed
+          if (backdropDomEl && backdropIndex() == -1) {
+            var backdropScopeRef = backdropScope;
+            removeAfterAnimate(backdropDomEl, backdropScope, 150, function () {
+              backdropScopeRef.$destroy();
+              backdropScopeRef = null;
+            });
+            backdropDomEl = undefined;
+            backdropScope = undefined;
+          }
+      }
 
-          backdropScope.$destroy();
-          backdropScope = undefined;
+      function removeAfterAnimate(domEl, scope, emulateTime, done) {
+        // Closing animation
+        scope.animate = false;
+
+        var transitionEndEventName = $transition.transitionEndEventName;
+        if (transitionEndEventName) {
+          // transition out
+          var timeout = $timeout(afterAnimating, emulateTime);
+
+          domEl.bind(transitionEndEventName, function () {
+            $timeout.cancel(timeout);
+            afterAnimating();
+            scope.$apply();
+          });
+        } else {
+          // Ensure this call is async
+          $timeout(afterAnimating, 0);
         }
 
-        //destroy scope
-        modalWindow.modalScope.$destroy();
+        function afterAnimating() {
+          if (afterAnimating.done) {
+            return;
+          }
+          afterAnimating.done = true;
+
+          domEl.remove();
+          if (done) {
+            done();
+          }
+        }
       }
 
       $document.bind('keydown', function (evt) {
@@ -191,6 +225,7 @@ angular.module('ui.bootstrap.modal', [])
         var angularDomEl = angular.element('<div modal-window></div>');
         angularDomEl.attr('window-class', modal.windowClass);
         angularDomEl.attr('index', openedWindows.length() - 1);
+        angularDomEl.attr('animate', 'animate');
         angularDomEl.html(modal.content);
 
         var modalDomEl = $compile(angularDomEl)(modal.scope);
