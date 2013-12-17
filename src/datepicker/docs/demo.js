@@ -1,4 +1,4 @@
-var DatepickerDemoCtrl = function ($scope, $timeout) {
+var DatepickerDemoCtrl = function ($scope) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -23,10 +23,11 @@ var DatepickerDemoCtrl = function ($scope, $timeout) {
   };
   $scope.toggleMin();
 
-  $scope.open = function() {
-    $timeout(function() {
-      $scope.opened = true;
-    });
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
   };
 
   $scope.dateOptions = {
