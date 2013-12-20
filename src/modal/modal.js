@@ -93,8 +93,11 @@ angular.module('ui.bootstrap.modal', [])
       link: function (scope, element, attrs) {
         scope.windowClass = attrs.windowClass || '';
 
-        //trigger CSS transitions
+        // focus a freshly-opened modal
+        element[0].focus();
+
         $timeout(function () {
+          // trigger CSS transitions
           scope.animate = true;
         });
       }
