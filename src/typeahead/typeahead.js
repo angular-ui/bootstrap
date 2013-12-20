@@ -230,9 +230,6 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
         //typeahead is open and an "interesting" key was pressed
         if (scope.matches.length === 0 || HOT_KEYS.indexOf(evt.which) === -1) {
-          if (evt.which === 13) {
-            evt.preventDefault();
-          }
           return;
         }
 
