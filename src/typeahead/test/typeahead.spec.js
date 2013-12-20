@@ -501,6 +501,18 @@ describe('typeahead tests', function () {
       expect(inputEl.val()).toEqual('AL');
       expect($scope.result).toEqual($scope.states[0]);
     });
+
+
+  });
+
+  describe('append to body', function () {
+
+    it('append typeahead results to body', function () {
+      var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-append-to-body='true'></div>");
+      changeInputValueTo(element, 'ba');
+      expect($document.find('body')).toBeOpenWithActive(2, 0);
+
+    });
   });
 
 });
