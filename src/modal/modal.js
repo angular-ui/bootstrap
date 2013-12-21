@@ -107,6 +107,8 @@ angular.module('ui.bootstrap.modal', [])
   .factory('$modalStack', ['$document', '$compile', '$rootScope', '$$stackedMap',
     function ($document, $compile, $rootScope, $$stackedMap) {
 
+      var OPENED_MODAL_CLASS = 'modal-open';
+
       var backdropjqLiteEl, backdropDomEl;
       var backdropScope = $rootScope.$new(true);
       var openedWindows = $$stackedMap.createNew();
@@ -129,6 +131,7 @@ angular.module('ui.bootstrap.modal', [])
 
       function removeModalWindow(modalInstance) {
 
+        var body = $document.find('body').eq(0);
         var modalWindow = openedWindows.get(modalInstance).value;
 
         //clean up the stack
@@ -136,6 +139,7 @@ angular.module('ui.bootstrap.modal', [])
 
         //remove window DOM element
         modalWindow.modalDomEl.remove();
+        body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
 
         //remove backdrop if no longer needed
         if (backdropDomEl && backdropIndex() == -1) {
@@ -185,7 +189,7 @@ angular.module('ui.bootstrap.modal', [])
         var modalDomEl = $compile(angularDomEl)(modal.scope);
         openedWindows.top().value.modalDomEl = modalDomEl;
         body.append(modalDomEl);
-       
+        body.addClass(OPENED_MODAL_CLASS);
       };
 
       $modalStack.close = function (modalInstance, result) {
