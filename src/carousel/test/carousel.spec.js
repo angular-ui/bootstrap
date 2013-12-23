@@ -294,6 +294,20 @@ describe('carousel', function() {
         expect(ctrl.slides.length).toBe(1);
         expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
       });
+
+      it('issue 1414 - should not continue running timers after scope is destroyed', function() {
+        spyOn(scope, 'next').andCallThrough();
+        scope.interval = 2000;
+        scope.$digest();
+
+        $timeout.flush();
+        expect(scope.next.calls.length).toBe(1);
+
+        scope.$destroy();
+
+        $timeout.flush(scope.interval);
+        expect(scope.next.calls.length).toBe(1);
+      });
     });
   });
 });

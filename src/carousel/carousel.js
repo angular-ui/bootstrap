@@ -106,6 +106,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   function restartTimer() {
     if (currentTimeout) {
       $timeout.cancel(currentTimeout);
+      currentTimeout = null;
     }
     function go() {
       if (isPlaying) {
@@ -131,6 +132,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
       isPlaying = false;
       if (currentTimeout) {
         $timeout.cancel(currentTimeout);
+        currentTimeout = null;
       }
     }
   };
@@ -163,6 +165,13 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
       currentIndex--;
     }
   };
+
+  $scope.$on('$destroy', function () {
+    if (currentTimeout) {
+      $timeout.cancel(currentTimeout);
+      currentTimeout = null;
+    }
+  });
 }])
 
 /**
