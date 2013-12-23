@@ -234,6 +234,19 @@ describe('carousel', function() {
       next.click();
       testSlideActive(1);
     });
+
+    it('issue 1414 - should not continue running timers after scope is destroyed', function() {
+      testSlideActive(0);
+      $timeout.flush();
+      testSlideActive(1);
+      $timeout.flush();
+      testSlideActive(2);
+      $timeout.flush();
+      testSlideActive(0);
+      scope.$destroy();
+      expect($timeout.flush).toThrow('No deferred tasks to be flushed');
+    });
+
   });
 
   describe('controller', function() {

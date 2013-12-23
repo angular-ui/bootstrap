@@ -14,6 +14,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     currentTimeout, isPlaying;
   self.currentSlide = null;
 
+  var destroyed = false;
   /* direction: "prev" or "next" */
   self.select = function(nextSlide, direction) {
     var nextIndex = slides.indexOf(nextSlide);
@@ -31,6 +32,8 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
       }
     }
     function goNext() {
+      // Scope has been destroyed, stop here.
+      if (destroyed) { return; }
       //If we have a slide to transition from and we have a transition type and we're allowed, go
       if (self.currentSlide && angular.isString(direction) && !$scope.noTransition && nextSlide.$element) {
         //We shouldn't do class manip in here, but it's the same weird thing bootstrap does. need to fix sometime
@@ -66,6 +69,9 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
       $scope.$currentTransition = null;
     }
   };
+  $scope.$on('$destroy', function () {
+    destroyed = true;
+  });
 
   /* Allow outside people to call indexOf on slides array */
   self.indexOfSlide = function(slide) {
