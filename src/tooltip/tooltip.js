@@ -261,10 +261,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             scope.tt_placement = angular.isDefined( val ) ? val : options.placement;
           });
 
-          attrs.$observe(prefix + 'Animation', function (val) {
-            scope.tt_animation = angular.isDefined(val) ? !!val : options.animation;
-          });
-
           attrs.$observe( prefix+'PopupDelay', function ( val ) {
             var delay = parseInt( val, 10 );
             scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
@@ -291,6 +287,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
             hasRegisteredTriggers = true;
           });
+
+          var animation = scope.$eval(attrs[prefix + 'Animation']);
+          scope.tt_animation = angular.isDefined(animation) ? !!animation : options.animation;
 
           attrs.$observe( prefix+'AppendToBody', function ( val ) {
             appendToBody = angular.isDefined( val ) ? $parse( val )( scope ) : appendToBody;
