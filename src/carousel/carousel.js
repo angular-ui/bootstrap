@@ -103,24 +103,32 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   };
 
   $scope.$watch('interval', restartTimer);
+  $scope.$on('$destroy', resetTimer);
+
   function restartTimer() {
+    resetTimer();
+    var interval = +$scope.interval;
+    if (!isNaN(interval) && interval>=0) {
+      currentTimeout = $timeout(timerFn, interval);
+    }
+  }
+
+  function resetTimer() {
     if (currentTimeout) {
       $timeout.cancel(currentTimeout);
       currentTimeout = null;
     }
-    function go() {
-      if (isPlaying) {
-        $scope.next();
-        restartTimer();
-      } else {
-        $scope.pause();
-      }
-    }
-    var interval = +$scope.interval;
-    if (!isNaN(interval) && interval>=0) {
-      currentTimeout = $timeout(go, interval);
+  }
+
+  function timerFn() {
+    if (isPlaying) {
+      $scope.next();
+      restartTimer();
+    } else {
+      $scope.pause();
     }
   }
+
   $scope.play = function() {
     if (!isPlaying) {
       isPlaying = true;
@@ -130,10 +138,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   $scope.pause = function() {
     if (!$scope.noPause) {
       isPlaying = false;
-      if (currentTimeout) {
-        $timeout.cancel(currentTimeout);
-        currentTimeout = null;
-      }
+      resetTimer();
     }
   };
 
@@ -166,12 +171,6 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     }
   };
 
-  $scope.$on('$destroy', function () {
-    if (currentTimeout) {
-      $timeout.cancel(currentTimeout);
-      currentTimeout = null;
-    }
-  });
 }])
 
 /**
