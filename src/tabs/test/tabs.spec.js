@@ -443,16 +443,33 @@ describe('tabs', function() {
       expectTitles(['1', 'tab 1', 'tab 2', 'tab 3']);
       expectContents(['Hello', 'content 1', 'content 2', 'content 3']);
 
+      // Select last tab
       titles().find('a').eq(3).click();
       expect(contents().eq(3)).toHaveClass('active');
       expect(titles().eq(3)).toHaveClass('active');
 
+      // Remove last tab
       scope.$apply('list = [1,2]');
       expectTitles(['1', 'tab 1', 'tab 2']);
       expectContents(['Hello', 'content 1', 'content 2']);
 
+      // "tab 2" is now selected
       expect(titles().eq(2)).toHaveClass('active');
       expect(contents().eq(2)).toHaveClass('active');
+
+      // Select 2nd tab ("tab 1")
+      titles().find('a').eq(1).click();
+      expect(titles().eq(1)).toHaveClass('active');
+      expect(contents().eq(1)).toHaveClass('active');
+
+      // Remove 2nd tab
+      scope.$apply('list = [2]');
+      expectTitles(['1', 'tab 2']);
+      expectContents(['Hello', 'content 2']);
+
+      // New 2nd tab is now selected
+      expect(titles().eq(1)).toHaveClass('active');
+      expect(contents().eq(1)).toHaveClass('active');
     }));
   });
 
