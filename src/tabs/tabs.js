@@ -9,12 +9,6 @@
 
 angular.module('ui.bootstrap.tabs', [])
 
-.directive('tabs', function() {
-  return function() {
-    throw new Error("The `tabs` directive is deprecated, please migrate to `tabset`. Instructions can be found at http://github.com/angular-ui/bootstrap/tree/master/CHANGELOG.md");
-  };
-})
-
 .controller('TabsetController', ['$scope', function TabsetCtrl($scope) {
   var ctrl = this,
       tabs = ctrl.tabs = $scope.tabs = [];
