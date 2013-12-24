@@ -10,7 +10,7 @@ describe('progressbar directive', function () {
     $rootScope.$digest();
   }));
 
-  var BAR_CLASS = 'bar';
+  var BAR_CLASS = 'progress-bar';
 
   function getBar(i) {
     return element.children().eq(i);
