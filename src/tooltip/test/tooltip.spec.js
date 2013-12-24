@@ -98,7 +98,7 @@ describe('tooltip', function() {
     scope.alt = "Alt Message";
 
     elmBody = $compile( angular.element( 
-      '<div><span alt={{alt}} tooltip="{{tooltipMsg}}">Selector Text</span></div>' 
+      '<div><span alt={{alt}} tooltip="{{tooltipMsg}}" tooltip-animation="false">Selector Text</span></div>'
     ) )( scope );
 
     $compile( elmBody )( scope );
@@ -114,6 +114,13 @@ describe('tooltip', function() {
     expect( ttScope.content ).toBe( scope.tooltipMsg );
 
     elm.trigger( 'mouseleave' );
+
+    //Isolate scope contents should be the same after hiding and showing again (issue 1191)
+    elm.trigger( 'mouseenter' );
+
+    ttScope = angular.element( elmBody.children()[1] ).scope();
+    expect( ttScope.placement ).toBe( 'top' );
+    expect( ttScope.content ).toBe( scope.tooltipMsg );
   }));
 
   it('should not show tooltips if there is nothing to show - issue #129', inject(function ($compile) {
@@ -134,6 +141,24 @@ describe('tooltip', function() {
     elm.remove();
     elmScope.$destroy();
     expect( elmBody.children().length ).toBe( 0 );
+  }));
+
+  it('issue 1191 - isolate scope on the popup should always be child of correct element scope', inject( function ( $compile ) {
+    var ttScope;
+    elm.trigger( 'mouseenter' );
+
+    ttScope = angular.element( elmBody.children()[1] ).scope();
+    expect( ttScope.$parent ).toBe( elmScope );
+
+    elm.trigger( 'mouseleave' );
+
+    // After leaving and coming back, the scope's parent should be the same
+    elm.trigger( 'mouseenter' );
+
+    ttScope = angular.element( elmBody.children()[1] ).scope();
+    expect( ttScope.$parent ).toBe( elmScope );
+
+    elm.trigger( 'mouseleave' );
   }));
 
   describe('with specified enable expression', function() {
@@ -323,18 +348,12 @@ describe('tooltip', function() {
 
       elm = elmBody.find('input');
       elmScope = elm.scope();
+      elm.trigger('fooTrigger');
       tooltipScope = elmScope.$$childTail;
     }));
 
-    it( 'should not contain a cached reference', function() {
-      expect( inCache() ).toBeTruthy();
-      elmScope.$destroy();
-      expect( inCache() ).toBeFalsy();
-    });
-
     it( 'should not contain a cached reference when visible', inject( function( $timeout ) {
       expect( inCache() ).toBeTruthy();
-      elm.trigger('fooTrigger');
       elmScope.$destroy();
       expect( inCache() ).toBeFalsy();
     }));
