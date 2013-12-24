@@ -1,15 +1,11 @@
-<div ng-controller="PaginationDemoCtrl" class="well well-small">
+<div ng-controller="PaginationDemoCtrl">
     <h4>Default</h4>
-
     <pagination total-items="totalItems" page="currentPage"></pagination>
     <pagination boundary-links="true" total-items="totalItems" page="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
     <pagination direction-links="false" boundary-links="true" total-items="totalItems" page="currentPage"></pagination>
     <pagination direction-links="false" total-items="totalItems" page="currentPage" num-pages="smallnumPages"></pagination>
-
-    <div>
-      <button class="btn btn-info" ng-click="setPage(3)">Set current page to: 3</button>
-      The selected page no: {{currentPage}}
-    </div>
+    <pre>The selected page no: {{currentPage}}</pre>
+    <button class="btn btn-info" ng-click="setPage(3)">Set current page to: 3</button>
 
     <hr />
     <h4>Pager</h4>
@@ -19,6 +15,5 @@
     <h4>Limit the maximum visible buttons</h4>
     <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
     <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-
     <pre>Page: {{bigCurrentPage}} / {{numPages}}</pre>
 </div>

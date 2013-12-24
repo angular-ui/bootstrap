@@ -63,7 +63,7 @@ section {
     border-bottom: 1px solid rgba(221,221,221,0.3);
 }
 
-.nav, .pagination, .carousel a {
+.nav, .pagination, .carousel, .panel-title a {
     cursor: pointer;
 }
 
