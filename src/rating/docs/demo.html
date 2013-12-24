@@ -1,12 +1,12 @@
 <div ng-controller="RatingDemoCtrl" class="well well-small">
     <h4>Default</h4>
     <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
-    <span class="badge" ng-class="{'badge-warning': percent<30, 'badge-info': percent>=30 && percent<70, 'badge-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
+    <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
 
     <pre style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
-    <button class="btn btn-small btn-danger" ng-click="rate = 0" ng-disabled="isReadonly">Clear</button>
-    <button class="btn btn-small" ng-click="isReadonly = ! isReadonly">Toggle Readonly</button>
+    <button class="btn btn-sm btn-danger" ng-click="rate = 0" ng-disabled="isReadonly">Clear</button>
+    <button class="btn btn-sm btn-default" ng-click="isReadonly = ! isReadonly">Toggle Readonly</button>
     <hr />
 
     <h4>Custom icons</h4>
