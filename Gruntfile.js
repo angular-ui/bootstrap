@@ -135,6 +135,16 @@ module.exports = function(grunt) {
       travis: {
         singleRun: true,
         browsers: ['Firefox']
+      },
+      coverage: {
+        singleRun: true,
+        preprocessors: {
+          'src/*/*.js': 'coverage'
+        },
+        reporters: ['progress', 'coverage'],
+        coverageReporter: {
+          type : 'text'
+        }
       }
     },
     changelog: {
@@ -316,11 +326,13 @@ module.exports = function(grunt) {
     grunt.task.run(['concat', 'uglify']);
   });
 
-  grunt.registerTask('test', 'Run tests on singleRun karma server', function() {
+  grunt.registerTask('test', 'Run tests on singleRun karma server', function (subTask) {
     //this task can be executed in 3 different environments: local, Travis-CI and Jenkins-CI
     //we need to take settings for each one into account
     if (process.env.TRAVIS) {
       grunt.task.run('karma:travis');
+    } else if (subTask === 'coverage') {
+      grunt.task.run('karma:coverage');
     } else {
       grunt.task.run(this.args.length ? 'karma:jenkins' : 'karma:continuous');
     }
