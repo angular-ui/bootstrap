@@ -398,7 +398,7 @@ describe('tabs', function() {
     beforeEach(inject(function($controller, $rootScope) {
       scope = $rootScope;
       //instantiate the controller stand-alone, without the directive
-      ctrl = $controller('TabsetController', {$scope: scope, $element: null});
+      ctrl = $controller('TabsetController', {$scope: scope});
     }));
 
 
@@ -609,7 +609,7 @@ describe('tabs', function() {
       scope = $rootScope.$new();
       scope.navType = 'pills';
 
-      elm = $compile('<tabset type="navType"></tabset>')(scope);
+      elm = $compile('<tabset type="{{navType}}"></tabset>')(scope);
       scope.$apply();
     }));
 
