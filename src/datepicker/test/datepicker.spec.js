@@ -164,7 +164,7 @@ describe('datepicker directive', function () {
     var options = getAllOptionsEl();
     for (var i = 0; i < 5; i ++) {
       for (var j = 0; j < 7; j ++) {
-        expect(options[i][j].find('button').find('span').hasClass('muted')).toBe( ((i === 0 && j < 3) || (i === 4 && j > 4)) );
+        expect(options[i][j].find('button').find('span').hasClass('text-muted')).toBe( ((i === 0 && j < 3) || (i === 4 && j > 4)) );
       }
     }
   });

@@ -9,18 +9,26 @@
     </div>
 
     <h4>Popup</h4>
-    <div class="form-horizontal">
-        <p>
-            <input type="text" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-            <button class="btn" ng-click="open($event)"><i class="icon-calendar"></i></button>
-        </p>
-        <p><i>Format options:</i> <select ng-model="format" ng-options="f for f in formats"><option></option></select></p>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Format:</label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
+        </div>
     </div>
 
     <hr />
-    <button class="btn btn-small btn-inverse" ng-click="today()">Today</button>
-    <button class="btn btn-small btn-inverse" ng-click="dt = '2009-08-24'">2009-08-24</button>
-    <button class="btn btn-small btn-success" ng-click="toggleWeeks()" tooltip="For inline datepicker">Toggle Weeks</button>
-    <button class="btn btn-small btn-danger" ng-click="clear()">Clear</button>
-    <button class="btn btn-small" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
+    <button class="btn btn-sm btn-info" ng-click="today()">Today</button>
+    <button class="btn btn-sm btn-default" ng-click="dt = '2009-08-24'">2009-08-24</button>
+    <button class="btn btn-sm btn-success" ng-click="toggleWeeks()" tooltip="For inline datepicker">Toggle Weeks</button>
+    <button class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+    <button class="btn btn-sm btn-default" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
 </div>
