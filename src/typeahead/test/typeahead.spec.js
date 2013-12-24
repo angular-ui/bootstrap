@@ -276,6 +276,13 @@ describe('typeahead tests', function () {
 
       expect(findMatches(element).eq(0).find('p').text()).toEqual('0 Alaska');
     }));
+
+    it('should throw error on invalid expression', function () {
+      var prepareInvalidDir = function () {
+        prepareInputEl("<div><input ng-model='result' typeahead='an invalid expression'></div>");
+      };
+      expect(prepareInvalidDir).toThrow();
+    });
   });
 
   describe('selecting a match', function () {
@@ -352,6 +359,84 @@ describe('typeahead tests', function () {
       expect($scope.result).toEqual('AL');
       expect(inputEl.val()).toEqual('AL');
     });
+  });
+
+  describe('pop-up interaction', function () {
+    var element;
+
+    beforeEach(function () {
+      element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue'></div>");
+    });
+
+    it('should activate prev/next matches on up/down keys', function () {
+      changeInputValueTo(element, 'b');
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Down arrow key
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 1);
+
+      // Down arrow key goes back to first element
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Up arrow key goes back to last element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 1);
+
+      // Up arrow key goes back to last element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 0);
+    });
+
+    it('should close popup on escape key', function () {
+      changeInputValueTo(element, 'b');
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Escape key
+      triggerKeyDown(element, 27);
+      expect(element).toBeClosed();
+    });
+
+    it('should highlight match on mouseenter', function () {
+      changeInputValueTo(element, 'b');
+      expect(element).toBeOpenWithActive(2, 0);
+
+      findMatches(element).eq(1).trigger('mouseenter');
+      expect(element).toBeOpenWithActive(2, 1);
+    });
+
+  });
+
+  describe('promises', function () {
+    var element, deferred;
+
+    beforeEach(inject(function ($q) {
+      deferred = $q.defer();
+      $scope.source = function () {
+        return deferred.promise;
+      };
+      element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source()'></div>");
+    }));
+
+    it('should display matches from promise', function () {
+      changeInputValueTo(element, 'c');
+      expect(element).toBeClosed();
+
+      deferred.resolve(['good', 'stuff']);
+      $scope.$digest();
+      expect(element).toBeOpenWithActive(2, 0);
+    });
+
+    it('should not display anything when promise is rejected', function () {
+      changeInputValueTo(element, 'c');
+      expect(element).toBeClosed();
+
+      deferred.reject('fail');
+      $scope.$digest();
+      expect(element).toBeClosed();
+    });
+
   });
 
   describe('non-regressions tests', function () {
