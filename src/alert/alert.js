@@ -12,7 +12,7 @@ angular.module('ui.bootstrap.alert', [])
     transclude:true,
     replace:true,
     scope: {
-      type: '=',
+      type: '@',
       close: '&'
     }
   };

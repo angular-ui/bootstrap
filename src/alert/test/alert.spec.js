@@ -13,7 +13,7 @@ describe('alert', function () {
 
     element = angular.element(
         '<div>' +
-          '<alert ng-repeat="alert in alerts" type="alert.type"' +
+          '<alert ng-repeat="alert in alerts" type="{{alert.type}}"' +
             'close="removeAlert($index)">{{alert.msg}}' +
           '</alert>' +
         '</div>');
@@ -88,7 +88,7 @@ describe('alert', function () {
   });
 
   it('should be possible to add additional classes for alert', function () {
-    var element = $compile('<alert class="alert-block" type="\'info\'">Default alert!</alert>')(scope);
+    var element = $compile('<alert class="alert-block" type="info">Default alert!</alert>')(scope);
     scope.$digest();
     expect(element).toHaveClass('alert-block');
     expect(element).toHaveClass('alert-info');
