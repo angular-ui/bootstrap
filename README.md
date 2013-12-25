@@ -94,6 +94,9 @@ Check the Grunt build file for other tasks that are defined for this project.
  
 This will start Karma server and will continously watch files in the project, executing tests upon every change.
 
+#### Test coverage
+Add the `--coverage` option (e.g. `grunt test --coverage`, `grunt watch --coverage`) to see reports on the test coverage. These coverage reports are found in the coverage folder.
+
 ### Customize templates
 
 As mentioned directives from this repository have all the markup externalized in templates. You might want to customize default
