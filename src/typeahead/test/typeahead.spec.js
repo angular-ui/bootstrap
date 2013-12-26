@@ -78,11 +78,15 @@ describe('typeahead tests', function () {
         var liEls = findMatches(this.actual);
 
         this.message = function () {
-          return "Expected '" + angular.mock.dump(this.actual) + "' to be opened.";
+          return "Expected '" + this.actual + "' to be opened.";
         };
         return typeaheadEl.css('display') === 'block' && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
       }
     });
+  });
+
+  afterEach(function () {
+    findDropDown($document.find('body')).remove();
   });
 
   //coarse grained, "integration" tests
@@ -582,12 +586,11 @@ describe('typeahead tests', function () {
 
   });
 
-  xdescribe('append to body', function () {
+  describe('append to body', function () {
     it('append typeahead results to body', function () {
       var element = prepareInputEl("<div><input ng-model='result' typeahead='item for item in source | filter:$viewValue' typeahead-append-to-body='true'></div>");
       changeInputValueTo(element, 'ba');
       expect($document.find('body')).toBeOpenWithActive(2, 0);
-
     });
   });
 
