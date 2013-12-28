@@ -1,3 +1,70 @@
+# 0.8.0 (2013-12-28)
+
+## Features
+
+- **datepicker:** 
+  - option whether to display button bar in popup ([4d158e0d](http://github.com/angular-ui/bootstrap/commit/4d158e0d))  
+- **modal:** 
+  - add modal-open class to body on modal open ([e76512fa](http://github.com/angular-ui/bootstrap/commit/e76512fa))  
+- **progressbar:** 
+  - add `max` attribute & support transclusion ([365573ab](http://github.com/angular-ui/bootstrap/commit/365573ab))  
+- **timepicker:** 
+  - default meridian labels based on locale ([8b1ab79a](http://github.com/angular-ui/bootstrap/commit/8b1ab79a))  
+- **typeahead:** 
+  - add typeahead-append-to-body option ([dd8eac22](http://github.com/angular-ui/bootstrap/commit/dd8eac22))   
+
+## Bug Fixes
+
+- **accordion:** 
+  - correct `is-open` handling for dynamic groups ([9ec21286](http://github.com/angular-ui/bootstrap/commit/9ec21286))  
+- **carousel:** 
+  - cancel timer on scope destruction ([5b9d929c](http://github.com/angular-ui/bootstrap/commit/5b9d929c))  
+  - cancel goNext on scope destruction ([7515df45](http://github.com/angular-ui/bootstrap/commit/7515df45))  
+- **collapse:** 
+  - dont animate height changes from 0 to 0 ([81e014a8](http://github.com/angular-ui/bootstrap/commit/81e014a8))  
+- **datepicker:** 
+  - set default zero time after no date selected ([93cd0df8](http://github.com/angular-ui/bootstrap/commit/93cd0df8))  
+  - fire `ngChange` on today/clear button press ([6b1c68fb](http://github.com/angular-ui/bootstrap/commit/6b1c68fb))  
+  - remove datepicker's popup on scope destroy ([48955d69](http://github.com/angular-ui/bootstrap/commit/48955d69))  
+  - remove edge case position updates ([1fbcb5d6](http://github.com/angular-ui/bootstrap/commit/1fbcb5d6))  
+- **modal:** 
+  - put backdrop in before window ([d64f4a97](http://github.com/angular-ui/bootstrap/commit/d64f4a97))  
+  - grab reference to body when it is needed in lieu of when the factory is created ([dd415a98](http://github.com/angular-ui/bootstrap/commit/dd415a98))
+  - focus freshly opened modal ([709e679c](http://github.com/angular-ui/bootstrap/commit/709e679c))  
+  - properly animate backdrops on each modal opening ([672a557a](http://github.com/angular-ui/bootstrap/commit/672a557a))  
+- **tabs:** 
+  - make nested tabs work ([c9acebbe](http://github.com/angular-ui/bootstrap/commit/c9acebbe))  
+- **tooltip:** 
+  - update tooltip content when empty ([60515ae1](http://github.com/angular-ui/bootstrap/commit/60515ae1))  
+  - support IE8 ([5dd98238](http://github.com/angular-ui/bootstrap/commit/5dd98238))  
+  - unbind element events on scope destroy ([3fe7aa8c](http://github.com/angular-ui/bootstrap/commit/3fe7aa8c))  
+  - respect animate attribute ([54e614a8](http://github.com/angular-ui/bootstrap/commit/54e614a8))   
+
+## Breaking Changes
+
+- **progressbar:** 
+ The onFull/onEmpty handlers & auto/stacked types have been removed.
+
+  To migrate your code change your markup like below.
+
+  Before:
+
+```html
+  <progress percent="var" class="progress-warning"></progress>
+```
+
+  After:
+
+```html
+  <progressbar value="var" type="warning"></progressbar>
+```
+
+  and for stacked instead of passing array/objects you can do:
+
+```html
+  <progress><bar ng-repeat="obj in objs" value="obj.var" type="{{obj.type}}"></bar></progress>
+```
+
 # 0.7.0 (2013-11-22)
 
 ## Features
