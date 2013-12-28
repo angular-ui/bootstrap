@@ -7,7 +7,7 @@
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-    <script src="ui-bootstrap-tpls-0.7.0.js"></script>
+    <script src="ui-bootstrap-tpls-0.8.0.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet"/>
@@ -97,7 +97,7 @@
             <p class="btn-group">
                 <a class="btn" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i> Code on Github</a>
                 <a class="btn btn-primary" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
-                    <i class="icon-download-alt icon-white"></i> Download <small>(0.7.0)</small>
+                    <i class="icon-download-alt icon-white"></i> Download <small>(0.8.0)</small>
                 </a>
                 <a class="btn" ng-click="showBuildModal()"><i class="icon-wrench"></i> Create a Build</a>
             </p>
@@ -245,7 +245,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'accordion')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -357,7 +357,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'alert')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -446,7 +446,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'buttons')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'buttons')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -553,7 +553,7 @@
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'carousel')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -653,7 +653,7 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'collapse')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'collapse')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -696,15 +696,17 @@ Provides a simple way to hide and show an element with a css transition</p>
     <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
     <h4>Inline</h4>
-    <div class="well well-small" ng-model="dt" style="display:inline-block;">
-        <datepicker min="minDate" show-weeks="showWeeks"></datepicker>
+    <div style="display:inline-block; min-height:290px;">
+      <div class="well well-small" ng-model="dt">
+          <datepicker min="minDate" show-weeks="showWeeks"></datepicker>
+      </div>
     </div>
 
     <h4>Popup</h4>
     <div class="form-horizontal">
         <p>
             <input type="text" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+            <button class="btn" ng-click="open($event)"><i class="icon-calendar"></i></button>
         </p>
         <p><i>Format options:</i> <select ng-model="format" ng-options="f for f in formats"><option></option></select></p>
     </div>
@@ -727,12 +729,12 @@ The datepicker shows dates that come from other than the main month being displa
 
 <h3>Datepicker Settings</h3>
 
-<p>All settings can be provided as attributes in the <code>&lt;datepicker&gt;</code> or globally configured through the <code>datepickerConfig</code>. <code>datepicker-popup</code> options may be provided as attributes in the <code>datepicker-popup</code>'s element, or globally configured through the <code>datepickerPopupConfig</code>.
- * <code>ng-model</code> <i class="icon-eye-open"></i>
-     :
-     The date object.</p>
+<p>All settings can be provided as attributes in the <code>&lt;datepicker&gt;</code> or globally configured through the <code>datepickerConfig</code>.</p>
 
 <ul>
+<li><p><code>ng-model</code> <i class="icon-eye-open"></i>
+ :
+ The date object.</p></li>
 <li><p><code>show-weeks</code> <i class="icon-eye-open"></i>
  <em>(Defaults: true)</em> :
  Whether to display week numbers.</p></li>
@@ -774,12 +776,15 @@ The datepicker shows dates that come from other than the main month being displa
 <h3>Popup Settings</h3>
 
 <p>Options for datepicker can be passed as JSON using the <code>datepicker-options</code> attribute.
-Specific settings for the <code>datepicker-popup</code> are:</p>
+Specific settings for the <code>datepicker-popup</code>, that can globally configured through the <code>datepickerPopupConfig</code>, are:</p>
 
 <ul>
 <li><p><code>datepicker-popup</code>
  <em>(Default: 'yyyy-MM-dd')</em> :
  The format for displayed dates.</p></li>
+<li><p><code>show-button-bar</code>
+ <em>(Default: true)</em> :
+ Whether to display a button bar underneath the datepicker.</p></li>
 <li><p><code>current-text</code>
  <em>(Default: 'Today')</em> :
  The text to display for the current day button.</p></li>
@@ -805,7 +810,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'datepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'datepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -814,15 +819,17 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
     &lt;pre&gt;Selected date is: &lt;em&gt;{{dt | date:&#x27;fullDate&#x27; }}&lt;/em&gt;&lt;/pre&gt;
 
     &lt;h4&gt;Inline&lt;/h4&gt;
-    &lt;div class=&quot;well well-small&quot; ng-model=&quot;dt&quot; style=&quot;display:inline-block;&quot;&gt;
-        &lt;datepicker min=&quot;minDate&quot; show-weeks=&quot;showWeeks&quot;&gt;&lt;/datepicker&gt;
+    &lt;div style=&quot;display:inline-block; min-height:290px;&quot;&gt;
+      &lt;div class=&quot;well well-small&quot; ng-model=&quot;dt&quot;&gt;
+          &lt;datepicker min=&quot;minDate&quot; show-weeks=&quot;showWeeks&quot;&gt;&lt;/datepicker&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
 
     &lt;h4&gt;Popup&lt;/h4&gt;
     &lt;div class=&quot;form-horizontal&quot;&gt;
         &lt;p&gt;
             &lt;input type=&quot;text&quot; datepicker-popup=&quot;{{format}}&quot; ng-model=&quot;dt&quot; is-open=&quot;opened&quot; min=&quot;minDate&quot; max=&quot;&#x27;2015-06-22&#x27;&quot; datepicker-options=&quot;dateOptions&quot; date-disabled=&quot;disabled(date, mode)&quot; ng-required=&quot;true&quot; close-text=&quot;Close&quot; /&gt;
-            &lt;button class=&quot;btn&quot; ng-click=&quot;open()&quot;&gt;&lt;i class=&quot;icon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class=&quot;btn&quot; ng-click=&quot;open($event)&quot;&gt;&lt;i class=&quot;icon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
         &lt;/p&gt;
         &lt;p&gt;&lt;i&gt;Format options:&lt;/i&gt; &lt;select ng-model=&quot;format&quot; ng-options=&quot;f for f in formats&quot;&gt;&lt;option&gt;&lt;/option&gt;&lt;/select&gt;&lt;/p&gt;
     &lt;/div&gt;
@@ -838,7 +845,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                     </tab>
                     <tab heading="JavaScript">
                         <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">var DatepickerDemoCtrl = function ($scope, $timeout) {
+                            <pre ng-non-bindable><code data-language="javascript">var DatepickerDemoCtrl = function ($scope) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -863,10 +870,11 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
   };
   $scope.toggleMin();
 
-  $scope.open = function() {
-    $timeout(function() {
-      $scope.opened = true;
-    });
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
   };
 
   $scope.dateOptions = {
@@ -884,7 +892,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
             </div>
         </div>
       </section>
-      <script>var DatepickerDemoCtrl = function ($scope, $timeout) {
+      <script>var DatepickerDemoCtrl = function ($scope) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -909,10 +917,11 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
   };
   $scope.toggleMin();
 
-  $scope.open = function() {
-    $timeout(function() {
-      $scope.opened = true;
-    });
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
   };
 
   $scope.dateOptions = {
@@ -953,7 +962,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'dropdownToggle')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1063,7 +1072,7 @@ Those methods make it easy to close a modal window without a need to create a de
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'modal')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1203,7 +1212,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
     <pager total-items="totalItems" page="currentPage"></pager>
 
     <hr />
-    <h4>Limit the maximimum visible buttons</h4>
+    <h4>Limit the maximum visible buttons</h4>
     <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true"></pagination>
     <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 
@@ -1282,7 +1291,7 @@ For <code>page</code>, <code>total-items</code>, <code>items-per-page</code>, <c
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'pagination')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1303,7 +1312,7 @@ For <code>page</code>, <code>total-items</code>, <code>items-per-page</code>, <c
     &lt;pager total-items=&quot;totalItems&quot; page=&quot;currentPage&quot;&gt;&lt;/pager&gt;
 
     &lt;hr /&gt;
-    &lt;h4&gt;Limit the maximimum visible buttons&lt;/h4&gt;
+    &lt;h4&gt;Limit the maximum visible buttons&lt;/h4&gt;
     &lt;pagination total-items=&quot;bigTotalItems&quot; page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot;&gt;&lt;/pagination&gt;
     &lt;pagination total-items=&quot;bigTotalItems&quot; page=&quot;bigCurrentPage&quot; max-size=&quot;maxSize&quot; class=&quot;pagination-small&quot; boundary-links=&quot;true&quot; rotate=&quot;false&quot; num-pages=&quot;numPages&quot;&gt;&lt;/pagination&gt;
 
@@ -1420,7 +1429,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'popover')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1488,83 +1497,101 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span6">
                 <div ng-controller="ProgressDemoCtrl" class="well">
-    <h2>Static</h2>
+
+    <h3>Static</h3>
     <div class="row-fluid">
-        <div class="span4"><progress percent="55"></progress></div>
-        <div class="span4"><progress percent="22" class="progress-warning progress-striped"></progress></div>
-        <div class="span4"><progress percent="88" class="progress-danger progress-striped active"></div>
+        <div class="span4"><progressbar value="55"></progressbar></div>
+        <div class="span4"><progressbar class="progress-striped" value="22" type="warning">22%</progressbar></div>
+        <div class="span4"><progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></progressbar></div>
     </div>
-    
-    <h2>Dynamic <button class="btn btn-primary" type="button" ng-click="random()">Randomize</button></h2>
-    <pre>Value: {{dynamic}}</pre>
-    <progress percent="dynamic"></progress>
+
+    <h3>Dynamic <button class="btn btn-small btn-primary" type="button" ng-click="random()">Randomize</button></h3>
+    <progressbar max="max" value="dynamic"><span style="color:black; white-space:nowrap;">{{dynamic}} / {{max}}</span></progressbar>
     
     <small><em>No animation</em></small>
-    <progress percent="dynamic" class="progress-success" animate="false"></progress>
+    <progressbar animate="false" value="dynamic" type="success"><b>{{dynamic}}%</b></progressbar>
 
     <small><em>Object (changes type based on value)</em></small>
-    <progress percent="dynamicObject" class="progress-striped active"></progress>
+    <progressbar class="progress-striped active" value="dynamic" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></progressbar>
     
-    <h2>Stacked <button class="btn btn-primary" type="button" ng-click="randomStacked()">Randomize</button></h2>
-    <small><em>Array values with automatic types</em></small>
-    <pre>Value: {{stackedArray}}</pre>
-    <progress percent="stackedArray" auto-type="true"></progress>
-    
-    <small><em>Objects</em></small>
-    <pre>Value: {{stacked}}</pre>
-    <progress percent="stacked"></progress>
+
+    <h3>Stacked <button class="btn btn-small btn-primary" type="button" ng-click="randomStacked()">Randomize</button></h3>
+    <progress><bar ng-repeat="bar in stacked" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
+
 </div>
             </div>
             <div class="span6">
-                <p>A lightweight progress bar directive that is focused on providing progress visualization! </p>
+                <p>A progress bar directive that is focused on providing feedback on the progress of a workflow or action.</p>
 
-<p>The progress bar directive supports multiple (stacked) bars into the same element, optional transition animation, event handler for full &amp; empty state and many more.</p>
+<p>It supports multiple (stacked) bars into the same <code>&lt;progress&gt;</code> element or a single <code>&lt;progressbar&gt;</code> elemtnt with optional <code>max</code> attribute and transition animations.</p>
+
+<h3>Settings</h3>
+
+<h4><code>&lt;progressbar&gt;</code></h4>
+
+<ul>
+<li><p><code>value</code> <i class="icon-eye-open"></i>
+ :
+ The current value of progress completed.</p></li>
+<li><p><code>type</code>
+ <em>(Default: null)</em> :
+ Style type. Possible values are 'success', 'warning' etc.</p></li>
+<li><p><code>max</code>
+ <em>(Default: 100)</em> :
+ A number that specifies the total value of bars that is required.</p></li>
+<li><p><code>animate</code>
+ <em>(Default: true)</em> :
+ Whether bars use transitions to achieve the width change.</p></li>
+</ul>
+
+<h3>Stacked</h3>
+
+<p>Place multiple <code>&lt;bars&gt;</code> into the same <code>&lt;progress&gt;</code> element to stack them.
+<code>&lt;progress&gt;</code> supports <code>max</code> and <code>animate</code> &amp;  <code>&lt;bar&gt;</code> supports  <code>value</code> and <code>type</code> attributes.</p>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'progressbar')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'progressbar')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;ProgressDemoCtrl&quot; class=&quot;well&quot;&gt;
-    &lt;h2&gt;Static&lt;/h2&gt;
+
+    &lt;h3&gt;Static&lt;/h3&gt;
     &lt;div class=&quot;row-fluid&quot;&gt;
-        &lt;div class=&quot;span4&quot;&gt;&lt;progress percent=&quot;55&quot;&gt;&lt;/progress&gt;&lt;/div&gt;
-        &lt;div class=&quot;span4&quot;&gt;&lt;progress percent=&quot;22&quot; class=&quot;progress-warning progress-striped&quot;&gt;&lt;/progress&gt;&lt;/div&gt;
-        &lt;div class=&quot;span4&quot;&gt;&lt;progress percent=&quot;88&quot; class=&quot;progress-danger progress-striped active&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;span4&quot;&gt;&lt;progressbar value=&quot;55&quot;&gt;&lt;/progressbar&gt;&lt;/div&gt;
+        &lt;div class=&quot;span4&quot;&gt;&lt;progressbar class=&quot;progress-striped&quot; value=&quot;22&quot; type=&quot;warning&quot;&gt;22%&lt;/progressbar&gt;&lt;/div&gt;
+        &lt;div class=&quot;span4&quot;&gt;&lt;progressbar class=&quot;progress-striped active&quot; max=&quot;200&quot; value=&quot;166&quot; type=&quot;danger&quot;&gt;&lt;i&gt;166 / 200&lt;/i&gt;&lt;/progressbar&gt;&lt;/div&gt;
     &lt;/div&gt;
-    
-    &lt;h2&gt;Dynamic &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; ng-click=&quot;random()&quot;&gt;Randomize&lt;/button&gt;&lt;/h2&gt;
-    &lt;pre&gt;Value: {{dynamic}}&lt;/pre&gt;
-    &lt;progress percent=&quot;dynamic&quot;&gt;&lt;/progress&gt;
+
+    &lt;h3&gt;Dynamic &lt;button class=&quot;btn btn-small btn-primary&quot; type=&quot;button&quot; ng-click=&quot;random()&quot;&gt;Randomize&lt;/button&gt;&lt;/h3&gt;
+    &lt;progressbar max=&quot;max&quot; value=&quot;dynamic&quot;&gt;&lt;span style=&quot;color:black; white-space:nowrap;&quot;&gt;{{dynamic}} / {{max}}&lt;/span&gt;&lt;/progressbar&gt;
     
     &lt;small&gt;&lt;em&gt;No animation&lt;/em&gt;&lt;/small&gt;
-    &lt;progress percent=&quot;dynamic&quot; class=&quot;progress-success&quot; animate=&quot;false&quot;&gt;&lt;/progress&gt;
+    &lt;progressbar animate=&quot;false&quot; value=&quot;dynamic&quot; type=&quot;success&quot;&gt;&lt;b&gt;{{dynamic}}%&lt;/b&gt;&lt;/progressbar&gt;
 
     &lt;small&gt;&lt;em&gt;Object (changes type based on value)&lt;/em&gt;&lt;/small&gt;
-    &lt;progress percent=&quot;dynamicObject&quot; class=&quot;progress-striped active&quot;&gt;&lt;/progress&gt;
+    &lt;progressbar class=&quot;progress-striped active&quot; value=&quot;dynamic&quot; type=&quot;{{type}}&quot;&gt;{{type}} &lt;i ng-show=&quot;showWarning&quot;&gt;!!! Watch out !!!&lt;/i&gt;&lt;/progressbar&gt;
     
-    &lt;h2&gt;Stacked &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; ng-click=&quot;randomStacked()&quot;&gt;Randomize&lt;/button&gt;&lt;/h2&gt;
-    &lt;small&gt;&lt;em&gt;Array values with automatic types&lt;/em&gt;&lt;/small&gt;
-    &lt;pre&gt;Value: {{stackedArray}}&lt;/pre&gt;
-    &lt;progress percent=&quot;stackedArray&quot; auto-type=&quot;true&quot;&gt;&lt;/progress&gt;
-    
-    &lt;small&gt;&lt;em&gt;Objects&lt;/em&gt;&lt;/small&gt;
-    &lt;pre&gt;Value: {{stacked}}&lt;/pre&gt;
-    &lt;progress percent=&quot;stacked&quot;&gt;&lt;/progress&gt;
+
+    &lt;h3&gt;Stacked &lt;button class=&quot;btn btn-small btn-primary&quot; type=&quot;button&quot; ng-click=&quot;randomStacked()&quot;&gt;Randomize&lt;/button&gt;&lt;/h3&gt;
+    &lt;progress&gt;&lt;bar ng-repeat=&quot;bar in stacked&quot; value=&quot;bar.value&quot; type=&quot;{{bar.type}}&quot;&gt;&lt;span ng-hide=&quot;bar.value &lt; 5&quot;&gt;{{bar.value}}%&lt;/span&gt;&lt;/bar&gt;&lt;/progress&gt;
+
 &lt;/div&gt;</code></pre>
                         </div>
                     </tab>
                     <tab heading="JavaScript">
                         <div plunker-content="javascript">
                             <pre ng-non-bindable><code data-language="javascript">var ProgressDemoCtrl = function ($scope) {
-   
+  
+  $scope.max = 200;
+
   $scope.random = function() {
-    var value = Math.floor((Math.random()*100)+1);
+    var value = Math.floor((Math.random() * 100) + 1);
     var type;
 
     if (value &lt; 25) {
@@ -1577,28 +1604,21 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
       type = &#x27;danger&#x27;;
     }
 
+    $scope.showWarning = (type === &#x27;danger&#x27; || type === &#x27;warning&#x27;);
+
     $scope.dynamic = value;
-    $scope.dynamicObject = {
-      value: value,
-      type: type
-    };
+    $scope.type = type;
   };
   $scope.random();
   
-  var types = [&#x27;success&#x27;, &#x27;info&#x27;, &#x27;warning&#x27;, &#x27;danger&#x27;];
   $scope.randomStacked = function() {
-    $scope.stackedArray = [];
     $scope.stacked = [];
+    var types = [&#x27;success&#x27;, &#x27;info&#x27;, &#x27;warning&#x27;, &#x27;danger&#x27;];
     
-    var n = Math.floor((Math.random()*4)+1);
-
-    for (var i=0; i &lt; n; i++) {
-        var value = Math.floor((Math.random()*30)+1);
-        $scope.stackedArray.push(value);
-        
-        var index = Math.floor((Math.random()*4));
+    for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i &lt; n; i++) {
+        var index = Math.floor((Math.random() * 4));
         $scope.stacked.push({
-          value: value,
+          value: Math.floor((Math.random() * 30) + 1),
           type: types[index]
         });
     }
@@ -1613,9 +1633,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         </div>
       </section>
       <script>var ProgressDemoCtrl = function ($scope) {
-   
+  
+  $scope.max = 200;
+
   $scope.random = function() {
-    var value = Math.floor((Math.random()*100)+1);
+    var value = Math.floor((Math.random() * 100) + 1);
     var type;
 
     if (value < 25) {
@@ -1628,28 +1650,21 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
       type = 'danger';
     }
 
+    $scope.showWarning = (type === 'danger' || type === 'warning');
+
     $scope.dynamic = value;
-    $scope.dynamicObject = {
-      value: value,
-      type: type
-    };
+    $scope.type = type;
   };
   $scope.random();
   
-  var types = ['success', 'info', 'warning', 'danger'];
   $scope.randomStacked = function() {
-    $scope.stackedArray = [];
     $scope.stacked = [];
+    var types = ['success', 'info', 'warning', 'danger'];
     
-    var n = Math.floor((Math.random()*4)+1);
-
-    for (var i=0; i < n; i++) {
-        var value = Math.floor((Math.random()*30)+1);
-        $scope.stackedArray.push(value);
-        
-        var index = Math.floor((Math.random()*4));
+    for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
+        var index = Math.floor((Math.random() * 4));
         $scope.stacked.push({
-          value: value,
+          value: Math.floor((Math.random() * 30) + 1),
           type: types[index]
         });
     }
@@ -1721,7 +1736,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'rating')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'rating')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1869,7 +1884,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'tabs')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -1988,8 +2003,8 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
  <em>(Defaults: true)</em> :
  Whether to display 12H or 24H mode.</p></li>
 <li><p><code>meridians</code>
- <em>(Defaults: ['AM', 'PM'])</em> :
-  Meridian labels</p></li>
+ <em>(Defaults: null)</em> :
+  Meridian labels based on locale. To override you must supply an array like ['AM', 'PM'].</p></li>
 <li><p><code>readonly-input</code>
  <em>(Defaults: false)</em> :
   Whether user can type inside the hours &amp; minutes input.</p></li>
@@ -2003,7 +2018,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'timepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'timepicker')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -2204,7 +2219,7 @@ appendToBody: false
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'tooltip')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
@@ -2272,10 +2287,28 @@ appendToBody: false
         </div>
         <div class="row">
             <div class="span6">
-                <div class='container-fluid' ng-controller="TypeaheadCtrl">
-    <pre>Model: {{selected| json}}</pre>
+                <script type="text/ng-template" id="customTemplate.html">
+  <a>
+      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+  </a>
+</script>
+<div class='container-fluid' ng-controller="TypeaheadCtrl">
+
+    <h4>Static arrays</h4>
+    <pre>Model: {{selected | json}}</pre>
     <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8">
+
+    <h4>Asynchronous results</h4>
+    <pre>Model: {{asyncSelected | json}}</pre>
+    <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" typeahead="address for address in getLocation($viewValue) | filter:$viewValue" typeahead-loading="loadingLocations">
+    <i ng-show="loadingLocations" class="icon-refresh"></i>
+
+    <h4>Custom templates for results</h4>
+    <pre>Model: {{customSelected | json}}</pre>
+    <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html">
 </div>
+
             </div>
             <div class="span6">
                 <p>Typeahead is a AngularJS version of <a href="http://twitter.github.com/bootstrap/javascript.html#typeahead">Twitter Bootstrap typeahead plugin</a>.
@@ -2330,23 +2363,58 @@ Minimal wait time after last character typed before typehead kicks-in</p></li>
         <div class="row">
             <div class="span12" ng-controller="PlunkerCtrl">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.7.0', 'typeahead')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
+                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.0.8', '2.3.1', '0.8.0', 'typeahead')"><i class="icon-edit icon-white"></i> Edit in plunker</button>
                 </div>
                 <tabset>
                     <tab heading="Markup">
                         <div plunker-content="markup">
-                            <pre ng-non-bindable><code data-language="html">&lt;div class=&#x27;container-fluid&#x27; ng-controller=&quot;TypeaheadCtrl&quot;&gt;
-    &lt;pre&gt;Model: {{selected| json}}&lt;/pre&gt;
+                            <pre ng-non-bindable><code data-language="html">&lt;script type=&quot;text/ng-template&quot; id=&quot;customTemplate.html&quot;&gt;
+  &lt;a&gt;
+      &lt;img ng-src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}&quot; width=&quot;16&quot;&gt;
+      &lt;span bind-html-unsafe=&quot;match.label | typeaheadHighlight:query&quot;&gt;&lt;/span&gt;
+  &lt;/a&gt;
+&lt;/script&gt;
+&lt;div class=&#x27;container-fluid&#x27; ng-controller=&quot;TypeaheadCtrl&quot;&gt;
+
+    &lt;h4&gt;Static arrays&lt;/h4&gt;
+    &lt;pre&gt;Model: {{selected | json}}&lt;/pre&gt;
     &lt;input type=&quot;text&quot; ng-model=&quot;selected&quot; typeahead=&quot;state for state in states | filter:$viewValue | limitTo:8&quot;&gt;
-&lt;/div&gt;</code></pre>
+
+    &lt;h4&gt;Asynchronous results&lt;/h4&gt;
+    &lt;pre&gt;Model: {{asyncSelected | json}}&lt;/pre&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;asyncSelected&quot; placeholder=&quot;Locations loaded via $http&quot; typeahead=&quot;address for address in getLocation($viewValue) | filter:$viewValue&quot; typeahead-loading=&quot;loadingLocations&quot;&gt;
+    &lt;i ng-show=&quot;loadingLocations&quot; class=&quot;icon-refresh&quot;&gt;&lt;/i&gt;
+
+    &lt;h4&gt;Custom templates for results&lt;/h4&gt;
+    &lt;pre&gt;Model: {{customSelected | json}}&lt;/pre&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;customSelected&quot; placeholder=&quot;Custom template&quot; typeahead=&quot;state as state.name for state in statesWithFlags | filter:{name:$viewValue}&quot; typeahead-template-url=&quot;customTemplate.html&quot;&gt;
+&lt;/div&gt;
+</code></pre>
                         </div>
                     </tab>
                     <tab heading="JavaScript">
                         <div plunker-content="javascript">
-                            <pre ng-non-bindable><code data-language="javascript">function TypeaheadCtrl($scope) {
+                            <pre ng-non-bindable><code data-language="javascript">function TypeaheadCtrl($scope, $http) {
 
   $scope.selected = undefined;
   $scope.states = [&#x27;Alabama&#x27;, &#x27;Alaska&#x27;, &#x27;Arizona&#x27;, &#x27;Arkansas&#x27;, &#x27;California&#x27;, &#x27;Colorado&#x27;, &#x27;Connecticut&#x27;, &#x27;Delaware&#x27;, &#x27;Florida&#x27;, &#x27;Georgia&#x27;, &#x27;Hawaii&#x27;, &#x27;Idaho&#x27;, &#x27;Illinois&#x27;, &#x27;Indiana&#x27;, &#x27;Iowa&#x27;, &#x27;Kansas&#x27;, &#x27;Kentucky&#x27;, &#x27;Louisiana&#x27;, &#x27;Maine&#x27;, &#x27;Maryland&#x27;, &#x27;Massachusetts&#x27;, &#x27;Michigan&#x27;, &#x27;Minnesota&#x27;, &#x27;Mississippi&#x27;, &#x27;Missouri&#x27;, &#x27;Montana&#x27;, &#x27;Nebraska&#x27;, &#x27;Nevada&#x27;, &#x27;New Hampshire&#x27;, &#x27;New Jersey&#x27;, &#x27;New Mexico&#x27;, &#x27;New York&#x27;, &#x27;North Dakota&#x27;, &#x27;North Carolina&#x27;, &#x27;Ohio&#x27;, &#x27;Oklahoma&#x27;, &#x27;Oregon&#x27;, &#x27;Pennsylvania&#x27;, &#x27;Rhode Island&#x27;, &#x27;South Carolina&#x27;, &#x27;South Dakota&#x27;, &#x27;Tennessee&#x27;, &#x27;Texas&#x27;, &#x27;Utah&#x27;, &#x27;Vermont&#x27;, &#x27;Virginia&#x27;, &#x27;Washington&#x27;, &#x27;West Virginia&#x27;, &#x27;Wisconsin&#x27;, &#x27;Wyoming&#x27;];
+  // Any function returning a promise object can be used to load values asynchronously
+  $scope.getLocation = function(val) {
+    return $http.get(&#x27;http://maps.googleapis.com/maps/api/geocode/json&#x27;, {
+      params: {
+        address: val,
+        sensor: false
+      }
+    }).then(function(res){
+      var addresses = [];
+      angular.forEach(res.data.results, function(item){
+        addresses.push(item.formatted_address);
+      });
+      return addresses;
+    });
+  };
+
+  $scope.statesWithFlags = [{&quot;name&quot;:&quot;Alabama&quot;,&quot;flag&quot;:&quot;5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png&quot;},{&quot;name&quot;:&quot;Alaska&quot;,&quot;flag&quot;:&quot;e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png&quot;},{&quot;name&quot;:&quot;Arizona&quot;,&quot;flag&quot;:&quot;9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png&quot;},{&quot;name&quot;:&quot;Arkansas&quot;,&quot;flag&quot;:&quot;9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png&quot;},{&quot;name&quot;:&quot;California&quot;,&quot;flag&quot;:&quot;0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png&quot;},{&quot;name&quot;:&quot;Colorado&quot;,&quot;flag&quot;:&quot;4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png&quot;},{&quot;name&quot;:&quot;Connecticut&quot;,&quot;flag&quot;:&quot;9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png&quot;},{&quot;name&quot;:&quot;Delaware&quot;,&quot;flag&quot;:&quot;c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png&quot;},{&quot;name&quot;:&quot;Florida&quot;,&quot;flag&quot;:&quot;f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png&quot;},{&quot;name&quot;:&quot;Georgia&quot;,&quot;flag&quot;:&quot;5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png&quot;},{&quot;name&quot;:&quot;Hawaii&quot;,&quot;flag&quot;:&quot;e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png&quot;},{&quot;name&quot;:&quot;Idaho&quot;,&quot;flag&quot;:&quot;a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png&quot;},{&quot;name&quot;:&quot;Illinois&quot;,&quot;flag&quot;:&quot;0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png&quot;},{&quot;name&quot;:&quot;Indiana&quot;,&quot;flag&quot;:&quot;a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png&quot;},{&quot;name&quot;:&quot;Iowa&quot;,&quot;flag&quot;:&quot;a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png&quot;},{&quot;name&quot;:&quot;Kansas&quot;,&quot;flag&quot;:&quot;d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png&quot;},{&quot;name&quot;:&quot;Kentucky&quot;,&quot;flag&quot;:&quot;8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png&quot;},{&quot;name&quot;:&quot;Louisiana&quot;,&quot;flag&quot;:&quot;e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png&quot;},{&quot;name&quot;:&quot;Maine&quot;,&quot;flag&quot;:&quot;3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png&quot;},{&quot;name&quot;:&quot;Maryland&quot;,&quot;flag&quot;:&quot;a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png&quot;},{&quot;name&quot;:&quot;Massachusetts&quot;,&quot;flag&quot;:&quot;f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png&quot;},{&quot;name&quot;:&quot;Michigan&quot;,&quot;flag&quot;:&quot;b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png&quot;},{&quot;name&quot;:&quot;Minnesota&quot;,&quot;flag&quot;:&quot;b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png&quot;},{&quot;name&quot;:&quot;Mississippi&quot;,&quot;flag&quot;:&quot;4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png&quot;},{&quot;name&quot;:&quot;Missouri&quot;,&quot;flag&quot;:&quot;5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png&quot;},{&quot;name&quot;:&quot;Montana&quot;,&quot;flag&quot;:&quot;c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png&quot;},{&quot;name&quot;:&quot;Nebraska&quot;,&quot;flag&quot;:&quot;4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png&quot;},{&quot;name&quot;:&quot;Nevada&quot;,&quot;flag&quot;:&quot;f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png&quot;},{&quot;name&quot;:&quot;New Hampshire&quot;,&quot;flag&quot;:&quot;2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png&quot;},{&quot;name&quot;:&quot;New Jersey&quot;,&quot;flag&quot;:&quot;9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png&quot;},{&quot;name&quot;:&quot;New Mexico&quot;,&quot;flag&quot;:&quot;c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png&quot;},{&quot;name&quot;:&quot;New York&quot;,&quot;flag&quot;:&quot;1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png&quot;},{&quot;name&quot;:&quot;North Carolina&quot;,&quot;flag&quot;:&quot;b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png&quot;},{&quot;name&quot;:&quot;North Dakota&quot;,&quot;flag&quot;:&quot;e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png&quot;},{&quot;name&quot;:&quot;Ohio&quot;,&quot;flag&quot;:&quot;4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png&quot;},{&quot;name&quot;:&quot;Oklahoma&quot;,&quot;flag&quot;:&quot;6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png&quot;},{&quot;name&quot;:&quot;Oregon&quot;,&quot;flag&quot;:&quot;b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png&quot;},{&quot;name&quot;:&quot;Pennsylvania&quot;,&quot;flag&quot;:&quot;f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png&quot;},{&quot;name&quot;:&quot;Rhode Island&quot;,&quot;flag&quot;:&quot;f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png&quot;},{&quot;name&quot;:&quot;South Carolina&quot;,&quot;flag&quot;:&quot;6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png&quot;},{&quot;name&quot;:&quot;South Dakota&quot;,&quot;flag&quot;:&quot;1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png&quot;},{&quot;name&quot;:&quot;Tennessee&quot;,&quot;flag&quot;:&quot;9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png&quot;},{&quot;name&quot;:&quot;Texas&quot;,&quot;flag&quot;:&quot;f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png&quot;},{&quot;name&quot;:&quot;Utah&quot;,&quot;flag&quot;:&quot;f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png&quot;},{&quot;name&quot;:&quot;Vermont&quot;,&quot;flag&quot;:&quot;4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png&quot;},{&quot;name&quot;:&quot;Virginia&quot;,&quot;flag&quot;:&quot;4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png&quot;},{&quot;name&quot;:&quot;Washington&quot;,&quot;flag&quot;:&quot;5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png&quot;},{&quot;name&quot;:&quot;West Virginia&quot;,&quot;flag&quot;:&quot;2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png&quot;},{&quot;name&quot;:&quot;Wisconsin&quot;,&quot;flag&quot;:&quot;2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png&quot;},{&quot;name&quot;:&quot;Wyoming&quot;,&quot;flag&quot;:&quot;b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png&quot;}];
 }</code></pre>
                         </div>
                     </tab>
@@ -2354,10 +2422,27 @@ Minimal wait time after last character typed before typehead kicks-in</p></li>
             </div>
         </div>
       </section>
-      <script>function TypeaheadCtrl($scope) {
+      <script>function TypeaheadCtrl($scope, $http) {
 
   $scope.selected = undefined;
   $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+  // Any function returning a promise object can be used to load values asynchronously
+  $scope.getLocation = function(val) {
+    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+      params: {
+        address: val,
+        sensor: false
+      }
+    }).then(function(res){
+      var addresses = [];
+      angular.forEach(res.data.results, function(item){
+        addresses.push(item.formatted_address);
+      });
+      return addresses;
+    });
+  };
+
+  $scope.statesWithFlags = [{"name":"Alabama","flag":"5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png"},{"name":"Alaska","flag":"e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png"},{"name":"Arizona","flag":"9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png"},{"name":"Arkansas","flag":"9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png"},{"name":"California","flag":"0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png"},{"name":"Colorado","flag":"4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png"},{"name":"Connecticut","flag":"9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png"},{"name":"Delaware","flag":"c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png"},{"name":"Florida","flag":"f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png"},{"name":"Georgia","flag":"5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png"},{"name":"Hawaii","flag":"e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png"},{"name":"Idaho","flag":"a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png"},{"name":"Illinois","flag":"0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png"},{"name":"Indiana","flag":"a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png"},{"name":"Iowa","flag":"a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png"},{"name":"Kansas","flag":"d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png"},{"name":"Kentucky","flag":"8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png"},{"name":"Louisiana","flag":"e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png"},{"name":"Maine","flag":"3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png"},{"name":"Maryland","flag":"a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png"},{"name":"Massachusetts","flag":"f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png"},{"name":"Michigan","flag":"b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png"},{"name":"Minnesota","flag":"b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png"},{"name":"Mississippi","flag":"4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png"},{"name":"Missouri","flag":"5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png"},{"name":"Montana","flag":"c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png"},{"name":"Nebraska","flag":"4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png"},{"name":"Nevada","flag":"f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png"},{"name":"New Hampshire","flag":"2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png"},{"name":"New Jersey","flag":"9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png"},{"name":"New Mexico","flag":"c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png"},{"name":"New York","flag":"1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png"},{"name":"North Carolina","flag":"b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png"},{"name":"North Dakota","flag":"e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png"},{"name":"Ohio","flag":"4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png"},{"name":"Oklahoma","flag":"6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png"},{"name":"Oregon","flag":"b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png"},{"name":"Pennsylvania","flag":"f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png"},{"name":"Rhode Island","flag":"f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png"},{"name":"South Carolina","flag":"6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png"},{"name":"South Dakota","flag":"1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png"},{"name":"Tennessee","flag":"9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png"},{"name":"Texas","flag":"f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png"},{"name":"Utah","flag":"f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png"},{"name":"Vermont","flag":"4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png"},{"name":"Virginia","flag":"4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png"},{"name":"Washington","flag":"5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png"},{"name":"West Virginia","flag":"2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png"},{"name":"Wisconsin","flag":"2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png"},{"name":"Wyoming","flag":"b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png"}];
 }</script>
     
   </div>
