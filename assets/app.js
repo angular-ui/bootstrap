@@ -1,4 +1,5 @@
 angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker'], function($httpProvider){
+  FastClick.attach(document.body);
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
