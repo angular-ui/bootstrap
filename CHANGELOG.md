@@ -1,3 +1,46 @@
+# 0.9.0 (2013-12-28)
+
+_This release adds Bootstrap3 support_
+
+## Features
+
+- **accordion:** 
+  - convert to bootstrap3 panel styling ([458a9bd3](http://github.com/angular-ui/bootstrap/commit/458a9bd3))  
+- **carousel:** 
+  - some changes for Bootstrap3 ([1f632b65](http://github.com/angular-ui/bootstrap/commit/1f632b65))  
+- **collapse:** 
+  - make collapse work with bootstrap3 ([517dff6e](http://github.com/angular-ui/bootstrap/commit/517dff6e))  
+- **datepicker:** 
+  - update to Bootstrap 3 ([37684330](http://github.com/angular-ui/bootstrap/commit/37684330))  
+- **modal:** 
+  - added bootstrap3 support ([444c488d](http://github.com/angular-ui/bootstrap/commit/444c488d))  
+- **pagination:** 
+  - support bootstrap3 ([3db699d7](http://github.com/angular-ui/bootstrap/commit/3db699d7))  
+- **progressbar:** 
+  - update to bootstrap3 ([5bcff623](http://github.com/angular-ui/bootstrap/commit/5bcff623))  
+- **rating:** 
+  - update rating to bootstrap3 ([7e60284e](http://github.com/angular-ui/bootstrap/commit/7e60284e))  
+- **tabs:** 
+  - add nav-justified ([3199dd88](http://github.com/angular-ui/bootstrap/commit/3199dd88))  
+- **timepicker:** 
+  - restyled for bootstrap 3 ([6724a721](http://github.com/angular-ui/bootstrap/commit/6724a721))  
+- **typeahead:** 
+  - update to Bootstrap 3 ([eadf934a](http://github.com/angular-ui/bootstrap/commit/eadf934a))   
+
+## Bug Fixes
+
+- **alert:** 
+  - update template to Bootstrap 3 ([dfc3b0bd](http://github.com/angular-ui/bootstrap/commit/dfc3b0bd))  
+- **collapse:** 
+  - Prevent consecutive transitions & tidy up code ([b0032d68](http://github.com/angular-ui/bootstrap/commit/b0032d68))  
+  - fixes after rebase ([dc02ad1d](http://github.com/angular-ui/bootstrap/commit/dc02ad1d))  
+- **rating:** 
+  - user glyhicon classes ([d221d517](http://github.com/angular-ui/bootstrap/commit/d221d517))  
+- **timepicker:** 
+  - fix look with bootstrap3 ([9613b61b](http://github.com/angular-ui/bootstrap/commit/9613b61b))  
+- **tooltip:** 
+  - re-position tooltip after draw ([a99b3608](http://github.com/angular-ui/bootstrap/commit/a99b3608))   
+
 # 0.8.0 (2013-12-28)
 
 ## Features
