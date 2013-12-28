@@ -45,26 +45,27 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
         return currentTransition;
       };
 
-      var expand = function() {
+      var expand = function () {
+        isCollapsed = false;
         if (initialAnimSkip) {
           initialAnimSkip = false;
-          if ( !isCollapsed ) {
-            fixUpHeight(scope, element, 'auto');
-            element.addClass('in');
-          }
+          expandDone();
         } else {
-          doTransition({ height : element[0].scrollHeight + 'px' })
-          .then(function() {
-            // This check ensures that we don't accidentally update the height if the user has closed
-            // the group while the animation was still running
-            if ( !isCollapsed ) {
-              fixUpHeight(scope, element, 'auto');
-              element.addClass('in');
-            }
-          });
+          var targetElHeight = element[0].scrollHeight;
+          if (targetElHeight) {
+            doTransition({ height: targetElHeight + 'px' }).then(expandDone);
+          } else {
+            expandDone();
+          }
         }
-        isCollapsed = false;
       };
+
+      function expandDone() {
+        if ( !isCollapsed ) {
+          fixUpHeight(scope, element, 'auto');
+          element.addClass('in');
+        }
+      }
       
       var collapse = function() {
         isCollapsed = true;
