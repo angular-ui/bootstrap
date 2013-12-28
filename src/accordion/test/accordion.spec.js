@@ -130,7 +130,6 @@ describe('accordion', function () {
             "<accordion-group heading=\"title 2\">Content 2</accordion-group>" +
             "</accordion>";
         element = angular.element(tpl);
-        angular.element(document.body).append(element);
         $compile(element)(scope);
         scope.$digest();
         groups = element.find('.panel');
