@@ -46,7 +46,7 @@ section {
 
 }
 
-.nav, .pagination, .carousel a {
+.nav, .pagination, .carousel, .panel-title a {
     cursor: pointer;
 }
 
