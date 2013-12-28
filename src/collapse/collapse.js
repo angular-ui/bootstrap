@@ -30,13 +30,8 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             initialAnimSkip = false;
             expandDone();
           } else {
-            var targetElHeight = element[0].scrollHeight;
-            if (targetElHeight) {
-              element.removeClass('collapse').addClass('collapsing');
-              doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
-            } else {
-              expandDone();
-            }
+            element.removeClass('collapse').addClass('collapsing');
+            doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
           }
         }
 
