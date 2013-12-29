@@ -31,7 +31,7 @@ browsers = [
 
 // test results reporter to use
 // possible values: dots || progress
-reporter = 'progress';
+reporters = ['progress'];
 
 // web server port
 port = 9018;

@@ -133,7 +133,7 @@ module.exports = function(grunt) {
       jenkins: {
         singleRun: true,
         colors: false,
-        reporter: ['dots', 'junit'],
+        reporters: ['dots', 'junit'],
         browsers: ['Chrome', 'ChromeCanary', 'Firefox', 'Opera', '/Users/jenkins/bin/safari.sh', '/Users/jenkins/bin/ie9.sh']
       },
       travis: {
