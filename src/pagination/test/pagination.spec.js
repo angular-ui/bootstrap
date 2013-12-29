@@ -179,12 +179,17 @@ describe('pagination directive', function () {
   });
 
   describe('when `page` is not a number', function () {
-    it('handles string', function() {
+    it('handles numerical string', function() {
       updateCurrentPage('2');
       expect(getPaginationEl(2)).toHaveClass('active');
 
       updateCurrentPage('04');
       expect(getPaginationEl(4)).toHaveClass('active');
+    });
+    
+    it('defaults to 1 if non-numeric', function() {
+      updateCurrentPage('pizza');
+      expect(getPaginationEl(1)).toHaveClass('active');
     });
   });
 
