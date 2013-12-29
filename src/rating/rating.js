@@ -28,11 +28,9 @@ angular.module('ui.bootstrap.rating', [])
   $scope.range = angular.isDefined($attrs.ratingStates) ?  this.createRateObjects(angular.copy($scope.$parent.$eval($attrs.ratingStates))): this.createRateObjects(new Array(this.maxRange));
 
   $scope.rate = function(value) {
-    if ( $scope.readonly || $scope.value === value) {
-      return;
+    if ( $scope.value !== value && !$scope.readonly ) {
+      $scope.value = value;
     }
-
-    $scope.value = value;
   };
 
   $scope.enter = function(value) {
