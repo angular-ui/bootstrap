@@ -46,7 +46,7 @@ describe('tabs', function() {
         '      <tab-heading><b>Second</b> Tab {{second}}</tab-heading>',
         '      second content is {{second}}',
         '    </tab>',
-        '  </tabs>',
+        '  </tabset>',
         '</div>'
       ].join('\n'))(scope);
       scope.$apply();
