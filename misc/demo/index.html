@@ -71,7 +71,7 @@
 
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
-                <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap/tree/gh-pages">
+                <a class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
                     <i class="glyphicon glyphicon-download-alt"></i> Download <small>(<%= pkg.version%>)</small>
                 </a>
                 <a class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</a>
@@ -220,6 +220,37 @@
 <script src="assets/rainbow-generic.js"></script>
 <script src="assets/rainbow-javascript.js"></script>
 <script src="assets/rainbow-html.js"></script>
+<script type="text/ng-template" id="downloadModal.html">
+    <div class="modal-header"><h4 class="modal-title">Download Angular UI Bootstrap</h4></div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><strong>Build</strong></label>
+            <div class="col-sm-9">
+              <span class="btn-group">
+                <button type="button" class="btn btn-default" ng-model="options.minified" btn-radio="true">Minified</button>
+                <button type="button" class="btn btn-default" ng-model="options.minified" btn-radio="false">Uncompressed</button>
+              </span>
+              <small class="help-block">Use <b>Minified</b> version in your deployed application. <b>Uncompressed</b> source code is useful only for debugging and development purpose.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><strong>Include Templates</strong></label>
+            <div class="col-sm-9">
+              <span class="btn-group">
+                <button type="button" class="btn btn-default" ng-model="options.tpls" btn-radio="true">Yes</button>
+                <button type="button" class="btn btn-default" ng-model="options.tpls" btn-radio="false">No</button>
+              </span>
+              <small class="help-block">Whether you want to include the <i>default templates</i>, bundled with most of the directives. These templates are based on Twitter Bootstrap's markup and CSS.</small>
+            </div>
+          </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+        <a class="btn btn-primary" ng-click="download('<%= pkg.version%>')"><i class="glyphicon glyphicon-download-alt"></i> Download <%= pkg.version %></a>
+    </div>
+</script>
 <script type="text/ng-template" id="buildModal.html">
     <div class="modal-header">
       <h4>
