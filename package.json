@@ -2,6 +2,7 @@
   "author": "https://github.com/angular-ui/bootstrap/graphs/contributors",
   "name": "angular-ui-bootstrap",
   "version": "0.10.0-SNAPSHOT",
+  "homepage": "http://angular-ui.github.io/bootstrap/",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -17,5 +18,6 @@
     "node-markdown": "0.1.1",
     "semver": "~1.1.4",
     "shelljs": "~0.1.4"
-  }
+  },
+  "license": "MIT"
 }
