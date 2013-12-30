@@ -110,8 +110,7 @@ angular.module('ui.bootstrap.modal', [])
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
-      var backdropjqLiteEl, backdropDomEl;
-      var backdropScope = $rootScope.$new(true);
+      var backdropDomEl, backdropScope;
       var openedWindows = $$stackedMap.createNew();
       var $modalStack = {};
 
@@ -127,7 +126,9 @@ angular.module('ui.bootstrap.modal', [])
       }
 
       $rootScope.$watch(backdropIndex, function(newBackdropIndex){
-        backdropScope.index = newBackdropIndex;
+        if (backdropScope) {
+          backdropScope.index = newBackdropIndex;
+        }
       });
 
       function removeModalWindow(modalInstance) {
@@ -146,6 +147,9 @@ angular.module('ui.bootstrap.modal', [])
         if (backdropDomEl && backdropIndex() == -1) {
           backdropDomEl.remove();
           backdropDomEl = undefined;
+
+          backdropScope.$destroy();
+          backdropScope = undefined;
         }
 
         //destroy scope
@@ -174,12 +178,14 @@ angular.module('ui.bootstrap.modal', [])
           keyboard: modal.keyboard
         });
 
-        var body = $document.find('body').eq(0);
+        var body = $document.find('body').eq(0),
+            currBackdropIndex = backdropIndex();
 
-        if (backdropIndex() >= 0 && !backdropDomEl) {
-            backdropjqLiteEl = angular.element('<div modal-backdrop></div>');
-            backdropDomEl = $compile(backdropjqLiteEl)(backdropScope);
-            body.append(backdropDomEl);
+        if (currBackdropIndex >= 0 && !backdropDomEl) {
+          backdropScope = $rootScope.$new(true);
+          backdropScope.index = currBackdropIndex;
+          backdropDomEl = $compile('<div modal-backdrop></div>')(backdropScope);
+          body.append(backdropDomEl);
         }
           
         var angularDomEl = angular.element('<div modal-window></div>');
