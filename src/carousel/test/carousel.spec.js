@@ -2,7 +2,7 @@ describe('carousel', function() {
   beforeEach(module('ui.bootstrap.carousel'));
   beforeEach(module('template/carousel/carousel.html', 'template/carousel/slide.html'));
   
-  var $rootScope, elm, $compile, $controller, $timeout;
+  var $rootScope, $compile, $controller, $timeout;
   beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$timeout_) {
     $rootScope = _$rootScope_;
     $compile = _$compile_;
@@ -11,7 +11,7 @@ describe('carousel', function() {
   }));
 
   describe('basics', function() {
-    var elm, scope, carouselScope;
+    var elm, scope;
     beforeEach(function() {
       scope = $rootScope.$new();
       scope.slides = [
@@ -26,13 +26,9 @@ describe('carousel', function() {
           '</slide>' +
         '</carousel>' 
       )(scope);
-      carouselScope = elm.scope();
       scope.interval = 5000;
       scope.nopause = undefined;
       scope.$apply();
-    });
-    afterEach(function() {
-      scope.$destroy();
     });
 
     function testSlideActive(slideIndex) {
@@ -212,12 +208,6 @@ describe('carousel', function() {
       expect(contents.eq(0).text()).toBe('new1');
       expect(contents.eq(1).text()).toBe('new2');
       expect(contents.eq(2).text()).toBe('new3');
-      scope.$apply('slides.splice(0,1)');
-      contents = elm.find('div.item');
-      expect(contents.length).toBe(2);
-      expect(contents.eq(0).text()).toBe('new2');
-      expect(contents.eq(0)).toHaveClass('active');
-      expect(contents.eq(1).text()).toBe('new3');
     });
 
     it('should not change if next is clicked while transitioning', function() {
@@ -252,7 +242,7 @@ describe('carousel', function() {
   describe('controller', function() {
     var scope, ctrl;
     //create an array of slides and add to the scope
-    var slides = [{'content': 1},{'content': 2},{'content':3},{'content':4}];
+    var slides = [{'content':1},{'content':2},{'content':3},{'content':4}];
 
     beforeEach(function() {
       scope = $rootScope.$new();
@@ -260,9 +250,6 @@ describe('carousel', function() {
       for(var i = 0;i < slides.length;i++){
         ctrl.addSlide(slides[i]);
       }
-    });
-    afterEach(function() {
-      scope.$destroy();
     });
 
     describe('addSlide', function() {
