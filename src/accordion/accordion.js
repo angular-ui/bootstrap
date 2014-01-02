@@ -35,7 +35,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
   this.removeGroup = function(group) {
     var index = this.groups.indexOf(group);
     if ( index !== -1 ) {
-      this.groups.splice(this.groups.indexOf(group), 1);
+      this.groups.splice(index, 1);
     }
   };
 
@@ -63,7 +63,8 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     templateUrl:'template/accordion/accordion-group.html',
     scope: { 
       heading: '@',               // Interpolate the heading attribute onto this scope
-      isOpen: '=?'
+      isOpen: '=?',
+      isDisabled: '=?'
     },
     controller: function() {
       this.setHeading = function(element) {
@@ -78,6 +79,12 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
           accordionCtrl.closeOthers(scope);
         }
       });
+
+      scope.toggleOpen = function() {
+        if ( !scope.isDisabled ) {
+          scope.isOpen = !scope.isOpen;
+        }
+      };
     }
   };
 })

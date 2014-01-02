@@ -305,6 +305,42 @@ describe('accordion', function () {
         expect(scope.groups[0].open).toBe(false);
       });
     });
+    
+    describe('`is-disabled` attribute', function() {
+      var groupBody;
+      beforeEach(function () {
+        var tpl =
+          '<accordion>' +
+            '<accordion-group heading="title 1" is-disabled="disabled">Content 1</accordion-group>' +
+            '</accordion>';
+        element = angular.element(tpl);
+        scope.disabled = true;
+        $compile(element)(scope);
+        scope.$digest();
+        groups = element.find('.panel');
+        groupBody = findGroupBody(0);
+      });
+
+      it('should open the panel with isOpen set to true', function () {
+        expect(groupBody.scope().isOpen).toBeFalsy();
+      });
+      
+      it('should not toggle if disabled', function() {
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(groupBody.scope().isOpen).toBeFalsy();
+      });
+      
+      it('should toggle after enabling', function() {
+        scope.disabled = false;
+        scope.$digest();
+        expect(groupBody.scope().isOpen).toBeFalsy();
+        
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(groupBody.scope().isOpen).toBeTruthy();
+      });
+    });
 
     describe('accordion-heading element', function() {
       beforeEach(function() {
