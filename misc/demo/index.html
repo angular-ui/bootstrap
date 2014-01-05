@@ -42,9 +42,7 @@
                             Directives <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <% demoModules.forEach(function(module) {  %>
-                                <li><a href="#<%= module.name %>"><%= module.displayName %></a></li>
-                            <% }); %>
+                            <% demoModules.forEach(function(module) {  %><li><a href="#<%= module.name %>"><%= module.displayName %></a></li>s<% }); %>
                         </ul>
                     </li>
                     <li><a href="#getting_started">Getting started</a></li>
@@ -144,7 +142,10 @@
                     </p>
                     <ul>
                         <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (minimal version 1.0.8)</li>
-                        <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version <%= bsversion %>)</li>
+                        <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version <%= bsversion %>).
+                            This version of the library (<%= pkg.version%>) works only with Bootstrap CSS in version 3.x.
+                            0.8.0 is the last version of this library that supports Bootstrap CSS in version 2.3.x.
+                        </li>
                     </ul>
                     <h3>Files to download</h3>
                     <p>
