@@ -7,12 +7,22 @@ angular.module('ui.bootstrap.rating', [])
 })
 
 .controller('RatingController', ['$scope', '$attrs', '$parse', 'ratingConfig', function($scope, $attrs, $parse, ratingConfig) {
+  var ngModelCtrl  = {$setViewValue: angular.noop};
 
   this.maxRange = angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max;
   this.stateOn = angular.isDefined($attrs.stateOn) ? $scope.$parent.$eval($attrs.stateOn) : ratingConfig.stateOn;
   this.stateOff = angular.isDefined($attrs.stateOff) ? $scope.$parent.$eval($attrs.stateOff) : ratingConfig.stateOff;
+  
+  this.init = function(ngModelCtrl_) {
+    ngModelCtrl = ngModelCtrl_;
+    ngModelCtrl.$render = this.render;
+    
+     $scope.range = this.buildTemplateObjects(
+      angular.isDefined($attrs.ratingStates) ? $scope.$parent.$eval($attrs.ratingStates) : new Array(this.maxRange)
+    );
+  };
 
-  this.createRateObjects = function(states) {
+  this.buildTemplateObjects = function(states) {
     var defaultOptions = {
       stateOn: this.stateOn,
       stateOff: this.stateOff
@@ -24,12 +34,10 @@ angular.module('ui.bootstrap.rating', [])
     return states;
   };
 
-  // Get objects used in template
-  $scope.range = angular.isDefined($attrs.ratingStates) ?  this.createRateObjects(angular.copy($scope.$parent.$eval($attrs.ratingStates))): this.createRateObjects(new Array(this.maxRange));
-
   $scope.rate = function(value) {
-    if ( $scope.value !== value && !$scope.readonly ) {
-      $scope.value = value;
+    if ( !$scope.readonly ) {
+      ngModelCtrl.$setViewValue(value);
+      ngModelCtrl.$render();
     }
   };
 
@@ -41,13 +49,13 @@ angular.module('ui.bootstrap.rating', [])
   };
 
   $scope.reset = function() {
-    $scope.val = angular.copy($scope.value);
+    $scope.val = ngModelCtrl.$viewValue;
     $scope.onLeave();
   };
-
-  $scope.$watch('value', function(value) {
-    $scope.val = value;
-  });
+  
+  this.render = function() {
+    $scope.val = ngModelCtrl.$viewValue;
+  };
 
   $scope.readonly = false;
   if ($attrs.readonly) {
@@ -60,13 +68,20 @@ angular.module('ui.bootstrap.rating', [])
 .directive('rating', function() {
   return {
     restrict: 'EA',
+    require: ['rating', 'ngModel'],
     scope: {
-      value: '=',
       onHover: '&',
       onLeave: '&'
     },
     controller: 'RatingController',
     templateUrl: 'template/rating/rating.html',
-    replace: true
+    replace: true,
+    link: function(scope, element, attrs, ctrls) {
+      var ratingCtrl = ctrls[0], ngModelCtrl = ctrls[1];
+
+      if ( ngModelCtrl ) {
+        ratingCtrl.init( ngModelCtrl );
+      }
+    }
   };
 });

@@ -6,7 +6,7 @@ describe('rating directive', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.rate = 3;
-    element = $compile('<rating value="rate"></rating>')($rootScope);
+    element = $compile('<rating ng-model="rate"></rating>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -71,7 +71,7 @@ describe('rating directive', function () {
   });
 
   it('shows different number of icons when `max` attribute is set', function() {
-    element = $compile('<rating value="rate" max="7"></rating>')($rootScope);
+    element = $compile('<rating ng-model="rate" max="7"></rating>')($rootScope);
     $rootScope.$digest();
 
     expect(getStars().length).toBe(7);
@@ -79,14 +79,14 @@ describe('rating directive', function () {
 
   it('shows different number of icons when `max` attribute is from scope variable', function() {
     $rootScope.max = 15;
-    element = $compile('<rating value="rate" max="max"></rating>')($rootScope);
+    element = $compile('<rating ng-model="rate" max="max"></rating>')($rootScope);
     $rootScope.$digest();
     expect(getStars().length).toBe(15);
   });
 
   it('handles readonly attribute', function() {
     $rootScope.isReadonly = true;
-    element = $compile('<rating value="rate" readonly="isReadonly"></rating>')($rootScope);
+    element = $compile('<rating ng-model="rate" readonly="isReadonly"></rating>')($rootScope);
     $rootScope.$digest();
 
     expect(getState()).toEqual([true, true, true, false, false]);
@@ -106,7 +106,7 @@ describe('rating directive', function () {
 
   it('should fire onHover', function() {
     $rootScope.hoveringOver = jasmine.createSpy('hoveringOver');
-    element = $compile('<rating value="rate" on-hover="hoveringOver(value)"></rating>')($rootScope);
+    element = $compile('<rating ng-model="rate" on-hover="hoveringOver(value)"></rating>')($rootScope);
     $rootScope.$digest();
 
     getStar(3).trigger('mouseover');
@@ -116,7 +116,7 @@ describe('rating directive', function () {
 
   it('should fire onLeave', function() {
     $rootScope.leaving = jasmine.createSpy('leaving');
-    element = $compile('<rating value="rate" on-leave="leaving()"></rating>')($rootScope);
+    element = $compile('<rating ng-model="rate" on-leave="leaving()"></rating>')($rootScope);
     $rootScope.$digest();
 
     element.trigger('mouseleave');
@@ -128,7 +128,7 @@ describe('rating directive', function () {
     beforeEach(inject(function() {
       $rootScope.classOn = 'icon-ok-sign';
       $rootScope.classOff = 'icon-ok-circle';
-      element = $compile('<rating value="rate" state-on="classOn" state-off="classOff"></rating>')($rootScope);
+      element = $compile('<rating ng-model="rate" state-on="classOn" state-off="classOff"></rating>')($rootScope);
       $rootScope.$digest();
     }));
 
@@ -145,7 +145,7 @@ describe('rating directive', function () {
         {stateOn: 'heart'},
         {stateOff: 'off'}
       ];
-      element = $compile('<rating value="rate" rating-states="states"></rating>')($rootScope);
+      element = $compile('<rating ng-model="rate" rating-states="states"></rating>')($rootScope);
       $rootScope.$digest();
     }));
 
@@ -175,7 +175,7 @@ describe('rating directive', function () {
       ratingConfig.max = 10;
       ratingConfig.stateOn = 'on';
       ratingConfig.stateOff = 'off';
-      element = $compile('<rating value="rate"></rating>')($rootScope);
+      element = $compile('<rating ng-model="rate"></rating>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(ratingConfig) {

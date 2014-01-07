@@ -4,7 +4,8 @@ Rating directive that will take care of visualising a star rating bar.
 
 #### `<rating>` ####
 
- * `value` <i class="glyphicon glyphicon-eye-open"></i>
+<<<<<<< HEAD
+ * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	The current rate.
 
@@ -12,7 +13,7 @@ Rating directive that will take care of visualising a star rating bar.
  	_(Defaults: 5)_ :
  	Changes the number of icons.
 
- * `readonly`
+ * `readonly` <i class="icon-eye-open"></i>
  	_(Defaults: false)_ :
  	Prevent user's interaction.
 
