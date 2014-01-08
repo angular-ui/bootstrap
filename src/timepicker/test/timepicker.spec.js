@@ -136,8 +136,13 @@ describe('timepicker directive', function () {
     expect(getTimeState()).toEqual(['02', '39', 'PM']);
     expect(getModelState()).toEqual([14, 39]);
   });
+  
+  it('meridian button has correct type', function() {
+    var button = getMeridianButton();
+    expect(button.attr('type')).toBe('button');
+  });
 
-  it('toggles meridian when arrows are clicked', function() {
+  it('toggles meridian when button is clicked', function() {
     var button = getMeridianButton();
 
     doClick(button);
