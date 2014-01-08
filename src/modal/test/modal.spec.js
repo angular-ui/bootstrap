@@ -8,6 +8,14 @@ describe('$modal', function () {
     element.trigger(e);
   };
 
+  var waitForBackdropAnimation = function () {
+    inject(function ($transition) {
+      if ($transition.transitionEndEventName) {
+        $timeout.flush();
+      }
+    });
+  };
+
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('template/modal/backdrop.html'));
   beforeEach(module('template/modal/window.html'));
@@ -122,8 +130,7 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(0);
 
-      // Backdrop animation
-      $timeout.flush();
+      waitForBackdropAnimation();
       expect($document).not.toHaveBackdrop();
     });
 
@@ -140,8 +147,7 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(0);
 
-      // Backdrop animation
-      $timeout.flush();
+      waitForBackdropAnimation();
       expect($document).not.toHaveBackdrop();
     });
 
@@ -395,8 +401,7 @@ describe('$modal', function () {
         expect(backdropEl).toHaveClass('in');
 
         dismiss(modal);
-        // Backdrop animation
-        $timeout.flush();
+        waitForBackdropAnimation();
 
         modal = open({ template: '<div>With backdrop</div>' });
         backdropEl = $document.find('body > div.modal-backdrop');
