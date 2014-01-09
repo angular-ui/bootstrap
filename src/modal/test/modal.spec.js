@@ -229,7 +229,6 @@ describe('$modal', function () {
       expect($document).toHaveModalOpenWithContent('Content', 'div');
       expect($document).not.toHaveBackdrop();
     });
-
   });
 
   describe('option by option', function () {

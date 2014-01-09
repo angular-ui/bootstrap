@@ -250,6 +250,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         }
       };
 
+      $modalStack.dismissAll = function (reason) {
+        var topModal = this.getTop();
+        while (topModal) {
+          this.dismiss(topModal.key, reason);
+          topModal = this.getTop();
+        }
+      };
+
       $modalStack.getTop = function () {
         return openedWindows.top();
       };
