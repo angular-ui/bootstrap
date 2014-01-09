@@ -22,6 +22,9 @@ var ModalDemoCtrl = function ($scope, $modal, $log) {
   };
 };
 
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
 var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
 
   $scope.items = items;
