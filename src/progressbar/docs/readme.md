@@ -6,7 +6,7 @@ It supports multiple (stacked) bars into the same `<progress>` element or a sing
 
 #### `<progressbar>` ####
 
- * `value` <i class="icon-eye-open"></i>
+ * `value` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	The current value of progress completed.
 

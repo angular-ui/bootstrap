@@ -9,11 +9,11 @@ Everything is formatted using the [date filter](http://docs.angularjs.org/api/ng
 
 All settings can be provided as attributes in the `<datepicker>` or globally configured through the `datepickerConfig`.
 
- * `ng-model` <i class="icon-eye-open"></i>
+ * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	The date object.
 
- * `show-weeks` <i class="icon-eye-open"></i>
+ * `show-weeks` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Defaults: true)_ :
  	Whether to display week numbers.
 
@@ -21,11 +21,11 @@ All settings can be provided as attributes in the `<datepicker>` or globally con
  	_(Defaults: 0)_ :
  	Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
 
- * `min` <i class="icon-eye-open"></i>
+ * `min` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Default: null)_ :
  	Defines the minimum available date.
 
- * `max` <i class="icon-eye-open"></i>
+ * `max` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Default: null)_ :
  	Defines the maximum available date.
 

@@ -4,7 +4,7 @@ Rating directive that will take care of visualising a star rating bar.
 
 #### `<rating>` ####
 
- * `value` <i class="icon-eye-open"></i>
+ * `value` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	The current rate.
 
