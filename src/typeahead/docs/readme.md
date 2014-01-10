@@ -1,5 +1,5 @@
-Typeahead is a AngularJS version of [Twitter Bootstrap typeahead plugin](http://twitter.github.com/bootstrap/javascript.html#typeahead).
-This directive can be used to quickly create elegant typeheads with any form text input.
+Typeahead is a AngularJS version of [Bootstrap v2's typeahead plugin](http://getbootstrap.com/2.3.2/javascript.html#typeahead).
+This directive can be used to quickly create elegant typeaheads with any form text input.
 
 It is very well integrated into AngularJS as it uses a subset of the
 [select directive](http://docs.angularjs.org/api/ng.directive:select) syntax, which is very flexible. Supported expressions are:
@@ -47,4 +47,4 @@ The typeahead directives provide several attributes:
 
 * `typeahead-wait-ms` <i class="icon-eye-open"></i>
    _(Defaults: 0)_ :
-   Minimal wait time after last character typed before typehead kicks-in
+   Minimal wait time after last character typed before typeahead kicks-in
