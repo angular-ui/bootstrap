@@ -1061,6 +1061,27 @@ describe('datepicker directive', function () {
 
     });
 
+    describe('attribute `datepickerOptions`', function () {
+      var weekHeader, weekElement;
+      beforeEach(function() {
+        $rootScope.opts = {
+          'show-weeks': false
+        };
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+
+        weekHeader = getLabelsRow().find('th').eq(0);
+        weekElement = element.find('tbody').find('tr').eq(1).find('td').eq(0);
+      });
+
+      it('hides week numbers based on variable', function() {
+        expect(weekHeader.text()).toEqual('#');
+        expect(weekHeader).toBeHidden();
+        expect(weekElement).toBeHidden();
+      });
+    });
+
     describe('toggles programatically by `open` attribute', function () {
       beforeEach(inject(function() {
         $rootScope.open = true;

@@ -337,9 +337,11 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
         'ng-model': 'date',
         'ng-change': 'dateSelection()'
       });
-      var datepickerEl = angular.element(popupEl.children()[0]);
+      var datepickerEl = angular.element(popupEl.children()[0]),
+          datepickerOptions = {};
       if (attrs.datepickerOptions) {
-        datepickerEl.attr(angular.extend({}, originalScope.$eval(attrs.datepickerOptions)));
+        datepickerOptions = originalScope.$eval(attrs.datepickerOptions);
+        datepickerEl.attr(angular.extend({}, datepickerOptions));
       }
 
       // TODO: reverse from dateFilter string to Date object
@@ -405,7 +407,7 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
       if (attrs.showWeeks) {
         addWatchableAttribute(attrs.showWeeks, 'showWeeks', 'show-weeks');
       } else {
-        scope.showWeeks = datepickerConfig.showWeeks;
+        scope.showWeeks = 'show-weeks' in datepickerOptions ? datepickerOptions['show-weeks'] : datepickerConfig.showWeeks;
         datepickerEl.attr('show-weeks', 'showWeeks');
       }
       if (attrs.dateDisabled) {
