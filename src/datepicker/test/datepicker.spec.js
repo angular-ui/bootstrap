@@ -1,5 +1,5 @@
 describe('datepicker directive', function () {
-  var $rootScope, element;
+  var $rootScope, $compile, element;
   beforeEach(module('ui.bootstrap.datepicker'));
   beforeEach(module('template/datepicker/datepicker.html'));
   beforeEach(module('template/datepicker/popup.html'));
@@ -107,10 +107,10 @@ describe('datepicker directive', function () {
   }
 
   describe('', function () {
-    beforeEach(inject(function(_$compile_, _$rootScope_) {
+    beforeEach(function() {
       element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('is a `<table>` element', function() {
       expect(element.prop('tagName')).toBe('TABLE');
@@ -194,7 +194,7 @@ describe('datepicker directive', function () {
       expectSelectedElement( null, null );
     });
 
-    it('updates the model only when when a day is clicked in the `previous` month', function() {
+    it('updates the model only when a day is clicked in the `previous` month', function() {
       clickPreviousButton();
       expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
 
@@ -219,7 +219,7 @@ describe('datepicker directive', function () {
       expectSelectedElement( 0, 4 );
     });
 
-    it('updates the model only when when a day is clicked in the `next` month', function() {
+    it('updates the model only when a day is clicked in the `next` month', function() {
       clickNextButton();
       expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
 
@@ -1316,9 +1316,9 @@ describe('datepicker directive', function () {
     });
 
     describe('with an append-to-body attribute', function() {
-      beforeEach(inject(function($rootScope) {
+      beforeEach(function() {
         $rootScope.date = new Date();
-      }));
+      });
 
       it('should append to the body', function() {
         var $body = $document.find('body'),
