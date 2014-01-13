@@ -4,7 +4,6 @@ Rating directive that will take care of visualising a star rating bar.
 
 #### `<rating>` ####
 
-<<<<<<< HEAD
  * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	The current rate.
