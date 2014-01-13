@@ -1,3 +1,24 @@
+# 0.10.0 (2014-01-13)
+
+_This release adds AngularJS 1.2 support_
+
+## Features
+
+- **modal:** 
+  - expose dismissAll on $modalStack ([bc8d21c1](http://github.com/angular-ui/bootstrap/commit/bc8d21c1))   
+
+## Bug Fixes
+
+- **datepicker:** 
+  - evaluate `show-weeks` from `datepicker-options` ([92c1715f](http://github.com/angular-ui/bootstrap/commit/92c1715f))  
+- **modal:** 
+  - leaking watchers due to scope re-use ([0754ad7b](http://github.com/angular-ui/bootstrap/commit/0754ad7b))  
+  - support close animation ([1933488c](http://github.com/angular-ui/bootstrap/commit/1933488c))  
+- **timepicker:** 
+  - add correct type for meridian button ([bcf39efe](http://github.com/angular-ui/bootstrap/commit/bcf39efe))  
+- **tooltip:** 
+  - performance and scope fixes ([c0df3201](http://github.com/angular-ui/bootstrap/commit/c0df3201))   
+
 # 0.9.0 (2013-12-28)
 
 _This release adds Bootstrap3 support_
