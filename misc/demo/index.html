@@ -293,10 +293,10 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-click="selectedModules.length && downloadBuild()">
+        <a class="btn btn-default" ng-click="cancel()">Close</a>
+        <a class="btn btn-primary" ng-disabled="!selectedModules.length" ng-href="{{selectedModules.length ? download(selectedModules) : ''}}">
             <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
         </a>
-        <a class="btn" ng-click="cancel()">Cancel</a>
     </div>
 </script>
 

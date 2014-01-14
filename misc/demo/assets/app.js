@@ -3,36 +3,20 @@ angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker'], function($httpPr
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
-  var url = "http://50.116.42.77:3001";
-  //iFrame for downloading
-  var $iframe = angular.element('<iframe>').css('display','none');
-  $document.find('body').append($iframe);
+var builderUrl = "http://50.116.42.77:3001";
 
-  var downloadFileFromUrl = function(downloadUrl) {
-    $iframe.attr('src', '');
-    $iframe.attr('src', downloadUrl);
-  };
-  
+function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
   $scope.showBuildModal = function() {
     var modalInstance = $modal.open({
       templateUrl: 'buildModal.html',
       controller: 'SelectModulesCtrl',
       resolve: {
         modules: function() {
-          return $http.get(url + "/api/bootstrap").then(function(response) {
+          return $http.get(builderUrl + "/api/bootstrap").then(function(response) {
             return response.data.modules;
           });
         }
       }
-    });
-
-    modalInstance.result.then(function(selectedModules) {
-      var downloadUrl = url + "/api/bootstrap/download?";
-      angular.forEach(selectedModules, function(module) {
-        downloadUrl += "modules=" + module + "&";
-      });
-      downloadFileFromUrl(downloadUrl);
     });
   };
   
@@ -45,7 +29,6 @@ function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
 }
 
 var SelectModulesCtrl = function($scope, $modalInstance, modules) {
-
   $scope.selectedModules = [];
   $scope.modules = modules;
 
@@ -63,6 +46,14 @@ var SelectModulesCtrl = function($scope, $modalInstance, modules) {
 
   $scope.cancel = function () {
     $modalInstance.dismiss();
+  };
+
+  $scope.download = function (selectedModules) {
+    var downloadUrl = builderUrl + "/api/bootstrap/download?";
+    angular.forEach(selectedModules, function(module) {
+      downloadUrl += "modules=" + module + "&";
+    });
+    return downloadUrl;
   };
 };
 
