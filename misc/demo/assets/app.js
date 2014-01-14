@@ -41,20 +41,6 @@ function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
       templateUrl: 'downloadModal.html',
       controller: 'DownloadCtrl'
     });
-
-    modalInstance.result.then(function(options) {
-      var downloadUrl = ['http://angular-ui.github.io/bootstrap/ui-bootstrap-'];
-      if (options.tpls) {
-        downloadUrl.push('tpls-');
-      }
-      downloadUrl.push(options.version);
-      if (options.minified) {
-        downloadUrl.push('.min');
-      }
-      downloadUrl.push('.js');
-
-      downloadFileFromUrl(downloadUrl.join(''));
-    });
   };
 }
 
@@ -87,8 +73,19 @@ var DownloadCtrl = function($scope, $modalInstance) {
   };
   
   $scope.download = function (version) {
-    $scope.options.version = version;
-    $modalInstance.close($scope.options);
+    var options = $scope.options;
+
+    var downloadUrl = ['ui-bootstrap-'];
+    if (options.tpls) {
+      downloadUrl.push('tpls-');
+    }
+    downloadUrl.push(version);
+    if (options.minified) {
+      downloadUrl.push('.min');
+    }
+    downloadUrl.push('.js');
+
+    return downloadUrl.join('');
   };
   
   $scope.cancel = function () {
