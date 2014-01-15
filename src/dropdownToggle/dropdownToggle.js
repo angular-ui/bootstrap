@@ -12,13 +12,13 @@
    </li>
  */
 
-angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['$document', '$location', function ($document, $location) {
+angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['$document', function ($document) {
   var openElement = null,
       closeMenu   = angular.noop;
   return {
     restrict: 'CA',
     link: function(scope, element, attrs) {
-      scope.$watch('$location.path', function() { closeMenu(); });
+      scope.$on('$locationChangeSuccess', function() { closeMenu(); });
       element.parent().bind('click', function() { closeMenu(); });
       element.bind('click', function (event) {
 

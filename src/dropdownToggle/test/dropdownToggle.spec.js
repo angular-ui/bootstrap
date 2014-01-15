@@ -50,7 +50,8 @@ describe('dropdownToggle', function() {
   it('should close on $location change', function() {
     var elm = dropdown();
     elm.find('a').click();
-    $location.path('/foo');
+    expect(elm.hasClass('open')).toBe(true);
+    $rootScope.$broadcast('$locationChangeSuccess');
     $rootScope.$apply();
     expect(elm.hasClass('open')).toBe(false);
   });
