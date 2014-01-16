@@ -69,7 +69,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.position'])
 
         var days = getDates(firstDate, numDates), labels = new Array(7);
         for (var i = 0; i < numDates; i ++) {
-          var dt = new Date(days[i]);
+          var dt = days[i];
           days[i] = makeDate(dt, format.day, (selected && selected.getDate() === dt.getDate() && selected.getMonth() === dt.getMonth() && selected.getFullYear() === dt.getFullYear()), dt.getMonth() !== month);
         }
         for (var j = 0; j < 7; j++) {
