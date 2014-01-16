@@ -4,8 +4,8 @@
     Open only one at a time
   </label>
 
-  <accordion close-others="oneAtATime">
-    <accordion-group heading="Static Header, initially expanded" is-open="true">
+  <accordion close-others="oneAtATime" ng-init="isFirstOpen = true">
+    <accordion-group heading="Static Header, initially expanded" is-open="isFirstOpen">
       This content is straight in the template.
     </accordion-group>
     <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
