@@ -13,19 +13,15 @@ All settings can be provided as attributes in the `<datepicker>` or globally con
  	:
  	The date object.
 
- * `show-weeks` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Defaults: true)_ :
- 	Whether to display week numbers.
+ * `datepicker-mode` <i class="glyphicon glyphicon-eye-open"></i>
+   _(Defaults: 'day')_ :
+   Current mode of the datepicker _(day|month|year)_. Can be used to initialize datepicker to specific mode.
 
- * `starting-day`
- 	_(Defaults: 0)_ :
- 	Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
-
- * `min` <i class="glyphicon glyphicon-eye-open"></i>
+ * `min-date` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Default: null)_ :
  	Defines the minimum available date.
 
- * `max` <i class="glyphicon glyphicon-eye-open"></i>
+ * `max-date` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Default: null)_ :
  	Defines the maximum available date.
 
@@ -33,33 +29,53 @@ All settings can be provided as attributes in the `<datepicker>` or globally con
  	_(Default: null)_ :
  	An optional expression to disable visible options based on passing date and current mode _(day|month|year)_.
 
- * `day-format`
+ * `show-weeks`
+ 	_(Defaults: true)_ :
+ 	Whether to display week numbers.
+
+ * `starting-day`
+ 	_(Defaults: 0)_ :
+ 	Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
+
+ * `init-date`
+ 	:
+ 	The initial date view when no model value is not specified.
+
+ * `min-mode`
+   _(Defaults: 'day')_ :
+   Set a lower limit for mode.
+
+ * `max-mode`
+   _(Defaults: 'year')_ :
+   Set an upper limit for mode.
+
+ * `format-day`
  	_(Default: 'dd')_ :
  	Format of day in month.
 
- * `month-format`
+ * `format-month`
  	_(Default: 'MMMM')_ :
  	Format of month in year.
 
- * `year-format`
+ * `format-year`
  	_(Default: 'yyyy')_ :
  	Format of year in year range.
+
+ * `format-day-header`
+ 	_(Default: 'EEE')_ :
+ 	Format of day in week header.
+
+ * `format-day-title-`
+ 	_(Default: 'MMMM yyyy')_ :
+ 	Format of title when selecting day.
+
+ * `format-month-title`
+ 	_(Default: 'yyyy')_ :
+ 	Format of title when selecting month.
 
  * `year-range`
  	_(Default: 20)_ :
  	Number of years displayed in year selection.
-
- * `day-header-format`
- 	_(Default: 'EEE')_ :
- 	Format of day in week header.
-
- * `day-title-format`
- 	_(Default: 'MMMM yyyy')_ :
- 	Format of title when selecting day.
-
- * `month-title-format`
- 	_(Default: 'yyyy')_ :
- 	Format of title when selecting month.
 
 
 ### Popup Settings ###
@@ -78,10 +94,6 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
  * `current-text`
  	_(Default: 'Today')_ :
  	The text to display for the current day button.
-
- * `toggle-weeks-text`
- 	_(Default: 'Weeks')_ :
- 	The text to display for the toggling week numbers button.
 
  * `clear-text`
  	_(Default: 'Clear')_ :
