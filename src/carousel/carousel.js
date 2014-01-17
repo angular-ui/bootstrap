@@ -297,7 +297,7 @@ function CarouselDemoCtrl($scope) {
 </example>
 */
 
-.directive('slide', ['$parse', function($parse) {
+.directive('slide', function() {
   return {
     require: '^carousel',
     restrict: 'EA',
@@ -305,30 +305,9 @@ function CarouselDemoCtrl($scope) {
     replace: true,
     templateUrl: 'template/carousel/slide.html',
     scope: {
+      active: '=?'
     },
     link: function (scope, element, attrs, carouselCtrl) {
-      //Set up optional 'active' = binding
-      if (attrs.active) {
-        var getActive = $parse(attrs.active);
-        var setActive = getActive.assign;
-        var lastValue = scope.active = getActive(scope.$parent);
-        scope.$watch(function parentActiveWatch() {
-          var parentActive = getActive(scope.$parent);
-
-          if (parentActive !== scope.active) {
-            // we are out of sync and need to copy
-            if (parentActive !== lastValue) {
-              // parent changed and it has precedence
-              lastValue = scope.active = parentActive;
-            } else {
-              // if the parent can be assigned then do so
-              setActive(scope.$parent, parentActive = lastValue = scope.active);
-            }
-          }
-          return parentActive;
-        });
-      }
-
       carouselCtrl.addSlide(scope, element);
       //when the scope is destroyed then remove the slide from the current slides array
       scope.$on('$destroy', function() {
@@ -342,4 +321,4 @@ function CarouselDemoCtrl($scope) {
       });
     }
   };
-}]);
+});
