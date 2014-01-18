@@ -7,7 +7,7 @@
 *
 */
 angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
-.controller('CarouselController', ['$scope', '$timeout', '$transition', '$q', function ($scope, $timeout, $transition, $q) {
+.controller('CarouselController', ['$scope', '$timeout', '$transition', function ($scope, $timeout, $transition) {
   var self = this,
     slides = self.slides = [],
     currentIndex = -1,
