@@ -117,7 +117,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             var popupTimeout;
             var appendToBody = angular.isDefined( options.appendToBody ) ? options.appendToBody : false;
             var triggers = getTriggers( undefined );
-            var hasRegisteredTriggers = false;
             var hasEnableExp = angular.isDefined(attrs[prefix+'Enable']);
 
             var positionTooltip = function (){
@@ -299,11 +298,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               scope.tt_popupDelay = ! isNaN(delay) ? delay : options.popupDelay;
             });
 
-            var unregisterTriggers = function() {
-              if (hasRegisteredTriggers) {
-                element.unbind( triggers.show, showTooltipBind );
-                element.unbind( triggers.hide, hideTooltipBind );
-              }
+            var unregisterTriggers = function () {
+              element.unbind(triggers.show, showTooltipBind);
+              element.unbind(triggers.hide, hideTooltipBind);
             };
 
             attrs.$observe( prefix+'Trigger', function ( val ) {
@@ -317,8 +314,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
                 element.bind( triggers.show, showTooltipBind );
                 element.bind( triggers.hide, hideTooltipBind );
               }
-
-              hasRegisteredTriggers = true;
             });
 
             var animation = scope.$eval(attrs[prefix + 'Animation']);
