@@ -1,5 +1,5 @@
 var ProgressDemoCtrl = function ($scope) {
-  
+
   $scope.max = 200;
 
   $scope.random = function() {
@@ -22,11 +22,11 @@ var ProgressDemoCtrl = function ($scope) {
     $scope.type = type;
   };
   $scope.random();
-  
+
   $scope.randomStacked = function() {
     $scope.stacked = [];
     var types = ['success', 'info', 'warning', 'danger'];
-    
+
     for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
         var index = Math.floor((Math.random() * 4));
         $scope.stacked.push({

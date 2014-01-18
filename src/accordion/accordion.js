@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
       });
     }
   };
-  
+
   // This is called from the accordion-group directive to add itself to the accordion
   this.addGroup = function(groupScope) {
     var that = this;
@@ -61,7 +61,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     transclude:true,              // It transcludes the contents of the directive into the template
     replace: true,                // The element containing the directive will be replaced with the template
     templateUrl:'template/accordion/accordion-group.html',
-    scope: { 
+    scope: {
       heading: '@',               // Interpolate the heading attribute onto this scope
       isOpen: '=?',
       isDisabled: '=?'

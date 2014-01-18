@@ -90,7 +90,7 @@ describe('progressbar directive', function () {
       $rootScope.value += 1;
       $rootScope.$digest();
 
-      var barEl = getBar(0); 
+      var barEl = getBar(0);
       expect(barEl).toHaveClass(BAR_CLASS);
       expect(barEl).not.toHaveClass(BAR_CLASS + '-success');
       expect(barEl).toHaveClass(BAR_CLASS + '-warning');

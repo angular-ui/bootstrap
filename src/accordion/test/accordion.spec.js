@@ -305,7 +305,7 @@ describe('accordion', function () {
         expect(scope.groups[0].open).toBe(false);
       });
     });
-    
+
     describe('`is-disabled` attribute', function() {
       var groupBody;
       beforeEach(function () {
@@ -324,18 +324,18 @@ describe('accordion', function () {
       it('should open the panel with isOpen set to true', function () {
         expect(groupBody.scope().isOpen).toBeFalsy();
       });
-      
+
       it('should not toggle if disabled', function() {
         findGroupLink(0).click();
         scope.$digest();
         expect(groupBody.scope().isOpen).toBeFalsy();
       });
-      
+
       it('should toggle after enabling', function() {
         scope.disabled = false;
         scope.$digest();
         expect(groupBody.scope().isOpen).toBeFalsy();
-        
+
         findGroupLink(0).click();
         scope.$digest();
         expect(groupBody.scope().isOpen).toBeTruthy();
@@ -344,7 +344,7 @@ describe('accordion', function () {
 
     describe('accordion-heading element', function() {
       beforeEach(function() {
-        var tpl = 
+        var tpl =
           '<accordion ng-init="a = [1,2,3]">' +
             '<accordion-group heading="I get overridden">' +
               '<accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </accordion-heading>' +
@@ -366,7 +366,7 @@ describe('accordion', function () {
 
     describe('accordion-heading attribute', function() {
       beforeEach(function() {
-        var tpl = 
+        var tpl =
           '<accordion ng-init="a = [1,2,3]">' +
             '<accordion-group heading="I get overridden">' +
               '<div accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </div>' +

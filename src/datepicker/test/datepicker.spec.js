@@ -1346,13 +1346,13 @@ describe('datepicker directive', function () {
         expect($body.children().length).toEqual(bodyLength);
       });
     });
-    
+
     describe('with setting datepickerConfig.showWeeks to false', function() {
       var originalConfig = {};
       beforeEach(inject(function(datepickerConfig) {
         angular.extend(originalConfig, datepickerConfig);
         datepickerConfig.showWeeks = false;
-        
+
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
@@ -1361,7 +1361,7 @@ describe('datepicker directive', function () {
         // return it to the original state
         angular.extend(datepickerConfig, originalConfig);
       }));
-      
+
       it('changes initial visibility for weeks', function() {
         expect(getLabelsRow().find('th').eq(0)).toBeHidden();
         var tr = element.find('tbody').find('tr');

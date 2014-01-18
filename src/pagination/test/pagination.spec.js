@@ -186,7 +186,7 @@ describe('pagination directive', function () {
       updateCurrentPage('04');
       expect(getPaginationEl(4)).toHaveClass('active');
     });
-    
+
     it('defaults to 1 if non-numeric', function() {
       updateCurrentPage('pizza');
       expect(getPaginationEl(1)).toHaveClass('active');

@@ -14,7 +14,7 @@ describe('dropdownToggle', function() {
   function dropdown() {
     return $compile('<li class="dropdown"><a dropdown-toggle></a><ul dropdown-toggle><li>Hello</li></ul></li>')($rootScope);
   }
-  
+
   it('should toggle on `a` click', function() {
     var elm = dropdown();
     expect(elm.hasClass('open')).toBe(false);
@@ -65,4 +65,4 @@ describe('dropdownToggle', function() {
     expect(elm2.hasClass('open')).toBe(true);
   });
 });
-  
+

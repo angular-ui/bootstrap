@@ -12,11 +12,11 @@ angular.module('ui.bootstrap.rating', [])
   this.maxRange = angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max;
   this.stateOn = angular.isDefined($attrs.stateOn) ? $scope.$parent.$eval($attrs.stateOn) : ratingConfig.stateOn;
   this.stateOff = angular.isDefined($attrs.stateOff) ? $scope.$parent.$eval($attrs.stateOff) : ratingConfig.stateOff;
-  
+
   this.init = function(ngModelCtrl_) {
     ngModelCtrl = ngModelCtrl_;
     ngModelCtrl.$render = this.render;
-    
+
      $scope.range = this.buildTemplateObjects(
       angular.isDefined($attrs.ratingStates) ? $scope.$parent.$eval($attrs.ratingStates) : new Array(this.maxRange)
     );
@@ -52,7 +52,7 @@ angular.module('ui.bootstrap.rating', [])
     $scope.val = ngModelCtrl.$viewValue;
     $scope.onLeave();
   };
-  
+
   this.render = function() {
     $scope.val = ngModelCtrl.$viewValue;
   };

@@ -387,8 +387,8 @@ describe('tabs', function() {
 
   describe('tabset controller', function() {
     function mockTab(isActive) {
-      return { 
-        active: !!isActive, 
+      return {
+        active: !!isActive,
         onSelect : angular.noop,
         onDeselect : angular.noop
       };

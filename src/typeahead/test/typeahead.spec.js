@@ -257,7 +257,7 @@ describe('typeahead tests', function () {
         return $scope.source;
       };
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in loadMatches($viewValue) | filter:$viewValue" typeahead-wait-ms="200"></div>');
-      
+
       changeInputValueTo(element, 'first');
       $timeout.flush();
 
