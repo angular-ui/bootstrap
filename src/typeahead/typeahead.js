@@ -15,8 +15,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       var match = input.match(TYPEAHEAD_REGEXP), modelMapper, viewMapper, source;
       if (!match) {
         throw new Error(
-          "Expected typeahead specification in form of '_modelValue_ (as _label_)? for _item_ in _collection_'" +
-            " but got '" + input + "'.");
+          'Expected typeahead specification in form of "_modelValue_ (as _label_)? for _item_ in _collection_"' +
+            ' but got "' + input + '".');
       }
 
       return {
@@ -340,7 +340,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
   .filter('typeaheadHighlight', function() {
 
     function escapeRegexp(queryToEscape) {
-      return queryToEscape.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+      return queryToEscape.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
     }
 
     return function(matchItem, query) {

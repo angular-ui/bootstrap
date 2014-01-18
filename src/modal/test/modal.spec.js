@@ -3,7 +3,7 @@ describe('$modal', function () {
   var $modal, $modalProvider;
 
   var triggerKeyDown = function (element, keyCode) {
-    var e = $.Event("keydown");
+    var e = $.Event('keydown');
     e.which = keyCode;
     element.trigger(e);
   };
@@ -39,7 +39,7 @@ describe('$modal', function () {
       toBeResolvedWith: function(value) {
         var resolved;
         this.message = function() {
-          return "Expected '" + angular.mock.dump(this.actual) + "' to be resolved with '" + value + "'.";
+          return 'Expected "' + angular.mock.dump(this.actual) + '" to be resolved with "' + value + '".';
         };
         this.actual.then(function(result){
           resolved = result;
@@ -52,7 +52,7 @@ describe('$modal', function () {
       toBeRejectedWith: function(value) {
         var rejected;
         this.message = function() {
-          return "Expected '" + angular.mock.dump(this.actual) + "' to be rejected with '" + value + "'.";
+          return 'Expected "' + angular.mock.dump(this.actual) + '" to be rejected with "' + value + '".';
         };
         this.actual.then(angular.noop, function(reason){
           rejected = reason;
@@ -67,7 +67,7 @@ describe('$modal', function () {
         var contentToCompare, modalDomEls = this.actual.find('body > div.modal > div.modal-dialog > div.modal-content');
 
         this.message = function() {
-          return "Expected '" + angular.mock.dump(modalDomEls) + "' to be open with '" + content + "'.";
+          return '"Expected "' + angular.mock.dump(modalDomEls) + '" to be open with "' + content + '".';
         };
 
         contentToCompare = selector ? modalDomEls.find(selector) : modalDomEls;
@@ -84,7 +84,7 @@ describe('$modal', function () {
 
         var backdropDomEls = this.actual.find('body > div.modal-backdrop');
         this.message = function() {
-          return "Expected '" + angular.mock.dump(backdropDomEls) + "' to be a backdrop element'.";
+          return 'Expected "' + angular.mock.dump(backdropDomEls) + '" to be a backdrop element".';
         };
 
         return backdropDomEls.length === 1;

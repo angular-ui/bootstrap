@@ -1,10 +1,10 @@
-describe("alert", function () {
+describe('alert', function () {
 
   var scope, $compile;
   var element;
 
   beforeEach(module('ui.bootstrap.alert'));
-  beforeEach(module('template/alert/alert.html'));
+  beforeEach(module('template/alert/alert.html')); 
 
   beforeEach(inject(function ($rootScope, _$compile_, $controller) {
 
@@ -12,11 +12,11 @@ describe("alert", function () {
     $compile = _$compile_;
 
     element = angular.element(
-        "<div>" + 
-          "<alert ng-repeat='alert in alerts' type='alert.type'" +
-            "close='removeAlert($index)'>{{alert.msg}}" +
-          "</alert>" +
-        "</div>");
+        '<div>' + 
+          '<alert ng-repeat="alert in alerts" type="alert.type"' +
+            'close="removeAlert($index)">{{alert.msg}}' +
+          '</alert>' +
+        '</div>');
 
     scope.alerts = [
       { msg:'foo', type:'success'},
@@ -39,12 +39,12 @@ describe("alert", function () {
     return element.find('span').eq(index);
   }
 
-  it("should generate alerts using ng-repeat", function () {
+  it('should generate alerts using ng-repeat', function () {
     var alerts = createAlerts();
     expect(alerts.length).toEqual(3);
   });
 
-  it("should use correct classes for different alert types", function () {
+  it('should use correct classes for different alert types', function () {
     var alerts = createAlerts();
     expect(alerts.eq(0)).toHaveClass('alert-success');
     expect(alerts.eq(1)).toHaveClass('alert-error');
@@ -59,7 +59,7 @@ describe("alert", function () {
     }
   });
 
-  it("should show close buttons", function () {
+  it('should show close buttons', function () {
     var alerts = createAlerts();
 
     for (var i = 0, n = alerts.length; i < n; i++) {
@@ -67,7 +67,7 @@ describe("alert", function () {
     }
   });
 
-  it("should fire callback when closed", function () {
+  it('should fire callback when closed', function () {
 
     var alerts = createAlerts();
 

@@ -125,10 +125,10 @@ describe('accordion', function () {
     describe('with static panels', function () {
       beforeEach(function () {
         var tpl =
-          "<accordion>" +
-            "<accordion-group heading=\"title 1\">Content 1</accordion-group>" +
-            "<accordion-group heading=\"title 2\">Content 2</accordion-group>" +
-            "</accordion>";
+          '<accordion>' +
+            '<accordion-group heading="title 1">Content 1</accordion-group>' +
+            '<accordion-group heading="title 2">Content 2</accordion-group>' +
+            '</accordion>';
         element = angular.element(tpl);
         $compile(element)(scope);
         scope.$digest();
@@ -171,9 +171,9 @@ describe('accordion', function () {
       var model;
       beforeEach(function () {
         var tpl =
-          "<accordion>" +
-            "<accordion-group ng-repeat='group in groups' heading='{{group.name}}'>{{group.content}}</accordion-group>" +
-          "</accordion>";
+          '<accordion>' +
+            '<accordion-group ng-repeat="group in groups" heading="{{group.name}}">{{group.content}}</accordion-group>' +
+          '</accordion>';
         element = angular.element(tpl);
         model = [
           {name: 'title 1', content: 'Content 1'},
@@ -246,10 +246,10 @@ describe('accordion', function () {
     describe('is-open attribute with dynamic content', function() {
       beforeEach(function () {
         var tpl =
-          "<accordion>" +
-            "<accordion-group heading=\"title 1\" is-open=\"open1\"><div ng-repeat='item in items'>{{item}}</div></accordion-group>" +
-            "<accordion-group heading=\"title 2\" is-open=\"open2\">Static content</accordion-group>" +
-            "</accordion>";
+          '<accordion>' +
+            '<accordion-group heading="title 1" is-open="open1"><div ng-repeat="item in items">{{item}}</div></accordion-group>' +
+            '<accordion-group heading="title 2" is-open="open2">Static content</accordion-group>' +
+            '</accordion>';
         element = angular.element(tpl);
         scope.items = ['Item 1', 'Item 2', 'Item 3'];
         scope.open1 = true;

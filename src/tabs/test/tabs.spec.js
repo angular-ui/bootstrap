@@ -232,7 +232,7 @@ describe('tabs', function() {
   describe('advanced tab-heading element', function() {
     beforeEach(inject(function($compile, $rootScope, $sce) {
       scope = $rootScope.$new();
-      scope.myHtml = $sce.trustAsHtml("<b>hello</b>, there!");
+      scope.myHtml = $sce.trustAsHtml('<b>hello</b>, there!');
       scope.value = true;
       elm = $compile([
         '<tabset>',
@@ -253,7 +253,7 @@ describe('tabs', function() {
     }
 
     it('should create a heading bound to myHtml', function() {
-      expect(heading().eq(0).html()).toBe("<b>hello</b>, there!");
+      expect(heading().eq(0).html()).toBe('<b>hello</b>, there!');
     });
 
     it('should hide and show the heading depending on value', function() {
@@ -278,9 +278,9 @@ describe('tabs', function() {
     beforeEach(inject(function($compile, $rootScope) {
       scope = $rootScope.$new();
       scope.tabs = [
-        { title:"Title 1", available:true },
-        { title:"Title 2", available:true },
-        { title:"Title 3", available:true }
+        { title:'Title 1', available:true },
+        { title:'Title 2', available:true },
+        { title:'Title 3', available:true }
       ];
       elm = $compile([
         '<tabset>',
@@ -332,15 +332,15 @@ describe('tabs', function() {
       scope.$apply('tabs[2].available=true');
       scope.$digest();
       expect(titles().length).toBe(9);
-      expect(titles().eq(0).text().trim()).toBe("first");
-      expect(titles().eq(1).text().trim()).toBe("Title 1");
-      expect(titles().eq(2).text().trim()).toBe("Title 2");
-      expect(titles().eq(3).text().trim()).toBe("Title 3");
-      expect(titles().eq(4).text().trim()).toBe("mid");
-      expect(titles().eq(5).text().trim()).toBe("Second Title 1");
-      expect(titles().eq(6).text().trim()).toBe("Second Title 2");
-      expect(titles().eq(7).text().trim()).toBe("Second Title 3");
-      expect(titles().eq(8).text().trim()).toBe("last");
+      expect(titles().eq(0).text().trim()).toBe('first');
+      expect(titles().eq(1).text().trim()).toBe('Title 1');
+      expect(titles().eq(2).text().trim()).toBe('Title 2');
+      expect(titles().eq(3).text().trim()).toBe('Title 3');
+      expect(titles().eq(4).text().trim()).toBe('mid');
+      expect(titles().eq(5).text().trim()).toBe('Second Title 1');
+      expect(titles().eq(6).text().trim()).toBe('Second Title 2');
+      expect(titles().eq(7).text().trim()).toBe('Second Title 3');
+      expect(titles().eq(8).text().trim()).toBe('last');
     });
   });
 
@@ -433,7 +433,7 @@ describe('tabs', function() {
 
     it('should remove title tabs when elements are destroyed and change selection', inject(function($controller, $compile, $rootScope) {
       scope = $rootScope.$new();
-      elm = $compile("<tabset><tab heading='1'>Hello</tab><tab ng-repeat='i in list' heading='tab {{i}}'>content {{i}}</tab></tabset>")(scope);
+      elm = $compile('<tabset><tab heading="1">Hello</tab><tab ng-repeat="i in list" heading="tab {{i}}">content {{i}}</tab></tabset>')(scope);
       scope.$apply();
 
       expectTitles(['1']);

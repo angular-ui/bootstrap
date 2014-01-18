@@ -51,7 +51,7 @@ describe('tooltip', function() {
 
   it('should have default placement of "top"', inject(function() {
     elm.trigger( 'mouseenter' );
-    expect( elmScope.tt_placement ).toBe( "top" );
+    expect( elmScope.tt_placement ).toBe( 'top' );
   }));
 
   it('should allow specification of placement', inject( function( $compile ) {
@@ -62,7 +62,7 @@ describe('tooltip', function() {
     elmScope = elm.scope();
 
     elm.trigger( 'mouseenter' );
-    expect( elmScope.tt_placement ).toBe( "bottom" );
+    expect( elmScope.tt_placement ).toBe( 'bottom' );
   }));
 
   it('should work inside an ngRepeat', inject( function( $compile ) {
@@ -76,12 +76,12 @@ describe('tooltip', function() {
     ) )( scope );
 
     scope.items = [
-      { name: "One", tooltip: "First Tooltip" }
+      { name: 'One', tooltip: 'First Tooltip' }
     ];
     
     scope.$digest();
     
-    var tt = angular.element( elm.find("li > span")[0] );
+    var tt = angular.element( elm.find('li > span')[0] );
     
     tt.trigger( 'mouseenter' );
 
@@ -94,8 +94,8 @@ describe('tooltip', function() {
   it('should only have an isolate scope on the popup', inject( function ( $compile ) {
     var ttScope;
 
-    scope.tooltipMsg = "Tooltip Text";
-    scope.alt = "Alt Message";
+    scope.tooltipMsg = 'Tooltip Text';
+    scope.alt = 'Alt Message';
 
     elmBody = $compile( angular.element( 
       '<div><span alt={{alt}} tooltip="{{tooltipMsg}}" tooltip-animation="false">Selector Text</span></div>'

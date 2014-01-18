@@ -6,7 +6,7 @@ describe('datepicker directive', function () {
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $rootScope.date = new Date("September 30, 2010 15:30:00");
+    $rootScope.date = new Date('September 30, 2010 15:30:00');
   }));
 
   function getTitle() {
@@ -502,7 +502,7 @@ describe('datepicker directive', function () {
 
   describe('min attribute', function () {
     beforeEach(function() {
-      $rootScope.mindate = new Date("September 12, 2010");
+      $rootScope.mindate = new Date('September 12, 2010');
       element = $compile('<datepicker ng-model="date" min="mindate"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
@@ -516,7 +516,7 @@ describe('datepicker directive', function () {
     });
 
     it('disables appropriate days when min date changes', function() {
-      $rootScope.mindate = new Date("September 5, 2010");
+      $rootScope.mindate = new Date('September 5, 2010');
       $rootScope.$digest();
       for (var i = 0; i < 5; i ++) {
         for (var j = 0; j < 7; j ++) {
@@ -526,8 +526,8 @@ describe('datepicker directive', function () {
     });
 
     it('invalidates when model is a disabled date', function() {
-      $rootScope.mindate = new Date("September 5, 2010");
-      $rootScope.date = new Date("September 2, 2010");
+      $rootScope.mindate = new Date('September 5, 2010');
+      $rootScope.date = new Date('September 2, 2010');
       $rootScope.$digest();
       expect(element.hasClass('ng-invalid')).toBeTruthy();
       expect(element.hasClass('ng-invalid-date-disabled')).toBeTruthy();
@@ -582,7 +582,7 @@ describe('datepicker directive', function () {
 
     it('enables everything before if it is cleared', function() {
       $rootScope.mindate = null;
-      $rootScope.date = new Date("December 20, 1949");
+      $rootScope.date = new Date('December 20, 1949');
       $rootScope.$digest();
 
       clickTitleButton();
@@ -597,7 +597,7 @@ describe('datepicker directive', function () {
 
   describe('max attribute', function () {
     beforeEach(function() {
-      $rootScope.maxdate = new Date("September 25, 2010");
+      $rootScope.maxdate = new Date('September 25, 2010');
       element = $compile('<datepicker ng-model="date" max="maxdate"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
@@ -611,7 +611,7 @@ describe('datepicker directive', function () {
     });
 
     it('disables appropriate days when max date changes', function() {
-      $rootScope.maxdate = new Date("September 18, 2010");
+      $rootScope.maxdate = new Date('September 18, 2010');
       $rootScope.$digest();
       for (var i = 0; i < 5; i ++) {
         for (var j = 0; j < 7; j ++) {
@@ -621,7 +621,7 @@ describe('datepicker directive', function () {
     });
 
     it('invalidates when model is a disabled date', function() {
-      $rootScope.maxdate = new Date("September 18, 2010");
+      $rootScope.maxdate = new Date('September 18, 2010');
       $rootScope.$digest();
       expect(element.hasClass('ng-invalid')).toBeTruthy();
       expect(element.hasClass('ng-invalid-date-disabled')).toBeTruthy();
@@ -912,7 +912,7 @@ describe('datepicker directive', function () {
     });
 
     describe('`isDisabled` function', function() {
-      var date = new Date("September 30, 2010 15:30:00");
+      var date = new Date('September 30, 2010 15:30:00');
 
       it('to return false if no limit is set', function() {
         expect(ctrl.isDisabled(date, 0)).toBeFalsy();
@@ -964,7 +964,7 @@ describe('datepicker directive', function () {
     describe('', function () {
       beforeEach(inject(function(_$document_, $sniffer) {
         $document = _$document_;
-        $rootScope.date = new Date("September 30, 2010 15:30:00");
+        $rootScope.date = new Date('September 30, 2010 15:30:00');
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
@@ -1014,7 +1014,7 @@ describe('datepicker directive', function () {
       });
 
       it('updates the input correctly when model changes', function() {
-        $rootScope.date = new Date("January 10, 1983 10:00:00");
+        $rootScope.date = new Date('January 10, 1983 10:00:00');
         $rootScope.$digest();
         expect(inputEl.val()).toBe('1983-01-10');
       });
@@ -1124,7 +1124,7 @@ describe('datepicker directive', function () {
       });
 
       it('updates the input correctly when model changes', function() {
-        $rootScope.date = new Date("January 10, 1983 10:00:00");
+        $rootScope.date = new Date('January 10, 1983 10:00:00');
         $rootScope.$digest();
         expect(inputEl.val()).toBe('10-January-1983');
       });
@@ -1149,7 +1149,7 @@ describe('datepicker directive', function () {
       });
 
       it('updates the input correctly when model changes', function() {
-        $rootScope.date = new Date("August 11, 2013 09:09:00");
+        $rootScope.date = new Date('August 11, 2013 09:09:00');
         $rootScope.$digest();
         expect(inputEl.val()).toBe('11-August-2013');
       });

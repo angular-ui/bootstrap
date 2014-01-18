@@ -73,18 +73,18 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          src: ["**/*.html"],
-          cwd: "misc/demo/",
-          dest: "dist/"
+          src: ['**/*.html'],
+          cwd: 'misc/demo/',
+          dest: 'dist/'
         }]
       },
       demoassets: {
         files: [{
           expand: true,
           //Don't re-copy html files, we process those
-          src: ["**/**/*", "!**/*.html"],
-          cwd: "misc/demo",
-          dest: "dist/"
+          src: ['**/**/*', '!**/*.html'],
+          cwd: 'misc/demo',
+          dest: 'dist/'
         }]
       }
     },
@@ -124,6 +124,7 @@ module.exports = function(grunt) {
         sub: true,
         boss: true,
         eqnull: true,
+        quotmark: 'single',
         globals: {
           angular: true
         }
@@ -195,8 +196,8 @@ module.exports = function(grunt) {
         html5Mode: false
       },
       api: {
-        src: ["src/**/*.js", "src/**/*.ngdoc"],
-        title: "API Documentation"
+        src: ['src/**/*.js', 'src/**/*.ngdoc'],
+        title: 'API Documentation'
       }
     }
   });
@@ -246,18 +247,18 @@ module.exports = function(grunt) {
       name: name,
       moduleName: enquote('ui.bootstrap.' + name),
       displayName: ucwords(breakup(name, ' ')),
-      srcFiles: grunt.file.expand("src/"+name+"/*.js"),
-      tplFiles: grunt.file.expand("template/"+name+"/*.html"),
-      tpljsFiles: grunt.file.expand("template/"+name+"/*.html.js"),
-      tplModules: grunt.file.expand("template/"+name+"/*.html").map(enquote),
+      srcFiles: grunt.file.expand('src/'+name+'/*.js'),
+      tplFiles: grunt.file.expand('template/'+name+'/*.html'),
+      tpljsFiles: grunt.file.expand('template/'+name+'/*.html.js'),
+      tplModules: grunt.file.expand('template/'+name+'/*.html').map(enquote),
       dependencies: dependenciesForModule(name),
       docs: {
-        md: grunt.file.expand("src/"+name+"/docs/*.md")
-          .map(grunt.file.read).map(markdown).join("\n"),
-        js: grunt.file.expand("src/"+name+"/docs/*.js")
-          .map(grunt.file.read).join("\n"),
-        html: grunt.file.expand("src/"+name+"/docs/*.html")
-          .map(grunt.file.read).join("\n")
+        md: grunt.file.expand('src/'+name+'/docs/*.md')
+          .map(grunt.file.read).map(markdown).join('\n'),
+        js: grunt.file.expand('src/'+name+'/docs/*.js')
+          .map(grunt.file.read).join('\n'),
+        html: grunt.file.expand('src/'+name+'/docs/*.html')
+          .map(grunt.file.read).join('\n')
       }
     };
     module.dependencies.forEach(findModule);

@@ -31,7 +31,7 @@ var DatepickerDemoCtrl = function ($scope) {
   };
 
   $scope.dateOptions = {
-    'year-format': "'yy'",
+    'year-format': '\'yy\'',
     'starting-day': 1
   };
 

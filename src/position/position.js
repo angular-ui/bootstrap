@@ -23,7 +23,7 @@ angular.module('ui.bootstrap.position', [])
      * @param element - raw DOM element
      */
     function isStaticPositioned(element) {
-      return (getStyle(element, "position") || 'static' ) === 'static';
+      return (getStyle(element, 'position') || 'static' ) === 'static';
     }
 
     /**

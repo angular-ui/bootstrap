@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     var nextIndex = slides.indexOf(nextSlide);
     //Decide direction if it's not given
     if (direction === undefined) {
-      direction = nextIndex > currentIndex ? "next" : "prev";
+      direction = nextIndex > currentIndex ? 'next' : 'prev';
     }
     if (nextSlide && nextSlide !== self.currentSlide) {
       if ($scope.$currentTransition) {

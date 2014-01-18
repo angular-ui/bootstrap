@@ -18,7 +18,7 @@ describe('tooltip directive', function () {
         noOfOpened = noOfOpened || 1;
 
         this.message = function() {
-          return "Expected '" + angular.mock.dump(ttipElements) + "' to have '" + ttipElements.length + "' opened tooltips.";
+          return 'Expected "' + angular.mock.dump(ttipElements) + '" to have "' + ttipElements.length + '" opened tooltips.';
         };
 
         return ttipElements.length === noOfOpened;
