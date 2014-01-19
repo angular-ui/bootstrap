@@ -1,52 +1,100 @@
-/*
- * dropdownToggle - Provides dropdown menu functionality in place of bootstrap js
- * @restrict class or attribute
- * @example:
-   <li class="dropdown">
-     <a class="dropdown-toggle">My Dropdown Menu</a>
-     <ul class="dropdown-menu">
-       <li ng-repeat="choice in dropChoices">
-         <a ng-href="{{choice.href}}">{{choice.text}}</a>
-       </li>
-     </ul>
-   </li>
- */
+angular.module('ui.bootstrap.dropdownToggle', [])
 
-angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['$document', function ($document) {
-  var openElement = null,
-      closeMenu   = angular.noop;
+.constant('dropdownConfig', {
+  openClass: 'open'
+})
+
+.service('dropdownService', ['$document', function($document) {
+  var self = this, openScope = null;
+
+  this.open = function( dropdownScope ) {
+    if ( !openScope ) {
+      $document.bind('click', closeDropdown);
+    }
+
+    if ( openScope && openScope !== dropdownScope ) {
+        openScope.isOpen = false;
+    }
+
+    openScope = dropdownScope;
+  };
+
+  this.close = function( dropdownScope ) {
+    if ( openScope === dropdownScope ) {
+      openScope = null;
+      $document.unbind('click', closeDropdown);
+    }
+  };
+
+  var closeDropdown = function() {
+    openScope.$apply(function() {
+      openScope.isOpen = false;
+    });
+  };
+}])
+
+.controller('DropdownController', ['$scope', '$attrs', 'dropdownConfig', 'dropdownService', function($scope, $attrs, dropdownConfig, dropdownService) {
+  var self = this, openClass = dropdownConfig.openClass;
+
+  this.init = function( element ) {
+    self.$element = element;
+    $scope.isOpen = angular.isDefined($attrs.isOpen) ? $scope.$parent.$eval($attrs.isOpen) : false;
+  };
+
+  this.toggle = function( open ) {
+    return $scope.isOpen = arguments.length ? !!open : !$scope.isOpen;
+  };
+
+  $scope.$watch('isOpen', function( value ) {
+    self.$element.toggleClass( openClass, value );
+
+    if ( value ) {
+      dropdownService.open( $scope );
+    } else {
+      dropdownService.close( $scope );
+    }
+
+    $scope.onToggle({ open: !!value });
+  });
+
+  $scope.$on('$locationChangeSuccess', function() {
+    $scope.isOpen = false;
+  });
+}])
+
+.directive('dropdown', function() {
   return {
     restrict: 'CA',
-    link: function(scope, element, attrs) {
-      scope.$on('$locationChangeSuccess', function() { closeMenu(); });
-      element.parent().bind('click', function() { closeMenu(); });
-      element.bind('click', function (event) {
+    controller: 'DropdownController',
+    scope: {
+      isOpen: '=?',
+      onToggle: '&'
+    },
+    link: function(scope, element, attrs, dropdownCtrl) {
+      dropdownCtrl.init( element );
+    }
+  };
+})
 
-        var elementWasOpen = (element === openElement);
+.directive('dropdownToggle', function() {
+  return {
+    restrict: 'CA',
+    require: '?^dropdown',
+    link: function(scope, element, attrs, dropdownCtrl) {
+      if ( !dropdownCtrl ) {
+        return;
+      }
 
+      element.bind('click', function(event) {
         event.preventDefault();
         event.stopPropagation();
 
-        if (!!openElement) {
-          closeMenu();
-        }
-
-        if (!elementWasOpen && !element.hasClass('disabled') && !element.prop('disabled')) {
-          element.parent().addClass('open');
-          openElement = element;
-          closeMenu = function (event) {
-            if (event) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            $document.unbind('click', closeMenu);
-            element.parent().removeClass('open');
-            closeMenu = angular.noop;
-            openElement = null;
-          };
-          $document.bind('click', closeMenu);
+        if ( !element.hasClass('disabled') && !element.prop('disabled') ) {
+          scope.$apply(function() {
+            dropdownCtrl.toggle();
+          });
         }
       });
     }
   };
-}]);
+});
