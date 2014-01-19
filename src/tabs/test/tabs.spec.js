@@ -73,7 +73,7 @@ describe('tabs', function() {
       expect(titles().eq(0)).toHaveClass('active');
       expect(titles().eq(1)).not.toHaveClass('active');
       expect(scope.actives.one).toBe(true);
-      expect(scope.actives.two).toBe(false);
+      expect(scope.actives.two).toBeFalsy();
     });
 
     it('should change active on click', function() {
@@ -99,7 +99,6 @@ describe('tabs', function() {
       titles().eq(1).find('a').click();
       expect(scope.deselectFirst).toHaveBeenCalled();
     });
-
   });
 
   describe('basics with initial active tab', function() {
@@ -150,6 +149,48 @@ describe('tabs', function() {
     it('should make tab titles and set active tab active', function() {
       expect(titles().length).toBe(scope.tabs.length);
       expectTabActive(scope.tabs[2]);
+    });
+  });
+
+  describe('tab callback order', function() {
+    var execOrder;
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+      execOrder = [];
+      scope.actives = {};
+
+      scope.execute = function(id) {
+        execOrder.push(id);
+      };
+
+      elm = $compile([
+        '<div>',
+        '  <tabset class="hello" data-pizza="pepperoni">',
+        '    <tab heading="First Tab" active="actives.one" select="execute(\'select1\')" deselect="execute(\'deselect1\')"></tab>',
+        '    <tab select="execute(\'select2\')" deselect="execute(\'deselect2\')"></tab>',
+        '  </tabset>',
+        '</div>'
+      ].join('\n'))(scope);
+      scope.$apply();
+      return elm;
+    }));
+
+    it('should call select  for the first tab', function() {
+        expect(execOrder).toEqual([ 'select1' ]);
+    });
+
+    it('should call deselect, then select', function() {
+          execOrder = [];
+
+          // Select second tab
+          titles().eq(1).find('a').click();
+          expect(execOrder).toEqual([ 'deselect1', 'select2' ]);
+
+          execOrder = [];
+
+          // Select again first tab
+          titles().eq(0).find('a').click();
+          expect(execOrder).toEqual([ 'deselect2', 'select1' ]);
     });
   });
 
@@ -346,7 +387,11 @@ describe('tabs', function() {
 
   describe('tabset controller', function() {
     function mockTab(isActive) {
-      return { active: !!isActive };
+      return { 
+        active: !!isActive, 
+        onSelect : angular.noop,
+        onDeselect : angular.noop
+      };
     }
 
     var ctrl;
