@@ -64,5 +64,11 @@ describe('dropdownToggle', function() {
     expect(elm1.hasClass('open')).toBe(false);
     expect(elm2.hasClass('open')).toBe(true);
   });
+
+  it('should not toggle if the element is disabled', function() {
+    var elm = $compile('<li class="dropdown"><a class="disabled" dropdown-toggle></a><ul dropdown-toggle><li>Hello</li></ul></li>')($rootScope);
+    elm.find('a').click();
+    expect(elm.hasClass('open')).toBe(false);
+  });
 });
 
