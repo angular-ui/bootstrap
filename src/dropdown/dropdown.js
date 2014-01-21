@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.dropdownToggle', [])
+angular.module('ui.bootstrap.dropdown', [])
 
 .constant('dropdownConfig', {
   openClass: 'open'

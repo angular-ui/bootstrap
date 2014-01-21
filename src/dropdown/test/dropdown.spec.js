@@ -1,7 +1,7 @@
 describe('dropdownToggle', function() {
   var $compile, $rootScope, $document, element;
 
-  beforeEach(module('ui.bootstrap.dropdownToggle'));
+  beforeEach(module('ui.bootstrap.dropdown'));
 
   beforeEach(inject(function(_$compile_, _$rootScope_, _$document_) {
     $compile = _$compile_;
