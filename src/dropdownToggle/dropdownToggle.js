@@ -10,6 +10,7 @@ angular.module('ui.bootstrap.dropdownToggle', [])
   this.open = function( dropdownScope ) {
     if ( !openScope ) {
       $document.bind('click', closeDropdown);
+      $document.bind('keydown', escapeKeyBind);
     }
 
     if ( openScope && openScope !== dropdownScope ) {
@@ -23,6 +24,7 @@ angular.module('ui.bootstrap.dropdownToggle', [])
     if ( openScope === dropdownScope ) {
       openScope = null;
       $document.unbind('click', closeDropdown);
+      $document.unbind('keydown', escapeKeyBind);
     }
   };
 
@@ -30,6 +32,12 @@ angular.module('ui.bootstrap.dropdownToggle', [])
     openScope.$apply(function() {
       openScope.isOpen = false;
     });
+  };
+
+  var escapeKeyBind = function( evt ) {
+    if ( evt.which === 27 ) {
+      closeDropdown();
+    }
   };
 }])
 

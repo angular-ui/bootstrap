@@ -14,6 +14,12 @@ describe('dropdownToggle', function() {
     elm.find('a').click();
   };
 
+  var triggerKeyDown = function (element, keyCode) {
+    var e = $.Event('keydown');
+    e.which = keyCode;
+    element.trigger(e);
+  };
+
   describe('basic', function() {
     function dropdown() {
       return $compile('<li class="dropdown"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
@@ -36,6 +42,18 @@ describe('dropdownToggle', function() {
       expect(element.hasClass('open')).toBe(true);
       $document.click();
       expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('should close on escape key', function() {
+      clickDropdownToggle();
+      triggerKeyDown($document, 27);
+      expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('should not close on backspace key', function() {
+      clickDropdownToggle();
+      triggerKeyDown($document, 8);
+      expect(element.hasClass('open')).toBe(true);
     });
 
     it('should close on $location change', function() {
