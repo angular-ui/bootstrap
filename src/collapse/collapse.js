@@ -1,6 +1,6 @@
 angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
 
-  .directive('collapse', ['$transition', function ($transition, $timeout) {
+  .directive('collapse', ['$transition', function ($transition) {
 
     return {
       link: function (scope, element, attrs) {
