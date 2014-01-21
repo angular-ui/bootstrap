@@ -33,7 +33,7 @@ describe('$modal', function () {
     $modal = _$modal_;
   }));
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(function () {
     this.addMatchers({
 
       toBeResolvedWith: function(value) {
@@ -90,7 +90,7 @@ describe('$modal', function () {
         return backdropDomEls.length === 1;
       }
     });
-  }));
+  });
 
   afterEach(function () {
     var body = $document.find('body');
