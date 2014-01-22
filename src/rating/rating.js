@@ -6,7 +6,7 @@ angular.module('ui.bootstrap.rating', [])
   stateOff: null
 })
 
-.controller('RatingController', ['$scope', '$attrs', '$parse', 'ratingConfig', function($scope, $attrs, $parse, ratingConfig) {
+.controller('RatingController', ['$scope', '$attrs', 'ratingConfig', function($scope, $attrs, ratingConfig) {
   var ngModelCtrl  = {$setViewValue: angular.noop};
 
   this.maxRange = angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max;
@@ -42,7 +42,7 @@ angular.module('ui.bootstrap.rating', [])
   };
 
   $scope.enter = function(value) {
-    if ( ! $scope.readonly ) {
+    if ( !$scope.readonly ) {
       $scope.val = value;
     }
     $scope.onHover({value: value});
@@ -56,13 +56,6 @@ angular.module('ui.bootstrap.rating', [])
   this.render = function() {
     $scope.val = ngModelCtrl.$viewValue;
   };
-
-  $scope.readonly = false;
-  if ($attrs.readonly) {
-    $scope.$parent.$watch($parse($attrs.readonly), function(value) {
-      $scope.readonly = !!value;
-    });
-  }
 }])
 
 .directive('rating', function() {
@@ -70,6 +63,7 @@ angular.module('ui.bootstrap.rating', [])
     restrict: 'EA',
     require: ['rating', 'ngModel'],
     scope: {
+      readonly: '=?',
       onHover: '&',
       onLeave: '&'
     },
