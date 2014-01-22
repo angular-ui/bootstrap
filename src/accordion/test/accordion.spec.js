@@ -271,7 +271,6 @@ describe('accordion', function () {
     });
 
     describe('is-open attribute with dynamic groups', function () {
-      var model;
       beforeEach(function () {
         var tpl =
           '<accordion>' +
