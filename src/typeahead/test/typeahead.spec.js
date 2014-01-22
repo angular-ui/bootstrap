@@ -274,7 +274,6 @@ describe('typeahead tests', function () {
       $templateCache.put('custom.html', '<p>{{ index }} {{ match.label }}</p>');
 
       var element = prepareInputEl('<div><input ng-model="result" typeahead-template-url="custom.html" typeahead="state as state.name for state in states | filter:$viewValue"></div>');
-      var inputEl = findInput(element);
 
       changeInputValueTo(element, 'Al');
 
@@ -341,7 +340,6 @@ describe('typeahead tests', function () {
         $scope.$label = $label;
       };
       var element = prepareInputEl('<div><input ng-model="result" typeahead-on-select="onSelect($item, $model, $label)" typeahead="state.code as state.name for state in states | filter:$viewValue"></div>');
-      var inputEl = findInput(element);
 
       changeInputValueTo(element, 'Alas');
       triggerKeyDown(element, 13);
@@ -447,7 +445,6 @@ describe('typeahead tests', function () {
 
     it('issue 231 - closes matches popup on click outside typeahead', function () {
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
-      var inputEl = findInput(element);
 
       changeInputValueTo(element, 'b');
 
@@ -513,7 +510,6 @@ describe('typeahead tests', function () {
         });
       };
       var element = prepareInputEl('<div><input ng-model="result" typeahead-min-length="2" typeahead-loading="isLoading" typeahead="item for item in items($viewValue)"></div>');
-      var inputEl = findInput(element);
 
       changeInputValueTo(element, 'match');
       $scope.$digest();
