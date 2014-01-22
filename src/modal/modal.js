@@ -143,9 +143,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         //remove window DOM element
         removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, 300, function() {
           modalWindow.modalScope.$destroy();
+          body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
           checkRemoveBackdrop();
         });
-        body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
       }
 
       function checkRemoveBackdrop() {
