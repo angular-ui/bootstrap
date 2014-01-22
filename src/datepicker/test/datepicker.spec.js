@@ -953,7 +953,7 @@ describe('datepicker directive', function () {
   });
 
   describe('as popup', function () {
-    var divElement, inputEl, dropdownEl, changeInputValueTo, $document;
+    var inputEl, dropdownEl, changeInputValueTo, $document;
 
     function assignElements(wrapElement) {
       inputEl = wrapElement.find('input');
