@@ -6,7 +6,7 @@ describe('alert', function () {
   beforeEach(module('ui.bootstrap.alert'));
   beforeEach(module('template/alert/alert.html'));
 
-  beforeEach(inject(function ($rootScope, _$compile_, $controller) {
+  beforeEach(inject(function ($rootScope, _$compile_) {
 
     scope = $rootScope;
     $compile = _$compile_;
