@@ -335,7 +335,7 @@ describe('$modal', function () {
 
     describe('scope', function () {
 
-      it('should custom scope if provided', function () {
+      it('should use custom scope if provided', function () {
         var $scope = $rootScope.$new();
         $scope.fromScope = 'Content from custom scope';
         open({
@@ -343,6 +343,17 @@ describe('$modal', function () {
           scope: $scope
         });
         expect($document).toHaveModalOpenWithContent('Content from custom scope', 'div');
+      });
+
+      it('should create and use child of $rootScope if custom scope not provided', function () {
+
+        var scopeTailBefore = $rootScope.$$childTail;
+
+        $rootScope.fromScope = 'Content from root scope';
+        open({
+          template: '<div>{{fromScope}}</div>'
+        });
+        expect($document).toHaveModalOpenWithContent('Content from root scope', 'div');
       });
     });
 
