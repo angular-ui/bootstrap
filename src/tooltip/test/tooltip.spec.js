@@ -361,10 +361,7 @@ describe('tooltip', function() {
 });
 
 describe('tooltipWithDifferentSymbols', function() {
-    var elm,
-        elmBody,
-        scope,
-        elmScope;
+    var elmBody;
 
     // load the tooltip code
     beforeEach(module('ui.bootstrap.tooltip'));
@@ -441,8 +438,7 @@ describe( '$tooltipProvider', function() {
   var elm,
       elmBody,
       scope,
-      elmScope,
-      body;
+      elmScope;
 
   describe( 'popupDelay', function() {
     beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider){
