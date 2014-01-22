@@ -143,7 +143,7 @@ describe('tooltip', function() {
     expect( elmBody.children().length ).toBe( 0 );
   }));
 
-  it('issue 1191 - isolate scope on the popup should always be child of correct element scope', inject( function ( $compile ) {
+  it('issue 1191 - isolate scope on the popup should always be child of correct element scope', function () {
     var ttScope;
     elm.trigger( 'mouseenter' );
 
@@ -159,7 +159,7 @@ describe('tooltip', function() {
     expect( ttScope.$parent ).toBe( elmScope );
 
     elm.trigger( 'mouseleave' );
-  }));
+  });
 
   describe('with specified enable expression', function() {
 
