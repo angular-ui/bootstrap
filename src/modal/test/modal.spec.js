@@ -108,6 +108,7 @@ describe('$modal', function () {
 
   function close(modal, result) {
     modal.close(result);
+    $timeout.flush();
     $rootScope.$digest();
   }
 
@@ -133,6 +134,36 @@ describe('$modal', function () {
 
       waitForBackdropAnimation();
       expect($document).not.toHaveBackdrop();
+    });
+
+    it('should not throw an exception on a second dismiss', function () {
+
+      var modal = open({template: '<div>Content</div>'});
+
+      expect($document).toHaveModalsOpen(1);
+      expect($document).toHaveModalOpenWithContent('Content', 'div');
+      expect($document).toHaveBackdrop();
+
+      dismiss(modal, 'closing in test');
+
+      expect($document).toHaveModalsOpen(0);
+
+      dismiss(modal, 'closing in test');
+    });
+
+    it('should not throw an exception on a second close', function () {
+
+      var modal = open({template: '<div>Content</div>'});
+
+      expect($document).toHaveModalsOpen(1);
+      expect($document).toHaveModalOpenWithContent('Content', 'div');
+      expect($document).toHaveBackdrop();
+
+      close(modal, 'closing in test');
+
+      expect($document).toHaveModalsOpen(0);
+
+      close(modal, 'closing in test');
     });
 
     it('should open a modal from templateUrl', function () {
