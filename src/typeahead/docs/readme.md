@@ -21,6 +21,9 @@ The typeahead directives provide several attributes:
    :
    Comprehension Angular expression (see [select directive](http://docs.angularjs.org/api/ng.directive:select))
 
+* `typeahead-append-to-body` <i class="glyphicon glyphicon-eye-open"></i>
+   _(Defaults: false)_ : Should the typeahead popup be appended to $body instead of the parent element?
+
 * `typeahead-editable` <i class="glyphicon glyphicon-eye-open"></i>
    _(Defaults: true)_ :
    Should it restrict model values to the ones selected from the popup only ?
