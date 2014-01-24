@@ -68,7 +68,7 @@ describe('typeahead tests', function () {
       toBeClosed: function () {
         var typeaheadEl = findDropDown(this.actual);
         this.message = function () {
-          return 'Expected "' + angular.mock.dump(this.actual) + '" to be closed.';
+          return 'Expected "' + angular.mock.dump(typeaheadEl) + '" to be closed.';
         };
         return typeaheadEl.css('display') === 'none' && findMatches(this.actual).length === 0;
 
@@ -587,6 +587,12 @@ describe('typeahead tests', function () {
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true"></div>');
       changeInputValueTo(element, 'ba');
       expect($document.find('body')).toBeOpenWithActive(2, 0);
+    });
+
+    it('should not append to body when value of the attribute is false', function () {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="false"></div>');
+      changeInputValueTo(element, 'ba');
+      expect(findDropDown($document.find('body')).length).toEqual(0);
     });
   });
 
