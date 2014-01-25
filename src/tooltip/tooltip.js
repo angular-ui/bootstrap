@@ -119,53 +119,14 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             var triggers = getTriggers( undefined );
             var hasEnableExp = angular.isDefined(attrs[prefix+'Enable']);
 
-            var positionTooltip = function (){
-              var position,
-                ttWidth,
-                ttHeight,
-                ttPosition;
-              // Get the position of the directive element.
-              position = appendToBody ? $position.offset( element ) : $position.position( element );
+            var positionTooltip = function () {
 
-              // Get the height and width of the tooltip so we can center it.
-              ttWidth = tooltip.prop( 'offsetWidth' );
-              ttHeight = tooltip.prop( 'offsetHeight' );
-
-              // Calculate the tooltip's top and left coordinates to center it with
-              // this directive.
-              switch ( scope.tt_placement ) {
-                case 'right':
-                  ttPosition = {
-                    top: position.top + position.height / 2 - ttHeight / 2,
-                    left: position.left + position.width
-                  };
-                  break;
-                case 'bottom':
-                  ttPosition = {
-                    top: position.top + position.height,
-                    left: position.left + position.width / 2 - ttWidth / 2
-                  };
-                  break;
-                case 'left':
-                  ttPosition = {
-                    top: position.top + position.height / 2 - ttHeight / 2,
-                    left: position.left - ttWidth
-                  };
-                  break;
-                default:
-                  ttPosition = {
-                    top: position.top - ttHeight,
-                    left: position.left + position.width / 2 - ttWidth / 2
-                  };
-                  break;
-              }
-
+              var ttPosition = $position.positionElements(element, tooltip, scope.tt_placement, appendToBody);
               ttPosition.top += 'px';
               ttPosition.left += 'px';
 
               // Now set the calculated positioning.
               tooltip.css( ttPosition );
-
             };
 
             // By default, the tooltip is not open.
