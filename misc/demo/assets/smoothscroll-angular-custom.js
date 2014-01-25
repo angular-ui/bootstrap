@@ -73,10 +73,13 @@ var linkHandler = function(ev) {
     // most browser don't update :target when the history api is used:
     // THIS IS A BUG FROM THE BROWSERS.
     // change the scrolling duration in this call
-    smoothScroll(document.getElementById(this.hash.substring(1)), 500, function(el) {
+    var targetEl = document.getElementById(this.hash.substring(1));
+    if (targetEl) {
+      smoothScroll(document.getElementById(this.hash.substring(1)), 500, function(el) {
         location.replace('#' + el.id)
         // this will cause the :target to be activated.
-    });
+      });
+    }
 }
 
 // We look for all the internal links in the documents and attach the smoothscroll function
