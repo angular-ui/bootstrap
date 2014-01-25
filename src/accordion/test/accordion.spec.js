@@ -265,8 +265,8 @@ describe('accordion', function () {
       });
 
       it('should have visible panel body when the group with isOpen set to true', function () {
-        expect(findGroupBody(0)[0].clientHeight).not.toBe(0);
-        expect(findGroupBody(1)[0].clientHeight).toBe(0);
+        expect(findGroupBody(0)).toHaveClass('in');
+        expect(findGroupBody(1)).not.toHaveClass('in');
       });
     });
 

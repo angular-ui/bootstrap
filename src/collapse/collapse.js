@@ -1,3 +1,6 @@
+/**
+ * @deprecated Switching over to using ngAnimate for animations
+ */
 angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
 
   .directive('collapse', ['$transition', function ($transition) {
