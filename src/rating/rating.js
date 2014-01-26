@@ -23,19 +23,14 @@ angular.module('ui.bootstrap.rating', [])
   };
 
   this.buildTemplateObjects = function(states) {
-    var defaultOptions = {
-      stateOn: this.stateOn,
-      stateOff: this.stateOff
-    };
-
     for (var i = 0, n = states.length; i < n; i++) {
-      states[i] = angular.extend({ index: i }, defaultOptions, states[i]);
+      states[i] = angular.extend({ index: i }, { stateOn: this.stateOn, stateOff: this.stateOff }, states[i]);
     }
     return states;
   };
 
   $scope.rate = function(value) {
-    if ( !$scope.readonly ) {
+    if ( !$scope.readonly && value >= 0 && value <= $scope.range.length ) {
       ngModelCtrl.$setViewValue(value);
       ngModelCtrl.$render();
     }
@@ -43,18 +38,26 @@ angular.module('ui.bootstrap.rating', [])
 
   $scope.enter = function(value) {
     if ( !$scope.readonly ) {
-      $scope.val = value;
+      $scope.value = value;
     }
     $scope.onHover({value: value});
   };
 
   $scope.reset = function() {
-    $scope.val = ngModelCtrl.$viewValue;
+    $scope.value = ngModelCtrl.$viewValue;
     $scope.onLeave();
   };
 
+  $scope.onKeydown = function(evt) {
+    if (/(37|38|39|40)/.test(evt.which)) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      $scope.rate( $scope.value + (evt.which === 38 || evt.which === 39 ? 1 : -1) );
+    }
+  };
+
   this.render = function() {
-    $scope.val = ngModelCtrl.$viewValue;
+    $scope.value = ngModelCtrl.$viewValue;
   };
 }])
 
