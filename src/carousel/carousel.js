@@ -7,7 +7,7 @@
 *
 */
 angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
-.controller('CarouselController', ['$scope', '$timeout', '$interval', '$transition', function ($scope, $timeout, $interval, $transition) {
+.controller('CarouselController', ['$scope', '$interval', '$animate', function ($scope, $interval, $animate) {
   var self = this,
     slides = self.slides = $scope.slides = [],
     currentIndex = -1,
@@ -23,50 +23,29 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
       direction = nextIndex > currentIndex ? 'next' : 'prev';
     }
     if (nextSlide && nextSlide !== self.currentSlide) {
-      if ($scope.$currentTransition) {
-        $scope.$currentTransition.cancel();
-        //Timeout so ng-class in template has time to fix classes for finished slide
-        $timeout(goNext);
-      } else {
-        goNext();
-      }
+      goNext();
     }
     function goNext() {
       // Scope has been destroyed, stop here.
       if (destroyed) { return; }
-      //If we have a slide to transition from and we have a transition type and we're allowed, go
-      if (self.currentSlide && angular.isString(direction) && !$scope.noTransition && nextSlide.$element) {
-        //We shouldn't do class manip in here, but it's the same weird thing bootstrap does. need to fix sometime
-        nextSlide.$element.addClass(direction);
-        var reflow = nextSlide.$element[0].offsetWidth; //force reflow
 
-        //Set all other slides to stop doing their stuff for the new transition
-        angular.forEach(slides, function(slide) {
-          angular.extend(slide, {direction: '', entering: false, leaving: false, active: false});
+      angular.extend(nextSlide, {direction: direction, active: true});
+      angular.extend(self.currentSlide || {}, {direction: direction, active: false});
+
+      if ($animate.enabled() && !$scope.noTransition && nextSlide.$element) {
+        $scope.$currentTransition = true;
+        // TODO: Switch to use .one when upgrading beyond 1.2.21
+        // (See https://github.com/angular/angular.js/pull/5984)
+        nextSlide.$element.on('$animate:close', function closeFn() {
+          $scope.$currentTransition = null;
+          nextSlide.$element.off('$animate:close', closeFn);
         });
-        angular.extend(nextSlide, {direction: direction, active: true, entering: true});
-        angular.extend(self.currentSlide||{}, {direction: direction, leaving: true});
-
-        $scope.$currentTransition = $transition(nextSlide.$element, {});
-        //We have to create new pointers inside a closure since next & current will change
-        (function(next,current) {
-          $scope.$currentTransition.then(
-            function(){ transitionDone(next, current); },
-            function(){ transitionDone(next, current); }
-          );
-        }(nextSlide, self.currentSlide));
-      } else {
-        transitionDone(nextSlide, self.currentSlide);
       }
+
       self.currentSlide = nextSlide;
       currentIndex = nextIndex;
       //every time you change slides, reset the timer
       restartTimer();
-    }
-    function transitionDone(next, current) {
-      angular.extend(next, {direction: '', active: true, leaving: false, entering: false});
-      angular.extend(current||{}, {direction: '', active: false, leaving: false, entering: false});
-      $scope.$currentTransition = null;
     }
   };
   $scope.$on('$destroy', function () {
@@ -290,4 +269,55 @@ function CarouselDemoCtrl($scope) {
       });
     }
   };
-});
+})
+
+.animation('.item', [
+         '$animate',
+function ($animate) {
+  return {
+    beforeAddClass: function (element, className, done) {
+      // Due to transclusion, noTransition property is on parent's scope
+      if (className == 'active' && element.parent() &&
+          !element.parent().scope().noTransition) {
+        var stopped = false;
+        var direction = element.isolateScope().direction;
+        var directionClass = direction == 'next' ? 'left' : 'right';
+        element.addClass(direction);
+        $animate.addClass(element, directionClass).then(function () {
+          if (!stopped) {
+            element.removeClass(directionClass + ' ' + direction);
+          }
+          done();
+        });
+
+        return function () {
+          stopped = true;
+        };
+      }
+      done();
+    },
+    beforeRemoveClass: function (element, className, done) {
+      // Due to transclusion, noTransition property is on parent's scope
+      if (className == 'active' && element.parent() &&
+          !element.parent().scope().noTransition) {
+        var stopped = false;
+        var direction = element.isolateScope().direction;
+        var directionClass = direction == 'next' ? 'left' : 'right';
+        $animate.addClass(element, directionClass).then(function () {
+          if (!stopped) {
+            element.removeClass(directionClass);
+          }
+          done();
+        });
+        return function () {
+          stopped = true;
+        };
+      }
+      done();
+    }
+  };
+
+}])
+
+
+;
