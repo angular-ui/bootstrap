@@ -150,6 +150,16 @@ describe('typeahead tests', function () {
       expect(inputEl.attr('aria-activedescendant')).toBeUndefined();
     });
 
+    it('should allow expressions over multiple lines', function () {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source \n' +
+        '| filter:$viewValue"></div>');
+      changeInputValueTo(element, 'ba');
+      expect(element).toBeOpenWithActive(2, 0);
+
+      changeInputValueTo(element, '');
+      expect(element).toBeClosed();
+    });
+
     it('should not open typeahead if input value smaller than a defined threshold', function () {
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-min-length="2"></div>');
       changeInputValueTo(element, 'b');
