@@ -1,4 +1,4 @@
-angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker'], function($httpProvider){
+angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker', 'ngTouch'], function($httpProvider){
   FastClick.attach(document.body);
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
@@ -19,7 +19,7 @@ function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
       }
     });
   };
-  
+
   $scope.showDownloadModal = function() {
     var modalInstance = $modal.open({
       templateUrl: 'downloadModal.html',
@@ -62,7 +62,7 @@ var DownloadCtrl = function($scope, $modalInstance) {
     minified: true,
     tpls: true
   };
-  
+
   $scope.download = function (version) {
     var options = $scope.options;
 
@@ -78,7 +78,7 @@ var DownloadCtrl = function($scope, $modalInstance) {
 
     return downloadUrl.join('');
   };
-  
+
   $scope.cancel = function () {
     $modalInstance.dismiss();
   };

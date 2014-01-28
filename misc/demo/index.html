@@ -10,6 +10,7 @@
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-touch.min.js"></script>
     <script src="ui-bootstrap-tpls-<%= pkg.version%>.min.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
@@ -208,7 +209,7 @@
                     <script><%= module.docs.js %></script>
                 <% }); %>
             </div>
-        </div> 
+        </div>
     </div><!-- /.container -->
 </div><!-- /.main -->
 <footer class="footer">
@@ -278,11 +279,11 @@
               <% if (i % 3 === 0) {%>
                 <div class="btn-group" style="width: 100%;">
               <% } %>
-              <button type="button" class="btn btn-default" 
+              <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
-               ng-class="{'btn-primary': module.<%= module.name %>}" 
-               ng-model="module.<%= module.name %>" 
-               btn-checkbox 
+               ng-class="{'btn-primary': module.<%= module.name %>}"
+               ng-model="module.<%= module.name %>"
+               btn-checkbox
                ng-change="selectedChanged('<%= module.name %>', module.<%= module.name %>)">
                   <%= module.displayName %>
               </button>

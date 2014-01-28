@@ -1,5 +1,17 @@
 describe('carousel', function() {
-  beforeEach(module('ui.bootstrap.carousel'));
+  beforeEach(module('ui.bootstrap.carousel', function($compileProvider, $provide) {
+    angular.forEach(['ngSwipeLeft', 'ngSwipeRight'], makeMock);
+    function makeMock(name) {
+      $provide.value(name + 'Directive', []); //remove existing directive if it exists
+      $compileProvider.directive(name, function() {
+        return function(scope, element, attr) {
+          element.on(name, function() {
+            scope.$apply(attr[name]);
+          });
+        };
+      });
+    }
+  }));
   beforeEach(module('template/carousel/carousel.html', 'template/carousel/slide.html'));
 
   var $rootScope, $compile, $controller, $timeout;
@@ -112,6 +124,20 @@ describe('carousel', function() {
       testSlideActive(1);
       navPrev.click();
       testSlideActive(0);
+    });
+
+    describe('swiping', function() {
+      it('should go next on swipeLeft', function() {
+        testSlideActive(0);
+        elm.triggerHandler('ngSwipeLeft');
+        testSlideActive(1);
+      });
+
+      it('should go prev on swipeRight', function() {
+        testSlideActive(0);
+        elm.triggerHandler('ngSwipeRight');
+        testSlideActive(2);
+      });
     });
 
     it('should select a slide when clicking on slide indicators', function () {
