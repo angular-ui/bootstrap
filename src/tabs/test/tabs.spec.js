@@ -37,26 +37,23 @@ describe('tabs', function() {
       scope.deselectFirst = jasmine.createSpy();
       scope.deselectSecond = jasmine.createSpy();
       elm = $compile([
-        '<div>',
-        '  <tabset class="hello" data-pizza="pepperoni">',
-        '    <tab heading="First Tab {{first}}" active="actives.one" select="selectFirst()" deselect="deselectFirst()">',
-        '      first content is {{first}}',
-        '    </tab>',
-        '    <tab active="actives.two" select="selectSecond()" deselect="deselectSecond()">',
-        '      <tab-heading><b>Second</b> Tab {{second}}</tab-heading>',
-        '      second content is {{second}}',
-        '    </tab>',
-        '  </tabset>',
-        '</div>'
+        '<tabset class="hello" data-pizza="pepperoni">',
+        '  <tab heading="First Tab {{first}}" active="actives.one" select="selectFirst()" deselect="deselectFirst()">',
+        '    first content is {{first}}',
+        '  </tab>',
+        '  <tab active="actives.two" select="selectSecond()" deselect="deselectSecond()">',
+        '    <tab-heading><b>Second</b> Tab {{second}}</tab-heading>',
+        '    second content is {{second}}',
+        '  </tab>',
+        '</tabset>'
       ].join('\n'))(scope);
       scope.$apply();
       return elm;
     }));
 
     it('should pass class and other attributes on to tab template', function() {
-      var tabbable = elm.find('.tabbable');
-      expect(tabbable).toHaveClass('hello');
-      expect(tabbable.attr('data-pizza')).toBe('pepperoni');
+      expect(elm).toHaveClass('hello');
+      expect(elm.attr('data-pizza')).toBe('pepperoni');
     });
 
     it('should create clickable titles', function() {
@@ -680,15 +677,15 @@ describe('tabs', function() {
       var scope = $rootScope.$new();
       elm = $compile([
         '<div>',
-        '  <tabset>',
+        '  <tabset class="tabbable">',
         '    <tab heading="Tab 1">',
-        '      <tabset>',
+        '      <tabset class="tabbable">',
         '        <tab heading="Tab 1A">',
         '        </tab>',
         '      </tabset>',
         '    </tab>',
         '    <tab heading="Tab 2">',
-        '      <tabset>',
+        '      <tabset class="tabbable">',
         '        <tab heading="Tab 2A">',
         '        </tab>',
         '      </tabset>',
@@ -710,9 +707,9 @@ describe('tabs', function() {
       scope.tab2aaText = '456';
       elm = $compile([
         '<div>',
-        '  <tabset>',
+        '  <tabset class="tabbable">',
         '    <tab heading="Tab 1">',
-        '      <tabset>',
+        '      <tabset class="tabbable">',
         '        <tab heading="{{ tab1aHead }}">',
         '          {{ tab1aText }}',
         '        </tab>',
@@ -720,9 +717,9 @@ describe('tabs', function() {
         '      <span class="tab-1">{{ tab1Text }}</span>',
         '    </tab>',
         '    <tab heading="Tab 2">',
-        '      <tabset>',
+        '      <tabset class="tabbable">',
         '        <tab heading="Tab 2A">',
-        '          <tabset>',
+        '          <tabset class="tabbable">',
         '            <tab heading="Tab 2AA">',
         '              <span class="tab-2aa">{{ tab2aaText }}</span>',
         '            </tab>',
