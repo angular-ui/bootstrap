@@ -182,6 +182,7 @@ angular.module('ui.bootstrap.tabs', [])
     templateUrl: 'template/tabs/tab.html',
     transclude: true,
     scope: {
+      active: '=?',
       heading: '@',
       onSelect: '&select', //This callback is called in contentHeadingTransclude
                           //once it inserts the tab's content into the dom
@@ -192,27 +193,7 @@ angular.module('ui.bootstrap.tabs', [])
     },
     compile: function(elm, attrs, transclude) {
       return function postLink(scope, elm, attrs, tabsetCtrl) {
-        var getActive, setActive;
-        if (attrs.active) {
-          getActive = $parse(attrs.active);
-          setActive = getActive.assign;
-          scope.$parent.$watch(getActive, function updateActive(value, oldVal) {
-            // Avoid re-initializing scope.active as it is already initialized
-            // below. (watcher is called async during init with value ===
-            // oldVal)
-            if (value !== oldVal) {
-              scope.active = !!value;
-            }
-          });
-          scope.active = getActive(scope.$parent);
-        } else {
-          setActive = getActive = angular.noop;
-        }
-
         scope.$watch('active', function(active) {
-          // Note this watcher also initializes and assigns scope.active to the
-          // attrs.active expression.
-          setActive(scope.$parent, active);
           if (active) {
             tabsetCtrl.select(scope);
           }
@@ -226,7 +207,7 @@ angular.module('ui.bootstrap.tabs', [])
         }
 
         scope.select = function() {
-          if ( ! scope.disabled ) {
+          if ( !scope.disabled ) {
             scope.active = true;
           }
         };
@@ -235,7 +216,6 @@ angular.module('ui.bootstrap.tabs', [])
         scope.$on('$destroy', function() {
           tabsetCtrl.removeTab(scope);
         });
-
 
         //We need to transclude later, once the content container is ready.
         //when this link happens, we're inside a tab heading.
