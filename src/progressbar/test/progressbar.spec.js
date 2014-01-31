@@ -29,6 +29,15 @@ describe('progressbar directive', function () {
     expect(getBar(0).css('width')).toBe('22%');
   });
 
+  it('has the appropriate aria markup', function() {
+    var bar = getBar(0);
+    expect(bar.attr('role')).toBe('progressbar');
+    expect(bar.attr('aria-valuemin')).toBe('0');
+    expect(bar.attr('aria-valuemax')).toBe('100');
+    expect(bar.attr('aria-valuenow')).toBe('22');
+    expect(bar.attr('aria-valuetext')).toBe('22%');
+  });
+
   it('transcludes "bar" text', function() {
     expect(getBar(0).text()).toBe('22 %');
   });
@@ -43,12 +52,29 @@ describe('progressbar directive', function () {
     expect(getBar(0)).toHaveClass('pizza');
   });
 
+  it('adjusts the "bar" width and aria when value changes', function() {
+      $rootScope.value = 60;
+      $rootScope.$digest();
+
+      var bar = getBar(0);
+      expect(bar.css('width')).toBe('60%');
+
+      expect(bar.attr('aria-valuemin')).toBe('0');
+      expect(bar.attr('aria-valuemax')).toBe('100');
+      expect(bar.attr('aria-valuenow')).toBe('60');
+      expect(bar.attr('aria-valuetext')).toBe('60%');
+    });
+
   describe('"max" attribute', function () {
     beforeEach(inject(function() {
       $rootScope.max = 200;
       element = $compile('<progressbar max="max" animate="false" value="value">{{value}}/{{max}}</progressbar>')($rootScope);
       $rootScope.$digest();
     }));
+
+    it('has the appropriate aria markup', function() {
+      expect(getBar(0).attr('aria-valuemax')).toBe('200');
+    });
 
     it('adjusts the "bar" width', function() {
       expect(element.children().eq(0).css('width')).toBe('11%');
