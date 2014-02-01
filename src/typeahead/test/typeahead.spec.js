@@ -70,7 +70,7 @@ describe('typeahead tests', function () {
         this.message = function () {
           return 'Expected "' + angular.mock.dump(typeaheadEl) + '" to be closed.';
         };
-        return typeaheadEl.css('display') === 'none' && findMatches(this.actual).length === 0;
+        return typeaheadEl.length === 0;
 
       }, toBeOpenWithActive: function (noOfMatches, activeIdx) {
 
@@ -80,7 +80,7 @@ describe('typeahead tests', function () {
         this.message = function () {
           return 'Expected "' + this.actual + '" to be opened.';
         };
-        return typeaheadEl.css('display') === 'block' && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
+        return typeaheadEl.length === 1 && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
       }
     });
   });
