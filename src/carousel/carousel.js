@@ -9,14 +9,14 @@
 angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 .controller('CarouselController', ['$scope', '$timeout', '$transition', function ($scope, $timeout, $transition) {
   var self = this,
-    slides = self.slides = [],
+    slides = self.slides = $scope.slides = [],
     currentIndex = -1,
     currentTimeout, isPlaying;
   self.currentSlide = null;
 
   var destroyed = false;
   /* direction: "prev" or "next" */
-  self.select = function(nextSlide, direction) {
+  self.select = $scope.select = function(nextSlide, direction) {
     var nextIndex = slides.indexOf(nextSlide);
     //Decide direction if it's not given
     if (direction === undefined) {
@@ -96,16 +96,8 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     }
   };
 
-  $scope.select = function(slide) {
-    self.select(slide);
-  };
-
   $scope.isActive = function(slide) {
      return self.currentSlide === slide;
-  };
-
-  $scope.slides = function() {
-    return slides;
   };
 
   $scope.$watch('interval', restartTimer);
