@@ -106,6 +106,18 @@ describe('dropdownToggle', function() {
       checkboxEl.click();
       expect($rootScope.clicked).toBeTruthy();
     });
+
+    // WAI-ARIA
+    it('should aria markup to the `dropdown-toggle`', function() {
+      var toggleEl = element.find('a');
+      expect(toggleEl.attr('aria-haspopup')).toBe('true');
+      expect(toggleEl.attr('aria-expanded')).toBe('false');
+
+      clickDropdownToggle();
+      expect(toggleEl.attr('aria-expanded')).toBe('true');
+      clickDropdownToggle();
+      expect(toggleEl.attr('aria-expanded')).toBe('false');
+    });
   });
 
   describe('without trigger', function() {

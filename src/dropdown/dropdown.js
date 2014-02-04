@@ -53,6 +53,11 @@ angular.module('ui.bootstrap.dropdown', [])
     return $scope.isOpen = arguments.length ? !!open : !$scope.isOpen;
   };
 
+  // Allow other directives to watch status
+  this.isOpen = function() {
+    return $scope.isOpen;
+  };
+
   $scope.$watch('isOpen', function( value ) {
     self.$element.toggleClass( openClass, value );
 
@@ -102,6 +107,12 @@ angular.module('ui.bootstrap.dropdown', [])
             dropdownCtrl.toggle();
           });
         }
+      });
+
+      // WAI-ARIA
+      element.attr({ 'aria-haspopup': true, 'aria-expanded': false });
+      scope.$watch(dropdownCtrl.isOpen, function( isOpen ) {
+        element.attr('aria-expanded', !!isOpen);
       });
     }
   };
