@@ -40,7 +40,7 @@ Modern mobile browsers should work without problems.
 
 **IE 8 is not officially supported at the moment**. This project is run by volunteers and with the current number of commiters
 we are not in the position to guarantee IE8 support. If you need support for IE8 we would welcome a contributor who would like to take care about IE8.
-Alternativelly you could sponsor this project to guarantee IE8 support.
+Alternatively you could sponsor this project to guarantee IE8 support.
 
 We believe that most of the directives would work OK after:
 * including relevant shims (for ES5 we recommend https://github.com/kriskowal/es5-shim)
@@ -57,7 +57,7 @@ It is often better to rewrite an existing JavaScript code and create a new, pure
 
 ### Customizability
 
-All the directives in this repository should have their markup externalized as templates (loaded via `templateUrl`). In practice it means that you can **customize directive's markup at will**. One could even imagine providing a non-Boostrap version of the templates!
+All the directives in this repository should have their markup externalized as templates (loaded via `templateUrl`). In practice it means that you can **customize directive's markup at will**. One could even imagine providing a non-Bootstrap version of the templates!
 
 ### Take what you need and not more
 
@@ -86,14 +86,14 @@ We are always looking for the quality contributions! Please check the [CONTRIBUT
 #### Prepare your environment
 * Install [Node.js](http://nodejs.org/) and NPM (should come with)
 * Install global dev dependencies: `npm install -g grunt-cli karma`
-* Instal local dev dependencies: `npm install` while current directory is bootstrap repo
+* Install local dev dependencies: `npm install` while current directory is bootstrap repo
 
 #### Build
 * Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
 * To build modules, first run `grunt html2js` then `grunt build:module1:module2...:moduleN`
 
 You can generate a custom build, containing only needed modules, from the project's homepage.
-Alternativelly you can run local Grunt build from the command line and list needed modules as shown below:
+Alternatively you can run local Grunt build from the command line and list needed modules as shown below:
 
 ```
 grunt build:modal:tabs:alert:popover:dropdownToggle:buttons:progressbar
@@ -104,7 +104,7 @@ Check the Grunt build file for other tasks that are defined for this project.
 #### TDD
 * Run test: `grunt watch`
  
-This will start Karma server and will continously watch files in the project, executing tests upon every change.
+This will start Karma server and will continuously watch files in the project, executing tests upon every change.
 
 #### Test coverage
 Add the `--coverage` option (e.g. `grunt test --coverage`, `grunt watch --coverage`) to see reports on the test coverage. These coverage reports are found in the coverage folder.
