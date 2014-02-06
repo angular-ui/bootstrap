@@ -11,11 +11,16 @@
         <label class="btn btn-primary" ng-model="checkModel.middle" btn-checkbox>Middle</label>
         <label class="btn btn-primary" ng-model="checkModel.right" btn-checkbox>Right</label>
     </div>
-    <h4>Radio</h4>
-    <pre>{{radioModel}}</pre>
+    <h4>Radio &amp; Uncheckable Radio</h4>
+    <pre>{{radioModel || 'null'}}</pre>
     <div class="btn-group">
         <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Left'">Left</label>
         <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Middle'">Middle</label>
         <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Right'">Right</label>
+    </div>
+    <div class="btn-group">
+        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Left'" uncheckable>Left</label>
+        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Middle'" uncheckable>Middle</label>
+        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Right'" uncheckable>Right</label>
     </div>
 </div>
