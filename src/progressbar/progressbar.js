@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.progressbar', [])
         this.bars.push(bar);
 
         bar.$watch('value', function( value ) {
-            bar.percent = Math.round(100 * value / $scope.max);
+            bar.percent = +(100 * value / $scope.max).toFixed(2);
         });
 
         bar.$on('$destroy', function() {

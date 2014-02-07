@@ -65,6 +65,27 @@ describe('progressbar directive', function () {
       expect(bar.attr('aria-valuetext')).toBe('60%');
     });
 
+  it('allows fractional "bar" width values, rounded to two places', function () {
+    $rootScope.value = 5.625;
+    $rootScope.$digest();
+    expect(getBar(0).css('width')).toBe('5.63%');
+
+    $rootScope.value = 1.3;
+    $rootScope.$digest();
+    expect(getBar(0).css('width')).toBe('1.3%');
+  });
+
+  it('does not include decimals in aria values', function () {
+    $rootScope.value = 50.34;
+    $rootScope.$digest();
+
+    var bar = getBar(0);
+    expect(bar.css('width')).toBe('50.34%');
+
+    expect(bar.attr('aria-valuenow')).toBe('50');
+    expect(bar.attr('aria-valuetext')).toBe('50%');
+  });
+
   describe('"max" attribute', function () {
     beforeEach(inject(function() {
       $rootScope.max = 200;
