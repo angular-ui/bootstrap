@@ -529,10 +529,17 @@ describe('pagination directive', function () {
   });
 
   describe('setting `paginationConfig`', function() {
-    var originalConfig = {};
-    beforeEach(inject(function(paginationConfig) {
-      angular.extend(originalConfig, paginationConfig);
-      paginationConfig.itemsPerPage = 5;
+    var originalConfig, paginationConfig;
+    beforeEach(inject(function(_paginationConfig_) {
+      originalConfig = angular.copy(_paginationConfig_);
+      paginationConfig = _paginationConfig_;
+    }));
+    afterEach(inject(function(paginationConfig) {
+      // return it to the original stat
+      angular.copy(originalConfig, paginationConfig);
+    }));
+
+    it('should change paging text', function () {
       paginationConfig.boundaryLinks = true;
       paginationConfig.directionLinks = true;
       paginationConfig.firstText = 'FI';
@@ -541,21 +548,27 @@ describe('pagination directive', function () {
       paginationConfig.lastText = 'LA';
       element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
-    afterEach(inject(function(paginationConfig) {
-      // return it to the original stat
-      angular.extend(paginationConfig, originalConfig);
-    }));
 
-    it('should change paging text', function () {
       expect(getPaginationEl(0).text()).toBe('FI');
       expect(getPaginationEl(1).text()).toBe('PR');
       expect(getPaginationEl(-2).text()).toBe('NE');
       expect(getPaginationEl(-1).text()).toBe('LA');
     });
 
-    it('contains number of pages + 4 li elements', function() {
-      expect(getPaginationBarSize()).toBe(14);
+    it('contains number of pages + 2 li elements', function() {
+      paginationConfig.itemsPerPage = 5;
+      element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      $rootScope.$digest();
+
+      expect(getPaginationBarSize()).toBe(12);
+    });
+
+    it('should take maxSize defaults into account', function () {
+      paginationConfig.maxSize = 2;
+      element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      $rootScope.$digest();
+
+      expect(getPaginationBarSize()).toBe(4);
     });
   });
 

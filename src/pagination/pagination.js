@@ -104,7 +104,7 @@ angular.module('ui.bootstrap.pagination', [])
       }
 
       // Setup configuration parameters
-      var maxSize,
+      var maxSize    = paginationCtrl.getAttributeValue(attrs.maxSize,        config.maxSize            ),
       boundaryLinks  = paginationCtrl.getAttributeValue(attrs.boundaryLinks,  config.boundaryLinks      ),
       directionLinks = paginationCtrl.getAttributeValue(attrs.directionLinks, config.directionLinks     ),
       firstText      = paginationCtrl.getAttributeValue(attrs.firstText,      config.firstText,     true),
