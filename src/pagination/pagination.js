@@ -56,10 +56,6 @@ angular.module('ui.bootstrap.pagination', [])
     }
   };
 
-  $scope.$watch('page', function() {
-    self.render();
-  });
-
   $scope.$watch('totalItems', function() {
     $scope.totalPages = self.calculateTotalPages();
   });
