@@ -7,19 +7,18 @@ angular.module('ui.bootstrap.rating', [])
 })
 
 .controller('RatingController', ['$scope', '$attrs', 'ratingConfig', function($scope, $attrs, ratingConfig) {
-  var ngModelCtrl  = {$setViewValue: angular.noop};
-
-  this.maxRange = angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max;
-  this.stateOn = angular.isDefined($attrs.stateOn) ? $scope.$parent.$eval($attrs.stateOn) : ratingConfig.stateOn;
-  this.stateOff = angular.isDefined($attrs.stateOff) ? $scope.$parent.$eval($attrs.stateOff) : ratingConfig.stateOff;
+  var ngModelCtrl  = { $setViewValue: angular.noop };
 
   this.init = function(ngModelCtrl_) {
     ngModelCtrl = ngModelCtrl_;
     ngModelCtrl.$render = this.render;
 
-     $scope.range = this.buildTemplateObjects(
-      angular.isDefined($attrs.ratingStates) ? $scope.$parent.$eval($attrs.ratingStates) : new Array(this.maxRange)
-    );
+    this.stateOn = angular.isDefined($attrs.stateOn) ? $scope.$parent.$eval($attrs.stateOn) : ratingConfig.stateOn;
+    this.stateOff = angular.isDefined($attrs.stateOff) ? $scope.$parent.$eval($attrs.stateOff) : ratingConfig.stateOff;
+
+    var ratingStates = angular.isDefined($attrs.ratingStates) ? $scope.$parent.$eval($attrs.ratingStates) :
+                        new Array( angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max );
+    $scope.range = this.buildTemplateObjects(ratingStates);
   };
 
   this.buildTemplateObjects = function(states) {
