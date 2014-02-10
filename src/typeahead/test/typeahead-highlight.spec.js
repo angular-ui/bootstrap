@@ -32,4 +32,8 @@ describe('typeaheadHighlight', function () {
   it('issue 316 - should work correctly for regexp reserved words', function () {
     expect(highlightFilter('before (match after', '(match')).toEqual('before <strong>(match</strong> after');
   });
+
+  it('issue 1777 - should work correctly with numeric values', function () {
+    expect(highlightFilter(123, '2')).toEqual('1<strong>2</strong>3');
+  });
 });
