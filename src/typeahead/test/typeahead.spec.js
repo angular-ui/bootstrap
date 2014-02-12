@@ -575,6 +575,23 @@ describe('typeahead tests', function () {
 
       expect(element).toBeOpenWithActive(2, 0);
     });
+
+    it('issue #1773 - should not trigger an error when used with ng-focus', function () {
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" ng-focus="foo()"></div>');
+      var inputEl = findInput(element);
+
+      // Note that this bug can only be found when element is in the document
+      $document.find('body').append(element);
+      // Extra teardown for this spec
+      this.after(function () { element.remove(); });
+
+      changeInputValueTo(element, 'b');
+      var match = $(findMatches(element)[1]).find('a')[0];
+
+      $(match).click();
+      $scope.$digest();
+    });
   });
 
   describe('input formatting', function () {
