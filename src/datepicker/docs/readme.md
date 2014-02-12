@@ -7,7 +7,7 @@ Everything is formatted using the [date filter](http://docs.angularjs.org/api/ng
 
 ### Datepicker Settings ###
 
-All settings can be provided as attributes in the `<datepicker>` or globally configured through the `datepickerConfig`.
+All settings can be provided as attributes in the `datepicker` or globally configured through the `datepickerConfig`.
 
  * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
@@ -65,7 +65,7 @@ All settings can be provided as attributes in the `<datepicker>` or globally con
  	_(Default: 'EEE')_ :
  	Format of day in week header.
 
- * `format-day-title-`
+ * `format-day-title`
  	_(Default: 'MMMM yyyy')_ :
  	Format of title when selecting day.
 
@@ -110,3 +110,20 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
  * `datepicker-append-to-body`
   _(Default: false)_:
   Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `datepickerPopupConfig.appendToBody`.
+
+### Keyboard Support ###
+
+Depending on datepicker's current mode, the date may reffer either to day, month or year. Accordingly, the term view reffers either to a month, year or year range.
+
+ * `Left`: Move focus to the previous date. Will move to the last date of the previous view, if the current date is the first date of a view.
+ * `Right`: Move focus to the next date. Will move to the first date of the following view, if the current date is the last date of a view.
+ * `Up`: Move focus to the same column of the previous row. Will wrap to the appropriate row in the previous view.
+ * `Down`: Move focus to the same column of the following row. Will wrap to the appropriate row in the following view.
+ * `PgUp`: Move focus to the same date of the previous view. If that date does not exist, focus is placed on the last date of the month.
+ * `PgDn`: Move focus to the same date of the following view. If that date does not exist, focus is placed on the last date of the month.
+ * `Home`: Move to the first date of the view.
+ * `End`: Move to the last date of the view.
+ * `Enter`/`Space`: Select date.
+ * `Ctrl`+`Up`: Move to an upper mode.
+ * `Ctrl`+`Down`: Move to a lower mode.
+ * `Esc`: Will close popup, and move focus to the input.
