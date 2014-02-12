@@ -100,13 +100,11 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     template: '',       // In effect remove this element!
     replace: true,
     require: '^accordionGroup',
-    compile: function(element, attr, transclude) {
-      return function link(scope, element, attr, accordionGroupCtrl) {
-        // Pass the heading to the accordion-group controller
-        // so that it can be transcluded into the right place in the template
-        // [The second parameter to transclude causes the elements to be cloned so that they work in ng-repeat]
-        accordionGroupCtrl.setHeading(transclude(scope, function() {}));
-      };
+    link: function(scope, element, attr, accordionGroupCtrl, transclude) {
+      // Pass the heading to the accordion-group controller
+      // so that it can be transcluded into the right place in the template
+      // [The second parameter to transclude causes the elements to be cloned so that they work in ng-repeat]
+      accordionGroupCtrl.setHeading(transclude(scope, function() {}));
     }
   };
 })
