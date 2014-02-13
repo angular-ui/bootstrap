@@ -1,5 +1,4 @@
 describe('alert', function () {
-
   var scope, $compile;
   var element;
 
@@ -36,7 +35,7 @@ describe('alert', function () {
   }
 
   function findContent(index) {
-    return element.find('span').eq(index);
+    return element.find('div[ng-transclude] span').eq(index);
   }
 
   it('should generate alerts using ng-repeat', function () {
