@@ -81,8 +81,6 @@ describe('progressbar directive', function () {
 
     var bar = getBar(0);
     expect(bar.css('width')).toBe('50.34%');
-
-    expect(bar.attr('aria-valuenow')).toBe('50');
     expect(bar.attr('aria-valuetext')).toBe('50%');
   });
 
