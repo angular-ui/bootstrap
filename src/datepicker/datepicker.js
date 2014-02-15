@@ -296,7 +296,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.position'])
 })
 
 .constant('datepickerPopupConfig', {
-  dateFormat: 'yyyy-MM-dd',
+  datepickerPopup: 'yyyy-MM-dd',
   currentText: 'Today',
   clearText: 'Clear',
   closeText: 'Done',
@@ -328,7 +328,7 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
       };
 
       attrs.$observe('datepickerPopup', function(value) {
-          dateFormat = value || datepickerPopupConfig.dateFormat;
+          dateFormat = value || datepickerPopupConfig.datepickerPopup;
           ngModel.$render();
       });
 
