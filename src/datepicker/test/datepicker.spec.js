@@ -1042,12 +1042,39 @@ describe('datepicker directive', function () {
           expect(dropdownEl.find('li').length).toBe(2);
         });
 
-        it('should have four buttons', function() {
+        it('should have three buttons', function() {
           expect(buttons.length).toBe(3);
 
           expect(buttons.eq(0).text()).toBe('Today');
           expect(buttons.eq(1).text()).toBe('Clear');
           expect(buttons.eq(2).text()).toBe('Done');
+        });
+
+        it('should have a button to set today date without altering time part', function() {
+          var today = new Date();
+          buttons.eq(0).click();
+          expect($rootScope.date.getFullYear()).toBe(today.getFullYear());
+          expect($rootScope.date.getMonth()).toBe(today.getMonth());
+          expect($rootScope.date.getDate()).toBe(today.getDate());
+
+          expect($rootScope.date.getHours()).toBe(15);
+          expect($rootScope.date.getMinutes()).toBe(30);
+          expect($rootScope.date.getSeconds()).toBe(0);
+        });
+
+        it('should have a button to set today date if blank', function() {
+          $rootScope.date = null;
+          $rootScope.$digest();
+
+          var today = new Date();
+          buttons.eq(0).click();
+          expect($rootScope.date.getFullYear()).toBe(today.getFullYear());
+          expect($rootScope.date.getMonth()).toBe(today.getMonth());
+          expect($rootScope.date.getDate()).toBe(today.getDate());
+
+          expect($rootScope.date.getHours()).toBe(0);
+          expect($rootScope.date.getMinutes()).toBe(0);
+          expect($rootScope.date.getSeconds()).toBe(0);
         });
 
         it('should have a button to clear value', function() {

@@ -442,7 +442,16 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
       });
 
       scope.select = function( date ) {
-        scope.dateSelection( date === 'today' ? new Date() : date);
+        if (date === 'today') {
+          var today = new Date();
+          if (angular.isDate(ngModel.$modelValue)) {
+            date = new Date(ngModel.$modelValue);
+            date.setFullYear(today.getFullYear(), today.getMonth(), today.getDate());
+          } else {
+            date = new Date(today.setHours(0, 0, 0, 0));
+          }
+        }
+        scope.dateSelection( date );
       };
 
       var $popup = $compile(popupEl)(scope);
