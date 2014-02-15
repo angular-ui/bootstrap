@@ -71,10 +71,10 @@
 
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
-                <a class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
+                <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
                     <i class="glyphicon glyphicon-download-alt"></i> Download <small>(<%= pkg.version%>)</small>
-                </a>
-                <a class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</a>
+                </button>
+                <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
         </div>
         <div class="bs-social container">
@@ -85,7 +85,7 @@
                 </li>
                 <li>
                     <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=bootstrap&type=fork&count=true"
-                            allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+                            allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
                 </li>
                 <li>
                     <a href="https://twitter.com/share" class="twitter-share-button"
