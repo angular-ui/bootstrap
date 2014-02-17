@@ -130,11 +130,16 @@ describe('typeahead tests', function () {
 
     it('should open and close typeahead based on matches', function () {
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
+      var inputEl = findInput(element);
+      expect(inputEl.attr('aria-expanded')).toBe('false');
+
       changeInputValueTo(element, 'ba');
       expect(element).toBeOpenWithActive(2, 0);
+      expect(inputEl.attr('aria-expanded')).toBe('true');
 
       changeInputValueTo(element, '');
       expect(element).toBeClosed();
+      expect(inputEl.attr('aria-expanded')).toBe('false');
     });
 
     it('should not open typeahead if input value smaller than a defined threshold', function () {

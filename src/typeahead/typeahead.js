@@ -69,6 +69,12 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
       var hasFocus;
 
+      // WAI-ARIA
+      element.attr({
+        'aria-autocomplete': 'list',
+        'aria-expanded': false
+      });
+
       //pop-up element used to display matches
       var popUpEl = angular.element('<div typeahead-popup></div>');
       popUpEl.attr({
@@ -93,6 +99,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       var resetMatches = function() {
         scope.matches = [];
         scope.activeIdx = -1;
+        element.attr('aria-expanded', false);
       };
 
       var getMatchesAsync = function(inputValue) {
@@ -125,6 +132,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
               scope.position = appendToBody ? $position.offset(element) : $position.position(element);
               scope.position.top = scope.position.top + element.prop('offsetHeight');
 
+              element.attr('aria-expanded', true);
             } else {
               resetMatches();
             }
