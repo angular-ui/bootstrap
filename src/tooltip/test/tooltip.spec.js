@@ -271,7 +271,7 @@ describe('tooltip', function() {
       expect( elmScope.tt_isOpen ).toBeFalsy();
     }));
 
-    it('should not share triggers among different element instances - issue 692', inject( function ($compile) {
+    it('should only set up triggers once', inject( function ($compile) {
 
       scope.test = true;
       elmBody = angular.element(
@@ -290,10 +290,12 @@ describe('tooltip', function() {
 
       scope.$apply('test = false');
 
-      elm2.trigger('mouseenter');
+      // click trigger isn't set
+      elm2.click();
       expect( elmScope2.tt_isOpen ).toBeFalsy();
 
-      elm2.click();
+      // mouseenter trigger is still set
+      elm2.trigger('mouseenter');
       expect( elmScope2.tt_isOpen ).toBeTruthy();
     }));
   });
