@@ -368,7 +368,7 @@ function ($compile, $parse, $document, $position, dateFilter, datepickerPopupCon
         if (!viewValue) {
           ngModel.$setValidity('date', true);
           return null;
-        } else if (angular.isDate(viewValue)) {
+        } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
           ngModel.$setValidity('date', true);
           return viewValue;
         } else if (angular.isString(viewValue)) {

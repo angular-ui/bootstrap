@@ -248,6 +248,15 @@ describe('datepicker directive', function () {
           testCalendar();
           expect(angular.isDate($rootScope.date)).toBe(true);
         });
+
+        it('to a date that is invalid, it gets invalid', function() {
+          $rootScope.date = new Date('pizza');
+          $rootScope.$digest();
+          expect(element.hasClass('ng-invalid')).toBeTruthy();
+          expect(element.hasClass('ng-invalid-date')).toBeTruthy();
+          expect(angular.isDate($rootScope.date)).toBe(true);
+          expect(isNaN($rootScope.date)).toBe(true);
+        });
       });
 
       describe('not to a Date object', function() {
