@@ -2,14 +2,27 @@
     <h4>Dynamic</h4>
     <div class="form-group">
       <label>Popup Text:</label>
-      <input type="text" ng-model="dynamicPopover" class="form-control">
+      <input type="text" ng-model="dynamicPopover.content" class="form-control">
     </div>
     <div class="form-group">
       <label>Popup Title:</label>
-      <input type="text" ng-model="dynamicPopoverTitle" class="form-control">
+      <input type="text" ng-model="dynamicPopover.title" class="form-control">
     </div>
-    <button popover="{{dynamicPopover}}" popover-title="{{dynamicPopoverTitle}}" class="btn btn-default">Dynamic Popover</button>
-    
+    <div class="form-group">
+      <label>Popup Template:</label>
+      <input type="text" ng-model="dynamicPopover.templateUrl" class="form-control">
+    </div>
+    <button popover="{{dynamicPopover.content}}" popover-title="{{dynamicPopover.title}}" class="btn btn-default">Dynamic Popover</button>
+
+    <button popover-template="{{dynamicPopover.templateUrl}}" popover-template-title="{{dynamicPopover.title}}" class="btn btn-default">Popover With Template</button>
+
+    <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div>{{dynamicPopover.content}}</div>
+        <div class="form-group">
+          <label>Popup Title:</label>
+          <input type="text" ng-model="dynamicPopover.title" class="form-control">
+        </div>
+    </script>
     <hr />
     <h4>Positional</h4>
     <button popover-placement="top" popover="On the Top!" class="btn btn-default">Top</button>

@@ -1,4 +1,7 @@
 angular.module('ui.bootstrap.demo').controller('PopoverDemoCtrl', function ($scope) {
-  $scope.dynamicPopover = 'Hello, World!';
-  $scope.dynamicPopoverTitle = 'Title';
+  $scope.dynamicPopover = {
+    content: 'Hello, World!',
+    templateUrl: 'myTemplatePopover.html',
+    title: 'Title'
+  };
 });

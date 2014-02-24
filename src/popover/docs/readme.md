@@ -4,6 +4,13 @@ directive supports multiple placements, optional transition animation, and more.
 Like the Bootstrap jQuery plugin, the popover **requires** the tooltip
 module.
 
+There are two versions of the popover: `popover` and `popover-template`:
+
+- `popover` takes text only and will escape any HTML provided for the popover
+  body.
+- `popover-template` takes text that specifies the location of a template to
+  use for the popover body.
+
 The popover directives provides several optional attributes to control how it
 will display:
 
