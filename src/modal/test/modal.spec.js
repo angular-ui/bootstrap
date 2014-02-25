@@ -460,6 +460,18 @@ describe('$modal', function () {
         expect(backdropEl).not.toHaveClass('in');
 
       });
+
+      describe('custom backdrop classes', function () {
+
+        it('should support additional backdrop class as string', function () {
+          open({
+            template: '<div>With custom backdrop class</div>',
+            backdropClass: 'additional'
+          });
+
+          expect($document.find('div.modal-backdrop')).toHaveClass('additional');
+        });
+      });
     });
 
     describe('custom window classes', function () {
@@ -473,7 +485,7 @@ describe('$modal', function () {
         expect($document.find('div.modal')).toHaveClass('additional');
       });
     });
-    
+
     describe('size', function () {
       
       it('should support creating small modal dialogs', function () {

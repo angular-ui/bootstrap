@@ -10,6 +10,7 @@ The `$modal` service has only one method: `open(options)` where available option
 * `resolve` - members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property for AngularJS routes
 * `backdrop` - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), `'static'` - backdrop is present but modal window is not closed when clicking outside of the modal window.
 * `keyboard` - indicates whether the dialog should be closable by hitting the ESC key, defaults to true
+* `backdropClass` - additional CSS class(es) to be added to a modal backdrop template
 * `windowClass` - additional CSS class(es) to be added to a modal window template
 * `windowTemplateUrl` - a path to a template overriding modal's window template
 * `size` - optional size of modal window. Allowed values: `'sm'` (small) or  `'lg'` (large). Requires Bootstrap 3.1.0 or later
