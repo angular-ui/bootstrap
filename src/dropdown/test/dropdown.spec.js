@@ -91,6 +91,35 @@ describe('dropdownToggle', function() {
       expect(elm.hasClass('open')).toBe(false);
     });
 
+    it('should not toggle if the element has `ng-disabled` as true', function() {
+      $rootScope.isdisabled = true;
+      var elm = $compile('<li class="dropdown"><div ng-disabled="isdisabled" dropdown-toggle></div><ul><li>Hello</li></ul></li>')($rootScope);
+      $rootScope.$digest();
+      elm.find('div').click();
+      expect(elm.hasClass('open')).toBe(false);
+
+      $rootScope.isdisabled = false;
+      $rootScope.$digest();
+      elm.find('div').click();
+      expect(elm.hasClass('open')).toBe(true);
+    });
+
+    it('should unbind events on scope destroy', function() {
+      var $scope = $rootScope.$new();
+      var elm = $compile('<li class="dropdown"><button ng-disabled="isdisabled" dropdown-toggle></button><ul><li>Hello</li></ul></li>')($scope);
+      $scope.$digest();
+
+      var buttonEl = elm.find('button');
+      buttonEl.click();
+      expect(elm.hasClass('open')).toBe(true);
+      buttonEl.click();
+      expect(elm.hasClass('open')).toBe(false);
+
+      $scope.$destroy();
+      buttonEl.click();
+      expect(elm.hasClass('open')).toBe(false);
+    });
+
     // issue 270
     it('executes other document click events normally', function() {
       var checkboxEl = $compile('<input type="checkbox" ng-click="clicked = true" />')($rootScope);

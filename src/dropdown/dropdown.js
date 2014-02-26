@@ -112,21 +112,27 @@ angular.module('ui.bootstrap.dropdown', [])
         return;
       }
 
-      element.bind('click', function(event) {
+      var toggleDropdown = function(event) {
         event.preventDefault();
         event.stopPropagation();
 
-        if ( !element.hasClass('disabled') && !element.prop('disabled') ) {
+        if ( !element.hasClass('disabled') && !attrs.disabled ) {
           scope.$apply(function() {
             dropdownCtrl.toggle();
           });
         }
-      });
+      };
+
+      element.bind('click', toggleDropdown);
 
       // WAI-ARIA
       element.attr({ 'aria-haspopup': true, 'aria-expanded': false });
       scope.$watch(dropdownCtrl.isOpen, function( isOpen ) {
         element.attr('aria-expanded', !!isOpen);
+      });
+
+      scope.$on('$destroy', function() {
+        element.unbind('click', toggleDropdown);
       });
     }
   };
