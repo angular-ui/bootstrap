@@ -16,6 +16,7 @@ files = [
 
 // list of files to exclude
 exclude = [
+  'src/**/docs/*'
 ];
 
 // Start these browsers, currently available:
