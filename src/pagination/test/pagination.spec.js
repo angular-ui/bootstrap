@@ -123,11 +123,11 @@ describe('pagination directive', function () {
   });
 
   describe('`items-per-page`', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.perpage = 5;
       element = $compile('<pagination total-items="total" items-per-page="perpage" ng-model="currentPage"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('changes the number of pages', function() {
       expect(getPaginationBarSize()).toBe(12);
@@ -166,11 +166,11 @@ describe('pagination directive', function () {
   });
 
   describe('executes  `ng-change` expression', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.selectPageHandler = jasmine.createSpy('selectPageHandler');
       element = $compile('<pagination total-items="total" ng-model="currentPage" ng-change="selectPageHandler()"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('when an element is clicked', function() {
       clickPaginationEl(2);
@@ -194,13 +194,13 @@ describe('pagination directive', function () {
   });
 
   describe('with `max-size` option', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.total = 98; // 10 pages
       $rootScope.currentPage = 3;
       $rootScope.maxSize = 5;
       element = $compile('<pagination total-items="total" ng-model="currentPage" max-size="maxSize"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains maxsize + 2 li elements', function() {
       expect(getPaginationBarSize()).toBe($rootScope.maxSize + 2);
@@ -230,7 +230,7 @@ describe('pagination directive', function () {
       clickPaginationEl(0);
 
       expect($rootScope.currentPage).toBe(6);
-     expect(getPaginationEl(3)).toHaveClass('active');
+      expect(getPaginationEl(3)).toHaveClass('active');
       expect(getPaginationEl(3).text()).toBe(''+$rootScope.currentPage);
     });
 
@@ -262,14 +262,14 @@ describe('pagination directive', function () {
   });
 
   describe('with `max-size` option & no `rotate`', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.total = 115; // 12 pages
       $rootScope.currentPage = 7;
       $rootScope.maxSize = 5;
       $rootScope.rotate = false;
       element = $compile('<pagination total-items="total" ng-model="currentPage" max-size="maxSize" rotate="rotate"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains maxsize + 4 elements', function() {
       expect(getPaginationBarSize()).toBe($rootScope.maxSize + 4);
@@ -325,10 +325,10 @@ describe('pagination directive', function () {
   });
 
   describe('pagination directive with `boundary-links`', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       element = $compile('<pagination boundary-links="true" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains num-pages + 4 li elements', function() {
       expect(getPaginationBarSize()).toBe(9);
@@ -418,10 +418,10 @@ describe('pagination directive', function () {
   });
 
   describe('pagination directive with just number links', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       element = $compile('<pagination direction-links="false" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains num-pages li elements', function() {
       expect(getPaginationBarSize()).toBe(5);
@@ -469,11 +469,11 @@ describe('pagination directive', function () {
   });
 
   describe('with just boundary & number links', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.directions = false;
       element = $compile('<pagination boundary-links="true" direction-links="directions" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains number of pages + 2 li elements', function() {
       expect(getPaginationBarSize()).toBe(7);
@@ -501,11 +501,11 @@ describe('pagination directive', function () {
   });
 
   describe('`num-pages`', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.numpg = null;
       element = $compile('<pagination total-items="total" ng-model="currentPage" num-pages="numpg"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('equals to total number of pages', function() {
       expect($rootScope.numpg).toBe(5);
@@ -573,10 +573,10 @@ describe('pagination directive', function () {
   });
 
   describe('override configuration from attributes', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       element = $compile('<pagination boundary-links="true" first-text="<<" previous-text="<" next-text=">" last-text=">>" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains number of pages + 4 li elements', function() {
       expect(getPaginationBarSize()).toBe(9);

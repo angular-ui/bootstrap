@@ -97,11 +97,11 @@ describe('pager directive', function () {
   });
 
   describe('`items-per-page`', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.perpage = 5;
-      element = $compile('<pager total-items="total" items-per-page="perpage" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<pager total-items="total" items-per-page="perpage" ng-model="currentPage"></pager>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('does not change the number of pages', function() {
       expect(getPaginationBarSize()).toBe(2);
@@ -116,7 +116,7 @@ describe('pager directive', function () {
       expect($rootScope.currentPage).toBe(2);
       expect(getPaginationBarSize()).toBe(2);
       expect(getPaginationEl(0)).not.toHaveClass('disabled');
-      expect(getPaginationEl(1)).toHaveClass('disabled');
+      expect(getPaginationEl(-1)).toHaveClass('disabled');
     });
   });
 
@@ -131,11 +131,11 @@ describe('pager directive', function () {
   });
 
   describe('`num-pages`', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       $rootScope.numpg = null;
       element = $compile('<pager total-items="total" ng-model="currentPage" num-pages="numpg"></pager>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('equals to total number of pages', function() {
       expect($rootScope.numpg).toBe(5);
@@ -169,10 +169,10 @@ describe('pager directive', function () {
   });
 
   describe('override configuration from attributes', function () {
-    beforeEach(inject(function() {
+    beforeEach(function() {
       element = $compile('<pager align="false" previous-text="<" next-text=">" total-items="total" ng-model="currentPage"></pager>')($rootScope);
       $rootScope.$digest();
-    }));
+    });
 
     it('contains 2 li elements', function() {
       expect(getPaginationBarSize()).toBe(2);
