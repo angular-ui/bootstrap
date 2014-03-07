@@ -507,6 +507,25 @@ describe('typeahead tests', function () {
       expect(element).toBeClosed();
     });
 
+    it('should properly update loading callback if an element is not focused', function () {
+
+      $scope.items = function(viewValue) {
+        return $timeout(function(){
+          return [viewValue];
+        });
+      };
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-loading="isLoading" typeahead="item for item in items($viewValue)"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'match');
+      $scope.$digest();
+
+      inputEl.blur();
+      $timeout.flush();
+
+      expect($scope.isLoading).toBeFalsy();
+    });
+
     it('issue 1140 - should properly update loading callback when deleting characters', function () {
 
       $scope.items = function(viewValue) {
