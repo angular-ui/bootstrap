@@ -36,6 +36,7 @@ angular.module('ui.bootstrap.dropdown', [])
 
   var escapeKeyBind = function( evt ) {
     if ( evt.which === 27 ) {
+      openScope.focusToggleElement();
       closeDropdown();
     }
   };
@@ -71,17 +72,24 @@ angular.module('ui.bootstrap.dropdown', [])
     return scope.isOpen;
   };
 
-  scope.$watch('isOpen', function( value ) {
-    $animate[value ? 'addClass' : 'removeClass'](self.$element, openClass);
+  scope.focusToggleElement = function() {
+    if ( self.toggleElement ) {
+      self.toggleElement[0].focus();
+    }
+  };
 
-    if ( value ) {
+  scope.$watch('isOpen', function( isOpen ) {
+    $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass);
+
+    if ( isOpen ) {
+      scope.focusToggleElement();
       dropdownService.open( scope );
     } else {
       dropdownService.close( scope );
     }
 
-    setIsOpen($scope, value);
-    toggleInvoker($scope, { open: !!value });
+    setIsOpen($scope, isOpen);
+    toggleInvoker($scope, { open: !!isOpen });
   });
 
   $scope.$on('$locationChangeSuccess', function() {
@@ -111,6 +119,8 @@ angular.module('ui.bootstrap.dropdown', [])
       if ( !dropdownCtrl ) {
         return;
       }
+
+      dropdownCtrl.toggleElement = element;
 
       var toggleDropdown = function(event) {
         event.preventDefault();

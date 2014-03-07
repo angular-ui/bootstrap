@@ -20,9 +20,13 @@ describe('dropdownToggle', function() {
     element.trigger(e);
   };
 
+  var isFocused = function(elm) {
+    return elm[0] === document.activeElement;
+  };
+
   describe('basic', function() {
     function dropdown() {
-      return $compile('<li class="dropdown"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      return $compile('<li class="dropdown"><a href dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -44,10 +48,13 @@ describe('dropdownToggle', function() {
       expect(element.hasClass('open')).toBe(false);
     });
 
-    it('should close on escape key', function() {
+    it('should close on escape key & focus toggle element', function() {
+      $document.find('body').append(element);
       clickDropdownToggle();
       triggerKeyDown($document, 27);
       expect(element.hasClass('open')).toBe(false);
+      expect(isFocused(element.find('a'))).toBe(true);
+      element.remove();
     });
 
     it('should not close on backspace key', function() {
@@ -170,7 +177,7 @@ describe('dropdownToggle', function() {
   describe('`is-open`', function() {
     beforeEach(function() {
       $rootScope.isopen = true;
-      element = $compile('<li class="dropdown" is-open="isopen"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      element = $compile('<li class="dropdown" is-open="isopen"><a href dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -187,6 +194,18 @@ describe('dropdownToggle', function() {
       $rootScope.isopen = false;
       $rootScope.$digest();
       expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('focus toggle element when opening', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      $rootScope.isopen = false;
+      $rootScope.$digest();
+      expect(isFocused(element.find('a'))).toBe(false);
+      $rootScope.isopen = true;
+      $rootScope.$digest();
+      expect(isFocused(element.find('a'))).toBe(true);
+      element.remove();
     });
   });
 
