@@ -601,6 +601,20 @@ describe('timepicker directive', function () {
     });
   });
 
+  describe('`readonly-input` attribute', function() {
+    beforeEach(inject(function() {
+      $rootScope.meridiansArray = ['am', 'pm'];
+      element = $compile('<timepicker ng-model="time" readonly-input="true"></timepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('should make inputs readonly', function () {
+      var inputs = element.find('input');
+      expect(inputs.eq(0).attr('readonly')).toBe('readonly');
+      expect(inputs.eq(1).attr('readonly')).toBe('readonly');
+    });
+  });
+
   describe('setting timepickerConfig steps', function() {
     var originalConfig = {};
     beforeEach(inject(function(_$compile_, _$rootScope_, timepickerConfig) {
