@@ -1,4 +1,4 @@
-function CarouselDemoCtrl($scope) {
+angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($scope) {
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
@@ -12,4 +12,4 @@ function CarouselDemoCtrl($scope) {
   for (var i=0; i<4; i++) {
     $scope.addSlide();
   }
-}
+});

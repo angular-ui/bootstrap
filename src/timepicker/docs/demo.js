@@ -1,4 +1,4 @@
-var TimepickerDemoCtrl = function ($scope) {
+angular.module('ui.bootstrap.demo').controller('TimepickerDemoCtrl', function ($scope) {
   $scope.mytime = new Date();
 
   $scope.hstep = 1;
@@ -28,4 +28,4 @@ var TimepickerDemoCtrl = function ($scope) {
   $scope.clear = function() {
     $scope.mytime = null;
   };
-};
+});
