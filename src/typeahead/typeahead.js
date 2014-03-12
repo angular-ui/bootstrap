@@ -232,7 +232,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
         resetMatches();
 
-        //return focus to the input element if a mach was selected via a mouse click event
+        //return focus to the input element if a match was selected via a mouse click event
         // use timeout to avoid $rootScope:inprog error
         $timeout(function() { element[0].focus(); }, 0, false);
       };
