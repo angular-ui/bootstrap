@@ -102,4 +102,35 @@ describe('tooltip directive', function () {
     });
 
   });
+
+  it('should show even after close trigger is called multiple times - issue #1847', function () {
+    var fragment = compileTooltip('<span tooltip="tooltip text">Trigger here</span>');
+
+    fragment.find('span').trigger( 'mouseenter' );
+    expect(fragment).toHaveOpenTooltips();
+
+    closeTooltip(fragment.find('span'), null, true);
+    // Close trigger is called again before timer completes
+    // The close trigger can be called any number of times (even after close has already been called)
+    // since users can trigger the hide triggers manually.
+    closeTooltip(fragment.find('span'), null, true);
+    expect(fragment).toHaveOpenTooltips();
+
+    fragment.find('span').trigger( 'mouseenter' );
+    expect(fragment).toHaveOpenTooltips();
+
+    $timeout.flush();
+    expect(fragment).toHaveOpenTooltips();
+  });
+
+  it('should hide even after show trigger is called multiple times', function () {
+    var fragment = compileTooltip('<span tooltip="tooltip text" tooltip-popup-delay="1000">Trigger here</span>');
+
+    fragment.find('span').trigger( 'mouseenter' );
+    fragment.find('span').trigger( 'mouseenter' );
+
+    closeTooltip(fragment.find('span'));
+    expect(fragment).not.toHaveOpenTooltips();
+  });
+
 });
