@@ -17,6 +17,13 @@ describe('typeahead tests', function () {
         }
       };
     });
+    $compileProvider.directive('childDirective', function () {
+      return {
+          restrict: 'A',
+          require: '^parentDirective',
+          link: function(scope, element, attrs, ctrl) {}
+      };
+    });
   }));
   beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, _$timeout_, $sniffer) {
     $scope = _$rootScope_;
@@ -302,6 +309,19 @@ describe('typeahead tests', function () {
       $templateCache.put('custom.html', '<p>{{ index }} {{ match.label }}</p>');
 
       var element = prepareInputEl('<div><input ng-model="result" typeahead-template-url="custom.html" typeahead="state as state.name for state in states | filter:$viewValue"></div>');
+
+      changeInputValueTo(element, 'Al');
+
+      expect(findMatches(element).eq(0).find('p').text()).toEqual('0 Alaska');
+    }));
+
+    it('should support directives which require controllers in custom templates for matched items', inject(function ($templateCache) {
+
+      $templateCache.put('custom.html', '<p child-directive>{{ index }} {{ match.label }}</p>');
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-template-url="custom.html" typeahead="state as state.name for state in states | filter:$viewValue"></div>');
+
+      element.data('$parentDirectiveController', {});
 
       changeInputValueTo(element, 'Al');
 
