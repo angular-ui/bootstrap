@@ -200,7 +200,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
           modal = openedWindows.top();
           if (modal && modal.value.keyboard) {
             $rootScope.$apply(function () {
-              $modalStack.dismiss(modal.key);
+              $modalStack.dismiss(modal.key, 'escape key press');
             });
           }
         }
