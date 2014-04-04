@@ -78,7 +78,7 @@ angular.module('ui.bootstrap.dropdown', [])
     }
   };
 
-  scope.$watch('isOpen', function( isOpen ) {
+  scope.$watch('isOpen', function( isOpen, wasOpen ) {
     $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass);
 
     if ( isOpen ) {
@@ -89,7 +89,9 @@ angular.module('ui.bootstrap.dropdown', [])
     }
 
     setIsOpen($scope, isOpen);
-    toggleInvoker($scope, { open: !!isOpen });
+    if (angular.isDefined(wasOpen) && isOpen !== wasOpen) {
+      toggleInvoker($scope, { open: !!isOpen });
+    }
   });
 
   $scope.$on('$locationChangeSuccess', function() {

@@ -212,16 +212,18 @@ describe('dropdownToggle', function() {
   describe('`on-toggle`', function() {
     beforeEach(function() {
       $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
-      element = $compile('<li class="dropdown" on-toggle="toggleHandler(open)"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      $rootScope.isopen = false;
+      element = $compile('<li class="dropdown" on-toggle="toggleHandler(open)"  is-open="isopen"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
-    it('should be called initially', function() {
-      expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
+    it('should not have been called initially', function() {
+      expect($rootScope.toggleHandler).not.toHaveBeenCalled();
     });
 
     it('should call it correctly when toggles', function() {
-      clickDropdownToggle();
+      $rootScope.isopen = true;
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
@@ -237,8 +239,8 @@ describe('dropdownToggle', function() {
       $rootScope.$digest();
     });
 
-    it('should be called initially with true', function() {
-      expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
+    it('should not have been called initially', function() {
+      expect($rootScope.toggleHandler).not.toHaveBeenCalled();
     });
 
     it('should call it correctly when toggles', function() {
