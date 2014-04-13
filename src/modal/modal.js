@@ -85,7 +85,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       transclude: true,
       templateUrl: 'template/modal/window.html',
       link: function (scope, element, attrs) {
-        scope.windowClass = attrs.windowClass || '';
+        element.addClass(attrs.windowClass || '');
 
         $timeout(function () {
           // trigger CSS transitions

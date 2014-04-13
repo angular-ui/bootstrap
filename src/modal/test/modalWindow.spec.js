@@ -10,9 +10,10 @@ describe('modal window', function () {
   }));
 
   it('should support custom CSS classes as string', function () {
-    var windowEl = $compile('<div modal-window window-class="test">content</div>')($rootScope);
+    var windowEl = $compile('<div modal-window window-class="test foo">content</div>')($rootScope);
     $rootScope.$digest();
 
     expect(windowEl).toHaveClass('test');
+    expect(windowEl).toHaveClass('foo');
   });
 });
