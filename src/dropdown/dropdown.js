@@ -28,7 +28,11 @@ angular.module('ui.bootstrap.dropdown', [])
     }
   };
 
-  var closeDropdown = function() {
+  var closeDropdown = function( evt ) {
+    if (evt && evt.isDefaultPrevented()) {
+        return;
+    }
+
     openScope.$apply(function() {
       openScope.isOpen = false;
     });
@@ -126,7 +130,6 @@ angular.module('ui.bootstrap.dropdown', [])
 
       var toggleDropdown = function(event) {
         event.preventDefault();
-        event.stopPropagation();
 
         if ( !element.hasClass('disabled') && !attrs.disabled ) {
           scope.$apply(function() {
