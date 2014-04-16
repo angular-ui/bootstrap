@@ -555,6 +555,21 @@ describe('typeahead tests', function () {
       expect($scope.isLoading).toBeFalsy();
     });
 
+    it('should cancel old timeout when deleting characters', inject(function ($timeout) {
+      var values = [];
+      $scope.loadMatches = function(viewValue) {
+        values.push(viewValue);
+        return $scope.source;
+      };
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in loadMatches($viewValue) | filter:$viewValue" typeahead-min-length="2" typeahead-wait-ms="200"></div>');
+      changeInputValueTo(element, 'match');
+      changeInputValueTo(element, 'm');
+
+      $timeout.flush();
+
+      expect(values).not.toContain('match');
+    }));
+
     it('does not close matches popup on click in input', function () {
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
       var inputEl = findInput(element);
