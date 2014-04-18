@@ -88,6 +88,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       },
       link: function (scope, element, attrs) {
         element.addClass(attrs.windowClass || '');
+        scope.size = attrs.size;
 
         $timeout(function () {
           // trigger CSS transitions
@@ -232,6 +233,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         angularDomEl.attr({
           'template-url': modal.windowTemplateUrl,
           'window-class': modal.windowClass,
+          'size': modal.size,
           'index': openedWindows.length() - 1,
           'animate': 'animate'
         }).html(modal.content);
@@ -359,7 +361,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                 backdrop: modalOptions.backdrop,
                 keyboard: modalOptions.keyboard,
                 windowClass: modalOptions.windowClass,
-                windowTemplateUrl: modalOptions.windowTemplateUrl
+                windowTemplateUrl: modalOptions.windowTemplateUrl,
+                size: modalOptions.size
               });
 
             }, function resolveError(reason) {

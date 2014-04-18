@@ -431,6 +431,27 @@ describe('$modal', function () {
         expect($document.find('div.modal')).toHaveClass('additional');
       });
     });
+    
+    describe('size', function () {
+      
+      it('should support creating small modal dialogs', function () {
+        open({
+          template: '<div>Small modal dialog</div>',
+          size: 'sm'
+        });
+        
+        expect($document.find('div.modal-dialog')).toHaveClass('modal-sm');
+      });
+      
+      it('should support creating large modal dialogs', function () {
+        open({
+          template: '<div>Large modal dialog</div>',
+          size: 'lg'
+        });
+        
+        expect($document.find('div.modal-dialog')).toHaveClass('modal-lg');
+      });
+    });
   });
 
   describe('multiple modals', function () {
