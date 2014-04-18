@@ -144,7 +144,7 @@ angular.module('ui.bootstrap.timepicker', [])
     };
 
     hoursInputEl.bind('blur', function(e) {
-      if ( !$scope.validHours && $scope.hours < 10) {
+      if ( !$scope.invalidHours && $scope.hours < 10) {
         $scope.$apply( function() {
           $scope.hours = pad( $scope.hours );
         });
