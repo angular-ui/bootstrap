@@ -201,6 +201,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         if (evt.which === 27) {
           modal = openedWindows.top();
           if (modal && modal.value.keyboard) {
+            evt.preventDefault();
             $rootScope.$apply(function () {
               $modalStack.dismiss(modal.key, 'escape key press');
             });
