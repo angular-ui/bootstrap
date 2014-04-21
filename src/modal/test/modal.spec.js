@@ -19,7 +19,8 @@ describe('$modal', function () {
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('template/modal/backdrop.html'));
   beforeEach(module('template/modal/window.html'));
-  beforeEach(module(function(_$modalProvider_){
+  beforeEach(module(function(_$controllerProvider_, _$modalProvider_){
+    $controllerProvider = _$controllerProvider_;
     $modalProvider = _$modalProvider_;
   }));
 
@@ -250,10 +251,9 @@ describe('$modal', function () {
 
     });
 
-    describe('controllers', function () {
+    describe('controller', function () {
 
       it('should accept controllers and inject modal instances', function () {
-
         var TestCtrl = function($scope, $modalInstance) {
           $scope.fromCtrl = 'Content from ctrl';
           $scope.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
@@ -262,6 +262,17 @@ describe('$modal', function () {
         var modal = open({template: '<div>{{fromCtrl}} {{isModalInstance}}</div>', controller: TestCtrl});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
+
+      it('should accept controllerAs alias', function () {
+        $controllerProvider.register('TestCtrl', function($modalInstance) {
+          this.fromCtrl = 'Content from ctrl';
+          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+        });
+
+        var modal = open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl as test'});
+        expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
+      });
+
     });
 
     describe('resolve', function () {
