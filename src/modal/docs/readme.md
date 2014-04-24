@@ -22,6 +22,8 @@ The `open` method returns a modal instance, an object with the following propert
 * `opened` - a promise that is resolved when a modal gets opened after downloading content's template and resolving all variables
 
 In addition the scope associated with modal's content is augmented with 2 methods:
+
 * `$close(result)`
 * `$dismiss(reason)`
+
 Those methods make it easy to close a modal window without a need to create a dedicated controller
