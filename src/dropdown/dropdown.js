@@ -93,7 +93,7 @@ angular.module('ui.bootstrap.dropdown', [])
     }
 
     setIsOpen($scope, isOpen);
-    if (angular.isDefined(wasOpen) && isOpen !== wasOpen) {
+    if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
       toggleInvoker($scope, { open: !!isOpen });
     }
   });

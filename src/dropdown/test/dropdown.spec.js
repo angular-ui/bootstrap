@@ -253,4 +253,24 @@ describe('dropdownToggle', function() {
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
     });
   });
+
+  describe('`on-toggle` without is-open', function() {
+    beforeEach(function() {
+      $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
+      element = $compile('<li class="dropdown" on-toggle="toggleHandler(open)"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      $rootScope.$digest();
+    });
+
+    it('should not have been called initially', function() {
+      expect($rootScope.toggleHandler).not.toHaveBeenCalled();
+    });
+
+    it('should call it when clicked', function() {
+      clickDropdownToggle();
+      expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
+
+      clickDropdownToggle();
+      expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
+    });
+  });
 });
