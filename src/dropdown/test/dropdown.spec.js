@@ -11,7 +11,7 @@ describe('dropdownToggle', function() {
 
   var clickDropdownToggle = function(elm) {
     elm = elm || element;
-    elm.find('a').click();
+    elm.find('a[dropdown-toggle]').click();
   };
 
   var triggerKeyDown = function (element, keyCode) {
@@ -26,7 +26,7 @@ describe('dropdownToggle', function() {
 
   describe('basic', function() {
     function dropdown() {
-      return $compile('<li class="dropdown"><a href dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      return $compile('<li class="dropdown"><a href dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -39,6 +39,18 @@ describe('dropdownToggle', function() {
       expect(element.hasClass('open')).toBe(true);
       clickDropdownToggle();
       expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('should toggle when an option is clicked', function() {
+      $document.find('body').append(element);
+      expect(element.hasClass('open')).toBe(false);
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+
+      var optionEl = element.find('ul > li').eq(0).find('a').eq(0);
+      optionEl.click();
+      expect(element.hasClass('open')).toBe(false);
+      element.remove();
     });
 
     it('should close on document click', function() {
