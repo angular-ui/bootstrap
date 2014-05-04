@@ -1543,6 +1543,10 @@ describe('datepicker directive', function () {
         $rootScope.date = new Date();
       });
 
+      afterEach(function () {
+        $document.find('body').find('.dropdown-menu').remove();
+      });
+
       it('should append to the body', function() {
         var $body = $document.find('body'),
             bodyLength = $body.children().length,
