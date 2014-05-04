@@ -299,11 +299,15 @@ describe('tooltip', function() {
   });
 
   describe( 'with an append-to-body attribute', function() {
-    var scope, elmBody, elm, elmScope;
+    var scope, elmBody, elm, elmScope, $body;
 
     beforeEach( inject( function( $rootScope ) {
       scope = $rootScope;
     }));
+
+    afterEach(function () {
+      $body.find('.tooltip').remove();
+    });
 
     it( 'should append to the body', inject( function( $compile, $document ) {
       $body = $document.find( 'body' );
@@ -473,13 +477,18 @@ describe( '$tooltipProvider', function() {
   });
 
   describe('appendToBody', function() {
-    // load the tooltip code
+
+    var $body;
+
+    beforeEach(module('template/tooltip/tooltip-popup.html'));
     beforeEach(module('ui.bootstrap.tooltip', function ( $tooltipProvider ) {
         $tooltipProvider.options({ appendToBody: true });
     }));
 
-    // load the template
-    beforeEach(module('template/tooltip/tooltip-popup.html'));
+    afterEach(function () {
+      $body.find('.tooltip').remove();
+    });
+
 
     it( 'should append to the body', inject( function( $rootScope, $compile, $document ) {
       $body = $document.find( 'body' );
