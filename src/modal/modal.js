@@ -180,7 +180,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
           });
         } else {
           // Ensure this call is async
-          $timeout(afterAnimating, 0);
+          $timeout(afterAnimating);
         }
 
         function afterAnimating() {
@@ -296,7 +296,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
           function getResolvePromises(resolves) {
             var promisesArr = [];
-            angular.forEach(resolves, function (value, key) {
+            angular.forEach(resolves, function (value) {
               if (angular.isFunction(value) || angular.isArray(value)) {
                 promisesArr.push($q.when($injector.invoke(value)));
               }
@@ -340,7 +340,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
               modalScope.$close = modalInstance.close;
               modalScope.$dismiss = modalInstance.dismiss;
 
-              var ctrlInstance, ctrlLocals = {};
+              var ctrlLocals = {};
               var resolveIter = 1;
 
               //controllers
@@ -351,7 +351,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                   ctrlLocals[key] = tplAndVars[resolveIter++];
                 });
 
-                ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
+                $controller(modalOptions.controller, ctrlLocals);
               }
 
               $modalStack.open(modalInstance, {
