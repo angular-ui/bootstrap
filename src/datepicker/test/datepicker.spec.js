@@ -1356,7 +1356,7 @@ describe('datepicker directive', function () {
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="dd.MM.yyyy"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
- 
+
         changeInputValueTo(inputEl, '11.08.2013');
         expect($rootScope.date.getFullYear()).toEqual(2013);
         expect($rootScope.date.getMonth()).toEqual(7);
