@@ -26,7 +26,7 @@ describe('dropdownToggle', function() {
 
   describe('basic', function() {
     function dropdown() {
-      return $compile('<li class="dropdown"><a href dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
+      return $compile('<li dropdown><a href dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -99,20 +99,20 @@ describe('dropdownToggle', function() {
     });
 
     it('should not toggle if the element has `disabled` class', function() {
-      var elm = $compile('<li class="dropdown"><a class="disabled" dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      var elm = $compile('<li dropdown><a class="disabled" dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       clickDropdownToggle( elm );
       expect(elm.hasClass('open')).toBe(false);
     });
 
     it('should not toggle if the element is disabled', function() {
-      var elm = $compile('<li class="dropdown"><button disabled="disabled" dropdown-toggle></button><ul><li>Hello</li></ul></li>')($rootScope);
+      var elm = $compile('<li dropdown><button disabled="disabled" dropdown-toggle></button><ul><li>Hello</li></ul></li>')($rootScope);
       elm.find('button').click();
       expect(elm.hasClass('open')).toBe(false);
     });
 
     it('should not toggle if the element has `ng-disabled` as true', function() {
       $rootScope.isdisabled = true;
-      var elm = $compile('<li class="dropdown"><div ng-disabled="isdisabled" dropdown-toggle></div><ul><li>Hello</li></ul></li>')($rootScope);
+      var elm = $compile('<li dropdown><div ng-disabled="isdisabled" dropdown-toggle></div><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
       elm.find('div').click();
       expect(elm.hasClass('open')).toBe(false);
@@ -125,7 +125,7 @@ describe('dropdownToggle', function() {
 
     it('should unbind events on scope destroy', function() {
       var $scope = $rootScope.$new();
-      var elm = $compile('<li class="dropdown"><button ng-disabled="isdisabled" dropdown-toggle></button><ul><li>Hello</li></ul></li>')($scope);
+      var elm = $compile('<li dropdown><button ng-disabled="isdisabled" dropdown-toggle></button><ul><li>Hello</li></ul></li>')($scope);
       $scope.$digest();
 
       var buttonEl = elm.find('button');
@@ -171,7 +171,7 @@ describe('dropdownToggle', function() {
   describe('without trigger', function() {
     beforeEach(function() {
       $rootScope.isopen = true;
-      element = $compile('<li class="dropdown" is-open="isopen"><ul><li>Hello</li></ul></li>')($rootScope);
+      element = $compile('<li dropdown is-open="isopen"><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -189,7 +189,7 @@ describe('dropdownToggle', function() {
   describe('`is-open`', function() {
     beforeEach(function() {
       $rootScope.isopen = true;
-      element = $compile('<li class="dropdown" is-open="isopen"><a href dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      element = $compile('<li dropdown is-open="isopen"><a href dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -225,7 +225,7 @@ describe('dropdownToggle', function() {
     beforeEach(function() {
       $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
       $rootScope.isopen = false;
-      element = $compile('<li class="dropdown" on-toggle="toggleHandler(open)"  is-open="isopen"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      element = $compile('<li dropdown on-toggle="toggleHandler(open)"  is-open="isopen"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -247,7 +247,7 @@ describe('dropdownToggle', function() {
     beforeEach(function() {
       $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
       $rootScope.isopen = true;
-      element = $compile('<li class="dropdown" on-toggle="toggleHandler(open)" is-open="isopen"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      element = $compile('<li dropdown on-toggle="toggleHandler(open)" is-open="isopen"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -269,7 +269,7 @@ describe('dropdownToggle', function() {
   describe('`on-toggle` without is-open', function() {
     beforeEach(function() {
       $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
-      element = $compile('<li class="dropdown" on-toggle="toggleHandler(open)"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      element = $compile('<li dropdown on-toggle="toggleHandler(open)"><a dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
     });
 
