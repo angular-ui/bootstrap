@@ -1597,6 +1597,25 @@ describe('datepicker directive', function () {
         }
       });
     });
+
+    describe('`datepicker-mode`', function () {
+      beforeEach(inject(function() {
+        $rootScope.date = new Date('August 11, 2013');
+        $rootScope.mode = 'month';
+        wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-mode="mode"></div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+      }));
+
+      it('shows the correct title', function() {
+        expect(getTitle()).toBe('2013');
+      });
+
+      it('updates binding', function() {
+        clickTitleButton();
+        expect($rootScope.mode).toBe('year');
+      });
+    });
   });
 
   describe('with empty initial state', function () {
