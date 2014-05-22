@@ -1,5 +1,5 @@
 describe('$modal', function () {
-  var $rootScope, $document, $compile, $templateCache, $timeout, $q;
+  var $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $modal, $modalProvider;
 
   var triggerKeyDown = function (element, keyCode) {
@@ -290,7 +290,7 @@ describe('$modal', function () {
           $scope.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
         };
 
-        var modal = open({template: '<div>{{fromCtrl}} {{isModalInstance}}</div>', controller: TestCtrl});
+        open({template: '<div>{{fromCtrl}} {{isModalInstance}}</div>', controller: TestCtrl});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
 
@@ -300,10 +300,19 @@ describe('$modal', function () {
           this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
         });
 
-        var modal = open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl as test'});
+        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl as test'});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
 
+      it('should respect the controllerAs property as an alternative for the controller-as syntax', function () {
+        $controllerProvider.register('TestCtrl', function($modalInstance) {
+          this.fromCtrl = 'Content from ctrl';
+          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+        });
+
+        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl', controllerAs: 'test'});
+        expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
+      });
     });
 
     describe('resolve', function () {

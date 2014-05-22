@@ -365,7 +365,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                   ctrlLocals[key] = tplAndVars[resolveIter++];
                 });
 
-                $controller(modalOptions.controller, ctrlLocals);
+                $controller(modalOptions.controllerAs ? modalOptions.controller + ' as ' + modalOptions.controllerAs : modalOptions.controller, ctrlLocals);
               }
 
               $modalStack.open(modalInstance, {
