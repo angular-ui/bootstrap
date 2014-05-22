@@ -123,41 +123,53 @@
  * `on-select-page` is removed since `ng-change` can now be used.
 
   Before:
-
+  
+  ```html
   <pagination page="current" on-select-page="changed(page)" ...></pagination>
-
+  ```
+  
   After:
 
+  ```html
   <pagination ng-model="current" ng-change="changed()" ...></pagination>
-
+  ```
+  
 - **rating:** 
  `rating` is now integrated with `ngModelController`.
  * `value` is replaced from `ng-model`.
 
   Before:
 
+  ```html
   <rating value="rate" ...></rating>
-
+  ```
+  
   After:
-
+  
+  ```html
   <rating ng-model="rate" ...></rating>
-
+  ```
+  
 - **tabs:**
 
  Use interpolation for type attribute.
 
   Before:
-
+  
+  ```html
   <tabset type="'pills'" ...></tabset >
-  or
+  <!-- or -->
   <tabset type="navtype" ...></tabset>
-
+  ```
+  
   After:
-
+  
+  ```html
   <tabset type="pills" ...></tabset>
-  or
+  <!-- or -->
   <tabset type="{{navtype}}" ...></tabset>
- 
+  ```
+  
 # 0.10.0 (2014-01-13)
 
 _This release adds AngularJS 1.2 support_
