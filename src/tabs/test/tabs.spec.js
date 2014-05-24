@@ -384,8 +384,13 @@ describe('tabs', function() {
 
   describe('tabset controller', function() {
     function mockTab(isActive) {
+      var _isActive;
+      if (isActive || isActive === false) {
+        _isActive = isActive;
+      }
+
       return {
-        active: !!isActive,
+        active: _isActive,
         onSelect : angular.noop,
         onDeselect : angular.noop
       };
@@ -457,6 +462,13 @@ describe('tabs', function() {
 
         ctrl.addTab(tab2);
         expect(tab1.active).toBe(true);
+      });
+
+      it('should not select first active === false tab as selected', function() {
+        var tab = mockTab(false);
+
+        ctrl.addTab(tab);
+        expect(tab.active).toBe(false);
       });
 
       it('should select a tab added that\'s already active', function() {

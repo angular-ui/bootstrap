@@ -28,10 +28,13 @@ angular.module('ui.bootstrap.tabs', [])
     tabs.push(tab);
     // we can't run the select function on the first tab
     // since that would select it twice
-    if (tabs.length === 1) {
+    if (tabs.length === 1 && tab.active !== false) {
       tab.active = true;
     } else if (tab.active) {
       ctrl.select(tab);
+    }
+    else {
+      tab.active = false;
     }
   };
 
