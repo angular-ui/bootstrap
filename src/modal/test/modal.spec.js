@@ -107,15 +107,17 @@ describe('$modal', function () {
   }
 
   function close(modal, result) {
-    modal.close(result);
+    var closed = modal.close(result);
     $timeout.flush();
     $rootScope.$digest();
+    return closed;
   }
 
   function dismiss(modal, reason) {
-    modal.dismiss(reason);
+    var closed = modal.dismiss(reason);
     $timeout.flush();
     $rootScope.$digest();
+    return closed;
   }
 
   describe('basic scenarios with default options', function () {
@@ -605,6 +607,72 @@ describe('$modal', function () {
 
       dismiss(modal2);
       expect(body).not.toHaveClass('modal-open');
+    });
+  });
+
+  describe('modal.closing event', function() {
+    it('should close the modal contingent on the modal.closing event and return whether the modal closed', function() {
+      var preventDefault;
+      var modal;
+      var template = '<div>content</div>';
+
+      function TestCtrl($scope) {
+        $scope.$on('modal.closing', function (event, resultOrReason, closing) {
+          if (preventDefault) {
+            event.preventDefault();
+          }
+        });
+      }
+
+      modal = open({template: template, controller: TestCtrl});
+
+      preventDefault = true;
+      expect(close(modal, 'result')).toBeFalsy();
+      expect($document).toHaveModalsOpen(1);
+
+      preventDefault = false;
+      expect(close(modal, 'result')).toBeTruthy();
+      expect($document).toHaveModalsOpen(0);
+
+      modal = open({template: template, controller: TestCtrl});
+
+      preventDefault = true;
+      expect(dismiss(modal, 'result')).toBeFalsy();
+      expect($document).toHaveModalsOpen(1);
+
+      preventDefault = false;
+      expect(dismiss(modal, 'result')).toBeTruthy();
+      expect($document).toHaveModalsOpen(0);
+    });
+
+    it('should trigger modal.closing and pass result/reason and closing parameters to the event', function() {
+      var called;
+
+      called = false;
+      close(open({
+        template: '<div>content</div>',
+        controller: function($scope) {
+          $scope.$on('modal.closing', function(event, resultOrReason, closing) {
+            called = true;
+            expect(resultOrReason).toBe('result');
+            expect(closing).toBeTruthy();
+          });
+        }
+      }), 'result');
+      expect(called).toBeTruthy();
+
+      called = false;
+      dismiss(open({
+        template: '<div>content</div>',
+        controller: function($scope) {
+          $scope.$on('modal.closing', function(event, resultOrReason, closing) {
+            called = true;
+            expect(resultOrReason).toBe('reason');
+            expect(closing).toBeFalsy();
+          });
+        }
+      }), 'reason');
+      expect(called).toBeTruthy();
     });
   });
 });
