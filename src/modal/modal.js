@@ -354,7 +354,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
               modalScope.$close = modalInstance.close;
               modalScope.$dismiss = modalInstance.dismiss;
 
-              var ctrlLocals = {};
+              var ctrlInstance, ctrlLocals = {};
               var resolveIter = 1;
 
               //controllers
@@ -365,7 +365,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                   ctrlLocals[key] = tplAndVars[resolveIter++];
                 });
 
-                $controller(modalOptions.controllerAs ? modalOptions.controller + ' as ' + modalOptions.controllerAs : modalOptions.controller, ctrlLocals);
+                ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
+                if (modalOptions.controller) {
+                  modalScope[modalOptions.controllerAs] = ctrlInstance;
+                }
               }
 
               $modalStack.open(modalInstance, {

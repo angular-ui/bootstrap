@@ -313,6 +313,14 @@ describe('$modal', function () {
         open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl', controllerAs: 'test'});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
+
+      it('should allow defining in-place controller-as controllers', function () {
+        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($modalInstance) {
+          this.fromCtrl = 'Content from ctrl';
+          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+        }, controllerAs: 'test'});
+        expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
+      });
     });
 
     describe('resolve', function () {
