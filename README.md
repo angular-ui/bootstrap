@@ -94,7 +94,7 @@ We are always looking for the quality contributions! Please check the [CONTRIBUT
 You can generate a custom build, containing only needed modules, from the project's homepage.
 Alternatively you can run local Grunt build from the command line and list needed modules as shown below:
 
-```
+```javascript
 grunt build:modal:tabs:alert:popover:dropdownToggle:buttons:progressbar
 ```
 
@@ -115,7 +115,7 @@ templates to match your desired look & feel, add new functionality etc.
 
 The easiest way to override an individual template is to use the `<script>` directive:
 
-```javascript
+```html
 <script id="template/alert/alert.html" type="text/ng-template">
     <div class='alert' ng-class='type && "alert-" + type'>
         <button ng-show='closeable' type='button' class='close' ng-click='close()'>Close</button>
@@ -131,7 +131,7 @@ Let's have a look:
 Your own template url is `views/partials/ui-bootstrap-tpls/alert/alert.html`.
 
 Add "html2js" task to your Gruntfile
-```
+```javascript
 html2js: {
   options: {
     base: '.',
@@ -152,7 +152,7 @@ Make sure to load your template.js file
 `<script src="/ui-templates.js"></script>`
 
 Inject the `ui-templates` module in your `app.js`
-```
+```javascript
 angular.module('myApp', [
   'ui.bootstrap',
   'ui-templates'
