@@ -1,4 +1,4 @@
-describe('$modal', function () {
+ddescribe('$modal', function () {
   var $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $modal, $modalProvider;
 
@@ -277,6 +277,23 @@ describe('$modal', function () {
 
         $templateCache.put('whitespace.html', '  <div>Whitespaces</div>  ');
         open({templateUrl: 'whitespace.html'});
+        expect($document).toHaveModalOpenWithContent('Whitespaces', 'div');
+      });
+
+      it('should accept template as a function', function () {
+        open({template: function() {
+          return '<div>From a function</div>';
+        }});
+
+        expect($document).toHaveModalOpenWithContent('From a function', 'div');
+      });
+
+      it('should not fail if a templateUrl as a function', function () {
+
+        $templateCache.put('whitespace.html', '  <div>Whitespaces</div>  ');
+        open({templateUrl: function(){
+          return 'whitespace.html';
+        }});
         expect($document).toHaveModalOpenWithContent('Whitespaces', 'div');
       });
 
