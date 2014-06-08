@@ -159,7 +159,7 @@ describe('datepicker directive', function () {
     });
 
     it('renders the week numbers based on ISO 8601', function() {
-      expect(getWeeks()).toEqual(['34', '35', '36', '37', '38', '39']);
+      expect(getWeeks()).toEqual(['35', '36', '37', '38', '39', '40']);
     });
 
     it('value is correct', function() {
@@ -2030,6 +2030,77 @@ describe('datepicker directive', function () {
 
       expect($rootScope.date.type).toEqual('date');
       expect(new Date($rootScope.date.date)).toEqual(new Date('April 15, 2015 00:00:00'));
+    });
+  });
+
+  describe('thurdays determine week count', function() {
+
+    beforeEach(inject(function() {
+      $rootScope.date = new Date('June 07, 2014');
+    }));
+
+    it('with the default starting day (sunday)', function() {
+      element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
+      $rootScope.$digest();
+
+      expect(getWeeks()).toEqual(['23', '24', '25', '26', '27', '28']);
+    });
+
+    describe('when starting date', function() {
+      it('is monday', function() {
+        element = $compile('<datepicker ng-model="date" starting-day="1"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(getWeeks()).toEqual(['22', '23', '24', '25', '26', '27']);
+      });
+
+      it('is thursday', function() {
+        element = $compile('<datepicker ng-model="date" starting-day="4"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(getWeeks()).toEqual(['22', '23', '24', '25', '26', '27']);
+      });
+
+      it('is saturday', function() {
+        element = $compile('<datepicker ng-model="date" starting-day="6"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(getWeeks()).toEqual(['23', '24', '25', '26', '27', '28']);
+      });
+    });
+
+    describe('first week in january', function() {
+      beforeEach(inject(function() {
+      }));
+
+      it('in current year', function() {
+        $rootScope.date = new Date('January 07, 2014');
+        element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(getWeeks()).toEqual(['1', '2', '3', '4', '5', '6']);
+      });
+
+      it('in last year', function() {
+        $rootScope.date = new Date('January 07, 2010');
+        element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(getWeeks()).toEqual(['53', '1', '2', '3', '4', '5']);
+      });
+    });
+
+    describe('last week(s) in december', function() {
+      beforeEach(inject(function() {
+       $rootScope.date = new Date('December 07, 2014');
+      }));
+
+      it('in next year', function() {
+         element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(getWeeks()).toEqual(['49', '50', '51', '52', '1', '2']);
+      });
     });
   });
 });
