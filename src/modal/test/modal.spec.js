@@ -1,4 +1,4 @@
-ddescribe('$modal', function () {
+describe('$modal', function () {
   var $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $modal, $modalProvider;
 
