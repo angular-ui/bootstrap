@@ -17,7 +17,8 @@
     "grunt-karma": "~0.4.4",
     "node-markdown": "0.1.1",
     "semver": "~2.2.0",
-    "shelljs": "~0.2.0"
+    "shelljs": "~0.2.0",
+    "grunt-ddescribe-iit": "0.0.4"
   },
   "license": "MIT"
 }
