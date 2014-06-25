@@ -113,6 +113,10 @@ angular.module('ui.bootstrap.dateparser', [])
   // Check if date is valid for specific month (and year for February).
   // Month: 0 = Jan, 1 = Feb, etc
   function isValid(year, month, date) {
+    if (date < 1) {
+      return false;
+    }
+
     if ( month === 1 && date > 28) {
         return date === 29 && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0);
     }
