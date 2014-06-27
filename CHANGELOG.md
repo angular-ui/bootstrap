@@ -215,6 +215,10 @@ Revert breaking change in **dropdown** ([1a998c4](http://github.com/angular-ui/b
 `min` attribute has been renamed to `min-date`
 `max` attribute has been renamed to `max-date`
 
+- **dropdown:**
+
+ Elements with the `dropdown-toggle` directive must have a parent element with the `dropdown` directive.
+
 - **pagination:**
 
  Both `pagination` and `pager` are now integrated with `ngModelController`.
