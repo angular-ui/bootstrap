@@ -51,6 +51,20 @@ describe('tooltip directive', function () {
       expect(fragment).not.toHaveOpenTooltips();
     });
 
+    it('should close the tooltip when any part of the body of the page is clicked', function() {
+      var fragment = compileTooltip('<span tooltip="tooltip text" tooltip-trigger="click">Trigger here</span>');
+
+      $document.find('body').append(fragment);
+      fragment.find('span').trigger( 'click' );
+      expect(fragment).toHaveOpenTooltips();
+
+      fragment.trigger( 'click' );
+      $timeout.flush();
+      expect(fragment).not.toHaveOpenTooltips();
+
+      fragment.remove();
+    });
+
     it('should not show a tooltip when its content is empty', function () {
       var fragment = compileTooltip('<span tooltip=""></span>');
       fragment.find('span').trigger( 'mouseenter' );
