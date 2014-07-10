@@ -510,6 +510,10 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       if (attrs.customClass){
         datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');
       }
+      if (attrs.initDate) {
+        scope.initDate = scope.$parent.$eval(attrs.initDate);
+        datepickerEl.attr('init-date', 'initDate');
+      }
 
       function parseDate(viewValue) {
         if (angular.isNumber(viewValue)) {
