@@ -25,6 +25,15 @@ describe('modal window', function() {
     expect(windowEl).toHaveClass('foo');
   });
 
+  it('should support window top class', function () {
+    $rootScope.animate = false;
+    var windowEl = $compile('<div modal-window animate="animate" window-top-class="test foo">content</div>')($rootScope);
+    $rootScope.$digest();
+
+    expect(windowEl).toHaveClass('test');
+    expect(windowEl).toHaveClass('foo');
+  });
+
   it('should support custom template url', inject(function($templateCache) {
     $templateCache.put('window.html', '<div class="mywindow" ng-transclude></div>');
 

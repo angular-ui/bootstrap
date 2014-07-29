@@ -773,6 +773,17 @@ describe('$modal', function () {
       });
     });
 
+    describe('top window class', function () {
+      it('should support top class option', function () {
+        open({
+          template: '<div>With custom window top class</div>',
+          windowTopClass: 'top-class'
+        });
+
+        expect($document.find('div.modal')).toHaveClass('top-class');
+      });
+    });
+
     describe('size', function() {
       it('should support creating small modal dialogs', function() {
         open({
@@ -805,7 +816,7 @@ describe('$modal', function () {
     describe('animation', function() {
       it('should have animation fade classes by default', function() {
         open({
-          template: '<div>Small modal dialog</div>',
+          template: '<div>Small modal dialog</div>'
         });
 
         expect($document.find('.modal')).toHaveClass('fade');
@@ -1078,6 +1089,32 @@ describe('$modal', function () {
       permute(3, function(a) { test(a.map(function(x, i) { return {reject:x}; })); });
       permute(3, function(a) { test(a.map(function(x, i) { return i === 0 ? {reject:x} : x; })); });
       permute(3, function(a) { test(a.map(function(x, i) { return i === 1 ? {reject:x} : x; })); });
+    });
+
+    it('should have top class only on top window', function () {
+      var modal1 = open({template: '<div>Content1</div>', windowClass: 'modal1', windowTopClass: 'modal-top'});
+      expect($document.find('div.modal1')).toHaveClass('modal-top');
+      expect($document).toHaveModalsOpen(1);
+
+      var modal2 = open({template: '<div>Content1</div>', windowClass: 'modal2', windowTopClass: 'modal-top'});
+      expect($document.find('div.modal1')).not.toHaveClass('modal-top');
+      expect($document.find('div.modal2')).toHaveClass('modal-top');
+      expect($document).toHaveModalsOpen(2);
+
+      var modal3 = open({template: '<div>Content1</div>', windowClass: 'modal3', windowTopClass: 'modal-top'});
+      expect($document.find('div.modal1')).not.toHaveClass('modal-top');
+      expect($document.find('div.modal2')).not.toHaveClass('modal-top');
+      expect($document.find('div.modal3')).toHaveClass('modal-top');
+      expect($document).toHaveModalsOpen(3);
+
+      dismiss(modal2);
+      expect($document.find('div.modal1')).not.toHaveClass('modal-top');
+      expect($document.find('div.modal3')).toHaveClass('modal-top');
+      expect($document).toHaveModalsOpen(2);
+
+      close(modal3);
+      expect($document.find('div.modal1')).toHaveClass('modal-top');
+      expect($document).toHaveModalsOpen(1);
     });
   });
 
