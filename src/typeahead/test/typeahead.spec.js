@@ -70,7 +70,7 @@ describe('typeahead tests', function () {
         this.message = function () {
           return 'Expected "' + angular.mock.dump(typeaheadEl) + '" to be closed.';
         };
-        return typeaheadEl.length === 0;
+        return typeaheadEl.hasClass('ng-hide') === true;
 
       }, toBeOpenWithActive: function (noOfMatches, activeIdx) {
 
@@ -80,7 +80,7 @@ describe('typeahead tests', function () {
         this.message = function () {
           return 'Expected "' + this.actual + '" to be opened.';
         };
-        return typeaheadEl.length === 1 && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
+        return typeaheadEl.length === 1 && typeaheadEl.hasClass('ng-hide') === false && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
       }
     });
   });
