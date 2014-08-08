@@ -377,7 +377,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                 });
 
                 ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
-                if (modalOptions.controller) {
+                if (modalOptions.controllerAs) {
                   modalScope[modalOptions.controllerAs] = ctrlInstance;
                 }
               }
