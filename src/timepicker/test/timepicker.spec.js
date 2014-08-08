@@ -37,7 +37,7 @@ describe('timepicker directive', function () {
   }
 
   function getArrow(isUp, tdIndex) {
-    return element.find('tr').eq( (isUp) ? 0 : 2 ).find('td').eq( tdIndex ).find('a').eq(0);
+    return element.find('tr').eq( (isUp) ? 0 : 2 ).find('td').eq( tdIndex ).find('button').eq(0);
   }
 
   function getHoursButton(isUp) {
@@ -49,7 +49,7 @@ describe('timepicker directive', function () {
   }
 
   function getMeridianButton() {
-    return element.find('button').eq(0);
+    return element.find('tr:nth-child(2) button').eq(0);
   }
 
   function doClick(button, n) {
@@ -93,7 +93,7 @@ describe('timepicker directive', function () {
   it('contains three row & three input elements', function() {
     expect(element.find('tr').length).toBe(3);
     expect(element.find('input').length).toBe(2);
-    expect(element.find('button').length).toBe(1);
+    expect(element.find('button').length).toBe(5);
   });
 
   it('has initially the correct time & meridian', function() {
@@ -156,9 +156,12 @@ describe('timepicker directive', function () {
     expect(getModelState()).toEqual([14, 39]);
   });
 
-  it('meridian button has correct type', function() {
-    var button = getMeridianButton();
-    expect(button.attr('type')).toBe('button');
+  it('all buttons has correct type', function() {
+    var btns = element.find('button[type=button]');
+
+    for (var a=0; a<btns.length; a++) {
+      expect(btns.eq(a).attr('type')).toBe('button');
+    }
   });
 
   it('toggles meridian when button is clicked', function() {
@@ -619,6 +622,30 @@ describe('timepicker directive', function () {
       doClick(upMinutes);
       expect(getTimeState()).toEqual(['06', '20', 'PM']);
       expect(getModelState()).toEqual([18, 20]);
+    });
+
+    describe('`ng-disabled` attribute', function() {
+      var initialTime;
+
+      beforeEach(function() {
+        $rootScope.disabled = true;
+        $rootScope.time = newTime(14, 0);
+        initialTime = angular.copy($rootScope.time);
+        element = $compile('<timepicker ng-model="time" hour-step="hstep" minute-step="mstep" ng-disabled="disabled"></timepicker>')($rootScope);
+        $rootScope.$digest();
+      });
+
+      it('should not allow interact when disabled', function() {
+        expect(element.find('input[disabled]').length).toBe(2);
+        expect(element.find('button[disabled]').length).toBe(4);
+      });
+
+      it('should allow interact after enabling', function() {
+        $rootScope.disabled = false;
+        $rootScope.$digest();
+        expect(element.find('input[disabled]').length).toBe(0);
+        expect(element.find('button[disabled]').length).toBe(0);
+      });
     });
 
   });
