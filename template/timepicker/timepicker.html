@@ -1,25 +1,25 @@
 <table>
 	<tbody>
 		<tr class="text-center">
-			<td><a ng-click="incrementHours()" class="btn btn-link"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
+			<td><button type="button" ng-click="incrementHours()" class="btn btn-link" ng-disabled="disabled" tabindex="-1"><span class="glyphicon glyphicon-chevron-up"></span></button></td>
 			<td>&nbsp;</td>
-			<td><a ng-click="incrementMinutes()" class="btn btn-link"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
+			<td><button type="button" ng-click="incrementMinutes()" class="btn btn-link" ng-disabled="disabled" tabindex="-1"><span class="glyphicon glyphicon-chevron-up"></span></button></td>
 			<td ng-show="showMeridian"></td>
 		</tr>
 		<tr>
 			<td class="form-group" ng-class="{'has-error': invalidHours}">
-				<input style="width:50px;" type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2">
+				<input style="width:50px;" type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" ng-disabled="disabled" maxlength="2">
 			</td>
 			<td>:</td>
 			<td class="form-group" ng-class="{'has-error': invalidMinutes}">
-				<input style="width:50px;" type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2">
+				<input style="width:50px;" type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" ng-disabled="disabled" maxlength="2">
 			</td>
 			<td ng-show="showMeridian"><button type="button" class="btn btn-default text-center" ng-click="toggleMeridian()">{{meridian}}</button></td>
 		</tr>
 		<tr class="text-center">
-			<td><a ng-click="decrementHours()" class="btn btn-link"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+			<td><button type="button" ng-click="decrementHours()" class="btn btn-link" ng-disabled="disabled" tabindex="-1"><span class="glyphicon glyphicon-chevron-down"></span></button></td>
 			<td>&nbsp;</td>
-			<td><a ng-click="decrementMinutes()" class="btn btn-link"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+			<td><button type="button" ng-click="decrementMinutes()" class="btn btn-link" ng-disabled="disabled" tabindex="-1"><span class="glyphicon glyphicon-chevron-down"></span></button></td>
 			<td ng-show="showMeridian"></td>
 		</tr>
 	</tbody>
