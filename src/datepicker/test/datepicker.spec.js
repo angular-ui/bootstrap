@@ -955,6 +955,31 @@ describe('datepicker directive', function () {
     });
   });
 
+  describe('custom-class expression', function () {
+    beforeEach(function() {
+      $rootScope.customClassHandler = jasmine.createSpy('customClassHandler');
+      element = $compile('<datepicker ng-model="date" custom-class="customClassHandler(date, mode)"></datepicker>')($rootScope);
+      $rootScope.$digest();
+    });
+
+    it('executes the customClass expression for each visible day plus one for validation', function() {
+      expect($rootScope.customClassHandler.calls.length).toEqual(42);
+    });
+
+    it('executes the customClass expression for each visible month plus one for validation', function() {
+      $rootScope.customClassHandler.reset();
+      clickTitleButton();
+      expect($rootScope.customClassHandler.calls.length).toEqual(12);
+    });
+
+    it('executes the customClass expression for each visible year plus one for validation', function() {
+      clickTitleButton();
+      $rootScope.customClassHandler.reset();
+      clickTitleButton();
+      expect($rootScope.customClassHandler.calls.length).toEqual(20);
+    });
+  });
+
   describe('formatting', function () {
     beforeEach(function() {
       $rootScope.dayTitle = 'MMMM, yy';

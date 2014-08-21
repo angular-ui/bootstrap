@@ -28,6 +28,10 @@ All settings can be provided as attributes in the `datepicker` or globally confi
  * `date-disabled (date, mode)`
  	_(Default: null)_ :
  	An optional expression to disable visible options based on passing date and current mode _(day|month|year)_.
+ 	
+ * `custom-class (date, mode)`
+ 	_(Default: null)_ :
+ 	An optional expression to add classes based on passing date and current mode _(day|month|year)_. 	
 
  * `show-weeks`
  	_(Defaults: true)_ :
