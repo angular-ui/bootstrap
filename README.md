@@ -137,8 +137,8 @@ html2js: {
     base: '.',
     module: 'ui-templates',
     rename: function (modulePath) {
-      var moduleName = modulePath.replace('app/views/partials/ui-bootstrap-tpls/', '').replace('.html', '');
-      return 'template' + '/' + moduleName + '.html';
+      var moduleName = modulePath.replace('app/views/partials/ui-bootstrap-tpls/', '');
+      return 'template/' + moduleName;
     }
   },
   main: {
