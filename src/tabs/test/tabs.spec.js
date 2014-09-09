@@ -566,15 +566,15 @@ describe('tabs', function() {
     }));
   });
 
-  describe('disabled', function() {
+  describe('disable', function() {
     beforeEach(inject(function($compile, $rootScope) {
       scope = $rootScope.$new();
 
-      function makeTab(disabled) {
+      function makeTab(disable) {
         return {
           active: false,
           select: jasmine.createSpy(),
-          disabled: disabled
+          disable: disable
         };
       }
       scope.tabs = [
@@ -582,7 +582,7 @@ describe('tabs', function() {
       ];
       elm = $compile([
         '<tabset>',
-        '  <tab ng-repeat="t in tabs" active="t.active" select="t.select()" disabled="t.disabled">',
+        '  <tab ng-repeat="t in tabs" active="t.active" select="t.select()" disable="t.disable">',
         '    <tab-heading><b>heading</b> {{index}}</tab-heading>',
         '    content {{$index}}',
         '  </tab>',
@@ -596,7 +596,7 @@ describe('tabs', function() {
       angular.forEach(scope.tabs, function(tab, i) {
         if (activeTab === tab) {
           expect(tab.active).toBe(true);
-          expect(tab.select.calls.count()).toBe( (tab.disabled) ? 0 : 1 );
+          expect(tab.select.calls.count()).toBe( (tab.disable) ? 0 : 1 );
           expect(_titles.eq(i)).toHaveClass('active');
           expect(contents().eq(i).text().trim()).toBe('content ' + i);
           expect(contents().eq(i)).toHaveClass('active');
@@ -617,11 +617,11 @@ describe('tabs', function() {
 
     it('should toggle between states', function() {
       expect(titles().eq(3)).toHaveClass('disabled');
-      scope.$apply('tabs[3].disabled = false');
+      scope.$apply('tabs[3].disable = false');
       expect(titles().eq(3)).not.toHaveClass('disabled');
 
       expect(titles().eq(2)).not.toHaveClass('disabled');
-      scope.$apply('tabs[2].disabled = true');
+      scope.$apply('tabs[2].disable = true');
       expect(titles().eq(2)).toHaveClass('disabled');
     });
   });

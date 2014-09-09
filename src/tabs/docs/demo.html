@@ -11,7 +11,7 @@
 
   <tabset>
     <tab heading="Static title">Static content</tab>
-    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
       {{tab.content}}
     </tab>
     <tab select="alertMe()">
