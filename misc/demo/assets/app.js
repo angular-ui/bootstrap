@@ -154,11 +154,38 @@ function SelectModulesCtrl($scope, $modalInstance, modules, buildFilesService) {
 
       var jsTplFile = createWithTplFile(srcModuleFullNames, srcJsContent, tplModuleNames, tplJsContent);
 
+      var cssContent = srcModules
+      .map(function (module) {
+        return module.css;
+      })
+      .filter(function (css) {
+        return css;
+      })
+      .join('\n')
+      ;
+
+      var cssJsContent = srcModules
+      .map(function (module) {
+        return module.cssJs;
+      })
+      .filter(function (cssJs) {
+        return cssJs;
+      })
+      .join('\n')
+      ;
+
+      var footer = cssJsContent;
+
       var zip = new JSZip();
-      zip.file('ui-bootstrap-custom-' + version + '.js', rawFiles.banner + jsFile);
-      zip.file('ui-bootstrap-custom-' + version + '.min.js', rawFiles.banner + uglify(jsFile));
-      zip.file('ui-bootstrap-custom-tpls-' + version + '.js', rawFiles.banner + jsTplFile);
-      zip.file('ui-bootstrap-custom-tpls-' + version + '.min.js', rawFiles.banner + uglify(jsTplFile));
+      zip.file('ui-bootstrap-custom-' + version + '.js', rawFiles.banner + jsFile + footer);
+      zip.file('ui-bootstrap-custom-' + version + '.min.js', rawFiles.banner + uglify(jsFile + footer));
+      zip.file('ui-bootstrap-custom-tpls-' + version + '.js', rawFiles.banner + jsTplFile + footer);
+      zip.file('ui-bootstrap-custom-tpls-' + version + '.min.js', rawFiles.banner + uglify(jsTplFile + footer));
+      zip.file('ui-bootstrap-custom-tpls-' + version + '.min.js', rawFiles.banner + uglify(jsTplFile + footer));
+
+      if (cssContent) {
+        zip.file('ui-bootstrap-custom-' + version + '-csp.css', rawFiles.cssBanner + cssContent);
+      }
 
       saveAs(zip.generate({type: 'blob'}), 'ui-bootstrap-custom-build.zip');
     }

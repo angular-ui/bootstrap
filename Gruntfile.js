@@ -1,5 +1,6 @@
 /* jshint node: true */
 var markdown = require('node-markdown').Markdown;
+var fs = require('fs');
 
 module.exports = function(grunt) {
 
@@ -29,6 +30,9 @@ module.exports = function(grunt) {
       modules: 'angular.module("ui.bootstrap", [<%= srcModules %>]);',
       tplmodules: 'angular.module("ui.bootstrap.tpls", [<%= tplModules %>]);',
       all: 'angular.module("ui.bootstrap", ["ui.bootstrap.tpls", <%= srcModules %>]);',
+      cssInclude: '',
+      cssFileBanner: '/* Include this file in your html if you are using the CSP mode. */\n\n',
+      cssFileDest: '<%= dist %>/<%= filename %>-<%= pkg.version %>-csp.css',
       banner: ['/*',
                ' * <%= pkg.name %>',
                ' * <%= pkg.homepage %>\n',
@@ -54,14 +58,16 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         options: {
-          banner: '<%= meta.banner %><%= meta.modules %>\n'
+          banner: '<%= meta.banner %><%= meta.modules %>\n',
+          footer: '<%= meta.cssInclude %>'
         },
         src: [], //src filled in by build task
         dest: '<%= dist %>/<%= filename %>-<%= pkg.version %>.js'
       },
       dist_tpls: {
         options: {
-          banner: '<%= meta.banner %><%= meta.all %>\n<%= meta.tplmodules %>\n'
+          banner: '<%= meta.banner %><%= meta.all %>\n<%= meta.tplmodules %>\n',
+          footer: '<%= meta.cssInclude %>'
         },
         src: [], //src filled in by build task
         dest: '<%= dist %>/<%= filename %>-tpls-<%= pkg.version %>.js'
@@ -245,6 +251,7 @@ module.exports = function(grunt) {
       moduleName: enquote('ui.bootstrap.' + name),
       displayName: ucwords(breakup(name, ' ')),
       srcFiles: grunt.file.expand('src/'+name+'/*.js'),
+      cssFiles: grunt.file.expand('src/'+name+'/*.css'),
       tplFiles: grunt.file.expand('template/'+name+'/*.html'),
       tpljsFiles: grunt.file.expand('template/'+name+'/*.html.js'),
       tplModules: grunt.file.expand('template/'+name+'/*.html').map(enquote),
@@ -258,6 +265,17 @@ module.exports = function(grunt) {
           .map(grunt.file.read).join('\n')
       }
     };
+
+    var styles = {
+      css: [],
+      js: []
+    };
+    module.cssFiles.forEach(processCSS.bind(null, styles, true));
+    if (styles.css.length) {
+      module.css = styles.css.join('\n');
+      module.cssJs = styles.js.join('\n');
+    }
+
     module.dependencies.forEach(findModule);
     grunt.config('modules', grunt.config('modules').concat(module));
   }
@@ -321,6 +339,17 @@ module.exports = function(grunt) {
       })
     );
 
+    var cssStrings = _.flatten(_.compact(_.pluck(modules, 'css')));
+    var cssJsStrings = _.flatten(_.compact(_.pluck(modules, 'cssJs')));
+    if (cssStrings.length) {
+      grunt.config('meta.cssInclude', cssJsStrings.join('\n'));
+
+      grunt.file.write(grunt.config('meta.cssFileDest'), grunt.config('meta.cssFileBanner') +
+                       cssStrings.join('\n'));
+
+      grunt.log.writeln('File ' + grunt.config('meta.cssFileDest') + ' created');
+    }
+
     var moduleFileMapping = _.clone(modules, true);
     moduleFileMapping.forEach(function (module) {
       delete module.docs;
@@ -373,8 +402,39 @@ module.exports = function(grunt) {
     var genRawFilesJs = require('./misc/raw-files-generator');
 
     genRawFilesJs(grunt, jsFilename, _.flatten(grunt.config('concat.dist_tpls.src')),
-                  grunt.config('meta.banner'));
+                  grunt.config('meta.banner'), grunt.config('meta.cssFileBanner'));
   });
+
+  /**
+   * Logic from AngularJS
+   * https://github.com/angular/angular.js/blob/36831eccd1da37c089f2141a2c073a6db69f3e1d/lib/grunt/utils.js#L121-L145
+   */
+  function processCSS(state, minify, file) {
+    /* jshint quotmark: false */
+    var css = fs.readFileSync(file).toString(),
+      js;
+    state.css.push(css);
+
+    if(minify){
+      css = css
+        .replace(/\r?\n/g, '')
+        .replace(/\/\*.*?\*\//g, '')
+        .replace(/:\s+/g, ':')
+        .replace(/\s*\{\s*/g, '{')
+        .replace(/\s*\}\s*/g, '}')
+        .replace(/\s*\,\s*/g, ',')
+        .replace(/\s*\;\s*/g, ';');
+    }
+    //escape for js
+    css = css
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/\r?\n/g, '\\n');
+    js = "!angular.$$csp() && angular.element(document).find('head').prepend('<style type=\"text/css\">" + css + "</style>');";
+    state.js.push(js);
+
+    return state;
+  }
 
   function setVersion(type, suffix) {
     var file = 'package.json';
