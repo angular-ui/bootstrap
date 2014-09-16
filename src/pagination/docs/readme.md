@@ -18,7 +18,7 @@ A lightweight pagination directive that is focused on ... providing pagination &
   <small class="badge">C</small>
   _(Default: `true`)_ -
   Whether to display Previous / Next buttons.
-  
+
 * `first-text`
   <small class="badge">C</small>
   _(Default: `First`)_ -
@@ -41,13 +41,13 @@ A lightweight pagination directive that is focused on ... providing pagination &
   <small class="badge">C</small>
   _(Default: `Last`)_ -
   Text for Last button.
-  
+
 * `max-size`
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `null`)_ -
   Limit number for pagination size.
-  
+
 * `next-text`
   <small class="badge">C</small>
   _(Default: `Next`)_ -
@@ -56,7 +56,7 @@ A lightweight pagination directive that is focused on ... providing pagination &
 * `ng-change`
   <small class="badge">$</small> -
   This can be used to call a function whenever the page changes.
-  
+
 * `ng-disabled`
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
@@ -74,6 +74,9 @@ A lightweight pagination directive that is focused on ... providing pagination &
   _(Default: `angular.noop`)_ -
   An optional expression assigned the total number of pages to display.
 
+* `page-label`-
+  An optional expression to override the page label based on passing the current page indexes. Supports page number with `$page` in the template.
+
 * `previous-text`
   <small class="badge">C</small>
   _(Default: `Previous`)_ -
@@ -88,7 +91,7 @@ A lightweight pagination directive that is focused on ... providing pagination &
 * `template-url`
   _(Default: `uib/template/pagination/pagination.html`)_ -
   Override the template for the component with a custom provided template
-  
+
 * `total-items`
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i> -

@@ -876,7 +876,10 @@ describe('pagination directive', function() {
 
   describe('override configuration from attributes', function() {
     beforeEach(function() {
-      element = $compile('<uib-pagination boundary-links="true" first-text="<<" previous-text="<" next-text=">" last-text=">>" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
+      $rootScope.pageLabel = function(id) {
+          return 'test_'+ id;
+      };
+      element = $compile('<uib-pagination boundary-links="true" page-label="pageLabel($page)" first-text="<<" previous-text="<" next-text=">" last-text=">>" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -889,6 +892,13 @@ describe('pagination directive', function() {
       expect(getPaginationEl(1).text()).toBe('<');
       expect(getPaginationEl(-2).text()).toBe('>');
       expect(getPaginationEl(-1).text()).toBe('>>');
+    });
+
+    it('has the label of the page as text in each page item', function() {
+      for (var i = 1; i <= 5; i++) {
+        // +1 because the first element is a <
+        expect(getPaginationEl(i+1).text()).toEqual('test_'+i);
+      }
     });
   });
 
