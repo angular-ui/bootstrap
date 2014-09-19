@@ -8,14 +8,6 @@ describe('$modal', function () {
     element.trigger(e);
   };
 
-  var waitForBackdropAnimation = function () {
-    inject(function ($transition) {
-      if ($transition.transitionEndEventName) {
-        $timeout.flush();
-      }
-    });
-  };
-
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('template/modal/backdrop.html'));
   beforeEach(module('template/modal/window.html'));
@@ -106,16 +98,20 @@ describe('$modal', function () {
     return modal;
   }
 
-  function close(modal, result) {
+  function close(modal, result, noFlush) {
     var closed = modal.close(result);
-    $timeout.flush();
+    if (!noFlush) {
+      $timeout.flush();
+    }
     $rootScope.$digest();
     return closed;
   }
 
-  function dismiss(modal, reason) {
+  function dismiss(modal, reason, noFlush) {
     var closed = modal.dismiss(reason);
-    $timeout.flush();
+    if (!noFlush) {
+      $timeout.flush();
+    }
     $rootScope.$digest();
     return closed;
   }
@@ -134,7 +130,6 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(0);
 
-      waitForBackdropAnimation();
       expect($document).not.toHaveBackdrop();
     });
 
@@ -150,7 +145,7 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(0);
 
-      dismiss(modal, 'closing in test');
+      dismiss(modal, 'closing in test', true);
     });
 
     it('should not throw an exception on a second close', function () {
@@ -165,7 +160,7 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(0);
 
-      close(modal, 'closing in test');
+      close(modal, 'closing in test', true);
     });
 
     it('should open a modal from templateUrl', function () {
@@ -181,7 +176,6 @@ describe('$modal', function () {
 
       expect($document).toHaveModalsOpen(0);
 
-      waitForBackdropAnimation();
       expect($document).not.toHaveBackdrop();
     });
 
@@ -243,8 +237,6 @@ describe('$modal', function () {
     it('should focus on the element that has autofocus attribute when the modal is open/reopen', function () {
       function openAndCloseModalWithAutofocusElement() {
         var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'});
-
-        waitForBackdropAnimation();
 
         expect(angular.element('#auto-focus-element')).toHaveFocus();
 
@@ -505,7 +497,6 @@ describe('$modal', function () {
         expect(backdropEl).toHaveClass('in');
 
         dismiss(modal);
-        waitForBackdropAnimation();
 
         modal = open({ template: '<div>With backdrop</div>' });
         backdropEl = $document.find('body > div.modal-backdrop');
