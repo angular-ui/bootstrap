@@ -9,6 +9,7 @@ The `$modal` service has only one method: `open(options)` where available option
 * `controller` - a controller for a modal instance - it can initialize scope used by modal. Accepts the "controller-as" syntax in the form 'SomeCtrl as myctrl'; can be injected with `$modalInstance`
 * `controllerAs` - an alternative to the controller-as syntax, matching the API of directive definitions. Requires the `controller` option to be provided as well
 * `resolve` - members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property for AngularJS routes
+* `animation` - set to false to disable animations on new modal/backdrop. Does not toggle animations for modals/backdrops that are already displayed.
 * `backdrop` - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), `'static'` - backdrop is present but modal window is not closed when clicking outside of the modal window.
 * `keyboard` - indicates whether the dialog should be closable by hitting the ESC key, defaults to true
 * `backdropClass` - additional CSS class(es) to be added to a modal backdrop template
@@ -35,3 +36,6 @@ Finally, a `modal.closing` event is broadcast to the modal scope before the moda
 preventDefault on the event, then the modal will remain open.  The $close and $dismiss methods return true if the 
 event was allowed.  The event itself includes a parameter for the result/reason and a boolean parameter that indicates
 whether the modal is being closed (true) or dismissed.
+
+The `modalConfig` exposes the following global option for all modals/backdrops:
+

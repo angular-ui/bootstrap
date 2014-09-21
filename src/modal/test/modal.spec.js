@@ -558,6 +558,30 @@ describe('$modal', function () {
         expect($document.find('div.modal-dialog')).toHaveClass('modal-custom');
       });
     });
+
+    describe('animation', function () {
+
+      it('should have animation fade classes by default', function () {
+        open({
+          template: '<div>Small modal dialog</div>',
+        });
+
+        expect($document.find('.modal')).toHaveClass('fade');
+        expect($document.find('.modal-backdrop')).toHaveClass('fade');
+      });
+
+      it('should not have fade classes if animation false', function () {
+        open({
+          template: '<div>Small modal dialog</div>',
+          animation: false
+        });
+
+        expect($document.find('.modal')).not.toHaveClass('fade');
+        expect($document.find('.modal-backdrop')).not.toHaveClass('fade');
+      });
+
+    });
+
   });
 
   describe('multiple modals', function () {

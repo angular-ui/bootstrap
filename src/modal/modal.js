@@ -62,17 +62,20 @@ angular.module('ui.bootstrap.modal', [])
       restrict: 'EA',
       replace: true,
       templateUrl: 'template/modal/backdrop.html',
-      link: function (scope, element, attrs) {
-        scope.backdropClass = attrs.backdropClass || '';
-
-        scope.animate = false;
-
-        //trigger CSS transitions
-        $timeout(function () {
-          scope.animate = true;
-        });
+      compile: function (tElement, tAttrs) {
+        tElement.addClass(tAttrs.backdropClass);
+        return linkFn;
       }
     };
+
+    function linkFn(scope, element, attrs) {
+      scope.animate = false;
+
+      //trigger CSS transitions
+      $timeout(function () {
+        scope.animate = true;
+      });
+    }
   }])
 
   .directive('modalWindow', ['$modalStack', '$q', function ($modalStack, $q) {
@@ -144,6 +147,17 @@ angular.module('ui.bootstrap.modal', [])
     };
   }])
 
+  .directive('modalAnimationClass', [
+    function () {
+      return {
+        compile: function (tElement, tAttrs) {
+          if (tAttrs.modalAnimation) {
+            tElement.addClass(tAttrs.modalAnimationClass);
+          }
+        }
+      };
+    }])
+
   .directive('modalTransclude', function () {
     return {
       link: function($scope, $element, $attrs, controller, $transclude) {
@@ -212,7 +226,7 @@ angular.module('ui.bootstrap.modal', [])
         // Closing animation
         scope.animate = false;
 
-        if ($animate.enabled()) {
+        if (domEl.attr('modal-animation') && $animate.enabled()) {
           // transition out
           domEl.one('$animate:close', function closeFn() {
             $rootScope.$evalAsync(afterAnimating);
@@ -268,6 +282,9 @@ angular.module('ui.bootstrap.modal', [])
           backdropScope.index = currBackdropIndex;
           var angularBackgroundDomEl = angular.element('<div modal-backdrop></div>');
           angularBackgroundDomEl.attr('backdrop-class', modal.backdropClass);
+          if (modal.animation) {
+            angularBackgroundDomEl.attr('modal-animation', 'true');
+          }
           backdropDomEl = $compile(angularBackgroundDomEl)(backdropScope);
           body.append(backdropDomEl);
         }
@@ -280,6 +297,9 @@ angular.module('ui.bootstrap.modal', [])
           'index': openedWindows.length() - 1,
           'animate': 'animate'
         }).html(modal.content);
+        if (modal.animation) {
+          angularDomEl.attr('modal-animation', 'true');
+        }
 
         var modalDomEl = $compile(angularDomEl)(modal.scope);
         openedWindows.top().value.modalDomEl = modalDomEl;
@@ -336,6 +356,7 @@ angular.module('ui.bootstrap.modal', [])
 
     var $modalProvider = {
       options: {
+        animation: true,
         backdrop: true, //can be also false or 'static'
         keyboard: true
       },
@@ -422,6 +443,7 @@ angular.module('ui.bootstrap.modal', [])
                 deferred: modalResultDeferred,
                 renderDeferred: modalRenderDeferred,
                 content: tplAndVars[0],
+                animation: modalOptions.animation,
                 backdrop: modalOptions.backdrop,
                 keyboard: modalOptions.keyboard,
                 backdropClass: modalOptions.backdropClass,
