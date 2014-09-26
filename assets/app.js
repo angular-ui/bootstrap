@@ -1,4 +1,4 @@
-angular.module('bootstrapDemoApp', ['ui.bootstrap', 'plunker', 'ngTouch'], function($httpProvider){
+angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch'], function($httpProvider){
   FastClick.attach(document.body);
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }).run(['$location', function($location){
@@ -89,4 +89,4 @@ var DownloadCtrl = function($scope, $modalInstance) {
   $scope.cancel = function () {
     $modalInstance.dismiss();
   };
-}
+};
