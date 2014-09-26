@@ -1,3 +1,7 @@
+# 0.11.2 (2014-09-26)
+
+Revert breaking change in **dropdown** ([c7829b9](http://github.com/angular-ui/bootstrap/commit/c7829b9))
+
 # 0.11.1 (2014-09-26)
 
 ## Features
