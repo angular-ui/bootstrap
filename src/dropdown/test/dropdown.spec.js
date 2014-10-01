@@ -168,6 +168,33 @@ describe('dropdownToggle', function() {
     });
   });
 
+  describe('integration with $location URL rewriting', function() {
+    function dropdown() {
+
+      // Simulate URL rewriting behavior
+      $document.on('click', 'a[href="#something"]', function () {
+        $rootScope.$broadcast('$locationChangeSuccess');
+        $rootScope.$apply();
+      });
+
+      return $compile('<li dropdown><a href dropdown-toggle></a>' +
+        '<ul><li><a href="#something">Hello</a></li></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should close without errors on $location change', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+      var optionEl = element.find('ul > li').eq(0).find('a').eq(0);
+      optionEl.click();
+      expect(element.hasClass('open')).toBe(false);
+    });
+  });
+
   describe('without trigger', function() {
     beforeEach(function() {
       $rootScope.isopen = true;
