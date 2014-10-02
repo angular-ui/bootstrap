@@ -1,6 +1,6 @@
 # 0.11.2 (2014-09-26)
 
-Revert breaking change in **dropdown** ([c7829b9](http://github.com/angular-ui/bootstrap/commit/c7829b9))
+Revert breaking change in **dropdown** ([1a998c4](http://github.com/angular-ui/bootstrap/commit/1a998c4))
 
 # 0.11.1 (2014-09-26)
 
