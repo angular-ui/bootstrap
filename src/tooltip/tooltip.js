@@ -203,7 +203,10 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
 
             // Show the tooltip popup element.
             function show() {
-              popupTimeout = null;
+              if (popupTimeout) {
+                $timeout.cancel(popupTimeout);
+                popupTimeout = null;
+              }
 
               // If there is a pending remove transition, we must cancel it, lest the
               // tooltip be mysteriously removed.
