@@ -43,7 +43,11 @@ The typeahead directives provide several attributes:
 * `typeahead-min-length` <i class="glyphicon glyphicon-eye-open"></i>
    _(Defaults: 1)_ :
    Minimal no of characters that needs to be entered before typeahead kicks-in
-   
+
+* `typeahead-no-results` <i class="glyphicon glyphicon-eye-open"></i>
+   _(Defaults: angular.noop)_ :
+   Binding to a variable that indicates if no matching results were found
+
 * `typeahead-on-select($item, $model, $label)`
    _(Defaults: null)_ :
    A callback executed when a match is selected

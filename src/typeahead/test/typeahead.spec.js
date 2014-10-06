@@ -455,6 +455,40 @@ describe('typeahead tests', function () {
       expect($scope.result).toEqual('AL');
       expect(inputEl.val()).toEqual('AL');
     });
+
+    it('should bind no results indicator as true when no matches returned', inject(function ($timeout) {
+
+      $scope.isNoResults = false;
+      $scope.loadMatches = function (viewValue) {
+        return $timeout(function () {
+          return [];
+        }, 1000);
+      };
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in loadMatches()" typeahead-no-results="isNoResults"></div>');
+      changeInputValueTo(element, 'foo');
+
+      expect($scope.isNoResults).toBeFalsy();
+      $timeout.flush();
+      expect($scope.isNoResults).toBeTruthy();
+    }));
+
+    it('should bind no results indicator as false when matches are returned', inject(function ($timeout) {
+
+      $scope.isNoResults = false;
+      $scope.loadMatches = function (viewValue) {
+        return $timeout(function () {
+          return [viewValue];
+        }, 1000);
+      };
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in loadMatches()" typeahead-no-results="isNoResults"></div>');
+      changeInputValueTo(element, 'foo');
+
+      expect($scope.isNoResults).toBeFalsy();
+      $timeout.flush();
+      expect($scope.isNoResults).toBeFalsy();
+    }));
   });
   
   describe('select on exact match', function(){
