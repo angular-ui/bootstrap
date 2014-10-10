@@ -97,7 +97,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
           /**
            * Auto-focusing of a freshly-opened modal element causes any child elements
-           * with the autofocus attribute to loose focus. This is an issue on touch
+           * with the autofocus attribute to lose focus. This is an issue on touch
            * based devices which will show and then hide the onscreen keyboard.
            * Attempts to refocus the autofocus element via JavaScript will not reopen
            * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
