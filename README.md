@@ -26,6 +26,10 @@ Project files are also available through your favourite package manager:
 * **Bower**: `bower install angular-bootstrap`
 * **NuGet**: https://nuget.org/packages/Angular.UI.Bootstrap/
 
+## FAQ
+
+https://github.com/angular-ui/bootstrap/wiki/FAQ
+
 ## Supported browsers
 
 Directives from this repository are automatically tested with the following browsers:
