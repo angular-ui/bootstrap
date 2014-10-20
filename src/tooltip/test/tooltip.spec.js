@@ -386,7 +386,7 @@ describe('tooltipWithDifferentSymbols', function() {
       );
       $compile(elmBody)($rootScope);
       $rootScope.$apply();
-      elmInput = elmBody.find('input');
+      var elmInput = elmBody.find('input');
       elmInput.trigger('focus');
 
       expect( elmInput.next().find('div').next().html() ).toBe('My tooltip');
@@ -396,7 +396,7 @@ describe('tooltipWithDifferentSymbols', function() {
 });
 
 describe( 'tooltipHtmlUnsafe', function() {
-  var elm, elmBody, scope;
+  var elm, elmBody, elmScope, scope;
 
   // load the tooltip code
   beforeEach(module('ui.bootstrap.tooltip', function ( $tooltipProvider ) {
