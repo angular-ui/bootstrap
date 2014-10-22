@@ -322,6 +322,13 @@ module.exports = function(grunt) {
       })
     );
 
+    var moduleFileMapping = _.clone(modules, true);
+    moduleFileMapping.forEach(function (module) {
+      delete module.docs;
+    });
+
+    grunt.config('moduleFileMapping', moduleFileMapping);
+
     var srcFiles = _.pluck(modules, 'srcFiles');
     var tpljsFiles = _.pluck(modules, 'tpljsFiles');
     //Set the concat task to concatenate the given src modules
@@ -331,7 +338,7 @@ module.exports = function(grunt) {
     grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
                  .concat(srcFiles).concat(tpljsFiles));
 
-    grunt.task.run(['concat', 'uglify']);
+    grunt.task.run(['concat', 'uglify', 'makeModuleMappingFile', 'makeRawFilesJs']);
   });
 
   grunt.registerTask('test', 'Run tests on singleRun karma server', function () {
@@ -349,6 +356,25 @@ module.exports = function(grunt) {
       }
       grunt.task.run(this.args.length ? 'karma:jenkins' : 'karma:continuous');
     }
+  });
+
+  grunt.registerTask('makeModuleMappingFile', function () {
+    var _ = grunt.util._;
+    var moduleMappingJs = 'dist/assets/module-mapping.json';
+    var moduleMappings = grunt.config('moduleFileMapping');
+    var moduleMappingsMap = _.object(_.pluck(moduleMappings, 'name'), moduleMappings);
+    var jsContent = JSON.stringify(moduleMappingsMap);
+    grunt.file.write(moduleMappingJs, jsContent);
+    grunt.log.writeln('File ' + moduleMappingJs.cyan + ' created.');
+  });
+
+  grunt.registerTask('makeRawFilesJs', function () {
+    var _ = grunt.util._;
+    var jsFilename = 'dist/assets/raw-files.json';
+    var genRawFilesJs = require('./misc/raw-files-generator');
+
+    genRawFilesJs(grunt, jsFilename, _.flatten(grunt.config('concat.dist_tpls.src')),
+                  grunt.config('meta.banner'));
   });
 
   function setVersion(type, suffix) {
