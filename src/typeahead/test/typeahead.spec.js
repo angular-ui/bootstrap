@@ -80,7 +80,12 @@ describe('typeahead tests', function () {
         this.message = function () {
           return 'Expected "' + this.actual + '" to be opened.';
         };
-        return typeaheadEl.length === 1 && typeaheadEl.hasClass('ng-hide') === false && liEls.length === noOfMatches && $(liEls[activeIdx]).hasClass('active');
+
+        return (typeaheadEl.length === 1 &&
+                typeaheadEl.hasClass('ng-hide') === false &&
+                liEls.length === noOfMatches &&
+                (activeIdx === -1 ? !$(liEls).hasClass('active') : $(liEls[activeIdx]).hasClass('active'))
+               );
       }
     });
   });
@@ -409,7 +414,7 @@ describe('typeahead tests', function () {
       triggerKeyDown(element, 38);
       expect(element).toBeOpenWithActive(2, 1);
 
-      // Up arrow key goes back to last element
+      // Up arrow key goes back to first element
       triggerKeyDown(element, 38);
       expect(element).toBeOpenWithActive(2, 0);
     });
@@ -668,6 +673,94 @@ describe('typeahead tests', function () {
       changeInputValueTo(element, 'ba');
       expect(findDropDown($document.find('body')).length).toEqual(0);
     });
+  });
+
+  describe('focus first', function () {
+    it('should focus the first element by default', function () {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
+      changeInputValueTo(element, 'b');
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Down arrow key
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 1);
+
+      // Down arrow key goes back to first element
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Up arrow key goes back to last element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 1);
+
+      // Up arrow key goes back to first element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 0);
+    });
+
+    it('should not focus the first element until keys are pressed', function () {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-focus-first="false"></div>');
+      changeInputValueTo(element, 'b');
+      expect(element).toBeOpenWithActive(2, -1);
+
+      // Down arrow key goes to first element
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Down arrow key goes to second element
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 1);
+
+      // Down arrow key goes back to first element
+      triggerKeyDown(element, 40);
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // Up arrow key goes back to last element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 1);
+
+      // Up arrow key goes back to first element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 0);
+
+      // New input goes back to no focus
+      changeInputValueTo(element, 'a');
+      changeInputValueTo(element, 'b');
+      expect(element).toBeOpenWithActive(2, -1);
+
+      // Up arrow key goes to last element
+      triggerKeyDown(element, 38);
+      expect(element).toBeOpenWithActive(2, 1);
+    });
+  });
+
+  it('should not capture enter or tab until an item is focused', function () {
+    $scope.select_count = 0;
+    $scope.onSelect = function ($item, $model, $label) {
+      $scope.select_count = $scope.select_count + 1;
+    };
+    var element = prepareInputEl('<div><input ng-model="result" ng-keydown="keyDownEvent = $event" typeahead="item for item in source | filter:$viewValue" typeahead-on-select="onSelect($item, $model, $label)" typeahead-focus-first="false"></div>');
+    changeInputValueTo(element, 'b');
+    
+    // enter key should not be captured when nothing is focused
+    triggerKeyDown(element, 13);
+    expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
+    expect($scope.select_count).toEqual(0);
+
+    // tab key should not be captured when nothing is focused
+    triggerKeyDown(element, 9);
+    expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
+    expect($scope.select_count).toEqual(0);
+
+    // down key should be captured and focus first element
+    triggerKeyDown(element, 40);
+    expect($scope.keyDownEvent.isDefaultPrevented()).toBeTruthy();
+    expect(element).toBeOpenWithActive(2, 0);
+
+    // enter key should be captured now that something is focused
+    triggerKeyDown(element, 13);
+    expect($scope.keyDownEvent.isDefaultPrevented()).toBeTruthy();
+    expect($scope.select_count).toEqual(1);
   });
 
 });
