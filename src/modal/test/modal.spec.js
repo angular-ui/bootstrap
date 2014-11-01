@@ -250,6 +250,28 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(0);
     });
 
+    it('should return to the element which had focus before the dialog is invoked', function () {
+      var link = '<a href>Link</a>';
+      var element = angular.element(link);
+      angular.element(document.body).append(element);
+      element.focus();
+      expect(document.activeElement.tagName).toBe('A');
+
+      var modal = open({template: '<div>Content<button>inside modal</button></div>'});
+      $timeout.flush();
+      expect(document.activeElement.tagName).toBe('DIV');
+      expect($document).toHaveModalsOpen(1);
+
+      triggerKeyDown($document, 27);
+      $timeout.flush();
+      $rootScope.$digest();
+
+      expect(document.activeElement.tagName).toBe('A');
+      expect($document).toHaveModalsOpen(0);
+
+      element.remove();
+    });
+
     it('should resolve returned promise on close', function () {
       var modal = open({template: '<div>Content</div>'});
       close(modal, 'closed ok');
@@ -694,6 +716,35 @@ describe('$modal', function () {
 
       dismiss(modal2);
       expect(body).not.toHaveClass('modal-open');
+    });
+
+    it('should return to the element which had focus before the dialog is invoked', function () {
+      var link = '<a href>Link</a>';
+      var element = angular.element(link);
+      angular.element(document.body).append(element);
+      element.focus();
+      expect(document.activeElement.tagName).toBe('A');
+
+      var modal1 = open({template: '<div>Modal1<button id="focus">inside modal1</button></div>'});
+      $timeout.flush();
+      document.getElementById('focus').focus();
+      expect(document.activeElement.tagName).toBe('BUTTON');
+      expect($document).toHaveModalsOpen(1);
+
+      var modal2 = open({template: '<div>Modal2</div>'});
+      $timeout.flush();
+      expect(document.activeElement.tagName).toBe('DIV');
+      expect($document).toHaveModalsOpen(2);
+
+      dismiss(modal2);
+      expect(document.activeElement.tagName).toBe('BUTTON');
+      expect($document).toHaveModalsOpen(1);
+
+      dismiss(modal1);
+      expect(document.activeElement.tagName).toBe('A');
+      expect($document).toHaveModalsOpen(0);
+
+      element.remove();
     });
   });
 

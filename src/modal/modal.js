@@ -266,6 +266,8 @@ angular.module('ui.bootstrap.modal', [])
 
       $modalStack.open = function (modalInstance, modal) {
 
+        var modalOpener = $document[0].activeElement;
+
         openedWindows.add(modalInstance, {
           deferred: modal.deferred,
           renderDeferred: modal.renderDeferred,
@@ -303,6 +305,7 @@ angular.module('ui.bootstrap.modal', [])
 
         var modalDomEl = $compile(angularDomEl)(modal.scope);
         openedWindows.top().value.modalDomEl = modalDomEl;
+        openedWindows.top().value.modalOpener = modalOpener;
         body.append(modalDomEl);
         body.addClass(OPENED_MODAL_CLASS);
       };
@@ -316,6 +319,7 @@ angular.module('ui.bootstrap.modal', [])
         if (modalWindow && broadcastClosing(modalWindow, result, true)) {
           modalWindow.value.deferred.resolve(result);
           removeModalWindow(modalInstance);
+          modalWindow.value.modalOpener.focus();
           return true;
         }
         return !modalWindow;
@@ -326,6 +330,7 @@ angular.module('ui.bootstrap.modal', [])
         if (modalWindow && broadcastClosing(modalWindow, reason, false)) {
           modalWindow.value.deferred.reject(reason);
           removeModalWindow(modalInstance);
+          modalWindow.value.modalOpener.focus();
           return true;
         }
         return !modalWindow;
