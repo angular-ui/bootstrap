@@ -148,11 +148,11 @@ describe('tooltip', function() {
     expect( elmBody.children().length ).toBe( 0 );
   }));
 
-  it('issue 1191 - isolate scope on the popup should always be child of correct element scope', function () {
+  it('issue 1191 - scope on the popup should always be child of correct element scope', function () {
     var ttScope;
     elm.trigger( 'mouseenter' );
 
-    ttScope = angular.element( elmBody.children()[1] ).isolateScope();
+    ttScope = angular.element( elmBody.children()[1] ).scope();
     expect( ttScope.$parent ).toBe( tooltipScope );
 
     elm.trigger( 'mouseleave' );
@@ -160,7 +160,7 @@ describe('tooltip', function() {
     // After leaving and coming back, the scope's parent should be the same
     elm.trigger( 'mouseenter' );
 
-    ttScope = angular.element( elmBody.children()[1] ).isolateScope();
+    ttScope = angular.element( elmBody.children()[1] ).scope();
     expect( ttScope.$parent ).toBe( tooltipScope );
 
     elm.trigger( 'mouseleave' );
@@ -349,7 +349,7 @@ describe('tooltip', function() {
       var match = false;
 
       angular.forEach(angular.element.cache, function (item) {
-        if (item.data && item.data.$isolateScope === tooltipScope) {
+        if (item.data && item.data.$scope === tooltipScope) {
           match = true;
         }
       });
@@ -369,7 +369,7 @@ describe('tooltip', function() {
       tooltipScope = elmScope.$$childTail.$$childTail;
     }));
 
-    it( 'should not contain a cached reference when visible', inject( function( $timeout ) {
+    it( 'should not contain a cached reference when not visible', inject( function( $timeout ) {
       expect( inCache() ).toBeTruthy();
       elmScope.$destroy();
       expect( inCache() ).toBeFalsy();
