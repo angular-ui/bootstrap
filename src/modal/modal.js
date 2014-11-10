@@ -119,6 +119,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
           // trigger CSS transitions
           scope.animate = true;
 
+          var inputsWithAutofocus = element[0].querySelectorAll('[autofocus]');
           /**
            * Auto-focusing of a freshly-opened modal element causes any child elements
            * with the autofocus attribute to lose focus. This is an issue on touch
@@ -127,7 +128,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
            * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
            * the modal element if the modal does not contain an autofocus element.
            */
-          if (!element[0].querySelectorAll('[autofocus]').length) {
+          if (inputsWithAutofocus.length) {
+            inputsWithAutofocus[0].focus();
+          } else {
             element[0].focus();
           }
 

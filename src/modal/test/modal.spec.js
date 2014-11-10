@@ -240,6 +240,22 @@ describe('$modal', function () {
       expect(modal.opened).toBeRejectedWith(false);
     });
 
+    it('should focus on the element that has autofocus attribute when the modal is open/reopen', function () {
+      function openAndCloseModalWithAutofocusElement() {
+        var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'});
+
+        waitForBackdropAnimation();
+
+        expect(angular.element('#auto-focus-element')).toHaveFocus();
+
+        close(modal, 'closed ok');
+
+        expect(modal.result).toBeResolvedWith('closed ok');
+      }
+
+      openAndCloseModalWithAutofocusElement();
+      openAndCloseModalWithAutofocusElement();
+    });
   });
 
   describe('default options can be changed in a provider', function () {
