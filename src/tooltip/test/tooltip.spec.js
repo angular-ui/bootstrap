@@ -96,6 +96,44 @@ describe('tooltip', function() {
     tt.trigger( 'mouseleave' );
   }));
 
+  it('should show correct text when in an ngRepeat', inject( function( $compile, $timeout ) {
+
+    elm = $compile( angular.element(
+      '<ul>'+
+        '<li ng-repeat="item in items">'+
+          '<span tooltip="{{item.tooltip}}">{{item.name}}</span>'+
+        '</li>'+
+      '</ul>'
+    ) )( scope );
+
+    scope.items = [
+      { name: 'One', tooltip: 'First Tooltip' },
+      { name: 'Second', tooltip: 'Second Tooltip' }
+    ];
+
+    scope.$digest();
+
+    var tt_1 = angular.element( elm.find('li > span')[0] );
+    var tt_2 = angular.element( elm.find('li > span')[1] );
+
+    tt_1.trigger( 'mouseenter' );
+    tt_1.trigger( 'mouseleave' );
+
+    $timeout.flush();
+
+    tt_2.trigger( 'mouseenter' );
+
+    expect( tt_1.text() ).toBe( scope.items[0].name );
+    expect( tt_2.text() ).toBe( scope.items[1].name );
+
+    tooltipScope = tt_2.scope().$$childTail;
+    expect( tooltipScope.content ).toBe( scope.items[1].tooltip );
+    expect( elm.find( '.tooltip-inner' ).text() ).toBe( scope.items[1].tooltip );
+
+    tt_2.trigger( 'mouseleave' );
+
+  }));
+
   it('should only have an isolate scope on the popup', inject( function ( $compile ) {
     var ttScope;
 
