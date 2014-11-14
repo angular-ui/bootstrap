@@ -44,7 +44,18 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   $scope.datepickerMode = $scope.datepickerMode || datepickerConfig.datepickerMode;
   $scope.uniqueId = 'datepicker-' + $scope.$id + '-' + Math.floor(Math.random() * 10000);
-  this.activeDate = angular.isDefined($attrs.initDate) ? $scope.$parent.$eval($attrs.initDate) : new Date();
+
+  if(angular.isDefined($attrs.initDate)) {
+    this.activeDate = $scope.$parent.$eval($attrs.initDate) || new Date();
+    $scope.$parent.$watch($attrs.initDate, function(initDate){
+      if(initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)){
+        self.activeDate = initDate;
+        self.refreshView();
+      }
+    });
+  } else {
+    this.activeDate =  new Date();
+  }
 
   $scope.isActive = function(dateObject) {
     if (self.compare(dateObject.date, self.activeDate) === 0) {
@@ -479,13 +490,19 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       // datepicker element
       var datepickerEl = angular.element(popupEl.children()[0]);
       if ( attrs.datepickerOptions ) {
-        angular.forEach(scope.$parent.$eval(attrs.datepickerOptions), function( value, option ) {
+        var options = scope.$parent.$eval(attrs.datepickerOptions);
+        if(options.initDate) {
+          scope.initDate = options.initDate;
+          datepickerEl.attr( 'init-date', 'initDate' );
+          delete options.initDate;
+        }
+        angular.forEach(options, function( value, option ) {
           datepickerEl.attr( cameltoDash(option), value );
         });
       }
 
       scope.watchData = {};
-      angular.forEach(['minDate', 'maxDate', 'datepickerMode'], function( key ) {
+      angular.forEach(['minDate', 'maxDate', 'datepickerMode', 'initDate'], function( key ) {
         if ( attrs[key] ) {
           var getAttribute = $parse(attrs[key]);
           scope.$parent.$watch(getAttribute, function(value){
@@ -509,10 +526,6 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       }
       if (attrs.customClass){
         datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');
-      }
-      if (attrs.initDate) {
-        scope.initDate = scope.$parent.$eval(attrs.initDate);
-        datepickerEl.attr('init-date', 'initDate');
       }
 
       function parseDate(viewValue) {

@@ -1337,23 +1337,107 @@ describe('datepicker directive', function () {
     });
 
     describe('attribute `datepickerOptions`', function () {
-      var weekHeader, weekElement;
-      beforeEach(function() {
-        $rootScope.opts = {
-          'show-weeks': false
-        };
-        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
-        $rootScope.$digest();
-        assignElements(wrapElement);
 
-        weekHeader = getLabelsRow().find('th').eq(0);
-        weekElement = element.find('tbody').find('tr').eq(1).find('td').eq(0);
+      describe('show-weeks', function(){
+        var weekHeader, weekElement;
+        beforeEach(function() {
+          $rootScope.opts = {
+            'show-weeks': false
+          };
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+
+          weekHeader = getLabelsRow().find('th').eq(0);
+          weekElement = element.find('tbody').find('tr').eq(1).find('td').eq(0);
+        });
+
+        it('hides week numbers based on variable', function() {
+          expect(weekHeader.text()).toEqual('');
+          expect(weekHeader).toBeHidden();
+          expect(weekElement).toBeHidden();
+        });
       });
 
-      it('hides week numbers based on variable', function() {
-        expect(weekHeader.text()).toEqual('');
-        expect(weekHeader).toBeHidden();
-        expect(weekElement).toBeHidden();
+      describe('init-date', function(){
+        beforeEach(function() {
+          $rootScope.date = null;
+          $rootScope.opts = {
+            'initDate': new Date('November 9, 1980')
+          };
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        });
+
+        it('does not alter the model', function() {
+          expect($rootScope.date).toBe(null);
+        });
+
+        it('shows the correct title', function() {
+          expect(getTitle()).toBe('November 1980');
+        });
+      });
+    });
+
+    describe('attribute `init-date`', function(){
+      beforeEach(function() {
+        $rootScope.date = null;
+        $rootScope.initDate = new Date('November 9, 1980');
+      });
+
+      describe('when initially set', function(){
+        beforeEach(function() {
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup init-date="initDate" is-open="true"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        });
+
+        it('does not alter the model', function() {
+          expect($rootScope.date).toBe(null);
+        });
+
+        it('shows the correct title', function() {
+          expect(getTitle()).toBe('November 1980');
+        });
+      });
+
+      describe('when modified before date selected.', function(){
+        beforeEach(function() {
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup init-date="initDate" is-open="true"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+
+          $rootScope.initDate = new Date('December 20, 1981');
+          $rootScope.$digest();
+        });
+
+        it('does not alter the model', function() {
+          expect($rootScope.date).toBe(null);
+        });
+
+        it('shows the correct title', function() {
+          expect(getTitle()).toBe('December 1981');
+        });
+      });
+
+      describe('when modified after date selected.', function(){
+        beforeEach(function() {
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup init-date="initDate" is-open="true"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+          $rootScope.date = new Date('April 1, 1982');
+          $rootScope.initDate = new Date('December 20, 1981');
+          $rootScope.$digest();
+        });
+
+        it('does not alter the model', function() {
+          expect($rootScope.date).toEqual(new Date('April 1, 1982'));
+        });
+
+        it('shows the correct title', function() {
+          expect(getTitle()).toBe('April 1982');
+        });
       });
     });
 
