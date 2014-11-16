@@ -13,7 +13,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-touch.min.js"></script>
-    <script src="ui-bootstrap-tpls-0.11.2.min.js"></script>
+    <script src="ui-bootstrap-tpls-0.12.0.min.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
@@ -40,8 +40,8 @@
                     <a href="#top" role="button" class="navbar-brand">
                         UI Bootstrap
                     </a>
-                    <li class="dropdown">
-                        <a role="button" class="dropdown-toggle">
+                    <li class="dropdown" dropdown>
+                        <a role="button" class="dropdown-toggle" dropdown-toggle>
                             Directives <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
@@ -74,7 +74,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.11.2)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.12.0)</small>
                 </button>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
@@ -176,7 +176,7 @@
                     <ul>
                         <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires AngularJS 1.2.x, tested with 1.2.16)</li>
                         <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version 3.1.1).
-                            This version of the library (0.11.2) works only with Bootstrap CSS in version 3.x.
+                            This version of the library (0.12.0) works only with Bootstrap CSS in version 3.x.
                             0.8.0 is the last version of this library that supports Bootstrap CSS in version 2.3.x.
                         </li>
                     </ul>
@@ -201,6 +201,8 @@
                     <p>Original Bootstrap's CSS depends on empty <code>href</code> attributes to style cursors for several components (pagination, tabs etc.).
                     But in AngularJS adding empty <code>href</code> attributes to link tags will cause unwanted route changes. This is why we need to remove empty <code>href</code> attributes from directive templates and as a result styling is not applied correctly. The remedy is simple, just add the following styling to your application: <pre><code>.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }</code></pre>
                     </p>
+                    <h3>FAQ</h3>
+                    <p>Please check <a href="https://github.com/angular-ui/bootstrap/wiki/FAQ" target="_blank">our FAQ section</a> for common problems / solutions.</p>
                 </section>
                 
                     <section id="accordion">
@@ -254,7 +256,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -369,16 +371,16 @@
                             <div class="col-md-6">
                                 <p>Alert is an AngularJS-version of bootstrap's alert.</p>
 
-<p>This directive can be used to generate alerts from the dynamic model data (using the ng-repeat directive);</p>
+<p>This directive can be used to generate alerts from the dynamic model data (using the <code>ng-repeat</code> directive);</p>
 
-<p>The presence of the "close" attribute determines if a close button is displayed</p>
+<p>The presence of the <code>close</code> attribute determines if a close button is displayed</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -470,7 +472,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -560,7 +562,7 @@
     </div>
     <div class="col-md-6">
       Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
-      <br />Enter a negative number to stop the interval.
+      <br />Enter a negative number or 0 to stop the interval.
     </div>
   </div>
 </div>
@@ -578,7 +580,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -601,7 +603,7 @@
     &lt;/div&gt;
     &lt;div class=&quot;col-md-6&quot;&gt;
       Interval, in milliseconds: &lt;input type=&quot;number&quot; class=&quot;form-control&quot; ng-model=&quot;myInterval&quot;&gt;
-      &lt;br /&gt;Enter a negative number to stop the interval.
+      &lt;br /&gt;Enter a negative number or 0 to stop the interval.
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -614,7 +616,7 @@
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
-    var newWidth = 600 + slides.length;
+    var newWidth = 600 + slides.length + 1;
     slides.push({
       image: &#x27;http://placekitten.com/&#x27; + newWidth + &#x27;/300&#x27;,
       text: [&#x27;More&#x27;,&#x27;Extra&#x27;,&#x27;Lots of&#x27;,&#x27;Surplus&#x27;][slides.length % 4] + &#x27; &#x27; +
@@ -636,7 +638,7 @@
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
-    var newWidth = 600 + slides.length;
+    var newWidth = 600 + slides.length + 1;
     slides.push({
       image: 'http://placekitten.com/' + newWidth + '/300',
       text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
@@ -674,7 +676,7 @@ Provides a simple way to hide and show an element with a css transition</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -864,7 +866,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -994,8 +996,8 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                                 
 <div ng-controller="DropdownCtrl">
     <!-- Simple dropdown -->
-    <span class="dropdown" on-toggle="toggled(open)">
-      <a href class="dropdown-toggle">
+    <span class="dropdown" dropdown on-toggle="toggled(open)">
+      <a href class="dropdown-toggle" dropdown-toggle>
         Click me for a dropdown, yo!
       </a>
       <ul class="dropdown-menu">
@@ -1007,7 +1009,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
 
     <!-- Single button -->
     <div class="btn-group" dropdown is-open="status.isopen">
-      <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
         Button dropdown <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
@@ -1022,7 +1024,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
     <!-- Split button -->
     <div class="btn-group" dropdown>
       <button type="button" class="btn btn-danger">Action</button>
-      <button type="button" class="btn btn-danger dropdown-toggle">
+      <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
@@ -1054,7 +1056,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1062,8 +1064,8 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
                                             <pre ng-non-bindable><code data-language="html">
 &lt;div ng-controller=&quot;DropdownCtrl&quot;&gt;
     &lt;!-- Simple dropdown --&gt;
-    &lt;span class=&quot;dropdown&quot; on-toggle=&quot;toggled(open)&quot;&gt;
-      &lt;a href class=&quot;dropdown-toggle&quot;&gt;
+    &lt;span class=&quot;dropdown&quot; dropdown on-toggle=&quot;toggled(open)&quot;&gt;
+      &lt;a href class=&quot;dropdown-toggle&quot; dropdown-toggle&gt;
         Click me for a dropdown, yo!
       &lt;/a&gt;
       &lt;ul class=&quot;dropdown-menu&quot;&gt;
@@ -1075,7 +1077,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
 
     &lt;!-- Single button --&gt;
     &lt;div class=&quot;btn-group&quot; dropdown is-open=&quot;status.isopen&quot;&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary dropdown-toggle&quot; ng-disabled=&quot;disabled&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary dropdown-toggle&quot; dropdown-toggle ng-disabled=&quot;disabled&quot;&gt;
         Button dropdown &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
       &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot;&gt;
@@ -1090,7 +1092,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
     &lt;!-- Split button --&gt;
     &lt;div class=&quot;btn-group&quot; dropdown&gt;
       &lt;button type=&quot;button&quot; class=&quot;btn btn-danger&quot;&gt;Action&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-danger dropdown-toggle&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-danger dropdown-toggle&quot; dropdown-toggle&gt;
         &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
         &lt;span class=&quot;sr-only&quot;&gt;Split button!&lt;/span&gt;
       &lt;/button&gt;
@@ -1115,7 +1117,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;DropdownCtrl&#x27;, function ($scope) {
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;DropdownCtrl&#x27;, function ($scope, $log) {
   $scope.items = [
     &#x27;The first choice!&#x27;,
     &#x27;And another choice for you.&#x27;,
@@ -1127,7 +1129,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
   };
 
   $scope.toggled = function(open) {
-    console.log(&#x27;Dropdown is now: &#x27;, open);
+    $log.log(&#x27;Dropdown is now: &#x27;, open);
   };
 
   $scope.toggleDropdown = function($event) {
@@ -1143,7 +1145,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('ui.bootstrap.demo').controller('DropdownCtrl', function ($scope) {
+                    <script>angular.module('ui.bootstrap.demo').controller('DropdownCtrl', function ($scope, $log) {
   $scope.items = [
     'The first choice!',
     'And another choice for you.',
@@ -1155,7 +1157,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
   };
 
   $scope.toggled = function(open) {
-    console.log('Dropdown is now: ', open);
+    $log.log('Dropdown is now: ', open);
   };
 
   $scope.toggleDropdown = function($event) {
@@ -1243,7 +1245,7 @@ Creating custom modals is straightforward: create a partial view, its controller
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1468,7 +1470,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1497,7 +1499,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;PaginationDemoCtrl&#x27;, function ($scope) {
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;PaginationDemoCtrl&#x27;, function ($scope, $log) {
   $scope.totalItems = 64;
   $scope.currentPage = 4;
 
@@ -1506,7 +1508,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
   };
 
   $scope.pageChanged = function() {
-    console.log(&#x27;Page changed to: &#x27; + $scope.currentPage);
+    $log.log(&#x27;Page changed to: &#x27; + $scope.currentPage);
   };
 
   $scope.maxSize = 5;
@@ -1520,7 +1522,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('ui.bootstrap.demo').controller('PaginationDemoCtrl', function ($scope) {
+                    <script>angular.module('ui.bootstrap.demo').controller('PaginationDemoCtrl', function ($scope, $log) {
   $scope.totalItems = 64;
   $scope.currentPage = 4;
 
@@ -1529,7 +1531,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
   };
 
   $scope.pageChanged = function() {
-    console.log('Page changed to: ' + $scope.currentPage);
+    $log.log('Page changed to: ' + $scope.currentPage);
   };
 
   $scope.maxSize = 5;
@@ -1612,7 +1614,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1737,7 +1739,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1918,7 +1920,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2080,7 +2082,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2129,7 +2131,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;TabsDemoCtrl&#x27;, function ($scope) {
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;TabsDemoCtrl&#x27;, function ($scope, $window) {
   $scope.tabs = [
     { title:&#x27;Dynamic Title 1&#x27;, content:&#x27;Dynamic content 1&#x27; },
     { title:&#x27;Dynamic Title 2&#x27;, content:&#x27;Dynamic content 2&#x27;, disabled: true }
@@ -2137,7 +2139,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 
   $scope.alertMe = function() {
     setTimeout(function() {
-      alert(&#x27;You\&#x27;ve selected the alert tab!&#x27;);
+      $window.alert(&#x27;You\&#x27;ve selected the alert tab!&#x27;);
     });
   };
 });
@@ -2148,7 +2150,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('ui.bootstrap.demo').controller('TabsDemoCtrl', function ($scope) {
+                    <script>angular.module('ui.bootstrap.demo').controller('TabsDemoCtrl', function ($scope, $window) {
   $scope.tabs = [
     { title:'Dynamic Title 1', content:'Dynamic content 1' },
     { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
@@ -2156,7 +2158,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 
   $scope.alertMe = function() {
     setTimeout(function() {
-      alert('You\'ve selected the alert tab!');
+      $window.alert('You\'ve selected the alert tab!');
     });
   };
 });
@@ -2232,7 +2234,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2266,7 +2268,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;TimepickerDemoCtrl&#x27;, function ($scope) {
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;TimepickerDemoCtrl&#x27;, function ($scope, $log) {
   $scope.mytime = new Date();
 
   $scope.hstep = 1;
@@ -2290,7 +2292,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
   };
 
   $scope.changed = function () {
-    console.log(&#x27;Time changed to: &#x27; + $scope.mytime);
+    $log.log(&#x27;Time changed to: &#x27; + $scope.mytime);
   };
 
   $scope.clear = function() {
@@ -2304,7 +2306,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('ui.bootstrap.demo').controller('TimepickerDemoCtrl', function ($scope) {
+                    <script>angular.module('ui.bootstrap.demo').controller('TimepickerDemoCtrl', function ($scope, $log) {
   $scope.mytime = new Date();
 
   $scope.hstep = 1;
@@ -2328,7 +2330,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
   };
 
   $scope.changed = function () {
-    console.log('Time changed to: ' + $scope.mytime);
+    $log.log('Time changed to: ' + $scope.mytime);
   };
 
   $scope.clear = function() {
@@ -2448,7 +2450,7 @@ appendToBody: false
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2591,6 +2593,9 @@ Set custom item template</p></li>
 <li><p><code>typeahead-wait-ms</code> <i class="glyphicon glyphicon-eye-open"></i>
 <em>(Defaults: 0)</em> :
 Minimal wait time after last character typed before typeahead kicks-in</p></li>
+<li><p><code>typeahead-focus-first</code>
+<em>(Defaults: true)</em> :
+Should the first match automatically be focused as you type?</p></li>
 </ul>
                             </div>
                         </div>
@@ -2598,7 +2603,7 @@ Minimal wait time after last character typed before typeahead kicks-in</p></li>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.11.2', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.0', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2727,7 +2732,7 @@ Minimal wait time after last character typed before typeahead kicks-in</p></li>
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('0.11.2')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.11.2</a>
+        <a class="btn btn-primary" ng-href="{{download('0.12.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.12.0</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
@@ -3001,7 +3006,7 @@ Minimal wait time after last character typed before typeahead kicks-in</p></li>
         <a class="btn btn-default" ng-click="cancel()">Close</a>
         <a class="btn btn-primary" ng-hide="isOldBrowser()"
             ng-disabled="isOldBrowser() !== false && !selectedModules.length"
-            ng-click="selectedModules.length && build(selectedModules, '0.11.2')">
+            ng-click="selectedModules.length && build(selectedModules, '0.12.0')">
             <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
         </a>
     </div>
