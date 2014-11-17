@@ -40,7 +40,7 @@ describe('$modal', function () {
       toBeResolvedWith: function(value) {
         var resolved;
         this.message = function() {
-          return 'Expected "' + angular.mock.dump(this.actual) + '" to be resolved with "' + value + '".';
+          return 'Expected "' + angular.mock.dump(resolved) + '" to be resolved with "' + value + '".';
         };
         this.actual.then(function(result){
           resolved = result;
@@ -53,7 +53,7 @@ describe('$modal', function () {
       toBeRejectedWith: function(value) {
         var rejected;
         this.message = function() {
-          return 'Expected "' + angular.mock.dump(this.actual) + '" to be rejected with "' + value + '".';
+          return 'Expected "' + angular.mock.dump(rejected) + '" to be rejected with "' + value + '".';
         };
         this.actual.then(angular.noop, function(reason){
           rejected = reason;
