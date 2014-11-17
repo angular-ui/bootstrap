@@ -458,8 +458,8 @@ angular.module('ui.bootstrap.modal', [])
 
             templateAndResolvePromise.then(function () {
               modalOpenedDeferred.resolve(true);
-            }, function () {
-              modalOpenedDeferred.reject(false);
+            }, function (reason) {
+              modalOpenedDeferred.reject(reason);
             });
 
             return modalInstance;
