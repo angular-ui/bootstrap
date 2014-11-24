@@ -44,6 +44,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   });
 
   $scope.datepickerMode = $scope.datepickerMode || datepickerConfig.datepickerMode;
+  $scope.maxMode = self.maxMode;
   $scope.uniqueId = 'datepicker-' + $scope.$id + '-' + Math.floor(Math.random() * 10000);
 
   if(angular.isDefined($attrs.initDate)) {

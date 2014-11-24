@@ -32,12 +32,16 @@ describe('datepicker directive', function () {
     $rootScope.date = new Date('September 30, 2010 15:30:00');
   }));
 
+  function getTitleButton() {
+    return element.find('th').eq(1).find('button').first();
+  }
+
   function getTitle() {
-    return element.find('th').eq(1).find('button').first().text();
+    return getTitleButton().text();
   }
 
   function clickTitleButton() {
-    element.find('th').eq(1).find('button').first().click();
+    getTitleButton().click();
   }
 
   function clickPreviousButton(times) {
@@ -1904,6 +1908,14 @@ describe('datepicker directive', function () {
       expect(getTitle()).toBe('2013');
       clickTitleButton();
       expect(getTitle()).toBe('2013');
+    });
+
+    it('disables the title button at it', function() {
+      expect(getTitleButton().prop('disabled')).toBe(false);
+      clickTitleButton();
+      expect(getTitleButton().prop('disabled')).toBe(true);
+      clickTitleButton();
+      expect(getTitleButton().prop('disabled')).toBe(true);
     });
   });
 
