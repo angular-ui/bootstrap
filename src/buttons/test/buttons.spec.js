@@ -80,6 +80,34 @@ describe('buttons', function () {
       expect(btn).toHaveClass('active');
       expect($scope.model).toEqual(2);
     });
+
+    describe('setting buttonConfig', function () {
+      var originalActiveClass, originalToggleEvent;
+
+      beforeEach(inject(function(buttonConfig) {
+        originalActiveClass = buttonConfig.activeClass;
+        originalToggleEvent = buttonConfig.toggleEvent;
+        buttonConfig.activeClass = false;
+        buttonConfig.toggleEvent = false;
+      }));
+
+      afterEach(inject(function(buttonConfig) {
+        // return it to the original value
+        buttonConfig.activeClass = originalActiveClass;
+        buttonConfig.toggleEvent = originalToggleEvent;
+      }));
+
+      it('should use default config when buttonConfig.activeClass and buttonConfig.toggleEvent is false', function () {
+        $scope.model = false;
+        var btn = compileButton('<button ng-model="model" btn-checkbox>click</button>', $scope);
+        expect(btn).not.toHaveClass('active');
+
+        $scope.model = true;
+        $scope.$digest();
+        expect(btn).toHaveClass('active');
+      });
+    });
+
   });
 
   describe('radio', function () {
@@ -135,6 +163,18 @@ describe('buttons', function () {
       $scope.$digest();
       expect(btns.eq(0)).not.toHaveClass('active');
       expect(btns.eq(1)).toHaveClass('active');
+    });
+
+    it('should do nothing when click active radio', function () {
+      $scope.model = 1;
+      var btns = compileButtons('<button ng-model="model" btn-radio="1">click1</button><button ng-model="model" btn-radio="2">click2</button>', $scope);
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
+
+      btns.eq(0).click();
+      $scope.$digest();
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
     });
 
     describe('uncheckable', function () {
