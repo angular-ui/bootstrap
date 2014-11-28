@@ -75,7 +75,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
     };
   }])
 
-  .directive('modalWindow', ['$modalStack', '$timeout', function ($modalStack, $timeout) {
+  .directive('modalWindow', ['$modalStack', '$q', function ($modalStack, $q) {
     return {
       restrict: 'EA',
       scope: {
@@ -91,7 +91,31 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         element.addClass(attrs.windowClass || '');
         scope.size = attrs.size;
 
-        $timeout(function () {
+        scope.close = function (evt) {
+          var modal = $modalStack.getTop();
+          if (modal && modal.value.backdrop && modal.value.backdrop != 'static' && (evt.target === evt.currentTarget)) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            $modalStack.dismiss(modal.key, 'backdrop click');
+          }
+        };
+
+        // This property is only added to the scope for the purpose of detecting when this directive is rendered.
+        // We can detect that by using this property in the template associated with this directive and then use
+        // {@link Attribute#$observe} on it. For more details please see {@link TableColumnResize}.
+        scope.$isRendered = true;
+
+        // Deferred object that will be resolved when this modal is render.
+        var modalRenderDeferObj = $q.defer();
+        // Observe function will be called on next digest cycle after compilation, ensuring that the DOM is ready.
+        // In order to use this way of finding whether DOM is ready, we need to observe a scope property used in modal's template.
+        attrs.$observe('modalRender', function (value) {
+          if (value == 'true') {
+            modalRenderDeferObj.resolve();
+          }
+        });
+
+        modalRenderDeferObj.promise.then(function () {
           // trigger CSS transitions
           scope.animate = true;
 
@@ -106,16 +130,13 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
           if (!element[0].querySelectorAll('[autofocus]').length) {
             element[0].focus();
           }
-        });
 
-        scope.close = function (evt) {
+          // Notify {@link $modalStack} that modal is rendered.
           var modal = $modalStack.getTop();
-          if (modal && modal.value.backdrop && modal.value.backdrop != 'static' && (evt.target === evt.currentTarget)) {
-            evt.preventDefault();
-            evt.stopPropagation();
-            $modalStack.dismiss(modal.key, 'backdrop click');
+          if (modal) {
+            $modalStack.modalRendered(modal.key);
           }
-        };
+        });
       }
     };
   }])
@@ -236,6 +257,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
         openedWindows.add(modalInstance, {
           deferred: modal.deferred,
+          renderDeferred: modal.renderDeferred,
           modalScope: modal.scope,
           backdrop: modal.backdrop,
           keyboard: modal.keyboard
@@ -296,6 +318,13 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         return openedWindows.top();
       };
 
+      $modalStack.modalRendered = function (modalInstance) {
+        var modalWindow = openedWindows.get(modalInstance);
+        if (modalWindow) {
+          modalWindow.value.renderDeferred.resolve();
+        }
+      };
+
       return $modalStack;
     }])
 
@@ -333,11 +362,13 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
             var modalResultDeferred = $q.defer();
             var modalOpenedDeferred = $q.defer();
+            var modalRenderDeferred = $q.defer();
 
             //prepare an instance of a modal to be injected into controllers and returned to a caller
             var modalInstance = {
               result: modalResultDeferred.promise,
               opened: modalOpenedDeferred.promise,
+              rendered: modalRenderDeferred.promise,
               close: function (result) {
                 $modalStack.close(modalInstance, result);
               },
@@ -385,6 +416,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
               $modalStack.open(modalInstance, {
                 scope: modalScope,
                 deferred: modalResultDeferred,
+                renderDeferred: modalRenderDeferred,
                 content: tplAndVars[0],
                 backdrop: modalOptions.backdrop,
                 keyboard: modalOptions.keyboard,
