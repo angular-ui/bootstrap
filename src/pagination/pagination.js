@@ -172,8 +172,8 @@ angular.module('ui.bootstrap.pagination', [])
         }
 
         // Add links to move between page sets
-        if (isMaxSized && ! rotate) {
-          if (startPage > 1) {
+        if ( isMaxSized && maxSize > 0 ) {
+          if ( startPage > 1 ) {
             var previousPageSet = makePage(startPage - 1, '...', false);
             pages.unshift(previousPageSet);
           }
@@ -183,7 +183,6 @@ angular.module('ui.bootstrap.pagination', [])
             pages.push(nextPageSet);
           }
         }
-
         return pages;
       }
 

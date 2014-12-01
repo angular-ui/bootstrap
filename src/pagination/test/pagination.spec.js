@@ -23,6 +23,15 @@ describe('pagination directive', function() {
     return element.find('li').eq(index);
   }
 
+  // Returns a comma-separated string that represents the pager, like: "Prev, 1, 2, 3, Next"
+  function getPaginationAsText(){
+    var len = getPaginationBarSize(), outItems = [];
+    for(var i = 0; i < len; i++){
+      outItems.push(getPaginationEl(i).text());
+    }
+    return outItems.join(', ');
+  }
+
   function clickPaginationEl(index) {
     getPaginationEl(index).find('a').click();
   }
@@ -281,8 +290,8 @@ describe('pagination directive', function() {
       $rootScope.$digest();
     });
 
-    it('contains maxsize + 2 li elements', function() {
-      expect(getPaginationBarSize()).toBe($rootScope.maxSize + 2);
+    it('contains maxsize + 3 li elements', function() {
+      expect(getPaginationBarSize()).toBe($rootScope.maxSize + 3);
       expect(getPaginationEl(0).text()).toBe('Previous');
       expect(getPaginationEl(-1).text()).toBe('Next');
     });
@@ -300,8 +309,8 @@ describe('pagination directive', function() {
       clickPaginationEl(-1);
 
       expect($rootScope.currentPage).toBe(7);
-      expect(getPaginationEl(3)).toHaveClass('active');
-      expect(getPaginationEl(3).text()).toBe(''+$rootScope.currentPage);
+      expect(getPaginationEl(4)).toHaveClass('active');
+      expect(getPaginationEl(4).text()).toBe(''+$rootScope.currentPage);
     });
 
     it('shows the page number in middle after the prev link is clicked', function() {
@@ -309,14 +318,14 @@ describe('pagination directive', function() {
       clickPaginationEl(0);
 
       expect($rootScope.currentPage).toBe(6);
-      expect(getPaginationEl(3)).toHaveClass('active');
-      expect(getPaginationEl(3).text()).toBe(''+$rootScope.currentPage);
+      expect(getPaginationEl(4)).toHaveClass('active');
+      expect(getPaginationEl(4).text()).toBe(''+$rootScope.currentPage);
     });
 
     it('changes pagination bar size when max-size value changed', function() {
       $rootScope.maxSize = 7;
       $rootScope.$digest();
-      expect(getPaginationBarSize()).toBe(9);
+      expect(getPaginationBarSize()).toBe(10);
     });
 
     it('sets the pagination bar size to num-pages, if max-size is greater than num-pages ', function() {
@@ -350,6 +359,27 @@ describe('pagination directive', function() {
       expect(linkEl).not.toHaveFocus();
 
       element.remove();
+    });
+
+    it('should display an ellipsis on the right if the last displayed page\'s number is less than the last page', function() {
+      updateCurrentPage(1);
+      expect(getPaginationAsText()).toBe('Previous, 1, 2, 3, 4, 5, ..., Next');
+    });
+
+    it('should display an ellipsis on the left if the first displayed page\'s number is greater than 1', function() {
+      updateCurrentPage(10);
+      expect(getPaginationAsText()).toBe('Previous, ..., 6, 7, 8, 9, 10, Next');
+  });
+
+    it('should display both ellipsis\' if the displayed range is in the middle', function() {
+      updateCurrentPage(5);
+      expect(getPaginationAsText()).toBe('Previous, ..., 3, 4, 5, 6, 7, ..., Next');
+    });
+
+    it('should not display any ellipsis\' if the number of pages >= maxsize', function() {
+      $rootScope.maxSize = 10;
+      $rootScope.$digest();
+      expect(getPaginationAsText()).toBe('Previous, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, Next');
     });
   });
 
@@ -519,7 +549,7 @@ describe('pagination directive', function() {
       expect(linkEl).not.toHaveFocus();
 
       element.remove();
-    });
+  });
 
     it('should blur the "last" link after it has been clicked', function() {
       body.append(element);
@@ -686,7 +716,8 @@ describe('pagination directive', function() {
       element = $compile('<uib-pagination total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
-      expect(getPaginationBarSize()).toBe(4);
+      // Should contain 2 nav buttons, 2 pages, and 2 ellipsis, since the currentPage defaults to 3, which is in the middle
+      expect(getPaginationBarSize()).toBe(6);
     });
   });
 
