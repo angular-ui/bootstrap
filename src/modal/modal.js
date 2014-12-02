@@ -187,6 +187,9 @@ angular.module('ui.bootstrap.modal', [])
           }
         };
 
+        // moved from template to fix issue #2280
+        element.on('click', scope.close);
+
         // This property is only added to the scope for the purpose of detecting when this directive is rendered.
         // We can detect that by using this property in the template associated with this directive and then use
         // {@link Attribute#$observe} on it. For more details please see {@link TableColumnResize}.
