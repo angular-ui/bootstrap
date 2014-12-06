@@ -191,15 +191,12 @@ describe('tabs', function() {
   });
 
   describe('ng-repeat', function() {
-    beforeEach(inject(function($compile, $rootScope) {
+    var $compile, $rootScope;
+    beforeEach(inject(function(_$compile_, _$rootScope_) {
+      $compile = _$compile_;
+      $rootScope = _$rootScope_;
       scope = $rootScope.$new();
 
-      function makeTab(active) {
-        return {
-          active: !!active,
-          select: jasmine.createSpy()
-        };
-      }
       scope.tabs = [
         makeTab(), makeTab(), makeTab(true), makeTab()
       ];
@@ -213,6 +210,13 @@ describe('tabs', function() {
       ].join('\n'))(scope);
       scope.$apply();
     }));
+
+    function makeTab(active) {
+      return {
+        active: !!active,
+        select: jasmine.createSpy()
+      };
+    }
 
     function titles() {
       return elm.find('ul.nav-tabs li');
@@ -262,6 +266,33 @@ describe('tabs', function() {
       scope.tabs[2].active = true;
       scope.$apply();
       expectTabActive(scope.tabs[2]);
+    });
+
+    it('should not select twice', function() {
+      elm.remove();
+      elm = null;
+      scope = $rootScope.$new();
+
+      scope.tabs = [
+        makeTab(), makeTab(), makeTab(true), makeTab()
+      ];
+      scope.foo = {active: true};
+      scope.select = jasmine.createSpy();
+      elm = $compile([
+        '<tabset>',
+        '  <tab ng-repeat="t in tabs" active="t.active" select="select()">',
+        '    <tab-heading><b>heading</b> {{index}}</tab-heading>',
+        '    content {{$index}}',
+        '  </tab>',
+        '  <tab active="foo.active" select="select()">',
+        '    <tab-heading><b>heading</b> foo</tab-heading>',
+        '    content foo',
+        '  </tab>',
+        '</tabset>'
+      ].join('\n'))(scope);
+      scope.$apply();
+
+      expect(scope.select.calls.count()).toBe(1);
     });
   });
 
