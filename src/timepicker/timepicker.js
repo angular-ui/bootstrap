@@ -6,7 +6,8 @@ angular.module('ui.bootstrap.timepicker', [])
   showMeridian: true,
   meridians: null,
   readonlyInput: false,
-  mousewheel: true
+  mousewheel: true,
+  arrowkeys: true
 })
 
 .controller('TimepickerController', ['$scope', '$attrs', '$parse', '$log', '$locale', 'timepickerConfig', function($scope, $attrs, $parse, $log, $locale, timepickerConfig) {
@@ -24,6 +25,11 @@ angular.module('ui.bootstrap.timepicker', [])
     var mousewheel = angular.isDefined($attrs.mousewheel) ? $scope.$parent.$eval($attrs.mousewheel) : timepickerConfig.mousewheel;
     if ( mousewheel ) {
       this.setupMousewheelEvents( hoursInputEl, minutesInputEl );
+    }
+
+    var arrowkeys = angular.isDefined($attrs.arrowkeys) ? $scope.$parent.$eval($attrs.arrowkeys) : timepickerConfig.arrowkeys;
+    if (arrowkeys) {
+      this.setupArrowkeyEvents( hoursInputEl, minutesInputEl );
     }
 
     $scope.readonlyInput = angular.isDefined($attrs.readonlyInput) ? $scope.$parent.$eval($attrs.readonlyInput) : timepickerConfig.readonlyInput;
@@ -112,6 +118,35 @@ angular.module('ui.bootstrap.timepicker', [])
       e.preventDefault();
     });
 
+  };
+
+  // Respond on up/down arrowkeys
+  this.setupArrowkeyEvents = function( hoursInputEl, minutesInputEl ) {
+    hoursInputEl.bind('keydown', function(e) {
+      if ( e.which === 38 ) { // up
+        e.preventDefault();
+        $scope.incrementHours();
+        $scope.$apply();
+      }
+      else if ( e.which === 40 ) { // down
+        e.preventDefault();
+        $scope.decrementHours();
+        $scope.$apply();
+      }
+    });
+
+    minutesInputEl.bind('keydown', function(e) {
+      if ( e.which === 38 ) { // up
+        e.preventDefault();
+        $scope.incrementMinutes();
+        $scope.$apply();
+      }
+      else if ( e.which === 40 ) { // down
+        e.preventDefault();
+        $scope.decrementMinutes();
+        $scope.$apply();
+      }
+    });
   };
 
   this.setupInputEvents = function( hoursInputEl, minutesInputEl ) {

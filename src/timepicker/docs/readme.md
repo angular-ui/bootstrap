@@ -29,5 +29,9 @@ All settings can be provided as attributes in the `<timepicker>` or globally con
  	 Whether user can type inside the hours & minutes input.
 
  * `mousewheel`
- 	_(Defaults: true)_ :
- 	 Whether user can scroll inside the hours & minutes input to increase or decrease it's values.
+    _(Defaults: true)_ :
+     Whether user can scroll inside the hours & minutes input to increase or decrease it's values.
+
+ * `arrowkeys`
+    _(Defaults: true)_ :
+     Whether user can use up/down arrowkeys inside the hours & minutes input to increase or decrease it's values.
