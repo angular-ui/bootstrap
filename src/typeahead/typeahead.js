@@ -321,9 +321,12 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         if (appendToBody) {
           $popup.remove();
         }
+        // Prevent jQuery cache memory leak
+        popUpEl.remove();
       });
 
       var $popup = $compile(popUpEl)(scope);
+      
       if (appendToBody) {
         $document.find('body').append($popup);
       } else {
