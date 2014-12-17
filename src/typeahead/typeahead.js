@@ -404,7 +404,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       var dismissClickHandler = function (evt) {
         // Issue #3973
         // Firefox treats right click as a click on document
-        if (element[0] !== evt.target && evt.which !== 3) {
+        if (element[0] !== evt.target && evt.which !== 3 && scope.matches.length !== 0) {
           resetMatches();
           if (!$rootScope.$$phase) {
             scope.$digest();
