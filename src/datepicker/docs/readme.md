@@ -79,7 +79,11 @@ All settings can be provided as attributes in the `datepicker` or globally confi
 
  * `year-range`
  	_(Default: 20)_ :
- 	Number of years displayed in year selection.
+ 	Number of years displayed in year selection. 
+ 	
+ * `shortcut-propagation`
+    _(Default: false)_ :
+    An option to disable or enable shortcut's event propagation.
 
 
 ### Popup Settings ###
