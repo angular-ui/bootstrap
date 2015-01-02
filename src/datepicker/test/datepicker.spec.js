@@ -1704,6 +1704,30 @@ describe('datepicker directive', function () {
           assignElements(wrapElement);
           expect(dropdownEl.find('li').length).toBe(1);
         });
+
+        it('should hide weeks column on popup', function() {
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup show-weeks="false"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+
+          expect(getLabelsRow().find('th').eq(0)).toBeHidden();
+          var tr = element.find('tbody').find('tr');
+          for (var i = 0; i < 5; i++) {
+            expect(tr.eq(i).find('td').eq(0)).toBeHidden();
+          }
+        });
+
+        it('should show weeks column on popup', function() {
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup show-weeks="true"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+
+          expect(getLabelsRow().find('th').eq(0)).not.toBeHidden();
+          var tr = element.find('tbody').find('tr');
+          for (var i = 0; i < 5; i++) {
+            expect(tr.eq(i).find('td').eq(0)).not.toBeHidden();
+          }
+        });
       });
 
       describe('`ng-change`', function() {

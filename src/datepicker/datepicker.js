@@ -535,6 +535,11 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       if (attrs.dateDisabled) {
         datepickerEl.attr('date-disabled', 'dateDisabled({ date: date, mode: mode })');
       }
+
+      if (attrs.showWeeks) {
+        datepickerEl.attr('show-weeks', attrs.showWeeks);
+      }
+
       if (attrs.customClass){
         datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');
       }
