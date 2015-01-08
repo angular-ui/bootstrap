@@ -133,4 +133,16 @@ describe('tooltip directive', function () {
     expect(fragment).not.toHaveOpenTooltips();
   });
 
+  it('should not show tooltips element is disabled (button) - issue #3167', function () {
+    var fragment = compileTooltip('<button tooltip="cancel!" ng-disabled="disabled" ng-click="disabled = true">Cancel</button>');
+
+    fragment.find('button').trigger( 'mouseenter' );
+    expect(fragment).toHaveOpenTooltips();
+
+    fragment.find('button').trigger( 'click' );
+    $timeout.flush();
+    // One needs to flush deferred functions before checking there is no tooltip.
+    expect(fragment).not.toHaveOpenTooltips();
+  });
+
 });
