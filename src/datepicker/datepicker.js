@@ -571,7 +571,9 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       scope.keydown = function(evt) {
         if (evt.which === 27) {
           evt.preventDefault();
-          evt.stopPropagation();
+          if (scope.isOpen) {
+            evt.stopPropagation();
+          }
           scope.close();
         } else if (evt.which === 40 && !scope.isOpen) {
           scope.isOpen = true;

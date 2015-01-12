@@ -1248,6 +1248,27 @@ describe('datepicker directive', function () {
           expect(dropdownEl).toBeHidden();
           expect(document.activeElement.tagName).toBe('INPUT');
         });
+        
+        it('stops the ESC key from propagating if the dropdown is open, but not when closed', function() {
+          expect(dropdownEl).not.toBeHidden();
+
+          dropdownEl.find('button').eq(0).focus();
+          expect(document.activeElement.tagName).toBe('BUTTON');
+          
+          var documentKey = -1;
+          var getKey = function(evt) { documentKey = evt.which; };
+          $document.bind('keydown', getKey);
+
+          triggerKeyDown(inputEl, 'esc');
+          $rootScope.$digest();
+          expect(dropdownEl).toBeHidden();
+          expect(documentKey).toBe(-1);
+          
+          triggerKeyDown(inputEl, 'esc');
+          expect(documentKey).toBe(27);
+          
+          $document.unbind('keydown', getKey);
+        });
       });
     });
 
