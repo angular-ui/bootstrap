@@ -487,6 +487,15 @@ describe('typeahead tests', function () {
       expect(element).toBeClosed();
     });
 
+    it('PR #3178, resolves #2999 - should not return property "length" of undefined for undefined matches', function () {
+      changeInputValueTo(element, 'c');
+      expect(element).toBeClosed();
+
+      deferred.resolve();
+      $scope.$digest();
+      expect(element).toBeClosed();
+    });
+
   });
 
   describe('non-regressions tests', function () {
@@ -777,7 +786,7 @@ describe('typeahead tests', function () {
     };
     var element = prepareInputEl('<div><input ng-model="result" ng-keydown="keyDownEvent = $event" typeahead="item for item in source | filter:$viewValue" typeahead-on-select="onSelect($item, $model, $label)" typeahead-focus-first="false"></div>');
     changeInputValueTo(element, 'b');
-    
+
     // enter key should not be captured when nothing is focused
     triggerKeyDown(element, 13);
     expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
