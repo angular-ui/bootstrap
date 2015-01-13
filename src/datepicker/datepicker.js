@@ -554,10 +554,12 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       });
 
       // Outer change
-      ngModel.$render = function() {
-        var date = ngModel.$viewValue ? dateFilter(parseDate(ngModel.$viewValue), dateFormat) : '';
-        element.val(date);
-        scope.date = parseDate( ngModel.$modelValue );
+      ngModel.$render = function () {
+        if (dateFormat) {
+          var date = ngModel.$viewValue ? dateFilter(parseDate(ngModel.$viewValue), dateFormat) : '';
+          element.val(date);
+          scope.date = parseDate( ngModel.$modelValue );
+        }
       };
 
       var documentClickBind = function(event) {

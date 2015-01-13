@@ -1103,6 +1103,25 @@ describe('datepicker directive', function () {
 
   });
 
+  describe('setting datepickerPopupConfig inside ng-if', function() {
+    var originalConfig = {};
+    beforeEach(inject(function (datepickerPopupConfig) {
+      angular.extend(originalConfig, datepickerPopupConfig);
+      datepickerPopupConfig.datepickerPopup = 'MM-dd-yyyy';
+
+      element = $compile('<div><div ng-if="true"><input ng-model="date" datepicker-popup></div></div>')($rootScope);
+      $rootScope.$digest();
+    }));
+    afterEach(inject(function (datepickerPopupConfig) {
+      // return it to the original state
+      angular.extend(datepickerPopupConfig, originalConfig);
+    }));
+
+    it('changes date format', function () {
+      expect(element.find('input').val()).toEqual('09-30-2010');
+    });
+  });
+
   describe('as popup', function () {
     var inputEl, dropdownEl, $document, $sniffer;
 
