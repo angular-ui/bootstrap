@@ -41,7 +41,10 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch'], func
       });
   }
 
-});
+})
+.controller('MainCtrl', MainCtrl)
+.controller('SelectModulesCtrl', SelectModulesCtrl)
+.controller('DownloadCtrl', DownloadCtrl);
 
 var builderUrl = "http://50.116.42.77:3001";
 
