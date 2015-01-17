@@ -39,7 +39,7 @@ All settings can be provided as attributes in the `datepicker` or globally confi
 
  * `init-date`
  	:
- 	The initial date view when no model value is not specified.
+ 	The initial date view when no model value is specified.
 
  * `min-mode`
    _(Defaults: 'day')_ :
