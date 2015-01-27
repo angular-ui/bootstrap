@@ -7,6 +7,24 @@
 [![Build Status](https://secure.travis-ci.org/angular-ui/bootstrap.svg)](http://travis-ci.org/angular-ui/bootstrap)
 [![devDependency Status](https://david-dm.org/angular-ui/bootstrap/dev-status.svg?branch=master)](https://david-dm.org/angular-ui/bootstrap#info=devDependencies)
 
+## IMPT NEW - ANGULAR 1.3 SUPPORT
+
+As of 17 Jan 2015 the project has bought on new maintainers to try and clear through the backlog of Angular 1.3 issues. As you can appreciate this is a *massive* undertaking 
+by a purely part-time, unpaid volunteer team; so please be patient with us! The milestones are as follows:
+
+* The 0.12.1 milestone will contain some important bug fixes for the existing Angular 1.2 supported version of bootstrap
+* The 0.13.0 milestone will contain issues and pull requests that are blocking 1.3 compatibility (definition - features/bugs that are blockers as opposed to nice to haves)
+* The 0.13.x milestome will contain issues and pull requests that are nice to haves for 1.3 compatibility
+* The 1.0 milestone is TBA
+* The Backlog milestone is nice to haves
+* The Purgatory Milestone is 'Good luck getting that in'
+
+The plan is:
+
+1. Rapidly Release 0.12.1 which new Maintainers learning the Cherry-Pick merge and Release process
+1. Triage of existing Pull Requests into 0.13.0, 0.13.x, Backlog and Purgatory milestones (you will start to see PR's get 'merged' at this point)
+1. Triage of existing issues into 0.13.0, 0.13.x, Backlog and Purgatory milestones
+
 ## Demo
 
 Do you want to see directives in action? Visit http://angular-ui.github.io/bootstrap/!
