@@ -7,6 +7,25 @@
 [![Build Status](https://secure.travis-ci.org/angular-ui/bootstrap.svg)](http://travis-ci.org/angular-ui/bootstrap)
 [![devDependency Status](https://david-dm.org/angular-ui/bootstrap/dev-status.svg?branch=master)](https://david-dm.org/angular-ui/bootstrap#info=devDependencies)
 
+## IMPT - 2015 PLANS AND ANGULAR 1.3 SUPPORT
+
+As of 17 Jan 2015 the project has bought on new maintainers to try and clear through the backlog of Angular 1.3 issues. As you can appreciate this is a **massive** undertaking 
+by a purely part-time, unpaid volunteer team; so please be patient with us! The milestones are as follows:
+
+* The **0.12.1** milestone will be for bug fixes for the existing Angular 1.2 supported version
+* The **0.13.0** milestone will contain issues / PRs that are majorly blocking 1.3 compatibility
+* The **0.13.x** milestone will contain issues / PRs that are nice to haves for 1.3 compatibility
+* The **1.0** milestone is TBA
+* The **Backlog** milestone is nice to haves
+* The **Purgatory** Milestone is *"Good luck getting that in"*
+
+The plan is to:
+
+1. **Rapidly Release 0.12.1** - new Maintainers learning the merge and release process
+1. **Triage of existing Pull Requests** - into 0.13.0, 0.13.x, Backlog and Purgatory milestones
+1. **Triage of existing issues** - into 0.13.0, 0.13.x, Backlog and Purgatory milestones
+1. Obligatory - **profit!**
+
 ## Demo
 
 Do you want to see directives in action? Visit http://angular-ui.github.io/bootstrap/!
@@ -27,6 +46,16 @@ angular.module('myModule', ['ui.bootstrap']);
 Project files are also available through your favourite package manager:
 * **Bower**: `bower install angular-bootstrap`
 * **NuGet**: https://nuget.org/packages/Angular.UI.Bootstrap/
+
+## Support
+
+If you are having problems making some directives work, there are several ways to get help:
+
+* Live help in the IRC (`#angularjs` channel at the `freenode` network). Use this [webchat](https://webchat.freenode.net/) or your own IRC client.
+* Ask a question in [stackoverflow](http://stackoverflow.com/) under the [angular-ui-bootstrap](http://stackoverflow.com/questions/tagged/angular-ui-bootstrap) tag.
+* Write your question in our [mailing list](https://groups.google.com/forum/#!categories/angular-ui/bootstrap).
+
+Project's issue on GitHub should be used discuss bugs and features.
 
 ## FAQ
 
