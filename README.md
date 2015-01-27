@@ -47,6 +47,16 @@ Project files are also available through your favourite package manager:
 * **Bower**: `bower install angular-bootstrap`
 * **NuGet**: https://nuget.org/packages/Angular.UI.Bootstrap/
 
+## Support
+
+If you are having problems making some directives work, there are several ways to get help:
+
+* Live help in the IRC (`#angularjs` channel at the `freenode` network). Use this [webchat](https://webchat.freenode.net/) or your own IRC client.
+* Ask a question in [stackoverflow](http://stackoverflow.com/) under the [angular-ui-bootstrap](http://stackoverflow.com/questions/tagged/angular-ui-bootstrap) tag.
+* Write your question in our [mailing list](https://groups.google.com/forum/#!categories/angular-ui/bootstrap).
+
+Project's issue on GitHub should be used discuss bugs and features.
+
 ## FAQ
 
 https://github.com/angular-ui/bootstrap/wiki/FAQ
