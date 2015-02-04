@@ -135,6 +135,7 @@ describe('tooltip', function() {
   }));
 
   it('should only have an isolate scope on the popup', inject( function ( $compile ) {
+    var ttScope;
 
     scope.tooltipMsg = 'Tooltip Text';
     scope.alt = 'Alt Message';
@@ -147,21 +148,22 @@ describe('tooltip', function() {
     scope.$digest();
     elm = elmBody.find( 'span' );
     elmScope = elm.scope();
-    tooltipScope = elmScope.$$childTail;
 
     elm.trigger( 'mouseenter' );
     expect( elm.attr( 'alt' ) ).toBe( scope.alt );
 
-    expect( tooltipScope.placement ).toBe('top');
-    expect( tooltipScope.content ).toBe(scope.tooltipMsg);
+    ttScope = angular.element( elmBody.children()[1] ).isolateScope();
+    expect( ttScope.placement ).toBe( 'top' );
+    expect( ttScope.content ).toBe( scope.tooltipMsg );
 
     elm.trigger( 'mouseleave' );
 
     //Isolate scope contents should be the same after hiding and showing again (issue 1191)
     elm.trigger( 'mouseenter' );
 
-    expect( tooltipScope.placement ).toBe('top');
-    expect( tooltipScope.content ).toBe(scope.tooltipMsg);
+    ttScope = angular.element( elmBody.children()[1] ).isolateScope();
+    expect( ttScope.placement ).toBe( 'top' );
+    expect( ttScope.content ).toBe( scope.tooltipMsg );
   }));
 
   it('should not show tooltips if there is nothing to show - issue #129', inject(function ($compile) {

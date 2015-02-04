@@ -36,9 +36,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
    *     $tooltipProvider.options( { placement: 'left' } );
    *   });
    */
-  this.options = function( value ) {
-    angular.extend( globalOptions, value );
-  };
+	this.options = function( value ) {
+		angular.extend( globalOptions, value );
+	};
 
   /**
    * This allows you to extend the set of trigger mappings available. E.g.:
@@ -202,7 +202,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
               // And show the tooltip.
               ttScope.isOpen = true;
-              ttScope.$apply(); // digest required as $apply is not called
+              ttScope.$digest(); // digest required as $apply is not called
 
               // Return positioning function as promise callback for correct
               // positioning after draw.
@@ -289,7 +289,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             }
 
             var unregisterTriggers = function () {
-              element.unbind(triggers.show, toggleTooltipBind);
               element.unbind(triggers.show, showTooltipBind);
               element.unbind(triggers.hide, hideTooltipBind);
             };
@@ -341,29 +340,11 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
   }];
 })
 
-.directive( 'tooltipTemplateTransclude', ['$http', '$compile', '$templateCache', function ($http ,  $compile ,  $templateCache) {
-  return {
-    link: function ( scope, elem, attrs ) {
-      if (scope.content) {
-        // TODO: How to solve the problem of pre-loading the template?
-        // TODO: Should this be watching for changes in scope.content?
-        var templateUrl = scope.content,
-        transcludeScope = scope.$parent.$parent;
-
-        $http.get( templateUrl, { cache: $templateCache })
-          .then(function (response) {
-            elem.html(response.data);
-            $compile(elem.contents())(transcludeScope);
-          });
-      }
-    }
-  };
-}])
-
 .directive( 'tooltipPopup', function () {
   return {
     restrict: 'EA',
     replace: true,
+    scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-popup.html'
   };
 })
@@ -376,6 +357,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
   return {
     restrict: 'EA',
     replace: true,
+    scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-html-unsafe-popup.html'
   };
 })
@@ -383,4 +365,3 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 .directive( 'tooltipHtmlUnsafe', [ '$tooltip', function ( $tooltip ) {
   return $tooltip( 'tooltipHtmlUnsafe', 'tooltip', 'mouseenter' );
 }]);
-
