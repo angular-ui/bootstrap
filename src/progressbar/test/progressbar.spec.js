@@ -116,6 +116,13 @@ describe('progressbar directive', function () {
     it('transcludes "bar" text', function() {
       expect(getBar(0).text()).toBe('22/200');
     });
+    
+    it('adjusts the valuemax when it changes', function() {
+      expect(getBar(0).attr('aria-valuemax')).toBe('200');
+      $rootScope.max = 300;
+      $rootScope.$digest();
+      expect(getBar(0).attr('aria-valuemax')).toBe('300');
+    });
   });
 
   describe('"type" attribute', function () {
