@@ -1,3 +1,10 @@
+# 0.12.1 (2015-02-20)
+
+## Bug Fixes
+
+- **tooltip:** 
+  - incorrect position when text wraps ([5726e3ef](http://github.com/angular-ui/bootstrap/commit/5726e3ef))   
+
 <a name="0.12.0"></a>
 # 0.12.0 (2014-11-16)
 
