@@ -91,11 +91,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         element.addClass(attrs.windowClass || '');
         scope.size = attrs.size;
 
-        // moved from template to fix issue #2280
-        element.on('click', function(evt) {
-          scope.close(evt);
-        });
-
         $timeout(function () {
           // trigger CSS transitions
           scope.animate = true;
