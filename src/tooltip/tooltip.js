@@ -266,12 +266,6 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
                 hide();
               }
             });
-            
-            attrs.$observe( 'disabled', function ( val ) {
-              if (val && ttScope.isOpen ) {
-                hide();
-              }
-            });
 
             attrs.$observe( prefix+'Title', function ( val ) {
               ttScope.title = val;
