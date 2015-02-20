@@ -650,6 +650,22 @@ describe('typeahead tests', function () {
       $(match).click();
       $scope.$digest();
     });
+
+    it('issue #3318 - should set model validity to true when set manually', function () {
+
+      var element = prepareInputEl(
+        '<div><form name="form">' +
+          '<input name="input" ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-editable="false">' +
+        '</form></div>');
+
+      changeInputValueTo(element, 'not in matches');
+      $scope.$apply(function () {
+        $scope.result = 'manually set';
+      });
+
+      expect($scope.result).toEqual('manually set');
+      expect($scope.form.input.$valid).toBeTruthy();
+    });
   });
 
   describe('input formatting', function () {
