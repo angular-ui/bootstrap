@@ -502,6 +502,11 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       }
 
       function parseDate(viewValue) {
+        if (angular.isNumber(viewValue)) {
+          // presumably timestamp to date object
+          viewValue = new Date(viewValue);
+        }
+
         if (!viewValue) {
           ngModel.$setValidity('date', true);
           return null;

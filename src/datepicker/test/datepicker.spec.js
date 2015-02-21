@@ -1547,8 +1547,15 @@ describe('datepicker directive', function () {
       it('should be invalid initially', function() {
         expect(inputEl.hasClass('ng-invalid')).toBeTruthy();
       });
+
       it('should be valid if model has been specified', function() {
         $rootScope.date = new Date();
+        $rootScope.$digest();
+        expect(inputEl.hasClass('ng-valid')).toBeTruthy();
+      });
+
+      it('should be valid if model value is a valid timestamp', function() {
+        $rootScope.date = Date.now();
         $rootScope.$digest();
         expect(inputEl.hasClass('ng-valid')).toBeTruthy();
       });
