@@ -12,7 +12,7 @@
 As of 17 Jan 2015 the project has bought on new maintainers to try and clear through the backlog of Angular 1.3 issues. As you can appreciate this is a **massive** undertaking 
 by a purely part-time, unpaid volunteer team; so please be patient with us! The milestones are as follows:
 
-* The **0.12.1** milestone will be for bug fixes for the existing Angular 1.2 supported version
+* **DONE** - The **0.12.1** milestone will be for bug fixes for the existing Angular 1.2 supported version
 * The **0.13.0** milestone will contain issues / PRs that are majorly blocking 1.3 compatibility
 * The **0.13.x** milestone will contain issues / PRs that are nice to haves for 1.3 compatibility
 * The **1.0** milestone is TBA
@@ -21,7 +21,7 @@ by a purely part-time, unpaid volunteer team; so please be patient with us! The 
 
 The plan is to:
 
-1. **Rapidly Release 0.12.1** - new Maintainers learning the merge and release process
+1. **DONE** - **Rapidly Release 0.12.1** - new Maintainers learning the merge and release process
 1. **Triage of existing Pull Requests** - into 0.13.0, 0.13.x, Backlog and Purgatory milestones
 1. **Triage of existing issues** - into 0.13.0, 0.13.x, Backlog and Purgatory milestones
 1. Obligatory - **profit!**
