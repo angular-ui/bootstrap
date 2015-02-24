@@ -21,6 +21,7 @@ will display:
   `tooltip-trigger`.
 - `tooltip-append-to-body`: Should the tooltip be appended to `$body` instead of
   the parent element?
+- `tooltip-class`: Custom class to be applied to the tooltip.
 
 The tooltip directives require the `$position` service.
 

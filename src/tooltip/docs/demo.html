@@ -10,20 +10,36 @@
     <p>
       Pellentesque <a href="#" tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</a>,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
-      aliquam. Tincidunt lobortis feugiat vivamus at 
+      aliquam. Tincidunt lobortis feugiat vivamus at
       <a href="#" tooltip-placement="left" tooltip="On the Left!">left</a> eget
       arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
-      <a href="#" tooltip-placement="right" tooltip="On the Right!">right</a> 
-      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
-      <a href="#" tooltip-placement="bottom" tooltip="On the Bottom!">bottom</a> 
-      pharetra convallis posuere morbi leo urna, 
+      <a href="#" tooltip-placement="right" tooltip="On the Right!">right</a>
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas
+      <a href="#" tooltip-placement="bottom" tooltip="On the Bottom!">bottom</a>
+      pharetra convallis posuere morbi leo urna,
       <a href="#" tooltip-animation="false" tooltip="I don't fade. :-(">fading</a>
       at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
       <a href="#" tooltip-popup-delay='1000' tooltip='appears with delay'>delayed</a> turpis massa tincidunt dui ut.
     </p>
 
     <p>
-      I can even contain HTML. <a href="#" tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</a>
+        I can even contain HTML. <a href="#" tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</a>
+    </p>
+
+    <p>
+        <style>
+            /* Specify styling for tooltip contents */
+            .tooltip.customClass .tooltip-inner {
+                color: #880000;
+                background-color: #ffff66;
+                box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            }
+            /* Hide arrow */
+            .tooltip.customClass .tooltip-arrow {
+                display: none;
+            }
+        </style>
+        I can have a custom class. <a href="#" tooltip="I can have a custom class applied to me!" tooltip-class="customClass">Check me out!</a>
     </p>
 
     <form role="form">
