@@ -67,10 +67,11 @@ angular.module('ui.bootstrap.modal', [])
 
         scope.animate = false;
 
-        //trigger CSS transitions
+        // schedule to trigger CSS transitions, but skip invoking apply immediately
+        // (modalWindow's $timeout will invoke an apply which is enough since modalWindow is added after modalBackdrop)
         $timeout(function () {
           scope.animate = true;
-        });
+        }, 0, false);
       }
     };
   }])
