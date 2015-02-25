@@ -9,7 +9,7 @@
 
 ## IMPT - 2015 PLANS AND ANGULAR 1.3 SUPPORT
 
-As of 17 Jan 2015 the project has bought on new maintainers to try and clear through the backlog of Angular 1.3 issues. As you can appreciate this is a **massive** undertaking 
+As of 17 Jan 2015 the project has brought on new maintainers to try and clear through the backlog of Angular 1.3 issues. As you can appreciate this is a **massive** undertaking 
 by a purely part-time, unpaid volunteer team; so please be patient with us! The milestones are as follows:
 
 * **DONE** - The **0.12.1** milestone will be for bug fixes for the existing Angular 1.2 supported version
