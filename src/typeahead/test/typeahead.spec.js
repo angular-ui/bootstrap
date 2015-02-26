@@ -863,7 +863,7 @@ describe('typeahead tests', function () {
     });
   });
 
-  it('should not capture enter or tab until an item is focused', function () {
+  it('should not capture enter or tab when an item is not focused', function () {
     $scope.select_count = 0;
     $scope.onSelect = function ($item, $model, $label) {
       $scope.select_count = $scope.select_count + 1;
@@ -876,10 +876,20 @@ describe('typeahead tests', function () {
     expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
     expect($scope.select_count).toEqual(0);
 
-    // tab key should not be captured when nothing is focused
+    // tab key should close the dropdown when nothing is focused
     triggerKeyDown(element, 9);
     expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
     expect($scope.select_count).toEqual(0);
+    expect(element).toBeClosed();
+  });
+
+  it('should capture enter or tab when an item is focused', function () {
+    $scope.select_count = 0;
+    $scope.onSelect = function ($item, $model, $label) {
+      $scope.select_count = $scope.select_count + 1;
+    };
+    var element = prepareInputEl('<div><input ng-model="result" ng-keydown="keyDownEvent = $event" typeahead="item for item in source | filter:$viewValue" typeahead-on-select="onSelect($item, $model, $label)" typeahead-focus-first="false"></div>');
+    changeInputValueTo(element, 'b');
 
     // down key should be captured and focus first element
     triggerKeyDown(element, 40);
