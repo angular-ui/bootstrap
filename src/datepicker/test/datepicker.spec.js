@@ -6,6 +6,26 @@ describe('datepicker directive', function () {
   beforeEach(module('template/datepicker/month.html'));
   beforeEach(module('template/datepicker/year.html'));
   beforeEach(module('template/datepicker/popup.html'));
+  beforeEach(module(function($compileProvider) {
+    $compileProvider.directive('dateModel', function() {
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, modelController) {
+          modelController.$formatters.push(function(object) {
+            return new Date(object.date);
+          });
+
+          modelController.$parsers.push(function(date) {
+            return {
+              type: 'date',
+              date: date.toUTCString()
+            };
+          });
+        }
+      };
+    });
+  }));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -1730,6 +1750,32 @@ describe('datepicker directive', function () {
       expect(getTitle()).toBe('2013');
       clickTitleButton();
       expect(getTitle()).toBe('2013');
+    });
+  });
+
+  describe('with an ngModelController having formatters and parsers', function() {
+    beforeEach(inject(function() {
+      // Custom date object.
+      $rootScope.date = { type: 'date', date: 'April 1, 2015 00:00:00' };
+
+      // Use dateModel directive to add formatters and parsers to the
+      // ngModelController that translate the custom date object.
+      element = $compile('<datepicker ng-model="date" date-model></datepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('updates the view', function() {
+      $rootScope.date = { type: 'date', date: 'April 15, 2015 00:00:00' };
+      $rootScope.$digest();
+
+      expectSelectedElement(17);
+    });
+
+    it('updates the model', function() {
+      clickOption(17);
+
+      expect($rootScope.date.type).toEqual('date');
+      expect(new Date($rootScope.date.date)).toEqual(new Date('April 15, 2015 00:00:00'));
     });
   });
 });

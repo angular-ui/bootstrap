@@ -63,8 +63,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 
   this.render = function() {
-    if ( ngModelCtrl.$modelValue ) {
-      var date = new Date( ngModelCtrl.$modelValue ),
+    if ( ngModelCtrl.$viewValue ) {
+      var date = new Date( ngModelCtrl.$viewValue ),
           isValid = !isNaN(date);
 
       if ( isValid ) {
@@ -81,13 +81,13 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     if ( this.element ) {
       this._refreshView();
 
-      var date = ngModelCtrl.$modelValue ? new Date(ngModelCtrl.$modelValue) : null;
+      var date = ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null;
       ngModelCtrl.$setValidity('date-disabled', !date || (this.element && !this.isDisabled(date)));
     }
   };
 
   this.createDateObject = function(date, format) {
-    var model = ngModelCtrl.$modelValue ? new Date(ngModelCtrl.$modelValue) : null;
+    var model = ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null;
     return {
       date: date,
       label: dateFilter(date, format),
@@ -112,7 +112,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   $scope.select = function( date ) {
     if ( $scope.datepickerMode === self.minMode ) {
-      var dt = ngModelCtrl.$modelValue ? new Date( ngModelCtrl.$modelValue ) : new Date(0, 0, 0, 0, 0, 0, 0);
+      var dt = ngModelCtrl.$viewValue ? new Date( ngModelCtrl.$viewValue ) : new Date(0, 0, 0, 0, 0, 0, 0);
       dt.setFullYear( date.getFullYear(), date.getMonth(), date.getDate() );
       ngModelCtrl.$setViewValue( dt );
       ngModelCtrl.$render();
