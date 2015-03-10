@@ -43,7 +43,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       //minimal no of characters that needs to be entered before typeahead kicks-in
       var minSearch = originalScope.$eval(attrs.typeaheadMinLength) || 1;
 
-      //minimal wait time after last character typed before typehead kicks-in
+      //minimal wait time after last character typed before typeahead kicks-in
       var waitTime = originalScope.$eval(attrs.typeaheadWaitMs) || 0;
 
       //should it restrict model values to the ones selected from the popup only?
