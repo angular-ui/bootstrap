@@ -16,6 +16,9 @@ will display:
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
 - `tooltip-trigger`: What should trigger a show of the tooltip?
+  Note: this attribute is no longer observable. See `tooltip-enable`.
+- `tooltip-enable`: Is it enabled? It will enable or disable the configured
+  `tooltip-trigger`.
 - `tooltip-append-to-body`: Should the tooltip be appended to `$body` instead of
   the parent element?
 
