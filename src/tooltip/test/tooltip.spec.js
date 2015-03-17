@@ -446,6 +446,58 @@ describe('tooltipWithDifferentSymbols', function() {
 
 });
 
+describe( 'tooltip positioning', function() {
+  var elm, elmBody, elmScope, tooltipScope, scope;
+  var $position;
+
+  // load the tooltip code
+  beforeEach(module('ui.bootstrap.tooltip', function ( $tooltipProvider ) {
+    $tooltipProvider.options({ animation: false });
+  }));
+
+  // load the template
+  beforeEach(module('template/tooltip/tooltip-popup.html'));
+
+  beforeEach(inject(function($rootScope, $compile, _$position_) {
+    $position = _$position_;
+    spyOn($position, 'positionElements').andCallThrough();
+
+    scope = $rootScope;
+    scope.text = 'Some Text';
+
+    elmBody = $compile( angular.element(
+      '<div><span tooltip="{{ text }}">Selector Text</span></div>'
+    ))( scope);
+    scope.$digest();
+    elm = elmBody.find('span');
+    elmScope = elm.scope();
+    tooltipScope = elmScope.$$childTail;
+  }));
+
+  it( 'should re-position on every digest', inject( function ($timeout) {
+    elm.trigger( 'mouseenter' );
+
+    scope.$digest();
+    $timeout.flush();
+    var startingPositionCalls = $position.positionElements.calls.length;
+
+    scope.$digest();
+    $timeout.flush();
+    expect($position.positionElements.calls.length).toEqual(startingPositionCalls + 1);
+    // Check that positionElements was called with elm
+    expect($position.positionElements.calls[startingPositionCalls].args[0][0])
+      .toBe(elm[0]);
+
+    scope.$digest();
+    $timeout.flush();
+    expect($position.positionElements.calls.length).toEqual(startingPositionCalls + 2);
+    expect($position.positionElements.calls[startingPositionCalls + 1].args[0][0])
+      .toBe(elm[0]);
+    scope.$digest();
+  }));
+
+});
+
 describe( 'tooltipHtmlUnsafe', function() {
   var elm, elmBody, elmScope, tooltipScope, scope;
 
