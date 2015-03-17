@@ -11,43 +11,43 @@
 
 ## Bug Fixes
 
-* **accordion:** make header links keyboard accessible ([992b2329](angular-ui/bootstrap/commit/992b23297cd100ab4e236fba469e3a70566a4163), closes [#2869](angular-ui/bootstrap/issues/2869))
-* **build:** make custom builds on demo site work ([390f2bf6](angular-ui/bootstrap/commit/390f2bf6b0846ee640e86ad87bbae8c449e53026), closes [#2960](angular-ui/bootstrap/issues/2960), [#2847](angular-ui/bootstrap/issues/2847), [#2625](angular-ui/bootstrap/issues/2625), [#2489](angular-ui/bootstrap/issues/2489), [#2357](angular-ui/bootstrap/issues/2357), [#2176](angular-ui/bootstrap/issues/2176), [#2892](angular-ui/bootstrap/issues/2892))
-* **carousel:** replaced $timeout with $interval when it was wrong ([392c0ad1](angular-ui/bootstrap/commit/392c0ad13ca9b65be5e77ac0c68de24ead8ea2ce), closes [#1308](angular-ui/bootstrap/issues/1308), [#2454](angular-ui/bootstrap/issues/2454), [#2776](angular-ui/bootstrap/issues/2776))
-* **datepicker:** correct button alignment when using bootstrap v3.2.0 ([460fbec7](angular-ui/bootstrap/commit/460fbec776c6d08d0e7db40aedd29d10ac48d7e9), closes [#2728](angular-ui/bootstrap/issues/2728))
-* **demo:** initial load of fragment URLs ([eab6daf6](angular-ui/bootstrap/commit/eab6daf64b3c963d8e285e254c75af5f97c24ec1), closes [#2762](angular-ui/bootstrap/issues/2762))
+* **accordion:** make header links keyboard accessible ([992b2329](http://github.com/angular-ui/bootstrap/commit/992b23297cd100ab4e236fba469e3a70566a4163), closes [#2869](http://github.com/angular-ui/bootstrap/issues/2869))
+* **build:** make custom builds on demo site work ([390f2bf6](http://github.com/angular-ui/bootstrap/commit/390f2bf6b0846ee640e86ad87bbae8c449e53026), closes [#2960](http://github.com/angular-ui/bootstrap/issues/2960), [#2847](http://github.com/angular-ui/bootstrap/issues/2847), [#2625](http://github.com/angular-ui/bootstrap/issues/2625), [#2489](http://github.com/angular-ui/bootstrap/issues/2489), [#2357](http://github.com/angular-ui/bootstrap/issues/2357), [#2176](http://github.com/angular-ui/bootstrap/issues/2176), [#2892](http://github.com/angular-ui/bootstrap/issues/2892))
+* **carousel:** replaced $timeout with $interval when it was wrong ([392c0ad1](http://github.com/angular-ui/bootstrap/commit/392c0ad13ca9b65be5e77ac0c68de24ead8ea2ce), closes [#1308](http://github.com/angular-ui/bootstrap/issues/1308), [#2454](http://github.com/angular-ui/bootstrap/issues/2454), [#2776](http://github.com/angular-ui/bootstrap/issues/2776))
+* **datepicker:** correct button alignment when using bootstrap v3.2.0 ([460fbec7](http://github.com/angular-ui/bootstrap/commit/460fbec776c6d08d0e7db40aedd29d10ac48d7e9), closes [#2728](http://github.com/angular-ui/bootstrap/issues/2728))
+* **demo:** initial load of fragment URLs ([eab6daf6](http://github.com/angular-ui/bootstrap/commit/eab6daf64b3c963d8e285e254c75af5f97c24ec1), closes [#2762](http://github.com/angular-ui/bootstrap/issues/2762))
 * **dropdown:**
-  * compatibility with `$location` url rewriting ([ef095170](angular-ui/bootstrap/commit/ef09517061b0b4c0c9e9f85086635af33207ec54), closes [#2343](angular-ui/bootstrap/issues/2343))
-  * remove `C` restrictions to avoid conflicts ([192768e1](angular-ui/bootstrap/commit/192768e109b5c4a50c7dcd320e09d05fedd4298a), closes [#2156](angular-ui/bootstrap/issues/2156), [#2170](angular-ui/bootstrap/issues/2170))
+  * compatibility with `$location` url rewriting ([ef095170](http://github.com/angular-ui/bootstrap/commit/ef09517061b0b4c0c9e9f85086635af33207ec54), closes [#2343](http://github.com/angular-ui/bootstrap/issues/2343))
+  * remove `C` restrictions to avoid conflicts ([192768e1](http://github.com/angular-ui/bootstrap/commit/192768e109b5c4a50c7dcd320e09d05fedd4298a), closes [#2156](http://github.com/angular-ui/bootstrap/issues/2156), [#2170](http://github.com/angular-ui/bootstrap/issues/2170))
 * **tabs:**
-  * make tab links keyboard accessible ([5df524b7](angular-ui/bootstrap/commit/5df524b77114bccdc9a49540e1eb52a564ee5dfd), closes [#2226](angular-ui/bootstrap/issues/2226), [#2290](angular-ui/bootstrap/issues/2290), [#2870](angular-ui/bootstrap/issues/2870), [#2304](angular-ui/bootstrap/issues/2304))
-  * don't select tabs on destroy ([9939867a](angular-ui/bootstrap/commit/9939867aba0b7b763588b18829b557c052ea69ba), closes [#2155](angular-ui/bootstrap/issues/2155), [#2596](angular-ui/bootstrap/issues/2596))
-* **tests:** usage of undefined variables ([34273ff0](angular-ui/bootstrap/commit/34273ff0107ecfa28438a7389d94ca619b8704e5))
+  * make tab links keyboard accessible ([5df524b7](http://github.com/angular-ui/bootstrap/commit/5df524b77114bccdc9a49540e1eb52a564ee5dfd), closes [#2226](http://github.com/angular-ui/bootstrap/issues/2226), [#2290](http://github.com/angular-ui/bootstrap/issues/2290), [#2870](http://github.com/angular-ui/bootstrap/issues/2870), [#2304](http://github.com/angular-ui/bootstrap/issues/2304))
+  * don't select tabs on destroy ([9939867a](http://github.com/angular-ui/bootstrap/commit/9939867aba0b7b763588b18829b557c052ea69ba), closes [#2155](http://github.com/angular-ui/bootstrap/issues/2155), [#2596](http://github.com/angular-ui/bootstrap/issues/2596))
+* **tests:** usage of undefined variables ([34273ff0](http://github.com/angular-ui/bootstrap/commit/34273ff0107ecfa28438a7389d94ca619b8704e5))
 * **tooltip:**
-  * remove extra digest causing incompatibility ([32c4704b](angular-ui/bootstrap/commit/32c4704b748cecf2de4c651f2e5157c1ef6c88b1), closes [#2951](angular-ui/bootstrap/issues/2951), [#2959](angular-ui/bootstrap/issues/2959))
-  * show correct tooltip on `ng-repeat` ([b4832c4b](angular-ui/bootstrap/commit/b4832c4b551af7e580ed65d9e5aaee1ef9e6c53e), closes [#2935](angular-ui/bootstrap/issues/2935))
-  * memory leak on show/hide ([faf38d20](angular-ui/bootstrap/commit/faf38d20a49176f2016f7f7d4fa49a5c438a986e), closes [#2709](angular-ui/bootstrap/issues/2709), [#2919](angular-ui/bootstrap/issues/2919))
-  * remove child scope requirement ([8204c808](angular-ui/bootstrap/commit/8204c8088139165ac9b2ad3977a2c20570e434cb), closes [#1269](angular-ui/bootstrap/issues/1269), [#2320](angular-ui/bootstrap/issues/2320), [#2203](angular-ui/bootstrap/issues/2203))
-  * evaluate appendToBody on init ([e10d561f](angular-ui/bootstrap/commit/e10d561f92c2927be0ec429761fa229520fb9a51), closes [#2921](angular-ui/bootstrap/issues/2921))
-  * don't use an empty transclusion fn ([689c4d01](angular-ui/bootstrap/commit/689c4d017d303b6d758164ee12837a172bb01139), closes [#2825](angular-ui/bootstrap/issues/2825))
-* **typeahead:** don't leak DOM nodes ([1f6c3c92](angular-ui/bootstrap/commit/1f6c3c92af0e343c7e34b85ea6d270ac79bf6755))
+  * remove extra digest causing incompatibility ([32c4704b](http://github.com/angular-ui/bootstrap/commit/32c4704b748cecf2de4c651f2e5157c1ef6c88b1), closes [#2951](http://github.com/angular-ui/bootstrap/issues/2951), [#2959](http://github.com/angular-ui/bootstrap/issues/2959))
+  * show correct tooltip on `ng-repeat` ([b4832c4b](http://github.com/angular-ui/bootstrap/commit/b4832c4b551af7e580ed65d9e5aaee1ef9e6c53e), closes [#2935](http://github.com/angular-ui/bootstrap/issues/2935))
+  * memory leak on show/hide ([faf38d20](http://github.com/angular-ui/bootstrap/commit/faf38d20a49176f2016f7f7d4fa49a5c438a986e), closes [#2709](http://github.com/angular-ui/bootstrap/issues/2709), [#2919](http://github.com/angular-ui/bootstrap/issues/2919))
+  * remove child scope requirement ([8204c808](http://github.com/angular-ui/bootstrap/commit/8204c8088139165ac9b2ad3977a2c20570e434cb), closes [#1269](http://github.com/angular-ui/bootstrap/issues/1269), [#2320](http://github.com/angular-ui/bootstrap/issues/2320), [#2203](http://github.com/angular-ui/bootstrap/issues/2203))
+  * evaluate appendToBody on init ([e10d561f](http://github.com/angular-ui/bootstrap/commit/e10d561f92c2927be0ec429761fa229520fb9a51), closes [#2921](http://github.com/angular-ui/bootstrap/issues/2921))
+  * don't use an empty transclusion fn ([689c4d01](http://github.com/angular-ui/bootstrap/commit/689c4d017d303b6d758164ee12837a172bb01139), closes [#2825](http://github.com/angular-ui/bootstrap/issues/2825))
+* **typeahead:** don't leak DOM nodes ([1f6c3c92](http://github.com/angular-ui/bootstrap/commit/1f6c3c92af0e343c7e34b85ea6d270ac79bf6755))
 
 
 ## Features
 
-* **alert:** allow alerts to be closed from a controller ([ca6fad67](angular-ui/bootstrap/commit/ca6fad675bf2aa793896bf3e086330667a5d9051), closes [#2399](angular-ui/bootstrap/issues/2399), [#2854](angular-ui/bootstrap/issues/2854))
-* **typeahead:** add focus-first option ([35d0cc1d](angular-ui/bootstrap/commit/35d0cc1d57302883840f7ad54a03918ae2df001d), closes [#908](angular-ui/bootstrap/issues/908), [#2916](angular-ui/bootstrap/issues/2916))
+* **alert:** allow alerts to be closed from a controller ([ca6fad67](http://github.com/angular-ui/bootstrap/commit/ca6fad675bf2aa793896bf3e086330667a5d9051), closes [#2399](http://github.com/angular-ui/bootstrap/issues/2399), [#2854](http://github.com/angular-ui/bootstrap/issues/2854))
+* **typeahead:** add focus-first option ([35d0cc1d](http://github.com/angular-ui/bootstrap/commit/35d0cc1d57302883840f7ad54a03918ae2df001d), closes [#908](http://github.com/angular-ui/bootstrap/issues/908), [#2916](http://github.com/angular-ui/bootstrap/issues/2916))
 
 
 ## Breaking Changes
 
 * `tooltip-trigger` and `popover-trigger` are no longer watched
 attributes.
-([a65bea95](angular-ui/bootstrap/commit/a65bea95338802b026fd213805b095b5a0b5b393))  
+([a65bea95](http://github.com/angular-ui/bootstrap/commit/a65bea95338802b026fd213805b095b5a0b5b393))  
 This affects both popovers and tooltips. The *triggers are now set up
 once* and can no longer be changed after initialization.
 
-* `dropdown` and `dropdown-toggle` are attribute-only directives. ([192768e1](angular-ui/bootstrap/commit/192768e109b5c4a50c7dcd320e09d05fedd4298a))
+* `dropdown` and `dropdown-toggle` are attribute-only directives. ([192768e1](http://github.com/angular-ui/bootstrap/commit/192768e109b5c4a50c7dcd320e09d05fedd4298a))
 
   Before:
     ```html
