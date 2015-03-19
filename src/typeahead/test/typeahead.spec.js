@@ -675,6 +675,16 @@ describe('typeahead tests', function () {
       expect($scope.result).toEqual('manually set');
       expect($scope.form.input.$valid).toBeTruthy();
     });
+
+    it('issue #3166 - should set \'parse\' key as valid when selecting a perfect match and not editable', function () {
+      var element = prepareInputEl('<div ng-form="test"><input name="typeahead" ng-model="result" typeahead="state as state.name for state in states | filter:$viewValue" typeahead-editable="false"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'Alaska');
+      triggerKeyDown(element, 13);
+
+      expect($scope.test.typeahead.$error.parse).toBeUndefined();
+    });
   });
 
   describe('input formatting', function () {
