@@ -5,6 +5,10 @@ A lightweight pagination directive that is focused on ... providing pagination &
 
 Settings can be provided as attributes in the `<pagination>` or globally configured through the `paginationConfig`.
 
+ * `ng-change`
+ 	:
+ 	Call a function on any pagination change.
+
  * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	Current page number. First page is 1.
