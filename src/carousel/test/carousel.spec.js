@@ -267,6 +267,76 @@ describe('carousel', function() {
       expect($interval.cancel).toHaveBeenCalled();
     });
 
+    describe('slide order', function() {
+
+      beforeEach(function() {
+        scope.slides = [
+          {active:false,content:'one', id:1},
+          {active:false,content:'two', id:2},
+          {active:false,content:'three', id:3}
+        ];
+        elm = $compile(
+          '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
+            '<slide ng-repeat="slide in slides | orderBy: \'id\' " active="slide.active" index="$index">' +
+              '{{slide.content}}' +
+            '</slide>' +
+          '</carousel>'
+        )(scope);
+        scope.$apply();
+        scope.slides[0].id = 3;
+        scope.slides[1].id = 1;
+        scope.slides[2].id = 2;
+        scope.$apply();
+      });
+
+      it('should change dom when an order of the slides was changed', function() {
+        testSlideActive(0);
+        var contents = elm.find('div.item');
+        expect(contents.length).toBe(3);
+        expect(contents.eq(0).text()).toBe('two');
+        expect(contents.eq(1).text()).toBe('three');
+        expect(contents.eq(2).text()).toBe('one');
+      });
+
+      it('should select next after order change', function() {
+        testSlideActive(0);
+        var next = elm.find('a.right');
+        next.click();
+        testSlideActive(1);
+      });
+
+      it('should select prev after order change', function() {
+        testSlideActive(0);
+        var prev = elm.find('a.left');
+        prev.click();
+        testSlideActive(2);
+      });
+
+      it('should add slide in the specified position', function() {
+        testSlideActive(0);
+        scope.slides[2].id = 4;
+        scope.slides.push({active:false,content:'four', id:2});
+        scope.$apply();
+        var contents = elm.find('div.item');
+        expect(contents.length).toBe(4);
+        expect(contents.eq(0).text()).toBe('two');
+        expect(contents.eq(1).text()).toBe('four');
+        expect(contents.eq(2).text()).toBe('one');
+        expect(contents.eq(3).text()).toBe('three');
+      });
+
+      it('should remove slide after order change', function() {
+        testSlideActive(0);
+        scope.slides.splice(1, 1);
+        scope.$apply();
+        var contents = elm.find('div.item');
+        expect(contents.length).toBe(2);
+        expect(contents.eq(0).text()).toBe('three');
+        expect(contents.eq(1).text()).toBe('one');
+      });
+
+    });
+
   });
 
   describe('controller', function() {

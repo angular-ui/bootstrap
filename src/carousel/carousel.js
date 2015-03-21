@@ -17,10 +17,10 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   var destroyed = false;
   /* direction: "prev" or "next" */
   self.select = $scope.select = function(nextSlide, direction) {
-    var nextIndex = slides.indexOf(nextSlide);
+    var nextIndex = self.indexOfSlide(nextSlide);
     //Decide direction if it's not given
     if (direction === undefined) {
-      direction = nextIndex > currentIndex ? 'next' : 'prev';
+      direction = nextIndex > self.getCurrentIndex() ? 'next' : 'prev';
     }
     if (nextSlide && nextSlide !== self.currentSlide) {
       goNext();
@@ -31,7 +31,6 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 
       angular.extend(nextSlide, {direction: direction, active: true});
       angular.extend(self.currentSlide || {}, {direction: direction, active: false});
-
       if ($animate.enabled() && !$scope.noTransition && nextSlide.$element) {
         $scope.$currentTransition = true;
         // TODO: Switch to use .one when upgrading beyond 1.2.21
@@ -52,26 +51,45 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     destroyed = true;
   });
 
+  function getSlideByIndex(index) {
+    if (angular.isUndefined(slides[index].index)) {
+      return slides[index];
+    }
+    var i, len = slides.length;
+    for (i = 0; i < slides.length; ++i) {
+      if (slides[i].index == index) {
+        return slides[i];
+      }
+    }
+  }
+
+  self.getCurrentIndex = function() {
+    if (self.currentSlide && angular.isDefined(self.currentSlide.index)) {
+      return +self.currentSlide.index;
+    }
+    return currentIndex;
+  };
+
   /* Allow outside people to call indexOf on slides array */
   self.indexOfSlide = function(slide) {
-    return slides.indexOf(slide);
+    return angular.isDefined(slide.index) ? +slide.index : slides.indexOf(slide);
   };
 
   $scope.next = function() {
-    var newIndex = (currentIndex + 1) % slides.length;
+    var newIndex = (self.getCurrentIndex() + 1) % slides.length;
 
     //Prevent this user-triggered transition from occurring if there is already one in progress
     if (!$scope.$currentTransition) {
-      return self.select(slides[newIndex], 'next');
+      return self.select(getSlideByIndex(newIndex), 'next');
     }
   };
 
   $scope.prev = function() {
-    var newIndex = currentIndex - 1 < 0 ? slides.length - 1 : currentIndex - 1;
+    var newIndex = self.getCurrentIndex() - 1 < 0 ? slides.length - 1 : self.getCurrentIndex() - 1;
 
     //Prevent this user-triggered transition from occurring if there is already one in progress
     if (!$scope.$currentTransition) {
-      return self.select(slides[newIndex], 'prev');
+      return self.select(getSlideByIndex(newIndex), 'prev');
     }
   };
 
@@ -134,6 +152,11 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   };
 
   self.removeSlide = function(slide) {
+    if (angular.isDefined(slide.index)) {
+      slides.sort(function(a, b) {
+        return +a.index > +b.index;
+      });
+    }
     //get the index of the slide inside the carousel
     var index = slides.indexOf(slide);
     slides.splice(index, 1);
@@ -213,13 +236,14 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
  * Creates a slide inside a {@link ui.bootstrap.carousel.directive:carousel carousel}.  Must be placed as a child of a carousel element.
  *
  * @param {boolean=} active Model binding, whether or not this slide is currently active.
+ * @param {number=} index The index of the slide. The slides will be sorted by this parameter.
  *
  * @example
 <example module="ui.bootstrap">
   <file name="index.html">
 <div ng-controller="CarouselDemoCtrl">
   <carousel>
-    <slide ng-repeat="slide in slides" active="slide.active">
+    <slide ng-repeat="slide in slides" active="slide.active" index="$index">
       <img ng-src="{{slide.image}}" style="margin:auto;">
       <div class="carousel-caption">
         <h4>Slide {{$index}}</h4>
@@ -253,7 +277,8 @@ function CarouselDemoCtrl($scope) {
     replace: true,
     templateUrl: 'template/carousel/slide.html',
     scope: {
-      active: '=?'
+      active: '=?',
+      index: '=?'
     },
     link: function (scope, element, attrs, carouselCtrl) {
       carouselCtrl.addSlide(scope, element);
