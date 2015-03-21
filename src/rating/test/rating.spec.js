@@ -73,6 +73,20 @@ describe('rating directive', function () {
     expect($rootScope.rate).toBe(3);
   });
 
+  it('rounds off the number of stars shown with decimal values', function() {
+    $rootScope.rate = 2.1;
+    $rootScope.$digest();
+
+    expect(getState()).toEqual([true, true, false, false, false]);
+    expect(element.attr('aria-valuenow')).toBe('2');
+
+    $rootScope.rate = 2.5;
+    $rootScope.$digest();
+
+    expect(getState()).toEqual([true, true, true, false, false]);
+    expect(element.attr('aria-valuenow')).toBe('3');
+  });
+
   it('changes the number of selected icons when value changes', function() {
     $rootScope.rate = 2;
     $rootScope.$digest();
