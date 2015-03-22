@@ -10,7 +10,7 @@ describe('date parser', function () {
     expect(dateParser.parse(input, format)).toEqual(date);
   }
 
-  describe('wih custom formats', function() {
+  describe('with custom formats', function() {
     it('should work correctly for `dd`, `MM`, `yyyy`', function() {
       expectParse('17.11.2013', 'dd.MM.yyyy', new Date(2013, 10, 17, 0));
       expectParse('31.12.2013', 'dd.MM.yyyy', new Date(2013, 11, 31, 0));
@@ -59,9 +59,65 @@ describe('date parser', function () {
       expectParse('1955/February/5', 'yyyy/MMMM/d', new Date(1955, 1, 5, 0));
       expectParse('11-08-13', 'd-MM-yy', new Date(2013, 7, 11, 0));
     });
+
+    it('should work correctly for `HH`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.HH', new Date(2015, 2, 22, 22));
+      expectParse('8-March-1991-11', 'd-MMMM-yyyy-HH', new Date(1991, 2, 8, 11));
+      expectParse('February/5/1980/00', 'MMMM/d/yyyy/HH', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5 03', 'yyyy/MMMM/d HH', new Date(1955, 1, 5, 3));
+      expectParse('11-08-13 23', 'd-MM-yy HH', new Date(2013, 7, 11, 23));
+    });
+
+    it('should work correctly for `H`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.H', new Date(2015, 2, 22, 22));
+      expectParse('8-March-1991-11', 'd-MMMM-yyyy-H', new Date(1991, 2, 8, 11));
+      expectParse('February/5/1980/0', 'MMMM/d/yyyy/H', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5 3', 'yyyy/MMMM/d H', new Date(1955, 1, 5, 3));
+      expectParse('11-08-13 23', 'd-MM-yy H', new Date(2013, 7, 11, 23));
+    });
+
+    it('should work correctly for `mm`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.mm', new Date(2015, 2, 22, 0, 22));
+      expectParse('8-March-1991-59', 'd-MMMM-yyyy-mm', new Date(1991, 2, 8, 0, 59));
+      expectParse('February/5/1980/00', 'MMMM/d/yyyy/mm', new Date(1980, 1, 5, 0, 0));
+      expectParse('1955/February/5 03', 'yyyy/MMMM/d mm', new Date(1955, 1, 5, 0, 3));
+      expectParse('11-08-13 46', 'd-MM-yy mm', new Date(2013, 7, 11, 0, 46));
+      expectParse('22.March.15.22:33', 'd.MMMM.yy.HH:mm', new Date(2015, 2, 22, 22, 33));
+      expectParse('22.March.15.2:01', 'd.MMMM.yy.H:mm', new Date(2015, 2, 22, 2, 1));
+    });
+
+    it('should work correctly for `m`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.m', new Date(2015, 2, 22, 0, 22));
+      expectParse('8-March-1991-59', 'd-MMMM-yyyy-m', new Date(1991, 2, 8, 0, 59));
+      expectParse('February/5/1980/0', 'MMMM/d/yyyy/m', new Date(1980, 1, 5, 0, 0));
+      expectParse('1955/February/5 3', 'yyyy/MMMM/d m', new Date(1955, 1, 5, 0, 3));
+      expectParse('11-08-13 46', 'd-MM-yy m', new Date(2013, 7, 11, 0, 46));
+      expectParse('22.March.15.22:3', 'd.MMMM.yy.HH:m', new Date(2015, 2, 22, 22, 3));
+      expectParse('22.March.15.2:1', 'd.MMMM.yy.H:m', new Date(2015, 2, 22, 2, 1));
+    });
+
+    it('should work correctly for `ss`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.ss', new Date(2015, 2, 22, 0, 0, 22));
+      expectParse('8-March-1991-59', 'd-MMMM-yyyy-ss', new Date(1991, 2, 8, 0, 0, 59));
+      expectParse('February/5/1980/00', 'MMMM/d/yyyy/ss', new Date(1980, 1, 5, 0, 0, 0));
+      expectParse('1955/February/5 03', 'yyyy/MMMM/d ss', new Date(1955, 1, 5, 0, 0, 3));
+      expectParse('11-08-13 46', 'd-MM-yy ss', new Date(2013, 7, 11, 0, 0, 46));
+      expectParse('22.March.15.22:33:44', 'd.MMMM.yy.HH:mm:ss', new Date(2015, 2, 22, 22, 33, 44));
+      expectParse('22.March.15.0:0:01', 'd.MMMM.yy.H:m:ss', new Date(2015, 2, 22, 0, 0, 1));
+    });
+
+    it('should work correctly for `s`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.s', new Date(2015, 2, 22, 0, 0, 22));
+      expectParse('8-March-1991-59', 'd-MMMM-yyyy-s', new Date(1991, 2, 8, 0, 0, 59));
+      expectParse('February/5/1980/0', 'MMMM/d/yyyy/s', new Date(1980, 1, 5, 0, 0, 0));
+      expectParse('1955/February/5 3', 'yyyy/MMMM/d s', new Date(1955, 1, 5, 0, 0, 3));
+      expectParse('11-08-13 46', 'd-MM-yy s', new Date(2013, 7, 11, 0, 0, 46));
+      expectParse('22.March.15.22:33:4', 'd.MMMM.yy.HH:mm:s', new Date(2015, 2, 22, 22, 33, 4));
+      expectParse('22.March.15.22:3:4', 'd.MMMM.yy.HH:m:s', new Date(2015, 2, 22, 22, 3, 4));
+    });
   });
 
-  describe('wih predefined formats', function() {
+  describe('with predefined formats', function() {
     it('should work correctly for `shortDate`', function() {
       expectParse('9/3/10', 'shortDate', new Date(2010, 8, 3, 0));
     });
