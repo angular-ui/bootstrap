@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.accordion', [])
+angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 
 .constant('accordionConfig', {
   closeOthers: true
@@ -125,63 +125,6 @@ angular.module('ui.bootstrap.accordion', [])
           element.append(heading);
         }
       });
-    }
-  };
-})
-
-/**
- * Animations based on addition and removal of `in` class
- * This requires the bootstrap classes to be present in order to take advantage
- * of the animation classes.
- */
-.animation('.panel-collapse', function () {
-  return {
-    beforeAddClass: function (element, className, done) {
-      if (className == 'in') {
-        element
-          .removeClass('collapse')
-          .addClass('collapsing')
-          ;
-      }
-      done();
-    },
-    addClass: function (element, className, done) {
-      if (className == 'in') {
-        element
-          .css({height: element[0].scrollHeight + 'px'})
-          .one('$animate:close', function closeFn() {
-            element
-              .removeClass('collapsing')
-              .css({height: 'auto'});
-          });
-      }
-      done();
-    },
-    beforeRemoveClass: function (element, className, done) {
-      if (className == 'in') {
-        element
-          // IMPORTANT: The height must be set before adding "collapsing" class.
-          // Otherwise, the browser attempts to animate from height 0 (in
-          // collapsing class) to the given height here.
-          .css({height: element[0].scrollHeight + 'px'})
-          // initially all panel collapse have the collapse class, this removal
-          // prevents the animation from jumping to collapsed state
-          .removeClass('collapse')
-          .addClass('collapsing');
-      }
-      done();
-    },
-    removeClass: function (element, className, done) {
-      if (className == 'in') {
-        element
-          .css({height: '0'})
-          .one('$animate:close', function closeFn() {
-            element
-              .removeClass('collapsing')
-              .addClass('collapse');
-          });
-      }
-      done();
     }
   };
 })

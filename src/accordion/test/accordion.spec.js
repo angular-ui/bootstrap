@@ -2,6 +2,7 @@ describe('accordion', function () {
   var $scope;
 
   beforeEach(module('ui.bootstrap.accordion'));
+  beforeEach(module('ui.bootstrap.collapse'));
   beforeEach(module('template/accordion/accordion.html'));
   beforeEach(module('template/accordion/accordion-group.html'));
 
