@@ -284,6 +284,33 @@ describe('datepicker directive', function () {
       expect(getTitle()).toBe('January 2014');
     });
 
+    // issue #3079
+    describe('time zone bug', function () {
+
+      it('should deal with time zone bug', function() {
+        var ctrl = element.controller('datepicker'),
+            date = new Date('January 1, 2014');
+        spyOn(date, 'getHours').and.returnValue(23);
+        spyOn(date, 'setHours').and.returnValue();
+
+        ctrl.fixTimeZone(date);
+
+        expect(date.setHours).toHaveBeenCalledWith(25);
+      });
+
+      it('should not change hours if time zone bug does not occur', function() {
+        var ctrl = element.controller('datepicker'),
+            date = new Date('January 1, 2014');
+        spyOn(date, 'getHours').and.returnValue(0);
+        spyOn(date, 'setHours').and.returnValue();
+
+        ctrl.fixTimeZone(date);
+
+        expect(date.setHours).toHaveBeenCalledWith(0);
+      });
+
+    });
+
     describe('when `model` changes', function () {
       function testCalendar() {
         expect(getTitle()).toBe('November 2005');
