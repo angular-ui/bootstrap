@@ -7,7 +7,7 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
 
  * `ng-change`
  	:
- 	Call a function on any pagination change.
+ 	`ng-change` can be used together with `ng-model` to call a function whenever the page changes.
 
  * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
