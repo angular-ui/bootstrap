@@ -4,7 +4,7 @@ angular.module('ui.bootstrap.dropdown', [])
   openClass: 'open'
 })
 
-.service('dropdownService', ['$document', function($document) {
+.service('dropdownService', ['$document', '$rootScope', function($document, $rootScope) {
   var openScope = null;
 
   this.open = function( dropdownScope ) {
@@ -38,9 +38,11 @@ angular.module('ui.bootstrap.dropdown', [])
         return;
     }
 
-    openScope.$apply(function() {
-      openScope.isOpen = false;
-    });
+    openScope.isOpen = false;
+
+    if (!$rootScope.$$phase) {
+      openScope.$apply();
+    }
   };
 
   var escapeKeyBind = function( evt ) {

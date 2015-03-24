@@ -166,6 +166,18 @@ describe('dropdownToggle', function() {
       clickDropdownToggle();
       expect(toggleEl.attr('aria-expanded')).toBe('false');
     });
+
+    // pr/issue 3274
+    it('should not raise $digest:inprog if dismissed during a digest cycle', function () {
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+
+      $rootScope.$apply(function () {
+        $document.click();
+      });
+
+      expect(element.hasClass('open')).toBe(false);
+    });
   });
 
   describe('integration with $location URL rewriting', function() {
