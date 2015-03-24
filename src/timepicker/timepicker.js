@@ -19,6 +19,10 @@ angular.module('ui.bootstrap.timepicker', [])
     ngModelCtrl = ngModelCtrl_;
     ngModelCtrl.$render = this.render;
 
+    ngModelCtrl.$formatters.unshift(function (modelValue) {
+      return modelValue ? new Date( modelValue ) : null;
+    });
+
     var hoursInputEl = inputs.eq(0),
         minutesInputEl = inputs.eq(1);
 
@@ -208,7 +212,7 @@ angular.module('ui.bootstrap.timepicker', [])
   };
 
   this.render = function() {
-    var date = ngModelCtrl.$modelValue ? new Date( ngModelCtrl.$modelValue ) : null;
+    var date = ngModelCtrl.$viewValue;
 
     if ( isNaN(date) ) {
       ngModelCtrl.$setValidity('time', false);

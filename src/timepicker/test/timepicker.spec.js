@@ -101,6 +101,10 @@ describe('timepicker directive', function () {
     expect(getModelState()).toEqual([14, 40]);
   });
 
+  it('should be pristine', function() {
+    expect(element.controller('ngModel').$pristine).toBe(true);
+  });
+
   it('has `selected` current time when model is initially cleared', function() {
     $rootScope.time = null;
     element = $compile('<timepicker ng-model="time"></timepicker>')($rootScope);
@@ -770,6 +774,36 @@ describe('timepicker directive', function () {
 
       expect(getTimeState()).toEqual(['02', '40', 'π.μ.']);
       expect(getModelState()).toEqual([2, 40]);
+    });
+  });
+
+  describe('$formatter', function () {
+    var ngModel,
+      date;
+
+    beforeEach(function () {
+      ngModel = element.controller('ngModel');
+      date = new Date('Mon Mar 23 2015 14:40:11 GMT-0700 (PDT)');
+    });
+
+    it('should have one formatter', function () {
+      expect(ngModel.$formatters.length).toBe(1);
+    });
+
+    it('should convert a date to a new reference representing the same date', function () {
+      expect(ngModel.$formatters[0](date)).toEqual(date);
+    });
+
+    it('should convert a valid date string to a date object', function () {
+      expect(ngModel.$formatters[0]('Mon Mar 23 2015 14:40:11 GMT-0700 (PDT)')).toEqual(date);
+    });
+
+    it('should set falsy values as null', function () {
+      expect(ngModel.$formatters[0](undefined)).toBe(null);
+      expect(ngModel.$formatters[0](null)).toBe(null);
+      expect(ngModel.$formatters[0]('')).toBe(null);
+      expect(ngModel.$formatters[0](0)).toBe(null);
+      expect(ngModel.$formatters[0](NaN)).toBe(null);
     });
   });
 
