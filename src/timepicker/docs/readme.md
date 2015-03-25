@@ -8,10 +8,6 @@ All settings can be provided as attributes in the `<timepicker>` or globally con
  	:
  	The Date object that provides the time state.
 
-* `ng-disabled` <i class="glyphicon glyphicon-eye-open"></i>
-    :
-    Will disable time picker for user interaction.
-
  * `hour-step` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Defaults: 1)_ :
  	 Number of hours to increase or decrease when using a button.

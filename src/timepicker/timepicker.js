@@ -6,7 +6,6 @@ angular.module('ui.bootstrap.timepicker', [])
   showMeridian: true,
   meridians: null,
   readonlyInput: false,
-  disabled: false,
   mousewheel: true,
   arrowkeys: true
 })
@@ -34,14 +33,6 @@ angular.module('ui.bootstrap.timepicker', [])
     }
 
     $scope.readonlyInput = angular.isDefined($attrs.readonlyInput) ? $scope.$parent.$eval($attrs.readonlyInput) : timepickerConfig.readonlyInput;
-    
-    $scope.disabled = timepickerConfig.disabled;
-    if (angular.isDefined($attrs.ngDisabled)) {
-      $scope.$parent.$watch($parse($attrs.ngDisabled), function(value) {
-        $scope.disabled = $scope.$parent.$eval($attrs.ngDisabled);
-      });
-    }
-
     this.setupInputEvents( hoursInputEl, minutesInputEl );
   };
 
