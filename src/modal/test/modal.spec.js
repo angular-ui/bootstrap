@@ -548,6 +548,15 @@ describe('$modal', function () {
 
         expect($document.find('div.modal-dialog')).toHaveClass('modal-lg');
       });
+
+      it('should support custom size modal dialogs', function () {
+        open({
+          template: '<div>Large modal dialog</div>',
+          size: 'custom'
+        });
+
+        expect($document.find('div.modal-dialog')).toHaveClass('modal-custom');
+      });
     });
   });
 
