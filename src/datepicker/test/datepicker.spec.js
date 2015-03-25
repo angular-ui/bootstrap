@@ -59,10 +59,10 @@ describe('datepicker directive', function () {
     return element.find('thead').find('tr').eq(1);
   }
 
-  function getLabels() {
+  function getLabels(dayMode) {
     var els = getLabelsRow().find('th'),
         labels = [];
-    for (var i = 1, n = els.length; i < n; i++) {
+    for (var i = dayMode ? 1 : 0, n = els.length; i < n; i++) {
       labels.push( els.eq(i).text() );
     }
     return labels;
@@ -77,7 +77,7 @@ describe('datepicker directive', function () {
     return weeks;
   }
 
-  function getOptions( dayMode ) {
+  function getOptions(dayMode) {
     var tr = element.find('tbody').find('tr');
     var rows = [];
 
@@ -91,11 +91,11 @@ describe('datepicker directive', function () {
     return rows;
   }
 
-  function clickOption( index ) {
+  function clickOption(index) {
     getAllOptionsEl().eq(index).click();
   }
 
-  function getAllOptionsEl( dayMode ) {
+  function getAllOptionsEl(dayMode) {
     return element.find('tbody').find('button');
   }
 
@@ -108,7 +108,7 @@ describe('datepicker directive', function () {
     }
   }
 
-  function expectSelectedElement( index ) {
+  function expectSelectedElement(index) {
     var buttons = getAllOptionsEl();
     angular.forEach( buttons, function( button, idx ) {
       expect(angular.element(button).hasClass('btn-info')).toBe( idx === index );
@@ -153,7 +153,7 @@ describe('datepicker directive', function () {
 
     it('shows the label row & the correct day labels', function() {
       expect(getLabelsRow().css('display')).not.toBe('none');
-      expect(getLabels()).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+      expect(getLabels(true)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
     });
 
     it('renders the calendar days correctly', function() {
@@ -211,7 +211,7 @@ describe('datepicker directive', function () {
       clickPreviousButton();
 
       expect(getTitle()).toBe('August 2010');
-      expect(getLabels()).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+      expect(getLabels(true)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
       expect(getOptions(true)).toEqual([
         ['01', '02', '03', '04', '05', '06', '07'],
         ['08', '09', '10', '11', '12', '13', '14'],
@@ -236,7 +236,7 @@ describe('datepicker directive', function () {
       clickNextButton();
 
       expect(getTitle()).toBe('October 2010');
-      expect(getLabels()).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+      expect(getLabels(true)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
       expect(getOptions(true)).toEqual([
         ['26', '27', '28', '29', '30', '01', '02'],
         ['03', '04', '05', '06', '07', '08', '09'],
@@ -261,7 +261,7 @@ describe('datepicker directive', function () {
       clickOption( 33 );
       expect($rootScope.date).toEqual(new Date('October 01, 2010 15:30:00'));
       expect(getTitle()).toBe('October 2010');
-      expect(getLabels()).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+      expect(getLabels(true)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
       expect(getOptions(true)).toEqual([
         ['26', '27', '28', '29', '30', '01', '02'],
         ['03', '04', '05', '06', '07', '08', '09'],
@@ -735,7 +735,7 @@ describe('datepicker directive', function () {
     });
 
     it('shows the day labels rotated', function() {
-      expect(getLabels()).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+      expect(getLabels(true)).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
     });
 
     it('renders the calendar days correctly', function() {
@@ -755,20 +755,18 @@ describe('datepicker directive', function () {
   });
 
   describe('attribute `show-weeks`', function () {
-    var weekHeader, weekElement;
     beforeEach(function() {
       $rootScope.showWeeks = false;
       element = $compile('<datepicker ng-model="date" show-weeks="showWeeks"></datepicker>')($rootScope);
       $rootScope.$digest();
-
-      weekHeader = getLabelsRow().find('th').eq(0);
-      weekElement = element.find('tbody').find('tr').eq(1).find('td').eq(0);
     });
 
     it('hides week numbers based on variable', function() {
-      expect(weekHeader.text()).toEqual('');
-      expect(weekHeader).toBeHidden();
-      expect(weekElement).toBeHidden();
+      expect(getLabelsRow().find('th').length).toEqual(7);
+      var tr = element.find('tbody').find('tr');
+      for (var i = 0; i < 5; i++) {
+        expect(tr.eq(i).find('td').length).toEqual(7);
+      }
     });
   });
 
@@ -1035,7 +1033,7 @@ describe('datepicker directive', function () {
     });
 
     it('shows day labels', function() {
-      expect(getLabels()).toEqual(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+      expect(getLabels(true)).toEqual(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
     });
 
     it('changes the day format', function() {
@@ -1101,7 +1099,7 @@ describe('datepicker directive', function () {
 
     it('changes the `starting-day` & day headers & format', function() {
       expect(getLabels()).toEqual(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
-      expect(getOptions(true)).toEqual([
+      expect(getOptions(false)).toEqual([
         ['28', '29', '30', '31', '1', '2', '3'],
         ['4', '5', '6', '7', '8', '9', '10'],
         ['11', '12', '13', '14', '15', '16', '17'],
@@ -1112,10 +1110,10 @@ describe('datepicker directive', function () {
     });
 
     it('changes initial visibility for weeks', function() {
-      expect(getLabelsRow().find('th').eq(0)).toBeHidden();
+      expect(getLabelsRow().find('th').length).toEqual(7);
       var tr = element.find('tbody').find('tr');
       for (var i = 0; i < 5; i++) {
-        expect(tr.eq(i).find('td').eq(0)).toBeHidden();
+        expect(tr.eq(i).find('td').length).toEqual(7);
       }
     });
 
@@ -1212,7 +1210,7 @@ describe('datepicker directive', function () {
 
       it('renders the calendar correctly', function() {
         expect(getLabelsRow().css('display')).not.toBe('none');
-        expect(getLabels()).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+        expect(getLabels(true)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
         expect(getOptions(true)).toEqual([
           ['29', '30', '31', '01', '02', '03', '04'],
           ['05', '06', '07', '08', '09', '10', '11'],
@@ -1495,7 +1493,6 @@ describe('datepicker directive', function () {
     describe('attribute `datepickerOptions`', function () {
 
       describe('show-weeks', function(){
-        var weekHeader, weekElement;
         beforeEach(function() {
           $rootScope.opts = {
             'show-weeks': false
@@ -1503,15 +1500,14 @@ describe('datepicker directive', function () {
           var wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
           $rootScope.$digest();
           assignElements(wrapElement);
-
-          weekHeader = getLabelsRow().find('th').eq(0);
-          weekElement = element.find('tbody').find('tr').eq(1).find('td').eq(0);
         });
 
         it('hides week numbers based on variable', function() {
-          expect(weekHeader.text()).toEqual('');
-          expect(weekHeader).toBeHidden();
-          expect(weekElement).toBeHidden();
+          expect(getLabelsRow().find('th').length).toEqual(7);
+          var tr = element.find('tbody').find('tr');
+          for (var i = 0; i < 5; i++) {
+            expect(tr.eq(i).find('td').length).toEqual(7);
+          }
         });
       });
 
@@ -1798,10 +1794,10 @@ describe('datepicker directive', function () {
           $rootScope.$digest();
           assignElements(wrapElement);
 
-          expect(getLabelsRow().find('th').eq(0)).toBeHidden();
+          expect(getLabelsRow().find('th').length).toEqual(7);
           var tr = element.find('tbody').find('tr');
           for (var i = 0; i < 5; i++) {
-            expect(tr.eq(i).find('td').eq(0)).toBeHidden();
+            expect(tr.eq(i).find('td').length).toEqual(7);
           }
         });
 
@@ -1946,10 +1942,10 @@ describe('datepicker directive', function () {
       }));
 
       it('changes initial visibility for weeks', function() {
-        expect(getLabelsRow().find('th').eq(0)).toBeHidden();
+        expect(getLabelsRow().find('th').length).toEqual(7);
         var tr = element.find('tbody').find('tr');
         for (var i = 0; i < 5; i++) {
-          expect(tr.eq(i).find('td').eq(0)).toBeHidden();
+          expect(tr.eq(i).find('td').length).toEqual(7);
         }
       });
     });
