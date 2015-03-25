@@ -14,7 +14,7 @@ The `$modal` service has only one method: `open(options)` where available option
 * `backdropClass` - additional CSS class(es) to be added to a modal backdrop template
 * `windowClass` - additional CSS class(es) to be added to a modal window template
 * `windowTemplateUrl` - a path to a template overriding modal's window template
-* `size` - optional size of modal window. Allowed values: `'sm'` (small) or  `'lg'` (large). Requires Bootstrap 3.1.0 or later
+* `size` - optional suffix of modal window class. The value used is appended to the `modal-` class, i.e. a value of `sm` gives `modal-sm`
 
 The `open` method returns a modal instance, an object with the following properties:
 
