@@ -1,11 +1,16 @@
 A lightweight, extensible directive for fancy tooltip creation. The tooltip
 directive supports multiple placements, optional transition animation, and more.
 
-There are two versions of the tooltip: `tooltip` and `tooltip-html-unsafe`. The
-former takes text only and will escape any HTML provided. The latter takes
-whatever HTML is provided and displays it in a tooltip; it's called "unsafe"
-because the HTML is not sanitized. *The user is responsible for ensuring the
-content is safe to put into the DOM!*
+There are three versions of the tooltip: `tooltip`, `tooltip-template`, and
+`tooltip-html-unsafe`:
+
+- `tooltip` takes text only and will escape any HTML provided.
+- `tooltip-template` takes text that specifies the location of a template to
+  use for the tooltip.
+- `tooltip-html-unsafe` takes
+  whatever HTML is provided and displays it in a tooltip; it's called "unsafe"
+  because the HTML is not sanitized. *The user is responsible for ensuring the
+  content is safe to put into the DOM!*
 
 The tooltip directives provide several optional attributes to control how they
 will display:
