@@ -384,6 +384,32 @@ describe('typeahead tests', function () {
       expect(element).toBeClosed();
     });
 
+    it('should not select any match on blur without \'select-on-blur=true\' option', function () {
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'b');
+      inputEl.blur(); // input loses focus
+
+      // no change
+      expect($scope.result).toEqual('b');
+      expect(inputEl.val()).toEqual('b');
+    });
+
+    it('should select a match on blur with \'select-on-blur=true\' option', function () {
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-select-on-blur="true"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'b');
+      inputEl.blur(); // input loses focus
+
+      // first element should be selected
+      expect($scope.result).toEqual('bar');
+      expect(inputEl.val()).toEqual('bar');
+    });
+
     it('should select match on click', function () {
 
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
