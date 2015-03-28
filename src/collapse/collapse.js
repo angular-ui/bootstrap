@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
+angular.module('ui.bootstrap.collapse', [])
 
   .directive('collapse', ['$animate', function ($animate) {
 
