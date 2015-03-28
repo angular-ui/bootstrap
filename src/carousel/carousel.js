@@ -33,11 +33,8 @@ angular.module('ui.bootstrap.carousel', [])
       angular.extend(self.currentSlide || {}, {direction: direction, active: false});
       if ($animate.enabled() && !$scope.noTransition && nextSlide.$element) {
         $scope.$currentTransition = true;
-        // TODO: Switch to use .one when upgrading beyond 1.2.21
-        // (See https://github.com/angular/angular.js/pull/5984)
-        nextSlide.$element.on('$animate:close', function closeFn() {
+        nextSlide.$element.one('$animate:close', function closeFn() {
           $scope.$currentTransition = null;
-          nextSlide.$element.off('$animate:close', closeFn);
         });
       }
 
