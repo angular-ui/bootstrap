@@ -165,6 +165,17 @@ describe('rating directive', function () {
       expect($rootScope.rate).toBe(3);
     });
 
+    it('supports only arrow keys', function() {
+      $rootScope.rate = undefined;
+      $rootScope.$digest();
+
+      triggerKeyDown(36);
+      expect($rootScope.rate).toBe(undefined);
+
+      triggerKeyDown(41);
+      expect($rootScope.rate).toBe(undefined);
+    });
+
     it('can get zero value but not negative', function() {
       $rootScope.rate = 1;
       $rootScope.$digest();

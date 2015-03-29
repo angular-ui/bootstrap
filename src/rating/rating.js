@@ -81,10 +81,7 @@ angular.module('ui.bootstrap.rating', [])
     replace: true,
     link: function(scope, element, attrs, ctrls) {
       var ratingCtrl = ctrls[0], ngModelCtrl = ctrls[1];
-
-      if ( ngModelCtrl ) {
-        ratingCtrl.init( ngModelCtrl );
-      }
+      ratingCtrl.init( ngModelCtrl );
     }
   };
 });
