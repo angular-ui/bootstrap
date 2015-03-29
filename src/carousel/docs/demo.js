@@ -1,5 +1,6 @@
 angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($scope) {
   $scope.myInterval = 5000;
+  $scope.noWrapSlides = false;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;

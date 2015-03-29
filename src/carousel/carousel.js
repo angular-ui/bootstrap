@@ -83,11 +83,21 @@ angular.module('ui.bootstrap.carousel', [])
   $scope.next = function() {
     var newIndex = (self.getCurrentIndex() + 1) % slides.length;
 
+    if (newIndex === 0 && $scope.noWrap()) {
+      $scope.pause();
+      return;
+    }
+
     return self.select(getSlideByIndex(newIndex), 'next');
   };
 
   $scope.prev = function() {
     var newIndex = self.getCurrentIndex() - 1 < 0 ? slides.length - 1 : self.getCurrentIndex() - 1;
+
+    if ($scope.noWrap() && newIndex === slides.length - 1){
+      $scope.pause();
+      return;
+    }
 
     return self.select(getSlideByIndex(newIndex), 'prev');
   };
@@ -225,7 +235,8 @@ angular.module('ui.bootstrap.carousel', [])
     scope: {
       interval: '=',
       noTransition: '=',
-      noPause: '='
+      noPause: '=',
+      noWrap: '&'
     }
   };
 }])
