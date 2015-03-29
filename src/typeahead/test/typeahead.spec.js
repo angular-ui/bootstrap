@@ -3,6 +3,7 @@ describe('typeahead tests', function() {
   var changeInputValueTo;
 
   beforeEach(module('ui.bootstrap.typeahead'));
+  beforeEach(module('ngSanitize'));
   beforeEach(module('template/typeahead/typeahead-popup.html'));
   beforeEach(module('template/typeahead/typeahead-match.html'));
   beforeEach(module(function($compileProvider) {
