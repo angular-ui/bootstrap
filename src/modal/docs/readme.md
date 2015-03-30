@@ -36,6 +36,3 @@ Finally, a `modal.closing` event is broadcast to the modal scope before the moda
 preventDefault on the event, then the modal will remain open.  The $close and $dismiss methods return true if the 
 event was allowed.  The event itself includes a parameter for the result/reason and a boolean parameter that indicates
 whether the modal is being closed (true) or dismissed.
-
-The `modalConfig` exposes the following global option for all modals/backdrops:
-
