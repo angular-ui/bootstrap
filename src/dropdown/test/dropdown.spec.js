@@ -324,4 +324,92 @@ describe('dropdownToggle', function() {
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });
+
+  describe('`auto-close` option', function() {
+    function dropdown(autoClose) {
+      return $compile('<li dropdown ' +
+        (autoClose === void 0 ? '' : 'auto-close="'+autoClose+'"') +
+        '><a href dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
+    }
+
+    it('should close on document click if no auto-close is specified', function() {
+      element = dropdown();
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+      $document.click();
+      expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('should close on document click if empty auto-close is specified', function() {
+      element = dropdown('');
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+      $document.click();
+      expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('auto-close="disabled"', function() {
+      element = dropdown('disabled');
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+      $document.click();
+      expect(element.hasClass('open')).toBe(true);
+    });
+
+    it('auto-close="outsideClick"', function() {
+      element = dropdown('outsideClick');
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+      element.find('ul li a').click();
+      expect(element.hasClass('open')).toBe(true);
+      $document.click();
+      expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('control with is-open', function() {
+      $rootScope.isopen = true;
+      element = $compile('<li dropdown is-open="isopen" auto-close="disabled"><a href dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      $rootScope.$digest();
+
+      expect(element.hasClass('open')).toBe(true);
+      //should remain open
+      $document.click();
+      expect(element.hasClass('open')).toBe(true);
+      //now should close
+      $rootScope.isopen = false;
+      $rootScope.$digest();
+      expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('should close anyway if toggle is clicked', function() {
+      element = dropdown('disabled');
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(true);
+      clickDropdownToggle();
+      expect(element.hasClass('open')).toBe(false);
+    });
+
+    it('should close anyway if esc is pressed', function() {
+      element = dropdown('disabled');
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 27);
+      expect(element.hasClass('open')).toBe(false);
+      expect(isFocused(element.find('a'))).toBe(true);
+      element.remove();
+    });
+
+    it('should close anyway if another dropdown is opened', function() {
+      var elm1 = dropdown('disabled');
+      var elm2 = dropdown();
+      expect(elm1.hasClass('open')).toBe(false);
+      expect(elm2.hasClass('open')).toBe(false);
+      clickDropdownToggle(elm1);
+      expect(elm1.hasClass('open')).toBe(true);
+      expect(elm2.hasClass('open')).toBe(false);
+      clickDropdownToggle(elm2);
+      expect(elm1.hasClass('open')).toBe(false);
+      expect(elm2.hasClass('open')).toBe(true);
+    });
+  });
 });

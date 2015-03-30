@@ -33,9 +33,16 @@ angular.module('ui.bootstrap.dropdown', [])
     // unbound this event handler. So check openScope before proceeding.
     if (!openScope) { return; }
 
+    if( evt && openScope.getAutoClose() === 'disabled' )  { return ; }
+
     var toggleElement = openScope.getToggleElement();
     if ( evt && toggleElement && toggleElement[0].contains(evt.target) ) {
         return;
+    }
+
+    var $element = openScope.getElement();
+    if( evt && openScope.getAutoClose() === 'outsideClick' && $element && $element[0].contains(evt.target) ) {
+      return;
     }
 
     openScope.isOpen = false;
@@ -85,6 +92,14 @@ angular.module('ui.bootstrap.dropdown', [])
 
   scope.getToggleElement = function() {
     return self.toggleElement;
+  };
+
+  scope.getAutoClose = function() {
+    return $attrs.autoClose || 'always'; //or 'outsideClick' or 'disabled'
+  };
+
+  scope.getElement = function() {
+    return self.$element;
   };
 
   scope.focusToggleElement = function() {
