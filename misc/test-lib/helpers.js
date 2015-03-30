@@ -1,25 +1,57 @@
 // jasmine matcher for expecting an element to have a css class
 // https://github.com/angular/angular.js/blob/master/test/matchers.js
 beforeEach(function() {
-  this.addMatchers({
-    toHaveClass: function(cls) {
-      this.message = function() {
-        return "Expected '" + this.actual + "'" + (this.isNot ? ' not ' : ' ') + "to have class '" + cls + "'.";
-      };
+  jasmine.addMatchers({
+    toHaveClass: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual, expected) {
+          var result = {
+            pass: actual.hasClass(expected)
+          };
 
-      return this.actual.hasClass(cls);
-    },
-    toBeHidden: function () {
-      var element = angular.element(this.actual);
-      return element.hasClass('ng-hide') ||
-        element.css('display') == 'none';
-    },
-    toHaveFocus: function () {
-      this.message = function () {
-        return 'Expected \'' + angular.mock.dump(this.actual) + '\' to have focus';
-      };
+          if (result.pass) {
+            result.message = 'Expected "' + actual + '" not to have the "' + expected + '" class.';
+          } else {
+            result.message = 'Expected "' + actual + '" to have the "' + expected + '" class.';
+          }
 
-      return document.activeElement === this.actual[0];
+          return result;
+        }
+      }
+    },
+    toBeHidden: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          var result = {
+            pass: actual.hasClass('ng-hide') || actual.css('display') === 'none'
+          };
+
+          if (result.pass) {
+            result.message = 'Expected "' + actual + '" not to be hidden';
+          } else {
+            result.message = 'Expected "' + actual + '" to be hidden';
+          }
+
+          return result;
+        }
+      }
+    },
+    toHaveFocus: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          var result = {
+            pass: document.activeElement === actual[0]
+          };
+
+          if (result.pass) {
+            result.message = 'Expected "' + actual + '" not to have focus';
+          } else {
+            result.message = 'Expected "' + actual + '" to have focus';
+          }
+
+          return result;
+        }
+      }
     }
   });
 });

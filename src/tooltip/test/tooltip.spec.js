@@ -460,7 +460,7 @@ describe( 'tooltip positioning', function() {
 
   beforeEach(inject(function($rootScope, $compile, _$position_) {
     $position = _$position_;
-    spyOn($position, 'positionElements').andCallThrough();
+    spyOn($position, 'positionElements').and.callThrough();
 
     scope = $rootScope;
     scope.text = 'Some Text';
@@ -479,19 +479,19 @@ describe( 'tooltip positioning', function() {
 
     scope.$digest();
     $timeout.flush();
-    var startingPositionCalls = $position.positionElements.calls.length;
+    var startingPositionCalls = $position.positionElements.calls.count();
 
     scope.$digest();
     $timeout.flush();
-    expect($position.positionElements.calls.length).toEqual(startingPositionCalls + 1);
+    expect($position.positionElements.calls.count()).toEqual(startingPositionCalls + 1);
     // Check that positionElements was called with elm
-    expect($position.positionElements.calls[startingPositionCalls].args[0][0])
+    expect($position.positionElements.calls.argsFor(startingPositionCalls)[0][0])
       .toBe(elm[0]);
 
     scope.$digest();
     $timeout.flush();
-    expect($position.positionElements.calls.length).toEqual(startingPositionCalls + 2);
-    expect($position.positionElements.calls[startingPositionCalls + 1].args[0][0])
+    expect($position.positionElements.calls.count()).toEqual(startingPositionCalls + 2);
+    expect($position.positionElements.calls.argsFor(startingPositionCalls + 1)[0][0])
       .toBe(elm[0]);
     scope.$digest();
   }));

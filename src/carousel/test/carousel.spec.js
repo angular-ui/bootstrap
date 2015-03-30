@@ -262,7 +262,7 @@ describe('carousel', function() {
       testSlideActive(2);
       $interval.flush(scope.interval);
       testSlideActive(0);
-      spyOn($interval, 'cancel').andCallThrough();
+      spyOn($interval, 'cancel').and.callThrough();
       scope.$destroy();
       expect($interval.cancel).toHaveBeenCalled();
     });
@@ -396,17 +396,17 @@ describe('carousel', function() {
       });
 
       it('issue 1414 - should not continue running timers after scope is destroyed', function() {
-        spyOn(scope, 'next').andCallThrough();
+        spyOn(scope, 'next').and.callThrough();
         scope.interval = 2000;
         scope.$digest();
 
         $interval.flush(scope.interval);
-        expect(scope.next.calls.length).toBe(1);
+        expect(scope.next.calls.count()).toBe(1);
 
         scope.$destroy();
 
         $interval.flush(scope.interval);
-        expect(scope.next.calls.length).toBe(1);
+        expect(scope.next.calls.count()).toBe(1);
       });
     });
   });

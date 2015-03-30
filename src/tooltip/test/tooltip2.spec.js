@@ -12,16 +12,26 @@ describe('tooltip directive', function () {
   }));
 
   beforeEach(function(){
-    this.addMatchers({
-      toHaveOpenTooltips: function(noOfOpened) {
-        var ttipElements = this.actual.find('div.tooltip');
-        noOfOpened = noOfOpened || 1;
+    jasmine.addMatchers({
+      toHaveOpenTooltips: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, noOfOpened) {
+            var ttipElements = actual.find('div.tooltip');
+            noOfOpened = noOfOpened || 1;
 
-        this.message = function() {
-          return 'Expected "' + angular.mock.dump(ttipElements) + '" to have "' + ttipElements.length + '" opened tooltips.';
+            var result = {
+              pass: util.equals(ttipElements.length, noOfOpened, customEqualityTesters)
+            };
+
+            if (result.message) {
+              result.message = 'Expected "' + angular.mock.dump(ttipElements) + '" not to have "' + ttipElements.length + '" opened tooltips.';
+            } else {
+              result.message = 'Expected "' + angular.mock.dump(ttipElements) + '" to have "' + ttipElements.length + '" opened tooltips.';
+            }
+
+            return result;
+          }
         };
-
-        return ttipElements.length === noOfOpened;
       }
     });
   });

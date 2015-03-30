@@ -71,28 +71,48 @@ describe('typeahead tests', function () {
 
   //custom matchers
   beforeEach(function () {
-    this.addMatchers({
-      toBeClosed: function () {
-        var typeaheadEl = findDropDown(this.actual);
-        this.message = function () {
-          return 'Expected "' + angular.mock.dump(typeaheadEl) + '" to be closed.';
+    jasmine.addMatchers({
+      toBeClosed: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, expected) {
+            var typeaheadEl = findDropDown(actual);
+
+            var result = {
+              pass: util.equals(typeaheadEl.hasClass('ng-hide'), true, customEqualityTesters)
+            };
+
+            if (result.pass) {
+              result.message = 'Expected "' + angular.mock.dump(typeaheadEl) + '" not to be closed.';
+            } else {
+              result.message = 'Expected "' + angular.mock.dump(typeaheadEl) + '" to be closed.';
+            }
+
+            return result;
+          }
         };
-        return typeaheadEl.hasClass('ng-hide') === true;
+      },
+      toBeOpenWithActive: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, noOfMatches, activeIdx) {
+            var typeaheadEl = findDropDown(actual);
+            var liEls = findMatches(actual);
 
-      }, toBeOpenWithActive: function (noOfMatches, activeIdx) {
+            var result = {
+              pass: util.equals(typeaheadEl.length, 1, customEqualityTesters) &&
+                    util.equals(typeaheadEl.hasClass('ng-hide'), false, customEqualityTesters) &&
+                    util.equals(liEls.length, noOfMatches, customEqualityTesters) &&
+                    activeIdx === -1 ? !$(liEls).hasClass('active') : $(liEls[activeIdx]).hasClass('active')
+            };
 
-        var typeaheadEl = findDropDown(this.actual);
-        var liEls = findMatches(this.actual);
+            if (result.pass) {
+              result.message = 'Expected "' + actual + '" not to be opened.';
+            } else {
+              result.message = 'Expected "' + actual + '" to be opened.';
+            }
 
-        this.message = function () {
-          return 'Expected "' + this.actual + '" to be opened.';
+            return result;
+          }
         };
-
-        return (typeaheadEl.length === 1 &&
-                typeaheadEl.hasClass('ng-hide') === false &&
-                liEls.length === noOfMatches &&
-                (activeIdx === -1 ? !$(liEls).hasClass('active') : $(liEls[activeIdx]).hasClass('active'))
-               );
       }
     });
   });
@@ -614,21 +634,42 @@ describe('typeahead tests', function () {
       expect(values).not.toContain('match');
     }));
 
-    it('does not close matches popup on click in input', function () {
-      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
-      var inputEl = findInput(element);
+    describe('', function() {
+      // Dummy describe to be able to create an after hook for this tests
+      var element;
 
-      // Note that this bug can only be found when element is in the document
-      $document.find('body').append(element);
-      // Extra teardown for this spec
-      this.after(function () { element.remove(); });
+      it('does not close matches popup on click in input', function () {
+        element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
+        var inputEl = findInput(element);
 
-      changeInputValueTo(element, 'b');
+        // Note that this bug can only be found when element is in the document
+        $document.find('body').append(element);
 
-      inputEl.click();
-      $scope.$digest();
+        changeInputValueTo(element, 'b');
 
-      expect(element).toBeOpenWithActive(2, 0);
+        inputEl.click();
+        $scope.$digest();
+
+        expect(element).toBeOpenWithActive(2, 0);
+      });
+
+      it('issue #1773 - should not trigger an error when used with ng-focus', function () {
+        element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" ng-focus="foo()"></div>');
+        var inputEl = findInput(element);
+
+        // Note that this bug can only be found when element is in the document
+        $document.find('body').append(element);
+
+        changeInputValueTo(element, 'b');
+        var match = $(findMatches(element)[1]).find('a')[0];
+
+        $(match).click();
+        $scope.$digest();
+      });
+
+      afterEach(function() {
+        element.remove();
+      });
     });
 
     it('issue #1238 - allow names like "query" to be used inside "in" expressions ', function () {
@@ -641,23 +682,6 @@ describe('typeahead tests', function () {
       changeInputValueTo(element, 'bar');
 
       expect(element).toBeOpenWithActive(2, 0);
-    });
-
-    it('issue #1773 - should not trigger an error when used with ng-focus', function () {
-
-      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" ng-focus="foo()"></div>');
-      var inputEl = findInput(element);
-
-      // Note that this bug can only be found when element is in the document
-      $document.find('body').append(element);
-      // Extra teardown for this spec
-      this.after(function () { element.remove(); });
-
-      changeInputValueTo(element, 'b');
-      var match = $(findMatches(element)[1]).find('a')[0];
-
-      $(match).click();
-      $scope.$digest();
     });
 
     it('issue #3318 - should set model validity to true when set manually', function () {

@@ -22,11 +22,12 @@
     "grunt-html2js": "^0.3.0",
     "grunt-karma": "^0.10.1",
     "grunt-ngdocs": "~0.1.1",
+    "jasmine-core": "^2.2.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",
     "karma-coverage": "^0.2.7",
     "karma-firefox-launcher": "^0.1.4",
-    "karma-jasmine": "^0.1.5",
+    "karma-jasmine": "^0.3.5",
     "node-markdown": "0.1.1",
     "semver": "^4.3.3",
     "shelljs": "^0.4.0"

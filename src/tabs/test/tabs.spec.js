@@ -596,7 +596,7 @@ describe('tabs', function() {
       angular.forEach(scope.tabs, function(tab, i) {
         if (activeTab === tab) {
           expect(tab.active).toBe(true);
-          expect(tab.select.callCount).toBe( (tab.disabled) ? 0 : 1 );
+          expect(tab.select.calls.count()).toBe( (tab.disabled) ? 0 : 1 );
           expect(_titles.eq(i)).toHaveClass('active');
           expect(contents().eq(i).text().trim()).toBe('content ' + i);
           expect(contents().eq(i)).toHaveClass('active');

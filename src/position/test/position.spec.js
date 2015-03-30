@@ -16,17 +16,27 @@ describe('position elements', function () {
     $position = _$position_;
   }));
   beforeEach(function () {
-    this.addMatchers({
-      toBePositionedAt: function(top, left) {
-        this.message = function() {
-          return 'Expected "('  + this.actual.top + ', ' + this.actual.left +  ')" to be positioned at (' + top + ', ' + left + ')';
-        };
+    jasmine.addMatchers({
+      toBePositionedAt: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, top, left) {
+            var result = {
+              pass: util.equals(actual.top, top, customEqualityTesters) &&
+                      util.equals(actual.left, left, customEqualityTesters)
+            };
 
-        return this.actual.top == top && this.actual.left == left;
+            if (result.pass) {
+              result.message = 'Expected "('  + actual.top + ', ' + actual.left +  ')" not to be positioned at (' + top + ', ' + left + ')';
+            } else {
+              result.message = 'Expected "('  + actual.top + ', ' + actual.left +  ')" to be positioned at (' + top + ', ' + left + ')';
+            }
+
+            return result;
+          }
+        };
       }
     });
   });
-
 
   describe('append-to-body: false', function () {
 

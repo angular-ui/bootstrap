@@ -27,60 +27,107 @@ describe('$modal', function () {
   }));
 
   beforeEach(function () {
-    this.addMatchers({
+    jasmine.addMatchers({
+      toBeResolvedWith: function(util, customEqualityTesters) {
+        return {
+          compare: function(promise, expected) {
+            promise.then(function(result) {
+              expect(result).toEqual(expected);
 
-      toBeResolvedWith: function(value) {
-        var resolved;
-        this.message = function() {
-          return 'Expected "' + angular.mock.dump(resolved) + '" to be resolved with "' + value + '".';
+              if (result === expected) {
+                result.message = 'Expected "' + angular.mock.dump(result) + '" not to be resolved with "' + expected + '".';
+              } else {
+                result.message = 'Expected "' + angular.mock.dump(result) + '" to be resolved with "' + expected + '".';
+              }
+            });
+
+            $rootScope.$digest();
+
+            return {pass: true};
+          }
         };
-        this.actual.then(function(result){
-          resolved = result;
-        });
-        $rootScope.$digest();
-
-        return resolved === value;
       },
+      toBeRejectedWith: function(util, customEqualityTesters) {
+        return {
+          compare: function(promise, expected) {
+            var result = {};
 
-      toBeRejectedWith: function(value) {
-        var rejected;
-        this.message = function() {
-          return 'Expected "' + angular.mock.dump(rejected) + '" to be rejected with "' + value + '".';
+            promise.then(function() {
+
+            }, function(result) {
+              expect(result).toEqual(expected);
+
+              if (result === expected) {
+                result.message = 'Expected "' + angular.mock.dump(result) + '" not to be rejected with "' + expected + '".';
+              } else {
+                result.message = 'Expected "' + angular.mock.dump(result) + '" to be rejected with "' + expected + '".';
+              }
+            });
+
+            $rootScope.$digest();
+
+            return {pass: true};
+          }
         };
-        this.actual.then(angular.noop, function(reason){
-          rejected = reason;
-        });
-        $rootScope.$digest();
-
-        return rejected === value;
       },
+      toHaveModalOpenWithContent: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, content, selector) {
+            var contentToCompare, modalDomEls = actual.find('body > div.modal > div.modal-dialog > div.modal-content');
 
-      toHaveModalOpenWithContent: function(content, selector) {
+            contentToCompare = selector ? modalDomEls.find(selector) : modalDomEls;
 
-        var contentToCompare, modalDomEls = this.actual.find('body > div.modal > div.modal-dialog > div.modal-content');
+            var result = {
+              pass: modalDomEls.css('display') === 'block' && contentToCompare.html() === content
+            };
 
-        this.message = function() {
-          return '"Expected "' + angular.mock.dump(modalDomEls) + '" to be open with "' + content + '".';
+            if (result.pass) {
+              result.message = '"Expected "' + angular.mock.dump(modalDomEls) + '" not to be open with "' + content + '".';
+            } else {
+              result.message = '"Expected "' + angular.mock.dump(modalDomEls) + '" to be open with "' + content + '".';
+            }
+
+            return result;
+          }
         };
-
-        contentToCompare = selector ? modalDomEls.find(selector) : modalDomEls;
-        return modalDomEls.css('display') === 'block' &&  contentToCompare.html() == content;
       },
+      toHaveModalsOpen: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, expected) {
+            var modalDomEls = actual.find('body > div.modal');
 
-      toHaveModalsOpen: function(noOfModals) {
+            var result = {
+              pass: util.equals(modalDomEls.length, expected, customEqualityTesters)
+            };
 
-        var modalDomEls = this.actual.find('body > div.modal');
-        return modalDomEls.length === noOfModals;
-      },
+            if (result.pass) {
+              result.message = 'Expected "' + angular.mock.dump(modalDomEls) + '" not to have "' + expected + '" modals opened.';
+            } else {
+              result.message = 'Expected "' + angular.mock.dump(modalDomEls) + '" to have "' + expected + '" modals opened.';
+            }
 
-      toHaveBackdrop: function() {
-
-        var backdropDomEls = this.actual.find('body > div.modal-backdrop');
-        this.message = function() {
-          return 'Expected "' + angular.mock.dump(backdropDomEls) + '" to be a backdrop element".';
+            return result;
+          }
         };
+      },
+      toHaveBackdrop: function(util, customEqualityTesters) {
+        return {
+          compare: function(actual, expected) {
+            var backdropDomEls = actual.find('body > div.modal-backdrop');
 
-        return backdropDomEls.length === 1;
+            var result = {
+              pass: util.equals(backdropDomEls.length, 1, customEqualityTesters)
+            };
+
+            if (result.pass) {
+              result.message = 'Expected "' + angular.mock.dump(backdropDomEls) + '" not to be a backdrop element".';
+            } else {
+              result.message = 'Expected "' + angular.mock.dump(backdropDomEls) + '" to be a backdrop element".';
+            }
+
+            return result;
+          }
+        };
       }
     });
   });

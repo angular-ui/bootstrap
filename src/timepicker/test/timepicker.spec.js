@@ -961,7 +961,7 @@ describe('timepicker directive', function () {
       doClick(btn1, 2);
       doClick(btn2, 3);
       $rootScope.$digest();
-      expect($rootScope.changeHandler.callCount).toBe(5);
+      expect($rootScope.changeHandler.calls.count()).toBe(5);
     });
 
     it('should not be called when model changes programatically', function() {

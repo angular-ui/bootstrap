@@ -62,7 +62,7 @@ describe('$transition', function() {
       beforeEach(function() {
         element = angular.element('<div></div>');
         // Mock up the element.bind method
-        spyOn(element, 'bind').andCallFake(function(element, handler) {
+        spyOn(element, 'bind').and.callFake(function(element, handler) {
           // Store the handler to be used to simulate the end of the transition later
           triggerTransitionEnd = handler;
         });

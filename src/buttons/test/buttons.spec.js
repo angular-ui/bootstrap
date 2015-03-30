@@ -201,7 +201,7 @@ describe('buttons', function () {
         expect(btns.eq(1)).not.toHaveClass('active');
 
         btns.eq(0).click();
-        expect($scope.model).toEqual(undefined);
+        expect($scope.model).toBeNull();
         expect(btns.eq(1)).not.toHaveClass('active');
         expect(btns.eq(0)).not.toHaveClass('active');
       });

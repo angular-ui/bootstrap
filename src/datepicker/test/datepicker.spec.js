@@ -942,20 +942,20 @@ describe('datepicker directive', function () {
     });
 
     it('executes the dateDisabled expression for each visible day plus one for validation', function() {
-      expect($rootScope.dateDisabledHandler.calls.length).toEqual(42 + 1);
+      expect($rootScope.dateDisabledHandler.calls.count()).toEqual(42 + 1);
     });
 
     it('executes the dateDisabled expression for each visible month plus one for validation', function() {
-      $rootScope.dateDisabledHandler.reset();
+      $rootScope.dateDisabledHandler.calls.reset();
       clickTitleButton();
-      expect($rootScope.dateDisabledHandler.calls.length).toEqual(12 + 1);
+      expect($rootScope.dateDisabledHandler.calls.count()).toEqual(12 + 1);
     });
 
     it('executes the dateDisabled expression for each visible year plus one for validation', function() {
       clickTitleButton();
-      $rootScope.dateDisabledHandler.reset();
+      $rootScope.dateDisabledHandler.calls.reset();
       clickTitleButton();
-      expect($rootScope.dateDisabledHandler.calls.length).toEqual(20 + 1);
+      expect($rootScope.dateDisabledHandler.calls.count()).toEqual(20 + 1);
     });
   });
 
@@ -967,20 +967,20 @@ describe('datepicker directive', function () {
     });
 
     it('executes the customClass expression for each visible day plus one for validation', function() {
-      expect($rootScope.customClassHandler.calls.length).toEqual(42);
+      expect($rootScope.customClassHandler.calls.count()).toEqual(42);
     });
 
     it('executes the customClass expression for each visible month plus one for validation', function() {
-      $rootScope.customClassHandler.reset();
+      $rootScope.customClassHandler.calls.reset();
       clickTitleButton();
-      expect($rootScope.customClassHandler.calls.length).toEqual(12);
+      expect($rootScope.customClassHandler.calls.count()).toEqual(12);
     });
 
     it('executes the customClass expression for each visible year plus one for validation', function() {
       clickTitleButton();
-      $rootScope.customClassHandler.reset();
+      $rootScope.customClassHandler.calls.reset();
       clickTitleButton();
-      expect($rootScope.customClassHandler.calls.length).toEqual(20);
+      expect($rootScope.customClassHandler.calls.count()).toEqual(20);
     });
   });
 
@@ -1316,13 +1316,13 @@ describe('datepicker directive', function () {
           expect(dropdownEl).toBeHidden();
           expect(document.activeElement.tagName).toBe('INPUT');
         });
-        
+
         it('stops the ESC key from propagating if the dropdown is open, but not when closed', function() {
           expect(dropdownEl).not.toBeHidden();
 
           dropdownEl.find('button').eq(0).focus();
           expect(document.activeElement.tagName).toBe('BUTTON');
-          
+
           var documentKey = -1;
           var getKey = function(evt) { documentKey = evt.which; };
           $document.bind('keydown', getKey);
@@ -1331,10 +1331,10 @@ describe('datepicker directive', function () {
           $rootScope.$digest();
           expect(dropdownEl).toBeHidden();
           expect(documentKey).toBe(-1);
-          
+
           triggerKeyDown(inputEl, 'esc');
           expect(documentKey).toBe(27);
-          
+
           $document.unbind('keydown', getKey);
         });
       });
@@ -1731,7 +1731,7 @@ describe('datepicker directive', function () {
         var $body = $document.find('body'),
             bodyLength = $body.children().length,
             elm = angular.element(
-              '<div><input datepicker-popup ng-model="date" datepicker-append-to-body="true"></input></div>'
+              '<div><input datepicker-popup ng-model="date" datepicker-append-to-body="true" /></div>'
             );
         $compile(elm)($rootScope);
         $rootScope.$digest();
@@ -1744,7 +1744,7 @@ describe('datepicker directive', function () {
             bodyLength = $body.children().length,
             isolatedScope = $rootScope.$new(),
             elm = angular.element(
-              '<input datepicker-popup ng-model="date" datepicker-append-to-body="true"></input>'
+              '<input datepicker-popup ng-model="date" datepicker-append-to-body="true" />'
             );
         $compile(elm)(isolatedScope);
         isolatedScope.$digest();
