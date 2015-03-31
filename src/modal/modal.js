@@ -280,7 +280,7 @@ angular.module('ui.bootstrap.modal', [])
         if (currBackdropIndex >= 0 && !backdropDomEl) {
           backdropScope = $rootScope.$new(true);
           backdropScope.index = currBackdropIndex;
-          var angularBackgroundDomEl = angular.element('<div modal-backdrop></div>');
+          var angularBackgroundDomEl = angular.element('<div modal-backdrop="modal-backdrop"></div>');
           angularBackgroundDomEl.attr('backdrop-class', modal.backdropClass);
           if (modal.animation) {
             angularBackgroundDomEl.attr('modal-animation', 'true');
@@ -289,7 +289,7 @@ angular.module('ui.bootstrap.modal', [])
           body.append(backdropDomEl);
         }
 
-        var angularDomEl = angular.element('<div modal-window></div>');
+        var angularDomEl = angular.element('<div modal-window="modal-window"></div>');
         angularDomEl.attr({
           'template-url': modal.windowTemplateUrl,
           'window-class': modal.windowClass,
