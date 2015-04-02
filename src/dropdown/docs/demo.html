@@ -42,6 +42,20 @@
       </ul>
     </div>
 
+    <!-- Single button using append-to-body -->
+    <div class="btn-group" dropdown dropdown-append-to-body>
+      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+        Dropdown on Body <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+
     <hr />
     <p>
         <button type="button" class="btn btn-default btn-sm" ng-click="toggleDropdown($event)">Toggle button dropdown</button>

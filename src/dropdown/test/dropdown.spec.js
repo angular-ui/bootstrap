@@ -9,6 +9,10 @@ describe('dropdownToggle', function() {
     $document = _$document_;
   }));
 
+  afterEach(function() {
+    element.remove();
+  });
+
   var clickDropdownToggle = function(elm) {
     elm = elm || element;
     elm.find('a[dropdown-toggle]').click();
@@ -50,7 +54,6 @@ describe('dropdownToggle', function() {
       var optionEl = element.find('ul > li').eq(0).find('a').eq(0);
       optionEl.click();
       expect(element.hasClass('open')).toBe(false);
-      element.remove();
     });
 
     it('should close on document click', function() {
@@ -66,7 +69,6 @@ describe('dropdownToggle', function() {
       triggerKeyDown($document, 27);
       expect(element.hasClass('open')).toBe(false);
       expect(isFocused(element.find('a'))).toBe(true);
-      element.remove();
     });
 
     it('should not close on backspace key', function() {
@@ -180,6 +182,26 @@ describe('dropdownToggle', function() {
     });
   });
 
+  describe('using dropdown-append-to-body', function() {
+    function dropdown() {
+      return $compile('<li dropdown dropdown-append-to-body><a href dropdown-toggle></a><ul class="dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('adds the menu to the body', function() {
+      expect($document.find('#dropdown-menu').parent()[0]).toBe($document.find('body')[0]);
+    });
+
+    it('removes the menu when the dropdown is removed', function() {
+      element.remove();
+      $rootScope.$digest();
+      expect($document.find('#dropdown-menu').length).toEqual(0);
+    });
+  });
+
   describe('integration with $location URL rewriting', function() {
     function dropdown() {
 
@@ -256,7 +278,6 @@ describe('dropdownToggle', function() {
       $rootScope.isopen = true;
       $rootScope.$digest();
       expect(isFocused(element.find('a'))).toBe(true);
-      element.remove();
     });
   });
 
@@ -396,7 +417,6 @@ describe('dropdownToggle', function() {
       triggerKeyDown($document, 27);
       expect(element.hasClass('open')).toBe(false);
       expect(isFocused(element.find('a'))).toBe(true);
-      element.remove();
     });
 
     it('should close anyway if another dropdown is opened', function() {
