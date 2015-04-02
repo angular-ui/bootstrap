@@ -421,6 +421,27 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   };
 }])
 
+// Apply animate class without animating itself
+.directive('tooltipAnimateClass', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      if (scope.animation()) {
+        element.addClass(attrs.tooltipAnimateClass);
+      }
+    }
+  };
+})
+
+.directive('tooltipPlacementClass', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      element.addClass(scope.placement);
+    }
+  };
+})
+
 .directive( 'tooltipPopup', function () {
   return {
     restrict: 'EA',
