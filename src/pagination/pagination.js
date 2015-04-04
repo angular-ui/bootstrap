@@ -46,8 +46,11 @@ angular.module('ui.bootstrap.pagination', [])
     $scope.page = parseInt(ngModelCtrl.$viewValue, 10) || 1;
   };
 
-  $scope.selectPage = function(page) {
+  $scope.selectPage = function(page, evt) {
     if ( $scope.page !== page && page > 0 && page <= $scope.totalPages) {
+      if (evt && evt.target) {
+        evt.target.blur();
+      }
       ngModelCtrl.$setViewValue(page);
       ngModelCtrl.$render();
     }

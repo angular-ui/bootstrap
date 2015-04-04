@@ -1,12 +1,13 @@
 describe('pagination directive', function () {
-  var $compile, $rootScope, element;
+  var $compile, $rootScope, $document, element;
   beforeEach(module('ui.bootstrap.pagination'));
   beforeEach(module('template/pagination/pagination.html'));
-  beforeEach(inject(function(_$compile_, _$rootScope_) {
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.total = 47; // 5 pages
     $rootScope.currentPage = 3;
+    $document = _$document_;
     element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
     $rootScope.$digest();
   }));
@@ -21,6 +22,10 @@ describe('pagination directive', function () {
 
   function clickPaginationEl(index) {
     getPaginationEl(index).find('a').click();
+  }
+  
+  function getPaginationLinkEl(elem, index) {
+    return elem.find('li').eq(index).find('a');
   }
 
   function updateCurrentPage(value) {
@@ -122,6 +127,45 @@ describe('pagination directive', function () {
     expect($rootScope.currentPage).toBe(1);
   });
 
+  it('should blur a page link after it has been clicked', function () {
+    $document.find('body').append(element);
+    var linkEl = getPaginationLinkEl(element, 2);
+    
+    linkEl.focus();
+    expect(linkEl).toHaveFocus();
+    
+    linkEl.click();
+    expect(linkEl).not.toHaveFocus();
+    
+    element.remove();
+  });
+  
+  it('should blur the "next" link after it has been clicked', function () {
+    $document.find('body').append(element);
+    var linkEl = getPaginationLinkEl(element, -1);
+    
+    linkEl.focus();
+    expect(linkEl).toHaveFocus();
+    
+    linkEl.click();
+    expect(linkEl).not.toHaveFocus();
+    
+    element.remove();
+  });
+  
+  it('should blur the "prev" link after it has been clicked', function () {
+    $document.find('body').append(element);
+    var linkEl = getPaginationLinkEl(element, 0);
+    
+    linkEl.focus();
+    expect(linkEl).toHaveFocus();
+    
+    linkEl.click();
+    expect(linkEl).not.toHaveFocus();
+    
+    element.remove();
+  });
+  
   describe('`items-per-page`', function () {
     beforeEach(function() {
       $rootScope.perpage = 5;
@@ -258,6 +302,19 @@ describe('pagination directive', function () {
       expect(getPaginationBarSize()).toBe(2);
       expect(getPaginationEl(0).text()).toBe('Previous');
       expect(getPaginationEl(-1).text()).toBe('Next');
+    });
+    
+    it('should blur page link when visible range changes', function () {
+      $document.find('body').append(element);
+      var linkEl = getPaginationLinkEl(element, 4);
+      
+      linkEl.focus();
+      expect(linkEl).toHaveFocus();
+      
+      linkEl.click();
+      expect(linkEl).not.toHaveFocus();
+      
+      element.remove();
     });
   });
 
@@ -414,6 +471,32 @@ describe('pagination directive', function () {
 
       expect(getPaginationEl(1).text()).toBe('<<');
       expect(getPaginationEl(-2).text()).toBe('>>');
+    });
+    
+    it('should blur the "first" link after it has been clicked', function () {
+      $document.find('body').append(element);
+      var linkEl = getPaginationLinkEl(element, 0);
+      
+      linkEl.focus();
+      expect(linkEl).toHaveFocus();
+      
+      linkEl.click();
+      expect(linkEl).not.toHaveFocus();
+      
+      element.remove();
+    });
+    
+    it('should blur the "last" link after it has been clicked', function () {
+      $document.find('body').append(element);
+      var linkEl = getPaginationLinkEl(element, -1);
+      
+      linkEl.focus();
+      expect(linkEl).toHaveFocus();
+      
+      linkEl.click();
+      expect(linkEl).not.toHaveFocus();
+      
+      element.remove();
     });
   });
 
