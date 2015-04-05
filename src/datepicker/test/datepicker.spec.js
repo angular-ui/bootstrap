@@ -1338,6 +1338,70 @@ describe('datepicker directive', function () {
           $document.unbind('keydown', getKey);
         });
       });
+
+      describe('works with ngModelOptions', function () {
+        var $timeout;
+
+        beforeEach(inject(function(_$document_, _$sniffer_, _$timeout_) {
+          $document = _$document_;
+          $timeout = _$timeout_;
+          $rootScope.isopen = true;
+          $rootScope.date = new Date('September 30, 2010 15:30:00');
+          var wrapElement = $compile('<div><input ng-model="date" ' +
+            'ng-model-options="{ debounce: 10000 }" ' +
+            'datepicker-popup><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        }));
+
+        it('should change model and update calendar after debounce timeout', function() {
+          changeInputValueTo(inputEl, 'March 5, 1980');
+
+          expect($rootScope.date.getFullYear()).toEqual(2010);
+          expect($rootScope.date.getMonth()).toEqual(9 - 1);
+          expect($rootScope.date.getDate()).toEqual(30);
+
+          expect(getOptions(true)).toEqual([
+            ['29', '30', '31', '01', '02', '03', '04'],
+            ['05', '06', '07', '08', '09', '10', '11'],
+            ['12', '13', '14', '15', '16', '17', '18'],
+            ['19', '20', '21', '22', '23', '24', '25'],
+            ['26', '27', '28', '29', '30', '01', '02'],
+            ['03', '04', '05', '06', '07', '08', '09']
+          ]);
+
+          // No changes yet
+          $timeout.flush(2000);
+          expect($rootScope.date.getFullYear()).toEqual(2010);
+          expect($rootScope.date.getMonth()).toEqual(9 - 1);
+          expect($rootScope.date.getDate()).toEqual(30);
+
+          expect(getOptions(true)).toEqual([
+            ['29', '30', '31', '01', '02', '03', '04'],
+            ['05', '06', '07', '08', '09', '10', '11'],
+            ['12', '13', '14', '15', '16', '17', '18'],
+            ['19', '20', '21', '22', '23', '24', '25'],
+            ['26', '27', '28', '29', '30', '01', '02'],
+            ['03', '04', '05', '06', '07', '08', '09']
+          ]);
+
+          $timeout.flush(10000);
+          expect($rootScope.date.getFullYear()).toEqual(1980);
+          expect($rootScope.date.getMonth()).toEqual(2);
+          expect($rootScope.date.getDate()).toEqual(5);
+
+          expect(getOptions(true)).toEqual([
+            ['24', '25', '26', '27', '28', '29', '01'],
+            ['02', '03', '04', '05', '06', '07', '08'],
+            ['09', '10', '11', '12', '13', '14', '15'],
+            ['16', '17', '18', '19', '20', '21', '22'],
+            ['23', '24', '25', '26', '27', '28', '29'],
+            ['30', '31', '01', '02', '03', '04', '05']
+          ]);
+          expectSelectedElement( 10 );
+        });
+      });
+
     });
 
     describe('attribute `datepickerOptions`', function () {

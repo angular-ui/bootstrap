@@ -476,9 +476,15 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         return scope[key + 'Text'] || datepickerPopupConfig[key + 'Text'];
       };
 
-      attrs.$observe('datepickerPopup', function(value) {
-          dateFormat = value || datepickerPopupConfig.datepickerPopup;
-          ngModel.$render();
+      dateFormat = attrs.datepickerPopup || datepickerPopupConfig.datepickerPopup;
+      attrs.$observe('datepickerPopup', function(value, oldValue) {
+          var newDateFormat = value || datepickerPopupConfig.datepickerPopup;
+          // Invalidate the $modelValue to ensure that formatters re-run
+          // FIXME: Refactor when PR is merged: https://github.com/angular/angular.js/pull/10764
+          if (newDateFormat !== dateFormat) {
+            dateFormat = newDateFormat;
+            ngModel.$modelValue = null;
+          }
       });
 
       // popup element used to display calendar
@@ -533,6 +539,8 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');
       }
 
+      // Internal API to maintain the correct ng-invalid-[key] class
+      ngModel.$$parserName = 'date';
       function parseDate(viewValue) {
         if (angular.isNumber(viewValue)) {
           // presumably timestamp to date object
@@ -540,28 +548,43 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         }
 
         if (!viewValue) {
-          ngModel.$setValidity('date', true);
           return null;
         } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
-          ngModel.$setValidity('date', true);
           return viewValue;
         } else if (angular.isString(viewValue)) {
           var date = dateParser.parse(viewValue, dateFormat) || new Date(viewValue);
           if (isNaN(date)) {
-            ngModel.$setValidity('date', false);
             return undefined;
           } else {
-            ngModel.$setValidity('date', true);
             return date;
           }
         } else {
-          ngModel.$setValidity('date', false);
           return undefined;
         }
       }
+
+      function validator(modelValue, viewValue) {
+        var value = modelValue || viewValue;
+        if (angular.isNumber(value)) {
+          value = new Date(value);
+        }
+        if (!value) {
+          return true;
+        } else if (angular.isDate(value) && !isNaN(value)) {
+          return true;
+        } else if (angular.isString(value)) {
+          var date = dateParser.parse(value, dateFormat) || new Date(value);
+          return !isNaN(date);
+        } else {
+          return false;
+        }
+      }
+
+      ngModel.$validators.date = validator;
       ngModel.$parsers.unshift(parseDate);
 
       ngModel.$formatters.push(function (value) {
+        scope.date = value;
          return ngModel.$isEmpty(value) ? value : dateFilter(value, dateFormat);
       });
 
@@ -570,8 +593,11 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         if (angular.isDefined(dt)) {
           scope.date = dt;
         }
+        if (dateFormat) {
+          var date = scope.date ? dateFilter(scope.date, dateFormat) : '';
+          element.val(date);
+        }
         ngModel.$setViewValue(scope.date);
-        ngModel.$render();
 
         if ( closeOnDateSelection ) {
           scope.isOpen = false;
@@ -579,20 +605,10 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         }
       };
 
-      element.bind('input change keyup', function() {
-        scope.$apply(function() {
-          scope.date = ngModel.$modelValue;
-        });
+      // Detect changes in the view from the text box
+      ngModel.$viewChangeListeners.push(function () {
+        scope.date = ngModel.$viewValue;
       });
-
-      // Outer change
-      ngModel.$render = function () {
-        if (dateFormat) {
-          var date = ngModel.$viewValue ? dateFilter(parseDate(ngModel.$viewValue), dateFormat) : '';
-          element.val(date);
-          scope.date = parseDate( ngModel.$modelValue );
-        }
-      };
 
       var documentClickBind = function(event) {
         if (scope.isOpen && event.target !== element[0]) {
@@ -634,8 +650,8 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       scope.select = function( date ) {
         if (date === 'today') {
           var today = new Date();
-          if (angular.isDate(ngModel.$modelValue)) {
-            date = new Date(ngModel.$modelValue);
+          if (angular.isDate(scope.date)) {
+            date = new Date(scope.date);
             date.setFullYear(today.getFullYear(), today.getMonth(), today.getDate());
           } else {
             date = new Date(today.setHours(0, 0, 0, 0));
