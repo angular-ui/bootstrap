@@ -16,7 +16,7 @@ angular.module( 'ui.bootstrap.popover', [ 'ui.bootstrap.tooltip' ] )
 })
 
 .directive( 'popoverTemplate', [ '$tooltip', function ( $tooltip ) {
-  return $tooltip( 'popoverTemplate', 'popoverTemplate', 'click' );
+  return $tooltip( 'popoverTemplate', 'popover', 'click' );
 }])
 
 .directive( 'popoverPopup', function () {
