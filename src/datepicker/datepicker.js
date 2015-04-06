@@ -447,6 +447,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
 .constant('datepickerPopupConfig', {
   datepickerPopup: 'yyyy-MM-dd',
+  html5Types: {
+    date: 'yyyy-MM-dd',
+    'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss'
+    // TODO: Add other formats/type support
+  },
   currentText: 'Today',
   clearText: 'Clear',
   closeText: 'Done',
@@ -479,16 +484,34 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         return scope[key + 'Text'] || datepickerPopupConfig[key + 'Text'];
       };
 
-      dateFormat = attrs.datepickerPopup || datepickerPopupConfig.datepickerPopup;
-      attrs.$observe('datepickerPopup', function(value, oldValue) {
-          var newDateFormat = value || datepickerPopupConfig.datepickerPopup;
-          // Invalidate the $modelValue to ensure that formatters re-run
-          // FIXME: Refactor when PR is merged: https://github.com/angular/angular.js/pull/10764
-          if (newDateFormat !== dateFormat) {
-            dateFormat = newDateFormat;
-            ngModel.$modelValue = null;
-          }
-      });
+      var isHtml5DateInput = false;
+      if (datepickerPopupConfig.html5Types[attrs.type]) {
+        dateFormat = datepickerPopupConfig.html5Types[attrs.type];
+        isHtml5DateInput = true;
+      } else {
+        dateFormat = attrs.datepickerPopup || datepickerPopupConfig.datepickerPopup;
+        attrs.$observe('datepickerPopup', function(value, oldValue) {
+            var newDateFormat = value || datepickerPopupConfig.datepickerPopup;
+            // Invalidate the $modelValue to ensure that formatters re-run
+            // FIXME: Refactor when PR is merged: https://github.com/angular/angular.js/pull/10764
+            if (newDateFormat !== dateFormat) {
+              dateFormat = newDateFormat;
+              ngModel.$modelValue = null;
+
+              if (!dateFormat) {
+                throw new Error('datepickerPopup must have a date format specified.');
+              }
+            }
+        });
+      }
+
+      if (!dateFormat) {
+        throw new Error('datepickerPopup must have a date format specified.');
+      }
+
+      if (isHtml5DateInput && attrs.datepickerPopup) {
+        throw new Error('HTML5 date input types do not support custom formats.');
+      }
 
       // popup element used to display calendar
       var popupEl = angular.element('<div datepicker-popup-wrap><div datepicker></div></div>');
@@ -547,8 +570,6 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');
       }
 
-      // Internal API to maintain the correct ng-invalid-[key] class
-      ngModel.$$parserName = 'date';
       function parseDate(viewValue) {
         if (angular.isNumber(viewValue)) {
           // presumably timestamp to date object
@@ -560,7 +581,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
           return viewValue;
         } else if (angular.isString(viewValue)) {
-          var date = dateParser.parse(viewValue, dateFormat) || new Date(viewValue);
+          var date = dateParser.parse(viewValue, dateFormat, scope.date) || new Date(viewValue);
           if (isNaN(date)) {
             return undefined;
           } else {
@@ -588,24 +609,31 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         }
       }
 
-      ngModel.$validators.date = validator;
-      ngModel.$parsers.unshift(parseDate);
-
-      ngModel.$formatters.push(function (value) {
-        scope.date = value;
-         return ngModel.$isEmpty(value) ? value : dateFilter(value, dateFormat);
-      });
+      if (!isHtml5DateInput) {
+        // Internal API to maintain the correct ng-invalid-[key] class
+        ngModel.$$parserName = 'date';
+        ngModel.$validators.date = validator;
+        ngModel.$parsers.unshift(parseDate);
+        ngModel.$formatters.push(function (value) {
+          scope.date = value;
+          return ngModel.$isEmpty(value) ? value : dateFilter(value, dateFormat);
+        });
+      }
+      else {
+        ngModel.$formatters.push(function (value) {
+          scope.date = value;
+          return value;
+        });
+      }
 
       // Inner change
       scope.dateSelection = function(dt) {
         if (angular.isDefined(dt)) {
           scope.date = dt;
         }
-        if (dateFormat) {
-          var date = scope.date ? dateFilter(scope.date, dateFormat) : '';
-          element.val(date);
-        }
-        ngModel.$setViewValue(scope.date);
+        var date = scope.date ? dateFilter(scope.date, dateFormat) : '';
+        element.val(date);
+        ngModel.$setViewValue(date);
 
         if ( closeOnDateSelection ) {
           scope.isOpen = false;
@@ -615,7 +643,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
 
       // Detect changes in the view from the text box
       ngModel.$viewChangeListeners.push(function () {
-        scope.date = ngModel.$viewValue;
+        scope.date = dateParser.parse(ngModel.$viewValue, dateFormat, scope.date) || new Date(ngModel.$viewValue);
       });
 
       var documentClickBind = function(event) {

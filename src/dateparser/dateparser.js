@@ -106,7 +106,7 @@ angular.module('ui.bootstrap.dateparser', [])
     };
   }
 
-  this.parse = function(input, format) {
+  this.parse = function(input, format, baseDate) {
     if ( !angular.isString(input) || !format ) {
       return input;
     }
@@ -124,7 +124,20 @@ angular.module('ui.bootstrap.dateparser', [])
         results = input.match(regex);
 
     if ( results && results.length ) {
-      var fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, dt;
+      var fields, dt;
+      if (baseDate) {
+        fields = {
+          year: baseDate.getFullYear(),
+          month: baseDate.getMonth(),
+          date: baseDate.getDate(),
+          hours: baseDate.getHours(),
+          minutes: baseDate.getMinutes(),
+          seconds: baseDate.getSeconds(),
+          milliseconds: baseDate.getMilliseconds()
+        };
+      } else {
+        fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };
+      }
 
       for( var i = 1, n = results.length; i < n; i++ ) {
         var mapper = map[i-1];
@@ -134,7 +147,8 @@ angular.module('ui.bootstrap.dateparser', [])
       }
 
       if ( isValid(fields.year, fields.month, fields.date) ) {
-        dt = new Date(fields.year, fields.month, fields.date, fields.hours, fields.minutes, fields.seconds, fields.milliseconds);
+        dt = new Date(fields.year, fields.month, fields.date, fields.hours, fields.minutes, fields.seconds,
+          fields.milliseconds || 0);
       }
 
       return dt;

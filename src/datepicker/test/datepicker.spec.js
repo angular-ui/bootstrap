@@ -99,6 +99,15 @@ describe('datepicker directive', function () {
     return element.find('tbody').find('button');
   }
 
+  function selectedElementIndex() {
+    var buttons = getAllOptionsEl();
+    for (var i = 0; i < buttons.length; i++) {
+      if (angular.element(buttons[i]).hasClass('btn-info')) {
+        return i;
+      }
+    }
+  }
+
   function expectSelectedElement( index ) {
     var buttons = getAllOptionsEl();
     angular.forEach( buttons, function( button, idx ) {
@@ -1400,6 +1409,65 @@ describe('datepicker directive', function () {
           ]);
           expectSelectedElement( 10 );
         });
+      });
+
+      describe('works with HTML5 date input types', function () {
+        var date2 = new Date('October 1, 2010 12:34:56.789');
+        beforeEach(inject(function(_$document_) {
+          $document = _$document_;
+          $rootScope.isopen = true;
+          $rootScope.date = new Date('September 30, 2010 15:30:00');
+        }));
+
+        it('works as date', function() {
+          setupInputWithType('date');
+          expect(dropdownEl).toBeHidden();
+          expect(inputEl.val()).toBe('2010-09-30');
+
+          changeInputValueTo(inputEl, '1980-03-05');
+
+          expect($rootScope.date.getFullYear()).toEqual(1980);
+          expect($rootScope.date.getMonth()).toEqual(2);
+          expect($rootScope.date.getDate()).toEqual(5);
+
+          expect(getOptions(true)).toEqual([
+            ['24', '25', '26', '27', '28', '29', '01'],
+            ['02', '03', '04', '05', '06', '07', '08'],
+            ['09', '10', '11', '12', '13', '14', '15'],
+            ['16', '17', '18', '19', '20', '21', '22'],
+            ['23', '24', '25', '26', '27', '28', '29'],
+            ['30', '31', '01', '02', '03', '04', '05']
+          ]);
+          expect(selectedElementIndex()).toEqual( 10 );
+        });
+
+        it('works as datetime-local', function() {
+          setupInputWithType('datetime-local');
+          expect(inputEl.val()).toBe('2010-09-30T15:30:00.000');
+
+          changeInputValueTo(inputEl, '1980-03-05T12:34:56.000');
+
+          expect($rootScope.date.getFullYear()).toEqual(1980);
+          expect($rootScope.date.getMonth()).toEqual(2);
+          expect($rootScope.date.getDate()).toEqual(5);
+
+          expect(getOptions(true)).toEqual([
+            ['24', '25', '26', '27', '28', '29', '01'],
+            ['02', '03', '04', '05', '06', '07', '08'],
+            ['09', '10', '11', '12', '13', '14', '15'],
+            ['16', '17', '18', '19', '20', '21', '22'],
+            ['23', '24', '25', '26', '27', '28', '29'],
+            ['30', '31', '01', '02', '03', '04', '05']
+          ]);
+          expect(selectedElementIndex()).toEqual( 10 );
+        });
+
+        function setupInputWithType(type) {
+          var wrapElement = $compile('<div><input type="' +
+            type + '" ng-model="date" datepicker-popup><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        }
       });
 
     });
