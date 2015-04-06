@@ -99,6 +99,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
         '<div '+ directiveName +'-popup '+
           'title="'+startSym+'title'+endSym+'" '+
           'content="'+startSym+'content'+endSym+'" '+
+          'content-exp="contentExp()" '+
           'placement="'+startSym+'placement'+endSym+'" '+
           'class="'+startSym+'class'+endSym+'" '+
           'animation="animation" '+
@@ -264,6 +265,10 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               prepPlacement();
               prepPopupDelay();
             }
+
+            ttScope.contentExp = function () {
+              return scope.$eval(attrs[type]);
+            };
 
             /**
              * Observe the relevant attributes.
@@ -469,6 +474,19 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return $tooltip( 'tooltipTemplate', 'tooltip', 'mouseenter' );
 }])
 
+.directive( 'tooltipHtmlPopup', function () {
+  return {
+    restrict: 'EA',
+    replace: true,
+    scope: { contentExp: '&', placement: '@', class: '@', animation: '&', isOpen: '&' },
+    templateUrl: 'template/tooltip/tooltip-html-popup.html'
+  };
+})
+
+.directive( 'tooltipHtml', [ '$tooltip', function ( $tooltip ) {
+  return $tooltip( 'tooltipHtml', 'tooltip', 'mouseenter' );
+}])
+
 /*
 Deprecated
 */
@@ -481,6 +499,12 @@ Deprecated
   };
 })
 
-.directive( 'tooltipHtmlUnsafe', [ '$tooltip', function ( $tooltip ) {
+.value('tooltipHtmlUnsafeSuppressDeprecated', false)
+.directive( 'tooltipHtmlUnsafe', [
+          '$tooltip', 'tooltipHtmlUnsafeSuppressDeprecated', '$log',
+function ( $tooltip ,  tooltipHtmlUnsafeSuppressDeprecated ,  $log) {
+  if (!tooltipHtmlUnsafeSuppressDeprecated) {
+    $log.warn('tooltip-html-unsafe is now deprecated. Use tooltip-html or tooltip-template instead.');
+  }
   return $tooltip( 'tooltipHtmlUnsafe', 'tooltip', 'mouseenter' );
 }]);
