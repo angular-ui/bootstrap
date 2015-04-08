@@ -262,6 +262,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             }
 
             function prepareTooltip() {
+              prepPopupClass();
               prepPlacement();
               prepPopupDelay();
             }
@@ -291,9 +292,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               ttScope.title = val;
             });
 
-            attrs.$observe( prefix+'Class', function ( val ) {
-              ttScope.popupClass = val;
-            });
+            function prepPopupClass() {
+              ttScope.popupClass = attrs[prefix + 'Class'];
+            }
 
             function prepPlacement() {
               var val = attrs[ prefix + 'Placement' ];
@@ -426,23 +427,24 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   };
 }])
 
-// Apply animate class without animating itself
-.directive('tooltipAnimateClass', function () {
+/**
+ * Note that it's intentional that these classes are *not* applied through $animate.
+ * They must not be animated as they're expected to be present on the tooltip on
+ * initialization.
+ */
+.directive('tooltipClasses', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
-      if (scope.animation()) {
-        element.addClass(attrs.tooltipAnimateClass);
+      if (scope.placement) {
+        element.addClass(scope.placement);
       }
-    }
-  };
-})
-
-.directive('tooltipPlacementClass', function () {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-      element.addClass(scope.placement);
+      if (scope.popupClass) {
+        element.addClass(scope.popupClass);
+      }
+      if (scope.animation()) {
+        element.addClass(attrs.tooltipAnimationClass);
+      }
     }
   };
 })
