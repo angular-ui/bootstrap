@@ -68,6 +68,30 @@ describe('popover', function() {
     elm.click();
     expect(scope.clicked).toBeTruthy();
   }));
+
+  it('should popup with animate class by default', inject(function() {
+    elm.trigger( 'click' );
+    expect( tooltipScope.isOpen ).toBe( true );
+
+    expect(elmBody.children().eq(1)).toHaveClass('fade');
+  }));
+
+  it('should popup without animate class when animation disabled', inject(function($compile) {
+    elmBody = angular.element(
+      '<div><span popover="popover text" popover-animation="false">Selector Text</span></div>'
+    );
+
+    $compile(elmBody)(scope);
+    scope.$digest();
+    elm = elmBody.find('span');
+    elmScope = elm.scope();
+    tooltipScope = elmScope.$$childTail;
+
+    elm.trigger( 'click' );
+    expect( tooltipScope.isOpen ).toBe( true );
+    expect(elmBody.children().eq(1)).not.toHaveClass('fade');
+  }));
+
 });
 
 

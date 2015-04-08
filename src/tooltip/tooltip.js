@@ -101,7 +101,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           'content="'+startSym+'content'+endSym+'" '+
           'content-exp="contentExp()" '+
           'placement="'+startSym+'placement'+endSym+'" '+
-          'class="'+startSym+'class'+endSym+'" '+
+          'popup-class="'+startSym+'popupClass'+endSym+'" '+
           'animation="animation" '+
           'is-open="isOpen"'+
           'origin-scope="origScope" '+
@@ -292,7 +292,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             });
 
             attrs.$observe( prefix+'Class', function ( val ) {
-              ttScope.class = val;
+              ttScope.popupClass = val;
             });
 
             function prepPlacement() {
@@ -451,7 +451,7 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     restrict: 'EA',
     replace: true,
-    scope: { content: '@', placement: '@', class: '@', animation: '&', isOpen: '&' },
+    scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-popup.html'
   };
 })
@@ -478,7 +478,7 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     restrict: 'EA',
     replace: true,
-    scope: { contentExp: '&', placement: '@', class: '@', animation: '&', isOpen: '&' },
+    scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-html-popup.html'
   };
 })
@@ -494,7 +494,7 @@ Deprecated
   return {
     restrict: 'EA',
     replace: true,
-    scope: { content: '@', placement: '@', class: '@', animation: '&', isOpen: '&' },
+    scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-html-unsafe-popup.html'
   };
 })
