@@ -30,8 +30,10 @@ Installation is easy as UI Bootstrap has minimal dependencies - only the Angular
 
 #### Install with Bower
 ```sh
-$ bower install angular-ui-bootstrap
+$ bower install angular-bootstrap
 ```
+
+Note: do not install 'angular-ui-bootstrap'.  A separate repository - [bootstrap-bower](https://github.com/angular-ui/bootstrap-bower) - hosts the compiled javascript file and bower.json.
 
 #### Install with NuGet
 To install AngularJS UI Bootstrap, run the following command in the Package Manager Console
