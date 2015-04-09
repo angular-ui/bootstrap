@@ -362,7 +362,7 @@ angular.module('ui.bootstrap.modal', [])
     var $modalProvider = {
       options: {
         animation: true,
-        backdrop: true, //can be also false or 'static'
+        backdrop: true, //can also be false or 'static'
         keyboard: true
       },
       $get: ['$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$modalStack',
