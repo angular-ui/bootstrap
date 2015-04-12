@@ -247,7 +247,9 @@ angular.module('ui.bootstrap.timepicker', [])
     }
 
     $scope.hours = keyboardChange === 'h' ? hours : pad(hours);
-    $scope.minutes = keyboardChange === 'm' ? minutes : pad(minutes);
+    if (keyboardChange !== 'm') {
+      $scope.minutes = pad(minutes);
+    }
     $scope.meridian = selected.getHours() < 12 ? meridians[0] : meridians[1];
   }
 
