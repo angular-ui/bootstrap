@@ -1462,6 +1462,25 @@ describe('datepicker directive', function () {
           expect(selectedElementIndex()).toEqual( 10 );
         });
 
+        it('works as month', function() {
+          setupInputWithType('month');
+          expect(inputEl.val()).toBe('2010-09');
+
+          changeInputValueTo(inputEl, '1980-03');
+
+          expect($rootScope.date.getFullYear()).toEqual(1980);
+          expect($rootScope.date.getMonth()).toEqual(2);
+          expect($rootScope.date.getDate()).toEqual(30);
+
+          expect(getOptions()).toEqual([
+            ['January', 'February', 'March'],
+            ['April', 'May', 'June'],
+            ['July', 'August', 'September'],
+            ['October', 'November', 'December']
+          ]);
+          expect(selectedElementIndex()).toEqual( 2 );
+        });
+
         function setupInputWithType(type) {
           var wrapElement = $compile('<div><input type="' +
             type + '" ng-model="date" datepicker-popup><div>')($rootScope);

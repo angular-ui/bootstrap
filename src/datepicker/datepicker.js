@@ -449,8 +449,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   datepickerPopup: 'yyyy-MM-dd',
   html5Types: {
     date: 'yyyy-MM-dd',
-    'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss'
-    // TODO: Add other formats/type support
+    'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+    'month': 'yyyy-MM'
   },
   currentText: 'Today',
   clearText: 'Clear',
@@ -526,6 +526,13 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
 
       // datepicker element
       var datepickerEl = angular.element(popupEl.children()[0]);
+      if (isHtml5DateInput) {
+        if (attrs.type == 'month') {
+          datepickerEl.attr('datepicker-mode', '"month"');
+          datepickerEl.attr('min-mode', 'month');
+        }
+      }
+
       if ( attrs.datepickerOptions ) {
         var options = scope.$parent.$eval(attrs.datepickerOptions);
         if(options.initDate) {
