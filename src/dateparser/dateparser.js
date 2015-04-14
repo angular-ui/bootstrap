@@ -65,6 +65,10 @@ angular.module('ui.bootstrap.dateparser', [])
       regex: '[0-9]|[1-5][0-9]',
       apply: function(value) { this.minutes = +value; }
     },
+    'sss': {
+      regex: '[0-9][0-9][0-9]',
+      apply: function(value) { this.milliseconds = +value; }
+    },
     'ss': {
       regex: '[0-5][0-9]',
       apply: function(value) { this.seconds = +value; }
@@ -120,7 +124,7 @@ angular.module('ui.bootstrap.dateparser', [])
         results = input.match(regex);
 
     if ( results && results.length ) {
-      var fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0 }, dt;
+      var fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, dt;
 
       for( var i = 1, n = results.length; i < n; i++ ) {
         var mapper = map[i-1];
@@ -130,7 +134,7 @@ angular.module('ui.bootstrap.dateparser', [])
       }
 
       if ( isValid(fields.year, fields.month, fields.date) ) {
-        dt = new Date(fields.year, fields.month, fields.date, fields.hours, fields.minutes, fields.seconds);
+        dt = new Date(fields.year, fields.month, fields.date, fields.hours, fields.minutes, fields.seconds, fields.milliseconds);
       }
 
       return dt;
