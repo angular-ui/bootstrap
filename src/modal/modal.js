@@ -339,6 +339,10 @@ angular.module('ui.bootstrap.modal', [])
       }
 
       $document.bind('keydown', function (evt) {
+        if (evt.isDefaultPrevented()) {
+          return evt;
+        }
+
         var modal = openedWindows.top();
         if (modal && modal.value.keyboard) {
           switch (evt.which){

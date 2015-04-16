@@ -4,6 +4,9 @@
   "version": "0.13.3-SNAPSHOT",
   "homepage": "http://angular-ui.github.io/bootstrap/",
   "dependencies": {},
+  "scripts":{
+    "test": "grunt"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/angular-ui/bootstrap.git"

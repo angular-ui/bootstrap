@@ -243,6 +243,30 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(0);
     });
 
+    it('should not close on ESC if event.preventDefault() was issued', function () {
+      var modal = open({template: '<div><button>x</button></div>' });
+      expect($document).toHaveModalsOpen(1);
+
+      var button = angular.element('button').on('keydown', preventKeyDown);
+
+      triggerKeyDown(button, 27);
+      $rootScope.$digest();
+
+      expect($document).toHaveModalsOpen(1);
+
+      button.off('keydown', preventKeyDown);
+
+      triggerKeyDown(button, 27);
+      $animate.triggerCallbacks();
+      $rootScope.$digest();
+
+      expect($document).toHaveModalsOpen(0);
+
+      function preventKeyDown(evt) {
+        evt.preventDefault();
+      }
+    });
+
     it('should support closing on backdrop click', function () {
 
       var modal = open({template: '<div>Content</div>'});
