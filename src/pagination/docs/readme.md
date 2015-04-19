@@ -36,6 +36,10 @@ Settings can be provided as attributes in the `<uib-pagination>` or globally con
  * `rotate`
  	_(Defaults: true)_ :
  	Whether to keep current page in the middle of the visible ones.
+ 	
+ * `force-ellipses`
+ 	_(Defaults: false)_ :
+ 	Also displays ellipses when `rotate` is true and `max-size` is smaller than the number of pages.
 
  * `direction-links`
  	_(Default: true)_ :
@@ -60,6 +64,10 @@ Settings can be provided as attributes in the `<uib-pagination>` or globally con
  * `last-text`
  	_(Default: 'Last')_ :
  	Text for Last button.
+ 	
+ * `boundary-link-numbers`
+ 	_(Default: false)_ :
+ 	Whether to always display the first and last page numbers. If `max-size` is smaller than the number of pages, then the  first and last page numbers are still shown with ellipses in-between as necessary. NOTE: `max-size` refers to the center of the range. This option may add up to 2 more numbers on each side of the displayed range for the end value and what would be an ellipsis but is replaced by a number because it is sequential. 
 
  * `template-url`
   _(Default: 'template/pagination/pagination.html')_ :

@@ -24,7 +24,7 @@ angular.module('ui.bootstrap.pagination', [])
 
     $scope.$watch('totalItems', function(newTotal, oldTotal) {
       if (angular.isDefined(newTotal) || newTotal !== oldTotal) {
-        $scope.totalPages = self.calculateTotalPages();
+      $scope.totalPages = self.calculateTotalPages();
         updatePage();
       }
     });
@@ -80,12 +80,14 @@ angular.module('ui.bootstrap.pagination', [])
 .constant('uibPaginationConfig', {
   itemsPerPage: 10,
   boundaryLinks: false,
+  boundaryLinkNumbers: false,
   directionLinks: true,
   firstText: 'First',
   previousText: 'Previous',
   nextText: 'Next',
   lastText: 'Last',
-  rotate: true
+  rotate: true,
+  forceEllipses: false
 })
 
 .directive('uibPagination', ['$parse', 'uibPaginationConfig', function($parse, paginationConfig) {
@@ -115,7 +117,9 @@ angular.module('ui.bootstrap.pagination', [])
 
       // Setup configuration parameters
       var maxSize = angular.isDefined(attrs.maxSize) ? scope.$parent.$eval(attrs.maxSize) : paginationConfig.maxSize,
-        rotate = angular.isDefined(attrs.rotate) ? scope.$parent.$eval(attrs.rotate) : paginationConfig.rotate;
+        rotate = angular.isDefined(attrs.rotate) ? scope.$parent.$eval(attrs.rotate) : paginationConfig.rotate,
+        forceEllipses = angular.isDefined(attrs.forceEllipses) ? scope.$parent.$eval(attrs.forceEllipses) : paginationConfig.forceEllipses,
+        boundaryLinkNumbers = angular.isDefined(attrs.boundaryLinkNumbers) ? scope.$parent.$eval(attrs.boundaryLinkNumbers) : paginationConfig.boundaryLinkNumbers;
       scope.boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$parent.$eval(attrs.boundaryLinks) : paginationConfig.boundaryLinks;
       scope.directionLinks = angular.isDefined(attrs.directionLinks) ? scope.$parent.$eval(attrs.directionLinks) : paginationConfig.directionLinks;
 
@@ -148,7 +152,7 @@ angular.module('ui.bootstrap.pagination', [])
         if (isMaxSized) {
           if (rotate) {
             // Current page is displayed in the middle of the visible ones
-            startPage = Math.max(currentPage - Math.floor(maxSize/2), 1);
+            startPage = Math.max(currentPage - Math.floor(maxSize / 2), 1);
             endPage   = startPage + maxSize - 1;
 
             // Adjust if limit is exceeded
@@ -158,7 +162,7 @@ angular.module('ui.bootstrap.pagination', [])
             }
           } else {
             // Visible pages are paginated with maxSize
-            startPage = ((Math.ceil(currentPage / maxSize) - 1) * maxSize) + 1;
+            startPage = (Math.ceil(currentPage / maxSize) - 1) * maxSize + 1;
 
             // Adjust last page if limit is exceeded
             endPage = Math.min(startPage + maxSize - 1, totalPages);
@@ -172,15 +176,37 @@ angular.module('ui.bootstrap.pagination', [])
         }
 
         // Add links to move between page sets
-        if ( isMaxSized && maxSize > 0 ) {
-          if ( startPage > 1 ) {
+        if (isMaxSized && maxSize > 0 &&  (!rotate || forceEllipses || boundaryLinkNumbers)) {
+          if (startPage > 1) {
+            if (!boundaryLinkNumbers || startPage > 3) { //need ellipsis for all options unless range is too close to beginning
             var previousPageSet = makePage(startPage - 1, '...', false);
             pages.unshift(previousPageSet);
           }
+            if (boundaryLinkNumbers) {
+              if (startPage === 3) { //need to replace ellipsis when the buttons would be sequential
+                var secondPageLink = makePage(2, '2', false);
+                pages.unshift(secondPageLink);
+              }
+              //add the first page
+              var firstPageLink = makePage(1, '1', false);
+              pages.unshift(firstPageLink);
+            }
+          }
 
           if (endPage < totalPages) {
+            if (!boundaryLinkNumbers || endPage < totalPages - 2) { //need ellipsis for all options unless range is too close to end
             var nextPageSet = makePage(endPage + 1, '...', false);
             pages.push(nextPageSet);
+          }
+            if (boundaryLinkNumbers) {
+              if (endPage === totalPages - 2) { //need to replace ellipsis when the buttons would be sequential
+                var secondToLastPageLink = makePage(totalPages - 1, totalPages - 1, false);
+                pages.push(secondToLastPageLink);
+              }
+              //add the last page
+              var lastPageLink = makePage(totalPages, totalPages, false);
+              pages.push(lastPageLink);
+            }
           }
         }
         return pages;
