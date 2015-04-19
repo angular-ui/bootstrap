@@ -76,5 +76,54 @@ describe('popover template', function() {
     expect( elmBody.children().length ).toBe( 1 );
   }));
 
+  describe('supports options', function () {
+
+    describe('placement', function () {
+
+      it('can specify an alternative, valid placement', inject(function ($compile) {
+        elmBody = angular.element(
+          '<div><span popover-template="templateUrl" popover-placement="left">Trigger</span></div>'
+        );
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('span');
+        elmScope = elm.scope();
+        tooltipScope = elmScope.$$childTail;
+
+        elm.trigger( 'click' );
+        expect( tooltipScope.isOpen ).toBe( true );
+
+        expect( elmBody.children().length ).toBe( 2 );
+        var ttipElement = elmBody.find('div.popover');
+        expect(ttipElement).toHaveClass('left');
+      }));
+
+    });
+
+    describe('class', function () {
+
+      it('can specify a custom class', inject(function ($compile) {
+        elmBody = angular.element(
+          '<div><span popover-template="templateUrl" popover-class="custom">Trigger</span></div>'
+        );
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('span');
+        elmScope = elm.scope();
+        tooltipScope = elmScope.$$childTail;
+
+        elm.trigger( 'click' );
+        expect( tooltipScope.isOpen ).toBe( true );
+
+        expect( elmBody.children().length ).toBe( 2 );
+        var ttipElement = elmBody.find('div.popover');
+        expect(ttipElement).toHaveClass('custom');
+      }));
+
+    });
+
+  });
+
+
 });
 

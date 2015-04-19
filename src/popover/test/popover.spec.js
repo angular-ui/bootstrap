@@ -92,6 +92,54 @@ describe('popover', function() {
     expect(elmBody.children().eq(1)).not.toHaveClass('fade');
   }));
 
+  describe('supports options', function () {
+
+    describe('placement', function () {
+
+      it('can specify an alternative, valid placement', inject(function ($compile) {
+        elmBody = angular.element(
+          '<div><span popover="popover text" popover-placement="left">Trigger here</span></div>'
+        );
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('span');
+        elmScope = elm.scope();
+        tooltipScope = elmScope.$$childTail;
+
+        elm.trigger( 'click' );
+        expect( tooltipScope.isOpen ).toBe( true );
+
+        expect( elmBody.children().length ).toBe( 2 );
+        var ttipElement = elmBody.find('div.popover');
+        expect(ttipElement).toHaveClass('left');
+      }));
+
+    });
+
+    describe('class', function () {
+
+      it('can specify a custom class', inject(function ($compile) {
+        elmBody = angular.element(
+          '<div><span popover="popover text" popover-class="custom">Trigger here</span></div>'
+        );
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('span');
+        elmScope = elm.scope();
+        tooltipScope = elmScope.$$childTail;
+
+        elm.trigger( 'click' );
+        expect( tooltipScope.isOpen ).toBe( true );
+
+        expect( elmBody.children().length ).toBe( 2 );
+        var ttipElement = elmBody.find('div.popover');
+        expect(ttipElement).toHaveClass('custom');
+      }));
+
+    });
+
+  });
+
 });
 
 
