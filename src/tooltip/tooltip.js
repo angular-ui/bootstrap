@@ -500,7 +500,9 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
 })
 
 .directive( 'tooltipHtml', [ '$tooltip', function ( $tooltip ) {
-  return $tooltip( 'tooltipHtml', 'tooltip', 'mouseenter' );
+  return $tooltip('tooltipHtml', 'tooltip', 'mouseenter', {
+    useContentExp: true
+  });
 }])
 
 /*

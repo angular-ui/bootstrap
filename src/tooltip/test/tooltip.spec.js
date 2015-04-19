@@ -528,6 +528,13 @@ describe( 'tooltipHtml', function() {
     expect( elmBody.find('.tooltip-inner').html() ).toBe( scope.html );
   }));
 
+  it( 'should not open if html is empty', function () {
+    scope.safeHtml = null;
+    scope.$digest();
+    elm.trigger( 'mouseenter' );
+    expect( tooltipScope.isOpen ).toBe( false );
+  });
+
   it( 'should show on mouseenter and hide on mouseleave', inject( function ($sce) {
     expect( tooltipScope.isOpen ).toBe( false );
 
