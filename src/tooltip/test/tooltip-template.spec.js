@@ -17,7 +17,7 @@ describe('tooltip template', function() {
 
   beforeEach(inject(function($rootScope, $compile) {
     elmBody = angular.element(
-      '<div><span tooltip-template="{{ templateUrl }}">Selector Text</span></div>'
+      '<div><span tooltip-template="templateUrl">Selector Text</span></div>'
     );
 
     scope = $rootScope;
@@ -61,5 +61,19 @@ describe('tooltip template', function() {
 
     expect( elmBody.children().eq(1).text().trim() ).toBe( 'new text' );
   }));
+
+  it('should hide tooltip when template becomes empty', inject(function ($timeout) {
+    elm.trigger( 'mouseenter' );
+    expect( tooltipScope.isOpen ).toBe( true );
+
+    scope.templateUrl = '';
+    scope.$digest();
+
+    expect( tooltipScope.isOpen ).toBe( false );
+
+    $timeout.flush();
+    expect( elmBody.children().length ).toBe( 1 );
+  }));
+
 });
 
