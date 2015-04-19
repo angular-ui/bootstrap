@@ -9,14 +9,16 @@ angular.module( 'ui.bootstrap.popover', [ 'ui.bootstrap.tooltip' ] )
   return {
     restrict: 'EA',
     replace: true,
-    scope: { title: '@', content: '@', placement: '@', animation: '&', isOpen: '&',
+    scope: { title: '@', contentExp: '&', placement: '@', animation: '&', isOpen: '&',
       originScope: '&' },
     templateUrl: 'template/popover/popover-template.html'
   };
 })
 
 .directive( 'popoverTemplate', [ '$tooltip', function ( $tooltip ) {
-  return $tooltip( 'popoverTemplate', 'popover', 'click' );
+  return $tooltip( 'popoverTemplate', 'popover', 'click', {
+    useContentExp: true
+  } );
 }])
 
 .directive( 'popoverPopup', function () {

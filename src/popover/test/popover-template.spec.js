@@ -18,7 +18,7 @@ describe('popover template', function() {
 
   beforeEach(inject(function($rootScope, $compile) {
     elmBody = angular.element(
-      '<div><span popover-template="{{ templateUrl }}">Selector Text</span></div>'
+      '<div><span popover-template="templateUrl">Selector Text</span></div>'
     );
 
     scope = $rootScope;
@@ -62,5 +62,19 @@ describe('popover template', function() {
 
     expect( elmBody.children().eq(1).text().trim() ).toBe( 'new text' );
   }));
+
+  it('should hide popover when template becomes empty', inject(function ($timeout) {
+    elm.trigger( 'click' );
+    expect( tooltipScope.isOpen ).toBe( true );
+
+    scope.templateUrl = '';
+    scope.$digest();
+
+    expect( tooltipScope.isOpen ).toBe( false );
+
+    $timeout.flush();
+    expect( elmBody.children().length ).toBe( 1 );
+  }));
+
 });
 
