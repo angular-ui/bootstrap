@@ -4,6 +4,9 @@ describe('tooltip directive', function () {
 
   beforeEach(module('ui.bootstrap.tooltip'));
   beforeEach(module('template/tooltip/tooltip-popup.html'));
+  beforeEach(module('template/tooltip/tooltip-template-popup.html'));
+  beforeEach(module('template/tooltip/tooltip-html-popup.html'));
+  beforeEach(module('template/tooltip/tooltip-html-unsafe-popup.html'));
   beforeEach(inject(function (_$rootScope_, _$compile_, _$document_, _$timeout_) {
     $rootScope = _$rootScope_;
     $compile = _$compile_;
@@ -95,34 +98,55 @@ describe('tooltip directive', function () {
 
   describe('option by option', function () {
 
-    describe('placement', function () {
+    var tooltipTypes = {
+      'tooltip': 'tooltip="tooltip text"',
+      'tooltip-html': 'tooltip-html="tooltipSafeHtml"',
+      'tooltip-html-unsafe': 'tooltip-html-unsafe="tooltip text"',
+      'tooltip-template': 'tooltip-template="\'tooltipTextUrl\'"'
+    };
 
-      it('can specify an alternative, valid placement', function () {
-        var fragment = compileTooltip('<span tooltip="tooltip text" tooltip-placement="left">Trigger here</span>');
-        fragment.find('span').trigger( 'mouseenter' );
+    beforeEach(inject(function ($sce, $templateCache) {
+      $rootScope.tooltipText = 'tooltip text';
+      $rootScope.tooltipSafeHtml = $sce.trustAsHtml('tooltip text');
+      $templateCache.put('tooltipTextUrl', [200, '<span>tooltip text</span>', {}]);
+    }));
 
-        var ttipElement = fragment.find('div.tooltip');
-        expect(fragment).toHaveOpenTooltips();
-        expect(ttipElement).toHaveClass('left');
+    angular.forEach(tooltipTypes, function (html, key) {
 
-        closeTooltip(fragment.find('span'));
-        expect(fragment).not.toHaveOpenTooltips();
-      });
+      describe(key, function () {
 
-    });
+        describe('placement', function () {
 
-    describe('class', function () {
+          it('can specify an alternative, valid placement', function () {
+            var fragment = compileTooltip('<span ' + html + ' tooltip-placement="left">Trigger here</span>');
+            fragment.find('span').trigger( 'mouseenter' );
 
-      it('can specify a custom class', function () {
-        var fragment = compileTooltip('<span tooltip="tooltip text" tooltip-class="custom">Trigger here</span>');
-        fragment.find('span').trigger( 'mouseenter' );
+            var ttipElement = fragment.find('div.tooltip');
+            expect(fragment).toHaveOpenTooltips();
+            expect(ttipElement).toHaveClass('left');
 
-        var ttipElement = fragment.find('div.tooltip');
-        expect(fragment).toHaveOpenTooltips();
-        expect(ttipElement).toHaveClass('custom');
+            closeTooltip(fragment.find('span'));
+            expect(fragment).not.toHaveOpenTooltips();
+          });
 
-        closeTooltip(fragment.find('span'));
-        expect(fragment).not.toHaveOpenTooltips();
+        });
+
+        describe('class', function () {
+
+          it('can specify a custom class', function () {
+            var fragment = compileTooltip('<span ' + html + ' tooltip-class="custom">Trigger here</span>');
+            fragment.find('span').trigger( 'mouseenter' );
+
+            var ttipElement = fragment.find('div.tooltip');
+            expect(fragment).toHaveOpenTooltips();
+            expect(ttipElement).toHaveClass('custom');
+
+            closeTooltip(fragment.find('span'));
+            expect(fragment).not.toHaveOpenTooltips();
+          });
+
+        });
+
       });
 
     });

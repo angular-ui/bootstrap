@@ -478,7 +478,7 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     restrict: 'EA',
     replace: true,
-    scope: { title: '@', contentExp: '&', placement: '@', animation: '&', isOpen: '&',
+    scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
       originScope: '&' },
     templateUrl: 'template/tooltip/tooltip-template-popup.html'
   };
