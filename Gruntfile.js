@@ -206,7 +206,7 @@ module.exports = function(grunt) {
   });
 
   //register before and after test tasks so we've don't have to change cli
-  //options on the goole's CI server
+  //options on the google's CI server
   grunt.registerTask('before-test', ['enforce', 'ddescribe-iit', 'jshint', 'html2js']);
   grunt.registerTask('after-test', ['build', 'copy']);
 
