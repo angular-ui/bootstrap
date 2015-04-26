@@ -365,17 +365,14 @@ angular.module('ui.bootstrap.modal', [])
         backdrop: true, //can also be false or 'static'
         keyboard: true
       },
-      $get: ['$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$modalStack',
-        function ($injector, $rootScope, $q, $http, $templateCache, $controller, $modalStack) {
+      $get: ['$injector', '$rootScope', '$q', '$templateRequest', '$controller', '$modalStack',
+        function ($injector, $rootScope, $q, $templateRequest, $controller, $modalStack) {
 
           var $modal = {};
 
           function getTemplatePromise(options) {
             return options.template ? $q.when(options.template) :
-              $http.get(angular.isFunction(options.templateUrl) ? (options.templateUrl)() : options.templateUrl,
-                {cache: $templateCache}).then(function (result) {
-                  return result.data;
-              });
+              $templateRequest(angular.isFunction(options.templateUrl) ? (options.templateUrl)() : options.templateUrl);
           }
 
           function getResolvePromises(resolves) {
