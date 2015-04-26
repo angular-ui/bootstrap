@@ -2070,9 +2070,6 @@ describe('datepicker directive', function () {
     });
 
     describe('first week in january', function() {
-      beforeEach(inject(function() {
-      }));
-
       it('in current year', function() {
         $rootScope.date = new Date('January 07, 2014');
         element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
