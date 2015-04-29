@@ -121,8 +121,8 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     link: function(scope, element, attr, controller) {
       scope.$watch(function() { return controller[attr.accordionTransclude]; }, function(heading) {
         if ( heading ) {
-          element.html('');
-          element.append(heading);
+          element.find('span').html('');
+          element.find('span').append(heading);
         }
       });
     }
