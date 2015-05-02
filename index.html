@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" href="assets/favicon.ico" />
     <title>Angular directives for Bootstrap</title>
     <meta name="description" content="AngularJS (Angular) native directives for Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Accordion, Alert, Buttons, Carousel, Collapse, Datepicker, Dropdown, Modal, Pagination, Popover, Progressbar, Rating, Tabs, Timepicker, Tooltip, Typeahead, ">
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.0.0/FileSaver.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-touch.min.js"></script>
-    <script src="ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular-touch.min.js"></script>
+    <script src="ui-bootstrap-tpls-0.13.0.min.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
@@ -74,7 +75,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.12.1)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.13.0)</small>
                 </button>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
@@ -174,9 +175,10 @@
                         JavaScript is required. The <strong>only required dependencies</strong> are:
                     </p>
                     <ul>
-                        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires AngularJS 1.2.x, tested with 1.2.16)</li>
+                        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires AngularJS 1.3.x, tested with 1.3.13).
+                            0.12.0 is the last version of this library that supports AngularJS 1.2.x.</li>
                         <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version 3.1.1).
-                            This version of the library (0.12.1) works only with Bootstrap CSS in version 3.x.
+                            This version of the library (0.13.0) works only with Bootstrap CSS in version 3.x.
                             0.8.0 is the last version of this library that supports Bootstrap CSS in version 2.3.x.
                         </li>
                     </ul>
@@ -250,13 +252,20 @@
 <p>We can control whether expanding an item will cause the other items to close, using the <code>close-others</code> attribute on accordion.</p>
 
 <p>The body of each accordion group is transcluded in to the body of the collapsible element.</p>
+
+<h3>Accordion Settings</h3>
+
+<ul>
+<li><code>is-open</code> <i class="glyphicon glyphicon-eye-open"></i> (Defaults: false) :
+Whether accordion group is open or closed.</li>
+</ul>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -380,7 +389,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -472,7 +481,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -580,7 +589,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -676,7 +685,7 @@ Provides a simple way to hide and show an element with a css transition</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -715,12 +724,24 @@ Provides a simple way to hide and show an element with a css transition</p>
                           </div>
                           <div class="row">
                             <div class="col-md-6 show-grid">
-                                <div ng-controller="DatepickerDemoCtrl">
+                                <style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+<div ng-controller="DatepickerDemoCtrl">
     <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
     <h4>Inline</h4>
     <div style="display:inline-block; min-height:290px;">
-        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+      <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
     </div>
 
     <h4>Popup</h4>
@@ -728,6 +749,15 @@ Provides a simple way to hide and show an element with a css transition</p>
         <div class="col-md-6">
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <p class="input-group">
+              <input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -775,6 +805,9 @@ Current mode of the datepicker <em>(day|month|year)</em>. Can be used to initial
 <li><p><code>date-disabled (date, mode)</code>
  <em>(Default: null)</em> :
  An optional expression to disable visible options based on passing date and current mode <em>(day|month|year)</em>.</p></li>
+<li><p><code>custom-class (date, mode)</code>
+ <em>(Default: null)</em> :
+ An optional expression to add classes based on passing date and current mode <em>(day|month|year)</em>.    </p></li>
 <li><p><code>show-weeks</code>
  <em>(Defaults: true)</em> :
  Whether to display week numbers.</p></li>
@@ -783,7 +816,7 @@ Current mode of the datepicker <em>(day|month|year)</em>. Can be used to initial
  Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).</p></li>
 <li><p><code>init-date</code>
  :
- The initial date view when no model value is not specified.</p></li>
+ The initial date view when no model value is specified.</p></li>
 <li><p><code>min-mode</code>
 <em>(Defaults: 'day')</em> :
 Set a lower limit for mode.</p></li>
@@ -810,7 +843,10 @@ Set an upper limit for mode.</p></li>
  Format of title when selecting month.</p></li>
 <li><p><code>year-range</code>
  <em>(Default: 20)</em> :
- Number of years displayed in year selection.</p></li>
+ Number of years displayed in year selection. </p></li>
+<li><p><code>shortcut-propagation</code>
+<em>(Default: false)</em> :
+An option to disable or enable shortcut's event propagation.</p></li>
 </ul>
 
 <h3>Popup Settings</h3>
@@ -866,17 +902,29 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
                                         <div plunker-content="markup">
-                                            <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;DatepickerDemoCtrl&quot;&gt;
+                                            <pre ng-non-bindable><code data-language="html">&lt;style&gt;
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+&lt;/style&gt;
+&lt;div ng-controller=&quot;DatepickerDemoCtrl&quot;&gt;
     &lt;pre&gt;Selected date is: &lt;em&gt;{{dt | date:&#x27;fullDate&#x27; }}&lt;/em&gt;&lt;/pre&gt;
 
     &lt;h4&gt;Inline&lt;/h4&gt;
     &lt;div style=&quot;display:inline-block; min-height:290px;&quot;&gt;
-        &lt;datepicker ng-model=&quot;dt&quot; min-date=&quot;minDate&quot; show-weeks=&quot;true&quot; class=&quot;well well-sm&quot;&gt;&lt;/datepicker&gt;
+      &lt;datepicker ng-model=&quot;dt&quot; min-date=&quot;minDate&quot; show-weeks=&quot;true&quot; class=&quot;well well-sm&quot; custom-class=&quot;getDayClass(date, mode)&quot;&gt;&lt;/datepicker&gt;
     &lt;/div&gt;
 
     &lt;h4&gt;Popup&lt;/h4&gt;
@@ -884,6 +932,15 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
         &lt;div class=&quot;col-md-6&quot;&gt;
             &lt;p class=&quot;input-group&quot;&gt;
               &lt;input type=&quot;text&quot; class=&quot;form-control&quot; datepicker-popup=&quot;{{format}}&quot; ng-model=&quot;dt&quot; is-open=&quot;opened&quot; min-date=&quot;minDate&quot; max-date=&quot;&#x27;2015-06-22&#x27;&quot; datepicker-options=&quot;dateOptions&quot; date-disabled=&quot;disabled(date, mode)&quot; ng-required=&quot;true&quot; close-text=&quot;Close&quot; /&gt;
+              &lt;span class=&quot;input-group-btn&quot;&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;open($event)&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+              &lt;/span&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;col-md-6&quot;&gt;
+            &lt;p class=&quot;input-group&quot;&gt;
+              &lt;input type=&quot;date&quot; class=&quot;form-control&quot; datepicker-popup ng-model=&quot;dt&quot; is-open=&quot;opened&quot; min-date=&quot;minDate&quot; max-date=&quot;&#x27;2015-06-22&#x27;&quot; datepicker-options=&quot;dateOptions&quot; date-disabled=&quot;disabled(date, mode)&quot; ng-required=&quot;true&quot; close-text=&quot;Close&quot; /&gt;
               &lt;span class=&quot;input-group-btn&quot;&gt;
                 &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;open($event)&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
               &lt;/span&gt;
@@ -940,6 +997,38 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
 
   $scope.formats = [&#x27;dd-MMMM-yyyy&#x27;, &#x27;yyyy/MM/dd&#x27;, &#x27;dd.MM.yyyy&#x27;, &#x27;shortDate&#x27;];
   $scope.format = $scope.formats[0];
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date();
+  afterTomorrow.setDate(tomorrow.getDate() + 2);
+  $scope.events =
+    [
+      {
+        date: tomorrow,
+        status: &#x27;full&#x27;
+      },
+      {
+        date: afterTomorrow,
+        status: &#x27;partially&#x27;
+      }
+    ];
+
+  $scope.getDayClass = function(date, mode) {
+    if (mode === &#x27;day&#x27;) {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i=0;i&lt;$scope.events.length;i++){
+        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return $scope.events[i].status;
+        }
+      }
+    }
+
+    return &#x27;&#x27;;
+  };
 });
 </code></pre>
                                         </div>
@@ -982,6 +1071,38 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date();
+  afterTomorrow.setDate(tomorrow.getDate() + 2);
+  $scope.events =
+    [
+      {
+        date: tomorrow,
+        status: 'full'
+      },
+      {
+        date: afterTomorrow,
+        status: 'partially'
+      }
+    ];
+
+  $scope.getDayClass = function(date, mode) {
+    if (mode === 'day') {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i=0;i<$scope.events.length;i++){
+        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return $scope.events[i].status;
+        }
+      }
+    }
+
+    return '';
+  };
 });
 </script>
                 
@@ -1037,6 +1158,20 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
       </ul>
     </div>
 
+    <!-- Single button using append-to-body -->
+    <div class="btn-group" dropdown dropdown-append-to-body>
+      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+        Dropdown on Body <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+
     <hr />
     <p>
         <button type="button" class="btn btn-default btn-sm" ng-click="toggleDropdown($event)">Toggle button dropdown</button>
@@ -1050,13 +1185,24 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                                 <p>Dropdown is a simple directive which will toggle a dropdown menu on click or programmatically.
 You can either use <code>is-open</code> to toggle or add inside a <code>&lt;a dropdown-toggle&gt;</code> element to toggle it when is clicked.
 There is also the <code>on-toggle(open)</code> optional expression fired when dropdown changes state.</p>
+
+<p>Add <code>dropdown-append-to-body</code> to the <code>dropdown</code> element to append to the inner <code>dropdown-menu</code> to the body.
+This is useful when the dropdown button is inside a div with <code>overflow: hidden</code>, and the menu would otherwise be hidden.</p>
+
+<p>By default the dropdown will automatically close if any of its elements is clicked, you can change this behavior by setting the <code>auto-close</code> option as follows:</p>
+
+<ul>
+<li><code>always</code> - (Default) automatically closes the dropdown when any of its elements is clicked.</li>
+<li><code>outsideClick</code> - closes the dropdown automatically only when the user clicks any element outside the dropdown.</li>
+<li><code>disabled</code> - disables the auto close. You can then control the open/close status of the dropdown manually, by using <code>is-open</code>. Please notice that the dropdown will still close if the toggle is clicked, the <code>esc</code> key is pressed or another dropdown is open.</li>
+</ul>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1095,6 +1241,20 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
       &lt;button type=&quot;button&quot; class=&quot;btn btn-danger dropdown-toggle&quot; dropdown-toggle&gt;
         &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
         &lt;span class=&quot;sr-only&quot;&gt;Split button!&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+        &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Single button using append-to-body --&gt;
+    &lt;div class=&quot;btn-group&quot; dropdown dropdown-append-to-body&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary dropdown-toggle&quot; dropdown-toggle&gt;
+        Dropdown on Body &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
       &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot;&gt;
         &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
@@ -1198,6 +1358,7 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
     <button class="btn btn-default" ng-click="open()">Open me!</button>
     <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
     <button class="btn btn-default" ng-click="open('sm')">Small modal</button>
+    <button class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
     <div ng-show="selected">Selection from a modal: {{ selected }}</div>
 </div>
                             </div>
@@ -1214,12 +1375,13 @@ Creating custom modals is straightforward: create a partial view, its controller
 <li><code>controller</code> - a controller for a modal instance - it can initialize scope used by modal. Accepts the "controller-as" syntax in the form 'SomeCtrl as myctrl'; can be injected with <code>$modalInstance</code></li>
 <li><code>controllerAs</code> - an alternative to the controller-as syntax, matching the API of directive definitions. Requires the <code>controller</code> option to be provided as well</li>
 <li><code>resolve</code> - members that will be resolved and passed to the controller as locals; it is equivalent of the <code>resolve</code> property for AngularJS routes</li>
+<li><code>animation</code> - set to false to disable animations on new modal/backdrop. Does not toggle animations for modals/backdrops that are already displayed.</li>
 <li><code>backdrop</code> - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), <code>'static'</code> - backdrop is present but modal window is not closed when clicking outside of the modal window.</li>
 <li><code>keyboard</code> - indicates whether the dialog should be closable by hitting the ESC key, defaults to true</li>
 <li><code>backdropClass</code> - additional CSS class(es) to be added to a modal backdrop template</li>
 <li><code>windowClass</code> - additional CSS class(es) to be added to a modal window template</li>
 <li><code>windowTemplateUrl</code> - a path to a template overriding modal's window template</li>
-<li><code>size</code> - optional size of modal window. Allowed values: <code>'sm'</code> (small) or  <code>'lg'</code> (large). Requires Bootstrap 3.1.0 or later</li>
+<li><code>size</code> - optional suffix of modal window class. The value used is appended to the <code>modal-</code> class, i.e. a value of <code>sm</code> gives <code>modal-sm</code></li>
 </ul>
 
 <p>The <code>open</code> method returns a modal instance, an object with the following properties:</p>
@@ -1229,6 +1391,7 @@ Creating custom modals is straightforward: create a partial view, its controller
 <li><code>dismiss(reason)</code> - a method that can be used to dismiss a modal, passing a reason</li>
 <li><code>result</code> - a promise that is resolved when a modal is closed and rejected when a modal is dismissed</li>
 <li><code>opened</code> - a promise that is resolved when a modal gets opened after downloading content's template and resolving all variables</li>
+<li>'rendered' - a promise that is resolved when a modal is rendered. </li>
 </ul>
 
 <p>In addition the scope associated with modal's content is augmented with 2 methods:</p>
@@ -1239,13 +1402,18 @@ Creating custom modals is straightforward: create a partial view, its controller
 </ul>
 
 <p>Those methods make it easy to close a modal window without a need to create a dedicated controller.</p>
+
+<p>Finally, a <code>modal.closing</code> event is broadcast to the modal scope before the modal closes.  If the listener calls 
+preventDefault on the event, then the modal will remain open.  The $close and $dismiss methods return true if the 
+event was allowed.  The event itself includes a parameter for the result/reason and a boolean parameter that indicates
+whether the modal is being closed (true) or dismissed.</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1272,6 +1440,7 @@ Creating custom modals is straightforward: create a partial view, its controller
     &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;open()&quot;&gt;Open me!&lt;/button&gt;
     &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;open(&#x27;lg&#x27;)&quot;&gt;Large modal&lt;/button&gt;
     &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;open(&#x27;sm&#x27;)&quot;&gt;Small modal&lt;/button&gt;
+    &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;toggleAnimation()&quot;&gt;Toggle Animation ({{ animationsEnabled }})&lt;/button&gt;
     &lt;div ng-show=&quot;selected&quot;&gt;Selection from a modal: {{ selected }}&lt;/div&gt;
 &lt;/div&gt;</code></pre>
                                         </div>
@@ -1282,9 +1451,12 @@ Creating custom modals is straightforward: create a partial view, its controller
 
   $scope.items = [&#x27;item1&#x27;, &#x27;item2&#x27;, &#x27;item3&#x27;];
 
+  $scope.animationsEnabled = true;
+
   $scope.open = function (size) {
 
     var modalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
       templateUrl: &#x27;myModalContent.html&#x27;,
       controller: &#x27;ModalInstanceCtrl&#x27;,
       size: size,
@@ -1301,6 +1473,11 @@ Creating custom modals is straightforward: create a partial view, its controller
       $log.info(&#x27;Modal dismissed at: &#x27; + new Date());
     });
   };
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
 });
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
@@ -1332,9 +1509,12 @@ angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;ModalInstanceCtrl
 
   $scope.items = ['item1', 'item2', 'item3'];
 
+  $scope.animationsEnabled = true;
+
   $scope.open = function (size) {
 
     var modalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
       templateUrl: 'myModalContent.html',
       controller: 'ModalInstanceCtrl',
       size: size,
@@ -1351,6 +1531,11 @@ angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;ModalInstanceCtrl
       $log.info('Modal dismissed at: ' + new Date());
     });
   };
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
 });
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
@@ -1410,6 +1595,9 @@ angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($s
 <p>Settings can be provided as attributes in the <code>&lt;pagination&gt;</code> or globally configured through the <code>paginationConfig</code>.</p>
 
 <ul>
+<li><p><code>ng-change</code>
+ :
+ <code>ng-change</code> can be used together with <code>ng-model</code> to call a function whenever the page changes.</p></li>
 <li><p><code>ng-model</code> <i class="glyphicon glyphicon-eye-open"></i>
  :
  Current page number. First page is 1.</p></li>
@@ -1470,7 +1658,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1552,14 +1740,27 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
     <h4>Dynamic</h4>
     <div class="form-group">
       <label>Popup Text:</label>
-      <input type="text" ng-model="dynamicPopover" class="form-control">
+      <input type="text" ng-model="dynamicPopover.content" class="form-control">
     </div>
     <div class="form-group">
       <label>Popup Title:</label>
-      <input type="text" ng-model="dynamicPopoverTitle" class="form-control">
+      <input type="text" ng-model="dynamicPopover.title" class="form-control">
     </div>
-    <button popover="{{dynamicPopover}}" popover-title="{{dynamicPopoverTitle}}" class="btn btn-default">Dynamic Popover</button>
-    
+    <div class="form-group">
+      <label>Popup Template:</label>
+      <input type="text" ng-model="dynamicPopover.templateUrl" class="form-control">
+    </div>
+    <button popover="{{dynamicPopover.content}}" popover-title="{{dynamicPopover.title}}" class="btn btn-default">Dynamic Popover</button>
+
+    <button popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" class="btn btn-default">Popover With Template</button>
+
+    <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div>{{dynamicPopover.content}}</div>
+        <div class="form-group">
+          <label>Popup Title:</label>
+          <input type="text" ng-model="dynamicPopover.title" class="form-control">
+        </div>
+    </script>
     <hr />
     <h4>Positional</h4>
     <button popover-placement="top" popover="On the Top!" class="btn btn-default">Top</button>
@@ -1588,6 +1789,15 @@ directive supports multiple placements, optional transition animation, and more.
 <p>Like the Bootstrap jQuery plugin, the popover <strong>requires</strong> the tooltip
 module.</p>
 
+<p>There are two versions of the popover: <code>popover</code> and <code>popover-template</code>:</p>
+
+<ul>
+<li><code>popover</code> takes text only and will escape any HTML provided for the popover
+body.</li>
+<li><code>popover-template</code> takes text that specifies the location of a template to
+use for the popover body.</li>
+</ul>
+
 <p>The popover directives provides several optional attributes to control how it
 will display:</p>
 
@@ -1614,7 +1824,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1623,14 +1833,27 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
     &lt;h4&gt;Dynamic&lt;/h4&gt;
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;label&gt;Popup Text:&lt;/label&gt;
-      &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopover&quot; class=&quot;form-control&quot;&gt;
+      &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopover.content&quot; class=&quot;form-control&quot;&gt;
     &lt;/div&gt;
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;label&gt;Popup Title:&lt;/label&gt;
-      &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopoverTitle&quot; class=&quot;form-control&quot;&gt;
+      &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopover.title&quot; class=&quot;form-control&quot;&gt;
     &lt;/div&gt;
-    &lt;button popover=&quot;{{dynamicPopover}}&quot; popover-title=&quot;{{dynamicPopoverTitle}}&quot; class=&quot;btn btn-default&quot;&gt;Dynamic Popover&lt;/button&gt;
-    
+    &lt;div class=&quot;form-group&quot;&gt;
+      &lt;label&gt;Popup Template:&lt;/label&gt;
+      &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopover.templateUrl&quot; class=&quot;form-control&quot;&gt;
+    &lt;/div&gt;
+    &lt;button popover=&quot;{{dynamicPopover.content}}&quot; popover-title=&quot;{{dynamicPopover.title}}&quot; class=&quot;btn btn-default&quot;&gt;Dynamic Popover&lt;/button&gt;
+
+    &lt;button popover-template=&quot;dynamicPopover.templateUrl&quot; popover-title=&quot;{{dynamicPopover.title}}&quot; class=&quot;btn btn-default&quot;&gt;Popover With Template&lt;/button&gt;
+
+    &lt;script type=&quot;text/ng-template&quot; id=&quot;myPopoverTemplate.html&quot;&gt;
+        &lt;div&gt;{{dynamicPopover.content}}&lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label&gt;Popup Title:&lt;/label&gt;
+          &lt;input type=&quot;text&quot; ng-model=&quot;dynamicPopover.title&quot; class=&quot;form-control&quot;&gt;
+        &lt;/div&gt;
+    &lt;/script&gt;
     &lt;hr /&gt;
     &lt;h4&gt;Positional&lt;/h4&gt;
     &lt;button popover-placement=&quot;top&quot; popover=&quot;On the Top!&quot; class=&quot;btn btn-default&quot;&gt;Top&lt;/button&gt;
@@ -1656,8 +1879,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
                                             <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;PopoverDemoCtrl&#x27;, function ($scope) {
-  $scope.dynamicPopover = &#x27;Hello, World!&#x27;;
-  $scope.dynamicPopoverTitle = &#x27;Title&#x27;;
+  $scope.dynamicPopover = {
+    content: &#x27;Hello, World!&#x27;,
+    templateUrl: &#x27;myPopoverTemplate.html&#x27;,
+    title: &#x27;Title&#x27;
+  };
 });
 </code></pre>
                                         </div>
@@ -1667,8 +1893,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         </div>
                     </section>
                     <script>angular.module('ui.bootstrap.demo').controller('PopoverDemoCtrl', function ($scope) {
-  $scope.dynamicPopover = 'Hello, World!';
-  $scope.dynamicPopoverTitle = 'Title';
+  $scope.dynamicPopover = {
+    content: 'Hello, World!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Title'
+  };
 });
 </script>
                 
@@ -1739,7 +1968,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1920,7 +2149,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2010,7 +2239,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 
   <tabset>
     <tab heading="Static title">Static content</tab>
-    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
       {{tab.content}}
     </tab>
     <tab select="alertMe()">
@@ -2066,9 +2295,10 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 <li><p><code>active</code> <i class="glyphicon glyphicon-eye-open"></i>
  <em>(Defaults: false)</em> :
  Whether tab is currently selected.</p></li>
-<li><p><code>disabled</code> <i class="glyphicon glyphicon-eye-open"></i>
+<li><p><code>disable</code> <i class="glyphicon glyphicon-eye-open"></i>
  <em>(Defaults: false)</em> :
- Whether tab is clickable and can be activated.</p></li>
+ Whether tab is clickable and can be activated.
+ Note that this was previously the <code>disabled</code> attribute, which is now deprecated.</p></li>
 <li><p><code>select()</code>
  <em>(Defaults: null)</em> :
  An optional expression called when tab is activated.</p></li>
@@ -2082,7 +2312,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2100,7 +2330,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 
   &lt;tabset&gt;
     &lt;tab heading=&quot;Static title&quot;&gt;Static content&lt;/tab&gt;
-    &lt;tab ng-repeat=&quot;tab in tabs&quot; heading=&quot;{{tab.title}}&quot; active=&quot;tab.active&quot; disabled=&quot;tab.disabled&quot;&gt;
+    &lt;tab ng-repeat=&quot;tab in tabs&quot; heading=&quot;{{tab.title}}&quot; active=&quot;tab.active&quot; disable=&quot;tab.disabled&quot;&gt;
       {{tab.content}}
     &lt;/tab&gt;
     &lt;tab select=&quot;alertMe()&quot;&gt;
@@ -2225,8 +2455,11 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
  <em>(Defaults: false)</em> :
   Whether user can type inside the hours &amp; minutes input.</p></li>
 <li><p><code>mousewheel</code>
- <em>(Defaults: true)</em> :
-  Whether user can scroll inside the hours &amp; minutes input to increase or decrease it's values.</p></li>
+<em>(Defaults: true)</em> :
+ Whether user can scroll inside the hours &amp; minutes input to increase or decrease it's values.</p></li>
+<li><p><code>arrowkeys</code>
+<em>(Defaults: true)</em> :
+ Whether user can use up/down arrowkeys inside the hours &amp; minutes input to increase or decrease it's values.</p></li>
 </ul>
                             </div>
                         </div>
@@ -2234,7 +2467,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2359,20 +2592,38 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
     <p>
       Pellentesque <a href="#" tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</a>,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
-      aliquam. Tincidunt lobortis feugiat vivamus at 
+      aliquam. Tincidunt lobortis feugiat vivamus at
       <a href="#" tooltip-placement="left" tooltip="On the Left!">left</a> eget
       arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
-      <a href="#" tooltip-placement="right" tooltip="On the Right!">right</a> 
-      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
-      <a href="#" tooltip-placement="bottom" tooltip="On the Bottom!">bottom</a> 
-      pharetra convallis posuere morbi leo urna, 
+      <a href="#" tooltip-placement="right" tooltip="On the Right!">right</a>
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas
+      <a href="#" tooltip-placement="bottom" tooltip="On the Bottom!">bottom</a>
+      pharetra convallis posuere morbi leo urna,
       <a href="#" tooltip-animation="false" tooltip="I don't fade. :-(">fading</a>
       at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
       <a href="#" tooltip-popup-delay='1000' tooltip='appears with delay'>delayed</a> turpis massa tincidunt dui ut.
+      <a href="#" tooltip-template="'myTooltipTemplate.html'">Custom template</a>
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas
     </p>
 
     <p>
-      I can even contain HTML. <a href="#" tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</a>
+        I can even contain HTML. <a href="#" tooltip-html="htmlTooltip">Check me out!</a>
+    </p>
+
+    <p>
+        <style>
+            /* Specify styling for tooltip contents */
+            .tooltip.customClass .tooltip-inner {
+                color: #880000;
+                background-color: #ffff66;
+                box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            }
+            /* Hide arrow */
+            .tooltip.customClass .tooltip-arrow {
+                display: none;
+            }
+        </style>
+        I can have a custom class. <a href="#" tooltip="I can have a custom class applied to me!" tooltip-class="customClass">Check me out!</a>
     </p>
 
     <form role="form">
@@ -2380,7 +2631,21 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
         <label>Or use custom triggers, like focus: </label>
         <input type="text" value="Click me!" tooltip="See? Now click away..."  tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
       </div>
+
+      <div class="form-group" ng-class="{'has-error' : !inputModel}">
+        <label>Disable tooltips conditionally:</label>
+        <input type="text" ng-model="inputModel" class="form-control"
+          placeholder="Hover over this for a tooltip until this is filled"
+          tooltip="Enter something in this input field to disable this tooltip"
+          tooltip-placement="top"
+          tooltip-trigger="mouseenter"
+          tooltip-enable="!inputModel" />
+      </div>
     </form>
+
+    <script type="text/ng-template" id="myTooltipTemplate.html">
+      <span>Special Tooltip with <strong>markup</strong> and {{ dynamicTooltipText }}</span>
+    </script>
 </div>
 
                             </div>
@@ -2388,11 +2653,18 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                                 <p>A lightweight, extensible directive for fancy tooltip creation. The tooltip
 directive supports multiple placements, optional transition animation, and more.</p>
 
-<p>There are two versions of the tooltip: <code>tooltip</code> and <code>tooltip-html-unsafe</code>. The
-former takes text only and will escape any HTML provided. The latter takes
+<p>There are three versions of the tooltip: <code>tooltip</code>, <code>tooltip-template</code>, and
+<code>tooltip-html-unsafe</code>:</p>
+
+<ul>
+<li><code>tooltip</code> takes text only and will escape any HTML provided.</li>
+<li><code>tooltip-template</code> takes text that specifies the location of a template to
+use for the tooltip.</li>
+<li><code>tooltip-html-unsafe</code> takes
 whatever HTML is provided and displays it in a tooltip; it's called "unsafe"
 because the HTML is not sanitized. <em>The user is responsible for ensuring the
-content is safe to put into the DOM!</em></p>
+content is safe to put into the DOM!</em></li>
+</ul>
 
 <p>The tooltip directives provide several optional attributes to control how they
 will display:</p>
@@ -2403,9 +2675,13 @@ will display:</p>
 <li><code>tooltip-animation</code>: Should it fade in and out? Defaults to "true".</li>
 <li><code>tooltip-popup-delay</code>: For how long should the user have to have the mouse
 over the element before the tooltip shows (in milliseconds)? Defaults to 0.</li>
-<li><code>tooltip-trigger</code>: What should trigger a show of the tooltip?</li>
+<li><code>tooltip-trigger</code>: What should trigger a show of the tooltip?
+Note: this attribute is no longer observable. See <code>tooltip-enable</code>.</li>
+<li><code>tooltip-enable</code>: Is it enabled? It will enable or disable the configured
+<code>tooltip-trigger</code>.</li>
 <li><code>tooltip-append-to-body</code>: Should the tooltip be appended to <code>$body</code> instead of
 the parent element?</li>
+<li><code>tooltip-class</code>: Custom class to be applied to the tooltip.</li>
 </ul>
 
 <p>The tooltip directives require the <code>$position</code> service.</p>
@@ -2450,7 +2726,7 @@ appendToBody: false
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2467,20 +2743,38 @@ appendToBody: false
     &lt;p&gt;
       Pellentesque &lt;a href=&quot;#&quot; tooltip=&quot;{{dynamicTooltip}}&quot;&gt;{{dynamicTooltipText}}&lt;/a&gt;,
       sit amet venenatis urna cursus eget nunc scelerisque viverra mauris, in
-      aliquam. Tincidunt lobortis feugiat vivamus at 
+      aliquam. Tincidunt lobortis feugiat vivamus at
       &lt;a href=&quot;#&quot; tooltip-placement=&quot;left&quot; tooltip=&quot;On the Left!&quot;&gt;left&lt;/a&gt; eget
       arcu dictum varius duis at consectetur lorem. Vitae elementum curabitur
-      &lt;a href=&quot;#&quot; tooltip-placement=&quot;right&quot; tooltip=&quot;On the Right!&quot;&gt;right&lt;/a&gt; 
-      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas 
-      &lt;a href=&quot;#&quot; tooltip-placement=&quot;bottom&quot; tooltip=&quot;On the Bottom!&quot;&gt;bottom&lt;/a&gt; 
-      pharetra convallis posuere morbi leo urna, 
+      &lt;a href=&quot;#&quot; tooltip-placement=&quot;right&quot; tooltip=&quot;On the Right!&quot;&gt;right&lt;/a&gt;
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas
+      &lt;a href=&quot;#&quot; tooltip-placement=&quot;bottom&quot; tooltip=&quot;On the Bottom!&quot;&gt;bottom&lt;/a&gt;
+      pharetra convallis posuere morbi leo urna,
       &lt;a href=&quot;#&quot; tooltip-animation=&quot;false&quot; tooltip=&quot;I don&#x27;t fade. :-(&quot;&gt;fading&lt;/a&gt;
       at elementum eu, facilisis sed odio morbi quis commodo odio. In cursus
       &lt;a href=&quot;#&quot; tooltip-popup-delay=&#x27;1000&#x27; tooltip=&#x27;appears with delay&#x27;&gt;delayed&lt;/a&gt; turpis massa tincidunt dui ut.
+      &lt;a href=&quot;#&quot; tooltip-template=&quot;&#x27;myTooltipTemplate.html&#x27;&quot;&gt;Custom template&lt;/a&gt;
+      nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas
     &lt;/p&gt;
 
     &lt;p&gt;
-      I can even contain HTML. &lt;a href=&quot;#&quot; tooltip-html-unsafe=&quot;{{htmlTooltip}}&quot;&gt;Check me out!&lt;/a&gt;
+        I can even contain HTML. &lt;a href=&quot;#&quot; tooltip-html=&quot;htmlTooltip&quot;&gt;Check me out!&lt;/a&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+        &lt;style&gt;
+            /* Specify styling for tooltip contents */
+            .tooltip.customClass .tooltip-inner {
+                color: #880000;
+                background-color: #ffff66;
+                box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            }
+            /* Hide arrow */
+            .tooltip.customClass .tooltip-arrow {
+                display: none;
+            }
+        &lt;/style&gt;
+        I can have a custom class. &lt;a href=&quot;#&quot; tooltip=&quot;I can have a custom class applied to me!&quot; tooltip-class=&quot;customClass&quot;&gt;Check me out!&lt;/a&gt;
     &lt;/p&gt;
 
     &lt;form role=&quot;form&quot;&gt;
@@ -2488,17 +2782,31 @@ appendToBody: false
         &lt;label&gt;Or use custom triggers, like focus: &lt;/label&gt;
         &lt;input type=&quot;text&quot; value=&quot;Click me!&quot; tooltip=&quot;See? Now click away...&quot;  tooltip-trigger=&quot;focus&quot; tooltip-placement=&quot;right&quot; class=&quot;form-control&quot; /&gt;
       &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot; ng-class=&quot;{&#x27;has-error&#x27; : !inputModel}&quot;&gt;
+        &lt;label&gt;Disable tooltips conditionally:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; ng-model=&quot;inputModel&quot; class=&quot;form-control&quot;
+          placeholder=&quot;Hover over this for a tooltip until this is filled&quot;
+          tooltip=&quot;Enter something in this input field to disable this tooltip&quot;
+          tooltip-placement=&quot;top&quot;
+          tooltip-trigger=&quot;mouseenter&quot;
+          tooltip-enable=&quot;!inputModel&quot; /&gt;
+      &lt;/div&gt;
     &lt;/form&gt;
+
+    &lt;script type=&quot;text/ng-template&quot; id=&quot;myTooltipTemplate.html&quot;&gt;
+      &lt;span&gt;Special Tooltip with &lt;strong&gt;markup&lt;/strong&gt; and {{ dynamicTooltipText }}&lt;/span&gt;
+    &lt;/script&gt;
 &lt;/div&gt;
 </code></pre>
                                         </div>
                                     </tab>
                                     <tab heading="JavaScript">
                                         <div plunker-content="javascript">
-                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;TooltipDemoCtrl&#x27;, function ($scope) {
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;TooltipDemoCtrl&#x27;, function ($scope, $sce) {
   $scope.dynamicTooltip = &#x27;Hello, World!&#x27;;
   $scope.dynamicTooltipText = &#x27;dynamic&#x27;;
-  $scope.htmlTooltip = &#x27;I\&#x27;ve been made &lt;b&gt;bold&lt;/b&gt;!&#x27;;
+  $scope.htmlTooltip = $sce.trustAsHtml(&#x27;I\&#x27;ve been made &lt;b&gt;bold&lt;/b&gt;!&#x27;);
 });
 </code></pre>
                                         </div>
@@ -2507,10 +2815,10 @@ appendToBody: false
                             </div>
                         </div>
                     </section>
-                    <script>angular.module('ui.bootstrap.demo').controller('TooltipDemoCtrl', function ($scope) {
+                    <script>angular.module('ui.bootstrap.demo').controller('TooltipDemoCtrl', function ($scope, $sce) {
   $scope.dynamicTooltip = 'Hello, World!';
   $scope.dynamicTooltipText = 'dynamic';
-  $scope.htmlTooltip = 'I\'ve been made <b>bold</b>!';
+  $scope.htmlTooltip = $sce.trustAsHtml('I\'ve been made <b>bold</b>!');
 });
 </script>
                 
@@ -2603,7 +2911,7 @@ Should the first match automatically be focused as you type?</p></li>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.2.16', '3.1.1', '0.12.1', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2732,7 +3040,7 @@ Should the first match automatically be focused as you type?</p></li>
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('0.12.1')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.12.1</a>
+        <a class="btn btn-primary" ng-href="{{download('0.13.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.13.0</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
@@ -2759,17 +3067,6 @@ Should the first match automatically be focused as you type?</p></li>
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
-               ng-class="{'btn-primary': module.transition}"
-               ng-model="module.transition"
-               btn-checkbox
-               ng-change="selectedChanged('transition', module.transition)">
-                  Transition
-              </button>
-              
-            
-              
-              <button type="button" class="btn btn-default"
-               style="width: 33%; border-radius: 0;"
                ng-class="{'btn-primary': module.collapse}"
                ng-model="module.collapse"
                btn-checkbox
@@ -2788,11 +3085,7 @@ Should the first match automatically be focused as you type?</p></li>
                   Accordion
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2803,7 +3096,11 @@ Should the first match automatically be focused as you type?</p></li>
                   Alert
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2825,11 +3122,7 @@ Should the first match automatically be focused as you type?</p></li>
                   Buttons
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2840,7 +3133,11 @@ Should the first match automatically be focused as you type?</p></li>
                   Carousel
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2862,11 +3159,7 @@ Should the first match automatically be focused as you type?</p></li>
                   Position
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2877,7 +3170,11 @@ Should the first match automatically be focused as you type?</p></li>
                   Datepicker
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2899,11 +3196,7 @@ Should the first match automatically be focused as you type?</p></li>
                   Modal
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2914,7 +3207,11 @@ Should the first match automatically be focused as you type?</p></li>
                   Pagination
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2936,11 +3233,7 @@ Should the first match automatically be focused as you type?</p></li>
                   Popover
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2951,7 +3244,11 @@ Should the first match automatically be focused as you type?</p></li>
                   Progressbar
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2973,11 +3270,7 @@ Should the first match automatically be focused as you type?</p></li>
                   Tabs
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -2986,6 +3279,21 @@ Should the first match automatically be focused as you type?</p></li>
                btn-checkbox
                ng-change="selectedChanged('timepicker', module.timepicker)">
                   Timepicker
+              </button>
+              
+                </div>
+              
+            
+              
+                <div class="btn-group" style="width: 100%;">
+              
+              <button type="button" class="btn btn-default"
+               style="width: 33%; border-radius: 0;"
+               ng-class="{'btn-primary': module.transition}"
+               ng-model="module.transition"
+               btn-checkbox
+               ng-change="selectedChanged('transition', module.transition)">
+                  Transition
               </button>
               
             
@@ -3006,7 +3314,7 @@ Should the first match automatically be focused as you type?</p></li>
         <a class="btn btn-default" ng-click="cancel()">Close</a>
         <a class="btn btn-primary" ng-hide="isOldBrowser()"
             ng-disabled="isOldBrowser() !== false && !selectedModules.length"
-            ng-click="selectedModules.length && build(selectedModules, '0.12.1')">
+            ng-click="selectedModules.length && build(selectedModules, '0.13.0')">
             <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
         </a>
     </div>
