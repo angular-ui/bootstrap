@@ -16,6 +16,10 @@ Rating directive that will take care of visualising a star rating bar.
  	_(Defaults: false)_ :
  	Prevent user's interaction.
 
+ * `titles`
+ 	_(Defaults: ["one", "two", "three", "four", "five"])_ :
+ 	An array of Strings defining titles for all icons 
+
  * `on-hover(value)`
  	:
  	An optional expression called when user's mouse is over a particular icon.

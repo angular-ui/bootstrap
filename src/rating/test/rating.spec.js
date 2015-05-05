@@ -27,6 +27,13 @@ describe('rating directive', function () {
     return state;
   }
 
+  function getTitles() {
+    var stars = getStars();
+    return stars.toArray().map(function(star) {
+      return angular.element(star).attr('title');
+    });
+  }
+  
   function triggerKeyDown(keyCode) {
     var e = $.Event('keydown');
     e.which = keyCode;
@@ -273,4 +280,50 @@ describe('rating directive', function () {
       expect(getState('on', 'off')).toEqual([true, true, true, true, true, false, false, false, false, false]);
     });
   });
+  
+  describe('Default title', function() {
+    it('should return the default title for each star', function() {
+      expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
+    });
+  });
+  
+  describe('shows different title when `max` attribute is greater than the titles array ', function() {
+    var originalConfig = {};
+    beforeEach(inject(function(ratingConfig) {
+      $rootScope.rate = 5;
+      angular.extend(originalConfig, ratingConfig);
+      ratingConfig.max = 10;
+      element = $compile('<rating ng-model="rate"></rating>')($rootScope);
+      $rootScope.$digest();
+    }));
+    afterEach(inject(function(ratingConfig) {
+      // return it to the original state
+      angular.extend(ratingConfig, originalConfig);
+    }));
+ 
+   it('should return the default title for each star', function() {
+      expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five', '6', '7', '8', '9', '10']);
+    });
+  });
+  
+  describe('shows custom titles ', function() {
+    it('should return the custom title for each star', function() {
+      $rootScope.titles = [44,45,46];
+      element = $compile('<rating ng-model="rate" titles="titles"></rating>')($rootScope);
+      $rootScope.$digest();
+      expect(getTitles()).toEqual(['44', '45', '46', '4', '5']);
+    });
+    it('should return the default title if the custom title is empty', function() {
+      $rootScope.titles = [];
+      element = $compile('<rating ng-model="rate" titles="titles"></rating>')($rootScope);
+      $rootScope.$digest();
+      expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
+    });
+   it('should return the default title if the custom title is not an array', function() {
+      element = $compile('<rating ng-model="rate" titles="test"></rating>')($rootScope);
+      $rootScope.$digest();
+      expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
+    });
+  });
+
 });
