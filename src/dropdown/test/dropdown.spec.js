@@ -468,4 +468,186 @@ describe('dropdownToggle', function() {
       expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
     });
   });
+
+  describe('`keyboard-nav` option', function() {
+    function dropdown() {
+      return $compile('<li dropdown keyboard-nav><a href dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+    }
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should focus first list element when down arrow pressed', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var optionEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(optionEl)).toBe(true);
+    });
+
+    it('should not focus first list element when down arrow pressed if closed', function() {
+      $document.find('body').append(element);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(false);
+    });
+
+    it('should focus second list element when down arrow pressed twice', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+  });
+
+  describe('`keyboard-nav` option', function() {
+    function dropdown() {
+      return $compile('<li dropdown keyboard-nav><a href dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+    }
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should focus first list element when down arrow pressed', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should not focus first list element when up arrow pressed after dropdown toggled', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+
+      triggerKeyDown($document, 38);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(false);
+    });
+
+    it('should not focus any list element when down arrow pressed if closed', function() {
+      $document.find('body').append(element);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      var focusEl = element.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl[0])).toBe(false);
+      expect(isFocused(focusEl[1])).toBe(false);
+    });
+
+    it('should not change focus when other keys are pressed', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 37);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl[0])).toBe(false);
+      expect(isFocused(focusEl[1])).toBe(false);
+    });
+
+    it('should focus second list element when down arrow pressed twice', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should focus first list element when down arrow pressed 2x and up pressed 1x', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      triggerKeyDown($document, 38);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should stay focused on final list element if down pressed at list end', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+
+      triggerKeyDown($document, 40);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should close if esc is pressed while focused', function() {
+      element = dropdown('disabled');
+      $document.find('body').append(element);
+      clickDropdownToggle();
+
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(true);
+
+      triggerKeyDown($document, 27);
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+    });
+  });
+
+  describe('`keyboard-nav` option with `dropdown-append-to-body` option', function() {
+    function dropdown() {
+      return $compile('<li dropdown dropdown-append-to-body keyboard-nav><a href dropdown-toggle></a><ul class="dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should focus first list element when down arrow pressed', function() {
+      clickDropdownToggle();
+
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = $document.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should not focus first list element when down arrow pressed if closed', function() {
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      var focusEl = $document.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl)).toBe(false);
+    });
+
+    it('should focus second list element when down arrow pressed twice', function() {
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var elem1 = $document.find('ul');
+      var elem2 = elem1.find('a');
+      var focusEl = $document.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+  });
 });

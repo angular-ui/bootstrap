@@ -70,8 +70,23 @@
         <button type="button" class="btn btn-default btn-sm" ng-click="toggleDropdown($event)">Toggle button dropdown</button>
         <button type="button" class="btn btn-warning btn-sm" ng-click="disabled = !disabled">Enable/Disable</button>
     </p>
-    
-    <script type="text/ng-template" id="dropdown.html">
+
+    <hr>
+    <!-- Single button with keyboard nav -->
+    <div class="btn-group" dropdown keyboard-nav>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+            Dropdown with keyboard navigation <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+
+	<script type="text/ng-template" id="dropdown.html">
         <ul class="dropdown-menu" role="menu">
           <li><a href="#">Action in Template</a></li>
           <li><a href="#">Another action in Template</a></li>
