@@ -250,7 +250,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(0);
     });
 
-    it('should return to the element which had focus before the dialog is invoked', function () {
+    it('should return to the element which had focus before the dialog was invoked', function () {
       var link = '<a href>Link</a>';
       var element = angular.element(link);
       angular.element(document.body).append(element);
@@ -269,6 +269,30 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
       expect($document).toHaveModalsOpen(0);
 
+      element.remove();
+    });
+
+    it('should return to document.body if element which had focus before the dialog was invoked is gone, or is missing focus function', function () {
+      var link = '<a href>Link</a>';
+      var element = angular.element(link);
+      angular.element(document.body).append(element);
+      element.focus();
+      expect(document.activeElement.tagName).toBe('A');
+
+      var modal = open({template: '<div>Content</div>'});
+      $timeout.flush();
+      expect(document.activeElement.tagName).toBe('DIV');
+      expect($document).toHaveModalsOpen(1);
+
+      // Fake undefined focus function, happening in IE in certain
+      // iframe conditions. See issue 3639
+      element[0].focus = undefined;
+      triggerKeyDown($document, 27);
+      $timeout.flush();
+      $rootScope.$digest();
+
+      expect(document.activeElement.tagName).toBe('BODY');
+      expect($document).toHaveModalsOpen(0);
       element.remove();
     });
 

@@ -195,7 +195,7 @@ angular.module('ui.bootstrap.modal', [])
         }
       });
 
-      function removeModalWindow(modalInstance) {
+      function removeModalWindow(modalInstance, elementToReceiveFocus) {
 
         var body = $document.find('body').eq(0);
         var modalWindow = openedWindows.get(modalInstance).value;
@@ -208,6 +208,13 @@ angular.module('ui.bootstrap.modal', [])
           body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
           checkRemoveBackdrop();
         });
+
+        //move focus to specified element if available, or else to body
+        if (elementToReceiveFocus && elementToReceiveFocus.focus) {
+          elementToReceiveFocus.focus();
+        } else {
+          body.focus();
+        }
       }
 
       function checkRemoveBackdrop() {
@@ -318,8 +325,7 @@ angular.module('ui.bootstrap.modal', [])
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow && broadcastClosing(modalWindow, result, true)) {
           modalWindow.value.deferred.resolve(result);
-          removeModalWindow(modalInstance);
-          modalWindow.value.modalOpener.focus();
+          removeModalWindow(modalInstance, modalWindow.value.modalOpener);
           return true;
         }
         return !modalWindow;
@@ -329,8 +335,7 @@ angular.module('ui.bootstrap.modal', [])
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow && broadcastClosing(modalWindow, reason, false)) {
           modalWindow.value.deferred.reject(reason);
-          removeModalWindow(modalInstance);
-          modalWindow.value.modalOpener.focus();
+          removeModalWindow(modalInstance, modalWindow.value.modalOpener);
           return true;
         }
         return !modalWindow;
