@@ -171,7 +171,11 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       });
     }
 
-    $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass);
+    $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass).then(function() {
+        if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
+           toggleInvoker($scope, { open: !!isOpen });
+        }
+    });
 
     if ( isOpen ) {
       if (self.dropdownMenuTemplateUrl) {
@@ -202,9 +206,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
 
     setIsOpen($scope, isOpen);
-    if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
-      toggleInvoker($scope, { open: !!isOpen });
-    }
   });
 
   $scope.$on('$locationChangeSuccess', function() {
