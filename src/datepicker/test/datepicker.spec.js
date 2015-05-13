@@ -1178,6 +1178,7 @@ describe('datepicker directive', function () {
     describe('initially', function () {
       beforeEach(inject(function(_$document_, _$sniffer_) {
         $document = _$document_;
+        $sniffer = _$sniffer_;
         $rootScope.isopen = true;
         $rootScope.date = new Date('September 30, 2010 15:30:00');
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup><div>')($rootScope);
@@ -1871,7 +1872,7 @@ describe('datepicker directive', function () {
     describe('use with `ng-change` directive', function() {
       beforeEach(inject(function() {
         $rootScope.changeHandler = jasmine.createSpy('changeHandler');
-        $rootScope.date = new Date();
+        $rootScope.date = new Date('09/16/2010');
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup ng-required="true" ng-change="changeHandler()"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
