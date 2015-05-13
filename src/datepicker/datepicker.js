@@ -18,7 +18,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   shortcutPropagation: false
 })
 
-.controller('DatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$timeout', '$log', 'dateFilter', 'datepickerConfig', function($scope, $attrs, $parse, $interpolate, $timeout, $log, dateFilter, datepickerConfig) {
+.controller('DatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$log', 'dateFilter', 'datepickerConfig', function($scope, $attrs, $parse, $interpolate, $log, dateFilter, datepickerConfig) {
   var self = this,
       ngModelCtrl = { $setViewValue: angular.noop }; // nullModelCtrl;
 
@@ -161,9 +161,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   $scope.keys = { 13:'enter', 32:'space', 33:'pageup', 34:'pagedown', 35:'end', 36:'home', 37:'left', 38:'up', 39:'right', 40:'down' };
 
   var focusElement = function() {
-    $timeout(function() {
-      self.element[0].focus();
-    }, 0 , false);
+    self.element[0].focus();
   };
 
   // Listen for focus requests from popup directive
@@ -460,8 +458,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   showButtonBar: true
 })
 
-.directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', 'dateFilter', 'dateParser', 'datepickerPopupConfig',
-function ($compile, $parse, $document, $position, dateFilter, dateParser, datepickerPopupConfig) {
+.directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', 'dateFilter', 'dateParser', 'datepickerPopupConfig', '$timeout',
+function ($compile, $parse, $document, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout) {
   return {
     restrict: 'EA',
     require: 'ngModel',
@@ -517,7 +515,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       var popupEl = angular.element('<div datepicker-popup-wrap><div datepicker></div></div>');
       popupEl.attr({
         'ng-model': 'date',
-        'ng-change': 'dateSelection()'
+        'ng-change': 'dateSelection(date)'
       });
 
       function cameltoDash( string ){
@@ -661,30 +659,41 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         }
       };
 
-      var keydown = function(evt, noApply) {
-        scope.keydown(evt);
+      var inputKeydownBind = function(evt) {
+        if (evt.which === 27 && scope.isOpen) {
+          evt.preventDefault();
+          evt.stopPropagation();
+          scope.$apply(function() {
+            scope.isOpen = false;
+          });
+          element[0].focus();
+        } else if (evt.which === 40 && !scope.isOpen) {
+          evt.preventDefault();
+          evt.stopPropagation();
+          scope.$apply(function() {
+            scope.isOpen = true;
+          });
+        }
       };
-      element.bind('keydown', keydown);
+      element.bind('keydown', inputKeydownBind);
 
       scope.keydown = function(evt) {
         if (evt.which === 27) {
-          evt.preventDefault();
-          if (scope.isOpen) {
-            evt.stopPropagation();
-          }
-          scope.close();
-        } else if (evt.which === 40 && !scope.isOpen) {
-          scope.isOpen = true;
+          scope.isOpen = false;
+          element[0].focus();
         }
       };
 
       scope.$watch('isOpen', function(value) {
         if (value) {
-          scope.$broadcast('datepicker.focus');
           scope.position = appendToBody ? $position.offset(element) : $position.position(element);
           scope.position.top = scope.position.top + element.prop('offsetHeight');
 
           $document.bind('click', documentClickBind);
+
+          $timeout(function() {
+            scope.$broadcast('datepicker.focus');
+          }, 0, false);
         } else {
           $document.unbind('click', documentClickBind);
         }
@@ -719,8 +728,14 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       }
 
       scope.$on('$destroy', function() {
+        if (scope.isOpen === true) {
+          scope.$apply(function() {
+            scope.isOpen = false;
+          });
+        }
+
         $popup.remove();
-        element.unbind('keydown', keydown);
+        element.unbind('keydown', inputKeydownBind);
         $document.unbind('click', documentClickBind);
       });
     }
@@ -732,12 +747,6 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
     restrict:'EA',
     replace: true,
     transclude: true,
-    templateUrl: 'template/datepicker/popup.html',
-    link:function (scope, element, attrs) {
-      element.bind('click', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-      });
-    }
+    templateUrl: 'template/datepicker/popup.html'
   };
 });
