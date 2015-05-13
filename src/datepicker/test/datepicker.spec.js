@@ -1178,7 +1178,6 @@ describe('datepicker directive', function () {
     describe('initially', function () {
       beforeEach(inject(function(_$document_, _$sniffer_) {
         $document = _$document_;
-        $sniffer = _$sniffer_;
         $rootScope.isopen = true;
         $rootScope.date = new Date('September 30, 2010 15:30:00');
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup><div>')($rootScope);
