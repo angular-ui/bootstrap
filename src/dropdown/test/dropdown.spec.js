@@ -432,5 +432,15 @@ describe('dropdownToggle', function() {
       expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
       expect(elm2.hasClass(dropdownConfig.openClass)).toBe(true);
     });
+
+    it('should not close on $locationChangeSuccess if auto-close="disabled"', function () {
+      var elm1 = dropdown('disabled');
+      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
+      clickDropdownToggle(elm1);
+      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
+      $rootScope.$broadcast('$locationChangeSuccess');
+      $rootScope.$digest();
+      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
+    });
   });
 });
