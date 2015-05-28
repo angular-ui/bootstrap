@@ -558,7 +558,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
           if ( key === 'datepickerMode' ) {
             var setAttribute = getAttribute.assign;
             scope.$watch('watchData.' + key, function(value, oldvalue) {
-              if ( value !== oldvalue ) {
+              if ( angular.isFunction(setAttribute) && value !== oldvalue ) {
                 setAttribute(scope.$parent, value);
               }
             });
