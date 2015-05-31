@@ -1,12 +1,13 @@
 describe('dropdownToggle', function() {
-  var $compile, $rootScope, $document, dropdownConfig, element;
+  var $compile, $rootScope, $document, $templateCache, dropdownConfig, element;
 
   beforeEach(module('ui.bootstrap.dropdown'));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _dropdownConfig_) {
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _$templateCache_, _dropdownConfig_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $document = _$document_;
+    $templateCache = _$templateCache_;
     dropdownConfig = _dropdownConfig_;
   }));
 
@@ -180,6 +181,30 @@ describe('dropdownToggle', function() {
       });
 
       expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+    });
+  });
+  
+  describe('using dropdownMenuTemplate', function() {
+    function dropdown() {
+      $templateCache.put('custom.html', '<ul class="dropdown-menu"><li>Item 1</li></ul>');
+
+      return $compile('<li dropdown><a href dropdown-toggle></a><ul class="dropdown-menu" template-url="custom.html"></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+    });
+    
+    it('should apply custom template for dropdown menu', function() {
+      element.find('a').click();
+      expect(element.find('ul.dropdown-menu').eq(0).find('li').eq(0).text()).toEqual('Item 1');
+    });
+
+    it('should clear ul when dropdown menu is closed', function() {
+      element.find('a').click();
+      expect(element.find('ul.dropdown-menu').eq(0).find('li').eq(0).text()).toEqual('Item 1');
+      element.find('a').click();
+      expect(element.find('ul.dropdown-menu').eq(0).find('li').length).toEqual(0);
     });
   });
 
