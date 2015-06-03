@@ -7,10 +7,10 @@ There are three versions of the tooltip: `tooltip`, `tooltip-template`, and
 - `tooltip` takes text only and will escape any HTML provided.
 - `tooltip-template` takes text that specifies the location of a template to
   use for the tooltip.
-- `tooltip-html-unsafe` takes
-  whatever HTML is provided and displays it in a tooltip; it's called "unsafe"
-  because the HTML is not sanitized. *The user is responsible for ensuring the
+- `tooltip-html` takes
+  whatever HTML is provided and displays it in a tooltip; *The user is responsible for ensuring the
   content is safe to put into the DOM!*
+- `tooltip-html-unsafe` -- deprecated in favour of `tooltip-html`
 
 The tooltip directives provide several optional attributes to control how they
 will display:
