@@ -162,6 +162,14 @@ describe('date parser', function () {
       expect(dateParser.parse('31-04-2013', 'dd-MM-yyyy')).toBeUndefined();
       expect(dateParser.parse('November 31, 2013', 'MMMM d, yyyy')).toBeUndefined();
     });
+
+    it('should work when base date is a string', function() {
+      expect(dateParser.parse('01-02-2034', 'dd-MM-yyyy', '05-06-2078')).toEqual(new Date(2034, 1, 1));
+    });
+
+    it('should work when base date is an invalid date', function() {
+      expect(dateParser.parse('30-12-2015', 'dd-MM-yyyy', new Date('foo'))).toEqual(new Date(2015, 11, 30));
+    });
   });
 
   it('should not parse non-string inputs', function() {
