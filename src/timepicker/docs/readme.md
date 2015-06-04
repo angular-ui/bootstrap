@@ -35,3 +35,7 @@ All settings can be provided as attributes in the `<timepicker>` or globally con
  * `arrowkeys`
     _(Defaults: true)_ :
      Whether user can use up/down arrowkeys inside the hours & minutes input to increase or decrease it's values.
+
+ * `show-spinners`
+    _(Defaults: true)_ :
+     Shows spinner arrows above and below the inputs
