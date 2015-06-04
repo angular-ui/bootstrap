@@ -78,6 +78,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
       var hasFocus;
 
+      //Used to avoid bug in iOS webview where iOS keyboard does not fire
+      //mousedown & mouseup events
+      //Issue #3699
+      var selected;
+
       //create a child scope for the typeahead directive so we are not polluting original scope
       //with typeahead-specific data (matches, query etc.)
       var scope = originalScope.$new();
@@ -304,6 +309,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         var locals = {};
         var model, item;
 
+        selected = true;
         locals[parserResult.itemName] = item = scope.matches[activeIdx].model;
         model = parserResult.modelMapper(originalScope, locals);
         $setModelValue(originalScope, model);
@@ -366,13 +372,15 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         }
       });
 
-      element.bind('blur', function (evt) {
-        if (isSelectOnBlur && scope.activeIdx >= 0) {
+      element.bind('blur', function () {
+        if (isSelectOnBlur && scope.matches.length && scope.activeIdx !== -1 && !selected) {
+          selected = true;
           scope.$apply(function () {
             scope.select(scope.activeIdx);
           });
         }
         hasFocus = false;
+        selected = false;
       });
 
       // Keep reference to click handler to unbind it.
