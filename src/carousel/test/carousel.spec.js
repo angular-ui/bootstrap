@@ -146,7 +146,7 @@ describe('carousel', function() {
       testSlideActive(1);
     });
 
-    it('shouldnt go forward if interval is NaN or negative', function() {
+    it('shouldnt go forward if interval is NaN or negative or has no slides', function() {
       testSlideActive(0);
       var previousInterval = scope.interval;
       scope.$apply('interval = -1');
@@ -159,6 +159,9 @@ describe('carousel', function() {
       $interval.flush(1000);
       testSlideActive(1);
       scope.$apply('interval = 1000');
+      $interval.flush(1000);
+      testSlideActive(2);
+      scope.$apply('slides = []');
       $interval.flush(1000);
       testSlideActive(2);
     });
