@@ -7,9 +7,11 @@
 *
 */
 angular.module('ui.bootstrap.carousel', [])
-.controller('CarouselController', ['$scope', '$interval', '$animate', function ($scope, $interval, $animate) {
+.controller('CarouselController', ['$scope', '$element', '$interval', '$animate', function ($scope, $element, $interval, $animate) {
   var self = this,
     slides = self.slides = $scope.slides = [],
+    NO_TRANSITION = 'uib-noTransition',
+    SLIDE_DIRECTION = 'uib-slideDirection',
     currentIndex = -1,
     currentInterval, isPlaying;
   self.currentSlide = null;
@@ -36,6 +38,7 @@ angular.module('ui.bootstrap.carousel', [])
     angular.extend(self.currentSlide || {}, {direction: direction, active: false});
     if ($animate.enabled() && !$scope.noTransition && !$scope.$currentTransition &&
       slide.$element) {
+      slide.$element.data(SLIDE_DIRECTION, slide.direction);
       $scope.$currentTransition = true;
       slide.$element.one('$animate:close', function closeFn() {
         $scope.$currentTransition = null;
@@ -167,6 +170,10 @@ angular.module('ui.bootstrap.carousel', [])
     }
   };
 
+  $scope.$watch('noTransition', function(noTransition) {
+    $element.data(NO_TRANSITION, noTransition);
+  });
+
 }])
 
 /**
@@ -295,13 +302,16 @@ function CarouselDemoCtrl($scope) {
 .animation('.item', [
          '$animate',
 function ($animate) {
+  var NO_TRANSITION = 'uib-noTransition',
+    SLIDE_DIRECTION = 'uib-slideDirection';
+
   return {
     beforeAddClass: function (element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
       if (className == 'active' && element.parent() &&
-          !element.parent().scope().noTransition) {
+          !element.parent().data(NO_TRANSITION)) {
         var stopped = false;
-        var direction = element.isolateScope().direction;
+        var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
         element.addClass(direction);
         $animate.addClass(element, directionClass).then(function () {
@@ -320,9 +330,9 @@ function ($animate) {
     beforeRemoveClass: function (element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
       if (className == 'active' && element.parent() &&
-          !element.parent().scope().noTransition) {
+          !element.parent().data(NO_TRANSITION)) {
         var stopped = false;
-        var direction = element.isolateScope().direction;
+        var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
         $animate.addClass(element, directionClass).then(function () {
           if (!stopped) {

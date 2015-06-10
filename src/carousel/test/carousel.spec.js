@@ -349,7 +349,7 @@ describe('carousel', function() {
 
     beforeEach(function() {
       scope = $rootScope.$new();
-      ctrl = $controller('CarouselController', {$scope: scope, $element: null});
+      ctrl = $controller('CarouselController', {$scope: scope, $element: angular.element('<div></div>')});
       for(var i = 0;i < slides.length;i++){
         ctrl.addSlide(slides[i]);
       }
