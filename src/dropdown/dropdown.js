@@ -40,8 +40,9 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       return;
     }
 
-    var $element = openScope.getElement();
-    if( evt && openScope.getAutoClose() === 'outsideClick' && $element && $element[0].contains(evt.target) ) {
+    var dropdownElement = openScope.getDropdownElement();
+    if (evt && openScope.getAutoClose() === 'outsideClick' &&
+      dropdownElement && dropdownElement[0].contains(evt.target)) {
       return;
     }
 
@@ -153,6 +154,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       }
     }
     elems[self.selectedOption].focus();
+  };
+
+  scope.getDropdownElement = function() {
+    return self.dropdownMenu;
   };
 
   scope.focusToggleElement = function() {

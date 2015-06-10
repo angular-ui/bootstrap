@@ -412,14 +412,26 @@ describe('dropdownToggle', function() {
       expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
     });
 
-    it('auto-close="outsideClick"', function() {
-      element = dropdown('outsideClick');
-      clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
-      element.find('ul li a').click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
-      $document.click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+    describe('outsideClick', function() {
+      it('should close only on a click outside of the dropdown menu', function() {
+        element = dropdown('outsideClick');
+        clickDropdownToggle();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        element.find('ul li a').click();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        $document.click();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      });
+
+      it('should work with dropdown-append-to-body', function() {
+        element = $compile('<li dropdown dropdown-append-to-body auto-close="outsideClick"><a href dropdown-toggle></a><ul class="dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
+        clickDropdownToggle();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        $document.find('#dropdown-menu').find('li').eq(0).trigger('click');
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        $document.click();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      });
     });
 
     it('control with is-open', function() {
