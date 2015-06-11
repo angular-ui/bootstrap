@@ -18,6 +18,8 @@ The `$modal` service has only one method: `open(options)` where available option
 * `windowTemplateUrl` - a path to a template overriding modal's window template
 * `size` - optional suffix of modal window class. The value used is appended to the `modal-` class, i.e. a value of `sm` gives `modal-sm`
 
+Global defaults may be set for `$modal` via `$modalProvider.options`.
+
 The `open` method returns a modal instance, an object with the following properties:
 
 * `close(result)` - a method that can be used to close a modal, passing a result
