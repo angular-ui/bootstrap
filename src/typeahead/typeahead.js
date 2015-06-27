@@ -34,8 +34,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     var eventDebounceTime = 200;
 
     return {
-      require: 'ngModel',
-      link: function(originalScope, element, attrs, modelCtrl) {
+      require: ['ngModel', '^?ngModelOptions'],
+      link: function(originalScope, element, attrs, ctrls) {
+        var modelCtrl = ctrls[0];
+        var ngModelOptions = ctrls[1];
         //SUPPORTED ATTRIBUTES (OPTIONS)
 
         //minimal no of characters that needs to be entered before typeahead kicks-in
@@ -74,7 +76,16 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         //INTERNAL VARIABLES
 
         //model setter executed upon match selection
-        var $setModelValue = $parse(attrs.ngModel).assign;
+        var parsedModel = $parse(attrs.ngModel);
+        var invokeModelSetter = $parse(attrs.ngModel + '($$$p)');
+        var $setModelValue = function(scope, newValue) {
+          if (angular.isFunction(parsedModel(originalScope)) &&
+            ngModelOptions && ngModelOptions.$options && ngModelOptions.$options.getterSetter) {
+            return invokeModelSetter(scope, {$$$p: newValue});
+          } else {
+            return parsedModel.assign(scope, newValue);
+          }
+        };
 
         //expressions used by typeahead
         var parserResult = typeaheadParser.parse(attrs.typeahead);
@@ -89,8 +100,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         //create a child scope for the typeahead directive so we are not polluting original scope
         //with typeahead-specific data (matches, query etc.)
         var scope = originalScope.$new();
-        var offDestroy = originalScope.$on('$destroy', function(){
-			scope.$destroy();
+        var offDestroy = originalScope.$on('$destroy', function() {
+			    scope.$destroy();
         });
         scope.$on('$destroy', offDestroy);
 

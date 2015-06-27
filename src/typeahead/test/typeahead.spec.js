@@ -809,6 +809,19 @@ describe('typeahead tests', function() {
 
       expect($scope.test.typeahead.$error.parse).toBeUndefined();
     });
+
+    it('issue #3823 - should support ng-model-options getterSetter', function() {
+      function resultSetter(state) {
+        return state;
+      }
+      $scope.result = resultSetter;
+      var element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{getterSetter: true}" typeahead="state as state.name for state in states | filter:$viewValue" typeahead-editable="false"></div>');
+
+      changeInputValueTo(element, 'Alaska');
+      triggerKeyDown(element, 13);
+
+      expect($scope.result).toBe(resultSetter);
+    });
   });
 
   describe('input formatting', function() {
