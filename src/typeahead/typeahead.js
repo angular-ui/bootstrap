@@ -29,10 +29,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
   };
 }])
 
-  .directive('typeahead', ['$compile', '$parse', '$q', '$timeout', '$document', '$rootScope', '$position', 'typeaheadParser',
-    function ($compile, $parse, $q, $timeout, $document, $rootScope, $position, typeaheadParser) {
+  .directive('typeahead', ['$compile', '$parse', '$q', '$timeout', '$document', '$window', '$rootScope', '$position', 'typeaheadParser',
+       function ($compile, $parse, $q, $timeout, $document, $window, $rootScope, $position, typeaheadParser) {
 
   var HOT_KEYS = [9, 13, 27, 38, 40];
+  var eventDebounceTime = 200;
 
   return {
     require:'ngModel',
@@ -96,6 +97,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         matches: 'matches',
         active: 'activeIdx',
         select: 'select(activeIdx)',
+        'move-in-progress': 'moveInProgress',
         query: 'query',
         position: 'position'
       });
@@ -153,8 +155,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
               //position pop-up with matches - we need to re-calculate its position each time we are opening a window
               //with matches as a pop-up might be absolute-positioned and position of an input might have changed on a page
               //due to other elements being rendered
-              scope.position = appendToBody ? $position.offset(element) : $position.position(element);
-              scope.position.top = scope.position.top + element.prop('offsetHeight');
+              recalculatePosition();
 
               element.attr('aria-expanded', true);
             } else {
@@ -169,6 +170,48 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
           isLoadingSetter(originalScope, false);
         });
       };
+
+      // bind events only if appendToBody params exist - performance feature
+      if (appendToBody) {
+        angular.element($window).bind('resize', fireRecalculating);
+        $document.find('body').bind('scroll', fireRecalculating);
+      }
+
+      // Declare the timeout promise var outside the function scope so that stacked calls can be cancelled later
+      var timeoutEventPromise;
+
+      // Default progress type
+      scope.moveInProgress = false;
+
+      function fireRecalculating() {
+        if(!scope.moveInProgress){
+          scope.moveInProgress = true;
+          scope.$digest();
+        }
+
+        // Cancel previous timeout
+        if (timeoutEventPromise) {
+          $timeout.cancel(timeoutEventPromise);
+        }
+
+        // Debounced executing recalculate after events fired
+        timeoutEventPromise = $timeout(function () {
+          // if popup is visible
+          if (scope.matches.length) {
+            recalculatePosition();
+          }
+
+          scope.moveInProgress = false;
+          scope.$digest();
+        }, eventDebounceTime);
+      }
+
+      // recalculate actual position and set new values to scope
+      // after digest loop is popup in right position
+      function recalculatePosition() {
+        scope.position = appendToBody ? $position.offset(element) : $position.position(element);
+        scope.position.top += element.prop('offsetHeight');
+      }
 
       resetMatches();
 
@@ -358,6 +401,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         query:'=',
         active:'=',
         position:'&',
+        moveInProgress:'=',
         select:'&'
       },
       replace:true,

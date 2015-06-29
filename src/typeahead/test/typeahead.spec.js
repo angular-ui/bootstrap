@@ -752,6 +752,30 @@ describe('typeahead tests', function () {
       changeInputValueTo(element, 'ba');
       expect(findDropDown($document.find('body')).length).toEqual(0);
     });
+
+    it('should have right position after scroll', function() {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true"></div>');
+      var dropdown = findDropDown($document.find('body'));
+      var body = angular.element(document.body);
+
+      // Set body height to allow scrolling
+      body.css({height:'10000px'});
+
+      // Scroll top
+      window.scroll(0, 1000);
+
+      // Set input value to show dropdown
+      changeInputValueTo(element, 'ba');
+
+      // Init position of dropdown must be 1000px
+      expect(dropdown.css('top') ).toEqual('1000px');
+
+      // After scroll, must have new position
+      window.scroll(0, 500);
+      body.triggerHandler('scroll');
+      $timeout.flush();
+      expect(dropdown.css('top') ).toEqual('500px');
+    });
   });
 
   describe('focus first', function () {
