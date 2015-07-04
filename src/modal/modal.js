@@ -78,12 +78,13 @@ angular.module('ui.bootstrap.modal', [])
     }
   }])
 
-  .directive('modalWindow', ['$modalStack', '$q', function ($modalStack, $q) {
+  .directive('modalWindow', [
+           '$modalStack', '$q', '$animate',
+  function ($modalStack ,  $q ,  $animate) {
     return {
       restrict: 'EA',
       scope: {
-        index: '@',
-        animate: '='
+        index: '@'
       },
       replace: true,
       transclude: true,
@@ -119,8 +120,14 @@ angular.module('ui.bootstrap.modal', [])
         });
 
         modalRenderDeferObj.promise.then(function () {
-          // trigger CSS transitions
-          scope.animate = true;
+          if (attrs.modalInClass) {
+            $animate.addClass(element, attrs.modalInClass);
+
+            scope.$on($modalStack.WINDOW_CLOSING_EVENT, function (e, setIsAsync) {
+              var done = setIsAsync();
+              $animate.removeClass(element, attrs.modalInClass).then(done);
+            });
+          }
 
           var inputsWithAutofocus = element[0].querySelectorAll('[autofocus]');
           /**
@@ -169,14 +176,21 @@ angular.module('ui.bootstrap.modal', [])
     };
   })
 
-  .factory('$modalStack', ['$animate', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
-    function ($animate, $timeout, $document, $compile, $rootScope, $$stackedMap) {
+  .factory('$modalStack', [
+             '$animate', '$timeout', '$document', '$compile', '$rootScope',
+             '$q',
+             '$$stackedMap',
+    function ($animate ,  $timeout ,  $document ,  $compile ,  $rootScope ,
+              $q,
+              $$stackedMap) {
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
       var backdropDomEl, backdropScope;
       var openedWindows = $$stackedMap.createNew();
-      var $modalStack = {};
+      var $modalStack = {
+        WINDOW_CLOSING_EVENT: 'modal.stack.window-closing'
+      };
 
       function backdropIndex() {
         var topBackdropIndex = -1;
@@ -203,8 +217,25 @@ angular.module('ui.bootstrap.modal', [])
         //clean up the stack
         openedWindows.remove(modalInstance);
 
+        var closingDeferred;
+        var closingPromise;
+        var setIsAsync = function () {
+          if (!closingDeferred) {
+            closingDeferred = $q.defer();
+            closingPromise = closingDeferred.promise;
+          }
+
+          return function () {
+            closingDeferred.resolve();
+          };
+        };
+        modalWindow.modalScope.$broadcast($modalStack.WINDOW_CLOSING_EVENT, setIsAsync);
+
         //remove window DOM element
-        removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
+        $q.when(closingPromise).then(function() {
+          modalWindow.modalDomEl.remove();
+          modalWindow.modalScope.$destroy();
+
           body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
           checkRemoveBackdrop();
         });

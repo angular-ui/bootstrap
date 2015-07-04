@@ -147,19 +147,19 @@ describe('$modal', function () {
 
   function close(modal, result, noFlush) {
     var closed = modal.close(result);
+    $rootScope.$digest();
     if (!noFlush) {
       $timeout.flush();
     }
-    $rootScope.$digest();
     return closed;
   }
 
   function dismiss(modal, reason, noFlush) {
     var closed = modal.dismiss(reason);
+    $rootScope.$digest();
     if (!noFlush) {
       $timeout.flush();
     }
-    $rootScope.$digest();
     return closed;
   }
 
