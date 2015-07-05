@@ -142,6 +142,7 @@ describe('$modal', function () {
   function open(modalOptions) {
     var modal = $modal.open(modalOptions);
     $rootScope.$digest();
+    $timeout.flush(0);
     return modal;
   }
 
@@ -258,7 +259,6 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal = open({template: '<div>Content<button>inside modal</button></div>'});
-      $timeout.flush();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(1);
 
@@ -280,7 +280,6 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal = open({template: '<div>Content</div>'});
-      $timeout.flush();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(1);
 
@@ -580,20 +579,17 @@ describe('$modal', function () {
         expect($document).toHaveBackdrop();
       });
 
-      it('should animate backdrop on each modal opening', function () {
+      it('should contain backdrop in classes on each modal opening', function () {
 
         var modal = open({ template: '<div>With backdrop</div>' });
         var backdropEl = $document.find('body > div.modal-backdrop');
-        expect(backdropEl).not.toHaveClass('in');
-
-        $timeout.flush();
         expect(backdropEl).toHaveClass('in');
 
         dismiss(modal);
 
         modal = open({ template: '<div>With backdrop</div>' });
         backdropEl = $document.find('body > div.modal-backdrop');
-        expect(backdropEl).not.toHaveClass('in');
+        expect(backdropEl).toHaveClass('in');
 
       });
 
@@ -750,13 +746,11 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal1 = open({template: '<div>Modal1<button id="focus">inside modal1</button></div>'});
-      $timeout.flush();
       document.getElementById('focus').focus();
       expect(document.activeElement.tagName).toBe('BUTTON');
       expect($document).toHaveModalsOpen(1);
 
       var modal2 = open({template: '<div>Modal2</div>'});
-      $timeout.flush();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(2);
 
@@ -789,7 +783,7 @@ describe('$modal', function () {
       modal = open({template: template, controller: TestCtrl});
 
       preventDefault = true;
-      expect(close(modal, 'result')).toBeFalsy();
+      expect(close(modal, 'result', true)).toBeFalsy();
       expect($document).toHaveModalsOpen(1);
 
       preventDefault = false;
@@ -799,7 +793,7 @@ describe('$modal', function () {
       modal = open({template: template, controller: TestCtrl});
 
       preventDefault = true;
-      expect(dismiss(modal, 'result')).toBeFalsy();
+      expect(dismiss(modal, 'result', true)).toBeFalsy();
       expect($document).toHaveModalsOpen(1);
 
       preventDefault = false;

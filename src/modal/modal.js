@@ -57,7 +57,9 @@ angular.module('ui.bootstrap.modal', [])
 /**
  * A helper directive for the $modal service. It creates a backdrop element.
  */
-  .directive('modalBackdrop', ['$timeout', function ($timeout) {
+  .directive('modalBackdrop', [
+           '$animate', '$modalStack',
+  function ($animate ,  $modalStack) {
     return {
       restrict: 'EA',
       replace: true,
@@ -69,12 +71,14 @@ angular.module('ui.bootstrap.modal', [])
     };
 
     function linkFn(scope, element, attrs) {
-      scope.animate = false;
+      if (attrs.modalInClass) {
+        $animate.addClass(element, attrs.modalInClass);
 
-      //trigger CSS transitions
-      $timeout(function () {
-        scope.animate = true;
-      });
+        scope.$on($modalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
+          var done = setIsAsync();
+          $animate.removeClass(element, attrs.modalInClass).then(done);
+        });
+      }
     }
   }])
 
@@ -123,7 +127,7 @@ angular.module('ui.bootstrap.modal', [])
           if (attrs.modalInClass) {
             $animate.addClass(element, attrs.modalInClass);
 
-            scope.$on($modalStack.WINDOW_CLOSING_EVENT, function (e, setIsAsync) {
+            scope.$on($modalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
               var done = setIsAsync();
               $animate.removeClass(element, attrs.modalInClass).then(done);
             });
@@ -189,7 +193,7 @@ angular.module('ui.bootstrap.modal', [])
       var backdropDomEl, backdropScope;
       var openedWindows = $$stackedMap.createNew();
       var $modalStack = {
-        WINDOW_CLOSING_EVENT: 'modal.stack.window-closing'
+        NOW_CLOSING_EVENT: 'modal.stack.now-closing'
       };
 
       function backdropIndex() {
@@ -217,25 +221,7 @@ angular.module('ui.bootstrap.modal', [])
         //clean up the stack
         openedWindows.remove(modalInstance);
 
-        var closingDeferred;
-        var closingPromise;
-        var setIsAsync = function () {
-          if (!closingDeferred) {
-            closingDeferred = $q.defer();
-            closingPromise = closingDeferred.promise;
-          }
-
-          return function () {
-            closingDeferred.resolve();
-          };
-        };
-        modalWindow.modalScope.$broadcast($modalStack.WINDOW_CLOSING_EVENT, setIsAsync);
-
-        //remove window DOM element
-        $q.when(closingPromise).then(function() {
-          modalWindow.modalDomEl.remove();
-          modalWindow.modalScope.$destroy();
-
+        removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
           body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
           checkRemoveBackdrop();
         });
@@ -261,18 +247,24 @@ angular.module('ui.bootstrap.modal', [])
       }
 
       function removeAfterAnimate(domEl, scope, done) {
-        // Closing animation
-        scope.animate = false;
+        var asyncDeferred;
+        var asyncPromise = null;
+        var setIsAsync = function () {
+          if (!asyncDeferred) {
+            asyncDeferred = $q.defer();
+            asyncPromise = asyncDeferred.promise;
+          }
 
-        if (domEl.attr('modal-animation') && $animate.enabled()) {
-          // transition out
-          domEl.one('$animate:close', function closeFn() {
-            $rootScope.$evalAsync(afterAnimating);
-          });
-        } else {
-          // Ensure this call is async
-          $timeout(afterAnimating);
-        }
+          return function asyncDone() {
+            asyncDeferred.resolve();
+          };
+        };
+        scope.$broadcast($modalStack.NOW_CLOSING_EVENT, setIsAsync);
+
+        // Note that it's intentional that asyncPromise might be null.
+        // That's when setIsAsync has not been called during the
+        // NOW_CLOSING_EVENT broadcast.
+        return $q.when(asyncPromise).then(afterAnimating);
 
         function afterAnimating() {
           if (afterAnimating.done) {
