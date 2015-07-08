@@ -70,6 +70,26 @@ describe('collapse directive', function () {
     expect(element.height()).toBe(0);
   });
 
+  it('should change aria-expanded attribute', function() {
+    scope.isCollapsed = false;
+    scope.$digest();
+    expect(element.attr('aria-expanded')).toBe('true');
+
+    scope.isCollapsed = true;
+    scope.$digest();
+    expect(element.attr('aria-expanded')).toBe('false');
+  });
+
+  it('should change aria-hidden attribute', function() {
+    scope.isCollapsed = false;
+    scope.$digest();
+    expect(element.attr('aria-hidden')).toBe('false');
+
+    scope.isCollapsed = true;
+    scope.$digest();
+    expect(element.attr('aria-hidden')).toBe('true');
+  });
+
   describe('dynamic content', function() {
 
     var element;
