@@ -162,13 +162,23 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 
   scope.$watch('isOpen', function( isOpen, wasOpen ) {
-    if ( appendToBody && self.dropdownMenu ) {
-      var pos = $position.positionElements(self.$element, self.dropdownMenu, 'bottom-left', true);
-      self.dropdownMenu.css({
-        top: pos.top + 'px',
-        left: pos.left + 'px',
-        display: isOpen ? 'block' : 'none'
-      });
+    if (appendToBody && self.dropdownMenu) {
+        var pos = $position.positionElements(self.$element, self.dropdownMenu, 'bottom-left', true);
+        var css = {
+            top: pos.top + 'px',
+            display: isOpen ? 'block' : 'none'
+        };
+
+        var rightalign = self.dropdownMenu.hasClass('dropdown-menu-right');
+        if (!rightalign) {
+            css.left = pos.left + 'px';
+            css.right = 'auto';
+        } else {
+            css.left = 'auto';
+            css.right = (window.innerWidth - (pos.left + self.$element.prop('offsetWidth'))) + 'px';
+        }
+
+        self.dropdownMenu.css(css);
     }
 
     $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass).then(function() {
