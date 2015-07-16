@@ -17,6 +17,10 @@ angular.module('ui.bootstrap.collapse', [])
         }
 
         function collapse() {
+          if(! element.hasClass('collapse') && ! element.hasClass('in')) {
+            return collapseDone();
+          }
+
           element
             // IMPORTANT: The height must be set before adding "collapsing" class.
             // Otherwise, the browser attempts to animate from height 0 (in
