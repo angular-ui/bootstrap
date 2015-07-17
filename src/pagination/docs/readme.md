@@ -13,6 +13,10 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  	:
  	Current page number. First page is 1.
 
+ * `ng-disabled` <i class="glyphicon glyphicon-eye-open"></i>
+  :
+  Used to disable the pagination component
+
  * `total-items` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	Total number of items in all pages.
