@@ -37,7 +37,7 @@ angular.module('ui.bootstrap.rating', [])
 
   $scope.rate = function(value) {
     if ( !$scope.readonly && value >= 0 && value <= $scope.range.length ) {
-      ngModelCtrl.$setViewValue(value);
+      ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue === value ? 0 : value);
       ngModelCtrl.$render();
     }
   };

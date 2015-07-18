@@ -55,6 +55,12 @@ describe('rating directive', function () {
     expect(getState()).toEqual([true, true, true, true, true]);
     expect($rootScope.rate).toBe(5);
     expect(element.attr('aria-valuenow')).toBe('5');
+
+    getStar(5).click();
+    $rootScope.$digest();
+    expect(getState()).toEqual([false, false, false, false, false]);
+    expect($rootScope.rate).toBe(0);
+    expect(element.attr('aria-valuenow')).toBe('0');
   });
 
   it('handles correctly the hover event', function() {
