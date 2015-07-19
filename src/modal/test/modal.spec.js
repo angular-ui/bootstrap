@@ -440,6 +440,14 @@ describe('$modal', function () {
         }, controllerAs: 'test'});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
+
+      it('should allow usage of bindToController', function () {
+        open({template: '<div>{{fromCtrl}} {{isModalInstance}}</div>', controller: function($modalInstance) {
+          this.fromCtrl = 'Content from ctrl';
+          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+        }, controllerAs: 'test', bindToController: true});
+        expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
+      });
     });
 
     describe('resolve', function () {
