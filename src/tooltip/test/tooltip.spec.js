@@ -68,6 +68,24 @@ describe('tooltip', function() {
     expect( tooltipScope.placement ).toBe( 'bottom' );
   }));
 
+  it('should update placement dynamically', inject( function( $compile, $timeout ) {
+    scope.place = 'bottom';
+    elm = $compile( angular.element(
+      '<span tooltip="tooltip text" tooltip-placement="{{place}}">Selector Text</span>'
+    ) )( scope );
+    scope.$apply();
+    elmScope = elm.scope();
+    tooltipScope = elmScope.$$childTail;
+
+    elm.trigger( 'mouseenter' );
+    expect( tooltipScope.placement ).toBe( 'bottom' );
+
+    scope.place = 'right';
+    scope.$digest();
+    $timeout.flush();
+    expect(tooltipScope.placement).toBe( 'right' );
+  }));
+
   it('should work inside an ngRepeat', inject( function( $compile ) {
 
     elm = $compile( angular.element(
