@@ -136,6 +136,10 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               tooltip.css( ttPosition );
             };
 
+            var positionTooltipAsync = function () {
+              $timeout(positionTooltip, 0, false);
+            };
+
             // Set up the correct scope to allow transclusion later
             ttScope.origScope = scope;
 
@@ -246,12 +250,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
                 }
               });
 
-              tooltipLinkedScope.$watch(function () {
-                $timeout(positionTooltip, 0, false);
-              });
-
               if (options.useContentExp) {
                 tooltipLinkedScope.$watch('contentExp()', function (val) {
+                  positionTooltipAsync();
                   if (!val && ttScope.isOpen ) {
                     hide();
                   }
@@ -287,6 +288,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             if (!options.useContentExp) {
               attrs.$observe( type, function ( val ) {
                 ttScope.content = val;
+                positionTooltipAsync();
 
                 if (!val && ttScope.isOpen ) {
                   hide();
@@ -302,6 +304,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
             attrs.$observe( prefix+'Title', function ( val ) {
               ttScope.title = val;
+              positionTooltipAsync();
             });
 
             function prepPopupClass() {

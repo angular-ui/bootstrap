@@ -474,24 +474,26 @@ describe( 'tooltip positioning', function() {
     tooltipScope = elmScope.$$childTail;
   }));
 
-  it( 'should re-position on every digest', inject( function ($timeout) {
+  it( 'should re-position when value changes', inject( function ($timeout) {
     elm.trigger( 'mouseenter' );
 
     scope.$digest();
     $timeout.flush();
     var startingPositionCalls = $position.positionElements.calls.count();
 
+    scope.text = 'New Text';
     scope.$digest();
     $timeout.flush();
+    expect(elm.attr('tooltip')).toBe( 'New Text' );
     expect($position.positionElements.calls.count()).toEqual(startingPositionCalls + 1);
     // Check that positionElements was called with elm
     expect($position.positionElements.calls.argsFor(startingPositionCalls)[0][0])
       .toBe(elm[0]);
 
     scope.$digest();
-    $timeout.flush();
-    expect($position.positionElements.calls.count()).toEqual(startingPositionCalls + 2);
-    expect($position.positionElements.calls.argsFor(startingPositionCalls + 1)[0][0])
+    $timeout.verifyNoPendingTasks();
+    expect($position.positionElements.calls.count()).toEqual(startingPositionCalls + 1);
+    expect($position.positionElements.calls.argsFor(startingPositionCalls)[0][0])
       .toBe(elm[0]);
     scope.$digest();
   }));
