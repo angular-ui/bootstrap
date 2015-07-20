@@ -19,9 +19,6 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
   $scope.toggleMin();
 
   $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
     $scope.opened = true;
   };
 

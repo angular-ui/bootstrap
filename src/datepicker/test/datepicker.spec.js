@@ -1184,7 +1184,7 @@ describe('datepicker directive', function () {
   });
 
   describe('as popup', function () {
-    var inputEl, dropdownEl, $document, $sniffer;
+    var inputEl, dropdownEl, $document, $sniffer, $timeout;
 
     function assignElements(wrapElement) {
       inputEl = wrapElement.find('input');
@@ -1221,9 +1221,10 @@ describe('datepicker directive', function () {
     describe('initially opened', function () {
       var wrapElement;
 
-      beforeEach(inject(function(_$document_, _$sniffer_) {
+      beforeEach(inject(function(_$document_, _$sniffer_, _$timeout_) {
         $document = _$document_;
         $sniffer = _$sniffer_;
+        $timeout = _$timeout_;
         $rootScope.isopen = true;
         $rootScope.date = new Date('September 30, 2010 15:30:00');
         wrapElement = $compile('<div><input ng-model="date" datepicker-popup is-open="isopen"><div>')($rootScope);
@@ -1295,6 +1296,7 @@ describe('datepicker directive', function () {
       it('closes when click outside of calendar', function() {
         expect(dropdownEl.length).toBe(1);
 
+        $timeout.flush(0);
         $document.find('body').click();
         assignElements(wrapElement);
         expect(dropdownEl.length).toBe(0);
