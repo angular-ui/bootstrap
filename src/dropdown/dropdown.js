@@ -234,6 +234,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     controller: 'DropdownController',
     link: function(scope, element, attrs, dropdownCtrl) {
       dropdownCtrl.init( element );
+      element.addClass('dropdown');
     }
   };
 })
@@ -302,6 +303,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       if ( !dropdownCtrl ) {
         return;
       }
+
+      element.addClass('dropdown-toggle');
 
       dropdownCtrl.toggleElement = element;
 

@@ -1,8 +1,8 @@
 
 <div ng-controller="DropdownCtrl">
     <!-- Simple dropdown -->
-    <span class="dropdown" dropdown on-toggle="toggled(open)">
-      <a href id="simple-dropdown" class="dropdown-toggle" dropdown-toggle>
+    <span dropdown on-toggle="toggled(open)">
+      <a href id="simple-dropdown" dropdown-toggle>
         Click me for a dropdown, yo!
       </a>
       <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
@@ -14,7 +14,7 @@
 
     <!-- Single button -->
     <div class="btn-group" dropdown is-open="status.isopen">
-      <button id="single-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+      <button id="single-button" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
         Button dropdown <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
@@ -29,7 +29,7 @@
     <!-- Split button -->
     <div class="btn-group" dropdown>
       <button id="split-button" type="button" class="btn btn-danger">Action</button>
-      <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
+      <button type="button" class="btn btn-danger" dropdown-toggle>
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
@@ -44,7 +44,7 @@
 
     <!-- Single button using append-to-body -->
     <div class="btn-group" dropdown dropdown-append-to-body>
-      <button id="btn-append-to-body" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+      <button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
         Dropdown on Body <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
@@ -58,7 +58,7 @@
     
     <!-- Single button using template-url -->
     <div class="btn-group" dropdown>
-      <button id="button-template-url" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+      <button id="button-template-url" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
         Dropdown using template <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" template-url="dropdown.html" aria-labelledby="button-template-url">
@@ -74,7 +74,7 @@
     <hr>
     <!-- Single button with keyboard nav -->
     <div class="btn-group" dropdown keyboard-nav>
-        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" dropdown-toggle>
             Dropdown with keyboard navigation <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
