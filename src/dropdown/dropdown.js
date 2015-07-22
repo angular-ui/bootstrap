@@ -266,7 +266,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
       element.bind('keydown', function(e) {
 
-        if ( /(38|40)/.test(e.which)) {
+        if ([38, 40].indexOf(e.which) !== -1) {
 
           e.preventDefault();
           e.stopPropagation();
