@@ -14,7 +14,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular-animate.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular-touch.min.js"></script>
-    <script src="ui-bootstrap-tpls-0.13.0.min.js"></script>
+    <script src="ui-bootstrap-tpls-0.13.1-SNAPSHOT.min.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
@@ -75,7 +75,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.13.0)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(0.13.1-SNAPSHOT)</small>
                 </button>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
@@ -178,7 +178,7 @@
                         <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires AngularJS 1.3.x, tested with 1.3.13).
                             0.12.0 is the last version of this library that supports AngularJS 1.2.x.</li>
                         <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version 3.1.1).
-                            This version of the library (0.13.0) works only with Bootstrap CSS in version 3.x.
+                            This version of the library (0.13.1-SNAPSHOT) works only with Bootstrap CSS in version 3.x.
                             0.8.0 is the last version of this library that supports Bootstrap CSS in version 2.3.x.
                         </li>
                     </ul>
@@ -265,7 +265,7 @@ Whether accordion group is open or closed.</li>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -382,14 +382,16 @@ Whether accordion group is open or closed.</li>
 
 <p>This directive can be used to generate alerts from the dynamic model data (using the <code>ng-repeat</code> directive);</p>
 
-<p>The presence of the <code>close</code> attribute determines if a close button is displayed</p>
+<p>The presence of the <code>close</code> attribute determines if a close button is displayed.</p>
+
+<p>The optional <code>dismiss-on-timeout</code> attribute takes the number of milliseconds that specify timeout duration, after which the alert will be closed.</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -481,7 +483,7 @@ Whether accordion group is open or closed.</li>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -555,7 +557,7 @@ Whether accordion group is open or closed.</li>
                             <div class="col-md-6 show-grid">
                                 <div ng-controller="CarouselDemoCtrl">
   <div style="height: 305px">
-    <carousel interval="myInterval">
+    <carousel interval="myInterval" no-wrap="noWrapSlides">
       <slide ng-repeat="slide in slides" active="slide.active">
         <img ng-src="{{slide.image}}" style="margin:auto;">
         <div class="carousel-caption">
@@ -568,6 +570,12 @@ Whether accordion group is open or closed.</li>
   <div class="row">
     <div class="col-md-6">
       <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="noWrapSlides">
+          Disable Slide Looping
+        </label>
+      </div>
     </div>
     <div class="col-md-6">
       Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
@@ -583,20 +591,22 @@ Whether accordion group is open or closed.</li>
 <p>The carousel also offers support for touchscreen devices in the form of swiping. To enable swiping, load the <code>ngTouch</code> module as a dependency.</p>
 
 <p>Use a <code>&lt;carousel&gt;</code> element with <code>&lt;slide&gt;</code> elements inside it.  It will automatically cycle through the slides at a given rate, and a current-index variable will be kept in sync with the currently visible slide.</p>
+
+<p>Use the no-wrap attribute on a <code>&lt;carousel&gt;</code> element to control the looping of slides; setting no-wrap to an expression which evaluates to a truthy value will prevent looping</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
                                         <div plunker-content="markup">
                                             <pre ng-non-bindable><code data-language="html">&lt;div ng-controller=&quot;CarouselDemoCtrl&quot;&gt;
   &lt;div style=&quot;height: 305px&quot;&gt;
-    &lt;carousel interval=&quot;myInterval&quot;&gt;
+    &lt;carousel interval=&quot;myInterval&quot; no-wrap=&quot;noWrapSlides&quot;&gt;
       &lt;slide ng-repeat=&quot;slide in slides&quot; active=&quot;slide.active&quot;&gt;
         &lt;img ng-src=&quot;{{slide.image}}&quot; style=&quot;margin:auto;&quot;&gt;
         &lt;div class=&quot;carousel-caption&quot;&gt;
@@ -609,6 +619,12 @@ Whether accordion group is open or closed.</li>
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col-md-6&quot;&gt;
       &lt;button type=&quot;button&quot; class=&quot;btn btn-info&quot; ng-click=&quot;addSlide()&quot;&gt;Add Slide&lt;/button&gt;
+      &lt;div class=&quot;checkbox&quot;&gt;
+        &lt;label&gt;
+          &lt;input type=&quot;checkbox&quot; ng-model=&quot;noWrapSlides&quot;&gt;
+          Disable Slide Looping
+        &lt;/label&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;col-md-6&quot;&gt;
       Interval, in milliseconds: &lt;input type=&quot;number&quot; class=&quot;form-control&quot; ng-model=&quot;myInterval&quot;&gt;
@@ -623,11 +639,12 @@ Whether accordion group is open or closed.</li>
                                         <div plunker-content="javascript">
                                             <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;CarouselDemoCtrl&#x27;, function ($scope) {
   $scope.myInterval = 5000;
+  $scope.noWrapSlides = false;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;
     slides.push({
-      image: &#x27;http://placekitten.com/&#x27; + newWidth + &#x27;/300&#x27;,
+      image: &#x27;//placekitten.com/&#x27; + newWidth + &#x27;/300&#x27;,
       text: [&#x27;More&#x27;,&#x27;Extra&#x27;,&#x27;Lots of&#x27;,&#x27;Surplus&#x27;][slides.length % 4] + &#x27; &#x27; +
         [&#x27;Cats&#x27;, &#x27;Kittys&#x27;, &#x27;Felines&#x27;, &#x27;Cutes&#x27;][slides.length % 4]
     });
@@ -645,11 +662,12 @@ Whether accordion group is open or closed.</li>
                     </section>
                     <script>angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($scope) {
   $scope.myInterval = 5000;
+  $scope.noWrapSlides = false;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;
     slides.push({
-      image: 'http://placekitten.com/' + newWidth + '/300',
+      image: '//placekitten.com/' + newWidth + '/300',
       text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
         ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
     });
@@ -685,7 +703,7 @@ Provides a simple way to hide and show an element with a css transition</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -902,7 +920,7 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1117,11 +1135,11 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
                                 
 <div ng-controller="DropdownCtrl">
     <!-- Simple dropdown -->
-    <span class="dropdown" dropdown on-toggle="toggled(open)">
-      <a href class="dropdown-toggle" dropdown-toggle>
+    <span dropdown on-toggle="toggled(open)">
+      <a href id="simple-dropdown" dropdown-toggle>
         Click me for a dropdown, yo!
       </a>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
         <li ng-repeat="choice in items">
           <a href>{{choice}}</a>
         </li>
@@ -1130,45 +1148,54 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
 
     <!-- Single button -->
     <div class="btn-group" dropdown is-open="status.isopen">
-      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+      <button id="single-button" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
         Button dropdown <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a href="#">Action</a></li>
+        <li role="menuitem"><a href="#">Another action</a></li>
+        <li role="menuitem"><a href="#">Something else here</a></li>
         <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
+        <li role="menuitem"><a href="#">Separated link</a></li>
       </ul>
     </div>
 
     <!-- Split button -->
     <div class="btn-group" dropdown>
-      <button type="button" class="btn btn-danger">Action</button>
-      <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
+      <button id="split-button" type="button" class="btn btn-danger">Action</button>
+      <button type="button" class="btn btn-danger" dropdown-toggle>
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="split-button">
+        <li role="menuitem"><a href="#">Action</a></li>
+        <li role="menuitem"><a href="#">Another action</a></li>
+        <li role="menuitem"><a href="#">Something else here</a></li>
         <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
+        <li role="menuitem"><a href="#">Separated link</a></li>
       </ul>
     </div>
 
     <!-- Single button using append-to-body -->
     <div class="btn-group" dropdown dropdown-append-to-body>
-      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+      <button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
         Dropdown on Body <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
+        <li role="menuitem"><a href="#">Action</a></li>
+        <li role="menuitem"><a href="#">Another action</a></li>
+        <li role="menuitem"><a href="#">Something else here</a></li>
         <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
+        <li role="menuitem"><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+    
+    <!-- Single button using template-url -->
+    <div class="btn-group" dropdown>
+      <button id="button-template-url" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
+        Dropdown using template <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" template-url="dropdown.html" aria-labelledby="button-template-url">
       </ul>
     </div>
 
@@ -1178,6 +1205,30 @@ Append the datepicker popup element to <code>body</code>, rather than inserting 
         <button type="button" class="btn btn-warning btn-sm" ng-click="disabled = !disabled">Enable/Disable</button>
     </p>
 
+    <hr>
+    <!-- Single button with keyboard nav -->
+    <div class="btn-group" dropdown keyboard-nav>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" dropdown-toggle>
+            Dropdown with keyboard navigation <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+            <li role="menuitem"><a href="#">Action</a></li>
+            <li role="menuitem"><a href="#">Another action</a></li>
+            <li role="menuitem"><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li role="menuitem"><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+
+    <script type="text/ng-template" id="dropdown.html">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="button-template-url">
+          <li role="menuitem"><a href="#">Action in Template</a></li>
+          <li role="menuitem"><a href="#">Another action in Template</a></li>
+          <li role="menuitem"><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li role="menuitem"><a href="#">Separated link in Template</a></li>
+        </ul>
+    </script>
 </div>
 
                             </div>
@@ -1189,20 +1240,26 @@ There is also the <code>on-toggle(open)</code> optional expression fired when dr
 <p>Add <code>dropdown-append-to-body</code> to the <code>dropdown</code> element to append to the inner <code>dropdown-menu</code> to the body.
 This is useful when the dropdown button is inside a div with <code>overflow: hidden</code>, and the menu would otherwise be hidden.</p>
 
+<p>Add <code>keyboard-nav</code> to the <code>dropdown</code> element to enable navigation of dropdown list elements with the arrow keys.</p>
+
 <p>By default the dropdown will automatically close if any of its elements is clicked, you can change this behavior by setting the <code>auto-close</code> option as follows:</p>
 
 <ul>
 <li><code>always</code> - (Default) automatically closes the dropdown when any of its elements is clicked.</li>
 <li><code>outsideClick</code> - closes the dropdown automatically only when the user clicks any element outside the dropdown.</li>
-<li><code>disabled</code> - disables the auto close. You can then control the open/close status of the dropdown manually, by using <code>is-open</code>. Please notice that the dropdown will still close if the toggle is clicked, the <code>esc</code> key is pressed or another dropdown is open.</li>
+<li><code>disabled</code> - disables the auto close. You can then control the open/close status of the dropdown manually, by using <code>is-open</code>. Please notice that the dropdown will still close if the toggle is clicked, the <code>esc</code> key is pressed or another dropdown is open. The dropdown will no longer close on <code>$locationChangeSuccess</code> events.</li>
 </ul>
+
+<p>Optionally, you may specify a template for the dropdown menu using the <code>template-url</code> attribute. This is especially useful when you have multiple similar dropdowns in a repeater and you want to keep your HTML output lean and your number of scopes to a minimum. The template has full access to the scope in which the dropdown lies.</p>
+
+<p>Example: <code>&lt;ul class="dropdown-menu" template-url="custom-dropdown.html"&gt;&lt;/ul&gt;</code>.</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1210,11 +1267,11 @@ This is useful when the dropdown button is inside a div with <code>overflow: hid
                                             <pre ng-non-bindable><code data-language="html">
 &lt;div ng-controller=&quot;DropdownCtrl&quot;&gt;
     &lt;!-- Simple dropdown --&gt;
-    &lt;span class=&quot;dropdown&quot; dropdown on-toggle=&quot;toggled(open)&quot;&gt;
-      &lt;a href class=&quot;dropdown-toggle&quot; dropdown-toggle&gt;
+    &lt;span dropdown on-toggle=&quot;toggled(open)&quot;&gt;
+      &lt;a href id=&quot;simple-dropdown&quot; dropdown-toggle&gt;
         Click me for a dropdown, yo!
       &lt;/a&gt;
-      &lt;ul class=&quot;dropdown-menu&quot;&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; aria-labelledby=&quot;simple-dropdown&quot;&gt;
         &lt;li ng-repeat=&quot;choice in items&quot;&gt;
           &lt;a href&gt;{{choice}}&lt;/a&gt;
         &lt;/li&gt;
@@ -1223,45 +1280,54 @@ This is useful when the dropdown button is inside a div with <code>overflow: hid
 
     &lt;!-- Single button --&gt;
     &lt;div class=&quot;btn-group&quot; dropdown is-open=&quot;status.isopen&quot;&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary dropdown-toggle&quot; dropdown-toggle ng-disabled=&quot;disabled&quot;&gt;
+      &lt;button id=&quot;single-button&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; dropdown-toggle ng-disabled=&quot;disabled&quot;&gt;
         Button dropdown &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot;&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;single-button&quot;&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
       &lt;/ul&gt;
     &lt;/div&gt;
 
     &lt;!-- Split button --&gt;
     &lt;div class=&quot;btn-group&quot; dropdown&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-danger&quot;&gt;Action&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-danger dropdown-toggle&quot; dropdown-toggle&gt;
+      &lt;button id=&quot;split-button&quot; type=&quot;button&quot; class=&quot;btn btn-danger&quot;&gt;Action&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-danger&quot; dropdown-toggle&gt;
         &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
         &lt;span class=&quot;sr-only&quot;&gt;Split button!&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot;&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;split-button&quot;&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
       &lt;/ul&gt;
     &lt;/div&gt;
 
     &lt;!-- Single button using append-to-body --&gt;
     &lt;div class=&quot;btn-group&quot; dropdown dropdown-append-to-body&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary dropdown-toggle&quot; dropdown-toggle&gt;
+      &lt;button id=&quot;btn-append-to-body&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; dropdown-toggle&gt;
         Dropdown on Body &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot;&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;btn-append-to-body&quot;&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+        &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Single button using template-url --&gt;
+    &lt;div class=&quot;btn-group&quot; dropdown&gt;
+      &lt;button id=&quot;button-template-url&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; dropdown-toggle ng-disabled=&quot;disabled&quot;&gt;
+        Dropdown using template &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; template-url=&quot;dropdown.html&quot; aria-labelledby=&quot;button-template-url&quot;&gt;
       &lt;/ul&gt;
     &lt;/div&gt;
 
@@ -1271,6 +1337,30 @@ This is useful when the dropdown button is inside a div with <code>overflow: hid
         &lt;button type=&quot;button&quot; class=&quot;btn btn-warning btn-sm&quot; ng-click=&quot;disabled = !disabled&quot;&gt;Enable/Disable&lt;/button&gt;
     &lt;/p&gt;
 
+    &lt;hr&gt;
+    &lt;!-- Single button with keyboard nav --&gt;
+    &lt;div class=&quot;btn-group&quot; dropdown keyboard-nav&gt;
+        &lt;button id=&quot;simple-btn-keyboard-nav&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; dropdown-toggle&gt;
+            Dropdown with keyboard navigation &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;simple-btn-keyboard-nav&quot;&gt;
+            &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+            &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+            &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+            &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;script type=&quot;text/ng-template&quot; id=&quot;dropdown.html&quot;&gt;
+        &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;button-template-url&quot;&gt;
+          &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action in Template&lt;/a&gt;&lt;/li&gt;
+          &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action in Template&lt;/a&gt;&lt;/li&gt;
+          &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+          &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+          &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Separated link in Template&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/script&gt;
 &lt;/div&gt;
 </code></pre>
                                         </div>
@@ -1374,6 +1464,7 @@ Creating custom modals is straightforward: create a partial view, its controller
 <li><code>scope</code> - a scope instance to be used for the modal's content (actually the <code>$modal</code> service is going to create a child scope of a provided scope). Defaults to <code>$rootScope</code></li>
 <li><code>controller</code> - a controller for a modal instance - it can initialize scope used by modal. Accepts the "controller-as" syntax in the form 'SomeCtrl as myctrl'; can be injected with <code>$modalInstance</code></li>
 <li><code>controllerAs</code> - an alternative to the controller-as syntax, matching the API of directive definitions. Requires the <code>controller</code> option to be provided as well</li>
+<li><code>bindToController</code> - when used with <code>controllerAs</code> &amp; set to <code>true</code>, it will bind the controller properties onto the <code>$scope</code> directly</li>
 <li><code>resolve</code> - members that will be resolved and passed to the controller as locals; it is equivalent of the <code>resolve</code> property for AngularJS routes</li>
 <li><code>animation</code> - set to false to disable animations on new modal/backdrop. Does not toggle animations for modals/backdrops that are already displayed.</li>
 <li><code>backdrop</code> - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), <code>'static'</code> - backdrop is present but modal window is not closed when clicking outside of the modal window.</li>
@@ -1383,6 +1474,8 @@ Creating custom modals is straightforward: create a partial view, its controller
 <li><code>windowTemplateUrl</code> - a path to a template overriding modal's window template</li>
 <li><code>size</code> - optional suffix of modal window class. The value used is appended to the <code>modal-</code> class, i.e. a value of <code>sm</code> gives <code>modal-sm</code></li>
 </ul>
+
+<p>Global defaults may be set for <code>$modal</code> via <code>$modalProvider.options</code>.</p>
 
 <p>The <code>open</code> method returns a modal instance, an object with the following properties:</p>
 
@@ -1413,7 +1506,7 @@ whether the modal is being closed (true) or dismissed.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1601,6 +1694,9 @@ angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($s
 <li><p><code>ng-model</code> <i class="glyphicon glyphicon-eye-open"></i>
  :
  Current page number. First page is 1.</p></li>
+<li><p><code>ng-disabled</code> <i class="glyphicon glyphicon-eye-open"></i>
+:
+Used to disable the pagination component</p></li>
 <li><p><code>total-items</code> <i class="glyphicon glyphicon-eye-open"></i>
  :
  Total number of items in all pages.</p></li>
@@ -1658,7 +1754,7 @@ For <code>ng-model</code>, <code>total-items</code>, <code>items-per-page</code>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1824,7 +1920,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -1968,7 +2064,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2149,7 +2245,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2312,7 +2408,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2460,6 +2556,9 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
 <li><p><code>arrowkeys</code>
 <em>(Defaults: true)</em> :
  Whether user can use up/down arrowkeys inside the hours &amp; minutes input to increase or decrease it's values.</p></li>
+<li><p><code>show-spinners</code>
+<em>(Defaults: true)</em> :
+ Shows spinner arrows above and below the inputs</p></li>
 </ul>
                             </div>
                         </div>
@@ -2467,7 +2566,7 @@ $tooltipProvider. See the <a href="#tooltip">tooltip</a> section for more inform
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2660,10 +2759,10 @@ directive supports multiple placements, optional transition animation, and more.
 <li><code>tooltip</code> takes text only and will escape any HTML provided.</li>
 <li><code>tooltip-template</code> takes text that specifies the location of a template to
 use for the tooltip.</li>
-<li><code>tooltip-html-unsafe</code> takes
-whatever HTML is provided and displays it in a tooltip; it's called "unsafe"
-because the HTML is not sanitized. <em>The user is responsible for ensuring the
+<li><code>tooltip-html</code> takes
+whatever HTML is provided and displays it in a tooltip; <em>The user is responsible for ensuring the
 content is safe to put into the DOM!</em></li>
+<li><code>tooltip-html-unsafe</code> -- deprecated in favour of <code>tooltip-html</code></li>
 </ul>
 
 <p>The tooltip directives provide several optional attributes to control how they
@@ -2726,7 +2825,7 @@ appendToBody: false
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2904,6 +3003,9 @@ Minimal wait time after last character typed before typeahead kicks-in</p></li>
 <li><p><code>typeahead-focus-first</code>
 <em>(Defaults: true)</em> :
 Should the first match automatically be focused as you type?</p></li>
+<li><p><code>select-on</code>blur`
+<em>(Defaults: false)</em> :
+On blur, select the currently highlighted match</p></li>
 </ul>
                             </div>
                         </div>
@@ -2911,7 +3013,7 @@ Should the first match automatically be focused as you type?</p></li>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.0', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('1.3.13', '3.1.1', '0.13.1-SNAPSHOT', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
@@ -2948,7 +3050,7 @@ Should the first match automatically be focused as you type?</p></li>
   $scope.states = [&#x27;Alabama&#x27;, &#x27;Alaska&#x27;, &#x27;Arizona&#x27;, &#x27;Arkansas&#x27;, &#x27;California&#x27;, &#x27;Colorado&#x27;, &#x27;Connecticut&#x27;, &#x27;Delaware&#x27;, &#x27;Florida&#x27;, &#x27;Georgia&#x27;, &#x27;Hawaii&#x27;, &#x27;Idaho&#x27;, &#x27;Illinois&#x27;, &#x27;Indiana&#x27;, &#x27;Iowa&#x27;, &#x27;Kansas&#x27;, &#x27;Kentucky&#x27;, &#x27;Louisiana&#x27;, &#x27;Maine&#x27;, &#x27;Maryland&#x27;, &#x27;Massachusetts&#x27;, &#x27;Michigan&#x27;, &#x27;Minnesota&#x27;, &#x27;Mississippi&#x27;, &#x27;Missouri&#x27;, &#x27;Montana&#x27;, &#x27;Nebraska&#x27;, &#x27;Nevada&#x27;, &#x27;New Hampshire&#x27;, &#x27;New Jersey&#x27;, &#x27;New Mexico&#x27;, &#x27;New York&#x27;, &#x27;North Dakota&#x27;, &#x27;North Carolina&#x27;, &#x27;Ohio&#x27;, &#x27;Oklahoma&#x27;, &#x27;Oregon&#x27;, &#x27;Pennsylvania&#x27;, &#x27;Rhode Island&#x27;, &#x27;South Carolina&#x27;, &#x27;South Dakota&#x27;, &#x27;Tennessee&#x27;, &#x27;Texas&#x27;, &#x27;Utah&#x27;, &#x27;Vermont&#x27;, &#x27;Virginia&#x27;, &#x27;Washington&#x27;, &#x27;West Virginia&#x27;, &#x27;Wisconsin&#x27;, &#x27;Wyoming&#x27;];
   // Any function returning a promise object can be used to load values asynchronously
   $scope.getLocation = function(val) {
-    return $http.get(&#x27;http://maps.googleapis.com/maps/api/geocode/json&#x27;, {
+    return $http.get(&#x27;//maps.googleapis.com/maps/api/geocode/json&#x27;, {
       params: {
         address: val,
         sensor: false
@@ -2961,7 +3063,8 @@ Should the first match automatically be focused as you type?</p></li>
   };
 
   $scope.statesWithFlags = [{&#x27;name&#x27;:&#x27;Alabama&#x27;,&#x27;flag&#x27;:&#x27;5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Alaska&#x27;,&#x27;flag&#x27;:&#x27;e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Arizona&#x27;,&#x27;flag&#x27;:&#x27;9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Arkansas&#x27;,&#x27;flag&#x27;:&#x27;9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png&#x27;},{&#x27;name&#x27;:&#x27;California&#x27;,&#x27;flag&#x27;:&#x27;0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Colorado&#x27;,&#x27;flag&#x27;:&#x27;4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Connecticut&#x27;,&#x27;flag&#x27;:&#x27;9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Delaware&#x27;,&#x27;flag&#x27;:&#x27;c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Florida&#x27;,&#x27;flag&#x27;:&#x27;f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Georgia&#x27;,&#x27;flag&#x27;:&#x27;5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Hawaii&#x27;,&#x27;flag&#x27;:&#x27;e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Idaho&#x27;,&#x27;flag&#x27;:&#x27;a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Illinois&#x27;,&#x27;flag&#x27;:&#x27;0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Indiana&#x27;,&#x27;flag&#x27;:&#x27;a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Iowa&#x27;,&#x27;flag&#x27;:&#x27;a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Kansas&#x27;,&#x27;flag&#x27;:&#x27;d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Kentucky&#x27;,&#x27;flag&#x27;:&#x27;8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Louisiana&#x27;,&#x27;flag&#x27;:&#x27;e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Maine&#x27;,&#x27;flag&#x27;:&#x27;3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Maryland&#x27;,&#x27;flag&#x27;:&#x27;a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Massachusetts&#x27;,&#x27;flag&#x27;:&#x27;f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Michigan&#x27;,&#x27;flag&#x27;:&#x27;b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Minnesota&#x27;,&#x27;flag&#x27;:&#x27;b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Mississippi&#x27;,&#x27;flag&#x27;:&#x27;4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Missouri&#x27;,&#x27;flag&#x27;:&#x27;5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Montana&#x27;,&#x27;flag&#x27;:&#x27;c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Nebraska&#x27;,&#x27;flag&#x27;:&#x27;4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Nevada&#x27;,&#x27;flag&#x27;:&#x27;f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png&#x27;},{&#x27;name&#x27;:&#x27;New Hampshire&#x27;,&#x27;flag&#x27;:&#x27;2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png&#x27;},{&#x27;name&#x27;:&#x27;New Jersey&#x27;,&#x27;flag&#x27;:&#x27;9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png&#x27;},{&#x27;name&#x27;:&#x27;New Mexico&#x27;,&#x27;flag&#x27;:&#x27;c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png&#x27;},{&#x27;name&#x27;:&#x27;New York&#x27;,&#x27;flag&#x27;:&#x27;1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png&#x27;},{&#x27;name&#x27;:&#x27;North Carolina&#x27;,&#x27;flag&#x27;:&#x27;b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png&#x27;},{&#x27;name&#x27;:&#x27;North Dakota&#x27;,&#x27;flag&#x27;:&#x27;e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Ohio&#x27;,&#x27;flag&#x27;:&#x27;4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Oklahoma&#x27;,&#x27;flag&#x27;:&#x27;6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Oregon&#x27;,&#x27;flag&#x27;:&#x27;b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Pennsylvania&#x27;,&#x27;flag&#x27;:&#x27;f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Rhode Island&#x27;,&#x27;flag&#x27;:&#x27;f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png&#x27;},{&#x27;name&#x27;:&#x27;South Carolina&#x27;,&#x27;flag&#x27;:&#x27;6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png&#x27;},{&#x27;name&#x27;:&#x27;South Dakota&#x27;,&#x27;flag&#x27;:&#x27;1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Tennessee&#x27;,&#x27;flag&#x27;:&#x27;9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Texas&#x27;,&#x27;flag&#x27;:&#x27;f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Utah&#x27;,&#x27;flag&#x27;:&#x27;f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Vermont&#x27;,&#x27;flag&#x27;:&#x27;4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Virginia&#x27;,&#x27;flag&#x27;:&#x27;4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Washington&#x27;,&#x27;flag&#x27;:&#x27;5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png&#x27;},{&#x27;name&#x27;:&#x27;West Virginia&#x27;,&#x27;flag&#x27;:&#x27;2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Wisconsin&#x27;,&#x27;flag&#x27;:&#x27;2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png&#x27;},{&#x27;name&#x27;:&#x27;Wyoming&#x27;,&#x27;flag&#x27;:&#x27;b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png&#x27;}];
-});</code></pre>
+});
+</code></pre>
                                         </div>
                                     </tab>
                                 </tabset>
@@ -2974,7 +3077,7 @@ Should the first match automatically be focused as you type?</p></li>
   $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
   // Any function returning a promise object can be used to load values asynchronously
   $scope.getLocation = function(val) {
-    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+    return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
       params: {
         address: val,
         sensor: false
@@ -2987,7 +3090,8 @@ Should the first match automatically be focused as you type?</p></li>
   };
 
   $scope.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
-});</script>
+});
+</script>
                 
             </div>
         </div>
@@ -3040,7 +3144,7 @@ Should the first match automatically be focused as you type?</p></li>
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('0.13.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.13.0</a>
+        <a class="btn btn-primary" ng-href="{{download('0.13.1-SNAPSHOT')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 0.13.1-SNAPSHOT</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
@@ -3314,7 +3418,7 @@ Should the first match automatically be focused as you type?</p></li>
         <a class="btn btn-default" ng-click="cancel()">Close</a>
         <a class="btn btn-primary" ng-hide="isOldBrowser()"
             ng-disabled="isOldBrowser() !== false && !selectedModules.length"
-            ng-click="selectedModules.length && build(selectedModules, '0.13.0')">
+            ng-click="selectedModules.length && build(selectedModules, '0.13.1-SNAPSHOT')">
             <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
         </a>
     </div>
