@@ -1,5 +1,5 @@
 describe('$modal', function () {
-  var $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
+  var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $modal, $modalProvider;
 
   var triggerKeyDown = function (element, keyCode) {
@@ -8,6 +8,7 @@ describe('$modal', function () {
     element.trigger(e);
   };
 
+  beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('template/modal/backdrop.html'));
   beforeEach(module('template/modal/window.html'));
@@ -16,7 +17,8 @@ describe('$modal', function () {
     $modalProvider = _$modalProvider_;
   }));
 
-  beforeEach(inject(function (_$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$modal_) {
+  beforeEach(inject(function (_$animate_, _$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$modal_) {
+    $animate = _$animate_;
     $rootScope = _$rootScope_;
     $document = _$document_;
     $compile = _$compile_;
@@ -150,7 +152,7 @@ describe('$modal', function () {
     var closed = modal.close(result);
     $rootScope.$digest();
     if (!noFlush) {
-      $timeout.flush();
+      $animate.triggerCallbacks();
     }
     return closed;
   }
@@ -159,7 +161,7 @@ describe('$modal', function () {
     var closed = modal.dismiss(reason);
     $rootScope.$digest();
     if (!noFlush) {
-      $timeout.flush();
+      $animate.triggerCallbacks();
     }
     return closed;
   }
@@ -175,6 +177,7 @@ describe('$modal', function () {
       expect($document).toHaveBackdrop();
 
       dismiss(modal, 'closing in test');
+      $animate.triggerCallbacks();
 
       expect($document).toHaveModalsOpen(0);
 
@@ -221,6 +224,7 @@ describe('$modal', function () {
       expect($document).toHaveBackdrop();
 
       dismiss(modal, 'closing in test');
+      $animate.triggerCallbacks();
 
       expect($document).toHaveModalsOpen(0);
 
@@ -233,7 +237,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
-      $timeout.flush();
+      $animate.triggerCallbacks();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
@@ -245,7 +249,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       $document.find('body > div.modal').click();
-      $timeout.flush();
+      $animate.triggerCallbacks();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
@@ -263,7 +267,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
-      $timeout.flush();
+      $animate.triggerCallbacks();
       $rootScope.$digest();
 
       expect(document.activeElement.tagName).toBe('A');
@@ -287,7 +291,7 @@ describe('$modal', function () {
       // iframe conditions. See issue 3639
       element[0].focus = undefined;
       triggerKeyDown($document, 27);
-      $timeout.flush();
+      $animate.triggerCallbacks();
       $rootScope.$digest();
 
       expect(document.activeElement.tagName).toBe('BODY');
