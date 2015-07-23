@@ -2,9 +2,11 @@ describe('$modal', function () {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $modal, $modalProvider;
 
-  var triggerKeyDown = function (element, keyCode) {
+  var triggerKeyDown = function (element, keyCode, shiftKey) {
     var e = $.Event('keydown');
+    e.srcElement = element[0];
     e.which = keyCode;
+    e.shiftKey = shiftKey;
     element.trigger(e);
   };
 
@@ -343,6 +345,40 @@ describe('$modal', function () {
 
       openAndCloseModalWithAutofocusElement();
       openAndCloseModalWithAutofocusElement();
+    });
+
+    it('should change focus to first element when tab key was pressed', function() {
+      var initialPage = angular.element('<a href="#" id="cannot-get-focus-from-modal">Outland link</a>');
+      angular.element(document.body).append(initialPage);
+      initialPage.focus();
+
+      open({
+        template:'<a href="#" id="tab-focus-link"><input type="text" id="tab-focus-input1"/><input type="text" id="tab-focus-input2"/>' +
+        '<button id="tab-focus-button">Open me!</button>'
+      });
+      expect($document).toHaveModalsOpen(1);
+
+      var lastElement = angular.element(document.getElementById('tab-focus-button'));
+      lastElement.focus();
+      triggerKeyDown(lastElement, 9);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link');
+    });
+
+    it('should change focus to last element when shift+tab key is pressed', function() {
+      var initialPage = angular.element('<a href="#" id="cannot-get-focus-from-modal">Outland link</a>');
+      angular.element(document.body).append(initialPage);
+      initialPage.focus();
+
+      open({
+        template:'<a href="#" id="tab-focus-link"><input type="text" id="tab-focus-input1"/><input type="text" id="tab-focus-input2"/>' +
+        '<button id="tab-focus-button">Open me!</button>'
+      });
+      expect($document).toHaveModalsOpen(1);
+
+      var lastElement = angular.element(document.getElementById('tab-focus-link'));
+      lastElement.focus();
+      triggerKeyDown(lastElement, 9, true);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
     });
   });
 
