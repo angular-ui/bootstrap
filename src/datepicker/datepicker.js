@@ -653,7 +653,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         if (angular.isDefined(dt)) {
           scope.date = dt;
         }
-        var date = scope.date ? dateFilter(scope.date, dateFormat) : '';
+        var date = scope.date ? dateFilter(scope.date, dateFormat) : null; // Setting to NULL is necessary for form validators to function
         element.val(date);
         ngModel.$setViewValue(date);
 
