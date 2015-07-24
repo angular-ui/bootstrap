@@ -456,6 +456,63 @@ describe('typeahead tests', function () {
       expect(inputEl.val()).toEqual('AL');
     });
   });
+  
+  describe('select on exact match', function(){
+    
+    it('should select on an exact match when set', function () {
+
+      $scope.onSelect = jasmine.createSpy('onSelect');
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-editable="false" typeahead-on-select="onSelect()" typeahead="item for item in source | filter:$viewValue" typeahead-select-on-exact="true"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'bar');
+      
+      expect($scope.result).toEqual('bar');
+      expect(inputEl.val()).toEqual('bar');
+      expect(element).toBeClosed();
+      expect($scope.onSelect).toHaveBeenCalled();
+    });
+    
+    it('should not select on an exact match by default', function () {
+
+      $scope.onSelect = jasmine.createSpy('onSelect');
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-editable="false" typeahead-on-select="onSelect()" typeahead="item for item in source | filter:$viewValue"></div>');
+      var inputEl = findInput(element);
+      
+      changeInputValueTo(element, 'bar');
+      
+      expect($scope.result).toBeUndefined();
+      expect(inputEl.val()).toEqual('bar');
+      expect($scope.onSelect.calls.any()).toBe(false);
+    });
+    
+    it('should not be case sensitive when select on an exact match', function () {
+
+      $scope.onSelect = jasmine.createSpy('onSelect');
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-editable="false" typeahead-on-select="onSelect()" typeahead="item for item in source | filter:$viewValue" typeahead-select-on-exact="true"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'BaR');
+      
+      expect($scope.result).toEqual('bar');
+      expect(inputEl.val()).toEqual('bar');
+      expect(element).toBeClosed();
+      expect($scope.onSelect).toHaveBeenCalled();
+    });
+    
+    it('should not auto select when not a match with one potential result left', function () {
+
+      $scope.onSelect = jasmine.createSpy('onSelect');
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-editable="false" typeahead-on-select="onSelect()" typeahead="item for item in source | filter:$viewValue" typeahead-select-on-exact="true"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'fo');
+      
+      expect($scope.result).toBeUndefined();
+      expect(inputEl.val()).toEqual('fo');
+      expect($scope.onSelect.calls.any()).toBe(false);
+    });
+  });
 
   describe('pop-up interaction', function () {
     var element;
