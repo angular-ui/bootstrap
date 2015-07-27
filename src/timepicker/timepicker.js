@@ -55,6 +55,46 @@ angular.module('ui.bootstrap.timepicker', [])
     });
   }
 
+  var min;
+  $scope.$parent.$watch($parse($attrs.min), function(value) {
+    var dt = new Date(value);
+    min = isNaN(dt) ? undefined : dt;
+  });
+
+  var max;
+  $scope.$parent.$watch($parse($attrs.max), function(value) {
+    var dt = new Date(value);
+    max = isNaN(dt) ? undefined : dt;
+  });
+
+  $scope.noIncrementHours = function() {
+    var incrementedSelected = addMinutes( selected, hourStep * 60 );
+    return incrementedSelected > max || (incrementedSelected < selected && incrementedSelected < min);
+  };
+
+  $scope.noDecrementHours = function() {
+    var decrementedSelected = addMinutes( selected, - hourStep * 60 );
+    return decrementedSelected < min || (decrementedSelected > selected && decrementedSelected > max);
+  };
+
+  $scope.noIncrementMinutes = function() {
+    var incrementedSelected = addMinutes( selected, minuteStep );
+    return incrementedSelected > max || (incrementedSelected < selected && incrementedSelected < min);
+  };
+
+  $scope.noDecrementMinutes = function() {
+    var decrementedSelected = addMinutes( selected, - minuteStep );
+    return decrementedSelected < min || (decrementedSelected > selected && decrementedSelected > max);
+  };
+
+  $scope.noToggleMeridian = function() {
+    if (selected.getHours() < 13) {
+      return addMinutes( selected, 12 * 60 ) > max;
+    } else {
+      return addMinutes( selected, - 12 * 60 ) < min;
+    }
+  };
+
   // 12H / 24H mode
   $scope.showMeridian = timepickerConfig.showMeridian;
   if ($attrs.showMeridian) {
@@ -177,7 +217,11 @@ angular.module('ui.bootstrap.timepicker', [])
 
       if ( angular.isDefined(hours) ) {
         selected.setHours( hours );
-        refresh( 'h' );
+        if ( selected < min || selected > max) {
+          invalidate(true);
+        } else {
+          refresh( 'h' );
+        }
       } else {
         invalidate(true);
       }
@@ -196,7 +240,11 @@ angular.module('ui.bootstrap.timepicker', [])
 
       if ( angular.isDefined(minutes) ) {
         selected.setMinutes( minutes );
-        refresh( 'm' );
+        if (selected < min || selected > max) {
+          invalidate(undefined, true);
+        } else {
+          refresh( 'm' );
+        }
       } else {
         invalidate(undefined, true);
       }
@@ -222,7 +270,13 @@ angular.module('ui.bootstrap.timepicker', [])
       if ( date ) {
         selected = date;
       }
-      makeValid();
+      if (selected < min || selected > max) {
+        ngModelCtrl.$setValidity('time', false);
+        $scope.invalidHours = true;
+        $scope.invalidMinutes = true;
+      } else {
+        makeValid();
+      }
       updateTemplate();
     }
   };
@@ -254,9 +308,15 @@ angular.module('ui.bootstrap.timepicker', [])
     $scope.meridian = selected.getHours() < 12 ? meridians[0] : meridians[1];
   }
 
-  function addMinutes( minutes ) {
-    var dt = new Date( selected.getTime() + minutes * 60000 );
-    selected.setHours( dt.getHours(), dt.getMinutes() );
+  function addMinutes( date,  minutes ) {
+    var dt = new Date( date.getTime() + minutes * 60000 );
+    var newDate = new Date( date );
+    newDate.setHours( dt.getHours(), dt.getMinutes() );
+    return newDate;
+  }
+
+  function addMinutesToSelected( minutes ) {
+    selected = addMinutes( selected, minutes );
     refresh();
   }
   
@@ -264,19 +324,29 @@ angular.module('ui.bootstrap.timepicker', [])
     $scope.$parent.$eval($attrs.showSpinners) : timepickerConfig.showSpinners;
   
   $scope.incrementHours = function() {
-    addMinutes( hourStep * 60 );
+    if (!$scope.noIncrementHours()) {
+      addMinutesToSelected( hourStep * 60 );
+    }
   };
   $scope.decrementHours = function() {
-    addMinutes( - hourStep * 60 );
+    if (!$scope.noDecrementHours()) {
+      addMinutesToSelected( - hourStep * 60 );
+    }
   };
   $scope.incrementMinutes = function() {
-    addMinutes( minuteStep );
+    if (!$scope.noIncrementMinutes()) {
+      addMinutesToSelected( minuteStep );
+    }
   };
   $scope.decrementMinutes = function() {
-    addMinutes( - minuteStep );
+    if (!$scope.noDecrementMinutes()) {
+      addMinutesToSelected( - minuteStep );
+    }
   };
   $scope.toggleMeridian = function() {
-    addMinutes( 12 * 60 * (( selected.getHours() < 12 ) ? 1 : -1) );
+    if (!$scope.noToggleMeridian()) {
+      addMinutesToSelected( 12 * 60 * (( selected.getHours() < 12 ) ? 1 : -1) );
+    }
   };
 }])
 

@@ -14,8 +14,7 @@ describe('timepicker directive', function () {
 
   function newTime(hours, minutes) {
     var time = new Date();
-    time.setHours(hours);
-    time.setMinutes(minutes);
+    time.setHours(hours, minutes, 0, 0);
     return time;
   }
 
@@ -1005,5 +1004,661 @@ describe('timepicker directive', function () {
     });
   });
 
+  describe('when used with min', function() {
+    var changeInputValueTo;
+    beforeEach(inject(function($sniffer) {
+      element = $compile('<timepicker ng-model="time" min="min"></timepicker>')($rootScope);
+      $rootScope.$digest();
+      changeInputValueTo = function (inputEl, value) {
+        inputEl.val(value);
+        inputEl.trigger($sniffer.hasEvent('input') ? 'input' : 'change');
+        $rootScope.$digest();
+      };
+    }));
+
+    it('should not decrease hours when it would result in a time earlier than min', function() {
+      var down = getHoursButton(false);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.min = newTime(13, 41);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(true);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      hoursEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      hoursEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+    });
+
+    it('should decrease hours when it would not result in a time earlier than min', function() {
+      var down = getHoursButton(false);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.min = newTime(0, 0);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(false);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['01', '40', 'PM']);
+      expect(getModelState()).toEqual([13, 40]);
+
+      hoursEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '40', 'PM']);
+      expect(getModelState()).toEqual([12, 40]);
+
+      hoursEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '40', 'AM']);
+      expect(getModelState()).toEqual([11, 40]);
+    });
+
+    it('should not decrease minutes when it would result in a time ealier than min', function() {
+      var down = getMinutesButton(false);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.min = newTime(14, 40);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(true);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      minutessEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      minutessEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+    });
+
+    it('should decrease minutes when it would not result in a time ealier than min', function() {
+      var down = getMinutesButton(false);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.min = newTime(0, 0);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(false);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['02', '39', 'PM']);
+      expect(getModelState()).toEqual([14, 39]);
+
+      minutessEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '38', 'PM']);
+      expect(getModelState()).toEqual([14, 38]);
+
+      minutessEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '37', 'PM']);
+      expect(getModelState()).toEqual([14, 37]);
+    });
+
+    it('should not increase hours when time would rollover to a time earlier than min', function() {
+      var up = getHoursButton(true);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.min = newTime(13, 40);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(true);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+
+      hoursEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+
+      hoursEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+    });
+
+    it('should increase hours when time would rollover to a time not earlier than min', function() {
+      var up = getHoursButton(true);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.min = newTime(0, 0);
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(false);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['12', '59', 'AM']);
+      expect(getModelState()).toEqual([0, 59]);
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.$digest();
+
+      hoursEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '59', 'AM']);
+      expect(getModelState()).toEqual([0, 59]);
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.$digest();
+
+      hoursEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '59', 'AM']);
+      expect(getModelState()).toEqual([0, 59]);
+    });
+
+
+    it('should not increase minutes when time would rollover to a time earlier than min', function() {
+      var up = getMinutesButton(true);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.min = newTime(13, 40);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(true);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+
+      minutessEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+
+      minutessEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+    });
+
+    it('should increase minutes when time would rollover to a time not earlier than min', function() {
+      var up = getMinutesButton(true);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.min = newTime(0, 0);
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(false);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.$digest();
+
+      minutessEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+
+      $rootScope.time = newTime(23, 59);
+      $rootScope.$digest();
+
+      minutessEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+    });
+
+    it('should not change meridian when it would result a in time earlier than min', function() {
+      var button = getMeridianButton();
+
+      $rootScope.min = newTime(2, 41);
+      $rootScope.$digest();
+
+      expect(button.hasClass('disabled')).toBe(true);
+
+      doClick(button);
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+    });
+
+    it('should change meridian when it would not result in a time earlier than min', function() {
+      var button = getMeridianButton();
+
+      $rootScope.min = newTime(2, 39);
+      $rootScope.$digest();
+
+      expect(button.hasClass('disabled')).toBe(false);
+
+      doClick(button);
+      expect(getTimeState()).toEqual(['02', '40', 'AM']);
+      expect(getModelState()).toEqual([2, 40]);
+    });
+
+    it('should return invalid when the hours are changes such that the time is earlier than min', function() {
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+
+      $rootScope.min = newTime(14, 0);
+      $rootScope.$digest();
+
+      changeInputValueTo(hoursEl, 1);
+      expect($rootScope.time).toBe(null);
+      expect(hoursEl.parent().hasClass('has-error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+    });
+
+    it('should return valid when the hours are changes such that the time is not earlier than min', function() {
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+
+      $rootScope.min = newTime(14, 41);
+      $rootScope.$digest();
+
+      changeInputValueTo(hoursEl, 3);
+      expect(getTimeState()).toEqual(['3', '40', 'PM']);
+      expect(getModelState()).toEqual([15, 40]);
+      expect(hoursEl.parent().hasClass('has-error')).toBe(false);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+
+    it('should return invalid when the minutes are changes such that the time is earlier than min', function() {
+      var inputs = element.find('input');
+      var minutesEl = inputs.eq(1);
+
+      $rootScope.min = newTime(14, 30);
+      $rootScope.$digest();
+
+      changeInputValueTo(minutesEl, 1);
+      expect($rootScope.time).toBe(null);
+      expect(minutesEl.parent().hasClass('has-error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+    });
+
+    it('should return valid when the minutes are changes such that the time is not earlier than min', function() {
+      var inputs = element.find('input');
+      var minutesEl = inputs.eq(1);
+
+      $rootScope.min = newTime(14, 41);
+      $rootScope.$digest();
+
+      changeInputValueTo(minutesEl, 42);
+      expect(getTimeState()).toEqual(['02', '42', 'PM']);
+      expect(getModelState()).toEqual([14, 42]);
+      expect(minutesEl.parent().hasClass('has-error')).toBe(false);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+  });
+
+  describe('when used with max', function() {
+    var changeInputValueTo;
+    beforeEach(inject(function($sniffer) {
+      element = $compile('<timepicker ng-model="time" max="max"></timepicker>')($rootScope);
+      $rootScope.$digest();
+      changeInputValueTo = function (inputEl, value) {
+        inputEl.val(value);
+        inputEl.trigger($sniffer.hasEvent('input') ? 'input' : 'change');
+        $rootScope.$digest();
+      };
+    }));
+
+    it('should not increase hours when it would result in a time later than max', function() {
+      var up = getHoursButton(true);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.max = newTime(15, 39);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(true);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      hoursEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      hoursEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+    });
+
+    it('should increase hours when it would not result in a time later than max', function() {
+      var up = getHoursButton(true);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.max = newTime(23, 59);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(false);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['03', '40', 'PM']);
+      expect(getModelState()).toEqual([15, 40]);
+
+      hoursEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['04', '40', 'PM']);
+      expect(getModelState()).toEqual([16, 40]);
+
+      hoursEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['05', '40', 'PM']);
+      expect(getModelState()).toEqual([17, 40]);
+    });
+
+    it('should not increase minutes when it would result in a time later than max', function() {
+      var up = getMinutesButton(true);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.max = newTime(14, 40);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(true);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      minutessEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+
+      minutessEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+    });
+
+    it('should increase minutes when it would not result in a time later than max', function() {
+      var up = getMinutesButton(true);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var upMouseWheelEvent = wheelThatMouse(1);
+      var upKeydownEvent = keydown('up');
+
+      $rootScope.max = newTime(23, 59);
+      $rootScope.$digest();
+
+      expect(up.hasClass('disabled')).toBe(false);
+
+      doClick(up);
+      expect(getTimeState()).toEqual(['02', '41', 'PM']);
+      expect(getModelState()).toEqual([14, 41]);
+
+      minutessEl.trigger( upMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '42', 'PM']);
+      expect(getModelState()).toEqual([14, 42]);
+
+      minutessEl.trigger( upKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['02', '43', 'PM']);
+      expect(getModelState()).toEqual([14, 43]);
+    });
+
+    it('should not decrease hours when time would rollover to a time later than max', function() {
+      var down = getHoursButton(false);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.max = newTime(13, 40);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(true);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+
+      hoursEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+
+      hoursEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+    });
+
+    it('should decrease hours when time would rollover to a time not later than max', function() {
+      var down = getHoursButton(false);
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.max = newTime(23, 59);
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(false);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['11', '00', 'PM']);
+      expect(getModelState()).toEqual([23, 0]);
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.$digest();
+
+      hoursEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '00', 'PM']);
+      expect(getModelState()).toEqual([23, 0]);
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.$digest();
+
+      hoursEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '00', 'PM']);
+      expect(getModelState()).toEqual([23, 0]);
+    });
+
+    it('should not decrease minutes when time would rollover to a time later than max', function() {
+      var down = getMinutesButton(false);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.max = newTime(13, 40);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(true);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+
+      minutessEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+
+      minutessEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['12', '00', 'AM']);
+      expect(getModelState()).toEqual([0, 0]);
+    });
+
+    it('should decrease minutes when time would rollover to a time not later than max', function() {
+      var down = getMinutesButton(false);
+      var inputs = element.find('input');
+      var minutessEl = inputs.eq(1);
+      var downMouseWheelEvent = wheelThatMouse(-1);
+      var downKeydownEvent = keydown('down');
+
+      $rootScope.max = newTime(23, 59);
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.$digest();
+
+      expect(down.hasClass('disabled')).toBe(false);
+
+      doClick(down);
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.$digest();
+
+      minutessEl.trigger( downMouseWheelEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+
+      $rootScope.time = newTime(0, 0);
+      $rootScope.$digest();
+
+      minutessEl.trigger( downKeydownEvent );
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['11', '59', 'PM']);
+      expect(getModelState()).toEqual([23, 59]);
+    });
+
+    it('should not change meridian when it would result a in time later than max', function() {
+      var button = getMeridianButton();
+
+      $rootScope.time = newTime(2, 40);
+      $rootScope.max = newTime(14, 39);
+      $rootScope.$digest();
+
+      expect(button.hasClass('disabled')).toBe(true);
+
+      doClick(button);
+      expect(getTimeState()).toEqual(['02', '40', 'AM']);
+      expect(getModelState()).toEqual([2, 40]);
+    });
+
+    it('should change meridian when it would not result in a time later than max', function() {
+      var button = getMeridianButton();
+
+      $rootScope.time = newTime(2, 40);
+      $rootScope.max = newTime(14, 41);
+      $rootScope.$digest();
+
+      expect(button.hasClass('disabled')).toBe(false);
+
+      doClick(button);
+      expect(getTimeState()).toEqual(['02', '40', 'PM']);
+      expect(getModelState()).toEqual([14, 40]);
+    });
+
+    it('should return invalid when the hours are changes such that the time is later than max', function() {
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+
+      $rootScope.max = newTime(14, 0);
+      $rootScope.$digest();
+
+      changeInputValueTo(hoursEl, 3);
+      expect($rootScope.time).toBe(null);
+      expect(hoursEl.parent().hasClass('has-error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+    });
+
+    it('should return valid when the hours are changes such that the time is not later than max', function() {
+      var inputs = element.find('input');
+      var hoursEl = inputs.eq(0);
+
+      $rootScope.max = newTime(15, 41);
+      $rootScope.$digest();
+
+      changeInputValueTo(hoursEl, 3);
+      expect(getTimeState()).toEqual(['3', '40', 'PM']);
+      expect(getModelState()).toEqual([15, 40]);
+      expect(hoursEl.parent().hasClass('has-error')).toBe(false);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+
+    it('should return invalid when the minutes are changes such that the time is later than max', function() {
+      var inputs = element.find('input');
+      var minutesEl = inputs.eq(1);
+
+      $rootScope.max = newTime(14, 50);
+      $rootScope.$digest();
+
+      changeInputValueTo(minutesEl, 51);
+      expect($rootScope.time).toBe(null);
+      expect(minutesEl.parent().hasClass('has-error')).toBe(true);
+      expect(element.hasClass('ng-invalid-time')).toBe(true);
+    });
+
+    it('should return valid when the minutes are changes such that the time is not later than max', function() {
+      var inputs = element.find('input');
+      var minutesEl = inputs.eq(1);
+
+      $rootScope.max = newTime(14, 42);
+      $rootScope.$digest();
+
+      changeInputValueTo(minutesEl, 41);
+      expect(getTimeState()).toEqual(['02', '41', 'PM']);
+      expect(getModelState()).toEqual([14, 41]);
+      expect(minutesEl.parent().hasClass('has-error')).toBe(false);
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+  });
 });
 
