@@ -178,6 +178,11 @@ angular.module('ui.bootstrap.carousel', [])
     } else if (currentIndex > index) {
       currentIndex--;
     }
+    
+    //clean the currentSlide when no more slide
+    if (slides.length === 0) {
+      self.currentSlide = null;
+    }
   };
 
   $scope.$watch('noTransition', function(noTransition) {
