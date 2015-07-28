@@ -24,6 +24,10 @@ angular.module('ui.bootstrap.buttons', [])
 
       //ui->model
       element.bind(buttonsCtrl.toggleEvent, function () {
+        if ('disabled' in attrs) {
+          return;
+        }
+
         var isActive = element.hasClass(buttonsCtrl.activeClass);
 
         if (!isActive || angular.isDefined(attrs.uncheckable)) {
@@ -64,6 +68,10 @@ angular.module('ui.bootstrap.buttons', [])
 
       //ui->model
       element.bind(buttonsCtrl.toggleEvent, function () {
+        if ('disabled' in attrs) {
+          return;
+        }
+
         scope.$apply(function () {
           ngModelCtrl.$setViewValue(element.hasClass(buttonsCtrl.activeClass) ? getFalseValue() : getTrueValue());
           ngModelCtrl.$render();

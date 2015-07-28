@@ -81,6 +81,23 @@ describe('buttons', function () {
       expect($scope.model).toEqual(2);
     });
 
+    it('should not toggle when disabled - issue 4013', function () {
+      $scope.model = 1;
+      $scope.falseVal = 0;
+      var btn = compileButton('<button disabled ng-model="model" btn-checkbox btn-checkbox-true="falseVal">click</button>', $scope);
+
+      expect(btn).not.toHaveClass('active');
+      expect($scope.model).toEqual(1);
+
+      btn.click();
+
+      expect(btn).not.toHaveClass('active');
+
+      $scope.$digest();
+      
+      expect(btn).not.toHaveClass('active');
+    });
+
     describe('setting buttonConfig', function () {
       var originalActiveClass, originalToggleEvent;
 
@@ -173,6 +190,24 @@ describe('buttons', function () {
 
       btns.eq(0).click();
       $scope.$digest();
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
+    });
+
+    it('should not toggle when disabled - issue 4013', function () {
+      $scope.model = 1;
+      var btns = compileButtons('<button ng-model="model" btn-radio="1">click1</button><button disabled ng-model="model" btn-radio="2">click2</button>', $scope);
+
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
+
+      btns.eq(1).click();
+
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
+
+      $scope.$digest();
+
       expect(btns.eq(0)).toHaveClass('active');
       expect(btns.eq(1)).not.toHaveClass('active');
     });
