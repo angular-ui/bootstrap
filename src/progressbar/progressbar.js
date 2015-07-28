@@ -27,6 +27,15 @@ angular.module('ui.bootstrap.progressbar', [])
 
         bar.recalculatePercentage = function() {
             bar.percent = +(100 * bar.value / bar.max).toFixed(2);
+			
+            var totalPercentage = 0;
+            self.bars.forEach(function (bar) {
+                totalPercentage += bar.percent;
+            });
+
+            if (totalPercentage > 100) {
+                bar.percent -= totalPercentage - 100;
+            }
         };
 
         bar.$on('$destroy', function() {

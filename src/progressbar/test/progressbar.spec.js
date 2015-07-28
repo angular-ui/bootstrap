@@ -258,6 +258,21 @@ describe('progressbar directive', function () {
         $rootScope.$digest();
         expect(getBar(0).attr('aria-valuemax')).toBe('300');
       });
+
+      it('should not have a total width over 100%', function() {
+        $rootScope.objects = [
+          { value: 60, type: 'warning' },
+          { value: 103 },
+          { value: 270, type: 'info' }
+        ];
+        $rootScope.max = 433;
+        $rootScope.$digest();
+        var totalWidth = 0;
+        for (var i = 0; i < 3; i++) {
+          totalWidth += parseFloat(getBar(i).css('width'));
+        }
+        expect(totalWidth.toFixed(2)).toBe('100.00');
+      });
     });
   });
 });
