@@ -179,7 +179,6 @@ describe('$modal', function () {
       expect($document).toHaveBackdrop();
 
       dismiss(modal, 'closing in test');
-      $animate.triggerCallbacks();
 
       expect($document).toHaveModalsOpen(0);
 
@@ -226,7 +225,6 @@ describe('$modal', function () {
       expect($document).toHaveBackdrop();
 
       dismiss(modal, 'closing in test');
-      $animate.triggerCallbacks();
 
       expect($document).toHaveModalsOpen(0);
 

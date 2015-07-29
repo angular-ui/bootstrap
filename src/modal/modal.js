@@ -230,8 +230,8 @@ angular.module('ui.bootstrap.modal', [])
 
         removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
           body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
-          checkRemoveBackdrop();
         });
+        checkRemoveBackdrop();
 
         //move focus to specified element if available, or else to body
         if (elementToReceiveFocus && elementToReceiveFocus.focus) {
