@@ -1,10 +1,11 @@
- language: node_js
- node_js:
-   - "0.12"
+language: node_js
+node_js:
+  - "0.12"
 
- before_install:
+before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - npm install --quiet -g grunt-cli karma
 
- script: grunt
+script: grunt
+sudo: false
