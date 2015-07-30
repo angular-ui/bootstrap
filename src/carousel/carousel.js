@@ -7,7 +7,8 @@
 *
 */
 angular.module('ui.bootstrap.carousel', [])
-.controller('CarouselController', ['$scope', '$element', '$interval', '$animate', function ($scope, $element, $interval, $animate) {
+.constant('ANIMATE_CSS', angular.version.minor >= 4)
+.controller('CarouselController', ['$scope', '$element', '$interval', '$animate', 'ANIMATE_CSS', function ($scope, $element, $interval, $animate, ANIMATE_CSS) {
   var self = this,
     slides = self.slides = $scope.slides = [],
     NO_TRANSITION = 'uib-noTransition',
@@ -40,9 +41,18 @@ angular.module('ui.bootstrap.carousel', [])
       slide.$element) {
       slide.$element.data(SLIDE_DIRECTION, slide.direction);
       $scope.$currentTransition = true;
-      slide.$element.one('$animate:close', function closeFn() {
-        $scope.$currentTransition = null;
-      });
+      if (ANIMATE_CSS) {
+        $animate.on('addClass', slide.$element, function (element, phase) {
+          $scope.$currentTransition = null;
+          if (!$scope.$currentTransition) {
+            $animate.off('addClass', element);
+          }
+        });
+      } else {
+        slide.$element.one('$animate:close', function closeFn() {
+          $scope.$currentTransition = null;
+        });
+      }
     }
 
     self.currentSlide = slide;
@@ -147,6 +157,12 @@ angular.module('ui.bootstrap.carousel', [])
   };
 
   self.addSlide = function(slide, element) {
+    // add default direction for initial transition
+    // necessary for angular 1.4+
+    if (!slides.length && element) {
+      element.data(SLIDE_DIRECTION, 'next');
+    }
+
     slide.$element = element;
     slides.push(slide);
     //if this is the first slide or the slide is set to active, select it
@@ -316,10 +332,18 @@ function CarouselDemoCtrl($scope) {
 })
 
 .animation('.item', [
-         '$animate',
-function ($animate) {
+         '$injector', '$animate', 'ANIMATE_CSS',
+function ($injector, $animate, ANIMATE_CSS) {
   var NO_TRANSITION = 'uib-noTransition',
-    SLIDE_DIRECTION = 'uib-slideDirection';
+    SLIDE_DIRECTION = 'uib-slideDirection',
+    $animateCss = ANIMATE_CSS ? $injector.get('$animateCss') : null;
+
+  function removeClass(element, className, callback) {
+    element.removeClass(className);
+    if (callback) {
+      callback();
+    }
+  }
 
   return {
     beforeAddClass: function (element, className, done) {
@@ -329,13 +353,22 @@ function ($animate) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
+        var removeClassFn = removeClass.bind(this, element,
+          directionClass + ' ' + direction, done);
         element.addClass(direction);
-        $animate.addClass(element, directionClass).then(function () {
-          if (!stopped) {
-            element.removeClass(directionClass + ' ' + direction);
-          }
-          done();
-        });
+
+        if ($animateCss) {
+          $animateCss(element, {addClass: directionClass})
+            .start()
+            .done(removeClassFn);
+        } else {
+          $animate.addClass(element, directionClass).then(function () {
+            if (!stopped) {
+              removeClassFn();
+            }
+            done();
+          });
+        }
 
         return function () {
           stopped = true;
@@ -345,17 +378,25 @@ function ($animate) {
     },
     beforeRemoveClass: function (element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
-      if (className == 'active' && element.parent() &&
+      if (className === 'active' && element.parent() &&
           !element.parent().data(NO_TRANSITION)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
-        $animate.addClass(element, directionClass).then(function () {
-          if (!stopped) {
-            element.removeClass(directionClass);
-          }
-          done();
-        });
+        var removeClassFn = removeClass.bind(this, element, directionClass, done);
+
+        if ($animateCss) {
+          $animateCss(element, {addClass: directionClass})
+            .start()
+            .done(removeClassFn);
+        } else {
+          $animate.addClass(element, directionClass).then(function () {
+            if (!stopped) {
+              removeClassFn();
+            }
+            done();
+          });
+        }
         return function () {
           stopped = true;
         };
