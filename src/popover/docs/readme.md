@@ -8,6 +8,8 @@ There are two versions of the popover: `popover` and `popover-template`:
 
 - `popover` takes text only and will escape any HTML provided for the popover
   body.
+- `popover-html` takes an expression that evaluates to an html string. *The user is responsible for ensuring the
+  content is safe to put into the DOM!*
 - `popover-template` takes text that specifies the location of a template to
   use for the popover body.
 
