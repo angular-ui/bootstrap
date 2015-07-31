@@ -480,7 +480,7 @@ describe('$modal', function () {
       });
 
       it('should allow usage of bindToController', function () {
-        open({template: '<div>{{fromCtrl}} {{isModalInstance}}</div>', controller: function($modalInstance) {
+        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($modalInstance) {
           this.fromCtrl = 'Content from ctrl';
           this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
         }, controllerAs: 'test', bindToController: true});

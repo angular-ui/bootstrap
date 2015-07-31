@@ -538,10 +538,10 @@ angular.module('ui.bootstrap.modal', [])
                 ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
                 if (modalOptions.controllerAs) {
                   if (modalOptions.bindToController) {
-                    angular.extend(modalScope, ctrlInstance);
-                  } else {
-                    modalScope[modalOptions.controllerAs] = ctrlInstance;
+                    angular.extend(ctrlInstance, modalScope);
                   }
+
+                  modalScope[modalOptions.controllerAs] = ctrlInstance;
                 }
               }
 
