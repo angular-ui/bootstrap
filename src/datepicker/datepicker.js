@@ -673,7 +673,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       });
 
       var documentClickBind = function(event) {
-        if (scope.isOpen && event.target !== element[0]) {
+        if (scope.isOpen && !element[0].contains(event.target)) {
           scope.$apply(function() {
             scope.isOpen = false;
           });
