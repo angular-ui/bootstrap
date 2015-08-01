@@ -602,7 +602,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
           return viewValue;
         } else if (angular.isString(viewValue)) {
-          var date = dateParser.parse(viewValue, dateFormat, scope.date) || new Date(viewValue);
+          var date = dateParser.parse(viewValue, dateFormat, scope.date);
           if (isNaN(date)) {
             return undefined;
           } else {
@@ -628,7 +628,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         } else if (angular.isDate(value) && !isNaN(value)) {
           return true;
         } else if (angular.isString(value)) {
-          var date = dateParser.parse(value, dateFormat) || new Date(value);
+          var date = dateParser.parse(value, dateFormat);
           return !isNaN(date);
         } else {
           return false;
@@ -669,7 +669,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
 
       // Detect changes in the view from the text box
       ngModel.$viewChangeListeners.push(function () {
-        scope.date = dateParser.parse(ngModel.$viewValue, dateFormat, scope.date) || new Date(ngModel.$viewValue);
+        scope.date = dateParser.parse(ngModel.$viewValue, dateFormat, scope.date);
       });
 
       var documentClickBind = function(event) {

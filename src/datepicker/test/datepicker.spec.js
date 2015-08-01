@@ -1276,21 +1276,21 @@ describe('datepicker directive', function () {
       });
 
       it('updates the model & calendar when input value changes', function() {
-        changeInputValueTo(inputEl, 'March 5, 1980');
+        changeInputValueTo(inputEl, '2010-09-15');
 
-        expect($rootScope.date.getFullYear()).toEqual(1980);
-        expect($rootScope.date.getMonth()).toEqual(2);
-        expect($rootScope.date.getDate()).toEqual(5);
+        expect($rootScope.date.getFullYear()).toEqual(2010);
+        expect($rootScope.date.getMonth()).toEqual(8);
+        expect($rootScope.date.getDate()).toEqual(15);
 
         expect(getOptions(true)).toEqual([
-          ['24', '25', '26', '27', '28', '29', '01'],
-          ['02', '03', '04', '05', '06', '07', '08'],
-          ['09', '10', '11', '12', '13', '14', '15'],
-          ['16', '17', '18', '19', '20', '21', '22'],
-          ['23', '24', '25', '26', '27', '28', '29'],
-          ['30', '31', '01', '02', '03', '04', '05']
+          ['29', '30', '31', '01', '02', '03', '04'],
+          ['05', '06', '07', '08', '09', '10', '11'],
+          ['12', '13', '14', '15', '16', '17', '18'],
+          ['19', '20', '21', '22', '23', '24', '25'],
+          ['26', '27', '28', '29', '30', '01', '02'],
+          ['03', '04', '05', '06', '07', '08', '09']
         ]);
-        expectSelectedElement( 10 );
+        expectSelectedElement( 17 );
       });
 
       it('closes when click outside of calendar', function() {
@@ -1389,7 +1389,7 @@ describe('datepicker directive', function () {
         }));
 
         it('should change model and update calendar after debounce timeout', function() {
-          changeInputValueTo(inputEl, 'March 5, 1980');
+          changeInputValueTo(inputEl, '1980-03-05');
 
           expect($rootScope.date.getFullYear()).toEqual(2010);
           expect($rootScope.date.getMonth()).toEqual(9 - 1);
