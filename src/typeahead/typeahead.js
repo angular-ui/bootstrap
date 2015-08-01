@@ -354,13 +354,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
           return;
         }
 
-        // if there's nothing selected (i.e. focusFirst) and enter is hit, don't do anything
-        if (scope.activeIdx === -1 && evt.which === 13) {
-          return;
-        }
-
-        // if there's nothing selected (i.e. focusFirst) and tab is hit, clear the results
-        if (scope.activeIdx === -1 && evt.which === 9) {
+        // if there's nothing selected (i.e. focusFirst) and enter or tab is hit, clear the results
+        if (scope.activeIdx === -1 && (evt.which === 9 || evt.which === 13)) {
           resetMatches();
           scope.$digest();
           return;
