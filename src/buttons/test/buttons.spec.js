@@ -212,6 +212,25 @@ describe('buttons', function () {
       expect(btns.eq(1)).not.toHaveClass('active');
     });
 
+    it('should handle string values in btn-radio value', function () {
+      $scope.model = 'Two';
+      var btns = compileButtons('<button ng-model="model" btn-radio="\'One\'">click1</button><button ng-model="model" btn-radio="\'Two\'">click2</button>', $scope);
+
+      expect(btns.eq(0)).not.toHaveClass('active');
+      expect(btns.eq(1)).toHaveClass('active');
+
+      btns.eq(0).click();
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
+      expect($scope.model).toEqual('One');
+
+      $scope.$digest();
+
+      expect(btns.eq(0)).toHaveClass('active');
+      expect(btns.eq(1)).not.toHaveClass('active');
+      expect($scope.model).toEqual('One');
+    });
+
     describe('uncheckable', function () {
       //model -> UI
       it('should set active class based on model', function () {
