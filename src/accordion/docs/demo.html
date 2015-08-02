@@ -1,13 +1,15 @@
 <div ng-controller="AccordionDemoCtrl">
   <p>
-    <button class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
-    <button class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
+    <button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
+    <button type="button" class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
   </p>
 
-  <label class="checkbox">
-    <input type="checkbox" ng-model="oneAtATime">
-    Open only one at a time
-  </label>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="oneAtATime">
+      Open only one at a time
+    </label>
+  </div>
   <accordion close-others="oneAtATime">
     <accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
       This content is straight in the template.
@@ -17,7 +19,7 @@
     </accordion-group>
     <accordion-group heading="Dynamic Body Content">
       <p>The body of the accordion group grows to fit the contents</p>
-        <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
         <div ng-repeat="item in items">{{item}}</div>
     </accordion-group>
     <accordion-group is-open="status.open">

@@ -24,41 +24,39 @@
     <link rel="author" href="https://github.com/angular-ui/bootstrap/graphs/contributors">
 </head>
 <body class="ng-cloak" ng-controller="MainCtrl">
-<header class="navbar navbar-default navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand visible-xs" href="#">UI Bootstrap</a>
-            </div>
-            <nav class="hidden-xs">
-                <ul class="nav navbar-nav">
-                    <a href="#top" role="button" class="navbar-brand">
-                        UI Bootstrap
-                    </a>
-                    <li class="dropdown" dropdown>
-                        <a role="button" class="dropdown-toggle" dropdown-toggle>
-                            Directives <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <% demoModules.forEach(function(module) {  %><li><a href="#<%= module.name %>"><%= module.displayName %></a></li><% }); %>
-                        </ul>
-                    </li>
-                    <li><a href="#getting_started">Getting started</a></li>
-                </ul>
-            </nav>
-            <nav class="visible-xs" collapse="!isCollapsed">
-                <ul class="nav navbar-nav">
-                    <li><a href="#getting_started" ng-click="isCollapsed = !isCollapsed">Getting started</a></li>
-                    <li><a href="#directives_small" ng-click="isCollapsed = !isCollapsed">Directives</a></li>
-                </ul>
-            </nav>
+<header class="navbar navbar-default navbar-fixed-top navbar-inner">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand visible-xs" href="#">UI Bootstrap</a>
         </div>
+        <nav class="hidden-xs">
+            <ul class="nav navbar-nav">
+                <a href="#top" role="button" class="navbar-brand">
+                    UI Bootstrap
+                </a>
+                <li class="dropdown" dropdown>
+                    <a role="button" class="dropdown-toggle" dropdown-toggle>
+                        Directives <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <% demoModules.forEach(function(module) {  %><li><a href="#<%= module.name %>"><%= module.displayName %></a></li><% }); %>
+                    </ul>
+                </li>
+                <li><a href="#getting_started">Getting started</a></li>
+            </ul>
+        </nav>
+        <nav class="visible-xs" collapse="!isCollapsed">
+            <ul class="nav navbar-nav">
+                <li><a href="#getting_started" ng-click="isCollapsed = !isCollapsed">Getting started</a></li>
+                <li><a href="#directives_small" ng-click="isCollapsed = !isCollapsed">Directives</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
 <div class="header-placeholder"></div>
@@ -195,7 +193,7 @@
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button class="btn btn-info" id="plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('<%= ngversion%>', '<%= bsversion %>', '<%= pkg.version%>', '<%= module.name %>')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <tabset>
                                     <tab heading="Markup">
