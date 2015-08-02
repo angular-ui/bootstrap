@@ -279,7 +279,7 @@ angular.module('ui.bootstrap.modal', [])
           }
           afterAnimating.done = true;
 
-          domEl.remove();
+          $animate.leave(domEl);
           scope.$destroy();
           if (done) {
             done();
