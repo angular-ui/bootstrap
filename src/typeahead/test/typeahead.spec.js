@@ -258,7 +258,7 @@ describe('typeahead tests', function () {
       expect($scope.result).toEqual(undefined);
       expect($scope.form.input.$error.editable).toBeTruthy();
       changeInputValueTo(element, '');
-      expect($scope.result).toEqual('');
+      expect($scope.result).toEqual(null);
       expect($scope.form.input.$error.editable).toBeFalsy();
     });
 
