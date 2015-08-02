@@ -84,8 +84,10 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
        * trigger; else it will just use the show trigger.
        */
       function getTriggers ( trigger ) {
-        var show = trigger || options.trigger || defaultTriggerShow;
-        var hide = triggerMap[show] || show;
+        var show = (trigger || options.trigger || defaultTriggerShow).split(' ');
+        var hide = show.map(function(trigger) {
+          return triggerMap[trigger] || trigger;
+        });
         return {
           show: show,
           hide: hide
@@ -332,8 +334,12 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             }
 
             var unregisterTriggers = function () {
-              element.unbind(triggers.show, showTooltipBind);
-              element.unbind(triggers.hide, hideTooltipBind);
+              triggers.show.forEach(function(trigger) {
+                element.unbind(trigger, showTooltipBind);
+              });
+              triggers.hide.forEach(function(trigger) {
+                element.unbind(trigger, hideTooltipBind);
+              });
             };
 
             function prepTriggers() {
@@ -342,12 +348,14 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
               triggers = getTriggers( val );
 
-              if ( triggers.show === triggers.hide ) {
-                element.bind( triggers.show, toggleTooltipBind );
-              } else {
-                element.bind( triggers.show, showTooltipBind );
-                element.bind( triggers.hide, hideTooltipBind );
-              }
+              triggers.show.forEach(function(trigger, idx) {
+                if (trigger === triggers.hide[idx]) {
+                  element.bind(trigger, toggleTooltipBind);
+                } else if (trigger) {
+                  element.bind(trigger, showTooltipBind);
+                  element.bind(triggers.hide[idx], hideTooltipBind);
+                }
+              });
             }
             prepTriggers();
 

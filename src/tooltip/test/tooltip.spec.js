@@ -364,6 +364,27 @@ describe('tooltip', function() {
       elm2.trigger('mouseenter');
       expect( tooltipScope2.isOpen ).toBeTruthy();
     }));
+
+    it( 'should accept multiple triggers based on the map for mapped triggers', inject( function( $compile ) {
+      elmBody = angular.element(
+        '<div><input tooltip="Hello!" tooltip-trigger="focus fakeTriggerAttr" /></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$apply();
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      expect( tooltipScope.isOpen ).toBeFalsy();
+      elm.trigger('focus');
+      expect( tooltipScope.isOpen ).toBeTruthy();
+      elm.trigger('blur');
+      expect( tooltipScope.isOpen ).toBeFalsy();
+      elm.trigger('fakeTriggerAttr');
+      expect( tooltipScope.isOpen ).toBeTruthy();
+      elm.trigger('fakeTriggerAttr');
+      expect( tooltipScope.isOpen ).toBeFalsy();
+    }));
   });
 
   describe( 'with an append-to-body attribute', function() {
