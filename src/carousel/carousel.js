@@ -40,11 +40,15 @@ angular.module('ui.bootstrap.carousel', [])
     if ($animate.enabled() && !$scope.noTransition && !$scope.$currentTransition &&
       slide.$element) {
       slide.$element.data(SLIDE_DIRECTION, slide.direction);
+      if (self.currentSlide && self.currentSlide.$element) {
+        self.currentSlide.$element.data(SLIDE_DIRECTION, slide.direction);
+      }
+
       $scope.$currentTransition = true;
       if (ANIMATE_CSS) {
         $animate.on('addClass', slide.$element, function (element, phase) {
-          $scope.$currentTransition = null;
-          if (!$scope.$currentTransition) {
+          if (phase === 'close') {
+            $scope.$currentTransition = null;
             $animate.off('addClass', element);
           }
         });
@@ -157,12 +161,6 @@ angular.module('ui.bootstrap.carousel', [])
   };
 
   self.addSlide = function(slide, element) {
-    // add default direction for initial transition
-    // necessary for angular 1.4+
-    if (!slides.length && element) {
-      element.data(SLIDE_DIRECTION, 'next');
-    }
-
     slide.$element = element;
     slides.push(slide);
     //if this is the first slide or the slide is set to active, select it
