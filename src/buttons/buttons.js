@@ -24,7 +24,7 @@ angular.module('ui.bootstrap.buttons', [])
 
       //ui->model
       element.bind(buttonsCtrl.toggleEvent, function () {
-        if ('disabled' in attrs) {
+        if (attrs.disabled) {
           return;
         }
 
