@@ -14,4 +14,4 @@ The body of each accordion group is transcluded in to the body of the collapsibl
 ### Accordion Group Settings ###
 
   * `template-url` (Defaults: `template/accordion/accordion-group.html`) :
-    Add ability to override the template url used
+    Add ability to override the template url used. Note that this must be a string
