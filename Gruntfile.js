@@ -139,12 +139,14 @@ module.exports = function(grunt) {
       },
       jenkins: {
         singleRun: true,
+        autoWatch: false,
         colors: false,
         reporters: ['dots', 'junit'],
         browsers: ['Chrome', 'ChromeCanary', 'Firefox', 'Opera', '/Users/jenkins/bin/safari.sh']
       },
       travis: {
         singleRun: true,
+        autoWatch: false,
         reporters: ['dots'],
         browsers: ['Firefox']
       },
