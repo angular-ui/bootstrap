@@ -314,6 +314,17 @@ describe('$modal', function () {
       expect(modal.result).toBeRejectedWith('esc');
     });
 
+    it('should reject returned promise on unexpected closure', function () {
+      var scope = $rootScope.$new();
+      var modal = open({template: '<div>Content</div>', scope: scope});
+      scope.$destroy();
+
+      expect(modal.result).toBeRejectedWith('$uibModal');
+
+      $animate.triggerCallbacks();
+      expect($document).toHaveModalsOpen(0);
+    });
+
     it('should expose a promise linked to the templateUrl / resolve promises', function () {
       var modal = open({template: '<div>Content</div>', resolve: {
           ok: function() {return $q.when('ok');}

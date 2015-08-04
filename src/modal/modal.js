@@ -375,6 +375,7 @@ angular.module('ui.bootstrap.modal', [])
       $modalStack.close = function (modalInstance, result) {
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow && broadcastClosing(modalWindow, result, true)) {
+          modalWindow.value.modalScope.$$uibDestructionScheduled = true;
           modalWindow.value.deferred.resolve(result);
           removeModalWindow(modalInstance, modalWindow.value.modalOpener);
           return true;
@@ -385,6 +386,7 @@ angular.module('ui.bootstrap.modal', [])
       $modalStack.dismiss = function (modalInstance, reason) {
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow && broadcastClosing(modalWindow, reason, false)) {
+          modalWindow.value.modalScope.$$uibDestructionScheduled = true;
           modalWindow.value.deferred.reject(reason);
           removeModalWindow(modalInstance, modalWindow.value.modalOpener);
           return true;
@@ -523,6 +525,12 @@ angular.module('ui.bootstrap.modal', [])
               var modalScope = (modalOptions.scope || $rootScope).$new();
               modalScope.$close = modalInstance.close;
               modalScope.$dismiss = modalInstance.dismiss;
+
+              modalScope.$on('$destroy', function() {
+                if (!modalScope.$$uibDestructionScheduled) {
+                  modalScope.$dismiss('$uibModal');
+                }
+              });
 
               var ctrlInstance, ctrlLocals = {};
               var resolveIter = 1;
