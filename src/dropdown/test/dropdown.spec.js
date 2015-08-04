@@ -646,25 +646,17 @@ describe('dropdownToggle', function() {
     it('should focus first list element when down arrow pressed', function() {
       clickDropdownToggle();
 
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
 
       expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
       var focusEl = $document.find('ul').eq(0).find('a');
       expect(isFocused(focusEl)).toBe(true);
     });
 
-    it('should not focus first list element when down arrow pressed if closed', function() {
-      triggerKeyDown($document, 40);
-
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
-      var focusEl = $document.find('ul').eq(0).find('a');
-      expect(isFocused(focusEl)).toBe(false);
-    });
-
     it('should focus second list element when down arrow pressed twice', function() {
       clickDropdownToggle();
-      triggerKeyDown($document, 40);
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
+      triggerKeyDown(element, 40);
 
       expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
       var elem1 = $document.find('ul');

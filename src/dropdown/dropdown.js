@@ -278,9 +278,9 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
           e.preventDefault();
           e.stopPropagation();
 
-          var elems = angular.element(element).find('a');
+          var elems = dropdownCtrl.dropdownMenu.find('a');
 
-          switch (e.keyCode) {
+          switch (e.which) {
             case (40): { // Down
               if ( !angular.isNumber(dropdownCtrl.selectedOption)) {
                 dropdownCtrl.selectedOption = 0;
