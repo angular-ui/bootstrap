@@ -6,7 +6,7 @@ There are three versions of the tooltip: `tooltip`, `tooltip-template`, and
 
 - `tooltip` takes text only and will escape any HTML provided.
 - `tooltip-template` takes text that specifies the location of a template to
-  use for the tooltip.
+  use for the tooltip. Note that this needs to be wrapped in a tag.
 - `tooltip-html` takes
   whatever HTML is provided and displays it in a tooltip; *The user is responsible for ensuring the
   content is safe to put into the DOM!*
