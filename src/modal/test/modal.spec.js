@@ -319,7 +319,7 @@ describe('$modal', function () {
       var modal = open({template: '<div>Content</div>', scope: scope});
       scope.$destroy();
 
-      expect(modal.result).toBeRejectedWith('$uibModal');
+      expect(modal.result).toBeRejectedWith('$uibUnscheduledDestruction');
 
       $animate.triggerCallbacks();
       expect($document).toHaveModalsOpen(0);
