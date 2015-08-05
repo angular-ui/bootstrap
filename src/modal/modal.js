@@ -528,7 +528,7 @@ angular.module('ui.bootstrap.modal', [])
 
               modalScope.$on('$destroy', function() {
                 if (!modalScope.$$uibDestructionScheduled) {
-                  modalScope.$dismiss('$uibModal');
+                  modalScope.$dismiss('$uibUnscheduledDestruction');
                 }
               });
 
