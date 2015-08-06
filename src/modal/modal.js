@@ -538,6 +538,8 @@ angular.module('ui.bootstrap.modal', [])
             angular.forEach(resolves, function (value) {
               if (angular.isFunction(value) || angular.isArray(value)) {
                 promisesArr.push($q.when($injector.invoke(value)));
+              } else if (angular.isString(value)) {
+                promisesArr.push($q.when($injector.get(value)));
               }
             });
             return promisesArr;

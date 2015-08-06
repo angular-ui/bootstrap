@@ -547,6 +547,21 @@ describe('$modal', function () {
         expect($document).toHaveModalOpenWithContent('Content from resolve', 'div');
       });
 
+      it('should resolve string references to injectables', function () {
+        open({
+          controller: function($scope, $foo) {
+            $scope.value = 'Content from resolve';
+            expect($foo).toBe($modal);
+          },
+          resolve: {
+            $foo: '$modal'
+          },
+          template: '<div>{{value}}</div>'
+        });
+
+        expect($document).toHaveModalOpenWithContent('Content from resolve', 'div');
+      });
+
       it('should delay showing modal if one of the resolves is a promise', function () {
 
         open(modalDefinition('<div>{{value}}</div>', {
