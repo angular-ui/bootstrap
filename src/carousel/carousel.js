@@ -7,10 +7,10 @@
 *
 */
 angular.module('ui.bootstrap.carousel', [])
-.constant('ANIMATE_CSS', angular.version.minor >= 4)
-.controller('CarouselController', ['$scope', '$element', '$interval', '$animate', 'ANIMATE_CSS', function ($scope, $element, $interval, $animate, ANIMATE_CSS) {
+.controller('CarouselController', ['$scope', '$element', '$interval', '$animate', function ($scope, $element, $interval, $animate) {
   var self = this,
     slides = self.slides = $scope.slides = [],
+    NEW_ANIMATE = angular.version.minor >= 4,
     NO_TRANSITION = 'uib-noTransition',
     SLIDE_DIRECTION = 'uib-slideDirection',
     currentIndex = -1,
@@ -45,7 +45,7 @@ angular.module('ui.bootstrap.carousel', [])
       }
 
       $scope.$currentTransition = true;
-      if (ANIMATE_CSS) {
+      if (NEW_ANIMATE) {
         $animate.on('addClass', slide.$element, function (element, phase) {
           if (phase === 'close') {
             $scope.$currentTransition = null;
@@ -330,17 +330,15 @@ function CarouselDemoCtrl($scope) {
 })
 
 .animation('.item', [
-         '$injector', '$animate', 'ANIMATE_CSS',
-function ($injector, $animate, ANIMATE_CSS) {
+         '$injector', '$animate',
+function ($injector, $animate) {
   var NO_TRANSITION = 'uib-noTransition',
     SLIDE_DIRECTION = 'uib-slideDirection',
     $animateCss = null;
 
-    if (ANIMATE_CSS) {
-      try {
-        $animateCss = $injector.get('$animateCss');
-      } catch(e) {}
-    }
+  if ($injector.has('$animateCss')) {
+    $animateCss = $injector.get('$animateCss');
+  }
 
   function removeClass(element, className, callback) {
     element.removeClass(className);

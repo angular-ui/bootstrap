@@ -62,10 +62,8 @@ angular.module('ui.bootstrap.modal', [])
   function ($animate ,  $injector,   $modalStack) {
     var $animateCss = null;
 
-    if (angular.version.minor >= 4) {
-      try {
-        $animateCss = $injector.get('$animateCss');
-      } catch(e) {}
+    if ($injector.has('$animateCss')) {
+      $animateCss = $injector.get('$animateCss');
     }
 
     return {
@@ -107,10 +105,8 @@ angular.module('ui.bootstrap.modal', [])
   function ($modalStack ,  $q ,  $animate,   $injector) {
     var $animateCss = null;
 
-    if (angular.version.minor >= 4) {
-      try {
-        $animateCss = $injector.get('$animateCss');
-      } catch(e) {}
+    if ($injector.has('$animateCss')) {
+      $animateCss = $injector.get('$animateCss');
     }
 
     return {
@@ -231,10 +227,8 @@ angular.module('ui.bootstrap.modal', [])
               $$stackedMap) {
       var $animateCss = null;
 
-      if (angular.version.minor >= 4) {
-        try {
-          $animateCss = $injector.get('$animateCss');
-        } catch(e) {}
+      if ($injector.has('$animateCss')) {
+        $animateCss = $injector.get('$animateCss');
       }
 
       var OPENED_MODAL_CLASS = 'modal-open';
