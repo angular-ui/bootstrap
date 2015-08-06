@@ -38,7 +38,7 @@ angular.module('ui.bootstrap.carousel', [])
     angular.extend(slide, {direction: direction, active: true});
     angular.extend(self.currentSlide || {}, {direction: direction, active: false});
     if ($animate.enabled() && !$scope.noTransition && !$scope.$currentTransition &&
-      slide.$element) {
+      slide.$element && self.slides.length > 1) {
       slide.$element.data(SLIDE_DIRECTION, slide.direction);
       if (self.currentSlide && self.currentSlide.$element) {
         self.currentSlide.$element.data(SLIDE_DIRECTION, slide.direction);
@@ -334,7 +334,13 @@ function CarouselDemoCtrl($scope) {
 function ($injector, $animate, ANIMATE_CSS) {
   var NO_TRANSITION = 'uib-noTransition',
     SLIDE_DIRECTION = 'uib-slideDirection',
-    $animateCss = ANIMATE_CSS ? $injector.get('$animateCss') : null;
+    $animateCss = null;
+
+    if (ANIMATE_CSS) {
+      try {
+        $animateCss = $injector.get('$animateCss');
+      } catch(e) {}
+    }
 
   function removeClass(element, className, callback) {
     element.removeClass(className);

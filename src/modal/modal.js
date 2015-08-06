@@ -58,8 +58,16 @@ angular.module('ui.bootstrap.modal', [])
  * A helper directive for the $modal service. It creates a backdrop element.
  */
   .directive('modalBackdrop', [
-           '$animate', '$modalStack',
-  function ($animate ,  $modalStack) {
+           '$animate', '$injector', '$modalStack',
+  function ($animate ,  $injector,   $modalStack) {
+    var $animateCss = null;
+
+    if (angular.version.minor >= 4) {
+      try {
+        $animateCss = $injector.get('$animateCss');
+      } catch(e) {}
+    }
+
     return {
       restrict: 'EA',
       replace: true,
@@ -72,19 +80,39 @@ angular.module('ui.bootstrap.modal', [])
 
     function linkFn(scope, element, attrs) {
       if (attrs.modalInClass) {
-        $animate.addClass(element, attrs.modalInClass);
+        if ($animateCss) {
+          $animateCss(element, {
+            addClass: attrs.modalInClass
+          }).start();
+        } else {
+          $animate.addClass(element, attrs.modalInClass);
+        }
 
         scope.$on($modalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
           var done = setIsAsync();
-          $animate.removeClass(element, attrs.modalInClass).then(done);
+          if ($animateCss) {
+            $animateCss(element, {
+              removeClass: attrs.modalInClass
+            }).start().then(done);
+          } else {
+            $animate.removeClass(element, attrs.modalInClass).then(done);
+          }
         });
       }
     }
   }])
 
   .directive('modalWindow', [
-           '$modalStack', '$q', '$animate',
-  function ($modalStack ,  $q ,  $animate) {
+           '$modalStack', '$q', '$animate', '$injector',
+  function ($modalStack ,  $q ,  $animate,   $injector) {
+    var $animateCss = null;
+
+    if (angular.version.minor >= 4) {
+      try {
+        $animateCss = $injector.get('$animateCss');
+      } catch(e) {}
+    }
+
     return {
       restrict: 'EA',
       scope: {
@@ -125,11 +153,23 @@ angular.module('ui.bootstrap.modal', [])
 
         modalRenderDeferObj.promise.then(function () {
           if (attrs.modalInClass) {
-            $animate.addClass(element, attrs.modalInClass);
+            if ($animateCss) {
+              $animateCss(element, {
+                addClass: attrs.modalInClass
+              }).start();
+            } else {
+              $animate.addClass(element, attrs.modalInClass);
+            }
 
             scope.$on($modalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
               var done = setIsAsync();
-              $animate.removeClass(element, attrs.modalInClass).then(done);
+              if ($animateCss) {
+                $animateCss(element, {
+                  removeClass: attrs.modalInClass
+                }).start().then(done);
+              } else {
+                $animate.removeClass(element, attrs.modalInClass).then(done);
+              }
             });
           }
 
@@ -183,10 +223,19 @@ angular.module('ui.bootstrap.modal', [])
   .factory('$modalStack', [
              '$animate', '$timeout', '$document', '$compile', '$rootScope',
              '$q',
+             '$injector',
              '$$stackedMap',
     function ($animate ,  $timeout ,  $document ,  $compile ,  $rootScope ,
               $q,
+              $injector,
               $$stackedMap) {
+      var $animateCss = null;
+
+      if (angular.version.minor >= 4) {
+        try {
+          $animateCss = $injector.get('$animateCss');
+        } catch(e) {}
+      }
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
@@ -279,7 +328,15 @@ angular.module('ui.bootstrap.modal', [])
           }
           afterAnimating.done = true;
 
-          $animate.leave(domEl);
+          if ($animateCss) {
+            $animateCss(domEl, {
+              event: 'leave'
+            }).start().then(function() {
+              domEl.remove();
+            });
+          } else {
+            $animate.leave(domEl);
+          }
           scope.$destroy();
           if (done) {
             done();
