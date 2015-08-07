@@ -130,9 +130,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     return ((this.minDate && this.compare(date, this.minDate) < 0) || (this.maxDate && this.compare(date, this.maxDate) > 0) || ($attrs.dateDisabled && $scope.dateDisabled({date: date, mode: $scope.datepickerMode})));
   };
 
-    this.customClass = function( date ) {
-      return $scope.customClass({date: date, mode: $scope.datepickerMode});
-    };
+  this.customClass = function( date ) {
+    return $scope.customClass({date: date, mode: $scope.datepickerMode});
+  };
 
   // Split array into smaller arrays
   this.split = function(arr, size) {
