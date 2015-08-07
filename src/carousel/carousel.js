@@ -249,6 +249,7 @@ angular.module('ui.bootstrap.carousel', [])
     transclude: true,
     replace: true,
     controller: 'CarouselController',
+    controllerAs: 'carousel',
     require: 'carousel',
     templateUrl: 'template/carousel/carousel.html',
     scope: {

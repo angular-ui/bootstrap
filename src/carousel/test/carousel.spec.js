@@ -457,5 +457,22 @@ describe('carousel', function() {
         expect(scope.next.calls.count()).toBe(1);
       });
     });
+
+    it('should be exposed in the template', inject(function($templateCache) {
+      $templateCache.put('template/carousel/carousel.html', '<div>{{carousel.text}}</div>');
+
+      var scope = $rootScope.$new();
+      var elm = $compile('<carousel interval="bar" no-transition="false" no-pause="true"></carousel>')(scope);
+      $rootScope.$digest();
+
+      var ctrl = elm.controller('carousel');
+
+      expect(ctrl).toBeDefined();
+
+      ctrl.text = 'foo';
+      $rootScope.$digest();
+
+      expect(elm.html()).toBe('foo');
+    }));
   });
 });
