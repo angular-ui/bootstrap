@@ -1,14 +1,15 @@
 describe('pagination directive', function () {
-  var $compile, $rootScope, $document, element;
+  var $compile, $rootScope, $document, $templateCache, element;
   beforeEach(module('ui.bootstrap.pagination'));
   beforeEach(module('template/pagination/pagination.html'));
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_) {
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _$templateCache_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.total = 47; // 5 pages
     $rootScope.currentPage = 3;
     $rootScope.disabled = false;
     $document = _$document_;
+    $templateCache = _$templateCache_;
     element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
     $rootScope.$digest();
   }));
@@ -42,6 +43,33 @@ describe('pagination directive', function () {
 
   it('has a "pagination" css class', function() {
     expect(element.hasClass('pagination')).toBe(true);
+  });
+
+  it('exposes the controller to the template', function() {
+    $templateCache.put('template/pagination/pagination.html', '<div>{{pagination.randomText}}</div>');
+    var scope = $rootScope.$new();
+
+    element = $compile('<pagination></pagination>')(scope);
+    $rootScope.$digest();
+
+    var ctrl = element.controller('pagination');
+
+    expect(ctrl).toBeDefined();
+
+    ctrl.randomText = 'foo';
+    $rootScope.$digest();
+
+    expect(element.html()).toBe('foo');
+  });
+
+  it('allows custom templates', function() {
+    $templateCache.put('foo/bar.html', '<div>baz</div>');
+    var scope = $rootScope.$new();
+
+    element = $compile('<pagination template-url="foo/bar.html"></pagination>')(scope);
+    $rootScope.$digest();
+
+    expect(element.html()).toBe('baz');
   });
 
   it('contains num-pages + 2 li elements', function() {

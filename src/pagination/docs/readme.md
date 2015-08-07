@@ -61,6 +61,10 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  	_(Default: 'Last')_ :
  	Text for Last button.
 
+ * `template-url`
+  _(Default: 'template/pagination/pagination.html') :
+  Override the template for the component with a custom provided template
+
 ### Pager Settings ###
 
 Settings can be provided as attributes in the `<pager>` or globally configured through the `pagerConfig`.  
