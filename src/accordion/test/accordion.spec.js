@@ -103,20 +103,36 @@ describe('accordion', function () {
   });
 
   describe('accordion', function () {
-    var scope, $compile, element;
+    var scope, $compile, $templateCache, element;
 
-    beforeEach(inject(function($rootScope, _$compile_) {
+    beforeEach(inject(function($rootScope, _$compile_, _$templateCache_) {
       scope = $rootScope;
       $compile = _$compile_;
+      $templateCache = _$templateCache_;
     }));
 
-    it('should allow custom templates', inject(function ($templateCache) {
+    it('should expose the controller on the view', function () {
+      $templateCache.put('template/accordion/accordion.html', '<div>{{accordion.text}}</div>');
+
+      element = $compile('<accordion></accordion')(scope);
+      scope.$digest();
+
+      var ctrl = element.controller('accordion');
+      expect(ctrl).toBeDefined();
+
+      ctrl.text = 'foo';
+      scope.$digest();
+
+      expect(element.html()).toBe('<div class="ng-binding">foo</div>');
+    });
+
+    it('should allow custom templates', function () {
       $templateCache.put('foo/bar.html', '<div>baz</div>');
 
       element = $compile('<accordion template-url="foo/bar.html"></accordion>')(scope);
       scope.$digest();
       expect(element.html()).toBe('<div>baz</div>');
-    }));
+    });
   });
 
   describe('accordion-group', function () {
