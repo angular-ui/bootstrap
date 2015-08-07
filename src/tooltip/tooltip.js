@@ -126,6 +126,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             var triggers = getTriggers( undefined );
             var hasEnableExp = angular.isDefined(attrs[prefix+'Enable']);
             var ttScope = scope.$new(true);
+            var repositionScheduled = false;
 
             var positionTooltip = function () {
               if (!tooltip) { return; }
@@ -254,11 +255,21 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
               if (options.useContentExp) {
                 tooltipLinkedScope.$watch('contentExp()', function (val) {
-                  positionTooltipAsync();
-                  if (!val && ttScope.isOpen ) {
+                  if (!val && ttScope.isOpen) {
                     hide();
                   }
                 });
+                
+                tooltipLinkedScope.$watch(function() {
+                  if (!repositionScheduled) {
+                    repositionScheduled = true;
+                    tooltipLinkedScope.$$postDigest(function() {
+                      repositionScheduled = false;
+                      positionTooltipAsync();
+                    });
+                  }
+                });
+                
               }
             }
 
@@ -290,10 +301,11 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             if (!options.useContentExp) {
               attrs.$observe( type, function ( val ) {
                 ttScope.content = val;
-                positionTooltipAsync();
 
-                if (!val && ttScope.isOpen ) {
+                if (!val && ttScope.isOpen) {
                   hide();
+                } else {
+                  positionTooltipAsync();
                 }
               });
             }
