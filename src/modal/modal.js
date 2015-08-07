@@ -272,7 +272,7 @@ angular.module('ui.bootstrap.modal', [])
         openedWindows.remove(modalInstance);
 
         removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
-          body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
+          body.toggleClass(modalInstance.openedClass || OPENED_MODAL_CLASS, openedWindows.length() > 0);
         });
         checkRemoveBackdrop();
 
@@ -385,7 +385,8 @@ angular.module('ui.bootstrap.modal', [])
           renderDeferred: modal.renderDeferred,
           modalScope: modal.scope,
           backdrop: modal.backdrop,
-          keyboard: modal.keyboard
+          keyboard: modal.keyboard,
+          openedClass: modal.openedClass
         });
 
         var body = $document.find('body').eq(0),
@@ -419,7 +420,7 @@ angular.module('ui.bootstrap.modal', [])
         openedWindows.top().value.modalDomEl = modalDomEl;
         openedWindows.top().value.modalOpener = modalOpener;
         body.append(modalDomEl);
-        body.addClass(OPENED_MODAL_CLASS);
+        body.addClass(modal.openedClass || OPENED_MODAL_CLASS);
         $modalStack.clearFocusListCache();
       };
 
@@ -621,7 +622,8 @@ angular.module('ui.bootstrap.modal', [])
                 backdropClass: modalOptions.backdropClass,
                 windowClass: modalOptions.windowClass,
                 windowTemplateUrl: modalOptions.windowTemplateUrl,
-                size: modalOptions.size
+                size: modalOptions.size,
+                openedClass: modalOptions.openedClass
               });
 
             }, function resolveError(reason) {

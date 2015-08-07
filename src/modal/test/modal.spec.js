@@ -767,6 +767,29 @@ describe('$modal', function () {
 
     });
 
+    describe('openedClass', function () {
+
+      it('should add the modal-open class to the body element by default', function () {
+        open({
+          template: '<div>dummy modal</div>'
+        });
+
+        expect($document.find('body')).toHaveClass('modal-open');
+      });
+
+      it('should add the custom class to the body element', function () {
+        open({
+          template: '<div>dummy modal</div>',
+          openedClass: 'foo'
+        });
+
+        var body = $document.find('body');
+
+        expect(body).toHaveClass('foo');
+        expect(body).not.toHaveClass('modal-open');
+      });
+    });
+
   });
 
   describe('multiple modals', function () {

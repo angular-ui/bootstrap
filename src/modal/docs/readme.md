@@ -17,6 +17,7 @@ The `$modal` service has only one method: `open(options)` where available option
 * `windowClass` - additional CSS class(es) to be added to a modal window template
 * `windowTemplateUrl` - a path to a template overriding modal's window template
 * `size` - optional suffix of modal window class. The value used is appended to the `modal-` class, i.e. a value of `sm` gives `modal-sm`
+* `openedClass` - class added to the `body` element when the modal is opened. Defaults to `modal-open`
 
 Global defaults may be set for `$modal` via `$modalProvider.options`.
 
