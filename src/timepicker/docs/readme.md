@@ -39,3 +39,11 @@ All settings can be provided as attributes in the `<timepicker>` or globally con
  * `show-spinners`
     _(Defaults: true)_ :
      Shows spinner arrows above and below the inputs
+
+ * `min`
+    _(Defaults: undefined)_ :
+     Minimum time a user can select
+
+ * `max`
+    _(Defaults: undefined)_ :
+     Maximum time a user can select

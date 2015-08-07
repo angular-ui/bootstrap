@@ -1009,7 +1009,7 @@ describe('timepicker directive', function () {
     beforeEach(inject(function($sniffer) {
       element = $compile('<timepicker ng-model="time" min="min"></timepicker>')($rootScope);
       $rootScope.$digest();
-      changeInputValueTo = function (inputEl, value) {
+      changeInputValueTo = function(inputEl, value) {
         inputEl.val(value);
         inputEl.trigger($sniffer.hasEvent('input') ? 'input' : 'change');
         $rootScope.$digest();
@@ -1059,12 +1059,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['01', '40', 'PM']);
       expect(getModelState()).toEqual([13, 40]);
 
-      hoursEl.trigger( downMouseWheelEvent );
+      hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '40', 'PM']);
       expect(getModelState()).toEqual([12, 40]);
 
-      hoursEl.trigger( downKeydownEvent );
+      hoursEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '40', 'AM']);
       expect(getModelState()).toEqual([11, 40]);
@@ -1073,7 +1073,7 @@ describe('timepicker directive', function () {
     it('should not decrease minutes when it would result in a time ealier than min', function() {
       var down = getMinutesButton(false);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var downMouseWheelEvent = wheelThatMouse(-1);
       var downKeydownEvent = keydown('down');
 
@@ -1086,12 +1086,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
 
-      minutessEl.trigger( downMouseWheelEvent );
+      minutesEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
 
-      minutessEl.trigger( downKeydownEvent );
+      minutesEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
@@ -1100,7 +1100,7 @@ describe('timepicker directive', function () {
     it('should decrease minutes when it would not result in a time ealier than min', function() {
       var down = getMinutesButton(false);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var downMouseWheelEvent = wheelThatMouse(-1);
       var downKeydownEvent = keydown('down');
 
@@ -1113,12 +1113,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['02', '39', 'PM']);
       expect(getModelState()).toEqual([14, 39]);
 
-      minutessEl.trigger( downMouseWheelEvent );
+      minutesEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '38', 'PM']);
       expect(getModelState()).toEqual([14, 38]);
 
-      minutessEl.trigger( downKeydownEvent );
+      minutesEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '37', 'PM']);
       expect(getModelState()).toEqual([14, 37]);
@@ -1141,12 +1141,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
 
-      hoursEl.trigger( upMouseWheelEvent );
+      hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
 
-      hoursEl.trigger( upKeydownEvent );
+      hoursEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
@@ -1173,7 +1173,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(23, 59);
       $rootScope.$digest();
 
-      hoursEl.trigger( upMouseWheelEvent );
+      hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '59', 'AM']);
       expect(getModelState()).toEqual([0, 59]);
@@ -1181,7 +1181,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(23, 59);
       $rootScope.$digest();
 
-      hoursEl.trigger( upKeydownEvent );
+      hoursEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '59', 'AM']);
       expect(getModelState()).toEqual([0, 59]);
@@ -1191,7 +1191,7 @@ describe('timepicker directive', function () {
     it('should not increase minutes when time would rollover to a time earlier than min', function() {
       var up = getMinutesButton(true);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var upMouseWheelEvent = wheelThatMouse(1);
       var upKeydownEvent = keydown('up');
 
@@ -1205,12 +1205,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
 
-      minutessEl.trigger( upMouseWheelEvent );
+      minutesEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
 
-      minutessEl.trigger( upKeydownEvent );
+      minutesEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
@@ -1219,7 +1219,7 @@ describe('timepicker directive', function () {
     it('should increase minutes when time would rollover to a time not earlier than min', function() {
       var up = getMinutesButton(true);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var upMouseWheelEvent = wheelThatMouse(1);
       var upKeydownEvent = keydown('up');
 
@@ -1237,7 +1237,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(23, 59);
       $rootScope.$digest();
 
-      minutessEl.trigger( upMouseWheelEvent );
+      minutesEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
@@ -1245,7 +1245,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(23, 59);
       $rootScope.$digest();
 
-      minutessEl.trigger( upKeydownEvent );
+      minutesEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
@@ -1360,12 +1360,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
 
-      hoursEl.trigger( upMouseWheelEvent );
+      hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
 
-      hoursEl.trigger( upKeydownEvent );
+      hoursEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
@@ -1387,12 +1387,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['03', '40', 'PM']);
       expect(getModelState()).toEqual([15, 40]);
 
-      hoursEl.trigger( upMouseWheelEvent );
+      hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '40', 'PM']);
       expect(getModelState()).toEqual([16, 40]);
 
-      hoursEl.trigger( upKeydownEvent );
+      hoursEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['05', '40', 'PM']);
       expect(getModelState()).toEqual([17, 40]);
@@ -1401,7 +1401,7 @@ describe('timepicker directive', function () {
     it('should not increase minutes when it would result in a time later than max', function() {
       var up = getMinutesButton(true);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var upMouseWheelEvent = wheelThatMouse(1);
       var upKeydownEvent = keydown('up');
 
@@ -1414,12 +1414,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
 
-      minutessEl.trigger( upMouseWheelEvent );
+      minutesEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
 
-      minutessEl.trigger( upKeydownEvent );
+      minutesEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', 'PM']);
       expect(getModelState()).toEqual([14, 40]);
@@ -1428,7 +1428,7 @@ describe('timepicker directive', function () {
     it('should increase minutes when it would not result in a time later than max', function() {
       var up = getMinutesButton(true);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var upMouseWheelEvent = wheelThatMouse(1);
       var upKeydownEvent = keydown('up');
 
@@ -1441,12 +1441,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['02', '41', 'PM']);
       expect(getModelState()).toEqual([14, 41]);
 
-      minutessEl.trigger( upMouseWheelEvent );
+      minutesEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '42', 'PM']);
       expect(getModelState()).toEqual([14, 42]);
 
-      minutessEl.trigger( upKeydownEvent );
+      minutesEl.trigger(upKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '43', 'PM']);
       expect(getModelState()).toEqual([14, 43]);
@@ -1469,12 +1469,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
 
-      hoursEl.trigger( downMouseWheelEvent );
+      hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
 
-      hoursEl.trigger( downKeydownEvent );
+      hoursEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
@@ -1501,7 +1501,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(0, 0);
       $rootScope.$digest();
 
-      hoursEl.trigger( downMouseWheelEvent );
+      hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '00', 'PM']);
       expect(getModelState()).toEqual([23, 0]);
@@ -1509,7 +1509,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(0, 0);
       $rootScope.$digest();
 
-      hoursEl.trigger( downKeydownEvent );
+      hoursEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '00', 'PM']);
       expect(getModelState()).toEqual([23, 0]);
@@ -1518,7 +1518,7 @@ describe('timepicker directive', function () {
     it('should not decrease minutes when time would rollover to a time later than max', function() {
       var down = getMinutesButton(false);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var downMouseWheelEvent = wheelThatMouse(-1);
       var downKeydownEvent = keydown('down');
 
@@ -1532,12 +1532,12 @@ describe('timepicker directive', function () {
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
 
-      minutessEl.trigger( downMouseWheelEvent );
+      minutesEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
 
-      minutessEl.trigger( downKeydownEvent );
+      minutesEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['12', '00', 'AM']);
       expect(getModelState()).toEqual([0, 0]);
@@ -1546,7 +1546,7 @@ describe('timepicker directive', function () {
     it('should decrease minutes when time would rollover to a time not later than max', function() {
       var down = getMinutesButton(false);
       var inputs = element.find('input');
-      var minutessEl = inputs.eq(1);
+      var minutesEl = inputs.eq(1);
       var downMouseWheelEvent = wheelThatMouse(-1);
       var downKeydownEvent = keydown('down');
 
@@ -1564,7 +1564,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(0, 0);
       $rootScope.$digest();
 
-      minutessEl.trigger( downMouseWheelEvent );
+      minutesEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);
@@ -1572,7 +1572,7 @@ describe('timepicker directive', function () {
       $rootScope.time = newTime(0, 0);
       $rootScope.$digest();
 
-      minutessEl.trigger( downKeydownEvent );
+      minutesEl.trigger( downKeydownEvent );
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['11', '59', 'PM']);
       expect(getModelState()).toEqual([23, 59]);

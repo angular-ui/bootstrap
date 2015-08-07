@@ -68,30 +68,34 @@ angular.module('ui.bootstrap.timepicker', [])
   });
 
   $scope.noIncrementHours = function() {
-    var incrementedSelected = addMinutes( selected, hourStep * 60 );
-    return incrementedSelected > max || (incrementedSelected < selected && incrementedSelected < min);
+    var incrementedSelected = addMinutes(selected, hourStep * 60);
+    return incrementedSelected > max ||
+      (incrementedSelected < selected && incrementedSelected < min);
   };
 
   $scope.noDecrementHours = function() {
-    var decrementedSelected = addMinutes( selected, - hourStep * 60 );
-    return decrementedSelected < min || (decrementedSelected > selected && decrementedSelected > max);
+    var decrementedSelected = addMinutes(selected, - hourStep * 60);
+    return decrementedSelected < min ||
+      (decrementedSelected > selected && decrementedSelected > max);
   };
 
   $scope.noIncrementMinutes = function() {
-    var incrementedSelected = addMinutes( selected, minuteStep );
-    return incrementedSelected > max || (incrementedSelected < selected && incrementedSelected < min);
+    var incrementedSelected = addMinutes(selected, minuteStep);
+    return incrementedSelected > max ||
+      (incrementedSelected < selected && incrementedSelected < min);
   };
 
   $scope.noDecrementMinutes = function() {
-    var decrementedSelected = addMinutes( selected, - minuteStep );
-    return decrementedSelected < min || (decrementedSelected > selected && decrementedSelected > max);
+    var decrementedSelected = addMinutes(selected, - minuteStep);
+    return decrementedSelected < min ||
+      (decrementedSelected > selected && decrementedSelected > max);
   };
 
   $scope.noToggleMeridian = function() {
     if (selected.getHours() < 13) {
-      return addMinutes( selected, 12 * 60 ) > max;
+      return addMinutes(selected, 12 * 60) > max;
     } else {
-      return addMinutes( selected, - 12 * 60 ) < min;
+      return addMinutes(selected, - 12 * 60) < min;
     }
   };
 
@@ -217,7 +221,7 @@ angular.module('ui.bootstrap.timepicker', [])
 
       if ( angular.isDefined(hours) ) {
         selected.setHours( hours );
-        if ( selected < min || selected > max) {
+        if (selected < min || selected > max) {
           invalidate(true);
         } else {
           refresh( 'h' );
@@ -270,6 +274,7 @@ angular.module('ui.bootstrap.timepicker', [])
       if ( date ) {
         selected = date;
       }
+
       if (selected < min || selected > max) {
         ngModelCtrl.$setValidity('time', false);
         $scope.invalidHours = true;
@@ -308,10 +313,10 @@ angular.module('ui.bootstrap.timepicker', [])
     $scope.meridian = selected.getHours() < 12 ? meridians[0] : meridians[1];
   }
 
-  function addMinutes( date,  minutes ) {
-    var dt = new Date( date.getTime() + minutes * 60000 );
-    var newDate = new Date( date );
-    newDate.setHours( dt.getHours(), dt.getMinutes() );
+  function addMinutes(date,  minutes) {
+    var dt = new Date(date.getTime() + minutes * 60000);
+    var newDate = new Date(date);
+    newDate.setHours(dt.getHours(), dt.getMinutes());
     return newDate;
   }
 
@@ -325,27 +330,27 @@ angular.module('ui.bootstrap.timepicker', [])
   
   $scope.incrementHours = function() {
     if (!$scope.noIncrementHours()) {
-      addMinutesToSelected( hourStep * 60 );
+      addMinutesToSelected(hourStep * 60);
     }
   };
   $scope.decrementHours = function() {
     if (!$scope.noDecrementHours()) {
-      addMinutesToSelected( - hourStep * 60 );
+      addMinutesToSelected(-hourStep * 60);
     }
   };
   $scope.incrementMinutes = function() {
     if (!$scope.noIncrementMinutes()) {
-      addMinutesToSelected( minuteStep );
+      addMinutesToSelected(minuteStep);
     }
   };
   $scope.decrementMinutes = function() {
     if (!$scope.noDecrementMinutes()) {
-      addMinutesToSelected( - minuteStep );
+      addMinutesToSelected(-minuteStep);
     }
   };
   $scope.toggleMeridian = function() {
     if (!$scope.noToggleMeridian()) {
-      addMinutesToSelected( 12 * 60 * (( selected.getHours() < 12 ) ? 1 : -1) );
+      addMinutesToSelected(12 * 60 * (selected.getHours() < 12 ? 1 : -1));
     }
   };
 }])
