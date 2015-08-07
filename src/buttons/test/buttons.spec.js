@@ -16,6 +16,17 @@ describe('buttons', function () {
       return el;
     };
 
+    it('should expose the controller to the view', inject(function ($templateCache) {
+      var btn = compileButton('<button ng-model="model" btn-checkbox>{{button.text}}</button>', $scope);
+      var ctrl = btn.controller('btnCheckbox');
+      expect(ctrl).toBeDefined();
+
+      ctrl.text = 'foo';
+      $scope.$digest();
+
+      expect(btn.html()).toBe('foo');
+    }));
+
     //model -> UI
     it('should work correctly with default model values', function () {
       $scope.model = false;
@@ -134,6 +145,17 @@ describe('buttons', function () {
       scope.$digest();
       return el.find('button');
     };
+
+    it('should expose the controller to the view', inject(function ($templateCache) {
+      var btn = compileButtons('<button ng-model="model" btn-radio="1">{{buttons.text}}</button>', $scope);
+      var ctrl = btn.controller('btnRadio');
+      expect(ctrl).toBeDefined();
+
+      ctrl.text = 'foo';
+      $scope.$digest();
+
+      expect(btn.html()).toBe('foo');
+    }));
 
     //model -> UI
     it('should work correctly set active class based on model', function () {
