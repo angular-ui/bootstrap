@@ -1,5 +1,5 @@
 describe('datepicker directive', function () {
-  var $rootScope, $compile, element;
+  var $rootScope, $compile, $templateCache, element;
   beforeEach(module('ui.bootstrap.datepicker'));
   beforeEach(module('template/datepicker/datepicker.html'));
   beforeEach(module('template/datepicker/day.html'));
@@ -198,10 +198,11 @@ describe('datepicker directive', function () {
   });
     
   describe('', function () {
-    beforeEach(inject(function(_$compile_, _$rootScope_) {
+    beforeEach(inject(function(_$compile_, _$rootScope_, _$templateCache_) {
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       $rootScope.date = new Date('September 30, 2010 15:30:00');
+      $templateCache = _$templateCache_;
     }));
   
       
@@ -350,6 +351,31 @@ describe('datepicker directive', function () {
         expect(getTitle()).toBe('February 2014');
         clickPreviousButton();
         expect(getTitle()).toBe('January 2014');
+      });
+
+      it('should support custom templates', function() {
+        $templateCache.put('foo/bar.html', '<div>baz</div>');
+
+        element = $compile('<datepicker ng-model="date" template-url="foo/bar.html"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        expect(element.html()).toBe('baz');
+      });
+
+      it('should expose the controller in the template', function() {
+        $templateCache.put('template/datepicker/datepicker.html', '<div>{{datepicker.text}}</div>');
+
+        element = $compile('<datepicker ng-model="date"></datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        var ctrl = element.controller('datepicker');
+        expect(ctrl).toBeDefined();
+        expect(element.html()).toBe('');
+
+        ctrl.text = 'baz';
+        $rootScope.$digest();
+
+        expect(element.html()).toBe('baz');
       });
 
       // issue #3079
@@ -2004,6 +2030,50 @@ describe('datepicker directive', function () {
           $rootScope.date = new Date();
           $rootScope.$digest();
           expect($rootScope.changeHandler).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('with datepicker-popup-template-url', function() {
+        beforeEach(function() {
+          $rootScope.date = new Date();
+        });
+
+        afterEach(function () {
+          $document.find('body').find('.dropdown-menu').remove();
+        });
+
+        it('should allow custom templates for the popup', function() {
+          $templateCache.put('foo/bar.html', '<div>baz</div>');
+
+          var elm = angular.element('<div><input ng-model="date" datepicker-popup datepicker-popup-template-url="foo/bar.html" is-open="true"></div>');
+
+          $compile(elm)($rootScope);
+          $rootScope.$digest();
+
+          expect(elm.children().eq(1).html()).toBe('baz');
+        });
+      });
+
+      describe('with datepicker-template-url', function() {
+        beforeEach(function() {
+          $rootScope.date = new Date();
+        });
+
+        afterEach(function () {
+          $document.find('body').find('.dropdown-menu').remove();
+        });
+
+        it('should allow custom templates for the datepicker', function() {
+          $templateCache.put('foo/bar.html', '<div>baz</div>');
+
+          var elm = angular.element('<div><input ng-model="date" datepicker-popup datepicker-template-url="foo/bar.html" is-open="true"></div>');
+
+          $compile(elm)($rootScope);
+          $rootScope.$digest();
+
+          var datepicker = elm.find('[datepicker]');
+
+          expect(datepicker.html()).toBe('baz');
         });
       });
 

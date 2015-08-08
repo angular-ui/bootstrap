@@ -80,10 +80,14 @@ All settings can be provided as attributes in the `datepicker` or globally confi
  * `year-range`
  	_(Default: 20)_ :
  	Number of years displayed in year selection. 
- 	
+
  * `shortcut-propagation`
-    _(Default: false)_ :
-    An option to disable or enable shortcut's event propagation.
+  _(Default: false)_ :
+  An option to disable or enable shortcut's event propagation.
+
+ * `template-url`
+  _(Default: 'template/datepicker/datepicker.html') :
+  Allows overriding of default template of the datepicker
 
 
 ### Popup Settings ###
@@ -114,6 +118,14 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
  * `close-on-date-selection`
  	_(Default: true)_ :
  	Whether to close calendar when a date is chosen.
+
+ * `datepicker-popup-template-url`
+  _(Default: 'template/datepicker/popup.html') :
+  Allows overriding of default template of the popup
+
+ * `datepicker-template-url`
+  _(Default: 'template/datepicker/popup.html') :
+  Allows overriding of default template of the datepicker used in popup
 
  * `datepicker-append-to-body`
   _(Default: false)_:
