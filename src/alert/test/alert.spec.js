@@ -1,22 +1,21 @@
-describe('alert', function () {
+describe('alert', function() {
   var scope, $compile, $templateCache;
   var element;
 
   beforeEach(module('ui.bootstrap.alert'));
   beforeEach(module('template/alert/alert.html'));
 
-  beforeEach(inject(function ($rootScope, _$compile_, _$templateCache_) {
-
+  beforeEach(inject(function($rootScope, _$compile_, _$templateCache_) {
     scope = $rootScope;
     $compile = _$compile_;
     $templateCache = _$templateCache_;
 
     element = angular.element(
-        '<div>' +
-          '<alert ng-repeat="alert in alerts" type="{{alert.type}}"' +
-            'close="removeAlert($index)">{{alert.msg}}' +
-          '</alert>' +
-        '</div>');
+      '<div>' +
+        '<alert ng-repeat="alert in alerts" type="{{alert.type}}"' +
+          'close="removeAlert($index)">{{alert.msg}}' +
+        '</alert>' +
+      '</div>');
 
     scope.alerts = [
       { msg:'foo', type:'success'},
@@ -39,7 +38,7 @@ describe('alert', function () {
     return element.find('div[ng-transclude] span').eq(index);
   }
 
-  it('should expose the controller to the view', function () {
+  it('should expose the controller to the view', function() {
     $templateCache.put('template/alert/alert.html', '<div>{{alert.text}}</div>');
 
     element = $compile('<alert></alert>')(scope);
@@ -54,7 +53,7 @@ describe('alert', function () {
     expect(element.html()).toBe('foo');
   });
 
-  it('should support custom templates', function () {
+  it('should support custom templates', function() {
     $templateCache.put('foo/bar.html', '<div>baz</div>');
 
     element = $compile('<alert template-url="foo/bar.html"></alert>')(scope);
@@ -63,19 +62,19 @@ describe('alert', function () {
     expect(element.html()).toBe('baz');
   });
 
-  it('should generate alerts using ng-repeat', function () {
+  it('should generate alerts using ng-repeat', function() {
     var alerts = createAlerts();
     expect(alerts.length).toEqual(3);
   });
 
-  it('should use correct classes for different alert types', function () {
+  it('should use correct classes for different alert types', function() {
     var alerts = createAlerts();
     expect(alerts.eq(0)).toHaveClass('alert-success');
     expect(alerts.eq(1)).toHaveClass('alert-error');
     expect(alerts.eq(2)).toHaveClass('alert-warning');
   });
 
-  it('should respect alert type binding', function () {
+  it('should respect alert type binding', function() {
     var alerts = createAlerts();
     expect(alerts.eq(0)).toHaveClass('alert-success');
 
@@ -93,7 +92,7 @@ describe('alert', function () {
     }
   });
 
-  it('should show close buttons and have the dismissible class', function () {
+  it('should show close buttons and have the dismissible class', function() {
     var alerts = createAlerts();
 
     for (var i = 0, n = alerts.length; i < n; i++) {
@@ -102,11 +101,10 @@ describe('alert', function () {
     }
   });
 
-  it('should fire callback when closed', function () {
-
+  it('should fire callback when closed', function() {
     var alerts = createAlerts();
 
-    scope.$apply(function () {
+    scope.$apply(function() {
       scope.removeAlert = jasmine.createSpy();
     });
 
@@ -116,14 +114,14 @@ describe('alert', function () {
     expect(scope.removeAlert).toHaveBeenCalledWith(1);
   });
 
-  it('should not show close button and have the dismissible class if no close callback specified', function () {
+  it('should not show close button and have the dismissible class if no close callback specified', function() {
     element = $compile('<alert>No close</alert>')(scope);
     scope.$digest();
     expect(findCloseButton(0)).toBeHidden();
     expect(element).not.toHaveClass('alert-dismissible');
   });
 
-  it('should be possible to add additional classes for alert', function () {
+  it('should be possible to add additional classes for alert', function() {
     var element = $compile('<alert class="alert-block" type="info">Default alert!</alert>')(scope);
     scope.$digest();
     expect(element).toHaveClass('alert-block');
