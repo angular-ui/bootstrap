@@ -56,7 +56,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       });
     } else {
       self[key] = datepickerConfig[key] || null;
-        $scope[key] = self[key];
+      $scope[key] = self[key];
     }
   });
 
