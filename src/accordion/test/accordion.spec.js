@@ -114,7 +114,7 @@ describe('accordion', function () {
     it('should expose the controller on the view', function () {
       $templateCache.put('template/accordion/accordion.html', '<div>{{accordion.text}}</div>');
 
-      element = $compile('<accordion></accordion')(scope);
+      element = $compile('<accordion></accordion>')(scope);
       scope.$digest();
 
       var ctrl = element.controller('accordion');
@@ -210,6 +210,17 @@ describe('accordion', function () {
         findGroupLink(0).click();
         scope.$digest();
         expect(findGroupBody(0).scope().isOpen).toBe(false);
+      });
+
+      it('should add "open" when opened', function() {
+        var group = groups.eq(0);
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(group).toHaveClass('panel-open');
+
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(group).not.toHaveClass('panel-open');
       });
     });
 
