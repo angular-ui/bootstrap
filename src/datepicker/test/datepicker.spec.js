@@ -2104,6 +2104,31 @@ describe('datepicker directive', function () {
           expect(getTitle()).toBe('November 1980');
         });
       });
+
+      describe('attribute `onOpenFocus`', function() {
+        beforeEach(function() {
+          $rootScope.date = null;
+          $rootScope.isopen = false;
+          var wrapElement = $compile('<div><input ng-model="date" datepicker-popup on-open-focus="false" is-open="isopen"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        });
+
+        it('should remain focused on the input', function() {
+          var focused = true;
+          expect(dropdownEl.length).toBe(0);
+
+          inputEl[0].focus();
+          inputEl.on('blur', function() {
+            focused = false;
+          });
+          $rootScope.isopen = true;
+          $rootScope.$digest();
+
+          expect(inputEl.parent().find('.dropdown-menu').length).toBe(1);
+          expect(focused).toBe(true);
+        });
+      });
     });
 
     describe('with empty initial state', function () {

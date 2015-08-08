@@ -118,9 +118,14 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
  * `datepicker-append-to-body`
   _(Default: false)_:
   Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `datepickerPopupConfig.appendToBody`.
+
  * `is-open` <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: false)_:
   Whether to show the datepicker.
+
+ * `on-open-focus`
+  _(Default: true)_:
+  Whether to focus the datepicker popup upon opening.
 
 ### Keyboard Support ###
 
