@@ -19,7 +19,7 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
   $scope.toggleMin();
 
   $scope.open = function($event) {
-    $scope.opened = true;
+    $scope.status.opened = true;
   };
 
   $scope.dateOptions = {
@@ -29,6 +29,10 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
+
+  $scope.status = {
+    opened: false
+  };
 
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
