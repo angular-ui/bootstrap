@@ -207,7 +207,7 @@ angular.module('ui.bootstrap.tabs', [])
       });
 
       scope.disabled = false;
-      if ( attrs.disable ) {
+      if (attrs.disable) {
         scope.$parent.$watch($parse(attrs.disable), function(value) {
           scope.disabled = !! value;
         });
@@ -217,7 +217,7 @@ angular.module('ui.bootstrap.tabs', [])
       // fix(tab): IE9 disabled attr renders grey text on enabled tab #2677
       // This code is duplicated from the lines above to make it easy to remove once
       // the feature has been completely deprecated
-      if ( attrs.disabled ) {
+      if (attrs.disabled) {
         $log.warn('Use of "disabled" attribute has been deprecated, please use "disable"');
         scope.$parent.$watch($parse(attrs.disabled), function(value) {
           scope.disabled = !! value;
@@ -225,7 +225,7 @@ angular.module('ui.bootstrap.tabs', [])
       }
 
       scope.select = function() {
-        if ( !scope.disabled ) {
+        if (!scope.disabled) {
           scope.active = true;
         }
       };
@@ -242,7 +242,7 @@ angular.module('ui.bootstrap.tabs', [])
   };
 }])
 
-.directive('tabHeadingTransclude', [function() {
+.directive('tabHeadingTransclude', function() {
   return {
     restrict: 'A',
     require: '^tab',
@@ -255,7 +255,7 @@ angular.module('ui.bootstrap.tabs', [])
       });
     }
   };
-}])
+})
 
 .directive('tabContentTransclude', function() {
   return {
@@ -278,6 +278,7 @@ angular.module('ui.bootstrap.tabs', [])
       });
     }
   };
+
   function isTabHeading(node) {
     return node.tagName && (
       node.hasAttribute('tab-heading') ||
@@ -288,6 +289,4 @@ angular.module('ui.bootstrap.tabs', [])
       node.tagName.toLowerCase() === 'x-tab-heading'
     );
   }
-})
-
-;
+});
