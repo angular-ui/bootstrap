@@ -9,7 +9,7 @@ StackOverflow is a much better place to ask questions since:
 * questions and answers stay available for public viewing so your question / answer might help someone else
 * SO voting system assures that the best answers are prominently visible.
 
-To save your and our time we will be systematically closing all the issues that are request for general support and redirecting people to StackOverflow. 
+To save your and our time we will be systematically closing all the issues that are requests for general support and redirecting people to StackOverflow.
 
 ## You think you've found a bug?
 
@@ -17,9 +17,9 @@ Oh, we are ashamed and want to fix it asap! But before fixing a bug we need to r
 * version of AngularJS used
 * version of this library that you are using
 * 3rd-party libraries used, if any
-* and most importantly - a use-case that fails 
+* and most importantly - a use-case that fails
 
-A minimal reproduce scenario using http://plnkr.co/ allows us to quickly confirm a bug (or point out coding problem) as well as confirm that we are fixing the right problem. 
+A minimal reproduce scenario using http://plnkr.co/ allows us to quickly confirm a bug (or point out coding problem) as well as confirm that we are fixing the right problem.
 
 We will be insisting on a minimal reproduce scenario in order to save maintainers time and ultimately be able to fix more bugs. Interestingly, from our experience users often find coding problems themselves while preparing a minimal plunk. We understand that sometimes it might be hard to extract essentials bits of code from a larger code-base but we really need to isolate the problem before we can fix it.
 
@@ -42,3 +42,4 @@ We are always looking for the quality contributions and will be happy to accept 
 * Please assure that you are submitting quality code, specifically make sure that:
   * your directive has accompanying tests and all the tests are passing; don't hesitate to contact us (angular-ui@googlegroups.com) if you need any help with unit testing
   * your PR doesn't break the build; check the Travis-CI build status after opening a PR and push corrective commits if anything goes wrong
+  * your commits conform to the conventions established [here](https://github.com/ajoslin/conventional-changelog/blob/master/conventions/angular.md)
