@@ -1,5 +1,4 @@
-describe('collapse directive', function () {
-
+describe('collapse directive', function() {
   var scope, $compile, $animate;
   var element;
 
@@ -83,7 +82,6 @@ describe('collapse directive', function () {
   });
 
   describe('dynamic content', function() {
-
     var element;
 
     beforeEach(function() {
@@ -117,6 +115,5 @@ describe('collapse directive', function () {
       scope.$digest();
       expect(element.height()).toBeLessThan(collapseHeight);
     });
-
   });
 });

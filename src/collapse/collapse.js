@@ -1,9 +1,8 @@
 angular.module('ui.bootstrap.collapse', [])
 
-  .directive('collapse', ['$animate', function ($animate) {
-
+  .directive('collapse', ['$animate', function($animate) {
     return {
-      link: function (scope, element, attrs) {
+      link: function(scope, element, attrs) {
         function expand() {
           element.removeClass('collapse')
             .addClass('collapsing')
@@ -48,7 +47,7 @@ angular.module('ui.bootstrap.collapse', [])
           element.addClass('collapse');
         }
 
-        scope.$watch(attrs.collapse, function (shouldCollapse) {
+        scope.$watch(attrs.collapse, function(shouldCollapse) {
           if (shouldCollapse) {
             collapse();
           } else {
