@@ -1,5 +1,4 @@
-describe('modal window', function () {
-
+describe('modal window', function() {
   var $rootScope, $compile;
 
   beforeEach(module('ui.bootstrap.modal'));
@@ -9,7 +8,7 @@ describe('modal window', function () {
     $compile = _$compile_;
   }));
 
-  it('should not use transclusion scope for modals content - issue 2110', function () {
+  it('should not use transclusion scope for modals content - issue 2110', function() {
     $rootScope.animate = false;
     $compile('<div modal-window animate="animate"><span ng-init="foo=true"></span></div>')($rootScope);
     $rootScope.$digest();
@@ -17,7 +16,7 @@ describe('modal window', function () {
     expect($rootScope.foo).toBeTruthy();
   });
 
-  it('should support custom CSS classes as string', function () {
+  it('should support custom CSS classes as string', function() {
     $rootScope.animate = false;
     var windowEl = $compile('<div modal-window animate="animate" window-class="test foo">content</div>')($rootScope);
     $rootScope.$digest();

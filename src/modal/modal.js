@@ -4,19 +4,19 @@ angular.module('ui.bootstrap.modal', [])
  * A helper, internal data structure that acts as a map but also allows getting / removing
  * elements in the LIFO order
  */
-  .factory('$$stackedMap', function () {
+  .factory('$$stackedMap', function() {
     return {
-      createNew: function () {
+      createNew: function() {
         var stack = [];
 
         return {
-          add: function (key, value) {
+          add: function(key, value) {
             stack.push({
               key: key,
               value: value
             });
           },
-          get: function (key) {
+          get: function(key) {
             for (var i = 0; i < stack.length; i++) {
               if (key == stack[i].key) {
                 return stack[i];
@@ -30,10 +30,10 @@ angular.module('ui.bootstrap.modal', [])
             }
             return keys;
           },
-          top: function () {
+          top: function() {
             return stack[stack.length - 1];
           },
-          remove: function (key) {
+          remove: function(key) {
             var idx = -1;
             for (var i = 0; i < stack.length; i++) {
               if (key == stack[i].key) {
@@ -43,10 +43,10 @@ angular.module('ui.bootstrap.modal', [])
             }
             return stack.splice(idx, 1)[0];
           },
-          removeTop: function () {
+          removeTop: function() {
             return stack.splice(stack.length - 1, 1)[0];
           },
-          length: function () {
+          length: function() {
             return stack.length;
           }
         };
@@ -59,7 +59,7 @@ angular.module('ui.bootstrap.modal', [])
  */
   .directive('modalBackdrop', [
            '$animate', '$injector', '$modalStack',
-  function ($animate ,  $injector,   $modalStack) {
+  function($animate ,  $injector,   $modalStack) {
     var $animateCss = null;
 
     if ($injector.has('$animateCss')) {
@@ -70,7 +70,7 @@ angular.module('ui.bootstrap.modal', [])
       restrict: 'EA',
       replace: true,
       templateUrl: 'template/modal/backdrop.html',
-      compile: function (tElement, tAttrs) {
+      compile: function(tElement, tAttrs) {
         tElement.addClass(tAttrs.backdropClass);
         return linkFn;
       }
@@ -86,7 +86,7 @@ angular.module('ui.bootstrap.modal', [])
           $animate.addClass(element, attrs.modalInClass);
         }
 
-        scope.$on($modalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
+        scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
           var done = setIsAsync();
           if ($animateCss) {
             $animateCss(element, {
@@ -102,7 +102,7 @@ angular.module('ui.bootstrap.modal', [])
 
   .directive('modalWindow', [
            '$modalStack', '$q', '$animate', '$injector',
-  function ($modalStack ,  $q ,  $animate,   $injector) {
+  function($modalStack ,  $q ,  $animate,   $injector) {
     var $animateCss = null;
 
     if ($injector.has('$animateCss')) {
@@ -119,13 +119,13 @@ angular.module('ui.bootstrap.modal', [])
       templateUrl: function(tElement, tAttrs) {
         return tAttrs.templateUrl || 'template/modal/window.html';
       },
-      link: function (scope, element, attrs) {
+      link: function(scope, element, attrs) {
         element.addClass(attrs.windowClass || '');
         scope.size = attrs.size;
 
-        scope.close = function (evt) {
+        scope.close = function(evt) {
           var modal = $modalStack.getTop();
-          if (modal && modal.value.backdrop && modal.value.backdrop != 'static' && (evt.target === evt.currentTarget)) {
+          if (modal && modal.value.backdrop && modal.value.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
             evt.preventDefault();
             evt.stopPropagation();
             $modalStack.dismiss(modal.key, 'backdrop click');
@@ -141,13 +141,13 @@ angular.module('ui.bootstrap.modal', [])
         var modalRenderDeferObj = $q.defer();
         // Observe function will be called on next digest cycle after compilation, ensuring that the DOM is ready.
         // In order to use this way of finding whether DOM is ready, we need to observe a scope property used in modal's template.
-        attrs.$observe('modalRender', function (value) {
+        attrs.$observe('modalRender', function(value) {
           if (value == 'true') {
             modalRenderDeferObj.resolve();
           }
         });
 
-        modalRenderDeferObj.promise.then(function () {
+        modalRenderDeferObj.promise.then(function() {
           if (attrs.modalInClass) {
             if ($animateCss) {
               $animateCss(element, {
@@ -157,7 +157,7 @@ angular.module('ui.bootstrap.modal', [])
               $animate.addClass(element, attrs.modalInClass);
             }
 
-            scope.$on($modalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
+            scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
               var done = setIsAsync();
               if ($animateCss) {
                 $animateCss(element, {
@@ -197,7 +197,7 @@ angular.module('ui.bootstrap.modal', [])
   .directive('modalAnimationClass', [
     function () {
       return {
-        compile: function (tElement, tAttrs) {
+        compile: function(tElement, tAttrs) {
           if (tAttrs.modalAnimation) {
             tElement.addClass(tAttrs.modalAnimationClass);
           }
@@ -205,7 +205,7 @@ angular.module('ui.bootstrap.modal', [])
       };
     }])
 
-  .directive('modalTransclude', function () {
+  .directive('modalTransclude', function() {
     return {
       link: function($scope, $element, $attrs, controller, $transclude) {
         $transclude($scope.$parent, function(clone) {
@@ -221,7 +221,7 @@ angular.module('ui.bootstrap.modal', [])
              '$q',
              '$injector',
              '$$stackedMap',
-    function ($animate ,  $timeout ,  $document ,  $compile ,  $rootScope ,
+    function($animate ,  $timeout ,  $document ,  $compile ,  $rootScope ,
               $q,
               $injector,
               $$stackedMap) {
@@ -288,7 +288,7 @@ angular.module('ui.bootstrap.modal', [])
           //remove backdrop if no longer needed
           if (backdropDomEl && backdropIndex() == -1) {
             var backdropScopeRef = backdropScope;
-            removeAfterAnimate(backdropDomEl, backdropScope, function () {
+            removeAfterAnimate(backdropDomEl, backdropScope, function() {
               backdropScopeRef = null;
             });
             backdropDomEl = undefined;
@@ -299,7 +299,7 @@ angular.module('ui.bootstrap.modal', [])
       function removeAfterAnimate(domEl, scope, done) {
         var asyncDeferred;
         var asyncPromise = null;
-        var setIsAsync = function () {
+        var setIsAsync = function() {
           if (!asyncDeferred) {
             asyncDeferred = $q.defer();
             asyncPromise = asyncDeferred.promise;
@@ -338,7 +338,7 @@ angular.module('ui.bootstrap.modal', [])
         }
       }
 
-      $document.bind('keydown', function (evt) {
+      $document.bind('keydown', function(evt) {
         if (evt.isDefaultPrevented()) {
           return evt;
         }
@@ -348,7 +348,7 @@ angular.module('ui.bootstrap.modal', [])
           switch (evt.which){
             case 27: {
               evt.preventDefault();
-              $rootScope.$apply(function () {
+              $rootScope.$apply(function() {
                 $modalStack.dismiss(modal.key, 'escape key press');
               });
               break;
@@ -376,8 +376,7 @@ angular.module('ui.bootstrap.modal', [])
         }
       });
 
-      $modalStack.open = function (modalInstance, modal) {
-
+      $modalStack.open = function(modalInstance, modal) {
         var modalOpener = $document[0].activeElement;
 
         openedWindows.add(modalInstance, {
@@ -428,7 +427,7 @@ angular.module('ui.bootstrap.modal', [])
           return !modalWindow.value.modalScope.$broadcast('modal.closing', resultOrReason, closing).defaultPrevented;
       }
 
-      $modalStack.close = function (modalInstance, result) {
+      $modalStack.close = function(modalInstance, result) {
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow && broadcastClosing(modalWindow, result, true)) {
           modalWindow.value.modalScope.$$uibDestructionScheduled = true;
@@ -439,7 +438,7 @@ angular.module('ui.bootstrap.modal', [])
         return !modalWindow;
       };
 
-      $modalStack.dismiss = function (modalInstance, reason) {
+      $modalStack.dismiss = function(modalInstance, reason) {
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow && broadcastClosing(modalWindow, reason, false)) {
           modalWindow.value.modalScope.$$uibDestructionScheduled = true;
@@ -450,18 +449,18 @@ angular.module('ui.bootstrap.modal', [])
         return !modalWindow;
       };
 
-      $modalStack.dismissAll = function (reason) {
+      $modalStack.dismissAll = function(reason) {
         var topModal = this.getTop();
         while (topModal && this.dismiss(topModal.key, reason)) {
           topModal = this.getTop();
         }
       };
 
-      $modalStack.getTop = function () {
+      $modalStack.getTop = function() {
         return openedWindows.top();
       };
 
-      $modalStack.modalRendered = function (modalInstance) {
+      $modalStack.modalRendered = function(modalInstance) {
         var modalWindow = openedWindows.get(modalInstance);
         if (modalWindow) {
           modalWindow.value.renderDeferred.resolve();
@@ -516,8 +515,7 @@ angular.module('ui.bootstrap.modal', [])
       return $modalStack;
     }])
 
-  .provider('$modal', function () {
-
+  .provider('$modal', function() {
     var $modalProvider = {
       options: {
         animation: true,
@@ -526,7 +524,6 @@ angular.module('ui.bootstrap.modal', [])
       },
       $get: ['$injector', '$rootScope', '$q', '$templateRequest', '$controller', '$modalStack',
         function ($injector, $rootScope, $q, $templateRequest, $controller, $modalStack) {
-
           var $modal = {};
 
           function getTemplatePromise(options) {
@@ -536,7 +533,7 @@ angular.module('ui.bootstrap.modal', [])
 
           function getResolvePromises(resolves) {
             var promisesArr = [];
-            angular.forEach(resolves, function (value) {
+            angular.forEach(resolves, function(value) {
               if (angular.isFunction(value) || angular.isArray(value)) {
                 promisesArr.push($q.when($injector.invoke(value)));
               } else if (angular.isString(value)) {
@@ -597,7 +594,7 @@ angular.module('ui.bootstrap.modal', [])
               if (modalOptions.controller) {
                 ctrlLocals.$scope = modalScope;
                 ctrlLocals.$modalInstance = modalInstance;
-                angular.forEach(modalOptions.resolve, function (value, key) {
+                angular.forEach(modalOptions.resolve, function(value, key) {
                   ctrlLocals[key] = tplAndVars[resolveIter++];
                 });
 
@@ -630,9 +627,9 @@ angular.module('ui.bootstrap.modal', [])
               modalResultDeferred.reject(reason);
             });
 
-            templateAndResolvePromise.then(function () {
+            templateAndResolvePromise.then(function() {
               modalOpenedDeferred.resolve(true);
-            }, function (reason) {
+            }, function(reason) {
               modalOpenedDeferred.reject(reason);
             });
 
