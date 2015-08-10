@@ -886,6 +886,38 @@ describe('timepicker directive', function () {
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
+    it('leaves view alone when hours are invalid and minutes are updated', function() {
+      var hoursEl = getHoursInputEl(),
+        minutesEl = getMinutesInputEl();
+
+      changeInputValueTo(hoursEl, '25');
+      hoursEl.blur();
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['25', '40', 'PM']);
+
+      changeInputValueTo(minutesEl, '2');
+      minutesEl.blur();
+      $rootScope.$digest();
+      expect(getTimeState()).toEqual(['25', '2', 'PM']);
+    });
+
+    it('leaves view alone when minutes are invalid and hours are updated', function() {
+      var hoursEl = getHoursInputEl(),
+        minutesEl = getMinutesInputEl();
+
+      changeInputValueTo(minutesEl, '61');
+      minutesEl.blur();
+      $rootScope.$digest();
+      expect($rootScope.time).toBe(null);
+      expect(getTimeState()).toEqual(['02', '61', 'PM']);
+
+      changeInputValueTo(hoursEl, '2');
+      hoursEl.blur();
+      $rootScope.$digest();
+      expect($rootScope.time).toBe(null);
+      expect(getTimeState()).toEqual(['2', '61', 'PM']);
+    });
+
     it('handles 12/24H mode change', function() {
       $rootScope.meridian = true;
       element = $compile('<timepicker ng-model="time" show-meridian="meridian"></timepicker>')($rootScope);
@@ -1661,4 +1693,3 @@ describe('timepicker directive', function () {
     });
   });
 });
-

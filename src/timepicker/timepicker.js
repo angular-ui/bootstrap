@@ -217,9 +217,10 @@ angular.module('ui.bootstrap.timepicker', [])
     };
 
     $scope.updateHours = function() {
-      var hours = getHoursFromTemplate();
+      var hours = getHoursFromTemplate(),
+        minutes = getMinutesFromTemplate();
 
-      if ( angular.isDefined(hours) ) {
+      if (angular.isDefined(hours) && angular.isDefined(minutes)) {
         selected.setHours( hours );
         if (selected < min || selected > max) {
           invalidate(true);
@@ -240,9 +241,10 @@ angular.module('ui.bootstrap.timepicker', [])
     });
 
     $scope.updateMinutes = function() {
-      var minutes = getMinutesFromTemplate();
+      var minutes = getMinutesFromTemplate(),
+        hours = getHoursFromTemplate();
 
-      if ( angular.isDefined(minutes) ) {
+      if (angular.isDefined(minutes) && angular.isDefined(hours)) {
         selected.setMinutes( minutes );
         if (selected < min || selected > max) {
           invalidate(undefined, true);
@@ -324,10 +326,10 @@ angular.module('ui.bootstrap.timepicker', [])
     selected = addMinutes( selected, minutes );
     refresh();
   }
-  
+
   $scope.showSpinners = angular.isDefined($attrs.showSpinners) ?
     $scope.$parent.$eval($attrs.showSpinners) : timepickerConfig.showSpinners;
-  
+
   $scope.incrementHours = function() {
     if (!$scope.noIncrementHours()) {
       addMinutesToSelected(hourStep * 60);
