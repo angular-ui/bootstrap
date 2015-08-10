@@ -124,7 +124,7 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
   Allows overriding of default template of the popup
 
  * `datepicker-template-url`
-  _(Default: 'template/datepicker/popup.html')_ :
+  _(Default: 'template/datepicker/datepicker.html')_ :
   Allows overriding of default template of the datepicker used in popup
 
  * `datepicker-append-to-body`
