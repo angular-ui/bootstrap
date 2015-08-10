@@ -279,11 +279,13 @@ angular.module('ui.bootstrap.tabs', [])
     }
   };
   function isTabHeading(node) {
-    return node.tagName &&  (
+    return node.tagName && (
       node.hasAttribute('tab-heading') ||
       node.hasAttribute('data-tab-heading') ||
+      node.hasAttribute('x-tab-heading') ||
       node.tagName.toLowerCase() === 'tab-heading' ||
-      node.tagName.toLowerCase() === 'data-tab-heading'
+      node.tagName.toLowerCase() === 'data-tab-heading' ||
+      node.tagName.toLowerCase() === 'x-tab-heading'
     );
   }
 })
