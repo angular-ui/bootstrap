@@ -175,11 +175,11 @@ describe('dropdownToggle', function() {
     });
 
     // pr/issue 3274
-    it('should not raise $digest:inprog if dismissed during a digest cycle', function () {
+    it('should not raise $digest:inprog if dismissed during a digest cycle', function() {
       clickDropdownToggle();
       expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
 
-      $rootScope.$apply(function () {
+      $rootScope.$apply(function() {
         $document.click();
       });
 
@@ -235,7 +235,7 @@ describe('dropdownToggle', function() {
     function dropdown() {
 
       // Simulate URL rewriting behavior
-      $document.on('click', 'a[href="#something"]', function () {
+      $document.on('click', 'a[href="#something"]', function() {
         $rootScope.$broadcast('$locationChangeSuccess');
         $rootScope.$apply();
       });
@@ -481,7 +481,7 @@ describe('dropdownToggle', function() {
       expect(elm2.hasClass(dropdownConfig.openClass)).toBe(true);
     });
 
-    it('should not close on $locationChangeSuccess if auto-close="disabled"', function () {
+    it('should not close on $locationChangeSuccess if auto-close="disabled"', function() {
       var elm1 = dropdown('disabled');
       expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
       clickDropdownToggle(elm1);
