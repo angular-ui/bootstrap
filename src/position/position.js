@@ -6,8 +6,7 @@ angular.module('ui.bootstrap.position', [])
  * relation to other, existing elements (this is the case for tooltips, popovers,
  * typeahead suggestions etc.).
  */
-  .factory('$position', ['$document', '$window', function ($document, $window) {
-
+  .factory('$position', ['$document', '$window', function($document, $window) {
     function getStyle(el, cssprop) {
       if (el.currentStyle) { //IE
         return el.currentStyle[cssprop];
@@ -30,7 +29,7 @@ angular.module('ui.bootstrap.position', [])
      * returns the closest, non-statically positioned parentOffset of a given element
      * @param element
      */
-    var parentOffsetEl = function (element) {
+    var parentOffsetEl = function(element) {
       var docDomEl = $document[0];
       var offsetParent = element.offsetParent || docDomEl;
       while (offsetParent && offsetParent !== docDomEl && isStaticPositioned(offsetParent) ) {
@@ -44,7 +43,7 @@ angular.module('ui.bootstrap.position', [])
        * Provides read-only equivalent of jQuery's position function:
        * http://api.jquery.com/position/
        */
-      position: function (element) {
+      position: function(element) {
         var elBCR = this.offset(element);
         var offsetParentBCR = { top: 0, left: 0 };
         var offsetParentEl = parentOffsetEl(element[0]);
@@ -67,7 +66,7 @@ angular.module('ui.bootstrap.position', [])
        * Provides read-only equivalent of jQuery's offset function:
        * http://api.jquery.com/offset/
        */
-      offset: function (element) {
+      offset: function(element) {
         var boundingClientRect = element[0].getBoundingClientRect();
         return {
           width: boundingClientRect.width || element.prop('offsetWidth'),
@@ -80,8 +79,7 @@ angular.module('ui.bootstrap.position', [])
       /**
        * Provides coordinates for the targetEl in relation to hostEl
        */
-      positionElements: function (hostEl, targetEl, positionStr, appendToBody) {
-
+      positionElements: function(hostEl, targetEl, positionStr, appendToBody) {
         var positionStrParts = positionStr.split('-');
         var pos0 = positionStrParts[0], pos1 = positionStrParts[1] || 'center';
 
@@ -96,25 +94,25 @@ angular.module('ui.bootstrap.position', [])
         targetElHeight = targetEl.prop('offsetHeight');
 
         var shiftWidth = {
-          center: function () {
+          center: function() {
             return hostElPos.left + hostElPos.width / 2 - targetElWidth / 2;
           },
-          left: function () {
+          left: function() {
             return hostElPos.left;
           },
-          right: function () {
+          right: function() {
             return hostElPos.left + hostElPos.width;
           }
         };
 
         var shiftHeight = {
-          center: function () {
+          center: function() {
             return hostElPos.top + hostElPos.height / 2 - targetElHeight / 2;
           },
-          top: function () {
+          top: function() {
             return hostElPos.top;
           },
-          bottom: function () {
+          bottom: function() {
             return hostElPos.top + hostElPos.height;
           }
         };
