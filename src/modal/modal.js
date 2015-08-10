@@ -272,7 +272,7 @@ angular.module('ui.bootstrap.modal', [])
         openedWindows.remove(modalInstance);
 
         removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
-          body.toggleClass(modalInstance.openedClass || OPENED_MODAL_CLASS, openedWindows.length() > 0);
+          body.toggleClass(modalWindow.openedClass || OPENED_MODAL_CLASS, openedWindows.length() > 0);
         });
         checkRemoveBackdrop();
 

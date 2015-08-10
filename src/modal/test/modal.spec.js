@@ -768,13 +768,18 @@ describe('$modal', function () {
     });
 
     describe('openedClass', function () {
+      var body;
+
+      beforeEach(function() {
+        body = $document.find('body');
+      });
 
       it('should add the modal-open class to the body element by default', function () {
         open({
           template: '<div>dummy modal</div>'
         });
 
-        expect($document.find('body')).toHaveClass('modal-open');
+        expect(body).toHaveClass('modal-open');
       });
 
       it('should add the custom class to the body element', function () {
@@ -783,10 +788,21 @@ describe('$modal', function () {
           openedClass: 'foo'
         });
 
-        var body = $document.find('body');
-
         expect(body).toHaveClass('foo');
         expect(body).not.toHaveClass('modal-open');
+      });
+
+      it('should remove the custom class on closing of modal', function () {
+        var modal = open({
+          template: '<div>dummy modal</div>',
+          openedClass: 'foo'
+        });
+
+        expect(body).toHaveClass('foo');
+
+        close(modal);
+
+        expect(body).not.toHaveClass('foo');
       });
     });
 
