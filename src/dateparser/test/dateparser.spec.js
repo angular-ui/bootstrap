@@ -1,4 +1,4 @@
-describe('date parser', function () {
+describe('date parser', function() {
   var dateParser;
 
   beforeEach(module('ui.bootstrap.dateparser'));
