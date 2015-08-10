@@ -25,30 +25,29 @@ describe('popover', function() {
   }));
 
   it('should not be open initially', inject(function() {
-    expect( tooltipScope.isOpen ).toBe( false );
+    expect(tooltipScope.isOpen).toBe(false);
 
     // We can only test *that* the popover-popup element wasn't created as the
     // implementation is templated and replaced.
-    expect( elmBody.children().length ).toBe( 1 );
+    expect(elmBody.children().length).toBe(1);
   }));
 
   it('should open on click', inject(function() {
-    elm.trigger( 'click' );
-    expect( tooltipScope.isOpen ).toBe( true );
+    elm.trigger('click');
+    expect(tooltipScope.isOpen).toBe(true);
 
     // We can only test *that* the popover-popup element was created as the
     // implementation is templated and replaced.
-    expect( elmBody.children().length ).toBe( 2 );
+    expect(elmBody.children().length).toBe(2);
   }));
 
   it('should close on second click', inject(function() {
-    elm.trigger( 'click' );
-    elm.trigger( 'click' );
-    expect( tooltipScope.isOpen ).toBe( false );
+    elm.trigger('click');
+    elm.trigger('click');
+    expect(tooltipScope.isOpen).toBe(false);
   }));
 
-  it('should not unbind event handlers created by other directives - issue 456', inject( function( $compile ) {
-
+  it('should not unbind event handlers created by other directives - issue 456', inject(function($compile) {
     scope.click = function() {
       scope.clicked = !scope.clicked;
     };
@@ -61,8 +60,8 @@ describe('popover', function() {
 
     elm = elmBody.find('input');
 
-    elm.trigger( 'mouseenter' );
-    elm.trigger( 'mouseleave' );
+    elm.trigger('mouseenter');
+    elm.trigger('mouseleave');
     expect(scope.clicked).toBeFalsy();
 
     elm.click();
@@ -70,8 +69,8 @@ describe('popover', function() {
   }));
 
   it('should popup with animate class by default', inject(function() {
-    elm.trigger( 'click' );
-    expect( tooltipScope.isOpen ).toBe( true );
+    elm.trigger('click');
+    expect(tooltipScope.isOpen).toBe(true);
 
     expect(elmBody.children().eq(1)).toHaveClass('fade');
   }));
@@ -87,16 +86,14 @@ describe('popover', function() {
     elmScope = elm.scope();
     tooltipScope = elmScope.$$childTail;
 
-    elm.trigger( 'click' );
-    expect( tooltipScope.isOpen ).toBe( true );
+    elm.trigger('click');
+    expect(tooltipScope.isOpen).toBe(true);
     expect(elmBody.children().eq(1)).not.toHaveClass('fade');
   }));
 
-  describe('supports options', function () {
-
-    describe('placement', function () {
-
-      it('can specify an alternative, valid placement', inject(function ($compile) {
+  describe('supports options', function() {
+    describe('placement', function() {
+      it('can specify an alternative, valid placement', inject(function($compile) {
         elmBody = angular.element(
           '<div><span popover="popover text" popover-placement="left">Trigger here</span></div>'
         );
@@ -106,19 +103,17 @@ describe('popover', function() {
         elmScope = elm.scope();
         tooltipScope = elmScope.$$childTail;
 
-        elm.trigger( 'click' );
-        expect( tooltipScope.isOpen ).toBe( true );
+        elm.trigger('click');
+        expect(tooltipScope.isOpen).toBe(true);
 
-        expect( elmBody.children().length ).toBe( 2 );
+        expect(elmBody.children().length).toBe(2);
         var ttipElement = elmBody.find('div.popover');
         expect(ttipElement).toHaveClass('left');
       }));
-
     });
 
-    describe('class', function () {
-
-      it('can specify a custom class', inject(function ($compile) {
+    describe('class', function() {
+      it('can specify a custom class', inject(function($compile) {
         elmBody = angular.element(
           '<div><span popover="popover text" popover-class="custom">Trigger here</span></div>'
         );
@@ -128,49 +123,44 @@ describe('popover', function() {
         elmScope = elm.scope();
         tooltipScope = elmScope.$$childTail;
 
-        elm.trigger( 'click' );
-        expect( tooltipScope.isOpen ).toBe( true );
+        elm.trigger('click');
+        expect(tooltipScope.isOpen).toBe(true);
 
-        expect( elmBody.children().length ).toBe( 2 );
+        expect(elmBody.children().length).toBe(2);
         var ttipElement = elmBody.find('div.popover');
         expect(ttipElement).toHaveClass('custom');
       }));
-
     });
     
-   describe( 'is-open', function() {
-    beforeEach(inject(function ($compile) {
-      scope.isOpen = false;
-      elmBody = angular.element(
-        '<div><span popover="popover text" popover-placement="left" popover-is-open="isOpen">Trigger here</span></div>'
-      );
-      $compile(elmBody)(scope);
-      scope.$digest();
-      elm = elmBody.find('span');
-      elmScope = elm.scope();
-      tooltipScope = elmScope.$$childTail;
-    }));
-    
-    it( 'should show and hide with the controller value', function() {
-      expect(tooltipScope.isOpen).toBe(false);
-      elmScope.isOpen = true;
-      elmScope.$digest();
-      expect(tooltipScope.isOpen).toBe(true);
-      elmScope.isOpen = false;
-      elmScope.$digest();
-      expect(tooltipScope.isOpen).toBe(false);
-    });
-    
-    it( 'should update the controller value', function() {
-      elm.trigger('click');
-      expect(elmScope.isOpen).toBe(true);
-      elm.trigger('click');
-      expect(elmScope.isOpen).toBe(false);
+    describe( 'is-open', function() {
+      beforeEach(inject(function ($compile) {
+        scope.isOpen = false;
+        elmBody = angular.element(
+          '<div><span popover="popover text" popover-placement="left" popover-is-open="isOpen">Trigger here</span></div>'
+        );
+        $compile(elmBody)(scope);
+        scope.$digest();
+        elm = elmBody.find('span');
+        elmScope = elm.scope();
+        tooltipScope = elmScope.$$childTail;
+      }));
+      
+      it( 'should show and hide with the controller value', function() {
+        expect(tooltipScope.isOpen).toBe(false);
+        elmScope.isOpen = true;
+        elmScope.$digest();
+        expect(tooltipScope.isOpen).toBe(true);
+        elmScope.isOpen = false;
+        elmScope.$digest();
+        expect(tooltipScope.isOpen).toBe(false);
+      });
+      
+      it( 'should update the controller value', function() {
+        elm.trigger('click');
+        expect(elmScope.isOpen).toBe(true);
+        elm.trigger('click');
+        expect(elmScope.isOpen).toBe(false);
+      });
     });
   });
-
-  });
-
 });
-
-
