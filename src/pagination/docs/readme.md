@@ -81,3 +81,7 @@ For `ng-model`, `total-items`, `items-per-page` and `num-pages` see pagination s
  * `next-text`
  	_(Default: 'Next »')_ :
  	Text for Next button.
+
+ * `template-url`
+  _(Default: 'template/pagination/pager.html') :
+  Override the template for the component with a custom provided template
