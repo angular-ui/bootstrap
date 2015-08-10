@@ -27,6 +27,9 @@ will display:
 - `tooltip-append-to-body`: Should the tooltip be appended to `$body` instead of
   the parent element?
 - `tooltip-class`: Custom class to be applied to the tooltip.
+- `tooltip-is-open` <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: false)_:
+  Whether to show the tooltip.
 
 The tooltip directives require the `$position` service.
 
@@ -38,9 +41,11 @@ provided hide triggers:
 - `mouseenter`: `mouseleave`
 - `click`: `click`
 - `focus`: `blur`
+- `none`: ``
 
 For any non-supported value, the trigger will be used to both show and hide the
-tooltip.
+tooltip. Using the 'none' trigger will disable the internal trigger(s), one can
+then use the `tooltip-is-open` attribute exclusively to show and hide the tooltip.
 
 **$tooltipProvider**
 

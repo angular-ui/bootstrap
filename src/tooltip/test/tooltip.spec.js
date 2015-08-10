@@ -307,6 +307,35 @@ describe('tooltip', function() {
     }));
 
   });
+  
+  describe( 'with an is-open attribute', function() {
+    beforeEach(inject(function ($compile) {
+      scope.isOpen = false;
+      elm = $compile(angular.element(
+        '<span tooltip="tooltip text" tooltip-is-open="isOpen" >Selector Text</span>'
+      ))(scope);
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+      scope.$digest();
+    }));
+    
+    it( 'should show and hide with the controller value', function() {
+      expect(tooltipScope.isOpen).toBe(false);
+      elmScope.isOpen = true;
+      elmScope.$digest();
+      expect(tooltipScope.isOpen).toBe(true);
+      elmScope.isOpen = false;
+      elmScope.$digest();
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+    
+    it( 'should update the controller value', function() {
+      elm.trigger('mouseenter');
+      expect(elmScope.isOpen).toBe(true);
+      elm.trigger('mouseleave');
+      expect(elmScope.isOpen).toBe(false);
+    });
+  });
 
   describe( 'with a trigger attribute', function() {
     var scope, elmBody, elm, elmScope;
@@ -396,6 +425,20 @@ describe('tooltip', function() {
       elm.trigger('fakeTriggerAttr');
       expect( tooltipScope.isOpen ).toBeTruthy();
       elm.trigger('fakeTriggerAttr');
+      expect( tooltipScope.isOpen ).toBeFalsy();
+    }));
+    
+    it( 'should not show when trigger is set to "none"', inject( function( $compile ) {
+      elmBody = angular.element(
+        '<div><input tooltip="Hello!" tooltip-trigger="none" /></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$apply();
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+      expect( tooltipScope.isOpen ).toBeFalsy();
+      elm.trigger('mouseenter');
       expect( tooltipScope.isOpen ).toBeFalsy();
     }));
   });

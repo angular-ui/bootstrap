@@ -137,6 +137,37 @@ describe('popover', function() {
       }));
 
     });
+    
+   describe( 'is-open', function() {
+    beforeEach(inject(function ($compile) {
+      scope.isOpen = false;
+      elmBody = angular.element(
+        '<div><span popover="popover text" popover-placement="left" popover-is-open="isOpen">Trigger here</span></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+    }));
+    
+    it( 'should show and hide with the controller value', function() {
+      expect(tooltipScope.isOpen).toBe(false);
+      elmScope.isOpen = true;
+      elmScope.$digest();
+      expect(tooltipScope.isOpen).toBe(true);
+      elmScope.isOpen = false;
+      elmScope.$digest();
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+    
+    it( 'should update the controller value', function() {
+      elm.trigger('click');
+      expect(elmScope.isOpen).toBe(true);
+      elm.trigger('click');
+      expect(elmScope.isOpen).toBe(false);
+    });
+  });
 
   });
 

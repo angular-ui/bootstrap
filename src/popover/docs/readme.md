@@ -26,6 +26,9 @@ will display:
   `tooltip` directive for supported values.
 - `popover-append-to-body`: Should the tooltip be appended to `$body` instead of
   the parent element?
+- `popover-is-open` <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: false)_:
+  Whether to show the popover.
 
 The popover directives require the `$position` service.
 
