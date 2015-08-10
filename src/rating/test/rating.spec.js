@@ -1,4 +1,4 @@
-describe('rating directive', function () {
+describe('rating directive', function() {
   var $rootScope, $compile, element;
   beforeEach(module('ui.bootstrap.rating'));
   beforeEach(module('template/rating/rating.html'));
@@ -237,7 +237,7 @@ describe('rating directive', function () {
       $rootScope.$digest();
     }));
 
-    it('should define number of icon elements', function () {
+    it('should define number of icon elements', function() {
       expect(getStars().length).toBe(4);
       expect(element.attr('aria-valuemax')).toBe('4');
     });
@@ -272,11 +272,11 @@ describe('rating directive', function () {
       angular.extend(ratingConfig, originalConfig);
     }));
 
-    it('should change number of icon elements', function () {
+    it('should change number of icon elements', function() {
       expect(getStars().length).toBe(10);
     });
 
-    it('should change icon states', function () {
+    it('should change icon states', function() {
       expect(getState('on', 'off')).toEqual([true, true, true, true, true, false, false, false, false, false]);
     });
   });
@@ -325,5 +325,4 @@ describe('rating directive', function () {
       expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
     });
   });
-
 });

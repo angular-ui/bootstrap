@@ -27,8 +27,9 @@ angular.module('ui.bootstrap.rating', [])
     this.titles = angular.isArray(tmpTitles) && tmpTitles.length > 0 ?
       tmpTitles : ratingConfig.titles;
     
-    var ratingStates = angular.isDefined($attrs.ratingStates) ? $scope.$parent.$eval($attrs.ratingStates) :
-                        new Array( angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max );
+    var ratingStates = angular.isDefined($attrs.ratingStates) ?
+      $scope.$parent.$eval($attrs.ratingStates) :
+      new Array(angular.isDefined($attrs.max) ? $scope.$parent.$eval($attrs.max) : ratingConfig.max);
     $scope.range = this.buildTemplateObjects(ratingStates);
   };
 
@@ -48,14 +49,14 @@ angular.module('ui.bootstrap.rating', [])
   };
   
   $scope.rate = function(value) {
-    if ( !$scope.readonly && value >= 0 && value <= $scope.range.length ) {
+    if (!$scope.readonly && value >= 0 && value <= $scope.range.length) {
       ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue === value ? 0 : value);
       ngModelCtrl.$render();
     }
   };
 
   $scope.enter = function(value) {
-    if ( !$scope.readonly ) {
+    if (!$scope.readonly) {
       $scope.value = value;
     }
     $scope.onHover({value: value});
@@ -70,7 +71,7 @@ angular.module('ui.bootstrap.rating', [])
     if (/(37|38|39|40)/.test(evt.which)) {
       evt.preventDefault();
       evt.stopPropagation();
-      $scope.rate( $scope.value + (evt.which === 38 || evt.which === 39 ? 1 : -1) );
+      $scope.rate($scope.value + (evt.which === 38 || evt.which === 39 ? 1 : -1));
     }
   };
 
