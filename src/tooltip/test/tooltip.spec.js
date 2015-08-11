@@ -519,11 +519,11 @@ describe('tooltipWithDifferentSymbols', function() {
       var elmInput = elmBody.find('input');
       elmInput.trigger('focus');
 
-      expect elmInput.next().find('div').next().html()).toBe('My tooltip');
+      expect(elmInput.next().find('div').next().html()).toBe('My tooltip');
     }));
 });
 
-describe( 'tooltip positioning', function() {
+describe('tooltip positioning', function() {
   var elm, elmBody, elmScope, tooltipScope, scope;
   var $position;
 
