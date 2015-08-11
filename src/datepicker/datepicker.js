@@ -221,7 +221,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 }])
 
-.directive( 'datepicker', function() {
+.directive('datepicker', function() {
   return {
     restrict: 'EA',
     replace: true,
