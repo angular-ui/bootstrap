@@ -1,15 +1,14 @@
-describe('syntax parser', function () {
-
+describe('syntax parser', function() {
   var typeaheadParser, scope, filterFilter;
 
   beforeEach(module('ui.bootstrap.typeahead'));
-  beforeEach(inject(function (_$rootScope_, _filterFilter_, _typeaheadParser_) {
+  beforeEach(inject(function(_$rootScope_, _filterFilter_, _typeaheadParser_) {
     typeaheadParser = _typeaheadParser_;
     scope = _$rootScope_;
     filterFilter = _filterFilter_;
   }));
 
-  it('should parse the simplest array-based syntax', function () {
+  it('should parse the simplest array-based syntax', function() {
     scope.states = ['Alabama', 'California', 'Delaware'];
     var result = typeaheadParser.parse('state for state in states | filter:$viewValue');
 
@@ -22,8 +21,8 @@ describe('syntax parser', function () {
     expect(result.modelMapper(scope, locals)).toEqual('Alabama');
   });
 
-  it('should parse the simplest function-based syntax', function () {
-    scope.getStates = function ($viewValue) {
+  it('should parse the simplest function-based syntax', function() {
+    scope.getStates = function($viewValue) {
       return filterFilter(['Alabama', 'California', 'Delaware'], $viewValue);
     };
     var result = typeaheadParser.parse('state for state in getStates($viewValue)');
@@ -38,7 +37,6 @@ describe('syntax parser', function () {
   });
 
   it('should allow to specify custom model mapping that is used as a label as well', function () {
-
     scope.states = [
       {code:'AL', name:'Alabama'},
       {code:'CA', name:'California'},
@@ -59,8 +57,7 @@ describe('syntax parser', function () {
     expect(result.modelMapper(scope, locals)).toEqual('Alabama');
   });
 
-  it('should allow to specify custom view and model mappers', function () {
-
+  it('should allow to specify custom view and model mappers', function() {
     scope.states = [
       {code:'AL', name:'Alabama'},
       {code:'CA', name:'California'},

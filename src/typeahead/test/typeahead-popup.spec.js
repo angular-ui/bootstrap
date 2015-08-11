@@ -1,18 +1,16 @@
-describe('typeaheadPopup - result rendering', function () {
-
+describe('typeaheadPopup - result rendering', function() {
   var scope, $rootScope, $compile;
 
   beforeEach(module('ui.bootstrap.typeahead'));
   beforeEach(module('template/typeahead/typeahead-popup.html'));
   beforeEach(module('template/typeahead/typeahead-match.html'));
-  beforeEach(inject(function (_$rootScope_, _$compile_) {
+  beforeEach(inject(function(_$rootScope_, _$compile_) {
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
     $compile = _$compile_;
   }));
 
-  it('should render initial results', function () {
-
+  it('should render initial results', function() {
     scope.matches = ['foo', 'bar', 'baz'];
     scope.active = 1;
 
@@ -26,8 +24,7 @@ describe('typeaheadPopup - result rendering', function () {
     expect(liElems.eq(2)).not.toHaveClass('active');
   });
 
-  it('should change active item on mouseenter', function () {
-
+  it('should change active item on mouseenter', function() {
     scope.matches = ['foo', 'bar', 'baz'];
     scope.active = 1;
 
@@ -44,8 +41,7 @@ describe('typeaheadPopup - result rendering', function () {
     expect(liElems.eq(2)).toHaveClass('active');
   });
 
-  it('should select an item on mouse click', function () {
-
+  it('should select an item on mouse click', function() {
     scope.matches = ['foo', 'bar', 'baz'];
     scope.active = 1;
     $rootScope.select = angular.noop;
