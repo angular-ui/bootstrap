@@ -11,7 +11,7 @@ describe('tooltip template', function() {
   // load the template
   beforeEach(module('template/tooltip/tooltip-template-popup.html'));
 
-  beforeEach(inject(function ($templateCache) {
+  beforeEach(inject(function($templateCache) {
     $templateCache.put('myUrl', [200, '<span>{{ myTemplateText }}</span>', {}]);
   }));
 
@@ -31,7 +31,7 @@ describe('tooltip template', function() {
   }));
 
   it('should open on mouseenter', inject(function() {
-    elm.trigger( 'mouseenter' );
+    elm.trigger('mouseenter');
     expect( tooltipScope.isOpen ).toBe( true );
 
     expect( elmBody.children().length ).toBe( 2 );
@@ -41,39 +41,38 @@ describe('tooltip template', function() {
     scope.templateUrl = null;
     scope.$digest();
 
-    elm.trigger( 'mouseenter' );
-    expect( tooltipScope.isOpen ).toBe( false );
+    elm.trigger('mouseenter');
+    expect(tooltipScope.isOpen).toBe(false);
 
-    expect( elmBody.children().length ).toBe( 1 );
+    expect(elmBody.children().length).toBe(1);
   }));
 
   it('should show updated text', inject(function() {
     scope.myTemplateText = 'some text';
     scope.$digest();
 
-    elm.trigger( 'mouseenter' );
-    expect( tooltipScope.isOpen ).toBe( true );
+    elm.trigger('mouseenter');
+    expect(tooltipScope.isOpen).toBe(true);
 
-    expect( elmBody.children().eq(1).text().trim() ).toBe( 'some text' );
+    expect(elmBody.children().eq(1).text().trim()).toBe('some text');
 
     scope.myTemplateText = 'new text';
     scope.$digest();
 
-    expect( elmBody.children().eq(1).text().trim() ).toBe( 'new text' );
+    expect(elmBody.children().eq(1).text().trim()).toBe('new text');
   }));
 
-  it('should hide tooltip when template becomes empty', inject(function ($timeout) {
-    elm.trigger( 'mouseenter' );
-    expect( tooltipScope.isOpen ).toBe( true );
+  it('should hide tooltip when template becomes empty', inject(function($timeout) {
+    elm.trigger('mouseenter');
+    expect(tooltipScope.isOpen).toBe(true);
 
     scope.templateUrl = '';
     scope.$digest();
 
-    expect( tooltipScope.isOpen ).toBe( false );
+    expect(tooltipScope.isOpen).toBe(false);
 
     $timeout.flush();
-    expect( elmBody.children().length ).toBe( 1 );
+    expect(elmBody.children().length).toBe(1);
   }));
-
 });
 
