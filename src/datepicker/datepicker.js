@@ -162,7 +162,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       ngModelCtrl.$render();
     } else {
       self.activeDate = date;
-      $scope.datepickerMode = self.modes[self.modes.indexOf( $scope.datepickerMode ) - 1];
+      $scope.datepickerMode = self.modes[self.modes.indexOf($scope.datepickerMode) - 1];
     }
   };
 
@@ -180,7 +180,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       return;
     }
 
-    $scope.datepickerMode = self.modes[self.modes.indexOf( $scope.datepickerMode ) + direction];
+    $scope.datepickerMode = self.modes[self.modes.indexOf($scope.datepickerMode) + direction];
   };
 
   // Key event mapper
@@ -567,7 +567,7 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
       datepickerEl.attr('template-url', datepickerTemplateUrl);
 
       if (isHtml5DateInput) {
-        if (attrs.type == 'month') {
+        if (attrs.type === 'month') {
           datepickerEl.attr('datepicker-mode', '"month"');
           datepickerEl.attr('min-mode', 'month');
         }
@@ -577,7 +577,7 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
         var options = scope.$parent.$eval(attrs.datepickerOptions);
         if (options && options.initDate) {
           scope.initDate = options.initDate;
-          datepickerEl.attr( 'init-date', 'initDate' );
+          datepickerEl.attr('init-date', 'initDate');
           delete options.initDate;
         }
         angular.forEach(options, function(value, option) {
@@ -589,7 +589,7 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
       angular.forEach(['minMode', 'maxMode', 'minDate', 'maxDate', 'datepickerMode', 'initDate', 'shortcutPropagation'], function(key) {
         if (attrs[key]) {
           var getAttribute = $parse(attrs[key]);
-          scope.$parent.$watch(getAttribute, function(value){
+          scope.$parent.$watch(getAttribute, function(value) {
             scope.watchData[key] = value;
           });
           datepickerEl.attr(cameltoDash(key), 'watchData.' + key);
