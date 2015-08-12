@@ -756,7 +756,7 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
             date = new Date(today.setHours(0, 0, 0, 0));
           }
         }
-        scope.dateSelection( date );
+        scope.dateSelection(date);
       };
 
       scope.close = function() {
