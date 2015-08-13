@@ -74,7 +74,7 @@ angular.module('ui.bootstrap.timepicker', [])
   };
 
   $scope.noDecrementHours = function() {
-    var decrementedSelected = addMinutes(selected, - hourStep * 60);
+    var decrementedSelected = addMinutes(selected, -hourStep * 60);
     return decrementedSelected < min ||
       (decrementedSelected > selected && decrementedSelected > max);
   };
@@ -86,7 +86,7 @@ angular.module('ui.bootstrap.timepicker', [])
   };
 
   $scope.noDecrementMinutes = function() {
-    var decrementedSelected = addMinutes(selected, - minuteStep);
+    var decrementedSelected = addMinutes(selected, -minuteStep);
     return decrementedSelected < min ||
       (decrementedSelected > selected && decrementedSelected > max);
   };
@@ -95,7 +95,7 @@ angular.module('ui.bootstrap.timepicker', [])
     if (selected.getHours() < 13) {
       return addMinutes(selected, 12 * 60) > max;
     } else {
-      return addMinutes(selected, - 12 * 60) < min;
+      return addMinutes(selected, -12 * 60) < min;
     }
   };
 
@@ -108,8 +108,8 @@ angular.module('ui.bootstrap.timepicker', [])
       if (ngModelCtrl.$error.time) {
         // Evaluate from template
         var hours = getHoursFromTemplate(), minutes = getMinutesFromTemplate();
-        if (angular.isDefined( hours ) && angular.isDefined( minutes )) {
-          selected.setHours( hours );
+        if (angular.isDefined(hours) && angular.isDefined(minutes)) {
+          selected.setHours(hours);
           refresh();
         }
       } else {
