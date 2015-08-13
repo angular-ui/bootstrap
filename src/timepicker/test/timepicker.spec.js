@@ -25,7 +25,7 @@ describe('timepicker directive', function() {
     for (var i = 0; i < 2; i ++) {
       state.push(inputs.eq(i).val());
     }
-    if ( withoutMeridian !== true ) {
+    if (withoutMeridian !== true) {
       state.push(getMeridianButton().text());
     }
     return state;
@@ -676,11 +676,11 @@ describe('timepicker directive', function() {
       $rootScope.$digest();
     }));
 
-    it('displays correctly', function () {
+    it('displays correctly', function() {
       expect(getTimeState()[2]).toBe('pm');
     });
 
-    it('toggles correctly', function () {
+    it('toggles correctly', function() {
       $rootScope.time = newTime(2, 40);
       $rootScope.$digest();
       expect(getTimeState()[2]).toBe('am');
@@ -694,7 +694,7 @@ describe('timepicker directive', function() {
       $rootScope.$digest();
     }));
 
-    it('should make inputs readonly', function () {
+    it('should make inputs readonly', function() {
       var inputs = element.find('input');
       expect(inputs.eq(0).attr('readonly')).toBe('readonly');
       expect(inputs.eq(1).attr('readonly')).toBe('readonly');
