@@ -1906,6 +1906,26 @@ describe('datepicker directive', function() {
             expect(buttons.eq(2).text()).toBe('CloseME');
           });
 
+          it('should disable today button if before min date', function() {
+            $rootScope.minDate = new Date().setDate(new Date().getDate() + 1);
+            var wrapElement = $compile('<div><input ng-model="date" datepicker-popup min-date="minDate" is-open="true"><div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+            assignButtonBar();
+
+            expect(buttons.eq(0).prop('disabled')).toBe(true);
+          });
+
+          it('should disable today button if after max date', function() {
+            $rootScope.maxDate = new Date().setDate(new Date().getDate() - 2);
+            var wrapElement = $compile('<div><input ng-model="date" datepicker-popup max-date="maxDate" is-open="true"><div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+            assignButtonBar();
+
+            expect(buttons.eq(0).prop('disabled')).toBe(true);
+          });
+
           it('should remove bar', function() {
             $rootScope.showBar = false;
             var wrapElement = $compile('<div><input ng-model="date" datepicker-popup show-button-bar="showBar" is-open="true"><div>')($rootScope);
