@@ -499,4 +499,27 @@ describe('carousel', function() {
       expect(elm.html()).toBe('foo');
     }));
   });
+
+  it('should expose a custom model in the carousel slide', function() {
+    var scope = $rootScope.$new();
+    scope.slides = [
+      {active:false,content:'one'},
+      {active:false,content:'two'},
+      {active:false,content:'three'}
+    ];
+    var elm = $compile(
+      '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
+        '<slide ng-repeat="slide in slides" active="slide.active" actual="slide">' +
+          '{{slide.content}}' +
+        '</slide>' +
+      '</carousel>'
+    )(scope);
+    $rootScope.$digest();
+
+    var ctrl = elm.controller('carousel');
+
+    expect(angular.equals(ctrl.slides.map(function(slide) {
+      return slide.actual;
+    }), scope.slides)).toBe(true);
+  });
 });
