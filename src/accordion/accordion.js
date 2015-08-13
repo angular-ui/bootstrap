@@ -79,7 +79,9 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     link: function(scope, element, attrs, accordionCtrl) {
       accordionCtrl.addGroup(scope);
 
+      scope.openClass = attrs.openClass || 'panel-open';
       scope.$watch('isOpen', function(value) {
+        element.toggleClass(scope.openClass, value);
         if (value) {
           accordionCtrl.closeOthers(scope);
         }

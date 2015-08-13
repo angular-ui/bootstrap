@@ -212,7 +212,7 @@ describe('accordion', function() {
         expect(findGroupBody(0).scope().isOpen).toBe(false);
       });
 
-      it('should add "open" when opened', function() {
+      it('should add, by default, "panel-open" when opened', function() {
         var group = groups.eq(0);
         findGroupLink(0).click();
         scope.$digest();
@@ -221,6 +221,34 @@ describe('accordion', function() {
         findGroupLink(0).click();
         scope.$digest();
         expect(group).not.toHaveClass('panel-open');
+      });
+    });
+
+    describe('with open-class attribute', function() {
+      beforeEach(function() {
+        var tpl =
+              '<accordion>' +
+              '<accordion-group heading="title 1" open-class="custom-open-class">Content 1</accordion-group>' +
+              '<accordion-group heading="title 2" open-class="custom-open-class">Content 2</accordion-group>' +
+              '</accordion>';
+        element = angular.element(tpl);
+        $compile(element)(scope);
+        scope.$digest();
+        groups = element.find('.panel');
+      });
+      afterEach(function() {
+        element.remove();
+      });
+
+      it('should add custom-open-class when opened', function() {
+        var group = groups.eq(0);
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(group).toHaveClass('custom-open-class');
+
+        findGroupLink(0).click();
+        scope.$digest();
+        expect(group).not.toHaveClass('custom-open-class');
       });
     });
 
