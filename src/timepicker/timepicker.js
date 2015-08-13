@@ -8,13 +8,19 @@ angular.module('ui.bootstrap.timepicker', [])
   readonlyInput: false,
   mousewheel: true,
   arrowkeys: true,
-  showSpinners: true
+  showSpinners: true,
+  emptyModel: false
 })
 
 .controller('TimepickerController', ['$scope', '$attrs', '$parse', '$log', '$locale', 'timepickerConfig', function($scope, $attrs, $parse, $log, $locale, timepickerConfig) {
   var selected = new Date(),
       ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl
-      meridians = angular.isDefined($attrs.meridians) ? $scope.$parent.$eval($attrs.meridians) : timepickerConfig.meridians || $locale.DATETIME_FORMATS.AMPMS;
+      meridians = angular.isDefined($attrs.meridians) ?
+        $scope.$parent.$eval($attrs.meridians) :
+        timepickerConfig.meridians || $locale.DATETIME_FORMATS.AMPMS,
+      emptyModel = angular.isDefined($attrs.emptyModel) ?
+        $scope.$parent.$eval($attrs.emptyModel) :
+        timepickerConfig.emptyModel;
 
   this.init = function(ngModelCtrl_, inputs) {
     ngModelCtrl = ngModelCtrl_;
@@ -204,7 +210,7 @@ angular.module('ui.bootstrap.timepicker', [])
     }
 
     var invalidate = function(invalidHours, invalidMinutes) {
-      ngModelCtrl.$setViewValue( null );
+      ngModelCtrl.$setViewValue(null);
       ngModelCtrl.$setValidity('time', false);
       if (angular.isDefined(invalidHours)) {
         $scope.invalidHours = invalidHours;
@@ -269,7 +275,14 @@ angular.module('ui.bootstrap.timepicker', [])
 
     if (isNaN(date)) {
       ngModelCtrl.$setValidity('time', false);
-      $log.error('Timepicker directive: "ng-model" value must be a Date object, a number of milliseconds since 01.01.1970 or a string representing an RFC2822 or ISO 8601 date.');
+      $scope.invalidHours = true;
+      $scope.invalidMinutes = true;
+      if (!emptyModel) {
+        $log.error('Timepicker directive: "ng-model" value must be a Date object, a number of milliseconds since 01.01.1970 or a string representing an RFC2822 or ISO 8601 date.');
+      } else {
+        selected = null;
+        updateTemplate();
+      }
     } else {
       if (date) {
         selected = date;
@@ -300,17 +313,30 @@ angular.module('ui.bootstrap.timepicker', [])
   }
 
   function updateTemplate(keyboardChange) {
-    var hours = selected.getHours(), minutes = selected.getMinutes();
+    var hours, minutes;
+    if (selected) {
+      hours = selected.getHours();
+      minutes = selected.getMinutes();
+    } else {
+      hours = null;
+      minutes = null;
+    }
 
-    if ($scope.showMeridian) {
+    if ($scope.showMeridian && !emptyModel) {
       hours = (hours === 0 || hours === 12) ? 12 : hours % 12; // Convert 24 to 12 hour system
     }
 
-    $scope.hours = keyboardChange === 'h' ? hours : pad(hours);
-    if (keyboardChange !== 'm') {
-      $scope.minutes = pad(minutes);
+    if (emptyModel) {
+      $scope.hours = null;
+      $scope.minutes = null;
+      $scope.meridian = meridians[0];
+    } else {
+      $scope.hours = keyboardChange === 'h' ? hours : pad(hours);
+      if (keyboardChange !== 'm') {
+        $scope.minutes = pad(minutes);
+      }
+      $scope.meridian = selected.getHours() < 12 ? meridians[0] : meridians[1];
     }
-    $scope.meridian = selected.getHours() < 12 ? meridians[0] : meridians[1];
   }
 
   function addMinutes(date, minutes) {
