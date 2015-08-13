@@ -233,7 +233,7 @@ angular.module('ui.bootstrap.timepicker', [])
     hoursInputEl.bind('blur', function(e) {
       if (!$scope.invalidHours && $scope.hours < 10) {
         $scope.$apply(function() {
-          $scope.hours = pad( $scope.hours );
+          $scope.hours = pad($scope.hours);
         });
       }
     });
@@ -243,7 +243,7 @@ angular.module('ui.bootstrap.timepicker', [])
         hours = getHoursFromTemplate();
 
       if (angular.isDefined(minutes) && angular.isDefined(hours)) {
-        selected.setMinutes( minutes );
+        selected.setMinutes(minutes);
         if (selected < min || selected > max) {
           invalidate(undefined, true);
         } else {
@@ -256,7 +256,7 @@ angular.module('ui.bootstrap.timepicker', [])
 
     minutesInputEl.bind('blur', function(e) {
       if (!$scope.invalidMinutes && $scope.minutes < 10) {
-        $scope.$apply( function() {
+        $scope.$apply(function() {
           $scope.minutes = pad($scope.minutes);
         });
       }
@@ -290,7 +290,7 @@ angular.module('ui.bootstrap.timepicker', [])
   function refresh(keyboardChange) {
     makeValid();
     ngModelCtrl.$setViewValue(new Date(selected));
-    updateTemplate( keyboardChange );
+    updateTemplate(keyboardChange);
   }
 
   function makeValid() {
@@ -303,7 +303,7 @@ angular.module('ui.bootstrap.timepicker', [])
     var hours = selected.getHours(), minutes = selected.getMinutes();
 
     if ($scope.showMeridian) {
-      hours = ( hours === 0 || hours === 12 ) ? 12 : hours % 12; // Convert 24 to 12 hour system
+      hours = (hours === 0 || hours === 12) ? 12 : hours % 12; // Convert 24 to 12 hour system
     }
 
     $scope.hours = keyboardChange === 'h' ? hours : pad(hours);
