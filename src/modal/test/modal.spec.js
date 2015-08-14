@@ -2,14 +2,6 @@ describe('$modal', function () {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $modal, $modalProvider;
 
-  var triggerKeyDown = function(element, keyCode, shiftKey) {
-    var e = $.Event('keydown');
-    e.srcElement = element[0];
-    e.which = keyCode;
-    e.shiftKey = shiftKey;
-    element.trigger(e);
-  };
-
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('template/modal/backdrop.html'));
@@ -143,6 +135,14 @@ describe('$modal', function () {
     body.removeClass('modal-open');
   });
 
+  function triggerKeyDown(element, keyCode, shiftKey) {
+    var e = $.Event('keydown');
+    e.srcElement = element[0];
+    e.which = keyCode;
+    e.shiftKey = shiftKey;
+    element.trigger(e);
+  }
+
   function open(modalOptions) {
     var modal = $modal.open(modalOptions);
     $rootScope.$digest();
@@ -155,6 +155,7 @@ describe('$modal', function () {
     $rootScope.$digest();
     if (!noFlush) {
       $animate.triggerCallbacks();
+      $animate.triggerCallbacks();
     }
     return closed;
   }
@@ -163,6 +164,7 @@ describe('$modal', function () {
     var closed = modal.dismiss(reason);
     $rootScope.$digest();
     if (!noFlush) {
+      $animate.triggerCallbacks();
       $animate.triggerCallbacks();
     }
     return closed;
@@ -232,6 +234,7 @@ describe('$modal', function () {
 
       triggerKeyDown($document, 27);
       $animate.triggerCallbacks();
+      $animate.triggerCallbacks();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
@@ -252,6 +255,7 @@ describe('$modal', function () {
 
       triggerKeyDown(button, 27);
       $animate.triggerCallbacks();
+      $animate.triggerCallbacks();
       $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
@@ -266,6 +270,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       $document.find('body > div.modal').click();
+      $animate.triggerCallbacks();
       $animate.triggerCallbacks();
       $rootScope.$digest();
 
@@ -284,6 +289,7 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
+      $animate.triggerCallbacks();
       $animate.triggerCallbacks();
       $rootScope.$digest();
 
@@ -308,6 +314,7 @@ describe('$modal', function () {
       // iframe conditions. See issue 3639
       element[0].focus = undefined;
       triggerKeyDown($document, 27);
+      $animate.triggerCallbacks();
       $animate.triggerCallbacks();
       $rootScope.$digest();
 
@@ -338,6 +345,7 @@ describe('$modal', function () {
 
       expect(modal.result).toBeRejectedWith('$uibUnscheduledDestruction');
 
+      $animate.triggerCallbacks();
       $animate.triggerCallbacks();
       expect($document).toHaveModalsOpen(0);
     });
@@ -663,12 +671,14 @@ describe('$modal', function () {
 
       it('should contain backdrop in classes on each modal opening', function() {
         var modal = open({ template: '<div>With backdrop</div>' });
+        $animate.triggerCallbacks();
         var backdropEl = $document.find('body > div.modal-backdrop');
         expect(backdropEl).toHaveClass('in');
 
         dismiss(modal);
 
         modal = open({ template: '<div>With backdrop</div>' });
+        $animate.triggerCallbacks();
         backdropEl = $document.find('body > div.modal-backdrop');
         expect(backdropEl).toHaveClass('in');
 
