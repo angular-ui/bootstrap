@@ -215,7 +215,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
               if (isOpenExp) {
                 isOpenExp.assign(ttScope.origScope, ttScope.isOpen);
               }
-              
+
               if (!$rootScope.$$phase) {
                 ttScope.$apply(); // digest required as $apply is not called
               }
@@ -232,7 +232,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
               if (isOpenExp) {
                 isOpenExp.assign(ttScope.origScope, ttScope.isOpen);
               }
-              
+
               //if tooltip is going to be shown after delay, we must cancel this
               $timeout.cancel(popupTimeout);
               popupTimeout = null;
@@ -269,7 +269,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
                     hide();
                   }
                 });
-                
+
                 tooltipLinkedScope.$watch(function() {
                   if (!repositionScheduled) {
                     repositionScheduled = true;
@@ -281,7 +281,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
                     });
                   }
                 });
-                
+
               }
             }
 
@@ -325,6 +325,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
             attrs.$observe('disabled', function(val) {
               if (popupTimeout && val) {
                 $timeout.cancel(popupTimeout);
+                popupTimeout = null;
               }
 
               if (val && ttScope.isOpen) {
@@ -345,7 +346,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
                 }, 0, false);
               }
             });
-            
+
             if (isOpenExp) {
               scope.$watch(isOpenExp, function(val) {
                 if (val !== ttScope.isOpen) {

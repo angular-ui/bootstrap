@@ -246,8 +246,10 @@ describe('tooltip', function() {
   });
 
   describe('with specified popup delay', function() {
-    beforeEach(inject(function($compile) {
-      scope.delay='1000';
+    var $timeout;
+    beforeEach(inject(function($compile, _$timeout_) {
+      $timeout = _$timeout_;
+      scope.delay = '1000';
       elm = $compile(angular.element(
         '<span tooltip="tooltip text" tooltip-popup-delay="{{delay}}" ng-disabled="disabled">Selector Text</span>'
       ))(scope);
@@ -256,22 +258,22 @@ describe('tooltip', function() {
       scope.$digest();
     }));
 
-    it('should open after timeout', inject(function($timeout) {
+    it('should open after timeout', function() {
       elm.trigger('mouseenter');
       expect(tooltipScope.isOpen).toBe(false);
 
       $timeout.flush();
       expect(tooltipScope.isOpen).toBe(true);
-    }));
+    });
 
-    it('should not open if mouseleave before timeout', inject(function($timeout) {
+    it('should not open if mouseleave before timeout', function() {
       elm.trigger('mouseenter');
       expect(tooltipScope.isOpen).toBe(false);
 
       elm.trigger('mouseleave');
       $timeout.flush();
       expect(tooltipScope.isOpen).toBe(false);
-    }));
+    });
 
     it('should use default popup delay if specified delay is not a number', function() {
       scope.delay='text1000';
@@ -280,7 +282,7 @@ describe('tooltip', function() {
       expect(tooltipScope.isOpen).toBe(true);
     });
 
-    it('should not open if disabled is present', inject(function($timeout) {
+    it('should not open if disabled is present', function() {
       elm.trigger('mouseenter');
       expect(tooltipScope.isOpen).toBe(false);
 
@@ -291,10 +293,30 @@ describe('tooltip', function() {
 
       $timeout.flush();
       expect(tooltipScope.isOpen).toBe(false);
-    }));
+    });
+
+    it('should open when not disabled after being disabled - issue #4204', function() {
+      elm.trigger('mouseenter');
+      expect(tooltipScope.isOpen).toBe(false);
+
+      $timeout.flush(500);
+      elmScope.disabled = true;
+      elmScope.$digest();
+
+      $timeout.flush(500);
+      expect(tooltipScope.isOpen).toBe(false);
+
+      elmScope.disabled = false;
+      elmScope.$digest();
+
+      elm.trigger('mouseenter');
+      $timeout.flush();
+
+      expect(tooltipScope.isOpen).toBe(true);
+    });
   });
-  
-  describe( 'with an is-open attribute', function() {
+
+  describe('with an is-open attribute', function() {
     beforeEach(inject(function ($compile) {
       scope.isOpen = false;
       elm = $compile(angular.element(
@@ -304,7 +326,7 @@ describe('tooltip', function() {
       tooltipScope = elmScope.$$childTail;
       scope.$digest();
     }));
-    
+
     it( 'should show and hide with the controller value', function() {
       expect(tooltipScope.isOpen).toBe(false);
       elmScope.isOpen = true;
@@ -314,7 +336,7 @@ describe('tooltip', function() {
       elmScope.$digest();
       expect(tooltipScope.isOpen).toBe(false);
     });
-    
+
     it( 'should update the controller value', function() {
       elm.trigger('mouseenter');
       expect(elmScope.isOpen).toBe(true);
@@ -412,7 +434,7 @@ describe('tooltip', function() {
       elm.trigger('fakeTriggerAttr');
       expect( tooltipScope.isOpen ).toBeFalsy();
     }));
-    
+
     it( 'should not show when trigger is set to "none"', inject(function($compile) {
       elmBody = angular.element(
         '<div><input tooltip="Hello!" tooltip-trigger="none" /></div>'
