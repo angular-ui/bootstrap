@@ -2099,7 +2099,7 @@ describe('datepicker directive', function() {
         });
 
         afterEach(function() {
-          $document.find('body').find('.dropdown-menu').remove();
+          $document.find('body').children().remove();
         });
 
         it('should append to the body', function() {
