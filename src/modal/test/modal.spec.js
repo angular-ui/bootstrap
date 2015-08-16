@@ -396,6 +396,8 @@ describe('$modal', function () {
       lastElement.focus();
       triggerKeyDown(lastElement, 9);
       expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link');
+
+      initialPage.remove();
     });
 
     it('should change focus to last element when shift+tab key is pressed', function() {
@@ -413,6 +415,8 @@ describe('$modal', function () {
       lastElement.focus();
       triggerKeyDown(lastElement, 9, true);
       expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
+
+      initialPage.remove();
     });
   });
 
