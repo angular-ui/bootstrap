@@ -859,6 +859,16 @@ describe('typeahead tests', function() {
     });
   });
 
+  describe('append to element id', function() {
+    it('append typeahead results to element', function() {
+      $document.find('body').append('<div id="myElement"></div>');
+      var element = prepareInputEl('<div><input name="input" ng-model="result" typeahead="item for item in states | filter:$viewValue" typeahead-append-to-element-id="myElement"></div>');
+      changeInputValueTo(element, 'al');
+      expect($document.find('#myElement')).toBeOpenWithActive(2, 0);
+      $document.find('#myElement').remove();
+    });
+  });
+
   describe('append to body', function() {
     it('append typeahead results to body', function() {
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true"></div>');
