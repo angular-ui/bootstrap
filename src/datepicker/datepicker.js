@@ -72,7 +72,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       }
     });
   } else {
-    this.activeDate =  new Date();
+    this.activeDate = new Date();
   }
 
   $scope.isActive = function(dateObject) {
