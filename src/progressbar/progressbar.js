@@ -35,7 +35,7 @@ angular.module('ui.bootstrap.progressbar', [])
 
       if (totalPercentage > 100) {
         bar.percent -= totalPercentage - 100;
-        }
+      }
     };
 
     bar.$on('$destroy', function() {
