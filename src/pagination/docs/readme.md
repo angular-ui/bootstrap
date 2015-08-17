@@ -85,3 +85,7 @@ For `ng-model`, `total-items`, `items-per-page` and `num-pages` see pagination s
  * `template-url`
   _(Default: 'template/pagination/pager.html') :
   Override the template for the component with a custom provided template
+
+ * `ng-disabled` <i class="glyphicon glyphicon-eye-open"></i>
+  :
+  Used to disable the pager component

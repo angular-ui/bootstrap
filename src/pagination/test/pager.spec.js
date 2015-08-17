@@ -256,4 +256,26 @@ describe('pager directive', function() {
     });
   });
 
+  it('disables the component when ng-disabled is true', function() {
+    $rootScope.disable = true;
+
+    element = $compile('<pager total-items="total" ng-disabled="disable" ng-model="currentPage"></pager>')($rootScope);
+    $rootScope.$digest();
+    updateCurrentPage(2);
+
+    expect(getPaginationEl(0)).toHaveClass('disabled');
+    expect(getPaginationEl(-1)).toHaveClass('disabled');
+
+    $rootScope.disable = false;
+    $rootScope.$digest();
+
+    expect(getPaginationEl(0)).not.toHaveClass('disabled');
+    expect(getPaginationEl(-1)).not.toHaveClass('disabled');
+
+    $rootScope.disable = true;
+    $rootScope.$digest();
+
+    expect(getPaginationEl(0)).toHaveClass('disabled');
+    expect(getPaginationEl(-1)).toHaveClass('disabled');
+  });
 });
