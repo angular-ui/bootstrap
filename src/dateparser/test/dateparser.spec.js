@@ -86,6 +86,14 @@ describe('date parser', function() {
       expectParse('11-08-13 23', 'd-MM-yy H', new Date(2013, 7, 11, 23));
     });
 
+    it('should work correctly for `h`', function() {
+      expectParse('22.March.15.12', 'd.MMMM.yy.h', new Date(2015, 2, 22, 12));
+      expectParse('8-March-1991-11', 'd-MMMM-yyyy-h', new Date(1991, 2, 8, 11));
+      expectParse('February/5/1980/0', 'MMMM/d/yyyy/h', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5 3', 'yyyy/MMMM/d h', new Date(1955, 1, 5, 3));
+      expectParse('11-08-13 3', 'd-MM-yy h', new Date(2013, 7, 11, 3));
+    });
+
     it('should work correctly for `mm`', function() {
       expectParse('22.March.15.22', 'd.MMMM.yy.mm', new Date(2015, 2, 22, 0, 22));
       expectParse('8-March-1991-59', 'd-MMMM-yyyy-mm', new Date(1991, 2, 8, 0, 59));

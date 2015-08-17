@@ -61,6 +61,10 @@ angular.module('ui.bootstrap.dateparser', [])
       regex: '1?[0-9]|2[0-3]',
       apply: function(value) { this.hours = +value; }
     },
+    'h': {
+      regex: '[0-9]|1[0-2]',
+      apply: function(value) { this.hours = +value; }
+    },
     'mm': {
       regex: '[0-5][0-9]',
       apply: function(value) { this.minutes = +value; }
