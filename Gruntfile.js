@@ -169,7 +169,7 @@ module.exports = function(grunt) {
       'release-prepare': [
         'grunt before-test after-test',
         'grunt version', //remove "-SNAPSHOT"
-        'grunt changelog'
+        'grunt conventionalChangelog'
       ],
       'release-complete': [
         'git commit CHANGELOG.md package.json -m "chore(release): v%version%"',
