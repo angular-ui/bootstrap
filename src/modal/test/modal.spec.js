@@ -421,9 +421,7 @@ describe('$modal', function () {
   });
 
   describe('default options can be changed in a provider', function() {
-
     it('should allow overriding default options in a provider', function() {
-
       $modalProvider.options.backdrop = false;
       var modal = open({template: '<div>Content</div>'});
 
@@ -432,7 +430,6 @@ describe('$modal', function () {
     });
 
     it('should accept new objects with default options in a provider', function() {
-
       $modalProvider.options = {
         backdrop: false
       };
@@ -444,9 +441,7 @@ describe('$modal', function () {
   });
 
   describe('option by option', function () {
-
     describe('template and templateUrl', function () {
-
       it('should throw an error if none of template and templateUrl are provided', function() {
         expect(function(){
           var modal = open({});
@@ -476,11 +471,9 @@ describe('$modal', function () {
         }});
         expect($document).toHaveModalOpenWithContent('Whitespaces', 'div');
       });
-
     });
 
     describe('controller', function() {
-
       it('should accept controllers and inject modal instances', function() {
         var TestCtrl = function($scope, $modalInstance) {
           $scope.fromCtrl = 'Content from ctrl';
