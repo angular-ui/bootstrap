@@ -798,6 +798,52 @@ describe('$modal', function () {
 
         expect(body).not.toHaveClass('foo');
       });
+
+      it('should add multiple custom classes to the body element and remove appropriately', function() {
+        var modal1 = open({
+          template: '<div>dummy modal</div>',
+          openedClass: 'foo'
+        });
+
+        expect(body).toHaveClass('foo');
+        expect(body).not.toHaveClass('modal-open');
+
+        var modal2 = open({
+          template: '<div>dummy modal</div>',
+          openedClass: 'bar'
+        });
+
+        expect(body).toHaveClass('foo');
+        expect(body).toHaveClass('bar');
+        expect(body).not.toHaveClass('modal-open');
+
+        var modal3 = open({
+          template: '<div>dummy modal</div>',
+          openedClass: 'foo'
+        });
+
+        expect(body).toHaveClass('foo');
+        expect(body).toHaveClass('bar');
+        expect(body).not.toHaveClass('modal-open');
+
+        close(modal1);
+
+        expect(body).toHaveClass('foo');
+        expect(body).toHaveClass('bar');
+        expect(body).not.toHaveClass('modal-open');
+
+        close(modal2);
+
+        expect(body).toHaveClass('foo');
+        expect(body).not.toHaveClass('bar');
+        expect(body).not.toHaveClass('modal-open');
+
+        close(modal3);
+
+        expect(body).not.toHaveClass('foo');
+        expect(body).not.toHaveClass('bar');
+        expect(body).not.toHaveClass('modal-open');
+      });
     });
   });
 
