@@ -13,5 +13,7 @@ The body of each accordion group is transcluded in to the body of the collapsibl
 
 ### Accordion Group Settings ###
 
+  * `panel-class` (Defaults: `panel-default`) :
+    Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own.  This must be a string.
   * `template-url` (Defaults: `template/accordion/accordion-group.html`) :
     Add ability to override the template url used. Note that this must be a string

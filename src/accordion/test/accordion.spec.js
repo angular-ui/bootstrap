@@ -515,7 +515,6 @@ describe('accordion', function() {
       });
     });
 
-
     describe('accordion-heading attribute, with repeating accordion-groups', function() {
       it('should clone the accordion-heading for each group', function() {
         element = $compile('<accordion><accordion-group ng-repeat="x in [1,2,3]"><div accordion-heading>{{x}}</div></accordion-group></accordion>')(scope);
@@ -528,5 +527,26 @@ describe('accordion', function() {
       });
     });
 
+    describe('accordion group panel class - #3968', function() {
+      it('should use the default value when panel class is falsy', function() {
+        element = $compile('<accordion><accordion-group heading="Heading">Content</accordion-group></accordion>')(scope);
+        scope.$digest();
+        groups = element.find('.panel');
+        expect(groups.eq(0)).toHaveClass('panel-default');
+
+        element = $compile('<accordion><accordion-group heading="Heading" panel-class="">Content</accordion-group></accordion>')(scope);
+        scope.$digest();
+        groups = element.find('.panel');
+        expect(groups.eq(0)).toHaveClass('panel-default');
+      });
+
+      it('should use the specified value when not falsy', function() {
+        element = $compile('<accordion><accordion-group heading="Heading" panel-class="custom-class">Content</accordion-group></accordion>')(scope);
+        scope.$digest();
+        groups = element.find('.panel');
+        expect(groups.eq(0)).toHaveClass('custom-class');
+        expect(groups.eq(0)).not.toHaveClass('panel-default');
+      });
+    });
   });
 });
