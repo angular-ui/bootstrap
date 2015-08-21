@@ -1,6 +1,6 @@
 A progress bar directive that is focused on providing feedback on the progress of a workflow or action.
 
-It supports multiple (stacked) bars into the same `<progress>` element or a single `<progressbar>` elemtnt with optional `max` attribute and transition animations.
+It supports multiple (stacked) bars into the same `<ui-progress>` element or a single `<progressbar>` elemtnt with optional `max` attribute and transition animations.
 
 ### Settings ###
 
@@ -25,5 +25,5 @@ It supports multiple (stacked) bars into the same `<progress>` element or a sing
 
 ### Stacked ###
 
-Place multiple `<bars>` into the same `<progress>` element to stack them.
-`<progress>` supports `max` and `animate` &  `<bar>` supports  `value` and `type` attributes.
+Place multiple `<uib-bar>`s into the same `<uib-progress>` element to stack them.
+`<uib-progress>` supports `max` and `animate` &  `<uib-bar>` supports  `value` and `type` attributes.
