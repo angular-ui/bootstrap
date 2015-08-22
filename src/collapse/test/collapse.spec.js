@@ -28,56 +28,70 @@ describe('collapse directive', function() {
   it('should collapse if isCollapsed = true with animation on subsequent use', function() {
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     scope.isCollapsed = true;
     scope.$digest();
+    $animate.flush();
     expect(element.height()).toBe(0);
   });
 
   it('should be shown on initialization if isCollapsed = false without transition', function() {
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     expect(element.height()).not.toBe(0);
   });
 
   it('should expand if isCollapsed = false with animation on subsequent use', function() {
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     scope.isCollapsed = true;
     scope.$digest();
+    $animate.flush();
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     expect(element.height()).not.toBe(0);
   });
 
   it('should expand if isCollapsed = true with animation on subsequent uses', function() {
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     scope.isCollapsed = true;
     scope.$digest();
+    $animate.flush();
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     scope.isCollapsed = true;
     scope.$digest();
+    $animate.flush();
     expect(element.height()).toBe(0);
   });
 
   it('should change aria-expanded attribute', function() {
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     expect(element.attr('aria-expanded')).toBe('true');
 
     scope.isCollapsed = true;
     scope.$digest();
+    $animate.flush();
     expect(element.attr('aria-expanded')).toBe('false');
   });
 
   it('should change aria-hidden attribute', function() {
     scope.isCollapsed = false;
     scope.$digest();
+    $animate.flush();
     expect(element.attr('aria-hidden')).toBe('false');
 
     scope.isCollapsed = true;
     scope.$digest();
+    $animate.flush();
     expect(element.attr('aria-hidden')).toBe('true');
   });
 
@@ -98,10 +112,9 @@ describe('collapse directive', function() {
       scope.exp = false;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.flush();
-      scope.$digest();
       var collapseHeight = element.height();
       scope.exp = true;
+      $animate.flush();
       scope.$digest();
       expect(element.height()).toBeGreaterThan(collapseHeight);
     });
@@ -110,7 +123,6 @@ describe('collapse directive', function() {
       scope.exp = true;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = false;
       scope.$digest();

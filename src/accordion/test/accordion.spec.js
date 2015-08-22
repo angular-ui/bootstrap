@@ -1,12 +1,14 @@
 describe('accordion', function() {
-  var $scope;
+  var $animate, $scope;
 
   beforeEach(module('ui.bootstrap.accordion'));
   beforeEach(module('ui.bootstrap.collapse'));
+  beforeEach(module('ngAnimateMock'));
   beforeEach(module('template/accordion/accordion.html'));
   beforeEach(module('template/accordion/accordion-group.html'));
 
-  beforeEach(inject(function($rootScope) {
+  beforeEach(inject(function(_$animate_, $rootScope) {
+    $animate = _$animate_;
     $scope = $rootScope;
   }));
 
@@ -358,6 +360,7 @@ describe('accordion', function() {
         angular.element(document.body).append(element);
         $compile(element)(scope);
         scope.$digest();
+        $animate.flush();
         groups = element.find('.panel');
       });
 

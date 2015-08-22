@@ -1,6 +1,7 @@
 angular.module('ui.bootstrap.collapse', [])
 
-  .directive('collapse', ['$animate', function($animate) {
+  .directive('collapse', ['$animate', '$injector', function($animate, $injector) {
+    var $animateCss = $injector.has('$animateCss') ? $injector.get('$animateCss') : null;
     return {
       link: function(scope, element, attrs) {
         function expand() {
@@ -9,14 +10,23 @@ angular.module('ui.bootstrap.collapse', [])
             .attr('aria-expanded', true)
             .attr('aria-hidden', false);
 
-          $animate.addClass(element, 'in', {
-            to: { height: element[0].scrollHeight + 'px' }
-          }).then(expandDone);
+          if ($animateCss) {
+            $animateCss(element, {
+              addClass: 'in',
+              easing: 'ease',
+              to: { height: element[0].scrollHeight + 'px' }
+            }).start().done(expandDone);
+          } else {
+            $animate.addClass(element, 'in', {
+              to: { height: element[0].scrollHeight + 'px' }
+            }).then(expandDone);
+          }
         }
 
         function expandDone() {
-          element.removeClass('collapsing');
-          element.css({height: 'auto'});
+          element.removeClass('collapsing')
+            .addClass('collapse')
+            .css({height: 'auto'});
         }
 
         function collapse() {
@@ -36,15 +46,22 @@ angular.module('ui.bootstrap.collapse', [])
             .attr('aria-expanded', false)
             .attr('aria-hidden', true);
 
-          $animate.removeClass(element, 'in', {
-            to: {height: '0'}
-          }).then(collapseDone);
+          if ($animateCss) {
+            $animateCss(element, {
+              removeClass: 'in',
+              to: {height: '0'}
+            }).start().done(collapseDone);
+          } else {
+            $animate.removeClass(element, 'in', {
+              to: {height: '0'}
+            }).then(collapseDone);
+          }
         }
 
         function collapseDone() {
           element.css({height: '0'}); // Required so that collapse works when animation is disabled
-          element.removeClass('collapsing');
-          element.addClass('collapse');
+          element.removeClass('collapsing')
+            .addClass('collapse');
         }
 
         scope.$watch(attrs.collapse, function(shouldCollapse) {
