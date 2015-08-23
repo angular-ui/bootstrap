@@ -74,6 +74,27 @@ describe('buttons', function() {
       expect(btn).not.toHaveClass('active');
     });
 
+    it('should toggle custom model values on spacebar if focused', function() {
+      $scope.model = 0;
+      var btn = compileButton('<button ng-model="model" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">click</button>', $scope);
+      $('body').append(btn);
+      var e = $.Event('keypress');
+      e.which = 32;
+
+      btn[0].focus();
+      btn.trigger(e);
+      $scope.$digest();
+      expect($scope.model).toEqual(1);
+      expect(btn).toHaveClass('active');
+
+      btn.trigger(e);
+      $scope.$digest();
+      expect($scope.model).toEqual(0);
+      expect(btn).not.toHaveClass('active');
+
+      btn.remove();
+    });
+
     it('should monitor true / false value changes - issue 666', function() {
 
       $scope.model = 1;
@@ -95,6 +116,7 @@ describe('buttons', function() {
       $scope.model = 1;
       $scope.falseVal = 0;
       var btn = compileButton('<button disabled ng-model="model" btn-checkbox btn-checkbox-true="falseVal">click</button>', $scope);
+      $('body').append(btn);
 
       expect(btn).not.toHaveClass('active');
       expect($scope.model).toEqual(1);
@@ -106,6 +128,19 @@ describe('buttons', function() {
       $scope.$digest();
       
       expect(btn).not.toHaveClass('active');
+
+      btn[0].focus();
+      var e = $.Event('keypress');
+      e.which = 32;
+      btn.trigger(e);
+
+      expect(btn).not.toHaveClass('active');
+
+      $scope.$digest();
+      
+      expect(btn).not.toHaveClass('active');
+
+      btn.remove();
     });
 
     describe('setting buttonConfig', function() {
