@@ -338,7 +338,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
               positionTooltipAsync();
             });
 
-            attrs.$observe( prefix + 'Placement', function() {
+            attrs.$observe(prefix + 'Placement', function() {
               if (ttScope.isOpen) {
                 $timeout(function() {
                   prepPlacement();
