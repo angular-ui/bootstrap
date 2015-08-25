@@ -161,7 +161,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
                 scope.matches.length = 0;
 
                 //transform labels
-                for (var i=0; i<matches.length; i++) {
+                for (var i = 0; i < matches.length; i++) {
                   locals[parserResult.itemName] = matches[i];
                   scope.matches.push({
                     id: getMatchId(i),
