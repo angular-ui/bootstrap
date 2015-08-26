@@ -1,4 +1,11 @@
 <div ng-controller="AlertDemoCtrl">
+  <script type="text/ng-template" id="alert.html">
+    <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
+      <div ng-transclude></div>
+    </div>
+  </script>
+
   <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+  <alert template-url="alert.html">A happy alert!</alert>
   <button type="button" class='btn btn-default' ng-click="addAlert()">Add Alert</button>
 </div>
