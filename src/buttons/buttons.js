@@ -18,6 +18,8 @@ angular.module('ui.bootstrap.buttons', [])
     link: function(scope, element, attrs, ctrls) {
       var buttonsCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
+      element.find('input').css({display: 'none'});
+
       //model -> UI
       ngModelCtrl.$render = function() {
         element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, scope.$eval(attrs.btnRadio)));
@@ -49,6 +51,8 @@ angular.module('ui.bootstrap.buttons', [])
     controllerAs: 'button',
     link: function(scope, element, attrs, ctrls) {
       var buttonsCtrl = ctrls[0], ngModelCtrl = ctrls[1];
+
+      element.find('input').css({display: 'none'});
 
       function getTrueValue() {
         return getCheckboxValue(attrs.btnCheckboxTrue, true);
