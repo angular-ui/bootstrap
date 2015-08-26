@@ -7,7 +7,6 @@ angular.module('ui.bootstrap.alert', [])
 
 .directive('alert', function() {
   return {
-    restrict: 'EA',
     controller: 'AlertController',
     controllerAs: 'alert',
     templateUrl: function(element, attrs) {
