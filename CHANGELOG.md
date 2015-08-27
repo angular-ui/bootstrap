@@ -65,6 +65,12 @@
 
 #### Breaking Changes
 
+* add `open` class to accordion group when expanded
+
+Closes #4152
+Closes #3419
+
+ ([ead15e37](https://github.com/angular-ui/bootstrap/commit/ead15e37))
 * Allow the user to hit `esc` inside an element in a modal and not exit the modal if the event has been `defaultPrevented`
 
 Closes #3551
