@@ -364,9 +364,12 @@ angular.module('ui.bootstrap.timepicker', [])
     restrict: 'EA',
     require: ['timepicker', '?^ngModel'],
     controller:'TimepickerController',
+    controllerAs: 'timepicker',
     replace: true,
     scope: {},
-    templateUrl: 'template/timepicker/timepicker.html',
+    templateUrl: function(element, attrs) {
+      return attrs.templateUrl || 'template/timepicker/timepicker.html';
+    },
     link: function(scope, element, attrs, ctrls) {
       var timepickerCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
