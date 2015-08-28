@@ -94,7 +94,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     keynavEnabled = angular.isDefined($attrs.keyboardNav);
 
     if (appendToBody && self.dropdownMenu) {
-      $document.find('body').append( self.dropdownMenu );
+      $document.find('body').append(self.dropdownMenu);
       element.on('$destroy', function handleDestroyEvent() {
         self.dropdownMenu.remove();
       });
@@ -169,17 +169,17 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     if (appendToBody && self.dropdownMenu) {
       var pos = $position.positionElements(self.$element, self.dropdownMenu, 'bottom-left', true);
       var css = {
-          top: pos.top + 'px',
-          display: isOpen ? 'block' : 'none'
+        top: pos.top + 'px',
+        display: isOpen ? 'block' : 'none'
       };
 
       var rightalign = self.dropdownMenu.hasClass('dropdown-menu-right');
       if (!rightalign) {
-          css.left = pos.left + 'px';
-          css.right = 'auto';
+        css.left = pos.left + 'px';
+        css.right = 'auto';
       } else {
-          css.left = 'auto';
-          css.right = (window.innerWidth - (pos.left + self.$element.prop('offsetWidth'))) + 'px';
+        css.left = 'auto';
+        css.right = (window.innerWidth - (pos.left + self.$element.prop('offsetWidth'))) + 'px';
       }
 
       self.dropdownMenu.css(css);
@@ -187,7 +187,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
     $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass).then(function() {
       if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
-         toggleInvoker($scope, { open: !!isOpen });
+        toggleInvoker($scope, { open: !!isOpen });
       }
     });
 
