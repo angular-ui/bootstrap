@@ -1,6 +1,6 @@
 describe('$modal', function () {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
-  var $modal, $modalProvider;
+  var $modal, $modalStack, $modalProvider;
 
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.modal'));
@@ -11,7 +11,7 @@ describe('$modal', function () {
     $modalProvider = _$modalProvider_;
   }));
 
-  beforeEach(inject(function(_$animate_, _$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$modal_) {
+  beforeEach(inject(function(_$animate_, _$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$modal_, _$modalStack_) {
     $animate = _$animate_;
     $rootScope = _$rootScope_;
     $document = _$document_;
@@ -20,6 +20,7 @@ describe('$modal', function () {
     $timeout = _$timeout_;
     $q = _$q_;
     $modal = _$modal_;
+    $modalStack = _$modalStack_;
   }));
 
   beforeEach(function() {
@@ -983,6 +984,87 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(0);
 
       element.remove();
+    });
+
+    it('should open modals and resolve the opened promises in order', function() {
+      // Opens a modal for each element in array order.
+      // Order is an array of non-repeating integers from 0..length-1 representing when to resolve that modal's promise.
+      // For example [1,2,0] would resolve the 3rd modal's promise first and the 2nd modal's promise last.
+      // Tests that the modals are added to $modalStack and that each resolves its "opened" promise sequentially.
+      // If an element is {reject:n} then n is still the order, but the corresponding promise is rejected.
+      // A rejection earlier in the open sequence should not affect modals opened later.
+      function test(order) {
+        var ds = []; // {index, deferred, reject}
+        var expected = ''; // 0..length-1
+        var actual = '';
+        angular.forEach(order, function(x, i) {
+          var reject = x.reject !== undefined;
+          if (reject) {
+            x = x.reject;
+          } else {
+            expected += i;
+          }
+          ds[x] = {index:i, deferred:$q.defer(), reject:reject};
+
+          var scope = $rootScope.$new();
+          scope.index = i;
+          open({
+            template: '<div>' + i + '</div>',
+            scope: scope,
+            resolve: {
+              x: function() { return ds[x].deferred.promise; }
+            }
+          }).opened.then(function() {
+            expect($modalStack.getTop().value.modalScope.index).toEqual(i);
+            actual += i;
+          });
+        });
+
+        angular.forEach(ds, function(d, i) {
+          if (d.reject) {
+            d.deferred.reject('rejected:' + d.index );
+          } else {
+            d.deferred.resolve('resolved:' + d.index );
+          }
+          $rootScope.$digest();
+        });
+
+        expect(actual).toEqual(expected);
+        expect($modal.getPromiseChain()).toEqual(null);
+      }
+
+      // Calls emit n! times on arrays of length n containing all non-repeating permutations of the integers 0..n-1.
+      function permute(n, emit) {
+        if (n < 1 || typeof emit !== 'function') {
+          return;
+        }
+        var a = [];
+        function _permute(depth) {
+          index: for (var i = 0; i < n; i++) {
+            for (var j = 0; j < depth; j++) {
+              if (a[j] === i) {
+                continue index; // already used
+              }
+            }
+
+            a[depth] = i;
+            if (depth + 1 === n) {
+              emit(angular.copy(a));
+            } else {
+              _permute(depth + 1);
+            }
+          }
+        }
+        _permute(0);
+      }
+
+      permute(2, function(a) { test(a); });
+      permute(2, function(a) { test(a.map(function(x, i) { return {reject:x}; })); });
+      permute(2, function(a) { test(a.map(function(x, i) { return i === 0 ? {reject:x} : x; })); });
+      permute(3, function(a) { test(a); });
+      permute(3, function(a) { test(a.map(function(x, i) { return {reject:x}; })); });
+      permute(3, function(a) { test(a.map(function(x, i) { return i === 0 ? {reject:x} : x; })); });
+      permute(3, function(a) { test(a.map(function(x, i) { return i === 1 ? {reject:x} : x; })); });
     });
   });
 
