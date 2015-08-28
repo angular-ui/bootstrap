@@ -325,11 +325,14 @@ describe('dropdownToggle', function() {
     it('should call it correctly when toggles', function() {
       $rootScope.isopen = true;
       $rootScope.$digest();
-      $animate.triggerCallbacks();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
-      $animate.triggerCallbacks();
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });
@@ -343,19 +346,22 @@ describe('dropdownToggle', function() {
     });
 
     it('should not have been called initially', function() {
-      $animate.triggerCallbacks();
       expect($rootScope.toggleHandler).not.toHaveBeenCalled();
     });
 
     it('should call it correctly when toggles', function() {
       $rootScope.isopen = false;
       $rootScope.$digest();
-      $animate.triggerCallbacks();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
 
       $rootScope.isopen = true;
       $rootScope.$digest();
-      $animate.triggerCallbacks();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
     });
   });
@@ -368,17 +374,20 @@ describe('dropdownToggle', function() {
     });
 
     it('should not have been called initially', function() {
-      $animate.triggerCallbacks();
       expect($rootScope.toggleHandler).not.toHaveBeenCalled();
     });
 
     it('should call it when clicked', function() {
       clickDropdownToggle();
-      $animate.triggerCallbacks();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
-      $animate.triggerCallbacks();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });

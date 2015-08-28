@@ -101,7 +101,7 @@ describe('collapse directive', function() {
       var collapseHeight = element.height();
       scope.exp = true;
       scope.$digest();
-      expect(element.height()).toBeGreaterThan(collapseHeight);
+      expect(element.height()).toBe(collapseHeight);
     });
 
     it('should shrink accordingly when content size inside collapse decreases', function() {

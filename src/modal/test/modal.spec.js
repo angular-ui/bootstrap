@@ -155,6 +155,9 @@ describe('$modal', function () {
     $rootScope.$digest();
     if (!noFlush) {
       $animate.flush();
+      $rootScope.$digest();
+      $animate.flush();
+      $rootScope.$digest();
     }
     return closed;
   }
@@ -164,6 +167,9 @@ describe('$modal', function () {
     $rootScope.$digest();
     if (!noFlush) {
       $animate.flush();
+      $rootScope.$digest();
+      $animate.flush();
+      $rootScope.$digest();
     }
     return closed;
   }
@@ -233,6 +239,8 @@ describe('$modal', function () {
       triggerKeyDown($document, 27);
       $animate.flush();
       $rootScope.$digest();
+      $animate.flush();
+      $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
     });
@@ -253,6 +261,8 @@ describe('$modal', function () {
       triggerKeyDown(button, 27);
       $animate.flush();
       $rootScope.$digest();
+      $animate.flush();
+      $rootScope.$digest();
 
       expect($document).toHaveModalsOpen(0);
 
@@ -266,6 +276,8 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       $document.find('body > div.modal').click();
+      $animate.flush();
+      $rootScope.$digest();
       $animate.flush();
       $rootScope.$digest();
 
@@ -284,6 +296,8 @@ describe('$modal', function () {
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
+      $animate.flush();
+      $rootScope.$digest();
       $animate.flush();
       $rootScope.$digest();
 
@@ -308,6 +322,8 @@ describe('$modal', function () {
       // iframe conditions. See issue 3639
       element[0].focus = undefined;
       triggerKeyDown($document, 27);
+      $animate.flush();
+      $rootScope.$digest();
       $animate.flush();
       $rootScope.$digest();
 
@@ -339,6 +355,9 @@ describe('$modal', function () {
       expect(modal.result).toBeRejectedWith('$uibUnscheduledDestruction');
 
       $animate.flush();
+      $rootScope.$digest();
+      $animate.flush();
+      $rootScope.$digest();
       expect($document).toHaveModalsOpen(0);
     });
 
