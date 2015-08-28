@@ -89,9 +89,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         //create a child scope for the typeahead directive so we are not polluting original scope
         //with typeahead-specific data (matches, query etc.)
         var scope = originalScope.$new();
-        originalScope.$on('$destroy', function() {
-          scope.$destroy();
+        var offDestroy = originalScope.$on('$destroy', function(){
+			scope.$destroy();
         });
+        scope.$on('$destroy', offDestroy);
 
         // WAI-ARIA
         var popupId = 'typeahead-' + scope.$id + '-' + Math.floor(Math.random() * 10000);
