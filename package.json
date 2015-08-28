@@ -13,7 +13,6 @@
   },
   "devDependencies": {
     "angular": "^1.4.4",
-    "angular-animate": "^1.4.4",
     "angular-mocks": "^1.4.4",
     "angular-sanitize": "^1.4.4",
     "grunt": "^0.4.5",
