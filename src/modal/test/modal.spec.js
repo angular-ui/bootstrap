@@ -292,6 +292,8 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal = open({template: '<div>Content<button>inside modal</button></div>'});
+      $animate.flush();
+      $rootScope.$digest();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(1);
 
@@ -315,6 +317,8 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal = open({template: '<div>Content</div>'});
+      $animate.flush();
+      $rootScope.$digest();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(1);
 
@@ -377,10 +381,11 @@ describe('$modal', function () {
       expect(modal.opened).toBeRejectedWith('ko');
     });
 
-    it('should focus on the element that has autofocus attribute when the modal is open/reopen', function() {
+    it('should focus on the element that has autofocus attribute when the modal is open/reopen and the animations have finished', function() {
       function openAndCloseModalWithAutofocusElement() {
         var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'});
-
+        $animate.flush();
+        $rootScope.$digest();
         expect(angular.element('#auto-focus-element')).toHaveFocus();
 
         close(modal, 'closed ok');
@@ -390,6 +395,45 @@ describe('$modal', function () {
 
       openAndCloseModalWithAutofocusElement();
       openAndCloseModalWithAutofocusElement();
+    });
+
+    it('should wait until the in animation is finished before attempting to focus the modal or autofocus element', function() {
+      function openAndCloseModalWithAutofocusElement() {
+        var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'});
+        expect(angular.element('#auto-focus-element')).not.toHaveFocus();
+
+        $animate.flush();
+        $rootScope.$digest();
+
+        expect(angular.element('#auto-focus-element')).toHaveFocus();
+
+        close(modal, 'closed ok');
+
+        expect(modal.result).toBeResolvedWith('closed ok');
+      }
+
+      function openAndCloseModalWithOutAutofocusElement() {
+        var link = '<a href>Link</a>';
+        var element = angular.element(link);
+        angular.element(document.body).append(element);
+        element.focus();
+        expect(document.activeElement.tagName).toBe('A');
+
+        var modal = open({template: '<div><input type="text"></div>'});
+        expect(document.activeElement.tagName).toBe('A');
+
+        $animate.flush();
+        $rootScope.$digest();
+
+        expect(document.activeElement.tagName).toBe('DIV');
+
+        close(modal, 'closed ok');
+
+        expect(modal.result).toBeResolvedWith('closed ok');
+      }
+
+      openAndCloseModalWithAutofocusElement();
+      openAndCloseModalWithOutAutofocusElement();
     });
 
     it('should change focus to first element when tab key was pressed', function() {
@@ -918,11 +962,15 @@ describe('$modal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal1 = open({template: '<div>Modal1<button id="focus">inside modal1</button></div>'});
+      $animate.flush();
+      $rootScope.$digest();
       document.getElementById('focus').focus();
       expect(document.activeElement.tagName).toBe('BUTTON');
       expect($document).toHaveModalsOpen(1);
 
       var modal2 = open({template: '<div>Modal2</div>'});
+      $animate.flush();
+      $rootScope.$digest();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(2);
 

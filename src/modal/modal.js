@@ -203,13 +203,15 @@ angular.module('ui.bootstrap.modal', [])
         });
 
         modalRenderDeferObj.promise.then(function() {
+          var animationPromise = null;
+
           if (attrs.modalInClass) {
             if ($animateCss) {
-              $animateCss(element, {
+              animationPromise = $animateCss(element, {
                 addClass: attrs.modalInClass
               }).start();
             } else {
-              $animate.addClass(element, attrs.modalInClass);
+              animationPromise = $animate.addClass(element, attrs.modalInClass);
             }
 
             scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
@@ -224,20 +226,23 @@ angular.module('ui.bootstrap.modal', [])
             });
           }
 
-          var inputsWithAutofocus = element[0].querySelectorAll('[autofocus]');
-          /**
-           * Auto-focusing of a freshly-opened modal element causes any child elements
-           * with the autofocus attribute to lose focus. This is an issue on touch
-           * based devices which will show and then hide the onscreen keyboard.
-           * Attempts to refocus the autofocus element via JavaScript will not reopen
-           * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
-           * the modal element if the modal does not contain an autofocus element.
-           */
-          if (inputsWithAutofocus.length) {
-            inputsWithAutofocus[0].focus();
-          } else {
-            element[0].focus();
-          }
+
+          $q.when(animationPromise).then(function() {
+            var inputsWithAutofocus = element[0].querySelectorAll('[autofocus]');
+            /**
+             * Auto-focusing of a freshly-opened modal element causes any child elements
+             * with the autofocus attribute to lose focus. This is an issue on touch
+             * based devices which will show and then hide the onscreen keyboard.
+             * Attempts to refocus the autofocus element via JavaScript will not reopen
+             * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
+             * the modal element if the modal does not contain an autofocus element.
+             */
+            if (inputsWithAutofocus.length) {
+              inputsWithAutofocus[0].focus();
+            } else {
+              element[0].focus();
+            }
+          });
 
           // Notify {@link $modalStack} that modal is rendered.
           var modal = $modalStack.getTop();
