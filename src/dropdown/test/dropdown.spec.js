@@ -224,10 +224,28 @@ describe('dropdownToggle', function() {
       expect($document.find('#dropdown-menu').parent()[0]).toBe($document.find('body')[0]);
     });
 
+    it('adds the dropdown class to the body', function() {
+      expect($document.find('body').hasClass('dropdown')).toBe(true);
+    });
+
     it('removes the menu when the dropdown is removed', function() {
       element.remove();
       $rootScope.$digest();
       expect($document.find('#dropdown-menu').length).toEqual(0);
+    });
+
+    it('toggles the open class on body', function() {
+      var body = $document.find('body');
+
+      expect(body.hasClass('open')).toBe(false);
+
+      element.find('[dropdown-toggle]').click();
+
+      expect(body.hasClass('open')).toBe(true);
+
+      element.find('[dropdown-toggle]').click();
+
+      expect(body.hasClass('open')).toBe(false);
     });
   });
 
@@ -437,11 +455,12 @@ describe('dropdownToggle', function() {
       it('should work with dropdown-append-to-body', function() {
         element = $compile('<li dropdown dropdown-append-to-body auto-close="outsideClick"><a href dropdown-toggle></a><ul class="dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        var body = $document.find('body');
+        expect(body.hasClass(dropdownConfig.openClass)).toBe(true);
         $document.find('#dropdown-menu').find('li').eq(0).trigger('click');
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(body.hasClass(dropdownConfig.openClass)).toBe(true);
         $document.click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(body.hasClass(dropdownConfig.openClass)).toBe(false);
       });
     });
 
@@ -657,7 +676,7 @@ describe('dropdownToggle', function() {
 
       triggerKeyDown(element, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect($document.find('body').hasClass(dropdownConfig.openClass)).toBe(true);
       var focusEl = $document.find('ul').eq(0).find('a');
       expect(isFocused(focusEl)).toBe(true);
     });
@@ -667,7 +686,7 @@ describe('dropdownToggle', function() {
       triggerKeyDown(element, 40);
       triggerKeyDown(element, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect($document.find('body').hasClass(dropdownConfig.openClass)).toBe(true);
       var elem1 = $document.find('ul');
       var elem2 = elem1.find('a');
       var focusEl = $document.find('ul').eq(0).find('a').eq(1);
