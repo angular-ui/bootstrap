@@ -615,6 +615,19 @@ describe('$modal', function () {
         expect($document).toHaveModalOpenWithContent('Content from resolve', 'div');
       });
 
+      it('should resolve promises as promises', function() {
+        open({
+          controller: function($scope, $foo) {
+            $scope.value = 'Content from resolve';
+            expect($foo).toBe('bar');
+          },
+          resolve: {
+            $foo: $q.when('bar')
+          },
+          template: '<div>{{value}}</div>'
+        });
+      });
+
       it('should delay showing modal if one of the resolves is a promise', function() {
         open(modalDefinition('<div>{{value}}</div>', {
           value: function() {
