@@ -715,7 +715,7 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
       });
 
       var documentClickBind = function(event) {
-        if (scope.isOpen && !element[0].contains(event.target)) {
+        if (scope.isOpen && !(element[0].contains(event.target) || popupEl[0].contains(event.target))) {
           scope.$apply(function() {
             scope.isOpen = false;
           });
