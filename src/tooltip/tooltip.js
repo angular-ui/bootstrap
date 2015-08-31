@@ -132,13 +132,20 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
 
             var positionTooltip = function() {
               if (!tooltip) { return; }
+              
+              // Reset the positioning and box size for correct width and height values.
+              tooltip.css({ top: 0, left: 0, width: 'auto', height: 'auto' });
 
-              var ttPosition = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
-              ttPosition.top += 'px';
-              ttPosition.left += 'px';
+              var ttBox = $position.position(tooltip);
+              var ttCss = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
+              ttCss.top += 'px';
+              ttCss.left += 'px';
+            
+              ttCss.width = ttBox.width + 'px';
+              ttCss.height = ttBox.height + 'px';
 
-              // Now set the calculated positioning.
-              tooltip.css(ttPosition);
+              // Now set the calculated positioning and size.
+              tooltip.css(ttCss);
             };
 
             var positionTooltipAsync = function() {
