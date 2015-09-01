@@ -129,6 +129,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
           popUpEl.attr('template-url', attrs.typeaheadTemplateUrl);
         }
 
+        if (angular.isDefined(attrs.typeaheadPopupTemplateUrl)) {
+          popUpEl.attr('popup-template-url', attrs.typeaheadPopupTemplateUrl);
+        }
+
         var resetMatches = function() {
           scope.matches = [];
           scope.activeIdx = -1;
@@ -451,7 +455,9 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         select: '&'
       },
       replace: true,
-      templateUrl: 'template/typeahead/typeahead-popup.html',
+      templateUrl: function(element, attrs) {
+        return attrs.popupTemplateUrl || 'template/typeahead/typeahead-popup.html';
+      },
       link: function(scope, element, attrs) {
         scope.templateUrl = attrs.templateUrl;
 
