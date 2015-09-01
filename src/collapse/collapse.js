@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.collapse', [])
         }
 
         function collapse() {
-          if(! element.hasClass('collapse') && ! element.hasClass('in')) {
+          if (!element.hasClass('collapse') && !element.hasClass('in')) {
             return collapseDone();
           }
 
