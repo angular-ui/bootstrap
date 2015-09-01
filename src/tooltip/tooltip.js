@@ -394,11 +394,12 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.b
 
               if (triggers.show !== 'none') {
                 triggers.show.forEach(function(trigger, idx) {
+                  // Using raw addEventListener due to jqLite/jQuery bug - #4060
                   if (trigger === triggers.hide[idx]) {
-                    element.bind(trigger, toggleTooltipBind);
+                    element[0].addEventListener(trigger, toggleTooltipBind);
                   } else if (trigger) {
-                    element.bind(trigger, showTooltipBind);
-                    element.bind(triggers.hide[idx], hideTooltipBind);
+                    element[0].addEventListener(trigger, showTooltipBind);
+                    element[0].addEventListener(triggers.hide[idx], hideTooltipBind);
                   }
                 });
               }
