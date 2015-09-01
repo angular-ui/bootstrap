@@ -39,7 +39,7 @@ describe('tooltip directive', function() {
   });
 
   function compileTooltip(ttipMarkup) {
-    var fragment = $compile('<div>'+ttipMarkup+'</div>')($rootScope);
+    var fragment = $compile('<div>' + ttipMarkup + '</div>')($rootScope);
     $rootScope.$digest();
     return fragment;
   }
