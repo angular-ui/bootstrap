@@ -88,9 +88,11 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
         }
       });
 
-      scope.toggleOpen = function() {
+      scope.toggleOpen = function($event) {
         if (!scope.isDisabled) {
-          scope.isOpen = !scope.isOpen;
+          if (!$event || $event.which === 32) {
+            scope.isOpen = !scope.isOpen;
+          }
         }
       };
     }

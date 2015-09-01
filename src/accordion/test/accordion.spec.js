@@ -222,6 +222,22 @@ describe('accordion', function() {
         scope.$digest();
         expect(group).not.toHaveClass('panel-open');
       });
+
+      it('should toggle element on spacebar when focused', function() {
+        var group = groups.eq(0);
+        findGroupLink(0)[0].focus();
+        var e = $.Event('keypress');
+        e.which = 32;
+        findGroupLink(0).trigger(e);
+
+        expect(group).toHaveClass('panel-open');
+
+        e = $.Event('keypress');
+        e.which = 32;
+        findGroupLink(0).trigger(e);
+
+        expect(group).not.toHaveClass('panel-open');
+      });
     });
 
     describe('with open-class attribute', function() {
