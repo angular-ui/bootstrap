@@ -145,7 +145,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       }
       case (38): {
         if (!angular.isNumber(self.selectedOption)) {
-          return;
+          self.selectedOption = elems.length - 1;
         } else {
           self.selectedOption = self.selectedOption === 0 ?
             0 : self.selectedOption - 1;
@@ -292,8 +292,12 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
               break;
             }
             case (38): { // Up
-              dropdownCtrl.selectedOption = dropdownCtrl.selectedOption === 0 ?
-                0 : dropdownCtrl.selectedOption - 1;
+              if (!angular.isNumber(dropdownCtrl.selectedOption)) {
+                dropdownCtrl.selectedOption = elems.length - 1;
+              } else {
+                dropdownCtrl.selectedOption = dropdownCtrl.selectedOption === 0 ?
+                  0 : dropdownCtrl.selectedOption - 1;
+              }
               break;
             }
           }
@@ -301,7 +305,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         }
       });
     }
-
   };
 })
 

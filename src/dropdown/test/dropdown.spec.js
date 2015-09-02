@@ -587,6 +587,16 @@ describe('dropdownToggle', function() {
       expect(isFocused(focusEl)).toBe(false);
     });
 
+    it('should focus last list element when up arrow pressed after dropdown toggled', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 38);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
     it('should not focus any list element when down arrow pressed if closed', function() {
       $document.find('body').append(element);
       triggerKeyDown($document, 40);
