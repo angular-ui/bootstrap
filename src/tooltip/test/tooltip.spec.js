@@ -297,7 +297,6 @@ describe('tooltip', function() {
       elmScope.disabled = true;
       elmScope.$digest();
 
-      $timeout.flush();
       expect(tooltipScope.isOpen).toBe(false);
     });
 
