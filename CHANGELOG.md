@@ -1,3 +1,53 @@
+<a name="0.13.4"></a>
+## [0.13.4](https://github.com/angular-ui/bootstrap/compare/0.13.3...v0.13.4) (2015-09-03)
+
+
+### Bug Fixes
+
+* **accordion:** add custom open class support ([575eb85](https://github.com/angular-ui/bootstrap/commit/575eb85)), closes [#4198](https://github.com/angular-ui/bootstrap/issues/4198)
+* **datepicker:** ensure the original target is not in popup ([9b2f7ac](https://github.com/angular-ui/bootstrap/commit/9b2f7ac)), closes [#4316](https://github.com/angular-ui/bootstrap/issues/4316) [#4314](https://github.com/angular-ui/bootstrap/issues/4314)
+* **dropdown:** fix display when using with append-to-body ([bf63cef](https://github.com/angular-ui/bootstrap/commit/bf63cef)), closes [#4305](https://github.com/angular-ui/bootstrap/issues/4305) [#4240](https://github.com/angular-ui/bootstrap/issues/4240)
+* **dropdown:** fix up arrow nav support ([defcbbb](https://github.com/angular-ui/bootstrap/commit/defcbbb)), closes [#4330](https://github.com/angular-ui/bootstrap/issues/4330) [#4327](https://github.com/angular-ui/bootstrap/issues/4327)
+* **modal:** Wait for animation before focus. ([937a1f3](https://github.com/angular-ui/bootstrap/commit/937a1f3)), closes [#4300](https://github.com/angular-ui/bootstrap/issues/4300) [#4274](https://github.com/angular-ui/bootstrap/issues/4274)
+* **modal:** correctly remove custom class ([ba2ce24](https://github.com/angular-ui/bootstrap/commit/ba2ce24)), closes [#4175](https://github.com/angular-ui/bootstrap/issues/4175) [#4171](https://github.com/angular-ui/bootstrap/issues/4171)
+* **modal:** fix allowing promises to be resolved ([b1e98b1](https://github.com/angular-ui/bootstrap/commit/b1e98b1)), closes [#4310](https://github.com/angular-ui/bootstrap/issues/4310) [#4309](https://github.com/angular-ui/bootstrap/issues/4309)
+* **progress:** rename to avoid conflict ([07a938d](https://github.com/angular-ui/bootstrap/commit/07a938d)), closes [#4255](https://github.com/angular-ui/bootstrap/issues/4255)
+* **tabs:** ensure tab selection only occurs once ([7d3ba1e](https://github.com/angular-ui/bootstrap/commit/7d3ba1e)), closes [#3060](https://github.com/angular-ui/bootstrap/issues/3060) [#4230](https://github.com/angular-ui/bootstrap/issues/4230) [#2883](https://github.com/angular-ui/bootstrap/issues/2883)
+* **timepicker:** leave view alone if either input is invalid ([818f7e5](https://github.com/angular-ui/bootstrap/commit/818f7e5)), closes [#4160](https://github.com/angular-ui/bootstrap/issues/4160) [#3825](https://github.com/angular-ui/bootstrap/issues/3825)
+* **tooltip:** correctly position tooltip ([457f10c](https://github.com/angular-ui/bootstrap/commit/457f10c)), closes [#4311](https://github.com/angular-ui/bootstrap/issues/4311) [#4195](https://github.com/angular-ui/bootstrap/issues/4195)
+* **tooltip:** fix jshint error ([17cc39f](https://github.com/angular-ui/bootstrap/commit/17cc39f))
+* **tooltip:** properly gc timeout on toggle of disabled ([f8eab55](https://github.com/angular-ui/bootstrap/commit/f8eab55)), closes [#4210](https://github.com/angular-ui/bootstrap/issues/4210) [#4204](https://github.com/angular-ui/bootstrap/issues/4204)
+* **tooltip:** switch to use raw DOM event bindings ([7556bed](https://github.com/angular-ui/bootstrap/commit/7556bed)), closes [#4322](https://github.com/angular-ui/bootstrap/issues/4322) [#4060](https://github.com/angular-ui/bootstrap/issues/4060)
+* **typeahead:** add support for ngModelOptions getterSetter ([ccaa627](https://github.com/angular-ui/bootstrap/commit/ccaa627)), closes [#3865](https://github.com/angular-ui/bootstrap/issues/3865) [#3823](https://github.com/angular-ui/bootstrap/issues/3823)
+* **typeahead:** release references on destruction ([695db9d](https://github.com/angular-ui/bootstrap/commit/695db9d)), closes [#4299](https://github.com/angular-ui/bootstrap/issues/4299) [#4298](https://github.com/angular-ui/bootstrap/issues/4298)
+* **typeahead:** use ng-bind-html ([bb9fa1a](https://github.com/angular-ui/bootstrap/commit/bb9fa1a)), closes [#3463](https://github.com/angular-ui/bootstrap/issues/3463) [#4073](https://github.com/angular-ui/bootstrap/issues/4073)
+
+### Features
+
+* **accordion:** allow custom panel class ([5ee23a4](https://github.com/angular-ui/bootstrap/commit/5ee23a4)), closes [#4242](https://github.com/angular-ui/bootstrap/issues/4242) [#3968](https://github.com/angular-ui/bootstrap/issues/3968)
+* **accordion:** support spacebar to toggle group ([aa5a991](https://github.com/angular-ui/bootstrap/commit/aa5a991)), closes [#4319](https://github.com/angular-ui/bootstrap/issues/4319) [#4249](https://github.com/angular-ui/bootstrap/issues/4249)
+* **buttons:** allow toggling via spacebar when focused ([bdfb289](https://github.com/angular-ui/bootstrap/commit/bdfb289)), closes [#4252](https://github.com/angular-ui/bootstrap/issues/4252) [#4259](https://github.com/angular-ui/bootstrap/issues/4259)
+* **buttons:** hide nested inputs ([a06afe6](https://github.com/angular-ui/bootstrap/commit/a06afe6)), closes [#4282](https://github.com/angular-ui/bootstrap/issues/4282)
+* **carousel:** add model binding support to slide ([dac087e](https://github.com/angular-ui/bootstrap/commit/dac087e)), closes [#4202](https://github.com/angular-ui/bootstrap/issues/4202) [#4201](https://github.com/angular-ui/bootstrap/issues/4201)
+* **dateparser:** add support for the `h` format ([550fe20](https://github.com/angular-ui/bootstrap/commit/550fe20)), closes [#4220](https://github.com/angular-ui/bootstrap/issues/4220)
+* **datepicker:** disable today button if invalid ([71e0b8a](https://github.com/angular-ui/bootstrap/commit/71e0b8a)), closes [#4199](https://github.com/angular-ui/bootstrap/issues/4199) [#3988](https://github.com/angular-ui/bootstrap/issues/3988)
+* **modal:** complete modal open resolution in order ([1bba8b4](https://github.com/angular-ui/bootstrap/commit/1bba8b4)), closes [#2443](https://github.com/angular-ui/bootstrap/issues/2443) [#4302](https://github.com/angular-ui/bootstrap/issues/4302) [#2404](https://github.com/angular-ui/bootstrap/issues/2404)
+* **modal:** support multiple open classes ([3d01c59](https://github.com/angular-ui/bootstrap/commit/3d01c59)), closes [#4226](https://github.com/angular-ui/bootstrap/issues/4226) [#4184](https://github.com/angular-ui/bootstrap/issues/4184)
+* **pagination:** add `ngDisabled` support for the pager ([ba734b4](https://github.com/angular-ui/bootstrap/commit/ba734b4)), closes [#4217](https://github.com/angular-ui/bootstrap/issues/4217) [#2856](https://github.com/angular-ui/bootstrap/issues/2856)
+* **pagination:** add `templateUrl` support ([64b5289](https://github.com/angular-ui/bootstrap/commit/64b5289)), closes [#4162](https://github.com/angular-ui/bootstrap/issues/4162)
+* **tabs:** add support for `x-tab-heading` ([1abfd05](https://github.com/angular-ui/bootstrap/commit/1abfd05)), closes [#4166](https://github.com/angular-ui/bootstrap/issues/4166) [#1893](https://github.com/angular-ui/bootstrap/issues/1893)
+* **timepicker:** add `templateUrl` and `controllerAs` support ([639d511](https://github.com/angular-ui/bootstrap/commit/639d511)), closes [#4275](https://github.com/angular-ui/bootstrap/issues/4275) [#4284](https://github.com/angular-ui/bootstrap/issues/4284)
+* **tooltip:** expose isOpen property ([99b87cc](https://github.com/angular-ui/bootstrap/commit/99b87cc)), closes [#4179](https://github.com/angular-ui/bootstrap/issues/4179) [#2148](https://github.com/angular-ui/bootstrap/issues/2148) [#590](https://github.com/angular-ui/bootstrap/issues/590)
+* **typeahead:** add `typeaheadFocusOnSelect` ([b5ecda3](https://github.com/angular-ui/bootstrap/commit/b5ecda3)), closes [#4212](https://github.com/angular-ui/bootstrap/issues/4212) [#4211](https://github.com/angular-ui/bootstrap/issues/4211) [#4206](https://github.com/angular-ui/bootstrap/issues/4206)
+* **typeahead:** add custom popup template support ([4b02648](https://github.com/angular-ui/bootstrap/commit/4b02648)), closes [#4320](https://github.com/angular-ui/bootstrap/issues/4320) [#3774](https://github.com/angular-ui/bootstrap/issues/3774)
+
+
+### BREAKING CHANGES
+
+* This differs from the existing behavior in that it no longer will toggle based on the existing `dropdown` directive element, but on the `body` element instead
+* This modifies the typeahead to use the the `$sce` service instead when `ngSanitize` is present
+
+
 <a name"0.13.3"></a>
 ### 0.13.3 (2015-08-09)
 

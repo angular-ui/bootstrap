@@ -159,8 +159,13 @@ module.exports = function(grunt) {
     },
     conventionalChangelog: {
       options: {
-        dest: 'CHANGELOG.md',
+        changelogOpts: {
+          preset: 'angular'
+        },
         templateFile: 'misc/changelog.tpl.md'
+      },
+      release: {
+        src: 'CHANGELOG.md'
       }
     },
     shell: {
