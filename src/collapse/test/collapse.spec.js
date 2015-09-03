@@ -98,10 +98,12 @@ describe('collapse directive', function() {
       scope.exp = false;
       scope.isCollapsed = false;
       scope.$digest();
+      $animate.flush();
+      scope.$digest();
       var collapseHeight = element.height();
       scope.exp = true;
       scope.$digest();
-      expect(element.height()).toBe(collapseHeight);
+      expect(element.height()).toBeGreaterThan(collapseHeight);
     });
 
     it('should shrink accordingly when content size inside collapse decreases', function() {
