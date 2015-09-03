@@ -3,7 +3,7 @@
  * function, placement as a function, inside, support for more triggers than
  * just mouse enter/leave, html tooltips, and selector delegation.
  */
-angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.bindHtml'])
+angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
 
 /**
  * The $tooltip service creates tooltip- and popover-like directives as well as
@@ -570,26 +570,4 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return $tooltip('tooltipHtml', 'tooltip', 'mouseenter', {
     useContentExp: true
   });
-}])
-
-/*
-Deprecated
-*/
-.directive('tooltipHtmlUnsafePopup', function() {
-  return {
-    restrict: 'EA',
-    replace: true,
-    scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-html-unsafe-popup.html'
-  };
-})
-
-.value('tooltipHtmlUnsafeSuppressDeprecated', false)
-.directive('tooltipHtmlUnsafe', [
-          '$tooltip', 'tooltipHtmlUnsafeSuppressDeprecated', '$log',
-function($tooltip ,  tooltipHtmlUnsafeSuppressDeprecated ,  $log) {
-  if (!tooltipHtmlUnsafeSuppressDeprecated) {
-    $log.warn('tooltip-html-unsafe is now deprecated. Use tooltip-html or tooltip-template instead.');
-  }
-  return $tooltip('tooltipHtmlUnsafe', 'tooltip', 'mouseenter');
 }]);

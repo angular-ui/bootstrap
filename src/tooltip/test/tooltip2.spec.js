@@ -5,7 +5,6 @@ describe('tooltip directive', function() {
   beforeEach(module('template/tooltip/tooltip-popup.html'));
   beforeEach(module('template/tooltip/tooltip-template-popup.html'));
   beforeEach(module('template/tooltip/tooltip-html-popup.html'));
-  beforeEach(module('template/tooltip/tooltip-html-unsafe-popup.html'));
   beforeEach(inject(function(_$rootScope_, _$compile_, _$document_, _$timeout_) {
     $rootScope = _$rootScope_;
     $compile = _$compile_;
@@ -103,7 +102,6 @@ describe('tooltip directive', function() {
     var tooltipTypes = {
       'tooltip': 'tooltip="tooltip text"',
       'tooltip-html': 'tooltip-html="tooltipSafeHtml"',
-      'tooltip-html-unsafe': 'tooltip-html-unsafe="tooltip text"',
       'tooltip-template': 'tooltip-template="\'tooltipTextUrl\'"'
     };
 

@@ -675,64 +675,6 @@ describe('tooltipHtml', function() {
   }));
 });
 
-describe('tooltipHtmlUnsafe', function() {
-  var elm, elmBody, elmScope, tooltipScope, scope;
-  var logWarnSpy;
-
-  // load the tooltip code
-  beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider) {
-    $tooltipProvider.options({ animation: false });
-  }));
-
-  // load the template
-  beforeEach(module('template/tooltip/tooltip-html-unsafe-popup.html'));
-
-  beforeEach(inject(function($rootScope, $compile, $log) {
-    scope = $rootScope;
-    scope.html = 'I say: <strong class="hello">Hello!</strong>';
-
-    logWarnSpy = spyOn($log, 'warn');
-
-    elmBody = $compile( angular.element(
-      '<div><span tooltip-html-unsafe="{{html}}">Selector Text</span></div>'
-    ))(scope);
-    scope.$digest();
-    elm = elmBody.find('span');
-    elmScope = elm.scope();
-    tooltipScope = elmScope.$$childTail;
-  }));
-
-  function trigger(element, evt) {
-    evt = new Event(evt);
-
-    element[0].dispatchEvent(evt);
-  }
-
-
-  it('should warn that this is deprecated', function() {
-    expect(logWarnSpy).toHaveBeenCalledWith(jasmine.stringMatching('deprecated'));
-  });
-
-  it('should render html properly', inject(function() {
-    trigger(elm, 'mouseenter');
-    expect(elmBody.find('.tooltip-inner').html()).toBe(scope.html);
-  }));
-
-  it('should show on mouseenter and hide on mouseleave', inject(function() {
-    expect(tooltipScope.isOpen).toBe(false);
-
-    trigger(elm, 'mouseenter');
-    expect(tooltipScope.isOpen).toBe(true);
-    expect(elmBody.children().length).toBe(2);
-
-    expect(tooltipScope.content).toEqual(scope.html);
-
-    trigger(elm, 'mouseleave');
-    expect(tooltipScope.isOpen).toBe(false);
-    expect(elmBody.children().length).toBe(1);
-  }));
-});
-
 describe('$tooltipProvider', function() {
   var elm,
       elmBody,
