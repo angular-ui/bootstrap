@@ -157,7 +157,7 @@ module.exports = function(grunt) {
         reporters: ['progress', 'coverage']
       }
     },
-    changelog: {
+    conventionalChangelog: {
       options: {
         dest: 'CHANGELOG.md',
         templateFile: 'misc/changelog.tpl.md'
