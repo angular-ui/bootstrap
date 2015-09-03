@@ -1,5 +1,5 @@
 /* global FastClick, smoothScroll */
-angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAnimate'], function($httpProvider){
+angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAnimate', 'ngSanitize'], function($httpProvider){
   FastClick.attach(document.body);
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }).run(['$location', function($location){
