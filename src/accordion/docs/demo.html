@@ -36,7 +36,7 @@
       <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
       <div ng-repeat="item in items">{{item}}</div>
     </accordion-group>
-    <accordion-group is-open="status.open">
+    <accordion-group>
       <accordion-heading>
         I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
       </accordion-heading>
@@ -45,7 +45,7 @@
     <accordion-group heading="Custom template" template-url="group-template.html">
       Hello
     </accordion-group>
-    <accordion-group heading="Delete account" panel-class="panel-danger">
+    <accordion-group heading="Delete account" panel-class="panel-danger" is-open="status.open">
       <p>Please, to delete your account, click the button below</p>
       <button class="btn btn-danger">Delete</button>
     </accordion-group>
