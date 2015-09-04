@@ -1,6 +1,5 @@
 describe('collapse directive', function() {
-  var scope, $compile, $animate;
-  var element;
+  var element, scope, $compile, $animate;
 
   beforeEach(module('ui.bootstrap.collapse'));
   beforeEach(module('ngAnimateMock'));
@@ -19,13 +18,13 @@ describe('collapse directive', function() {
     element.remove();
   });
 
-  it('should be hidden on initialization if isCollapsed = true without transition', function() {
+  it('should be hidden on initialization if isCollapsed = true', function() {
     scope.isCollapsed = true;
     scope.$digest();
     expect(element.height()).toBe(0);
   });
 
-  it('should collapse if isCollapsed = true with animation on subsequent use', function() {
+  it('should collapse if isCollapsed = true on subsequent use', function() {
     scope.isCollapsed = false;
     scope.$digest();
     $animate.flush();
@@ -35,14 +34,14 @@ describe('collapse directive', function() {
     expect(element.height()).toBe(0);
   });
 
-  it('should be shown on initialization if isCollapsed = false without transition', function() {
+  it('should be shown on initialization if isCollapsed = false', function() {
     scope.isCollapsed = false;
     scope.$digest();
     $animate.flush();
     expect(element.height()).not.toBe(0);
   });
 
-  it('should expand if isCollapsed = false with animation on subsequent use', function() {
+  it('should expand if isCollapsed = false on subsequent use', function() {
     scope.isCollapsed = false;
     scope.$digest();
     $animate.flush();
@@ -55,7 +54,7 @@ describe('collapse directive', function() {
     expect(element.height()).not.toBe(0);
   });
 
-  it('should expand if isCollapsed = true with animation on subsequent uses', function() {
+  it('should expand if isCollapsed = true on subsequent uses', function() {
     scope.isCollapsed = false;
     scope.$digest();
     $animate.flush();
