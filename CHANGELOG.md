@@ -42,10 +42,35 @@
 * **typeahead:** add custom popup template support ([4b02648](https://github.com/angular-ui/bootstrap/commit/4b02648)), closes [#4320](https://github.com/angular-ui/bootstrap/issues/4320) [#3774](https://github.com/angular-ui/bootstrap/issues/3774)
 
 
-### BREAKING CHANGES
+### Breaking Changes
 
-* This differs from the existing behavior in that it no longer will toggle based on the existing `dropdown` directive element, but on the `body` element instead
-* This modifies the typeahead to use the the `$sce` service instead when `ngSanitize` is present
+* **buttons**
+  * hide nested `<input>` elements on `btn-radio` and `btn-checkbox` directives.
+
+  Fixes #3264
+  Closes #4282
+
+   ([a06afe6](https://github.com/angular-ui/bootstrap/commit/a06afe6))
+
+* **dropdown**
+  * when using `append-to-body`, both the `dropdown` and `open` classes are added to the `<body>` element.
+  * this differs from the existing behavior in that it will no longer toggle based on the existing `dropdown` directive element, but on the `body` element instead.
+
+  Fixes #4240
+  Closes #4305
+
+   ([bf63cef](https://github.com/angular-ui/bootstrap/commit/bf63cef))
+
+* **typeahead**
+  * for security reasons, only whitelisted HTML should be added.
+  * the typeahead match template now uses `ng-bind-html` instead of `bind-html-unsafe`.
+  * typeahead now uses the `$sce` service when `ngSanitize` is present and logs a warning if it is not.
+
+  Fixes #2884
+  Closes #3463
+  Closes #4073
+
+   ([bb9fa1a](https://github.com/angular-ui/bootstrap/commit/bb9fa1a))
 
 
 <a name"0.13.3"></a>
