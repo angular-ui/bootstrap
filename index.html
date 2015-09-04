@@ -258,18 +258,18 @@
       <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
       <div ng-repeat="item in items">{{item}}</div>
     </accordion-group>
-    <accordion-group is-open="status.open">
-      <accordion-heading>
-        I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-      </accordion-heading>
-      This is just some content to illustrate fancy headings.
-    </accordion-group>
     <accordion-group heading="Custom template" template-url="group-template.html">
       Hello
     </accordion-group>
     <accordion-group heading="Delete account" panel-class="panel-danger">
       <p>Please, to delete your account, click the button below</p>
       <button class="btn btn-danger">Delete</button>
+    </accordion-group>
+    <accordion-group is-open="status.open">
+      <accordion-heading>
+        I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </accordion-heading>
+      This is just some content to illustrate fancy headings.
     </accordion-group>
   </accordion>
 </div>
@@ -356,18 +356,18 @@ Add the ability to override the template used on the component.</li>
       &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-sm&quot; ng-click=&quot;addItem()&quot;&gt;Add Item&lt;/button&gt;
       &lt;div ng-repeat=&quot;item in items&quot;&gt;{{item}}&lt;/div&gt;
     &lt;/accordion-group&gt;
-    &lt;accordion-group is-open=&quot;status.open&quot;&gt;
-      &lt;accordion-heading&gt;
-        I can have markup, too! &lt;i class=&quot;pull-right glyphicon&quot; ng-class=&quot;{&#x27;glyphicon-chevron-down&#x27;: status.open, &#x27;glyphicon-chevron-right&#x27;: !status.open}&quot;&gt;&lt;/i&gt;
-      &lt;/accordion-heading&gt;
-      This is just some content to illustrate fancy headings.
-    &lt;/accordion-group&gt;
     &lt;accordion-group heading=&quot;Custom template&quot; template-url=&quot;group-template.html&quot;&gt;
       Hello
     &lt;/accordion-group&gt;
     &lt;accordion-group heading=&quot;Delete account&quot; panel-class=&quot;panel-danger&quot;&gt;
       &lt;p&gt;Please, to delete your account, click the button below&lt;/p&gt;
       &lt;button class=&quot;btn btn-danger&quot;&gt;Delete&lt;/button&gt;
+    &lt;/accordion-group&gt;
+    &lt;accordion-group is-open=&quot;status.open&quot;&gt;
+      &lt;accordion-heading&gt;
+        I can have markup, too! &lt;i class=&quot;pull-right glyphicon&quot; ng-class=&quot;{&#x27;glyphicon-chevron-down&#x27;: status.open, &#x27;glyphicon-chevron-right&#x27;: !status.open}&quot;&gt;&lt;/i&gt;
+      &lt;/accordion-heading&gt;
+      This is just some content to illustrate fancy headings.
     &lt;/accordion-group&gt;
   &lt;/accordion&gt;
 &lt;/div&gt;
