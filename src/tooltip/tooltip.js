@@ -146,6 +146,8 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
 
                   ttCss.width = ttBox.width + 'px';
                   ttCss.height = ttBox.height + 'px';
+                  
+                  ttCss.visibility = 'visible';
 
                   // Now set the calculated positioning and size.
                   tooltip.css(ttCss);
@@ -225,7 +227,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
                 ttScope.$apply(); // digest required as $apply is not called
               }
 
-              tooltip.css({ display: 'block' });
+              tooltip.css({ display: 'block', visibility: 'hidden' });
 
               positionTooltip();
             }
