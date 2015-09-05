@@ -3,7 +3,8 @@ describe('tooltip', function() {
       elmBody,
       scope,
       elmScope,
-      tooltipScope;
+      tooltipScope,
+      $document;
 
   // load the tooltip code
   beforeEach(module('ui.bootstrap.tooltip'));
@@ -11,11 +12,12 @@ describe('tooltip', function() {
   // load the template
   beforeEach(module('template/tooltip/tooltip-popup.html'));
 
-  beforeEach(inject(function($rootScope, $compile) {
+  beforeEach(inject(function($rootScope, $compile, _$document_) {
     elmBody = angular.element(
       '<div><span tooltip="tooltip text" tooltip-animation="false">Selector Text</span></div>'
     );
 
+    $document = _$document_;
     scope = $rootScope;
     $compile(elmBody)(scope);
     scope.$digest();
@@ -319,6 +321,41 @@ describe('tooltip', function() {
 
       expect(tooltipScope.isOpen).toBe(true);
     });
+
+    it('should close the tooltips in order', inject(function($compile) {
+      var elm2 = $compile('<div><span tooltip="tooltip #2" tooltip-is-open="isOpen2">Selector Text</span></div>')(scope);
+      scope.$digest();
+      elm2 = elm2.find('span');
+      var tooltipScope2 = elm2.scope().$$childTail;
+      tooltipScope2.isOpen = false;
+      scope.$digest();
+
+      trigger(elm, 'mouseenter');
+      $timeout.flush();
+      expect(tooltipScope.isOpen).toBe(true);
+      expect(tooltipScope2.isOpen).toBe(false);
+
+      trigger(elm2, 'mouseenter');
+      $timeout.flush();
+      expect(tooltipScope.isOpen).toBe(true);
+      expect(tooltipScope2.isOpen).toBe(true);
+
+      var evt = $.Event('keypress');
+      evt.which = 27;
+
+      $document.trigger(evt);
+
+      expect(tooltipScope.isOpen).toBe(true);
+      expect(tooltipScope2.isOpen).toBe(false);
+
+      var evt2 = $.Event('keypress');
+      evt2.which = 27;
+
+      $document.trigger(evt2);
+
+      expect(tooltipScope.isOpen).toBe(false);
+      expect(tooltipScope2.isOpen).toBe(false);
+    }));
   });
 
   describe('with an is-open attribute', function() {
