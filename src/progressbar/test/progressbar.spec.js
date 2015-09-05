@@ -51,7 +51,7 @@ describe('progressbar directive', function() {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.value = 22;
-    element = $compile('<progressbar animate="false" value="value">{{value}} %</progressbar>')($rootScope);
+    element = $compile('<progressbar animate="false" value="value" title="foo">{{value}} %</progressbar>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -81,6 +81,14 @@ describe('progressbar directive', function() {
     expect(bar.attr('aria-valuemax')).toBe('100');
     expect(bar.attr('aria-valuenow')).toBe('22');
     expect(bar.attr('aria-valuetext')).toBe('22%');
+    expect(bar.attr('aria-labelledby')).toBe('foo');
+  });
+
+  it('has the default aria-labelledby value of `progressbar`', function() {
+    element = $compile('<progressbar animate="false" value="value">{{value}} %</progressbar>')($rootScope);
+    $rootScope.$digest();
+    var bar = getBar(0);
+    expect(bar.attr('aria-labelledby')).toBe('progressbar');
   });
 
   it('transcludes "bar" text', function() {
@@ -197,11 +205,11 @@ describe('progressbar directive', function() {
   describe('stacked', function() {
     beforeEach(inject(function() {
       $rootScope.objects = [
-        { value: 10, type: 'success' },
-        { value: 50, type: 'warning' },
-        { value: 20 }
+        { value: 10, title: 'foo', type: 'success' },
+        { value: 50, title: 'bar', type: 'warning' },
+        { value: 20, title: 'baz' }
       ];
-      element = $compile('<uib-progress animate="false"><uib-bar ng-repeat="o in objects" value="o.value" type="{{o.type}}">{{o.value}}</uib-bar></uib-progress>')($rootScope);
+      element = $compile('<uib-progress animate="false"><uib-bar ng-repeat="o in objects" value="o.value" type="{{o.type}}" title="{{o.title}}">{{o.value}}</uib-bar></uib-progress>')($rootScope);
       $rootScope.$digest();
     }));
 
@@ -259,6 +267,40 @@ describe('progressbar directive', function() {
       expect(getBar(0)).toHaveClass(BAR_CLASS + '-info');
       expect(getBar(0)).not.toHaveClass(BAR_CLASS + '-success');
       expect(getBar(0)).not.toHaveClass(BAR_CLASS + '-warning');
+    });
+
+    it('should have the correct aria markup', function() {
+      expect(getBar(0).attr('aria-valuenow')).toBe('10');
+      expect(getBar(0).attr('aria-valuemin')).toBe('0');
+      expect(getBar(0).attr('aria-valuemax')).toBe('100');
+      expect(getBar(0).attr('aria-valuetext')).toBe('10%');
+      expect(getBar(0).attr('aria-labelledby')).toBe('foo');
+
+      expect(getBar(1).attr('aria-valuenow')).toBe('50');
+      expect(getBar(1).attr('aria-valuemin')).toBe('0');
+      expect(getBar(1).attr('aria-valuemax')).toBe('100');
+      expect(getBar(1).attr('aria-valuetext')).toBe('50%');
+      expect(getBar(1).attr('aria-labelledby')).toBe('bar');
+
+      expect(getBar(2).attr('aria-valuenow')).toBe('20');
+      expect(getBar(2).attr('aria-valuemin')).toBe('0');
+      expect(getBar(2).attr('aria-valuemax')).toBe('100');
+      expect(getBar(2).attr('aria-valuetext')).toBe('20%');
+      expect(getBar(2).attr('aria-labelledby')).toBe('baz');
+    });
+
+    it('should default to `progressbar`', function() {
+      $rootScope.objects = [
+        { value: 10, title: 'foo', type: 'success' },
+        { value: 50, title: 'bar', type: 'warning' },
+        { value: 20, title: 'baz' }
+      ];
+      element = $compile('<uib-progress animate="false"><uib-bar ng-repeat="o in objects" value="o.value" type="{{o.type}}">{{o.value}}</uib-bar></uib-progress>')($rootScope);
+      $rootScope.$digest();
+
+      expect(getBar(0).attr('aria-labelledby')).toBe('progressbar');
+      expect(getBar(1).attr('aria-labelledby')).toBe('progressbar');
+      expect(getBar(2).attr('aria-labelledby')).toBe('progressbar');
     });
 
     describe('"max" attribute', function() {

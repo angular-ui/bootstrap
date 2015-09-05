@@ -22,8 +22,11 @@ It supports multiple (stacked) bars into the same `<uib-progress>` element or a 
  	_(Default: true)_ :
  	Whether bars use transitions to achieve the width change.
 
+ * `title`
+  _(Default: progressbar)_ :
+  Title to use as label (for accessibility)
 
 ### Stacked ###
 
 Place multiple `<uib-bar>`s into the same `<uib-progress>` element to stack them.
-`<uib-progress>` supports `max` and `animate` &  `<uib-bar>` supports  `value` and `type` attributes.
+`<uib-progress>` supports `max`, `animate`, and `title` &  `<uib-bar>` supports  `value`, `title`, and `type` attributes.
