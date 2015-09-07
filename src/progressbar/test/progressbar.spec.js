@@ -3,20 +3,6 @@ describe('progressbar directive', function() {
     beforeEach(module('ui.bootstrap.progressbar'));
     beforeEach(module('template/progressbar/progress.html', 'template/progressbar/bar.html'));
 
-    it('should give warning', inject(function($compile, $log, $rootScope) {
-      spyOn($log, 'warn');
-
-      $rootScope.objects = [
-        { value: 10, type: 'success' },
-        { value: 50, type: 'warning' },
-        { value: 20 }
-      ];
-      var element = $compile('<progress animate="false"><bar ng-repeat="o in objects" value="o.value" type="{{o.type}}">{{o.value}}</bar></progress>')($rootScope);
-      $rootScope.$digest();
-
-      expect($log.warn.calls.count()).toBe(0);
-    }));
-
     it('should suppress warning', function() {
       module(function($provide) {
         $provide.value('$progressSuppressWarning', true);
@@ -33,13 +19,27 @@ describe('progressbar directive', function() {
         var element = $compile('<progress animate="false"><bar ng-repeat="o in objects" value="o.value" type="{{o.type}}">{{o.value}}</bar></progress>')($rootScope);
         $rootScope.$digest();
 
-        expect($log.warn.calls.count()).toBe(4);
-        expect($log.warn.calls.argsFor(0)).toEqual(['progress is now deprecated. Use uib-progress instead']);
-        expect($log.warn.calls.argsFor(1)).toEqual(['bar is now deprecated. Use uib-bar instead']);
-        expect($log.warn.calls.argsFor(2)).toEqual(['bar is now deprecated. Use uib-bar instead']);
-        expect($log.warn.calls.argsFor(3)).toEqual(['bar is now deprecated. Use uib-bar instead']);
+        expect($log.warn.calls.count()).toBe(0);
       });
     });
+
+    it('should give warning by default', inject(function($compile, $log, $rootScope) {
+      spyOn($log, 'warn');
+
+      $rootScope.objects = [
+        { value: 10, type: 'success' },
+        { value: 50, type: 'warning' },
+        { value: 20 }
+      ];
+      var element = $compile('<progress animate="false"><bar ng-repeat="o in objects" value="o.value" type="{{o.type}}">{{o.value}}</bar></progress>')($rootScope);
+      $rootScope.$digest();
+
+      expect($log.warn.calls.count()).toBe(4);
+      expect($log.warn.calls.argsFor(0)).toEqual(['progress is now deprecated. Use uib-progress instead']);
+      expect($log.warn.calls.argsFor(1)).toEqual(['bar is now deprecated. Use uib-bar instead']);
+      expect($log.warn.calls.argsFor(2)).toEqual(['bar is now deprecated. Use uib-bar instead']);
+      expect($log.warn.calls.argsFor(3)).toEqual(['bar is now deprecated. Use uib-bar instead']);
+    }));
   });
 });
 

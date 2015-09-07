@@ -83,7 +83,7 @@ angular.module('ui.bootstrap.progressbar', [])
     },
     templateUrl: 'template/progressbar/progress.html',
     link: function() {
-      if ($progressSuppressWarning) {
+      if (!$progressSuppressWarning) {
         $log.warn('progress is now deprecated. Use uib-progress instead');
       }
     }
@@ -119,7 +119,7 @@ angular.module('ui.bootstrap.progressbar', [])
     },
     templateUrl: 'template/progressbar/bar.html',
     link: function(scope, element, attrs, progressCtrl) {
-      if ($progressSuppressWarning) {
+      if (!$progressSuppressWarning) {
         $log.warn('bar is now deprecated. Use uib-bar instead');
       }
       progressCtrl.addBar(scope, element);
