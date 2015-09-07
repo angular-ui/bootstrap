@@ -110,6 +110,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
           'animation="animation" '+
           'is-open="isOpen"'+
           'origin-scope="origScope" '+
+          'style="visibility: hidden"'+
           '>'+
         '</div>';
 
@@ -132,12 +133,13 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
             var isOpenExp = angular.isDefined(attrs[prefix + 'IsOpen']) ? $parse(attrs[prefix + 'IsOpen']) : false;
 
             var positionTooltip = function() {
-              if (!tooltip) { return; }
+              // check if tooltip exists and is not empty
+              if (!tooltip || !tooltip.html()) { return; }
 
               if (!positionTimeout) {
                 positionTimeout = $timeout(function() {
                   // Reset the positioning and box size for correct width and height values.
-                  tooltip.css({ top: 0, left: 0, width: 'auto', height: 'auto' });
+                  tooltip.css({ top: 0, left: 0, width: 'auto', height: 'auto', visibility: 'hidden' });
 
                   var ttBox = $position.position(tooltip);
                   var ttCss = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
@@ -226,8 +228,6 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
               if (!$rootScope.$$phase) {
                 ttScope.$apply(); // digest required as $apply is not called
               }
-
-              tooltip.css({ display: 'block', visibility: 'hidden' });
 
               positionTooltip();
             }
