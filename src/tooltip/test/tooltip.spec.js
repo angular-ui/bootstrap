@@ -350,6 +350,28 @@ describe('tooltip', function() {
     });
   });
 
+  describe('with an is-open attribute expression', function() {
+    beforeEach(inject(function ($compile) {
+      scope.isOpen = false;
+      elm = $compile(angular.element(
+        '<span tooltip="tooltip text" tooltip-is-open="isOpen === true" >Selector Text</span>'
+      ))(scope);
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+      scope.$digest();
+    }));
+
+    it('should show and hide with the expression', function() {
+      expect(tooltipScope.isOpen).toBe(false);
+      elmScope.isOpen = true;
+      elmScope.$digest();
+      expect(tooltipScope.isOpen).toBe(true);
+      elmScope.isOpen = false;
+      elmScope.$digest();
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+  });
+
   describe('with a trigger attribute', function() {
     var scope, elmBody, elm, elmScope;
 
