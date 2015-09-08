@@ -110,7 +110,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
           'animation="animation" '+
           'is-open="isOpen"'+
           'origin-scope="origScope" '+
-          'style="visibility: hidden"'+
+          'style="visibility: hidden; display: block;"'+
           '>'+
         '</div>';
 
@@ -148,7 +148,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
 
                   ttCss.width = ttBox.width + 'px';
                   ttCss.height = ttBox.height + 'px';
-                  
+
                   ttCss.visibility = 'visible';
 
                   // Now set the calculated positioning and size.
