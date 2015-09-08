@@ -30,6 +30,8 @@ Unfortunately we are not able to investigate / fix bugs without a minimal reprod
 
 ## You want to contribute some code?
 
+**NOTE: We are migrating all our components to use a prefix, in the meantime you will see both the new and the old directives separated by a comment. If you want to contribute with code, make all your changes on top of that comment.** 
+
 We are always looking for the quality contributions and will be happy to accept your Pull Requests as long as those adhere to some basic rules:
 
 * Please make sure that your contribution fits well in the project's context:
