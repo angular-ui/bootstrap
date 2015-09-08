@@ -197,7 +197,7 @@ describe('tooltip', function() {
     expect(elmBody.children().length).toBe(1);
   }));
 
-  it( 'should close the tooltip when its trigger element is destroyed', inject(function() {
+  it('should close the tooltip when its trigger element is destroyed', inject(function() {
     trigger(elm, 'mouseenter');
     expect(tooltipScope.isOpen).toBe(true);
 
@@ -332,7 +332,7 @@ describe('tooltip', function() {
       scope.$digest();
     }));
 
-    it( 'should show and hide with the controller value', function() {
+    it('should show and hide with the controller value', function() {
       expect(tooltipScope.isOpen).toBe(false);
       elmScope.isOpen = true;
       elmScope.$digest();
@@ -342,7 +342,7 @@ describe('tooltip', function() {
       expect(tooltipScope.isOpen).toBe(false);
     });
 
-    it( 'should update the controller value', function() {
+    it('should update the controller value', function() {
       trigger(elm, 'mouseenter');
       expect(elmScope.isOpen).toBe(true);
       trigger(elm, 'mouseleave');
@@ -350,7 +350,7 @@ describe('tooltip', function() {
     });
   });
 
-  describe( 'with a trigger attribute', function() {
+  describe('with a trigger attribute', function() {
     var scope, elmBody, elm, elmScope;
 
     beforeEach( inject( function( $rootScope ) {
@@ -419,7 +419,7 @@ describe('tooltip', function() {
       expect(tooltipScope2.isOpen).toBeTruthy();
     }));
 
-    it( 'should accept multiple triggers based on the map for mapped triggers', inject(function($compile) {
+    it('should accept multiple triggers based on the map for mapped triggers', inject(function($compile) {
       elmBody = angular.element(
         '<div><input tooltip="Hello!" tooltip-trigger="focus fakeTriggerAttr" /></div>'
       );
@@ -440,7 +440,7 @@ describe('tooltip', function() {
       expect(tooltipScope.isOpen).toBeFalsy();
     }));
 
-    it( 'should not show when trigger is set to "none"', inject(function($compile) {
+    it('should not show when trigger is set to "none"', inject(function($compile) {
       elmBody = angular.element(
         '<div><input tooltip="Hello!" tooltip-trigger="none" /></div>'
       );
