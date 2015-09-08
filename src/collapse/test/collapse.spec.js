@@ -10,7 +10,7 @@ describe('collapse directive', function() {
   }));
 
   beforeEach(function() {
-    element = $compile('<div collapse="isCollapsed">Some Content</div>')(scope);
+    element = $compile('<div uib-collapse="isCollapsed">Some Content</div>')(scope);
     angular.element(document.body).append(element);
   });
 
@@ -98,7 +98,7 @@ describe('collapse directive', function() {
     var element;
 
     beforeEach(function() {
-      element = angular.element('<div collapse="isCollapsed"><p>Initial content</p><div ng-show="exp">Additional content</div></div>');
+      element = angular.element('<div uib-collapse="isCollapsed"><p>Initial content</p><div ng-show="exp">Additional content</div></div>');
       $compile(element)(scope);
       angular.element(document.body).append(element);
     });
@@ -128,4 +128,37 @@ describe('collapse directive', function() {
       expect(element.height()).toBeLessThan(collapseHeight);
     });
   });
+});
+
+/* Deprecation tests below */
+
+describe('collapse deprecation', function() {
+  beforeEach(module('ui.bootstrap.collapse'));
+  beforeEach(module('ngAnimateMock'));
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$collapseSuppressWarning', true);
+    });
+
+    inject(function($compile, $log, $rootScope) {
+      spyOn($log, 'warn');
+
+      var element = $compile('<div collapse="isCollapsed">Some Content</div>')($rootScope);
+      $rootScope.$digest();
+
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($compile, $log, $rootScope) {
+    spyOn($log, 'warn');
+
+    var element = $compile('<div collapse="isCollapsed">Some Content</div>')($rootScope);
+    $rootScope.$digest();
+
+    expect($log.warn.calls.count()).toBe(1);
+    expect($log.warn.calls.argsFor(0)).toEqual(['collapse is now deprecated. Use uib-collapse instead.']);
+
+  }));
 });
