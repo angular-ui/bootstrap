@@ -1,10 +1,10 @@
 <div class="panel {{panelClass || 'panel-default'}}">
   <div class="panel-heading" ng-keypress="toggleOpen($event)">
     <h4 class="panel-title">
-      <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" accordion-transclude="heading"><span ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+      <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
     </h4>
   </div>
-  <div class="panel-collapse collapse" collapse="!isOpen">
+  <div class="panel-collapse collapse" uib-collapse="!isOpen">
 	  <div class="panel-body" ng-transclude></div>
   </div>
 </div>

@@ -2,14 +2,14 @@ The **accordion directive** builds on top of the collapse directive to provide a
 
 The body of each accordion group is transcluded into the body of the collapsible element.
 
-### Accordion Settings
+### uib-accordion Settings
 
   * `close-others` (Defaults: false) :
     Control whether expanding an item will cause the other items to close
   * `template-url` (Defaults: `template/accordion/accordion.html`) :
     Add the ability to override the template used on the component.
 
-### Accordion Group Settings
+### uib-accordion Group Settings
 
   * `is-disabled` <i class="glyphicon glyphicon-eye-open"></i> (Defaults: false) :
     Whether the accordion group is disabled or not.
@@ -24,4 +24,4 @@ The body of each accordion group is transcluded into the body of the collapsible
 
 ### Accordion heading
 
-Instead of the `heading` attribute on the `accordion-group`, you can use an `accordion-heading` element inside a group that will be used as the group's header.
+Instead of the `heading` attribute on the `uib-accordion-group`, you can use an `uib-accordion-heading` element inside a group that will be used as the group's header.
