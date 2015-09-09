@@ -844,7 +844,7 @@ describe('$tooltipProvider', function() {
 
     describe('triggers with a custom mapped value', function() {
       beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider) {
-        $tooltipProvider.setTriggers({ 'customOpenTrigger': 'customCloseTrigger' });
+        $tooltipProvider.setTriggers({ customOpenTrigger: 'foo bar' });
         $tooltipProvider.options({trigger: 'customOpenTrigger'});
       }));
 
@@ -866,7 +866,11 @@ describe('$tooltipProvider', function() {
         expect(tooltipScope.isOpen).toBeFalsy();
         trigger(elm, 'customOpenTrigger');
         expect(tooltipScope.isOpen).toBeTruthy();
-        trigger(elm, 'customCloseTrigger');
+        trigger(elm, 'foo');
+        expect(tooltipScope.isOpen).toBeFalsy();
+        trigger(elm, 'customOpenTrigger');
+        expect(tooltipScope.isOpen).toBeTruthy();
+        trigger(elm, 'bar');
         expect(tooltipScope.isOpen).toBeFalsy();
       }));
     });

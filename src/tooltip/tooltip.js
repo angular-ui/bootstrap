@@ -390,7 +390,9 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
                 element.unbind(trigger, showTooltipBind);
               });
               triggers.hide.forEach(function(trigger) {
-                element.unbind(trigger, hideTooltipBind);
+                trigger.split(' ').forEach(function(hideTrigger) {
+                  element[0].removeEventListener(hideTrigger, hideTooltipBind);
+                });
               });
             };
 
@@ -407,7 +409,9 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position'])
                     element[0].addEventListener(trigger, toggleTooltipBind);
                   } else if (trigger) {
                     element[0].addEventListener(trigger, showTooltipBind);
-                    element[0].addEventListener(triggers.hide[idx], hideTooltipBind);
+                    triggers.hide[idx].split(' ').forEach(function(trigger) {
+                      element[0].addEventListener(trigger, hideTooltipBind);
+                    });
                   }
                 });
               }
