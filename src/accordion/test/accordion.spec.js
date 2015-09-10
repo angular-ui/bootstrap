@@ -100,6 +100,16 @@ describe('uib-accordion', function() {
         ctrl.removeGroup({});
         expect(ctrl.groups.length).toBe(2);
       });
+      it('should remove a panel when the scope is destroyed', function() {
+        var group1, group2, group3;
+        ctrl.addGroup(group1 = $scope.$new());
+        ctrl.addGroup(group2 = $scope.$new());
+        ctrl.addGroup(group3 = $scope.$new());
+        group2.$destroy();
+        expect(ctrl.groups.length).toBe(2);
+        expect(ctrl.groups[0]).toBe(group1);
+        expect(ctrl.groups[1]).toBe(group3);
+      });
     });
   });
 
