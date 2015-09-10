@@ -2,7 +2,6 @@ describe('uib-accordion', function() {
   var $animate, $scope;
 
   beforeEach(module('ui.bootstrap.accordion'));
-  beforeEach(module('ui.bootstrap.collapse'));
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('template/accordion/accordion.html'));
   beforeEach(module('template/accordion/accordion-group.html'));
@@ -16,8 +15,8 @@ describe('uib-accordion', function() {
 
     var ctrl, $element, $attrs;
     beforeEach(inject(function($controller) {
-      $attrs = {}; $element = {};
-      ctrl = $controller('UibAccordionController', { $scope: $scope, $element: $element, $attrs: $attrs });
+      $attrs = {};
+      ctrl = $controller('UibAccordionController', { $scope: $scope, $attrs: $attrs });
     }));
 
     describe('addGroup', function() {
@@ -152,10 +151,6 @@ describe('uib-accordion', function() {
       scope = _$rootScope_;
       $compile = _$compile_;
     }));
-
-    afterEach(function () {
-      element = groups = scope = $compile = undefined;
-    });
 
     it('should allow custom templates', inject(function($templateCache) {
       $templateCache.put('foo/bar.html', '<div>baz</div>');
