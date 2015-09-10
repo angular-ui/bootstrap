@@ -4,23 +4,37 @@ The body of each accordion group is transcluded into the body of the collapsible
 
 ### uib-accordion Settings
 
-  * `close-others` (Defaults: false) :
-    Control whether expanding an item will cause the other items to close
-  * `template-url` (Defaults: `template/accordion/accordion.html`) :
-    Add the ability to override the template used on the component.
+* `close-others`
+  _(Default: `false`)_ -
+  Control whether expanding an item will cause the other items to close.
+  
+* `template-url`
+  _(Default: `template/accordion/accordion.html`)_ -
+  Add the ability to override the template used on the component.
 
 ### uib-accordion Group Settings
 
-  * `is-disabled` <i class="glyphicon glyphicon-eye-open"></i> (Defaults: false) :
-    Whether the accordion group is disabled or not.
-  * `is-open` <i class="glyphicon glyphicon-eye-open"></i> (Defaults: false) :
-    Whether accordion group is open or closed.
-  * `heading` (Defaults: none) :
-    The clickable text on the group's header. You need one to be able to click on the header for toggling.
-  * `panel-class` (Defaults: `panel-default`) :
-    Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own.  This must be a string.
-  * `template-url` (Defaults: `template/accordion/accordion-group.html`) :
-    Add the ability to override the template used on the component.
+* `is-disabled`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+   Whether the accordion group is disabled or not.
+
+* `is-open`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether accordion group is open or closed.
+
+* `heading`
+  _(Default: `none`)_ -
+  The clickable text on the group's header. You need one to be able to click on the header for toggling.
+
+* `panel-class` 
+  _(Default: `panel-default`)_ -
+  Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own.  This must be a string.
+
+* `template-url`
+  _(Default: `template/accordion/accordion-group.html`)_ -
+  Add the ability to override the template used on the component.
 
 ### Accordion heading
 
