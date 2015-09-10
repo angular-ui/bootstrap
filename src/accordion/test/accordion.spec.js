@@ -240,6 +240,16 @@ describe('uib-accordion', function() {
 
         expect(group).not.toHaveClass('panel-open');
       });
+
+      it('should not toggle with any other keyCode', function() {
+        var group = groups.eq(0);
+        findGroupLink(0)[0].focus();
+        var e = $.Event('keypress');
+        e.which = 65;
+        findGroupLink(0).trigger(e);
+
+        expect(group).not.toHaveClass('panel-open');
+      });
     });
 
     describe('with open-class attribute', function() {
