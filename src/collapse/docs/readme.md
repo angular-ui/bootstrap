@@ -2,4 +2,7 @@
 
 ### uib-collapse settings
 
-  * `uib-collapse` <i class="glyphicon glyphicon-eye-open"></i> _(Defaults: false)_ : Whether the element should be collapsed or not.
+* `uib-collapse`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether the element should be collapsed or not.
