@@ -68,7 +68,7 @@
   Fixes #4060
   Closes #4322
 
-   ([7556bed])(https://github.com/angular-ui/bootstrap/commit/7556beda486f26b40fb860448316e8a32457e9e9)
+   ([7556bed](https://github.com/angular-ui/bootstrap/commit/7556beda486f26b40fb860448316e8a32457e9e9))
 
 * **typeahead**
   * for security reasons, only whitelisted HTML should be added.
