@@ -1,4 +1,4 @@
-describe('alert', function() {
+describe('uib-alert', function() {
   var element, scope, $compile, $templateCache, $timeout;
 
   beforeEach(module('ui.bootstrap.alert'));
@@ -12,9 +12,9 @@ describe('alert', function() {
 
     element = angular.element(
       '<div>' +
-        '<alert ng-repeat="alert in alerts" type="{{alert.type}}"' +
+        '<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"' +
           'close="removeAlert($index)">{{alert.msg}}' +
-        '</alert>' +
+        '</uib-alert>' +
       '</div>');
 
     scope.alerts = [
@@ -41,10 +41,10 @@ describe('alert', function() {
   it('should expose the controller to the view', function() {
     $templateCache.put('template/alert/alert.html', '<div>{{alert.text}}</div>');
 
-    element = $compile('<alert></alert>')(scope);
+    element = $compile('<uib-alert></uib-alert>')(scope);
     scope.$digest();
 
-    var ctrl = element.controller('alert');
+    var ctrl = element.controller('uib-alert');
     expect(ctrl).toBeDefined();
 
     ctrl.text = 'foo';
@@ -56,7 +56,7 @@ describe('alert', function() {
   it('should support custom templates', function() {
     $templateCache.put('foo/bar.html', '<div>baz</div>');
 
-    element = $compile('<alert template-url="foo/bar.html"></alert>')(scope);
+    element = $compile('<uib-alert template-url="foo/bar.html"></uib-alert>')(scope);
     scope.$digest();
 
     expect(element.html()).toBe('baz');
@@ -115,14 +115,14 @@ describe('alert', function() {
   });
 
   it('should not show close button and have the dismissible class if no close callback specified', function() {
-    element = $compile('<alert>No close</alert>')(scope);
+    element = $compile('<uib-alert>No close</uib-alert>')(scope);
     scope.$digest();
     expect(findCloseButton(0)).toBeHidden();
     expect(element).not.toHaveClass('alert-dismissible');
   });
 
   it('should be possible to add additional classes for alert', function() {
-    var element = $compile('<alert class="alert-block" type="info">Default alert!</alert>')(scope);
+    var element = $compile('<uib-alert class="alert-block" type="info">Default alert!</uib-alert>')(scope);
     scope.$digest();
     expect(element).toHaveClass('alert-block');
     expect(element).toHaveClass('alert-info');
@@ -130,10 +130,43 @@ describe('alert', function() {
 
   it('should close automatically if dismiss-on-timeout is defined on the element', function() {
     scope.removeAlert = jasmine.createSpy();
-    $compile('<alert close="removeAlert()" dismiss-on-timeout="500">Default alert!</alert>')(scope);
+    $compile('<uib-alert close="removeAlert()" dismiss-on-timeout="500">Default alert!</uib-alert>')(scope);
     scope.$digest();
 
     $timeout.flush();
     expect(scope.removeAlert).toHaveBeenCalled();
   });
+});
+
+/* Deprecation tests below */
+
+describe('alert deprecation', function() {
+  beforeEach(module('ui.bootstrap.alert'));
+  beforeEach(module('template/alert/alert.html'));
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$alertSuppressWarning', true);
+    });
+
+    inject(function($compile, $log, $rootScope) {
+      spyOn($log, 'warn');
+
+      var element = '<alert></alert>';
+      element = $compile(element)($rootScope);
+      $rootScope.$digest();
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($compile, $log, $rootScope) {
+    spyOn($log, 'warn');
+
+    var element = '<alert></alert>';
+    element = $compile(element)($rootScope);
+    $rootScope.$digest();
+
+    expect($log.warn.calls.count()).toBe(1);
+    expect($log.warn.calls.argsFor(0)).toEqual(['alert is now deprecated. Use uib-alert instead.']);
+  }));
 });
