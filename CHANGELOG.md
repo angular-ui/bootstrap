@@ -593,6 +593,7 @@ Revert breaking change in **dropdown** ([1a998c4](http://github.com/angular-ui/b
 `min` attribute has been renamed to `min-date`
 `max` attribute has been renamed to `max-date`
 `Open on focus` has been removed. Read more on this ([comment](https://github.com/angular-ui/bootstrap/pull/1922#issuecomment-40491716)). 
+`dateFormat` renamed to `datepickerPopup` in datepickerPopupConfig
 
 - **dropdown:**
 
