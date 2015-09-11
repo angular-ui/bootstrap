@@ -61,6 +61,15 @@
 
    ([bf63cef](https://github.com/angular-ui/bootstrap/commit/bf63cef))
 
+* **tooltip**
+  * Switch to use `addEventListener` and `removeEventListener` to prevent jqLite/jQuery bug where the events are swallowed on disabled elements
+  * this affects custom events, which must now be dispatched with `element[0].dispatchEvent(new Event('customEvent'))`, as opposed to `element.trigger('customEvent')`
+
+  Fixes #4060
+  Closes #4322
+
+   ([7556bed])(https://github.com/angular-ui/bootstrap/commit/7556beda486f26b40fb860448316e8a32457e9e9)
+
 * **typeahead**
   * for security reasons, only whitelisted HTML should be added.
   * the typeahead match template now uses `ng-bind-html` instead of `bind-html-unsafe`.
