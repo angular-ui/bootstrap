@@ -1,14 +1,14 @@
 describe('alert', function() {
-  var scope, $compile, $templateCache;
-  var element;
+  var element, scope, $compile, $templateCache, $timeout;
 
   beforeEach(module('ui.bootstrap.alert'));
   beforeEach(module('template/alert/alert.html'));
 
-  beforeEach(inject(function($rootScope, _$compile_, _$templateCache_) {
+  beforeEach(inject(function($rootScope, _$compile_, _$templateCache_, _$timeout_) {
     scope = $rootScope;
     $compile = _$compile_;
     $templateCache = _$templateCache_;
+    $timeout = _$timeout_;
 
     element = angular.element(
       '<div>' +
@@ -128,4 +128,12 @@ describe('alert', function() {
     expect(element).toHaveClass('alert-info');
   });
 
+  it('should close automatically if dismiss-on-timeout is defined on the element', function() {
+    scope.removeAlert = jasmine.createSpy();
+    $compile('<alert close="removeAlert()" dismiss-on-timeout="500">Default alert!</alert>')(scope);
+    scope.$digest();
+
+    $timeout.flush();
+    expect(scope.removeAlert).toHaveBeenCalled();
+  });
 });

@@ -1,8 +1,13 @@
 angular.module('ui.bootstrap.alert', [])
 
-.controller('AlertController', ['$scope', '$attrs', function($scope, $attrs) {
+.controller('AlertController', ['$scope', '$attrs', '$timeout', function($scope, $attrs, $timeout) {
   $scope.closeable = !!$attrs.close;
-  this.close = $scope.close;
+
+  if (angular.isDefined($attrs.dismissOnTimeout)) {
+    $timeout(function() {
+      $scope.close();
+    }, parseInt($attrs.dismissOnTimeout, 10));
+  }
 }])
 
 .directive('alert', function() {
@@ -19,15 +24,4 @@ angular.module('ui.bootstrap.alert', [])
       close: '&'
     }
   };
-})
-
-.directive('dismissOnTimeout', ['$timeout', function($timeout) {
-  return {
-    require: 'alert',
-    link: function(scope, element, attrs, alertCtrl) {
-      $timeout(function() {
-        alertCtrl.close();
-      }, parseInt(attrs.dismissOnTimeout, 10));
-    }
-  };
-}]);
+});
