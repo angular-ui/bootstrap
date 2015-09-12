@@ -210,10 +210,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         return; // do nothing
       }
       $scope.select(self.activeDate);
-      focusElement();
     } else if (evt.ctrlKey && (key === 'up' || key === 'down')) {
       $scope.toggleMode(key === 'up' ? 1 : -1);
-      focusElement();
     } else {
       self.handleKeyDown(key, evt);
       self.refreshView();
