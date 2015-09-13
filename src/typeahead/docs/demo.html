@@ -1,3 +1,15 @@
+<style>
+    .dropdown-menu.demo-class {
+        border-radius: 0;
+        font-style: italic;
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, .12);
+    }
+    .dropdown-menu.demo-class > .active > a,
+    .dropdown-menu.demo-class > .active > a:hover,
+    .dropdown-menu.demo-class > .active > a:focus {
+        background-color: rgba(247, 150, 4, .69);
+    }
+</style>
 <script type="text/ng-template" id="customTemplate.html">
   <a>
       <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
@@ -21,4 +33,8 @@
     <h4>Custom templates for results</h4>
     <pre>Model: {{customSelected | json}}</pre>
     <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control">
+
+    <h4>Custom class for append-to-body popup</h4>
+    <pre>Model: {{customClassSelected | json}}</pre>
+    <input type="text" ng-model="customClassSelected" typeahead-append-to-body="true" typeahead-dropdown-custom-class="demo-class" placeholder="Custom class" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" class="form-control">
 </div>

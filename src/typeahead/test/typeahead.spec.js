@@ -595,6 +595,19 @@ describe('typeahead tests', function() {
       findMatches(element).eq(1).trigger('mouseenter');
       expect(element).toBeOpenWithActive(2, 1);
     });
+
+    it('should add a custom class to popup', function() {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-dropdown-custom-class="demo-class"></div>');
+      changeInputValueTo(element, 'b');
+      expect(findDropDown(element).hasClass('demo-class')).toBeTruthy();
+    });
+
+    it('should add a custom class to popup with custom template', function() {
+      $templateCache.put('custom.html', '<div>foo</div>');
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-dropdown-custom-class="demo-class" typeahead-template-url="custom.html"></div>');
+      changeInputValueTo(element, 'b');
+      expect(findDropDown(element).hasClass('demo-class dropdown-menu')).toBeTruthy();
+    });
   });
 
   describe('promises', function() {
@@ -894,6 +907,12 @@ describe('typeahead tests', function() {
       body.triggerHandler('scroll');
       $timeout.flush();
       expect(dropdown.css('top')).toEqual('500px');
+    });
+
+    it('should add a custom class to append-to-body popup', function() {
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true" typeahead-dropdown-custom-class="demo-class"></div>');
+      changeInputValueTo(element, 'b');
+      expect(findDropDown($document.find('body')).hasClass('demo-class')).toBeTruthy();
     });
   });
 

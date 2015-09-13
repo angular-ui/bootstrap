@@ -73,5 +73,9 @@ The typeahead directives provide several attributes:
    On blur, select the currently highlighted match
 
 * `typeahead-focus-on-select`
-   _(Defaults: true) :
+   _(Defaults: true)_ :
    On selection, focus the input element the typeahead directive is associated with
+   
+* `typeahead-dropdown-custom-class`
+   _(Defaults: undefined)_ :
+   Add custom class to popup

@@ -133,6 +133,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
           popUpEl.attr('popup-template-url', attrs.typeaheadPopupTemplateUrl);
         }
 
+        // Add a custom class to Dropdown Menu element
+        if (angular.isDefined(attrs.typeaheadDropdownCustomClass)) {
+          popUpEl.addClass(attrs.typeaheadDropdownCustomClass);
+        }
+
         var resetMatches = function() {
           scope.matches = [];
           scope.activeIdx = -1;
