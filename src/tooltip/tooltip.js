@@ -209,7 +209,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               }
             }
 
-            function hideTooltipBind () {
+            function hideTooltipBind() {
               hide();
               if (!$rootScope.$$phase) {
                 $rootScope.$digest();
