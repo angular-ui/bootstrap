@@ -251,7 +251,6 @@ describe('dropdownToggle', function() {
 
   describe('integration with $location URL rewriting', function() {
     function dropdown() {
-
       // Simulate URL rewriting behavior
       $document.on('click', 'a[href="#something"]', function() {
         $rootScope.$broadcast('$locationChangeSuccess');
