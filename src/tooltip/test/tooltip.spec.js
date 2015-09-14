@@ -212,8 +212,8 @@ describe('tooltip', function() {
     var ttScope;
     trigger(elm, 'mouseenter');
 
-    ttScope = angular.element( elmBody.children()[1] ).scope();
-    expect(ttScope.$parent).toBe( tooltipScope );
+    ttScope = angular.element(elmBody.children()[1]).scope();
+    expect(ttScope.$parent).toBe(tooltipScope);
 
     trigger(elm, 'mouseleave');
 
@@ -388,7 +388,7 @@ describe('tooltip', function() {
   });
 
   describe('with an is-open attribute expression', function() {
-    beforeEach(inject(function ($compile) {
+    beforeEach(inject(function($compile) {
       scope.isOpen = false;
       elm = $compile(angular.element(
         '<span tooltip="tooltip text" tooltip-is-open="isOpen === true" >Selector Text</span>'
@@ -412,7 +412,7 @@ describe('tooltip', function() {
   describe('with a trigger attribute', function() {
     var scope, elmBody, elm, elmScope;
 
-    beforeEach( inject( function( $rootScope ) {
+    beforeEach(inject(function($rootScope) {
       scope = $rootScope;
     }));
 
@@ -591,7 +591,7 @@ describe('tooltipWithDifferentSymbols', function() {
     beforeEach(module('template/tooltip/tooltip-popup.html'));
 
     // configure interpolate provider to use [[ ]] instead of {{ }}
-    beforeEach(module( function($interpolateProvider) {
+    beforeEach(module(function($interpolateProvider) {
       $interpolateProvider.startSymbol('[[');
       $interpolateProvider.startSymbol(']]');
     }));

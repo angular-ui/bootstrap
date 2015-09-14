@@ -38,9 +38,9 @@ describe('tooltip template', function() {
 
   it('should open on mouseenter', inject(function() {
     trigger(elm, 'mouseenter');
-    expect( tooltipScope.isOpen ).toBe( true );
+    expect(tooltipScope.isOpen).toBe(true);
 
-    expect( elmBody.children().length ).toBe( 2 );
+    expect(elmBody.children().length).toBe(2);
   }));
 
   it('should not open on mouseenter if templateUrl is empty', inject(function() {
@@ -81,4 +81,3 @@ describe('tooltip template', function() {
     expect(elmBody.children().length).toBe(1);
   }));
 });
-

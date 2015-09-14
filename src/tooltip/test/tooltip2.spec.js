@@ -112,7 +112,7 @@ describe('tooltip directive', function() {
     }));
 
     angular.forEach(tooltipTypes, function(html, key) {
-      describe(key, function () {
+      describe(key, function() {
         describe('placement', function() {
           it('can specify an alternative, valid placement', function() {
             var fragment = compileTooltip('<span ' + html + ' tooltip-placement="left">Trigger here</span>');
