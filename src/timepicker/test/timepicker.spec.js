@@ -717,7 +717,7 @@ describe('timepicker directive', function() {
       angular.extend(timepickerConfig, originalConfig);
     }));
 
-    it('does not affect the initial value', function () {
+    it('does not affect the initial value', function() {
       expect(getTimeState(true)).toEqual(['14', '40']);
       expect(getModelState()).toEqual([14, 40]);
     });
