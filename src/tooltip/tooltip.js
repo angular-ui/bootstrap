@@ -23,6 +23,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
   var triggerMap = {
     'mouseenter': 'mouseleave',
     'click': 'click',
+    'outsideClick': 'outsideClick',
     'focus': 'blur',
     'none': ''
   };
@@ -438,13 +439,33 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               }
             }
 
+            // hide tooltips/popovers for outsideClick trigger
+            function bodyHideTooltipBind(e) {
+              if (!ttScope || !ttScope.isOpen || !tooltip) {
+                return;
+              }
+              // make sure the tooltip/popover link or tool tooltip/popover itself were not clicked
+              if (!element[0].contains(e.target) && !tooltip[0].contains(e.target)) {
+                hideTooltipBind();
+              }
+            }
+
             var unregisterTriggers = function() {
               triggers.show.forEach(function(trigger) {
-                element.unbind(trigger, showTooltipBind);
+                if (trigger === 'outsideClick') {
+                  element[0].removeEventListener('click', toggleTooltipBind);
+                } else {
+                  element[0].removeEventListener(trigger, showTooltipBind);
+                  element[0].removeEventListener(trigger, toggleTooltipBind);
+                }
               });
               triggers.hide.forEach(function(trigger) {
                 trigger.split(' ').forEach(function(hideTrigger) {
-                  element[0].removeEventListener(hideTrigger, hideTooltipBind);
+                  if (trigger === 'outsideClick') {
+                    $document[0].removeEventListener('click', bodyHideTooltipBind);
+                  } else {
+                    element[0].removeEventListener(hideTrigger, hideTooltipBind);
+                  }
                 });
               });
             };
@@ -458,7 +479,10 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               if (triggers.show !== 'none') {
                 triggers.show.forEach(function(trigger, idx) {
                   // Using raw addEventListener due to jqLite/jQuery bug - #4060
-                  if (trigger === triggers.hide[idx]) {
+                  if (trigger === 'outsideClick') {
+                    element[0].addEventListener('click', toggleTooltipBind);
+                    $document[0].addEventListener('click', bodyHideTooltipBind);
+                  } else if (trigger === triggers.hide[idx]) {
                     element[0].addEventListener(trigger, toggleTooltipBind);
                   } else if (trigger) {
                     element[0].addEventListener(trigger, showTooltipBind);

@@ -42,8 +42,11 @@ provided hide triggers:
 
 - `mouseenter`: `mouseleave`
 - `click`: `click`
+- `outsideClick`: `outsideClick`
 - `focus`: `blur`
 - `none`: ``
+
+The `outsideClick` trigger will cause the tooltip to toggle on click, and hide when anything else is clicked.
 
 For any non-supported value, the trigger will be used to both show and hide the
 tooltip. Using the 'none' trigger will disable the internal trigger(s), one can

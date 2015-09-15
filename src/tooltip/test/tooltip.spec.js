@@ -596,6 +596,31 @@ describe('tooltip', function() {
       elm.trigger('mouseenter');
       expect(tooltipScope.isOpen).toBeFalsy();
     }));
+
+    it('should toggle on click and hide when anything else is clicked when trigger is set to "outsideClick"', inject(function($compile, $document) {
+      elm = $compile(angular.element(
+        '<span uib-tooltip="tooltip text" tooltip-trigger="outsideClick">Selector Text</span>'
+      ))(scope);
+      scope.$apply();
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      // start off
+      expect(tooltipScope.isOpen).toBeFalsy();
+
+      // toggle
+      trigger(elm, 'click');
+      expect(tooltipScope.isOpen).toBeTruthy();
+      trigger(elm, 'click');
+      expect(tooltipScope.isOpen).toBeFalsy();
+
+      // click on, outsideClick off
+      trigger(elm, 'click');
+      expect(tooltipScope.isOpen).toBeTruthy();
+      angular.element($document[0].body).trigger('click');
+      tooltipScope.$digest();
+      expect(tooltipScope.isOpen).toBeFalsy();
+    }));
   });
 
   describe('with an append-to-body attribute', function() {
