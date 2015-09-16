@@ -713,7 +713,12 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
       });
 
       var documentClickBind = function(event) {
-        if (scope.isOpen && !(element[0].contains(event.target) || $popup[0].contains(event.target))) {
+        var popup = $popup[0];
+        var dpContainsTarget = element[0].contains(event.target);
+        // The popup node may not be an element node
+        // In some browsers (IE) only element nodes have the 'contains' function
+        var popupContainsTarget = popup.contains !== undefined && popup.contains(event.target);
+        if (scope.isOpen && !(dpContainsTarget || popupContainsTarget)) {
           scope.$apply(function() {
             scope.isOpen = false;
           });
