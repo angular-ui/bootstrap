@@ -28,7 +28,7 @@ All settings can be provided as attributes in the `uib-datepicker` or globally c
  * `date-disabled (date, mode)`
  	_(Default: null)_ :
  	An optional expression to disable visible options based on passing date and current mode _(day|month|year)_.
- 	
+
  * `custom-class (date, mode)`
  	_(Default: null)_ :
  	An optional expression to add classes based on passing date and current mode _(day|month|year)_. 	
@@ -79,7 +79,7 @@ All settings can be provided as attributes in the `uib-datepicker` or globally c
 
  * `year-range`
  	_(Default: 20)_ :
- 	Number of years displayed in year selection. 
+ 	Number of years displayed in year selection.
 
  * `shortcut-propagation`
   _(Default: false)_ :
@@ -97,7 +97,7 @@ Specific settings for the `uib-datepicker-popup`, that can globally configured t
 
  * `uib-datepicker-popup`
  	_(Default: 'yyyy-MM-dd')_ :
- 	The format for displayed dates.
+ 	The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. `yyyy-MM-dd h 'o\'clock'`
 
  * `show-button-bar`
  	_(Default: true)_ :
