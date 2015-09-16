@@ -212,4 +212,15 @@ describe('date parser', function() {
   it('should not parse if no format is specified', function() {
     expect(dateParser.parse('21.08.1951', '')).toBe('21.08.1951');
   });
+
+  it('should reinitialize when locale changes', inject(function($locale) {
+    spyOn(dateParser, 'init').and.callThrough();
+    expect($locale.id).toBe('en-us');
+
+    $locale.id = 'en-uk';
+
+    dateParser.parse('22.March.15.22', 'd.MMMM.yy.s');
+
+    expect(dateParser.init).toHaveBeenCalled();
+  }));
 });
