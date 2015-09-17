@@ -111,7 +111,7 @@ angular.module('ui.bootstrap.timepicker', [])
   };
 
   $scope.noToggleMeridian = function() {
-    if (selected.getHours() < 13) {
+    if (selected.getHours() < 12) {
       return addMinutes(selected, 12 * 60) > max;
     } else {
       return addMinutes(selected, -12 * 60) < min;
