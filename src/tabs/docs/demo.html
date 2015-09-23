@@ -9,31 +9,31 @@
   </p>
   <hr />
 
-  <tabset>
-    <tab heading="Static title">Static content</tab>
-    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+  <uib-tabset>
+    <uib-tab heading="Static title">Static content</uib-tab>
+    <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
       {{tab.content}}
-    </tab>
-    <tab select="alertMe()">
-      <tab-heading>
+    </uib-tab>
+    <uib-tab select="alertMe()">
+      <uib-tab-heading>
         <i class="glyphicon glyphicon-bell"></i> Alert!
-      </tab-heading>
+      </uib-tab-heading>
       I've got an HTML heading, and a select callback. Pretty cool!
-    </tab>
-  </tabset>
+    </uib-tab>
+  </uib-tabset>
 
   <hr />
 
-  <tabset vertical="true" type="pills">
-    <tab heading="Vertical 1">Vertical content 1</tab>
-    <tab heading="Vertical 2">Vertical content 2</tab>
-  </tabset>
+  <uib-tabset vertical="true" type="pills">
+    <uib-tab heading="Vertical 1">Vertical content 1</uib-tab>
+    <uib-tab heading="Vertical 2">Vertical content 2</uib-tab>
+  </uib-tabset>
 
   <hr />
 
-  <tabset justified="true">
-    <tab heading="Justified">Justified content</tab>
-    <tab heading="SJ">Short Labeled Justified content</tab>
-    <tab heading="Long Justified">Long Labeled Justified content</tab>
-  </tabset>
+  <uib-tabset justified="true">
+    <uib-tab heading="Justified">Justified content</uib-tab>
+    <uib-tab heading="SJ">Short Labeled Justified content</uib-tab>
+    <uib-tab heading="Long Justified">Long Labeled Justified content</uib-tab>
+  </uib-tabset>
 </div>

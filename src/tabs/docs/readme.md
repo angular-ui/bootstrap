@@ -2,7 +2,7 @@ AngularJS version of the tabs directive.
 
 ### Settings ###
 
-#### `<tabset>` ####
+#### `<uib-tabset>` ####
 
  * `vertical`
  	_(Defaults: false)_ :
@@ -16,9 +16,9 @@ AngularJS version of the tabs directive.
  	_(Defaults: 'tabs')_ :
  	Navigation type. Possible values are 'tabs' and 'pills'.
 
-#### `<tab>` ####
+#### `<uib-tab>` ####
 
- * `heading` or `<tab-heading>`
+ * `heading` or `<uib-tab-heading>`
  	:
  	Heading text or HTML markup.
 
