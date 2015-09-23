@@ -34,6 +34,7 @@ describe('tooltip template', function() {
     evt = new Event(evt);
 
     element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
   }
 
   it('should open on mouseenter', inject(function() {
@@ -55,10 +56,10 @@ describe('tooltip template', function() {
 
   it('should show updated text', inject(function() {
     scope.myTemplateText = 'some text';
-    scope.$digest();
 
     trigger(elm, 'mouseenter');
     expect(tooltipScope.isOpen).toBe(true);
+    scope.$digest();
 
     expect(elmBody.children().eq(1).text().trim()).toBe('some text');
 

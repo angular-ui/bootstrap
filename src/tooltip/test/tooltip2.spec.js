@@ -45,6 +45,7 @@ describe('tooltip directive', function() {
 
   function closeTooltip(hostEl, triggerEvt, shouldNotFlush) {
     trigger(hostEl, triggerEvt || 'mouseleave');
+    hostEl.scope().$$childTail.$digest();
     if (!shouldNotFlush) {
       $timeout.flush();
     }
@@ -54,6 +55,7 @@ describe('tooltip directive', function() {
     evt = new Event(evt);
 
     element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
   }
 
   describe('basic scenarios with default options', function() {

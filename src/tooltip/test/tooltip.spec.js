@@ -30,6 +30,7 @@ describe('tooltip', function() {
     evt = new Event(evt);
 
     element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
   }
 
   it('should not be open initially', inject(function() {
@@ -78,7 +79,7 @@ describe('tooltip', function() {
 
   it('should update placement dynamically', inject(function($compile, $timeout) {
     scope.place = 'bottom';
-    elm = $compile( angular.element(
+    elm = $compile(angular.element(
       '<span tooltip="tooltip text" tooltip-placement="{{place}}">Selector Text</span>'
     ))(scope);
     scope.$apply();
@@ -110,15 +111,15 @@ describe('tooltip', function() {
     scope.$digest();
 
     var tt = angular.element(elm.find('li > span')[0]);
-
-    tt.trigger('mouseenter');
+    trigger(tt, 'mouseenter');
 
     expect(tt.text()).toBe(scope.items[0].name);
 
     tooltipScope = tt.scope().$$childTail;
     expect(tooltipScope.content).toBe(scope.items[0].tooltip);
 
-    tt.trigger('mouseleave');
+    trigger(tt, 'mouseleave');
+    expect(tooltipScope.isOpen).toBeFalsy();
   }));
 
   it('should show correct text when in an ngRepeat', inject(function($compile, $timeout) {
@@ -163,7 +164,7 @@ describe('tooltip', function() {
     scope.tooltipMsg = 'Tooltip Text';
     scope.alt = 'Alt Message';
 
-    elmBody = $compile( angular.element(
+    elmBody = $compile(angular.element(
       '<div><span alt={{alt}} tooltip="{{tooltipMsg}}" tooltip-animation="false">Selector Text</span></div>'
     ))(scope);
 
@@ -331,11 +332,13 @@ describe('tooltip', function() {
       scope.$digest();
 
       trigger(elm, 'mouseenter');
+      tooltipScope2.$digest();
       $timeout.flush();
       expect(tooltipScope.isOpen).toBe(true);
       expect(tooltipScope2.isOpen).toBe(false);
 
       trigger(elm2, 'mouseenter');
+      tooltipScope2.$digest();
       $timeout.flush();
       expect(tooltipScope.isOpen).toBe(true);
       expect(tooltipScope2.isOpen).toBe(true);
@@ -344,6 +347,8 @@ describe('tooltip', function() {
       evt.which = 27;
 
       $document.trigger(evt);
+      tooltipScope.$digest();
+      tooltipScope2.$digest();
 
       expect(tooltipScope.isOpen).toBe(true);
       expect(tooltipScope2.isOpen).toBe(false);
@@ -352,6 +357,8 @@ describe('tooltip', function() {
       evt2.which = 27;
 
       $document.trigger(evt2);
+      tooltipScope.$digest();
+      tooltipScope2.$digest();
 
       expect(tooltipScope.isOpen).toBe(false);
       expect(tooltipScope2.isOpen).toBe(false);
@@ -579,6 +586,46 @@ describe('tooltip', function() {
       expect(inCache()).toBeFalsy();
     }));
   });
+
+  describe('observers', function() {
+    var elmBody, elm, elmScope, scope, tooltipScope;
+
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope;
+      scope.content = 'tooltip content';
+      scope.placement = 'top';
+      elmBody = angular.element('<div><input tooltip="{{content}}" tooltip-placement={{placement}} /></div>');
+      $compile(elmBody)(scope);
+      scope.$apply();
+
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+    }));
+
+    it('should be removed when tooltip hides', inject(function($timeout) {
+      expect(tooltipScope.content).toBe(undefined);
+      expect(tooltipScope.placement).toBe(undefined);
+
+      trigger(elm, 'mouseenter');
+      expect(tooltipScope.content).toBe('tooltip content');
+      expect(tooltipScope.placement).toBe('top');
+      scope.content = 'tooltip content updated';
+
+      scope.placement = 'bottom';
+      scope.$apply();
+      expect(tooltipScope.content).toBe('tooltip content updated');
+      expect(tooltipScope.placement).toBe('bottom');
+
+      trigger(elm, 'mouseleave');
+      $timeout.flush();
+      scope.content = 'tooltip content updated after close';
+      scope.placement = 'left';
+      scope.$apply();
+      expect(tooltipScope.content).toBe('tooltip content updated');
+      expect(tooltipScope.placement).toBe('bottom');
+    }));
+  });
 });
 
 describe('tooltipWithDifferentSymbols', function() {
@@ -600,6 +647,7 @@ describe('tooltipWithDifferentSymbols', function() {
       evt = new Event(evt);
 
       element[0].dispatchEvent(evt);
+      element.scope().$$childTail.$digest();
     }
 
     it('should show the correct tooltip text', inject(function($compile, $rootScope) {
@@ -634,9 +682,9 @@ describe('tooltip positioning', function() {
     scope = $rootScope;
     scope.text = 'Some Text';
 
-    elmBody = $compile( angular.element(
+    elmBody = $compile(angular.element(
       '<div><span tooltip="{{ text }}">Selector Text</span></div>'
-    ))( scope);
+    ))(scope);
     scope.$digest();
     elm = elmBody.find('span');
     elmScope = elm.scope();
@@ -647,6 +695,7 @@ describe('tooltip positioning', function() {
     evt = new Event(evt);
 
     element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
   }
 
   it('should re-position when value changes', inject(function($timeout) {
@@ -659,7 +708,7 @@ describe('tooltip positioning', function() {
     scope.text = 'New Text';
     scope.$digest();
     $timeout.flush();
-    expect(elm.attr('tooltip')).toBe( 'New Text' );
+    expect(elm.attr('tooltip')).toBe('New Text' );
     expect($position.positionElements.calls.count()).toEqual(startingPositionCalls + 1);
     // Check that positionElements was called with elm
     expect($position.positionElements.calls.argsFor(startingPositionCalls)[0][0])
@@ -691,9 +740,9 @@ describe('tooltipHtml', function() {
     scope.html = 'I say: <strong class="hello">Hello!</strong>';
     scope.safeHtml = $sce.trustAsHtml(scope.html);
 
-    elmBody = $compile( angular.element(
+    elmBody = $compile(angular.element(
       '<div><span tooltip-html="safeHtml">Selector Text</span></div>'
-    ))( scope );
+    ))(scope);
     scope.$digest();
     elm = elmBody.find('span');
     elmScope = elm.scope();
@@ -704,12 +753,13 @@ describe('tooltipHtml', function() {
     evt = new Event(evt);
 
     element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
   }
 
 
   it('should render html properly', inject(function() {
     trigger(elm, 'mouseenter');
-    expect( elmBody.find('.tooltip-inner').html()).toBe(scope.html);
+    expect(elmBody.find('.tooltip-inner').html()).toBe(scope.html);
   }));
 
   it('should not open if html is empty', function() {
@@ -745,6 +795,7 @@ describe('$tooltipProvider', function() {
     evt = new Event(evt);
 
     element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
   }
 
   describe('popupDelay', function() {

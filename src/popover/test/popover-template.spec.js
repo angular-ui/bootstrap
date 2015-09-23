@@ -32,10 +32,11 @@ describe('popover template', function() {
   }));
 
   it('should open on click', inject(function() {
-    elm.trigger( 'click' );
-    expect( tooltipScope.isOpen ).toBe( true );
+    elm.trigger('click');
+    tooltipScope.$digest();
+    expect(tooltipScope.isOpen).toBe(true);
 
-    expect( elmBody.children().length ).toBe( 2 );
+    expect(elmBody.children().length ).toBe(2);
   }));
 
   it('should not open on click if templateUrl is empty', inject(function() {
@@ -43,6 +44,7 @@ describe('popover template', function() {
     scope.$digest();
 
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(false);
 
     expect(elmBody.children().length).toBe(1);
@@ -50,11 +52,12 @@ describe('popover template', function() {
 
   it('should show updated text', inject(function() {
     scope.myTemplateText = 'some text';
-    scope.$digest();
 
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(true);
 
+    scope.$digest();
     expect(elmBody.children().eq(1).text().trim()).toBe('some text');
 
     scope.myTemplateText = 'new text';
@@ -65,6 +68,7 @@ describe('popover template', function() {
 
   it('should hide popover when template becomes empty', inject(function($timeout) {
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(true);
 
     scope.templateUrl = '';
@@ -89,6 +93,7 @@ describe('popover template', function() {
         tooltipScope = elmScope.$$childTail;
 
         elm.trigger('click');
+        tooltipScope.$digest();
         expect(tooltipScope.isOpen).toBe(true);
 
         expect(elmBody.children().length).toBe(2);
@@ -110,6 +115,7 @@ describe('popover template', function() {
         tooltipScope = elmScope.$$childTail;
 
         elm.trigger('click');
+        tooltipScope.$digest();
         expect(tooltipScope.isOpen).toBe(true);
 
         expect(elmBody.children().length).toBe(2);

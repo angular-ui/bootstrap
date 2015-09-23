@@ -34,6 +34,7 @@ describe('popover', function() {
 
   it('should open on click', inject(function() {
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(true);
 
     // We can only test *that* the popover-popup element was created as the
@@ -43,7 +44,10 @@ describe('popover', function() {
 
   it('should close on second click', inject(function() {
     elm.trigger('click');
+    tooltipScope.$digest();
+    expect(tooltipScope.isOpen).toBe(true);
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(false);
   }));
 
@@ -70,6 +74,7 @@ describe('popover', function() {
 
   it('should popup with animate class by default', inject(function() {
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(true);
 
     expect(elmBody.children().eq(1)).toHaveClass('fade');
@@ -87,6 +92,7 @@ describe('popover', function() {
     tooltipScope = elmScope.$$childTail;
 
     elm.trigger('click');
+    tooltipScope.$digest();
     expect(tooltipScope.isOpen).toBe(true);
     expect(elmBody.children().eq(1)).not.toHaveClass('fade');
   }));
@@ -104,6 +110,7 @@ describe('popover', function() {
         tooltipScope = elmScope.$$childTail;
 
         elm.trigger('click');
+        tooltipScope.$digest();
         expect(tooltipScope.isOpen).toBe(true);
 
         expect(elmBody.children().length).toBe(2);
@@ -124,6 +131,7 @@ describe('popover', function() {
         tooltipScope = elmScope.$$childTail;
 
         elm.trigger('click');
+        tooltipScope.$digest();
         expect(tooltipScope.isOpen).toBe(true);
 
         expect(elmBody.children().length).toBe(2);
@@ -131,8 +139,8 @@ describe('popover', function() {
         expect(ttipElement).toHaveClass('custom');
       }));
     });
-    
-    describe( 'is-open', function() {
+
+    describe('is-open', function() {
       beforeEach(inject(function ($compile) {
         scope.isOpen = false;
         elmBody = angular.element(
@@ -144,8 +152,8 @@ describe('popover', function() {
         elmScope = elm.scope();
         tooltipScope = elmScope.$$childTail;
       }));
-      
-      it( 'should show and hide with the controller value', function() {
+
+      it('should show and hide with the controller value', function() {
         expect(tooltipScope.isOpen).toBe(false);
         elmScope.isOpen = true;
         elmScope.$digest();
@@ -154,11 +162,13 @@ describe('popover', function() {
         elmScope.$digest();
         expect(tooltipScope.isOpen).toBe(false);
       });
-      
-      it( 'should update the controller value', function() {
+
+      it('should update the controller value', function() {
         elm.trigger('click');
+        tooltipScope.$digest();
         expect(elmScope.isOpen).toBe(true);
         elm.trigger('click');
+        tooltipScope.$digest();
         expect(elmScope.isOpen).toBe(false);
       });
     });
