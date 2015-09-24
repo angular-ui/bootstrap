@@ -368,9 +368,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       if (evt.which === 40) {
         scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
         scope.$digest();
+        popUpEl.children()[scope.activeIdx].scrollIntoView(false);
       } else if (evt.which === 38) {
         scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
         scope.$digest();
+        popUpEl.children()[scope.activeIdx].scrollIntoView(false);
       } else if (evt.which === 13 || evt.which === 9) {
         scope.$apply(function () {
           scope.select(scope.activeIdx);
@@ -570,7 +572,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     };
   }])
 
-  .filter('uibTypeaheadHighlight', ['$sce', '$injector', '$log', function($sce, $injector, $log) {
+  .filter('typeaheadHighlight', ['$sce', '$injector', '$log', function($sce, $injector, $log) {
     var isSanitizePresent;
     isSanitizePresent = $injector.has('$sanitize');
 
