@@ -26,7 +26,7 @@ angular.module('ui.bootstrap.buttons', [])
       };
 
       //ui->model
-      element.bind(buttonsCtrl.toggleEvent, function() {
+      element.on(buttonsCtrl.toggleEvent, function() {
         if (attrs.disabled) {
           return;
         }
@@ -73,7 +73,7 @@ angular.module('ui.bootstrap.buttons', [])
       };
 
       //ui->model
-      element.bind(buttonsCtrl.toggleEvent, function() {
+      element.on(buttonsCtrl.toggleEvent, function() {
         if (attrs.disabled) {
           return;
         }
