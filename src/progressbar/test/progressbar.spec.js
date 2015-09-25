@@ -315,6 +315,29 @@ describe('progressbar directive', function() {
         }
         expect(totalWidth.toFixed(2)).toBe('100.00');
       });
+
+      it('should not have a total width over 37.65% when removing bar', function() {
+        $rootScope.objects = [
+          { value: 60, type: 'warning' },
+          { value: 103 },
+          { value: 270, type: 'info' }
+        ];
+        $rootScope.max = 433;
+        $rootScope.$digest();
+        var totalWidth = 0;
+        for (var i = 0; i < 3; i++) {
+          totalWidth += parseFloat(getBar(i).css('width'));
+        }
+        expect(totalWidth.toFixed(2)).toBe('100.00');
+
+        $rootScope.objects.splice(2, 1);
+        $rootScope.$digest();
+        totalWidth = 0;
+        for (i = 0; i < 2; i++) {
+          totalWidth += parseFloat(getBar(i).css('width'));
+        }
+        expect(totalWidth.toFixed(2)).toBe('37.65');
+      });
     });
   });
 });
