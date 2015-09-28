@@ -18,4 +18,6 @@ angular.module('ui.bootstrap.demo').controller('DropdownCtrl', function ($scope,
     $event.stopPropagation();
     $scope.status.isopen = !$scope.status.isopen;
   };
+
+  $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
 });

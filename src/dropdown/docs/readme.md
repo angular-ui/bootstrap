@@ -6,6 +6,8 @@ There is also the `on-toggle(open)` optional expression fired when dropdown chan
 Add `dropdown-append-to-body` to the `uib-dropdown` element to append to the inner `dropdown-menu` to the body.
 This is useful when the dropdown button is inside a div with `overflow: hidden`, and the menu would otherwise be hidden.
 
+Pass an [angular.element](https://docs.angularjs.org/api/ng/function/angular.element) object as the `dropdown-append-to` attribute on the `dropdown` element to append the inner `dropdown-menu` to the passed in element. This is particularly useful when appending to the body element isn't possible, perhaps because the dropdown button is enclosed in a scrollable container. Explore the demo on the left to see this in action. Expand the three different dropdowns and try scrolling inside the containing element.
+
 Add `uib-keyboard-nav` to the `uib-dropdown` element to enable navigation of dropdown list elements with the arrow keys.
 
 By default the dropdown will automatically close if any of its elements is clicked, you can change this behavior by setting the `auto-close` option as follows:
