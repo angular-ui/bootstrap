@@ -250,7 +250,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     restrict: 'AC',
     require: '?^uibDropdown',
     link: function(scope, element, attrs, dropdownCtrl) {
-      if (!dropdownCtrl) {
+      if (!dropdownCtrl || angular.isDefined(attrs.dropdownNested)) {
         return;
       }
 

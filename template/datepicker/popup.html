@@ -1,4 +1,4 @@
-<ul class="dropdown-menu" ng-if="isOpen" style="display: block" ng-style="{top: position.top+'px', left: position.left+'px'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
+<ul class="dropdown-menu" dropdown-nested ng-if="isOpen" style="display: block" ng-style="{top: position.top+'px', left: position.left+'px'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
 	<li ng-transclude></li>
 	<li ng-if="showButtonBar" style="padding:10px 9px 2px">
 		<span class="btn-group pull-left">
