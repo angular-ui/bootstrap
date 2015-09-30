@@ -19,10 +19,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       }
 
       return {
-        itemName:match[3],
-        source:$parse(match[4]),
-        viewMapper:$parse(match[2] || match[1]),
-        modelMapper:$parse(match[1])
+        itemName: match[3],
+        source: $parse(match[4]),
+        viewMapper: $parse(match[2] || match[1]),
+        modelMapper: $parse(match[1])
       };
     }
   };
@@ -171,7 +171,6 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
             var onCurrentRequest = (inputValue === modelCtrl.$viewValue);
             if (onCurrentRequest && hasFocus) {
               if (matches && matches.length > 0) {
-
                 scope.activeIdx = focusFirst ? 0 : -1;
                 isNoResultsSetter(originalScope, false);
                 scope.matches.length = 0;
@@ -329,7 +328,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
             locals[parserResult.itemName] = undefined;
             emptyViewValue = parserResult.viewMapper(originalScope, locals);
 
-            return candidateViewValue!== emptyViewValue ? candidateViewValue : modelValue;
+            return candidateViewValue !== emptyViewValue ? candidateViewValue : modelValue;
           }
         });
 
@@ -379,16 +378,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
           if (evt.which === 40) {
             scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
             scope.$digest();
-
           } else if (evt.which === 38) {
             scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
             scope.$digest();
-
           } else if (evt.which === 13 || evt.which === 9) {
             scope.$apply(function () {
               scope.select(scope.activeIdx);
             });
-
           } else if (evt.which === 27) {
             evt.stopPropagation();
 
