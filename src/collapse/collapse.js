@@ -97,20 +97,19 @@ angular.module('ui.bootstrap.collapse')
 
           if ($animateCss) {
             $animateCss(element, {
-              addClass: 'in',
               easing: 'ease',
               to: { height: element[0].scrollHeight + 'px' }
             }).start().done(expandDone);
           } else {
-            $animate.addClass(element, 'in', {
-              to: { height: element[0].scrollHeight + 'px' }
+            $animate.animate(element, {}, {
+              height: element[0].scrollHeight + 'px'
             }).then(expandDone);
           }
         }
 
         function expandDone() {
           element.removeClass('collapsing')
-            .addClass('collapse')
+            .addClass('collapse in')
             .css({height: 'auto'});
         }
 
@@ -126,19 +125,18 @@ angular.module('ui.bootstrap.collapse')
             .css({height: element[0].scrollHeight + 'px'})
             // initially all panel collapse have the collapse class, this removal
             // prevents the animation from jumping to collapsed state
-            .removeClass('collapse')
+            .removeClass('collapse in')
             .addClass('collapsing')
             .attr('aria-expanded', false)
             .attr('aria-hidden', true);
 
           if ($animateCss) {
             $animateCss(element, {
-              removeClass: 'in',
               to: {height: '0'}
             }).start().done(collapseDone);
           } else {
-            $animate.removeClass(element, 'in', {
-              to: {height: '0'}
+            $animate.animate(element, {}, {
+              height: '0'
             }).then(collapseDone);
           }
         }
