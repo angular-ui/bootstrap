@@ -1,13 +1,11 @@
 angular.module('ui.bootstrap.progressbar', [])
 
-.constant('progressConfig', {
+.constant('uibProgressConfig', {
   animate: true,
   max: 100
 })
 
-.value('$progressSuppressWarning', false)
-
-.controller('ProgressController', ['$scope', '$attrs', 'progressConfig', function($scope, $attrs, progressConfig) {
+.controller('UibProgressController', ['$scope', '$attrs', 'uibProgressConfig', function($scope, $attrs, progressConfig) {
   var self = this,
       animate = angular.isDefined($attrs.animate) ? $scope.$parent.$eval($attrs.animate) : progressConfig.animate;
 
@@ -63,7 +61,7 @@ angular.module('ui.bootstrap.progressbar', [])
     restrict: 'EA',
     replace: true,
     transclude: true,
-    controller: 'ProgressController',
+    controller: 'UibProgressController',
     require: 'uibProgress',
     scope: {
       max: '=?'
@@ -71,26 +69,6 @@ angular.module('ui.bootstrap.progressbar', [])
     templateUrl: 'template/progressbar/progress.html'
   };
 })
-
-.directive('progress', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
-  return {
-    restrict: 'EA',
-    replace: true,
-    transclude: true,
-    controller: 'ProgressController',
-    require: 'progress',
-    scope: {
-      max: '=?',
-      title: '@?'
-    },
-    templateUrl: 'template/progressbar/progress.html',
-    link: function() {
-      if (!$progressSuppressWarning) {
-        $log.warn('progress is now deprecated. Use uib-progress instead');
-      }
-    }
-  };
-}])
 
 .directive('uibBar', function() {
   return {
@@ -109,6 +87,50 @@ angular.module('ui.bootstrap.progressbar', [])
   };
 })
 
+.directive('uibProgressbar', function() {
+  return {
+    restrict: 'EA',
+    replace: true,
+    transclude: true,
+    controller: 'UibProgressController',
+    scope: {
+      value: '=',
+      max: '=?',
+      type: '@'
+    },
+    templateUrl: 'template/progressbar/progressbar.html',
+    link: function(scope, element, attrs, progressCtrl) {
+      progressCtrl.addBar(scope, angular.element(element.children()[0]), {title: attrs.title});
+    }
+  };
+});
+
+/* Deprecated progressbar below */
+
+angular.module('ui.bootstrap.progressbar')
+
+.value('$progressSuppressWarning', false)
+
+.directive('progress', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
+  return {
+    restrict: 'EA',
+    replace: true,
+    transclude: true,
+    controller: 'UibProgressController',
+    require: 'progress',
+    scope: {
+      max: '=?',
+      title: '@?'
+    },
+    templateUrl: 'template/progressbar/progress.html',
+    link: function() {
+      if (!$progressSuppressWarning) {
+        $log.warn('progress is now deprecated. Use uib-progress instead.');
+      }
+    }
+  };
+}])
+
 .directive('bar', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
   return {
     restrict: 'EA',
@@ -122,19 +144,19 @@ angular.module('ui.bootstrap.progressbar', [])
     templateUrl: 'template/progressbar/bar.html',
     link: function(scope, element, attrs, progressCtrl) {
       if (!$progressSuppressWarning) {
-        $log.warn('bar is now deprecated. Use uib-bar instead');
+        $log.warn('bar is now deprecated. Use uib-bar instead.');
       }
       progressCtrl.addBar(scope, element);
     }
   };
 }])
 
-.directive('progressbar', function() {
+.directive('progressbar', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
   return {
     restrict: 'EA',
     replace: true,
     transclude: true,
-    controller: 'ProgressController',
+    controller: 'UibProgressController',
     scope: {
       value: '=',
       max: '=?',
@@ -142,7 +164,10 @@ angular.module('ui.bootstrap.progressbar', [])
     },
     templateUrl: 'template/progressbar/progressbar.html',
     link: function(scope, element, attrs, progressCtrl) {
+      if (!$progressSuppressWarning) {
+        $log.warn('progressbar is now deprecated. Use uib-progressbar instead.');
+      }
       progressCtrl.addBar(scope, angular.element(element.children()[0]), {title: attrs.title});
     }
   };
-});
+}]);

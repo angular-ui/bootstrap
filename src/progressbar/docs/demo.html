@@ -2,20 +2,20 @@
 
     <h3>Static</h3>
     <div class="row">
-        <div class="col-sm-4"><progressbar value="55"></progressbar></div>
-        <div class="col-sm-4"><progressbar class="progress-striped" value="22" type="warning">22%</progressbar></div>
-        <div class="col-sm-4"><progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></progressbar></div>
+        <div class="col-sm-4"><uib-progressbar value="55"></uib-progressbar></div>
+        <div class="col-sm-4"><uib-progressbar class="progress-striped" value="22" type="warning">22%</uib-progressbar></div>
+        <div class="col-sm-4"><uib-progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></uib-progressbar></div>
     </div>
 
     <hr />
     <h3>Dynamic <button type="button" class="btn btn-sm btn-primary" ng-click="random()">Randomize</button></h3>
-    <progressbar max="max" value="dynamic"><span style="color:white; white-space:nowrap;">{{dynamic}} / {{max}}</span></progressbar>
+    <uib-progressbar max="max" value="dynamic"><span style="color:white; white-space:nowrap;">{{dynamic}} / {{max}}</span></uib-progressbar>
     
     <small><em>No animation</em></small>
-    <progressbar animate="false" value="dynamic" type="success"><b>{{dynamic}}%</b></progressbar>
+    <uib-progressbar animate="false" value="dynamic" type="success"><b>{{dynamic}}%</b></uib-progressbar>
 
     <small><em>Object (changes type based on value)</em></small>
-    <progressbar class="progress-striped active" value="dynamic" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></progressbar>
+    <uib-progressbar class="progress-striped active" value="dynamic" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
     
     <hr />
     <h3>Stacked <button type="button" class="btn btn-sm btn-primary" ng-click="randomStacked()">Randomize</button></h3>
