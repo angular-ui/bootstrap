@@ -111,9 +111,9 @@ describe('collapse directive', function() {
       scope.exp = false;
       scope.isCollapsed = false;
       scope.$digest();
+      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = true;
-      $animate.flush();
       scope.$digest();
       expect(element.height()).toBeGreaterThan(collapseHeight);
     });
@@ -122,6 +122,7 @@ describe('collapse directive', function() {
       scope.exp = true;
       scope.isCollapsed = false;
       scope.$digest();
+      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = false;
       scope.$digest();
