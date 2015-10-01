@@ -1,13 +1,14 @@
-/**
-* @ngdoc overview
-* @name ui.bootstrap.carousel
-*
-* @description
-* AngularJS version of an image carousel.
-*
-*/
+/**    
+ * @ngdoc overview    
+ * @name ui.bootstrap.carousel    
+ *    
+ * @description   
+ * AngularJS version of an image carousel.    
+ *    
+ */
 angular.module('ui.bootstrap.carousel', [])
-.controller('CarouselController', ['$scope', '$element', '$interval', '$animate', function($scope, $element, $interval, $animate) {
+
+.controller('UibCarouselController', ['$scope', '$element', '$interval', '$animate', function($scope, $element, $interval, $animate) {
   var self = this,
     slides = self.slides = $scope.slides = [],
     NEW_ANIMATE = angular.version.minor >= 4,
@@ -220,20 +221,20 @@ angular.module('ui.bootstrap.carousel', [])
  * @example
 <example module="ui.bootstrap">
   <file name="index.html">
-    <carousel>
-      <slide>
+    <uib-carousel>
+      <uib-slide>
         <img src="http://placekitten.com/150/150" style="margin:auto;">
         <div class="carousel-caption">
           <p>Beautiful!</p>
         </div>
-      </slide>
-      <slide>
+      </uib-slide>
+      <uib-slide>
         <img src="http://placekitten.com/100/150" style="margin:auto;">
         <div class="carousel-caption">
           <p>D'aww!</p>
         </div>
-      </slide>
-    </carousel>
+      </uib-slide>
+    </uib-carousel>
   </file>
   <file name="demo.css">
     .carousel-indicators {
@@ -243,12 +244,12 @@ angular.module('ui.bootstrap.carousel', [])
   </file>
 </example>
  */
-.directive('carousel', [function() {
+.directive('uibCarousel', [function() {
   return {
     restrict: 'EA',
     transclude: true,
     replace: true,
-    controller: 'CarouselController',
+    controller: 'UibCarouselController',
     controllerAs: 'carousel',
     require: 'carousel',
     templateUrl: function(element, attrs) {
@@ -278,15 +279,15 @@ angular.module('ui.bootstrap.carousel', [])
 <example module="ui.bootstrap">
   <file name="index.html">
 <div ng-controller="CarouselDemoCtrl">
-  <carousel>
-    <slide ng-repeat="slide in slides" active="slide.active" index="$index">
+  <uib-carousel>
+    <uib-slide ng-repeat="slide in slides" active="slide.active" index="$index">
       <img ng-src="{{slide.image}}" style="margin:auto;">
       <div class="carousel-caption">
         <h4>Slide {{$index}}</h4>
         <p>{{slide.text}}</p>
       </div>
-    </slide>
-  </carousel>
+    </uib-slide>
+  </uib-carousel>
   Interval, in milliseconds: <input type="number" ng-model="myInterval">
   <br />Enter a negative number to stop the interval.
 </div>
@@ -305,9 +306,9 @@ function CarouselDemoCtrl($scope) {
 </example>
 */
 
-.directive('slide', function() {
+.directive('uibSlide', function() {
   return {
-    require: '^carousel',
+    require: '^uibCarousel',
     restrict: 'EA',
     transclude: true,
     replace: true,
@@ -410,6 +411,56 @@ function ($injector, $animate) {
         };
       }
       done();
+    }
+  };
+}]);
+
+/* deprecated carousel below */
+
+angular.module('ui.bootstrap.carousel')
+
+.value('$carouselSuppressWarning', false)
+
+.directive('carousel', ['$log', '$carouselSuppressWarning', function($log, $carouselSuppressWarning) {
+  return {
+    restrict: 'EA',
+    transclude: true,
+    replace: true,
+    templateUrl: function(element, attrs) {
+      return attrs.templateUrl || 'template/carousel/carousel.html';
+    },
+    scope: {
+      interval: '=',
+      noTransition: '=',
+      noPause: '=',
+      noWrap: '&'
+    },
+    link: function() {
+      if (!$carouselSuppressWarning) {
+        $log.warn('carousel is now deprecated. Use uib-carousel instead.');
+      }
+    }
+  };
+}])
+
+.directive('slide', ['$log', '$carouselSuppressWarning', function($log, $carouselSuppressWarning) {
+  return {
+
+    restrict: 'EA',
+    transclude: true,
+    replace: true,
+    templateUrl: function(element, attrs) {
+      return attrs.templateUrl || 'template/carousel/slide.html';
+    },
+    scope: {
+      active: '=?',
+      actual: '=?',
+      index: '=?'
+    },
+    link: function (scope, element, attrs, carouselCtrl) {
+      if (!$carouselSuppressWarning) {
+        $log.warn('slide is now deprecated. Use uib-slide instead.');
+      }
     }
   };
 }]);

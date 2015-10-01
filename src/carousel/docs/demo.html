@@ -1,14 +1,14 @@
 <div ng-controller="CarouselDemoCtrl">
   <div style="height: 305px">
-    <carousel interval="myInterval" no-wrap="noWrapSlides">
-      <slide ng-repeat="slide in slides" active="slide.active">
+    <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+      <uib-slide ng-repeat="slide in slides" active="slide.active">
         <img ng-src="{{slide.image}}" style="margin:auto;">
         <div class="carousel-caption">
           <h4>Slide {{$index}}</h4>
           <p>{{slide.text}}</p>
         </div>
-      </slide>
-    </carousel>
+      </uib-slide>
+    </uib-carousel>
   </div>
   <div class="row">
     <div class="col-md-6">
