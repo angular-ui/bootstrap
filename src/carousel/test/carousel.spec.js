@@ -72,7 +72,7 @@ describe('carousel', function() {
         '</uib-carousel>'
       )(scope);
       $rootScope.$digest();
-      
+
       var slide = elm.find('.slide');
       expect(slide.html()).toBe('bar');
     });
