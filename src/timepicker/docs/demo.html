@@ -1,6 +1,6 @@
 <div ng-controller="TimepickerDemoCtrl">
 
-  <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  <uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
 
   <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
 
