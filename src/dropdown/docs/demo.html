@@ -1,11 +1,11 @@
 
 <div ng-controller="DropdownCtrl">
     <!-- Simple dropdown -->
-    <span dropdown on-toggle="toggled(open)">
-      <a href id="simple-dropdown" dropdown-toggle>
+    <span uib-dropdown on-toggle="toggled(open)">
+      <a href id="simple-dropdown" uib-dropdown-toggle>
         Click me for a dropdown, yo!
       </a>
-      <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
+      <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
         <li ng-repeat="choice in items">
           <a href>{{choice}}</a>
         </li>
@@ -13,11 +13,11 @@
     </span>
 
     <!-- Single button -->
-    <div class="btn-group" dropdown is-open="status.isopen">
-      <button id="single-button" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
+    <div class="btn-group" uib-dropdown is-open="status.isopen">
+      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
         Button dropdown <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -27,13 +27,13 @@
     </div>
 
     <!-- Split button -->
-    <div class="btn-group" dropdown>
+    <div class="btn-group" uib-dropdown>
       <button id="split-button" type="button" class="btn btn-danger">Action</button>
-      <button type="button" class="btn btn-danger" dropdown-toggle>
+      <button type="button" class="btn btn-danger" uib-dropdown-toggle>
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="split-button">
+      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -43,11 +43,11 @@
     </div>
 
     <!-- Single button using append-to-body -->
-    <div class="btn-group" dropdown dropdown-append-to-body>
-      <button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
+    <div class="btn-group" uib-dropdown dropdown-append-to-body>
+      <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>
         Dropdown on Body <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
+      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -57,11 +57,11 @@
     </div>
     
     <!-- Single button using template-url -->
-    <div class="btn-group" dropdown>
-      <button id="button-template-url" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
+    <div class="btn-group" uib-dropdown>
+      <button id="button-template-url" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
         Dropdown using template <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" template-url="dropdown.html" aria-labelledby="button-template-url">
+      <ul class="uib-dropdown-menu" template-url="dropdown.html" aria-labelledby="button-template-url">
       </ul>
     </div>
 
@@ -73,11 +73,11 @@
 
     <hr>
     <!-- Single button with keyboard nav -->
-    <div class="btn-group" dropdown keyboard-nav>
-        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" dropdown-toggle>
+    <div class="btn-group" uib-dropdown keyboard-nav>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
             Dropdown with keyboard navigation <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
             <li role="menuitem"><a href="#">Action</a></li>
             <li role="menuitem"><a href="#">Another action</a></li>
             <li role="menuitem"><a href="#">Something else here</a></li>
@@ -87,7 +87,7 @@
     </div>
 
     <script type="text/ng-template" id="dropdown.html">
-        <ul class="dropdown-menu" role="menu" aria-labelledby="button-template-url">
+        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="button-template-url">
           <li role="menuitem"><a href="#">Action in Template</a></li>
           <li role="menuitem"><a href="#">Another action in Template</a></li>
           <li role="menuitem"><a href="#">Something else here</a></li>

@@ -4,7 +4,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   openClass: 'open'
 })
 
-.service('dropdownService', ['$document', '$rootScope', function($document, $rootScope) {
+.service('uibDropdownService', ['$document', '$rootScope', function($document, $rootScope) {
   var openScope = null;
 
   this.open = function(dropdownScope) {
@@ -65,7 +65,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 }])
 
-.controller('DropdownController', ['$scope', '$attrs', '$parse', 'dropdownConfig', 'dropdownService', '$animate', '$position', '$document', '$compile', '$templateRequest', function($scope, $attrs, $parse, dropdownConfig, dropdownService, $animate, $position, $document, $compile, $templateRequest) {
+.controller('UibDropdownController', ['$scope', '$attrs', '$parse', 'dropdownConfig', 'uibDropdownService', '$animate', '$position', '$document', '$compile', '$templateRequest', function($scope, $attrs, $parse, dropdownConfig, uibDropdownService, $animate, $position, $document, $compile, $templateRequest) {
   var self = this,
     scope = $scope.$new(), // create a child scope so we are not polluting original one
     templateScope,
@@ -91,7 +91,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
 
     appendToBody = angular.isDefined($attrs.dropdownAppendToBody);
-    keynavEnabled = angular.isDefined($attrs.keyboardNav);
+    keynavEnabled = angular.isDefined($attrs.uibKeyboardNav);
 
     if (appendToBody && self.dropdownMenu) {
       body.append(self.dropdownMenu);
@@ -207,7 +207,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       }
 
       scope.focusToggleElement();
-      dropdownService.open(scope);
+      uibDropdownService.open(scope);
     } else {
       if (self.dropdownMenuTemplateUrl) {
         if (templateScope) {
@@ -218,7 +218,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         self.dropdownMenu = newEl;
       }
 
-      dropdownService.close(scope);
+      uibDropdownService.close(scope);
       self.selectedOption = null;
     }
 
@@ -239,9 +239,9 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   scope.$on('$destroy', offDestroy);
 }])
 
-.directive('dropdown', function() {
+.directive('uibDropdown', function() {
   return {
-    controller: 'DropdownController',
+    controller: 'UibDropdownController',
     link: function(scope, element, attrs, dropdownCtrl) {
       dropdownCtrl.init(element);
       element.addClass('dropdown');
@@ -249,10 +249,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 })
 
-.directive('dropdownMenu', function() {
+.directive('uibDropdownMenu', function() {
   return {
     restrict: 'AC',
-    require: '?^dropdown',
+    require: '?^uibDropdown',
     link: function(scope, element, attrs, dropdownCtrl) {
       if (!dropdownCtrl) {
         return;
@@ -268,10 +268,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 })
 
-.directive('keyboardNav', function() {
+.directive('uibKeyboardNav', function() {
   return {
     restrict: 'A',
-    require: '?^dropdown',
+    require: '?^uibDropdown',
     link: function(scope, element, attrs, dropdownCtrl) {
       element.bind('keydown', function(e) {
         if ([38, 40].indexOf(e.which) !== -1) {
@@ -307,9 +307,9 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 })
 
-.directive('dropdownToggle', function() {
+.directive('uibDropdownToggle', function() {
   return {
-    require: '?^dropdown',
+    require: '?^uibDropdown',
     link: function(scope, element, attrs, dropdownCtrl) {
       if (!dropdownCtrl) {
         return;
@@ -343,3 +343,53 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
   };
 });
+
+/* Depreciated dropdown below */
+
+angular.module('ui.bootstrap.dropdown')
+.value('$dropdownSuppressWarning', false)
+.directive('dropdown', ['$log', '$dropdownSuppressWarning', function($log, $dropdownSuppressWarning) {
+  return {
+    link: function(scope, element, attrs, dropdownCtrl) {
+        if (!$dropdownSuppressWarning) {
+          $log.warn('dropdown is now deprecated. Use uib-dropdown instead.');
+        }
+      }
+  };
+}])
+
+.directive('dropdownMenu', ['$log', '$dropdownSuppressWarning', function($log, $dropdownSuppressWarning) {
+  return {
+    restrict: 'AC',
+    require: '?^dropdown',
+    link: function(scope, element, attrs, dropdownCtrl) {
+        if (!$dropdownSuppressWarning) {
+          $log.warn('dropdown-menu is now deprecated. Use uib-dropdown-menu instead.');
+        }
+      }
+  };
+}])
+
+.directive('keyboardNav', ['$log', '$dropdownSuppressWarning', function($log, $dropdownSuppressWarning) {
+  return {
+    restrict: 'A',
+    require: '?^dropdown',
+    link: function(scope, element, attrs, dropdownCtrl) {
+        if (!$dropdownSuppressWarning) {
+          $log.warn('keyboard-nav is now deprecated. Use uib-keyboard-nav instead.');
+        }
+      }
+  };
+}])
+
+.directive('dropdownToggle', ['$log', '$dropdownSuppressWarning', function($log, $dropdownSuppressWarning) {
+  return {
+    require: '?^dropdown',
+    link: function(scope, element, attrs, dropdownCtrl) {
+        if (!$dropdownSuppressWarning) {
+          $log.warn('dropdown-toggle is now deprecated. Use uib-dropdown-toggle instead.');
+        }
+     }
+  };
+}]);
+
