@@ -675,8 +675,8 @@ describe('tooltip positioning', function() {
   // load the template
   beforeEach(module('template/tooltip/tooltip-popup.html'));
 
-  beforeEach(inject(function($rootScope, $compile, _$position_) {
-    $position = _$position_;
+  beforeEach(inject(function($rootScope, $compile, $uibPosition) {
+    $position = $uibPosition;
     spyOn($position, 'positionElements').and.callThrough();
 
     scope = $rootScope;

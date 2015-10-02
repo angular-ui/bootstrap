@@ -1,5 +1,4 @@
 describe('position elements', function () {
-
   var TargetElMock = function(width, height) {
     this.width = width;
     this.height = height;
@@ -12,8 +11,8 @@ describe('position elements', function () {
   var $position;
 
   beforeEach(module('ui.bootstrap.position'));
-  beforeEach(inject(function(_$position_) {
-    $position = _$position_;
+  beforeEach(inject(function($uibPosition) {
+    $position = $uibPosition;
   }));
   beforeEach(function () {
     jasmine.addMatchers({
@@ -39,7 +38,6 @@ describe('position elements', function () {
   });
 
   describe('append-to-body: false', function() {
-
     beforeEach(function() {
       //mock position info normally queried from the DOM
       $position.position = function() {
@@ -105,4 +103,62 @@ describe('position elements', function () {
       expect($position.positionElements({}, new TargetElMock(10, 10), 'right-bottom')).toBePositionedAt(120, 120);
     });
   });
+});
+
+/* Deprecation tests below */
+
+describe('position deprecation', function() {
+  var TargetElMock = function(width, height) {
+    this.width = width;
+    this.height = height;
+
+    this.prop = function(propName) {
+      return propName === 'offsetWidth' ? width : height;
+    };
+  };
+  beforeEach(module('ui.bootstrap.position'));
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$positionSuppressWarning', true);
+    });
+
+    inject(function($log, $position) {
+      spyOn($log, 'warn');
+      //mock position info normally queried from the DOM
+      $position.position = function() {
+        return {
+          width: 20,
+          height: 20,
+          top: 100,
+          left: 100
+        };
+      };
+
+      $position.positionElements({}, new TargetElMock(10, 10), 'other');
+
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($log) {
+    spyOn($log, 'warn');
+
+    inject(function($position) {
+      //mock position info normally queried from the DOM
+      $position.position = function() {
+        return {
+          width: 20,
+          height: 20,
+          top: 100,
+          left: 100
+        };
+      };
+
+      $position.positionElements({}, new TargetElMock(10, 10), 'other');
+
+      expect($log.warn.calls.count()).toBe(1);
+      expect($log.warn.calls.argsFor(0)).toEqual(['$position is now deprecated. Use $uibPosition instead.']);
+    });
+  }));
 });
