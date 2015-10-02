@@ -1,17 +1,17 @@
-describe('$modal', function () {
+describe('$uibModal', function () {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
-  var $modal, $modalStack, $modalProvider;
+  var $uibModal, $uibModalStack, $uibModalProvider;
 
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('template/modal/backdrop.html'));
   beforeEach(module('template/modal/window.html'));
-  beforeEach(module(function(_$controllerProvider_, _$modalProvider_){
+  beforeEach(module(function(_$controllerProvider_, _$uibModalProvider_){
     $controllerProvider = _$controllerProvider_;
-    $modalProvider = _$modalProvider_;
+    $uibModalProvider = _$uibModalProvider_;
   }));
 
-  beforeEach(inject(function(_$animate_, _$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$modal_, _$modalStack_) {
+  beforeEach(inject(function(_$animate_, _$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$uibModal_, _$uibModalStack_) {
     $animate = _$animate_;
     $rootScope = _$rootScope_;
     $document = _$document_;
@@ -19,8 +19,8 @@ describe('$modal', function () {
     $templateCache = _$templateCache_;
     $timeout = _$timeout_;
     $q = _$q_;
-    $modal = _$modal_;
-    $modalStack = _$modalStack_;
+    $uibModal = _$uibModal_;
+    $uibModalStack = _$uibModalStack_;
   }));
 
   beforeEach(function() {
@@ -145,7 +145,7 @@ describe('$modal', function () {
   }
 
   function open(modalOptions) {
-    var modal = $modal.open(modalOptions);
+    var modal = $uibModal.open(modalOptions);
     $rootScope.$digest();
     $timeout.flush(0);
     return modal;
@@ -478,7 +478,7 @@ describe('$modal', function () {
 
   describe('default options can be changed in a provider', function() {
     it('should allow overriding default options in a provider', function() {
-      $modalProvider.options.backdrop = false;
+      $uibModalProvider.options.backdrop = false;
       var modal = open({template: '<div>Content</div>'});
 
       expect($document).toHaveModalOpenWithContent('Content', 'div');
@@ -486,7 +486,7 @@ describe('$modal', function () {
     });
 
     it('should accept new objects with default options in a provider', function() {
-      $modalProvider.options = {
+      $uibModalProvider.options = {
         backdrop: false
       };
       var modal = open({template: '<div>Content</div>'});
@@ -604,10 +604,10 @@ describe('$modal', function () {
         open({
           controller: function($scope, $foo) {
             $scope.value = 'Content from resolve';
-            expect($foo).toBe($modal);
+            expect($foo).toBe($uibModal);
           },
           resolve: {
-            $foo: '$modal'
+            $foo: '$uibModal'
           },
           template: '<div>{{value}}</div>'
         });
@@ -1014,7 +1014,7 @@ describe('$modal', function () {
       // Opens a modal for each element in array order.
       // Order is an array of non-repeating integers from 0..length-1 representing when to resolve that modal's promise.
       // For example [1,2,0] would resolve the 3rd modal's promise first and the 2nd modal's promise last.
-      // Tests that the modals are added to $modalStack and that each resolves its "opened" promise sequentially.
+      // Tests that the modals are added to $uibModalStack and that each resolves its "opened" promise sequentially.
       // If an element is {reject:n} then n is still the order, but the corresponding promise is rejected.
       // A rejection earlier in the open sequence should not affect modals opened later.
       function test(order) {
@@ -1039,7 +1039,7 @@ describe('$modal', function () {
               x: function() { return ds[x].deferred.promise; }
             }
           }).opened.then(function() {
-            expect($modalStack.getTop().value.modalScope.index).toEqual(i);
+            expect($uibModalStack.getTop().value.modalScope.index).toEqual(i);
             actual += i;
           });
         });
@@ -1054,7 +1054,7 @@ describe('$modal', function () {
         });
 
         expect(actual).toEqual(expected);
-        expect($modal.getPromiseChain()).toEqual(null);
+        expect($uibModal.getPromiseChain()).toEqual(null);
       }
 
       // Calls emit n! times on arrays of length n containing all non-repeating permutations of the integers 0..n-1.
@@ -1183,4 +1183,72 @@ describe('$modal', function () {
       expect(called).toBeTruthy();
     });
   });
+});
+
+/* deprecation tests below */
+
+describe('$modal deprecation', function() {
+  beforeEach(module('ngAnimateMock'));
+  beforeEach(module('ui.bootstrap.modal'));
+  beforeEach(module('template/modal/backdrop.html'));
+  beforeEach(module('template/modal/window.html'));
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$modalSuppressWarning', true);
+    });
+
+    inject(function($modal, $timeout, $log, $rootScope) {
+      spyOn($log, 'warn');
+
+      $modal.open({template: '<div>Foo</div>'});
+      $rootScope.$digest();
+      $timeout.flush(0);
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($log) {
+    spyOn($log, 'warn');
+
+    inject(function($compile, $templateCache, $rootScope, $modal, $timeout) {
+      var backdropTemplate =
+        '<div class="modal-backdrop"' +
+        'modal-animation-class="fade"' +
+        'modal-in-class="in"' +
+        'ng-style="{\'z-index\': 1040 + (index && 1 || 0) + index*10}"' +
+        '></div>';
+      $templateCache.put('template/modal/backdrop.html', backdropTemplate);
+
+      var windowTemplate =
+        '<div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal"' +
+        'modal-animation-class="fade"' +
+        'modal-in-class="in"' +
+        'ng-style="{\'z-index\': 1050 + index*10, display: \'block\'}">' +
+        '<div class="modal-dialog" ng-class="size ? \'modal-\' + size : \'\'"><div class="modal-content" modal-transclude></div></div>' +
+        '</div>';
+      $templateCache.put('template/modal/window.html', windowTemplate);
+
+      $modal.open({template: '<div>Foo</div>'});
+      $rootScope.$digest();
+      $timeout.flush(0);
+
+      expect($log.warn.calls.count()).toBe(5);
+      expect($log.warn.calls.argsFor(0)).toEqual(['$modal is now deprecated. Use $uibModal instead.']);
+      expect($log.warn.calls.argsFor(1)).toEqual(['$modalStack is now deprecated. Use $uibModalStack instead.']);
+      expect($log.warn.calls.argsFor(2)).toEqual(['modal-animation-class is now deprecated. Use uib-modal-animation-class instead.']);
+      expect($log.warn.calls.argsFor(3)).toEqual(['modal-animation-class is now deprecated. Use uib-modal-animation-class instead.']);
+      expect($log.warn.calls.argsFor(4)).toEqual(['modal-transclude is now deprecated. Use uib-modal-transclude instead.']);
+
+      $log.warn.calls.reset();
+      $compile('<div modal-backdrop></div>')($rootScope);
+      $rootScope.$digest();
+      expect($log.warn.calls.argsFor(1)).toEqual(['modal-backdrop is now deprecated. Use uib-modal-backdrop instead.']);
+
+      $log.warn.calls.reset();
+      $compile('<div modal-window></div>')($rootScope);
+      $rootScope.$digest();
+      expect($log.warn.calls.argsFor(2)).toEqual(['modal-window is now deprecated. Use uib-modal-window instead.']);
+    });
+  }));
 });
