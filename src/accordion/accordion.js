@@ -135,10 +135,21 @@ angular.module('ui.bootstrap.accordion')
 
   .value('$accordionSuppressWarning', false)
 
+  .controller('AccordionController', ['$scope', '$attrs', '$controller', '$log', '$accordionSuppressWarning', function($scope, $attrs, $controller, $log, $accordionSuppressWarning) {
+    if (!$accordionSuppressWarning) {
+      $log.warn('AccordionController is now deprecated. Use UibAccordionController instead.');
+    }
+
+    angular.extend(this, $controller('UibAccordionController', {
+      $scope: $scope,
+      $attrs: $attrs
+    }));
+  }])
+
   .directive('accordion', ['$log', '$accordionSuppressWarning', function($log, $accordionSuppressWarning) {
     return {
       restrict: 'EA',
-      controller: 'UibAccordionController',
+      controller: 'AccordionController',
       controllerAs: 'accordion',
       transclude: true,
       replace: false,

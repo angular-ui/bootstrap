@@ -12,7 +12,6 @@ describe('uib-accordion', function() {
   }));
 
   describe('controller', function () {
-
     var ctrl, $element, $attrs;
     beforeEach(inject(function($controller) {
       $attrs = {};
@@ -627,9 +626,10 @@ describe('accordion deprecation', function() {
     element = $compile(element)($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(3);
-    expect($log.warn.calls.argsFor(0)).toEqual(['accordion-heading is now deprecated. Use uib-accordion-heading instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['accordion-group is now deprecated. Use uib-accordion-group instead.']);
-    expect($log.warn.calls.argsFor(2)).toEqual(['accordion is now deprecated. Use uib-accordion instead.']);
+    expect($log.warn.calls.count()).toBe(4);
+    expect($log.warn.calls.argsFor(0)).toEqual(['AccordionController is now deprecated. Use UibAccordionController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['accordion-heading is now deprecated. Use uib-accordion-heading instead.']);
+    expect($log.warn.calls.argsFor(2)).toEqual(['accordion-group is now deprecated. Use uib-accordion-group instead.']);
+    expect($log.warn.calls.argsFor(3)).toEqual(['accordion is now deprecated. Use uib-accordion instead.']);
   }));
 });
