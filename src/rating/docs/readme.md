@@ -2,7 +2,7 @@ Rating directive that will take care of visualising a star rating bar.
 
 ### Settings ###
 
-#### `<rating>` ####
+#### `<uib-rating>` ####
 
  * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
