@@ -371,9 +371,12 @@ describe('buttons deprecation', function() {
     element = $compile('<button ng-model="model" btn-radio="1">click1</button><button ng-model="model" btn-radio="2">click2</button>')($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(3);
-    expect($log.warn.calls.argsFor(0)).toEqual(['btn-checkbox is now deprecated. Use uib-btn-checkbox instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['btn-radio is now deprecated. Use uib-btn-radio instead.']);
-    expect($log.warn.calls.argsFor(2)).toEqual(['btn-radio is now deprecated. Use uib-btn-radio instead.']);
+    expect($log.warn.calls.count()).toBe(6);
+    expect($log.warn.calls.argsFor(0)).toEqual(['ButtonsController is now deprecated. Use UibButtonsController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['btn-checkbox is now deprecated. Use uib-btn-checkbox instead.']);
+    expect($log.warn.calls.argsFor(2)).toEqual(['ButtonsController is now deprecated. Use UibButtonsController instead.']);
+    expect($log.warn.calls.argsFor(3)).toEqual(['btn-radio is now deprecated. Use uib-btn-radio instead.']);
+    expect($log.warn.calls.argsFor(4)).toEqual(['ButtonsController is now deprecated. Use UibButtonsController instead.']);
+    expect($log.warn.calls.argsFor(5)).toEqual(['btn-radio is now deprecated. Use uib-btn-radio instead.']);
   }));
 });

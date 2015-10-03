@@ -104,10 +104,18 @@ angular.module('ui.bootstrap.buttons')
 
   .value('$buttonsSuppressWarning', false)
 
+  .controller('ButtonsController', ['$controller', '$log', '$buttonsSuppressWarning', function($controller, $log, $buttonsSuppressWarning) {
+    if (!$buttonsSuppressWarning) {
+      $log.warn('ButtonsController is now deprecated. Use UibButtonsController instead.');
+    }
+
+    angular.extend(this, $controller('UibButtonsController'));
+  }])
+
   .directive('btnRadio', ['$log', '$buttonsSuppressWarning', function($log, $buttonsSuppressWarning) {
     return {
       require: ['btnRadio', 'ngModel'],
-      controller: 'UibButtonsController',
+      controller: 'ButtonsController',
       controllerAs: 'buttons',
       link: function(scope, element, attrs, ctrls) {
         if (!$buttonsSuppressWarning) {
@@ -145,7 +153,7 @@ angular.module('ui.bootstrap.buttons')
   .directive('btnCheckbox', ['$document', '$log', '$buttonsSuppressWarning', function($document, $log, $buttonsSuppressWarning) {
     return {
       require: ['btnCheckbox', 'ngModel'],
-      controller: 'UibButtonsController',
+      controller: 'ButtonsController',
       controllerAs: 'button',
       link: function(scope, element, attrs, ctrls) {
         if (!$buttonsSuppressWarning) {
