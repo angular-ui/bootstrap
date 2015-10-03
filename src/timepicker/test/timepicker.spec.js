@@ -1752,7 +1752,8 @@ describe('timepicker deprecation', function() {
     element = $compile(element)($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['timepicker is now deprecated. Use uib-timepicker instead.']);
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['TimepickerController is now deprecated. Use UibTimepickerController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['timepicker is now deprecated. Use uib-timepicker instead.']);
   }));
 });

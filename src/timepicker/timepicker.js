@@ -386,11 +386,22 @@ angular.module('ui.bootstrap.timepicker')
 
 .value('$timepickerSuppressWarning', false)
 
+.controller('TimepickerController', ['$scope', '$attrs', '$controller', '$log', '$timepickerSuppressWarning', function($scope, $attrs, $controller, $log, $timepickerSuppressWarning) {
+  if (!$timepickerSuppressWarning) {
+    $log.warn('TimepickerController is now deprecated. Use UibTimepickerController instead.');
+  }
+
+  angular.extend(this, $controller('UibTimepickerController', {
+    $scope: $scope,
+    $attrs: $attrs
+  }));
+}])
+
 .directive('timepicker', ['$log', '$timepickerSuppressWarning', function($log, $timepickerSuppressWarning) {
   return {
     restrict: 'EA',
     require: ['timepicker', '?^ngModel'],
-    controller: 'UibTimepickerController',
+    controller: 'TimepickerController',
     controllerAs: 'timepicker',
     replace: true,
     scope: {},
