@@ -13,7 +13,7 @@ describe('popover', function() {
 
   beforeEach(inject(function($rootScope, $compile, $sce) {
     elmBody = angular.element(
-      '<div><span popover-html="template">Selector Text</span></div>'
+      '<div><span uib-popover-html="template">Selector Text</span></div>'
     );
 
     scope = $rootScope;
@@ -100,7 +100,7 @@ describe('popover', function() {
     };
 
     elmBody = angular.element(
-      '<div><input popover-html="template" ng-click="click()" popover-trigger="mouseenter"/></div>'
+      '<div><input uib-popover-html="template" ng-click="click()" popover-trigger="mouseenter"/></div>'
     );
     $compile(elmBody)(scope);
     scope.$digest();
@@ -127,7 +127,7 @@ describe('popover', function() {
 
   it('should popup without animate class when animation disabled', inject(function($compile) {
     elmBody = angular.element(
-      '<div><span popover-html="template" popover-animation="false">Selector Text</span></div>'
+      '<div><span uib-popover-html="template" popover-animation="false">Selector Text</span></div>'
     );
 
     $compile(elmBody)(scope);
@@ -146,7 +146,7 @@ describe('popover', function() {
     describe('placement', function() {
       it('can specify an alternative, valid placement', inject(function($compile) {
         elmBody = angular.element(
-          '<div><span popover-html="template" popover-placement="left">Trigger here</span></div>'
+          '<div><span uib-popover-html="template" popover-placement="left">Trigger here</span></div>'
         );
         $compile(elmBody)(scope);
         scope.$digest();
@@ -168,7 +168,7 @@ describe('popover', function() {
     describe('class', function() {
       it('can specify a custom class', inject(function($compile) {
         elmBody = angular.element(
-          '<div><span popover-html="template" popover-class="custom">Trigger here</span></div>'
+          '<div><span uib-popover-html="template" popover-class="custom">Trigger here</span></div>'
         );
         $compile(elmBody)(scope);
         scope.$digest();
@@ -186,4 +186,65 @@ describe('popover', function() {
       }));
     });
   });
+});
+
+/* Deprecation tests below */
+
+describe('popover deprecation', function() {
+  beforeEach(module('ui.bootstrap.popover'));
+  beforeEach(module('template/popover/popover-html.html'));
+
+  var elm, elmBody, elmScope, tooltipScope;
+
+  function trigger(element, evt) {
+    evt = new Event(evt);
+
+    element[0].dispatchEvent(evt);
+    element.scope().$$childTail.$digest();
+  }
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$popoverSuppressWarning', true);
+      $provide.value('$tooltipSuppressWarning', true);
+    });
+
+    inject(function($compile, $log, $rootScope, $sce) {
+      spyOn($log, 'warn');
+
+      $rootScope.html = 'I say: <strong class="hello">Hello!</strong>';
+      $rootScope.safeHtml = $sce.trustAsHtml($rootScope.html);
+      elmBody = angular.element('<div><span popover-html="safeHtml">Selector Text</span></div>');
+      $compile(elmBody)($rootScope);
+      $rootScope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      trigger(elm, 'mouseenter');
+      tooltipScope.$digest();
+
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($compile, $log, $rootScope, $sce) {
+    spyOn($log, 'warn');
+
+    $rootScope.html = 'I say: <strong class="hello">Hello!</strong>';
+    $rootScope.safeHtml = $sce.trustAsHtml($rootScope.html);
+    elmBody = angular.element('<div><span popover-html="safeHtml">Selector Text</span></div>');
+    $compile(elmBody)($rootScope);
+    $rootScope.$digest();
+    elm = elmBody.find('span');
+    elmScope = elm.scope();
+    tooltipScope = elmScope.$$childTail;
+
+    elm.trigger('click');
+    tooltipScope.$digest();
+
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['$tooltip is now deprecated. Use $uibTooltip instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['popover-html-popup is now deprecated. Use uib-popover-html-popup instead.']);
+  }));
 });

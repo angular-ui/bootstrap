@@ -4,13 +4,13 @@ directive supports multiple placements, optional transition animation, and more.
 Like the Bootstrap jQuery plugin, the popover **requires** the tooltip
 module.
 
-There are two versions of the popover: `popover` and `popover-template`:
+There are two versions of the popover: `uib-popover` and `uib-popover-template`:
 
-- `popover` takes text only and will escape any HTML provided for the popover
+- `uib-popover` takes text only and will escape any HTML provided for the popover
   body.
-- `popover-html` takes an expression that evaluates to an html string. *The user is responsible for ensuring the
+- `uib-popover-html` takes an expression that evaluates to an html string. *The user is responsible for ensuring the
   content is safe to put into the DOM!*
-- `popover-template` takes text that specifies the location of a template to
+- `uib-popover-template` takes text that specifies the location of a template to
   use for the popover body. Note that this needs to be wrapped in a tag.
 
 The popover directives provides several optional attributes to control how it
@@ -40,7 +40,7 @@ $tooltipProvider. See the [tooltip](#tooltip) section for more information.
 For Safari 7+ support, if you want to use **focus** `popover-trigger`, you need to use an anchor tag with a tab index. For example:
 
 ```
-<a tabindex="0" popover="Test" popover-trigger="focus" class="btn btn-default">
+<a tabindex="0" uib-popover="Test" popover-trigger="focus" class="btn btn-default">
   Click Me
 </a>
 ```

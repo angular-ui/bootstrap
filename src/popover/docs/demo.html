@@ -12,9 +12,9 @@
       <label>Popup Template:</label>
       <input type="text" ng-model="dynamicPopover.templateUrl" class="form-control">
     </div>
-    <button popover="{{dynamicPopover.content}}" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button>
+    <button uib-popover="{{dynamicPopover.content}}" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button>
 
-    <button popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Popover With Template</button>
+    <button uib-popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Popover With Template</button>
 
     <script type="text/ng-template" id="myPopoverTemplate.html">
         <div>{{dynamicPopover.content}}</div>
@@ -25,20 +25,20 @@
     </script>
     <hr />
     <h4>Positional</h4>
-    <button popover-placement="top" popover="On the Top!" type="button" class="btn btn-default">Top</button>
-    <button popover-placement="left" popover="On the Left!" type="button" class="btn btn-default">Left</button>
-    <button popover-placement="right" popover="On the Right!" type="button" class="btn btn-default">Right</button>
-    <button popover-placement="bottom" popover="On the Bottom!" type="button" class="btn btn-default">Bottom</button>
+    <button popover-placement="top" uib-popover="On the Top!" type="button" class="btn btn-default">Top</button>
+    <button popover-placement="left" uib-popover="On the Left!" type="button" class="btn btn-default">Left</button>
+    <button popover-placement="right" uib-popover="On the Right!" type="button" class="btn btn-default">Right</button>
+    <button popover-placement="bottom" uib-popover="On the Bottom!" type="button" class="btn btn-default">Bottom</button>
     
     <hr />
     <h4>Triggers</h4>
     <p>
-      <button popover="I appeared on mouse enter!" popover-trigger="mouseenter" type="button" class="btn btn-default">Mouseenter</button>
+      <button uib-popover="I appeared on mouse enter!" popover-trigger="mouseenter" type="button" class="btn btn-default">Mouseenter</button>
     </p>
-    <input type="text" value="Click me!" popover="I appeared on focus! Click away and I'll vanish..."  popover-trigger="focus" class="form-control">
+    <input type="text" value="Click me!" uib-popover="I appeared on focus! Click away and I'll vanish..."  popover-trigger="focus" class="form-control">
 
     <hr />
     <h4>Other</h4>
-    <button Popover-animation="true" popover="I fade in and out!" type="button" class="btn btn-default">fading</button>
-    <button popover="I have a title!" popover-title="The title." type="button" class="btn btn-default">title</button>
+    <button popover-animation="true" uib-popover="I fade in and out!" type="button" class="btn btn-default">fading</button>
+    <button uib-popover="I have a title!" popover-title="The title." type="button" class="btn btn-default">title</button>
 </div>

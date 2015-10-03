@@ -18,7 +18,7 @@ describe('popover template', function() {
 
   beforeEach(inject(function($rootScope, $compile) {
     elmBody = angular.element(
-      '<div><span popover-template="templateUrl">Selector Text</span></div>'
+      '<div><span uib-popover-template="templateUrl">Selector Text</span></div>'
     );
 
     scope = $rootScope;
@@ -84,7 +84,7 @@ describe('popover template', function() {
     describe('placement', function() {
       it('can specify an alternative, valid placement', inject(function($compile) {
         elmBody = angular.element(
-          '<div><span popover-template="templateUrl" popover-placement="left">Trigger</span></div>'
+          '<div><span uib-popover-template="templateUrl" popover-placement="left">Trigger</span></div>'
         );
         $compile(elmBody)(scope);
         scope.$digest();
@@ -106,7 +106,7 @@ describe('popover template', function() {
     describe('class', function() {
       it('can specify a custom class', inject(function($compile) {
         elmBody = angular.element(
-          '<div><span popover-template="templateUrl" popover-class="custom">Trigger</span></div>'
+          '<div><span uib-popover-template="templateUrl" popover-class="custom">Trigger</span></div>'
         );
         $compile(elmBody)(scope);
         scope.$digest();
@@ -124,4 +124,57 @@ describe('popover template', function() {
       }));
     });
   });
+});
+
+/* Deprecation tests below */
+
+describe('popover template deprecation', function() {
+  beforeEach(module('ui.bootstrap.popover'));
+  beforeEach(module('template/popover/popover.html'));
+  beforeEach(module('template/popover/popover-template.html'));
+
+  var elm, elmBody, elmScope, tooltipScope;
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$popoverSuppressWarning', true);
+      $provide.value('$tooltipSuppressWarning', true);
+    });
+
+    inject(function($compile, $log, $rootScope, $templateCache) {
+      spyOn($log, 'warn');
+      $templateCache.put('myUrl', [200, '<span>{{ myTemplateText }}</span>', {}]);
+      $rootScope.templateUrl = 'myUrl';
+
+      elmBody = angular.element('<div><span popover-template="templateUrl">Selector Text</span></div>');
+      $compile(elmBody)($rootScope);
+      $rootScope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      elm.trigger('click');
+      tooltipScope.$digest();
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($compile, $log, $rootScope, $templateCache) {
+    spyOn($log, 'warn');
+    $templateCache.put('myUrl', [200, '<span>{{ myTemplateText }}</span>', {}]);
+    $rootScope.templateUrl = 'myUrl';
+
+    elmBody = angular.element('<div><span popover-template="templateUrl">Selector Text</span></div>');
+    $compile(elmBody)($rootScope);
+    elm = elmBody.find('span');
+    elmScope = elm.scope();
+    tooltipScope = elmScope.$$childTail;
+
+    elm.trigger('click');
+    tooltipScope.$digest();
+
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['$tooltip is now deprecated. Use $uibTooltip instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['popover-template-popup is now deprecated. Use uib-popover-template-popup instead.']);
+  }));
 });
