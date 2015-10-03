@@ -4,7 +4,7 @@ It supports multiple (stacked) bars into the same `<uib-progress>` element or a 
 
 ### Settings ###
 
-#### `<progressbar>` ####
+#### `<uib-progressbar>` ####
 
  * `value` <i class="glyphicon glyphicon-eye-open"></i>
  	:
