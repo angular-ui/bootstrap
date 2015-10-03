@@ -4,13 +4,13 @@ describe('dropdownToggle', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.dropdown'));
 
-  beforeEach(inject(function(_$animate_, _$compile_, _$rootScope_, _$document_, _$templateCache_, _dropdownConfig_, _$browser_, _$log_) {
+  beforeEach(inject(function(_$animate_, _$compile_, _$rootScope_, _$document_, _$templateCache_, uibDropdownConfig, _$browser_, _$log_) {
     $animate = _$animate_;
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $document = _$document_;
     $templateCache = _$templateCache_;
-    dropdownConfig = _dropdownConfig_;
+    dropdownConfig = uibDropdownConfig;
     $browser = _$browser_;
     $log = _$log_;
   }));
@@ -707,33 +707,21 @@ describe('dropdown deprecation', function() {
   
   it('should give warning by default', inject(function($compile, $log, $rootScope) {
     spyOn($log, 'warn');
-    var element = $compile('<li dropdown><a href></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
+    var element = $compile('<li dropdown><a href></a><ul><li><a href dropdown-toggle>Hello</a></li></ul></li>')($rootScope);
     $rootScope.$digest();
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['dropdown is now deprecated. Use uib-dropdown instead.']);
-  }));
-  
-  it('should give warning by default for dropdownToggle', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-    var element = $compile('<li dropdown><a href dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
-    $rootScope.$digest();
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['dropdown-toggle is now deprecated. Use uib-dropdown-toggle instead.']);
+    expect($log.warn.calls.count()).toBe(3);
+    expect($log.warn.calls.argsFor(0)).toEqual(['DropdownController is now deprecated. Use UibDropdownController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['dropdown-toggle is now deprecated. Use uib-dropdown-toggle instead.']);
+    expect($log.warn.calls.argsFor(2)).toEqual(['dropdown is now deprecated. Use uib-dropdown instead.']);
   }));
   
   it('should give warning by default for keyboardNav', inject(function($compile, $log, $rootScope) {
     spyOn($log, 'warn');
     var element = $compile('<li dropdown keyboard-nav><a href ></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
     $rootScope.$digest();
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['keyboard-nav is now deprecated. Use uib-keyboard-nav instead.']);
+    expect($log.warn.calls.count()).toBe(3);
+    expect($log.warn.calls.argsFor(0)).toEqual(['DropdownController is now deprecated. Use UibDropdownController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['keyboard-nav is now deprecated. Use uib-keyboard-nav instead.']);
+    expect($log.warn.calls.argsFor(2)).toEqual(['dropdown is now deprecated. Use uib-dropdown instead.']);
   }));
-  
-  it('should give warning by default for dropdownMenu', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-    var element = $compile('<li dropdown><a href ></a><ul dropdown-menu><li><a href>Hello</a></li></ul></li>')($rootScope);
-    $rootScope.$digest();
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['dropdown-menu is now deprecated. Use uib-dropdown-menu instead.']);
-  }));   
 });
