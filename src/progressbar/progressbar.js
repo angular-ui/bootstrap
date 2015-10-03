@@ -58,7 +58,6 @@ angular.module('ui.bootstrap.progressbar', [])
 
 .directive('uibProgress', function() {
   return {
-    restrict: 'EA',
     replace: true,
     transclude: true,
     controller: 'UibProgressController',
@@ -72,7 +71,6 @@ angular.module('ui.bootstrap.progressbar', [])
 
 .directive('uibBar', function() {
   return {
-    restrict: 'EA',
     replace: true,
     transclude: true,
     require: '^uibProgress',
@@ -89,7 +87,6 @@ angular.module('ui.bootstrap.progressbar', [])
 
 .directive('uibProgressbar', function() {
   return {
-    restrict: 'EA',
     replace: true,
     transclude: true,
     controller: 'UibProgressController',
@@ -111,12 +108,22 @@ angular.module('ui.bootstrap.progressbar')
 
 .value('$progressSuppressWarning', false)
 
+.controller('ProgressController', ['$scope', '$attrs', '$controller', '$log', '$progressSuppressWarning', function($scope, $attrs, $controller, $log, $progressSuppressWarning) {
+  if (!$progressSuppressWarning) {
+    $log.warn('ProgressController is now deprecated. Use UibProgressController instead.');
+  }
+
+  angular.extend(this, $controller('UibProgressController', {
+    $scope: $scope,
+    $attrs: $attrs
+  }));
+}])
+
 .directive('progress', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
   return {
-    restrict: 'EA',
     replace: true,
     transclude: true,
-    controller: 'UibProgressController',
+    controller: 'ProgressController',
     require: 'progress',
     scope: {
       max: '=?',
@@ -133,7 +140,6 @@ angular.module('ui.bootstrap.progressbar')
 
 .directive('bar', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
   return {
-    restrict: 'EA',
     replace: true,
     transclude: true,
     require: '^progress',
@@ -153,10 +159,9 @@ angular.module('ui.bootstrap.progressbar')
 
 .directive('progressbar', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
   return {
-    restrict: 'EA',
     replace: true,
     transclude: true,
-    controller: 'UibProgressController',
+    controller: 'ProgressController',
     scope: {
       value: '=',
       max: '=?',
