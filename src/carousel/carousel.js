@@ -122,6 +122,7 @@ angular.module('ui.bootstrap.carousel', [])
   };
 
   $scope.$watch('interval', restartTimer);
+  $scope.$watchCollection('slides', resetTransition);
   $scope.$on('$destroy', resetTimer);
 
   function restartTimer() {
@@ -145,6 +146,12 @@ angular.module('ui.bootstrap.carousel', [])
       $scope.next();
     } else {
       $scope.pause();
+    }
+  }
+
+  function resetTransition(slides) {
+    if (!slides.length) {
+      $scope.$currentTransition = null;
     }
   }
 

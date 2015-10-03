@@ -45,7 +45,7 @@ describe('carousel', function() {
     });
 
     function testSlideActive(slideIndex) {
-      for (var i=0; i<scope.slides.length; i++) {
+      for (var i = 0; i < scope.slides.length; i++) {
         if (i == slideIndex) {
           expect(scope.slides[i].active).toBe(true);
         } else {
@@ -143,7 +143,7 @@ describe('carousel', function() {
     });
 
     it('should hide navigation when only one slide', function () {
-      scope.slides=[{active:false,content:'one'}];
+      scope.slides = [{active:false,content:'one'}];
       scope.$apply();
       elm = $compile(
           '<uib-carousel interval="interval" no-transition="true">' +
@@ -302,7 +302,7 @@ describe('carousel', function() {
     });
 
     it('should change dom when you reassign ng-repeat slides array', function() {
-      scope.slides=[{content:'new1'},{content:'new2'},{content:'new3'}];
+      scope.slides = [{content:'new1'},{content:'new2'},{content:'new3'}];
       scope.$apply();
       var contents = elm.find('div.item');
       expect(contents.length).toBe(3);
@@ -337,6 +337,21 @@ describe('carousel', function() {
       spyOn($interval, 'cancel').and.callThrough();
       scope.$destroy();
       expect($interval.cancel).toHaveBeenCalled();
+    });
+
+    it('issue 4390 - should reset the currentTransition if there are no slides', function() {
+      var carouselScope = elm.children().scope();
+      var next = elm.find('a.right');
+      scope.slides = [{content:'new1'},{content:'new2'},{content:'new3'}];
+      scope.$apply();
+
+      testSlideActive(0);
+      carouselScope.$currentTransition = true;
+
+      scope.slides = [];
+      scope.$apply();
+
+      expect(carouselScope.$currentTransition).toBe(null);
     });
 
     describe('slide order', function() {
