@@ -74,9 +74,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     setIsOpen = angular.noop,
     toggleInvoker = $attrs.onToggle ? $parse($attrs.onToggle) : angular.noop,
     appendToBody = false,
-    keynavEnabled = false,
-    selectedOption = null,
-    body = $document.find('body');
+    keynavEnabled =false,
+    selectedOption = null;
 
   this.init = function(element) {
     self.$element = element;
@@ -94,8 +93,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     keynavEnabled = angular.isDefined($attrs.uibKeyboardNav);
 
     if (appendToBody && self.dropdownMenu) {
-      body.append(self.dropdownMenu);
-      body.addClass('dropdown');
+      $document.find('body').append(self.dropdownMenu);
       element.on('$destroy', function handleDestroyEvent() {
         self.dropdownMenu.remove();
       });
@@ -186,9 +184,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       self.dropdownMenu.css(css);
     }
 
-    var openContainer = appendToBody ? body : self.$element;
-
-    $animate[isOpen ? 'addClass' : 'removeClass'](openContainer, openClass).then(function() {
+    $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass).then(function() {
       if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
         toggleInvoker($scope, { open: !!isOpen });
       }
