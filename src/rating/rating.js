@@ -104,6 +104,17 @@ angular.module('ui.bootstrap.rating')
 
 .value('$ratingSuppressWarning', false)
 
+.controller('RatingController', ['$scope', '$attrs', '$controller', '$log', '$ratingSuppressWarning', function($scope, $attrs, $controller, $log, $ratingSuppressWarning) {
+  if (!$ratingSuppressWarning) {
+    $log.warn('RatingController is now deprecated. Use UibRatingController instead.');
+  }
+
+  angular.extend(this, $controller('UibRatingController', {
+    $scope: $scope,
+    $attrs: $attrs
+  }));
+}])
+
 .directive('rating', ['$log', '$ratingSuppressWarning', function($log, $ratingSuppressWarning) {
   return {
     require: ['rating', 'ngModel'],
@@ -112,7 +123,7 @@ angular.module('ui.bootstrap.rating')
       onHover: '&',
       onLeave: '&'
     },
-    controller: 'UibRatingController',
+    controller: 'RatingController',
     templateUrl: 'template/rating/rating.html',
     replace: true,
     link: function(scope, element, attrs, ctrls) {

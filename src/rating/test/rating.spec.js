@@ -354,7 +354,8 @@ describe('rating deprecation', function() {
     var element = $compile('<rating ng-model="rate"></rating>')($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['rating is now deprecated. Use uib-rating instead.']);
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['RatingController is now deprecated. Use UibRatingController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['rating is now deprecated. Use uib-rating instead.']);
   }));
 });
