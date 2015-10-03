@@ -65,7 +65,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 }])
 
-.controller('UibDropdownController', ['$scope', '$attrs', '$parse', 'uibDropdownConfig', 'uibDropdownService', '$animate', '$uibPosition', '$document', '$compile', '$templateRequest', function($scope, $attrs, $parse, dropdownConfig, uibDropdownService, $animate, $position, $document, $compile, $templateRequest) {
+.controller('UibDropdownController', ['$scope', '$element', '$attrs', '$parse', 'uibDropdownConfig', 'uibDropdownService', '$animate', '$uibPosition', '$document', '$compile', '$templateRequest', function($scope, $element, $attrs, $parse, dropdownConfig, uibDropdownService, $animate, $position, $document, $compile, $templateRequest) {
   var self = this,
     scope = $scope.$new(), // create a child scope so we are not polluting original one
     templateScope,
@@ -77,9 +77,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     keynavEnabled =false,
     selectedOption = null;
 
-  this.init = function(element) {
-    self.$element = element;
 
+  $element.addClass('dropdown');
+
+  this.init = function() {
     if ($attrs.isOpen) {
       getIsOpen = $parse($attrs.isOpen);
       setIsOpen = getIsOpen.assign;
@@ -94,7 +95,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
     if (appendToBody && self.dropdownMenu) {
       $document.find('body').append(self.dropdownMenu);
-      element.on('$destroy', function handleDestroyEvent() {
+      $element.on('$destroy', function handleDestroyEvent() {
         self.dropdownMenu.remove();
       });
     }
@@ -118,7 +119,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 
   scope.getElement = function() {
-    return self.$element;
+    return $element;
   };
 
   scope.isKeynavEnabled = function() {
@@ -128,7 +129,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   scope.focusDropdownEntry = function(keyCode) {
     var elems = self.dropdownMenu ? //If append to body is used.
       (angular.element(self.dropdownMenu).find('a')) :
-      (angular.element(self.$element).find('ul').eq(0).find('a'));
+      (angular.element($element).find('ul').eq(0).find('a'));
 
     switch (keyCode) {
       case (40): {
@@ -166,7 +167,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
   scope.$watch('isOpen', function(isOpen, wasOpen) {
     if (appendToBody && self.dropdownMenu) {
-      var pos = $position.positionElements(self.$element, self.dropdownMenu, 'bottom-left', true);
+      var pos = $position.positionElements($element, self.dropdownMenu, 'bottom-left', true);
       var css = {
         top: pos.top + 'px',
         display: isOpen ? 'block' : 'none'
@@ -178,13 +179,13 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         css.right = 'auto';
       } else {
         css.left = 'auto';
-        css.right = (window.innerWidth - (pos.left + self.$element.prop('offsetWidth'))) + 'px';
+        css.right = (window.innerWidth - (pos.left + $element.prop('offsetWidth'))) + 'px';
       }
 
       self.dropdownMenu.css(css);
     }
 
-    $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass).then(function() {
+    $animate[isOpen ? 'addClass' : 'removeClass']($element, openClass).then(function() {
       if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
         toggleInvoker($scope, { open: !!isOpen });
       }
@@ -239,8 +240,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   return {
     controller: 'UibDropdownController',
     link: function(scope, element, attrs, dropdownCtrl) {
-      dropdownCtrl.init(element);
-      element.addClass('dropdown');
+      dropdownCtrl.init();
     }
   };
 })
@@ -253,6 +253,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       if (!dropdownCtrl) {
         return;
       }
+
+      element.addClass('dropdown-menu');
 
       var tplUrl = attrs.templateUrl;
       if (tplUrl) {
@@ -356,13 +358,14 @@ angular.module('ui.bootstrap.dropdown')
   angular.extend(this, uibDropdownService);
 }])
 
-.controller('DropdownController', ['$scope', '$attrs', '$log', '$dropdownSuppressWarning', '$controller', function($scope, $attrs, $log, $dropdownSuppressWarning, $controller) {
+.controller('DropdownController', ['$scope', '$element', '$attrs', '$log', '$dropdownSuppressWarning', '$controller', function($scope, $element, $attrs, $log, $dropdownSuppressWarning, $controller) {
   if (!$dropdownSuppressWarning) {
     $log.warn('DropdownController is now deprecated. Use UibDropdownController instead.');
   }
 
   angular.extend(this, $controller('UibDropdownController', {
     $scope: $scope,
+    $element: $element,
     $attrs: $attrs
   }));
 }])
@@ -375,8 +378,7 @@ angular.module('ui.bootstrap.dropdown')
         $log.warn('dropdown is now deprecated. Use uib-dropdown instead.');
       }
 
-      dropdownCtrl.init(element);
-      element.addClass('dropdown');
+      dropdownCtrl.init();
     }
   };
 }])
@@ -393,6 +395,8 @@ angular.module('ui.bootstrap.dropdown')
       if (!dropdownCtrl) {
         return;
       }
+
+      element.addClass('dropdown-menu');
 
       var tplUrl = attrs.templateUrl;
       if (tplUrl) {
