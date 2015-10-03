@@ -355,7 +355,6 @@ describe('carousel', function() {
     });
 
     describe('slide order', function() {
-
       beforeEach(function() {
         scope.slides = [
           {active:false,content:'one', id:1},
@@ -566,27 +565,30 @@ describe('carousel deprecation', function() {
     spyOn($log, 'warn');
 
     var element = '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
-          '<slide ng-repeat="slide in slides" active="slide.active">' +
-            '{{slide.content}}' +
-          '</slide>' +
-        '</carousel>';
+        '<slide ng-repeat="slide in slides" active="slide.active">' +
+          '{{slide.content}}' +
+        '</slide>' +
+      '</carousel>';
     element = $compile(element)($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['carousel is now deprecated. Use uib-carousel instead.']);
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['CarouselController is now deprecated. Use UibCarouselController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['carousel is now deprecated. Use uib-carousel instead.']);
   }));
   
    it('should give warning by default for slider', inject(function($compile, $log, $rootScope) {
     spyOn($log, 'warn');
 
     var element = '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
-          '<slide></slide>' + 
-        '</carousel>';
+        '<slide></slide>' + 
+      '</carousel>';
     element = $compile(element)($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['slide is now deprecated. Use uib-slide instead.']);
+    expect($log.warn.calls.count()).toBe(3);
+    expect($log.warn.calls.argsFor(0)).toEqual(['CarouselController is now deprecated. Use UibCarouselController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['slide is now deprecated. Use uib-slide instead.']);
+    expect($log.warn.calls.argsFor(2)).toEqual(['carousel is now deprecated. Use uib-carousel instead.']);
   }));
 });

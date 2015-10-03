@@ -253,7 +253,6 @@ angular.module('ui.bootstrap.carousel', [])
  */
 .directive('uibCarousel', [function() {
   return {
-    restrict: 'EA',
     transclude: true,
     replace: true,
     controller: 'UibCarouselController',
@@ -428,11 +427,24 @@ angular.module('ui.bootstrap.carousel')
 
 .value('$carouselSuppressWarning', false)
 
+.controller('CarouselController', ['$scope', '$element', '$controller', '$log', '$carouselSuppressWarning', function($scope, $element, $controller, $log, $carouselSuppressWarning) {
+  if (!$carouselSuppressWarning) {
+    $log.warn('CarouselController is now deprecated. Use UibCarouselController instead.');
+  }
+
+  return $controller('UibCarouselController', {
+    $scope: $scope,
+    $element: $element
+  });
+}])
+
 .directive('carousel', ['$log', '$carouselSuppressWarning', function($log, $carouselSuppressWarning) {
   return {
-    restrict: 'EA',
     transclude: true,
     replace: true,
+    controller: 'CarouselController',
+    controllerAs: 'carousel',
+    require: 'carousel',
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'template/carousel/carousel.html';
     },
@@ -452,8 +464,7 @@ angular.module('ui.bootstrap.carousel')
 
 .directive('slide', ['$log', '$carouselSuppressWarning', function($log, $carouselSuppressWarning) {
   return {
-
-    restrict: 'EA',
+    require: '^carousel',
     transclude: true,
     replace: true,
     templateUrl: function(element, attrs) {
@@ -468,6 +479,18 @@ angular.module('ui.bootstrap.carousel')
       if (!$carouselSuppressWarning) {
         $log.warn('slide is now deprecated. Use uib-slide instead.');
       }
+
+      carouselCtrl.addSlide(scope, element);
+      //when the scope is destroyed then remove the slide from the current slides array
+      scope.$on('$destroy', function() {
+        carouselCtrl.removeSlide(scope);
+      });
+
+      scope.$watch('active', function(active) {
+        if (active) {
+          carouselCtrl.select(scope);
+        }
+      });
     }
   };
 }]);
