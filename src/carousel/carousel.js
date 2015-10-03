@@ -165,7 +165,7 @@ angular.module('ui.bootstrap.carousel', [])
     slide.$element = element;
     slides.push(slide);
     //if this is the first slide or the slide is set to active, select it
-    if(slides.length === 1 || slide.active) {
+    if (slides.length === 1 || slide.active) {
       self.select(slides[slides.length - 1]);
       if (slides.length === 1) {
         $scope.play();
