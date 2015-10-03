@@ -245,7 +245,6 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
             }
 
             scope.moveInProgress = false;
-            scope.$digest();
           }, eventDebounceTime);
         }
 
