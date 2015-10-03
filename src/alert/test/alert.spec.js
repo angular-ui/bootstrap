@@ -166,7 +166,8 @@ describe('alert deprecation', function() {
     element = $compile(element)($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['alert is now deprecated. Use uib-alert instead.']);
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['AlertController is now deprecated. Use UibAlertController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['alert is now deprecated. Use uib-alert instead.']);
   }));
 });
