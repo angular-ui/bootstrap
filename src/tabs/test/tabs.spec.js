@@ -913,10 +913,11 @@ describe('tab deprecation', function() {
     $compile(element)($rootScope);
     $rootScope.$digest();
 
-    expect($log.warn.calls.count()).toBe(4);
-    expect($log.warn.calls.argsFor(0)).toEqual(['tab-heading-transclude is now deprecated. Use uib-tab-heading-transclude instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['tab is now deprecated. Use uib-tab instead.']);
-    expect($log.warn.calls.argsFor(2)).toEqual(['tabset is now deprecated. Use uib-tabset instead.']);
-    expect($log.warn.calls.argsFor(3)).toEqual(['tab-content-transclude is now deprecated. Use uib-tab-content-transclude instead.']);
+    expect($log.warn.calls.count()).toBe(5);
+    expect($log.warn.calls.argsFor(0)).toEqual(['TabsetController is now deprecated. Use UibTabsetController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['tab-heading-transclude is now deprecated. Use uib-tab-heading-transclude instead.']);
+    expect($log.warn.calls.argsFor(2)).toEqual(['tab is now deprecated. Use uib-tab instead.']);
+    expect($log.warn.calls.argsFor(3)).toEqual(['tabset is now deprecated. Use uib-tabset instead.']);
+    expect($log.warn.calls.argsFor(4)).toEqual(['tab-content-transclude is now deprecated. Use uib-tab-content-transclude instead.']);
   }));
 });

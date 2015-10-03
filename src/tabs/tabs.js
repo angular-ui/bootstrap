@@ -296,6 +296,16 @@ angular.module('ui.bootstrap.tabs')
 
   .value('$tabsSuppressWarning', false)
 
+  .controller('TabsetController', ['$scope', '$controller', '$log', '$tabsSuppressWarning', function($scope, $controller, $log, $tabsSuppressWarning) {
+    if (!$tabsSuppressWarning) {
+      $log.warn('TabsetController is now deprecated. Use UibTabsetController instead.');
+    }
+
+    angular.extend(this, $controller('UibTabsetController', {
+      $scope: $scope
+    }));
+  }])
+
   .directive('tabset', ['$log', '$tabsSuppressWarning', function($log, $tabsSuppressWarning) {
     return {
       restrict: 'EA',
@@ -304,7 +314,7 @@ angular.module('ui.bootstrap.tabs')
       scope: {
         type: '@'
       },
-      controller: 'UibTabsetController',
+      controller: 'TabsetController',
       templateUrl: 'template/tabs/tabset.html',
       link: function(scope, element, attrs) {
 
