@@ -35,3 +35,12 @@ The popover directives require the `$position` service.
 The popover directive also supports various default configurations through the
 $tooltipProvider. See the [tooltip](#tooltip) section for more information.
 
+**Known issues**
+
+For Safari 7+ support, if you want to use **focus** `popover-trigger`, you need to use an anchor tag with a tab index. For example:
+
+```
+<a tabindex="0" popover="Test" popover-trigger="focus" class="btn btn-default">
+  Click Me
+</a>
+```
