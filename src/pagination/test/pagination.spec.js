@@ -11,7 +11,7 @@ describe('pagination directive', function() {
     $document = _$document_;
     $templateCache = _$templateCache_;
     body = $document.find('body');
-    element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+    element = $compile('<uib-pagination total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -49,10 +49,10 @@ describe('pagination directive', function() {
     $templateCache.put('template/pagination/pagination.html', '<div>{{pagination.randomText}}</div>');
     var scope = $rootScope.$new();
 
-    element = $compile('<pagination></pagination>')(scope);
+    element = $compile('<uib-pagination></uib-pagination>')(scope);
     $rootScope.$digest();
 
-    var ctrl = element.controller('pagination');
+    var ctrl = element.controller('uibPagination');
 
     expect(ctrl).toBeDefined();
 
@@ -66,7 +66,7 @@ describe('pagination directive', function() {
     $templateCache.put('foo/bar.html', '<div>baz</div>');
     var scope = $rootScope.$new();
 
-    element = $compile('<pagination template-url="foo/bar.html"></pagination>')(scope);
+    element = $compile('<uib-pagination template-url="foo/bar.html"></uib-pagination>')(scope);
     $rootScope.$digest();
 
     expect(element.html()).toBe('baz');
@@ -204,7 +204,7 @@ describe('pagination directive', function() {
   describe('`items-per-page`', function() {
     beforeEach(function() {
       $rootScope.perpage = 5;
-      element = $compile('<pagination total-items="total" items-per-page="perpage" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" items-per-page="perpage" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -247,7 +247,7 @@ describe('pagination directive', function() {
   describe('executes  `ng-change` expression', function() {
     beforeEach(function() {
       $rootScope.selectPageHandler = jasmine.createSpy('selectPageHandler');
-      element = $compile('<pagination total-items="total" ng-model="currentPage" ng-change="selectPageHandler()"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage" ng-change="selectPageHandler()"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -277,7 +277,7 @@ describe('pagination directive', function() {
       $rootScope.total = 98; // 10 pages
       $rootScope.currentPage = 3;
       $rootScope.maxSize = 5;
-      element = $compile('<pagination total-items="total" ng-model="currentPage" max-size="maxSize"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage" max-size="maxSize"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -359,7 +359,7 @@ describe('pagination directive', function() {
       $rootScope.currentPage = 7;
       $rootScope.maxSize = 5;
       $rootScope.rotate = false;
-      element = $compile('<pagination total-items="total" ng-model="currentPage" max-size="maxSize" rotate="rotate"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage" max-size="maxSize" rotate="rotate"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -418,7 +418,7 @@ describe('pagination directive', function() {
 
   describe('pagination directive with `boundary-links`', function() {
     beforeEach(function() {
-      element = $compile('<pagination boundary-links="true" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -473,7 +473,7 @@ describe('pagination directive', function() {
     });
 
     it('changes "first" & "last" text from attributes', function() {
-      element = $compile('<pagination boundary-links="true" first-text="<<<" last-text=">>>" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" first-text="<<<" last-text=">>>" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationEl(0).text()).toBe('<<<');
@@ -481,7 +481,7 @@ describe('pagination directive', function() {
     });
 
     it('changes "previous" & "next" text from attributes', function() {
-      element = $compile('<pagination boundary-links="true" previous-text="<<" next-text=">>" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" previous-text="<<" next-text=">>" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationEl(1).text()).toBe('<<');
@@ -491,7 +491,7 @@ describe('pagination directive', function() {
     it('changes "first" & "last" text from interpolated attributes', function() {
       $rootScope.myfirstText = '<<<';
       $rootScope.mylastText = '>>>';
-      element = $compile('<pagination boundary-links="true" first-text="{{myfirstText}}" last-text="{{mylastText}}" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" first-text="{{myfirstText}}" last-text="{{mylastText}}" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationEl(0).text()).toBe('<<<');
@@ -501,7 +501,7 @@ describe('pagination directive', function() {
     it('changes "previous" & "next" text from interpolated attributes', function() {
       $rootScope.previousText = '<<';
       $rootScope.nextText = '>>';
-      element = $compile('<pagination boundary-links="true" previous-text="{{previousText}}" next-text="{{nextText}}" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" previous-text="{{previousText}}" next-text="{{nextText}}" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationEl(1).text()).toBe('<<');
@@ -537,7 +537,7 @@ describe('pagination directive', function() {
 
   describe('pagination directive with just number links', function() {
     beforeEach(function() {
-      element = $compile('<pagination direction-links="false" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination direction-links="false" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -589,7 +589,7 @@ describe('pagination directive', function() {
   describe('with just boundary & number links', function() {
     beforeEach(function() {
       $rootScope.directions = false;
-      element = $compile('<pagination boundary-links="true" direction-links="directions" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" direction-links="directions" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -621,7 +621,7 @@ describe('pagination directive', function() {
   describe('`num-pages`', function () {
     beforeEach(function() {
       $rootScope.numpg = null;
-      element = $compile('<pagination total-items="total" ng-model="currentPage" num-pages="numpg"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage" num-pages="numpg"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -648,13 +648,13 @@ describe('pagination directive', function() {
 
   describe('setting `paginationConfig`', function() {
     var originalConfig, paginationConfig;
-    beforeEach(inject(function(_paginationConfig_) {
-      originalConfig = angular.copy(_paginationConfig_);
-      paginationConfig = _paginationConfig_;
+    beforeEach(inject(function(_uibPaginationConfig_) {
+      originalConfig = angular.copy(_uibPaginationConfig_);
+      paginationConfig = _uibPaginationConfig_;
     }));
-    afterEach(inject(function(paginationConfig) {
+    afterEach(inject(function(_uibPaginationConfig_) {
       // return it to the original stat
-      angular.copy(originalConfig, paginationConfig);
+      angular.copy(originalConfig, _uibPaginationConfig_);
     }));
 
     it('should change paging text', function() {
@@ -664,7 +664,7 @@ describe('pagination directive', function() {
       paginationConfig.previousText = 'PR';
       paginationConfig.nextText = 'NE';
       paginationConfig.lastText = 'LA';
-      element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationEl(0).text()).toBe('FI');
@@ -675,7 +675,7 @@ describe('pagination directive', function() {
 
     it('contains number of pages + 2 li elements', function() {
       paginationConfig.itemsPerPage = 5;
-      element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationBarSize()).toBe(12);
@@ -683,7 +683,7 @@ describe('pagination directive', function() {
 
     it('should take maxSize defaults into account', function() {
       paginationConfig.maxSize = 2;
-      element = $compile('<pagination total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationBarSize()).toBe(4);
@@ -692,7 +692,7 @@ describe('pagination directive', function() {
 
   describe('override configuration from attributes', function() {
     beforeEach(function() {
-      element = $compile('<pagination boundary-links="true" first-text="<<" previous-text="<" next-text=">" last-text=">>" total-items="total" ng-model="currentPage"></pagination>')($rootScope);
+      element = $compile('<uib-pagination boundary-links="true" first-text="<<" previous-text="<" next-text=">" last-text=">>" total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -710,7 +710,7 @@ describe('pagination directive', function() {
 
   describe('disabled with ngDisable', function() {
     beforeEach(function() {
-      element = $compile('<pagination total-items="total" ng-model="currentPage" ng-disabled="disabled"></pagination>')($rootScope);
+      element = $compile('<uib-pagination total-items="total" ng-model="currentPage" ng-disabled="disabled"></uib-pagination>')($rootScope);
       $rootScope.currentPage = 3;
       $rootScope.$digest();
     });
@@ -733,4 +733,34 @@ describe('pagination directive', function() {
       expect(getPaginationEl(4).hasClass('disabled')).toBe(true);
     });
   });
+});
+
+describe('pagination deprecation', function() {
+  beforeEach(module('ui.bootstrap.pagination'));
+  beforeEach(module('template/pagination/pagination.html'));
+
+  it('should suppress warning', function() {
+    module(function($provide) {
+      $provide.value('$paginationSuppressWarning', true);
+    });
+
+    inject(function($compile, $log, $rootScope) {
+      spyOn($log, 'warn');
+
+      var element = $compile('<pagination></pagination>')($rootScope);
+      $rootScope.$digest();
+      expect($log.warn.calls.count()).toBe(0);
+    });
+  });
+
+  it('should give warning by default', inject(function($compile, $log, $rootScope) {
+    spyOn($log, 'warn');
+
+    var element = $compile('<pagination></pagination>')($rootScope);
+    $rootScope.$digest();
+
+    expect($log.warn.calls.count()).toBe(2);
+    expect($log.warn.calls.argsFor(0)).toEqual(['PaginationController is now deprecated. Use UibPaginationController instead.']);
+    expect($log.warn.calls.argsFor(1)).toEqual(['pagination is now deprecated. Use uib-pagination instead.']);
+  }));
 });

@@ -3,7 +3,7 @@ A lightweight pagination directive that is focused on ... providing pagination &
 
 ### Pagination Settings ###
 
-Settings can be provided as attributes in the `<pagination>` or globally configured through the `paginationConfig`.
+Settings can be provided as attributes in the `<uib-pagination>` or globally configured through the `uibPaginationConfig`.
 
  * `ng-change`
  	:
@@ -67,7 +67,7 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
 
 ### Pager Settings ###
 
-Settings can be provided as attributes in the `<pager>` or globally configured through the `pagerConfig`.  
+Settings can be provided as attributes in the `<uib-pager>` or globally configured through the `uibPagerConfig`.  
 For `ng-model`, `total-items`, `items-per-page` and `num-pages` see pagination settings. Other settings are:
 
  * `align`
