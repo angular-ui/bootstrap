@@ -745,7 +745,7 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest,   $log,   $tooltipSu
     templateUrl: 'template/tooltip/tooltip-popup.html',
     link: function() {
       if (!$tooltipSuppressWarning) {
-        $log.warn('tooltip-classes is now deprecated. Use uib-tooltip-classes instead.');
+        $log.warn('tooltip-popup is now deprecated. Use uib-tooltip-popup instead.');
       }
     }
   };
