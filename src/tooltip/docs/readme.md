@@ -20,6 +20,7 @@ will display:
 - `tooltip-animation`: Should it fade in and out? Defaults to "true".
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
+- `tooltip-close-popup-delay`: For how long should the tooltip remained open?
 - `tooltip-trigger`: What should trigger a show of the tooltip? Supports a space separated list of event names.
   Note: this attribute is no longer observable. See `tooltip-enable`.
 - `tooltip-enable`: Is it enabled? It will enable or disable the configured
@@ -63,6 +64,7 @@ methods are available:
   placement: 'top',
   animation: true,
   popupDelay: 0,
+  popupCloseDelay: 500,
   appendToBody: false
   </pre>
 

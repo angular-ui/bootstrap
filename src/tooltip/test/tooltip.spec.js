@@ -365,6 +365,60 @@ describe('tooltip', function() {
     }));
   });
 
+  describe('with specified popup close delay', function() {
+    var $timeout;
+    beforeEach(inject(function($compile, _$timeout_) {
+      $timeout = _$timeout_;
+      scope.delay = '1000';
+      elm = $compile(angular.element(
+        '<span uib-tooltip="tooltip text" tooltip-popup-close-delay="{{delay}}" ng-disabled="disabled">Selector Text</span>'
+      ))(scope);
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+      scope.$digest();
+    }));
+
+    it('should close after timeout', function() {
+      trigger(elm, 'mouseenter');
+      expect(tooltipScope.isOpen).toBe(true);
+      trigger(elm, 'mouseleave');
+      $timeout.flush();
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+
+    it('should use default popup close delay if specified delay is not a number and close after delay', function() {
+      scope.delay = 'text1000';
+      scope.$digest();
+      trigger(elm, 'mouseenter');
+      expect(tooltipScope.popupCloseDelay).toBe(500);
+      expect(tooltipScope.isOpen).toBe(true);
+      trigger(elm, 'mouseleave');
+      $timeout.flush();
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+
+    it('should open when not disabled after being disabled and close after delay - issue #4204', function() {
+      trigger(elm, 'mouseenter');
+      expect(tooltipScope.isOpen).toBe(true);
+
+      elmScope.disabled = true;
+      elmScope.$digest();
+
+      $timeout.flush(500);
+      expect(tooltipScope.isOpen).toBe(false);
+
+      elmScope.disabled = false;
+      elmScope.$digest();
+
+      trigger(elm, 'mouseenter');
+
+      expect(tooltipScope.isOpen).toBe(true);
+      trigger(elm, 'mouseleave');
+      $timeout.flush();
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+  });
+
   describe('with an is-open attribute', function() {
     beforeEach(inject(function ($compile) {
       scope.isOpen = false;

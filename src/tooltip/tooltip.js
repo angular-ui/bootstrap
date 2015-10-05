@@ -15,6 +15,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
     placement: 'top',
     animation: true,
     popupDelay: 0,
+    popupCloseDelay: 500,
     useContentExp: false
   };
 
@@ -265,7 +266,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               // FIXME: this is a placeholder for a port of the transitions library.
               if (ttScope.animation) {
                 if (!transitionTimeout) {
-                  transitionTimeout = $timeout(removeTooltip, 500);
+                  transitionTimeout = $timeout(removeTooltip, ttScope.popupCloseDelay);
                 }
               } else {
                 removeTooltip();
@@ -321,7 +322,9 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               ttScope.placement = angular.isDefined(attrs[prefix + 'Placement']) ? attrs[prefix + 'Placement'] : options.placement;
 
               var delay = parseInt(attrs[prefix + 'PopupDelay'], 10);
+              var closeDelay = parseInt(attrs[prefix + 'PopupCloseDelay'], 10);
               ttScope.popupDelay = !isNaN(delay) ? delay : options.popupDelay;
+              ttScope.popupCloseDelay = !isNaN(closeDelay) ? closeDelay : options.popupCloseDelay;
             }
 
             ttScope.contentExp = function() {
