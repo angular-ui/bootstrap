@@ -109,10 +109,10 @@ angular.module('ui.bootstrap.rating')
     $log.warn('RatingController is now deprecated. Use UibRatingController instead.');
   }
 
-  angular.extend(this, $controller('UibRatingController', {
+  return $controller('UibRatingController', {
     $scope: $scope,
     $attrs: $attrs
-  }));
+  });
 }])
 
 .directive('rating', ['$log', '$ratingSuppressWarning', function($log, $ratingSuppressWarning) {
