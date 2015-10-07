@@ -301,9 +301,9 @@ angular.module('ui.bootstrap.tabs')
       $log.warn('TabsetController is now deprecated. Use UibTabsetController instead.');
     }
 
-    angular.extend(this, $controller('UibTabsetController', {
+    return $controller('UibTabsetController', {
       $scope: $scope
-    }));
+    });
   }])
 
   .directive('tabset', ['$log', '$tabsSuppressWarning', function($log, $tabsSuppressWarning) {
