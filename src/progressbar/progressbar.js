@@ -113,10 +113,10 @@ angular.module('ui.bootstrap.progressbar')
     $log.warn('ProgressController is now deprecated. Use UibProgressController instead.');
   }
 
-  angular.extend(this, $controller('UibProgressController', {
+  return $controller('UibProgressController', {
     $scope: $scope,
     $attrs: $attrs
-  }));
+  });
 }])
 
 .directive('progress', ['$log', '$progressSuppressWarning', function($log, $progressSuppressWarning) {
