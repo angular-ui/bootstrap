@@ -29,7 +29,7 @@
 <script type="text/ng-template" id="customTemplate.html">
   <a>
       <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-      <span ng-bind-html="match.label | typeaheadHighlight:query"></span>
+      <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
   </a>
 </script>
 
@@ -44,7 +44,7 @@
     <ul class="dropdown-menu" role="listbox">
         <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
             ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{::match.id}}">
-            <div typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+            <div uib-typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
         </li>
     </ul>
   </div>
@@ -54,11 +54,11 @@
 
     <h4>Static arrays</h4>
     <pre>Model: {{selected | json}}</pre>
-    <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control">
+    <input type="text" ng-model="selected" uib-typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control">
 
     <h4>Asynchronous results</h4>
     <pre>Model: {{asyncSelected | json}}</pre>
-    <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+    <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" uib-typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResults">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -66,9 +66,9 @@
 
     <h4>Custom templates for results</h4>
     <pre>Model: {{customSelected | json}}</pre>
-    <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control">
+    <input type="text" ng-model="customSelected" placeholder="Custom template" uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control">
 
     <h4>Custom popup templates for typeahead's dropdown</h4>
     <pre>Model: {{customPopupSelected | json}}</pre>
-    <input type="text" ng-model="customPopupSelected" placeholder="Custom popup template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-popup-template-url="customPopupTemplate.html" class="form-control">
+    <input type="text" ng-model="customPopupSelected" placeholder="Custom popup template" uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-popup-template-url="customPopupTemplate.html" class="form-control">
 </div>

@@ -3,8 +3,8 @@ describe('Security concerns', function() {
 
   beforeEach(module('ui.bootstrap.typeahead', 'ngSanitize'));
 
-  beforeEach(inject(function (typeaheadHighlightFilter, _$sanitize_, $log) {
-    highlightFilter = typeaheadHighlightFilter;
+  beforeEach(inject(function (uibTypeaheadHighlightFilter, _$sanitize_, $log) {
+    highlightFilter = uibTypeaheadHighlightFilter;
     $sanitize = _$sanitize_;
     logSpy = spyOn($log, 'warn');
   }));
