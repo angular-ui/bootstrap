@@ -37,10 +37,10 @@ angular.module('ui.bootstrap.alert')
       $log.warn('AlertController is now deprecated. Use UibAlertController instead.');
     }
 
-    angular.extend(this, $controller('UibAlertController', {
+    return $controller('UibAlertController', {
       $scope: $scope,
       $attrs: $attrs
-    }));
+    });
   }])
 
   .directive('alert', ['$log', '$alertSuppressWarning', function($log, $alertSuppressWarning) {
