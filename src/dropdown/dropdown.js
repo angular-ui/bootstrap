@@ -363,11 +363,11 @@ angular.module('ui.bootstrap.dropdown')
     $log.warn('DropdownController is now deprecated. Use UibDropdownController instead.');
   }
 
-  angular.extend(this, $controller('UibDropdownController', {
+  return $controller('UibDropdownController', {
     $scope: $scope,
     $element: $element,
     $attrs: $attrs
-  }));
+  });
 }])
 
 .directive('dropdown', ['$log', '$dropdownSuppressWarning', function($log, $dropdownSuppressWarning) {
