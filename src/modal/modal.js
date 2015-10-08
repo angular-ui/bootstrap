@@ -76,6 +76,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     };
 
     function linkFn(scope, element, attrs) {
+      // Temporary fix for prefixing
+      element.addClass('modal-backdrop');
+
       if (attrs.modalInClass) {
         if ($animateCss) {
           $animateCss(element, {
@@ -719,6 +722,8 @@ angular.module('ui.bootstrap.modal')
         if (!$modalSuppressWarning) {
           $log.warn('modal-backdrop is now deprecated. Use uib-modal-backdrop instead.');
         }
+        element.addClass('modal-backdrop');
+
         if (attrs.modalInClass) {
           if ($animateCss) {
             $animateCss(element, {
