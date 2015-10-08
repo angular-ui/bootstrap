@@ -41,8 +41,8 @@
                 <a href="#top" role="button" class="navbar-brand">
                     UI Bootstrap
                 </a>
-                <li class="dropdown" dropdown>
-                    <a role="button" class="dropdown-toggle" dropdown-toggle>
+                <li class="dropdown" uib-dropdown>
+                    <a role="button" class="dropdown-toggle" uib-dropdown-toggle>
                         Directives <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
@@ -242,8 +242,8 @@
             <label class="col-sm-3 control-label"><strong>Build</strong></label>
             <div class="col-sm-9">
               <span class="btn-group">
-                <button type="button" class="btn btn-default" ng-model="options.minified" btn-radio="true">Minified</button>
-                <button type="button" class="btn btn-default" ng-model="options.minified" btn-radio="false">Uncompressed</button>
+                <button type="button" class="btn btn-default" ng-model="options.minified" uib-btn-radio="true">Minified</button>
+                <button type="button" class="btn btn-default" ng-model="options.minified" uib-btn-radio="false">Uncompressed</button>
               </span>
               <small class="help-block">Use <b>Minified</b> version in your deployed application. <b>Uncompressed</b> source code is useful only for debugging and development purpose.</small>
             </div>
@@ -252,8 +252,8 @@
             <label class="col-sm-3 control-label"><strong>Include Templates</strong></label>
             <div class="col-sm-9">
               <span class="btn-group">
-                <button type="button" class="btn btn-default" ng-model="options.tpls" btn-radio="true">Yes</button>
-                <button type="button" class="btn btn-default" ng-model="options.tpls" btn-radio="false">No</button>
+                <button type="button" class="btn btn-default" ng-model="options.tpls" uib-btn-radio="true">Yes</button>
+                <button type="button" class="btn btn-default" ng-model="options.tpls" uib-btn-radio="false">No</button>
               </span>
               <small class="help-block">Whether you want to include the <i>default templates</i>, bundled with most of the directives. These templates are based on Bootstrap's markup and CSS.</small>
             </div>
@@ -299,7 +299,7 @@
                style="width: 33%; border-radius: 0;"
                ng-class="{'btn-primary': module.<%= module.name %>}"
                ng-model="module.<%= module.name %>"
-               btn-checkbox
+               uib-btn-checkbox
                ng-change="selectedChanged('<%= module.name %>', module.<%= module.name %>)">
                   <%= module.displayName %>
               </button>

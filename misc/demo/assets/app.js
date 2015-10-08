@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
     get: function () {
       return $q.all({
         moduleMap: getModuleMap(),
-        rawFiles: getRawFiles(),
+        rawFiles: getRawFiles()
       });
     }
   };
@@ -46,9 +46,9 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
 .controller('SelectModulesCtrl', SelectModulesCtrl)
 .controller('DownloadCtrl', DownloadCtrl);
 
-function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
+function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
   $scope.showBuildModal = function() {
-    var modalInstance = $modal.open({
+    var modalInstance = $uibModal.open({
       templateUrl: 'buildModal.html',
       controller: 'SelectModulesCtrl',
       resolve: {
@@ -63,7 +63,7 @@ function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
   };
 
   $scope.showDownloadModal = function() {
-    var modalInstance = $modal.open({
+    var modalInstance = $uibModal.open({
       templateUrl: 'downloadModal.html',
       controller: 'DownloadCtrl'
     });
