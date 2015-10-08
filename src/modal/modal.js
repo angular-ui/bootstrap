@@ -67,7 +67,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     }
 
     return {
-      restrict: 'EA',
       replace: true,
       templateUrl: 'template/modal/backdrop.html',
       compile: function(tElement, tAttrs) {
@@ -110,7 +109,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     }
 
     return {
-      restrict: 'EA',
       scope: {
         index: '@'
       },
@@ -709,7 +707,6 @@ angular.module('ui.bootstrap.modal')
       }
 
       return {
-        restrict: 'EA',
         replace: true,
         templateUrl: 'template/modal/backdrop.html',
         compile: function(tElement, tAttrs) {
@@ -755,7 +752,6 @@ angular.module('ui.bootstrap.modal')
       }
 
       return {
-        restrict: 'EA',
         scope: {
           index: '@'
         },
