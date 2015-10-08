@@ -593,7 +593,10 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     replace: true,
     scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-popup.html'
+    templateUrl: 'template/tooltip/tooltip-popup.html',
+    link: function(scope, element) {
+      element.addClass('tooltip');
+    }
   };
 })
 
@@ -606,7 +609,10 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
     replace: true,
     scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
       originScope: '&' },
-    templateUrl: 'template/tooltip/tooltip-template-popup.html'
+    templateUrl: 'template/tooltip/tooltip-template-popup.html',
+    link: function(scope, element) {
+      element.addClass('tooltip');
+    }
   };
 })
 
@@ -620,7 +626,10 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     replace: true,
     scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-html-popup.html'
+    templateUrl: 'template/tooltip/tooltip-html-popup.html',
+    link: function(scope, element) {
+      element.addClass('tooltip');
+    }
   };
 })
 
@@ -746,10 +755,12 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest,   $log,   $tooltipSu
     replace: true,
     scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-popup.html',
-    link: function() {
+    link: function(scope, element) {
       if (!$tooltipSuppressWarning) {
         $log.warn('tooltip-popup is now deprecated. Use uib-tooltip-popup instead.');
       }
+
+      element.addClass('tooltip');
     }
   };
 }])
@@ -764,10 +775,12 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest,   $log,   $tooltipSu
     scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
       originScope: '&' },
     templateUrl: 'template/tooltip/tooltip-template-popup.html',
-    link: function() {
+    link: function(scope, element) {
       if (!$tooltipSuppressWarning) {
         $log.warn('tooltip-template-popup is now deprecated. Use uib-tooltip-template-popup instead.');
       }
+
+      element.addClass('tooltip');
     }
   };
 }])
@@ -783,10 +796,12 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest,   $log,   $tooltipSu
     replace: true,
     scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/tooltip/tooltip-html-popup.html',
-    link: function() {
+    link: function(scope, element) {
       if (!$tooltipSuppressWarning) {
         $log.warn('tooltip-html-popup is now deprecated. Use uib-tooltip-html-popup instead.');
       }
+
+      element.addClass('tooltip');
     }
   };
 }])

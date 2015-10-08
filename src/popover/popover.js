@@ -10,7 +10,10 @@ angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
     replace: true,
     scope: { title: '@', contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
       originScope: '&' },
-    templateUrl: 'template/popover/popover-template.html'
+    templateUrl: 'template/popover/popover-template.html',
+    link: function(scope, element) {
+      element.addClass('popover');
+    }
   };
 })
 
@@ -24,7 +27,10 @@ angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
   return {
     replace: true,
     scope: { contentExp: '&', title: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/popover/popover-html.html'
+    templateUrl: 'template/popover/popover-html.html',
+    link: function(scope, element) {
+      element.addClass('popover');
+    }
   };
 })
 
@@ -38,7 +44,10 @@ angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
   return {
     replace: true,
     scope: { title: '@', content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/popover/popover.html'
+    templateUrl: 'template/popover/popover.html',
+    link: function(scope, element) {
+      element.addClass('popover');
+    }
   };
 })
 
@@ -58,10 +67,12 @@ angular.module('ui.bootstrap.popover')
     scope: { title: '@', contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
       originScope: '&' },
     templateUrl: 'template/popover/popover-template.html',
-    link: function() {
+    link: function(scope, element) {
       if (!$popoverSuppressWarning) {
         $log.warn('popover-template-popup is now deprecated. Use uib-popover-template-popup instead.');
       }
+
+      element.addClass('popover');
     }
   };
 }])
@@ -77,10 +88,12 @@ angular.module('ui.bootstrap.popover')
     replace: true,
     scope: { contentExp: '&', title: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/popover/popover-html.html',
-    link: function() {
+    link: function(scope, element) {
       if (!$popoverSuppressWarning) {
         $log.warn('popover-html-popup is now deprecated. Use uib-popover-html-popup instead.');
       }
+
+      element.addClass('popover');
     }
   };
 }])
@@ -96,10 +109,12 @@ angular.module('ui.bootstrap.popover')
     replace: true,
     scope: { title: '@', content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
     templateUrl: 'template/popover/popover.html',
-    link: function() {
+    link: function(scope, element) {
       if (!$popoverSuppressWarning) {
         $log.warn('popover-popup is now deprecated. Use uib-popover-popup instead.');
       }
+
+      element.addClass('popover');
     }
   };
 }])
