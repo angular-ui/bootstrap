@@ -374,7 +374,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                       repositionScheduled = true;
                       tooltipLinkedScope.$$postDigest(function() {
                         repositionScheduled = false;
-                        if (ttScope.isOpen) {
+                        if (ttScope && ttScope.isOpen) {
                           positionTooltip();
                         }
                       });
