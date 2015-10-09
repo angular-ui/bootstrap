@@ -1,5 +1,5 @@
 <a name="0.14.0"></a>
-# [0.14.0](https://github.com/angular-ui/bootstrap/compare/0.13.4...v0.14.0) (2015-10-09)
+# [0.14.0](https://github.com/angular-ui/bootstrap/compare/0.13.4...0.14.0) (2015-10-09)
 
 
 ### Bug Fixes
@@ -74,7 +74,7 @@
 
 
 <a name="0.13.4"></a>
-## [0.13.4](https://github.com/angular-ui/bootstrap/compare/0.13.3...v0.13.4) (2015-09-03)
+## [0.13.4](https://github.com/angular-ui/bootstrap/compare/0.13.3...0.13.4) (2015-09-03)
 
 
 ### Bug Fixes
