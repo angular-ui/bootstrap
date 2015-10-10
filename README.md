@@ -14,6 +14,7 @@
     - [Manual](#manual-download)
 - [Support](#support)
     - [FAQ](#faq)
+    - [PREFIX MIGRATION GUIDE](#prefix-migration-guide)
     - [Supported browsers](#supported-browsers)
     - [Need help?](#need-help)
     - [Found a bug?](#found-a-bug)
@@ -85,6 +86,10 @@ angular.module('myModule', [uibs]);
 ## FAQ
 
 https://github.com/angular-ui/bootstrap/wiki/FAQ
+
+## PREFIX MIGRATION GUIDE
+
+If you're updating your application to use prefixes, please check the [migration guide](https://github.com/angular-ui/bootstrap/wiki/Migration-guide-for-prefixes).
 
 ## Supported browsers
 
