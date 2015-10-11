@@ -1,3 +1,27 @@
+<a name="0.14.1"></a>
+## [0.14.1](https://github.com/angular-ui/bootstrap/compare/0.14.0...v0.14.1) (2015-10-11)
+
+
+### Bug Fixes
+
+* **accordion:** make deprecated controller work with 1.3.x ([c5e6042](https://github.com/angular-ui/bootstrap/commit/c5e6042)), closes [#4574](https://github.com/angular-ui/bootstrap/issues/4574)
+* **alert:** make deprecated controller work with 1.3.x ([e8c8ee6](https://github.com/angular-ui/bootstrap/commit/e8c8ee6)), closes [#4576](https://github.com/angular-ui/bootstrap/issues/4576)
+* **buttons:** make deprecated controller work with 1.3.x ([1e3cbd8](https://github.com/angular-ui/bootstrap/commit/1e3cbd8)), closes [#4577](https://github.com/angular-ui/bootstrap/issues/4577)
+* **carousel:** make deprecated controller work with 1.3.x ([f6c7931](https://github.com/angular-ui/bootstrap/commit/f6c7931)), closes [#4578](https://github.com/angular-ui/bootstrap/issues/4578)
+* **datepicker:** make deprecated controller work with 1.3.x ([18371ab](https://github.com/angular-ui/bootstrap/commit/18371ab)), closes [#4586](https://github.com/angular-ui/bootstrap/issues/4586)
+* **dropdown:** make deprecated controller work with 1.3.x ([ae1a87c](https://github.com/angular-ui/bootstrap/commit/ae1a87c)), closes [#4585](https://github.com/angular-ui/bootstrap/issues/4585)
+* **pagination:** make deprecated controller work with 1.3.x ([d50e8d2](https://github.com/angular-ui/bootstrap/commit/d50e8d2)), closes [#4580](https://github.com/angular-ui/bootstrap/issues/4580)
+* **progressbar:** make deprecated controller work with 1.3.x ([1c5e479](https://github.com/angular-ui/bootstrap/commit/1c5e479)), closes [#4581](https://github.com/angular-ui/bootstrap/issues/4581)
+* **rating:** make deprecated controller work with 1.3.x ([ce1114a](https://github.com/angular-ui/bootstrap/commit/ce1114a)), closes [#4582](https://github.com/angular-ui/bootstrap/issues/4582)
+* **tabs:** make deprecated controller work with 1.3.x ([685bd6a](https://github.com/angular-ui/bootstrap/commit/685bd6a)), closes [#4583](https://github.com/angular-ui/bootstrap/issues/4583)
+* **timepicker:** make deprecated controller work with 1.3.x ([00f60ee](https://github.com/angular-ui/bootstrap/commit/00f60ee)), closes [#4584](https://github.com/angular-ui/bootstrap/issues/4584)
+
+### Features
+
+* **timepicker:** add accessibility improvements ([4ebecbc](https://github.com/angular-ui/bootstrap/commit/4ebecbc)), closes [#4569](https://github.com/angular-ui/bootstrap/issues/4569) [#4573](https://github.com/angular-ui/bootstrap/issues/4573)
+
+
+
 <a name="0.14.0"></a>
 # [0.14.0](https://github.com/angular-ui/bootstrap/compare/0.13.4...0.14.0) (2015-10-09)
 
