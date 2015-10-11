@@ -23,6 +23,10 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
     $scope.status.opened = true;
   };
 
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
   $scope.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
