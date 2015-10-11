@@ -358,16 +358,179 @@ angular.module('ui.bootstrap.dropdown')
   angular.extend(this, uibDropdownService);
 }])
 
-.controller('DropdownController', ['$scope', '$element', '$attrs', '$log', '$dropdownSuppressWarning', '$controller', function($scope, $element, $attrs, $log, $dropdownSuppressWarning, $controller) {
+.controller('DropdownController', ['$scope', '$element', '$attrs', '$parse', 'uibDropdownConfig', 'uibDropdownService', '$animate', '$uibPosition', '$document', '$compile', '$templateRequest', '$log', '$dropdownSuppressWarning', function($scope, $element, $attrs, $parse, dropdownConfig, uibDropdownService, $animate, $position, $document, $compile, $templateRequest, $log, $dropdownSuppressWarning) {
   if (!$dropdownSuppressWarning) {
     $log.warn('DropdownController is now deprecated. Use UibDropdownController instead.');
   }
 
-  return $controller('UibDropdownController', {
-    $scope: $scope,
-    $element: $element,
-    $attrs: $attrs
+  var self = this,
+    scope = $scope.$new(), // create a child scope so we are not polluting original one
+    templateScope,
+    openClass = dropdownConfig.openClass,
+    getIsOpen,
+    setIsOpen = angular.noop,
+    toggleInvoker = $attrs.onToggle ? $parse($attrs.onToggle) : angular.noop,
+    appendToBody = false,
+    keynavEnabled =false,
+    selectedOption = null;
+
+
+  $element.addClass('dropdown');
+
+  this.init = function() {
+    if ($attrs.isOpen) {
+      getIsOpen = $parse($attrs.isOpen);
+      setIsOpen = getIsOpen.assign;
+
+      $scope.$watch(getIsOpen, function(value) {
+        scope.isOpen = !!value;
+      });
+    }
+
+    appendToBody = angular.isDefined($attrs.dropdownAppendToBody);
+    keynavEnabled = angular.isDefined($attrs.uibKeyboardNav);
+
+    if (appendToBody && self.dropdownMenu) {
+      $document.find('body').append(self.dropdownMenu);
+      $element.on('$destroy', function handleDestroyEvent() {
+        self.dropdownMenu.remove();
+      });
+    }
+  };
+
+  this.toggle = function(open) {
+    return scope.isOpen = arguments.length ? !!open : !scope.isOpen;
+  };
+
+  // Allow other directives to watch status
+  this.isOpen = function() {
+    return scope.isOpen;
+  };
+
+  scope.getToggleElement = function() {
+    return self.toggleElement;
+  };
+
+  scope.getAutoClose = function() {
+    return $attrs.autoClose || 'always'; //or 'outsideClick' or 'disabled'
+  };
+
+  scope.getElement = function() {
+    return $element;
+  };
+
+  scope.isKeynavEnabled = function() {
+    return keynavEnabled;
+  };
+
+  scope.focusDropdownEntry = function(keyCode) {
+    var elems = self.dropdownMenu ? //If append to body is used.
+      (angular.element(self.dropdownMenu).find('a')) :
+      (angular.element($element).find('ul').eq(0).find('a'));
+
+    switch (keyCode) {
+      case (40): {
+        if (!angular.isNumber(self.selectedOption)) {
+          self.selectedOption = 0;
+        } else {
+          self.selectedOption = (self.selectedOption === elems.length -1 ?
+            self.selectedOption :
+          self.selectedOption + 1);
+        }
+        break;
+      }
+      case (38): {
+        if (!angular.isNumber(self.selectedOption)) {
+          self.selectedOption = elems.length - 1;
+        } else {
+          self.selectedOption = self.selectedOption === 0 ?
+            0 : self.selectedOption - 1;
+        }
+        break;
+      }
+    }
+    elems[self.selectedOption].focus();
+  };
+
+  scope.getDropdownElement = function() {
+    return self.dropdownMenu;
+  };
+
+  scope.focusToggleElement = function() {
+    if (self.toggleElement) {
+      self.toggleElement[0].focus();
+    }
+  };
+
+  scope.$watch('isOpen', function(isOpen, wasOpen) {
+    if (appendToBody && self.dropdownMenu) {
+      var pos = $position.positionElements($element, self.dropdownMenu, 'bottom-left', true);
+      var css = {
+        top: pos.top + 'px',
+        display: isOpen ? 'block' : 'none'
+      };
+
+      var rightalign = self.dropdownMenu.hasClass('dropdown-menu-right');
+      if (!rightalign) {
+        css.left = pos.left + 'px';
+        css.right = 'auto';
+      } else {
+        css.left = 'auto';
+        css.right = (window.innerWidth - (pos.left + $element.prop('offsetWidth'))) + 'px';
+      }
+
+      self.dropdownMenu.css(css);
+    }
+
+    $animate[isOpen ? 'addClass' : 'removeClass']($element, openClass).then(function() {
+      if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
+        toggleInvoker($scope, { open: !!isOpen });
+      }
+    });
+
+    if (isOpen) {
+      if (self.dropdownMenuTemplateUrl) {
+        $templateRequest(self.dropdownMenuTemplateUrl).then(function(tplContent) {
+          templateScope = scope.$new();
+          $compile(tplContent.trim())(templateScope, function(dropdownElement) {
+            var newEl = dropdownElement;
+            self.dropdownMenu.replaceWith(newEl);
+            self.dropdownMenu = newEl;
+          });
+        });
+      }
+
+      scope.focusToggleElement();
+      uibDropdownService.open(scope);
+    } else {
+      if (self.dropdownMenuTemplateUrl) {
+        if (templateScope) {
+          templateScope.$destroy();
+        }
+        var newEl = angular.element('<ul class="dropdown-menu"></ul>');
+        self.dropdownMenu.replaceWith(newEl);
+        self.dropdownMenu = newEl;
+      }
+
+      uibDropdownService.close(scope);
+      self.selectedOption = null;
+    }
+
+    if (angular.isFunction(setIsOpen)) {
+      setIsOpen($scope, isOpen);
+    }
   });
+
+  $scope.$on('$locationChangeSuccess', function() {
+    if (scope.getAutoClose() !== 'disabled') {
+      scope.isOpen = false;
+    }
+  });
+
+  var offDestroy = $scope.$on('$destroy', function() {
+    scope.$destroy();
+  });
+  scope.$on('$destroy', offDestroy);
 }])
 
 .directive('dropdown', ['$log', '$dropdownSuppressWarning', function($log, $dropdownSuppressWarning) {
