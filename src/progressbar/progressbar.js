@@ -108,14 +108,58 @@ angular.module('ui.bootstrap.progressbar')
 
 .value('$progressSuppressWarning', false)
 
-.controller('ProgressController', ['$scope', '$attrs', '$controller', '$log', '$progressSuppressWarning', function($scope, $attrs, $controller, $log, $progressSuppressWarning) {
+.controller('ProgressController', ['$scope', '$attrs', 'uibProgressConfig', '$log', '$progressSuppressWarning', function($scope, $attrs, progressConfig, $log, $progressSuppressWarning) {
   if (!$progressSuppressWarning) {
     $log.warn('ProgressController is now deprecated. Use UibProgressController instead.');
   }
 
-  return $controller('UibProgressController', {
-    $scope: $scope,
-    $attrs: $attrs
+  var self = this,
+    animate = angular.isDefined($attrs.animate) ? $scope.$parent.$eval($attrs.animate) : progressConfig.animate;
+
+  this.bars = [];
+  $scope.max = angular.isDefined($scope.max) ? $scope.max : progressConfig.max;
+
+  this.addBar = function(bar, element, attrs) {
+    if (!animate) {
+      element.css({'transition': 'none'});
+    }
+
+    this.bars.push(bar);
+
+    bar.max = $scope.max;
+    bar.title = attrs && angular.isDefined(attrs.title) ? attrs.title : 'progressbar';
+
+    bar.$watch('value', function(value) {
+      bar.recalculatePercentage();
+    });
+
+    bar.recalculatePercentage = function() {
+      bar.percent = +(100 * bar.value / bar.max).toFixed(2);
+
+      var totalPercentage = self.bars.reduce(function(total, bar) {
+        return total + bar.percent;
+      }, 0);
+
+      if (totalPercentage > 100) {
+        bar.percent -= totalPercentage - 100;
+      }
+    };
+
+    bar.$on('$destroy', function() {
+      element = null;
+      self.removeBar(bar);
+    });
+  };
+
+  this.removeBar = function(bar) {
+    this.bars.splice(this.bars.indexOf(bar), 1);
+  };
+
+  $scope.$watch('max', function(max) {
+    self.bars.forEach(function(bar) {
+      bar.max = $scope.max;
+      bar.recalculatePercentage();
+    });
   });
 }])
 
