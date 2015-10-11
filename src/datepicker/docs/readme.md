@@ -7,7 +7,7 @@ Everything is formatted using the [date filter](http://docs.angularjs.org/api/ng
 
 ### Datepicker Settings ###
 
-All settings can be provided as attributes in the `datepicker` or globally configured through the `datepickerConfig`.
+All settings can be provided as attributes in the `uib-datepicker` or globally configured through the `uibDatepickerConfig`.
 
  * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
  	:
@@ -93,9 +93,9 @@ All settings can be provided as attributes in the `datepicker` or globally confi
 ### Popup Settings ###
 
 Options for datepicker can be passed as JSON using the `datepicker-options` attribute.
-Specific settings for the `datepicker-popup`, that can globally configured through the `datepickerPopupConfig`, are:
+Specific settings for the `uib-datepicker-popup`, that can globally configured through the `uibDatepickerPopupConfig`, are:
 
- * `datepicker-popup`
+ * `uib-datepicker-popup`
  	_(Default: 'yyyy-MM-dd')_ :
  	The format for displayed dates.
 
@@ -129,7 +129,7 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
 
  * `datepicker-append-to-body`
   _(Default: false)_:
-  Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `datepickerPopupConfig.appendToBody`.
+  Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `uibDatepickerPopupConfig.appendToBody`.
 
  * `is-open` <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: false)_:
