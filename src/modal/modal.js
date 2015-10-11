@@ -535,7 +535,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
       };
 
       $modalStack.loadFocusElementList = function(modalWindow) {
-        if (focusableElementList === undefined || !focusableElementList.length0) {
+        if (focusableElementList === undefined || !focusableElementList.length) {
           if (modalWindow) {
             var modalDomE1 = modalWindow.value.modalDomEl;
             if (modalDomE1 && modalDomE1.length) {
