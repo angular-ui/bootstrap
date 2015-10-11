@@ -50,3 +50,7 @@ All settings can be provided as attributes in the `<uib-timepicker>` or globally
  * `max`
     _(Defaults: undefined)_ :
      Maximum time a user can select
+
+ * `tabindex`
+    _(Defaults: 0)_ :
+     Sets tabindex for each control in timepicker

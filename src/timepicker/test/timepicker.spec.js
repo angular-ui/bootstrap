@@ -937,6 +937,21 @@ describe('timepicker directive', function() {
       expect(getModelState()).toEqual([16, 40]);
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
+
+    it('should have a default tabindex of 0', function() {
+      element = $compile('<uib-timepicker ng-model="time"></uib-timepicker>')($rootScope);
+      $rootScope.$digest();
+
+      expect(element.isolateScope().tabindex).toBe(0);
+    });
+
+    it('should have the correct tabindex', function() {
+      element = $compile('<uib-timepicker ng-model="time" tabindex="5"></uib-timepicker>')($rootScope);
+      $rootScope.$digest();
+
+      expect(element.attr('tabindex')).toBe(undefined);
+      expect(element.isolateScope().tabindex).toBe('5');
+    });
   });
 
   describe('when model is not a Date', function() {
