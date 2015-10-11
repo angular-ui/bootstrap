@@ -109,7 +109,7 @@ angular.module('ui.bootstrap.buttons')
       $log.warn('ButtonsController is now deprecated. Use UibButtonsController instead.');
     }
 
-    return $controller('UibButtonsController');
+    angular.extend(this, $controller('UibButtonsController'));
   }])
 
   .directive('btnRadio', ['$log', '$buttonsSuppressWarning', function($log, $buttonsSuppressWarning) {
