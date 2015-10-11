@@ -1,10 +1,10 @@
-/**    
- * @ngdoc overview    
- * @name ui.bootstrap.carousel    
- *    
- * @description   
- * AngularJS version of an image carousel.    
- *    
+/**
+ * @ngdoc overview
+ * @name ui.bootstrap.carousel
+ *
+ * @description
+ * AngularJS version of an image carousel.
+ *
  */
 angular.module('ui.bootstrap.carousel', [])
 
@@ -200,7 +200,7 @@ angular.module('ui.bootstrap.carousel', [])
     } else if (currentIndex > index) {
       currentIndex--;
     }
-    
+
     //clean the currentSlide when no more slide
     if (slides.length === 0) {
       self.currentSlide = null;
@@ -432,10 +432,10 @@ angular.module('ui.bootstrap.carousel')
     $log.warn('CarouselController is now deprecated. Use UibCarouselController instead.');
   }
 
-  return $controller('UibCarouselController', {
+  angular.extend(this, $controller('UibCarouselController', {
     $scope: $scope,
     $element: $element
-  });
+  }));
 }])
 
 .directive('carousel', ['$log', '$carouselSuppressWarning', function($log, $carouselSuppressWarning) {
