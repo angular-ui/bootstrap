@@ -833,6 +833,48 @@ describe('$uibModal', function () {
         expect($document.find('.modal-backdrop')).not.toHaveClass('fade');
       });
     });
+    
+    describe('appendTo', function() {
+      it('should be added to body by default', function() {
+        var modal = open({template: '<div>Content</div>'});
+
+        expect($document).toHaveModalsOpen(1);
+        expect($document).toHaveModalOpenWithContent('Content', 'div');
+      });
+
+      it('should not be added to body if appendTo is passed', function() {
+        var element = angular.element('<section>Some content</section>');
+        angular.element(document.body).append(element);
+
+        var modal = open({template: '<div>Content</div>', appendTo: element});
+
+        expect($document).not.toHaveModalOpenWithContent('Content', 'div');
+      });
+
+      it('should be added to appendTo element if appendTo is passed', function() {
+        var element = angular.element('<section>Some content</section>');
+        angular.element(document.body).append(element);
+
+        expect($document.find('section').children('div.modal').length).toBe(0);
+        open({template: '<div>Content</div>', appendTo: element});
+        expect($document.find('section').children('div.modal').length).toBe(1);
+      });
+
+      it('should throw error if appendTo element is not found', function() {
+        expect(function(){
+          open({template: '<div>Content</div>', appendTo: $document.find('aside')});
+        }).toThrow(new Error('appendTo element not found. Make sure that the element passed is in DOM.'));
+      });
+
+      it('should be removed from appendTo element when dismissed', function() {
+        var modal = open({template: '<div>Content</div>'});
+
+        expect($document).toHaveModalsOpen(1);
+
+        dismiss(modal);
+        expect($document).toHaveModalsOpen(0);
+      });
+    });
 
     describe('openedClass', function() {
       var body;

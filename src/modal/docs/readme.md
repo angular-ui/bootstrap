@@ -19,6 +19,7 @@ The `$uibModal` service has only one method: `open(options)` where available opt
 * `windowTemplateUrl` - a path to a template overriding modal's window template
 * `size` - optional suffix of modal window class. The value used is appended to the `modal-` class, i.e. a value of `sm` gives `modal-sm`
 * `openedClass` - class added to the `body` element when the modal is opened. Defaults to `modal-open`
+* `appendTo` - Appends the modal to a specific element. appendTo must be an `angular.element`. Defaults to `body` element. Example: `appendTo: $document.find('aside')`. 
 
 Global defaults may be set for `$uibModal` via `$uibModalProvider.options`.
 
