@@ -386,11 +386,11 @@ describe('tooltip', function() {
       expect(tooltipScope.isOpen).toBe(false);
     });
 
-    it('should use default popup close delay if specified delay is not a number and close after delay', function() {
+    it('should use default popup close delay if specified delay is not a number and close immediately', function() {
       scope.delay = 'text1000';
       scope.$digest();
       trigger(elm, 'mouseenter');
-      expect(tooltipScope.popupCloseDelay).toBe(500);
+      expect(tooltipScope.popupCloseDelay).toBe(0);
       expect(tooltipScope.isOpen).toBe(true);
       trigger(elm, 'mouseleave');
       $timeout.flush();
