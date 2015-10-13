@@ -687,7 +687,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           };
 
           return $modal;
-        }]
+        }
+      ]
     };
 
     return $modalProvider;
