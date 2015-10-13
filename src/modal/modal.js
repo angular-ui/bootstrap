@@ -204,16 +204,15 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     };
   }])
 
-  .directive('uibModalAnimationClass', [
-    function() {
-      return {
-        compile: function(tElement, tAttrs) {
-          if (tAttrs.modalAnimation) {
-            tElement.addClass(tAttrs.uibModalAnimationClass);
-          }
+  .directive('uibModalAnimationClass', function() {
+    return {
+      compile: function(tElement, tAttrs) {
+        if (tAttrs.modalAnimation) {
+          tElement.addClass(tAttrs.uibModalAnimationClass);
         }
-      };
-    }])
+      }
+    };
+  })
 
   .directive('uibModalTransclude', function() {
     return {
