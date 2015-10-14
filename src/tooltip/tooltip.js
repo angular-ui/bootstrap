@@ -192,6 +192,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                 return;
               }
 
+              cancelHide();
               prepareTooltip();
 
               if (ttScope.popupDelay) {
@@ -206,8 +207,12 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             }
 
             function hideTooltipBind() {
+              cancelShow();
+
               if (ttScope.popupCloseDelay) {
-                hideTimeout = $timeout(hide, ttScope.popupCloseDelay, false);
+                if (!hideTimeout) {
+                  hideTimeout = $timeout(hide, ttScope.popupCloseDelay, false);
+                }
               } else {
                 hide();
               }
@@ -215,21 +220,8 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
             // Show the tooltip popup element.
             function show() {
-              if (showTimeout) {
-                $timeout.cancel(showTimeout);
-                showTimeout = null;
-              }
-
-              // If there is a pending remove transition, we must cancel it, lest the
-              // tooltip be mysteriously removed.
-              if (hideTimeout) {
-                $timeout.cancel(hideTimeout);
-                hideTimeout = null;
-              }
-              if (transitionTimeout) {
-                $timeout.cancel(transitionTimeout);
-                transitionTimeout = null;
-              }
+              cancelShow();
+              cancelHide();
 
               // Don't show empty tooltips.
               if (!ttScope.content) {
@@ -246,13 +238,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               });
             }
 
-            // Hide the tooltip popup element.
-            function hide() {
-              if (!ttScope) {
-                return;
-              }
-
-              //if tooltip is going to be shown after delay, we must cancel this
+            function cancelShow() {
               if (showTimeout) {
                 $timeout.cancel(showTimeout);
                 showTimeout = null;
@@ -261,6 +247,16 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               if (positionTimeout) {
                 $timeout.cancel(positionTimeout);
                 positionTimeout = null;
+              }
+            }
+
+            // Hide the tooltip popup element.
+            function hide() {
+              cancelShow();
+              cancelHide();
+
+              if (!ttScope) {
+                return;
               }
 
               // First things first: we don't show it anymore.
@@ -279,6 +275,17 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                   removeTooltip();
                 }
               });
+            }
+
+            function cancelHide() {
+              if (hideTimeout) {
+                $timeout.cancel(hideTimeout);
+                hideTimeout = null;
+              }
+              if (transitionTimeout) {
+                $timeout.cancel(transitionTimeout);
+                transitionTimeout = null;
+              }
             }
 
             function createTooltip() {
@@ -349,9 +356,8 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
              * Observe the relevant attributes.
              */
             attrs.$observe('disabled', function(val) {
-              if (showTimeout && val) {
-                $timeout.cancel(showTimeout);
-                showTimeout = null;
+              if (val) {
+                cancelShow();
               }
 
               if (val && ttScope.isOpen) {
@@ -495,10 +501,8 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
             // Make sure tooltip is destroyed and removed.
             scope.$on('$destroy', function onDestroyTooltip() {
-              $timeout.cancel(transitionTimeout);
-              $timeout.cancel(showTimeout);
-              $timeout.cancel(hideTimeout);
-              $timeout.cancel(positionTimeout);
+              cancelShow();
+              cancelHide();
               unregisterTriggers();
               removeTooltip();
               openedTooltips.remove(ttScope);

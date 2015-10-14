@@ -419,6 +419,29 @@ describe('tooltip', function() {
     });
   });
 
+  describe('with specified popup and popup close delay', function() {
+    var $timeout;
+    beforeEach(inject(function($compile, _$timeout_) {
+      $timeout = _$timeout_;
+      scope.delay = '1000';
+      elm = $compile(angular.element(
+        '<span uib-tooltip="tooltip text" tooltip-popup-close-delay="{{delay}}" tooltip-popup-close-delay="{{delay}}" ng-disabled="disabled">Selector Text</span>'
+      ))(scope);
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+      scope.$digest();
+    }));
+
+    it('should not open if mouseleave before timeout', function() {
+      trigger(elm, 'mouseenter');
+      $timeout.flush(500);
+      trigger(elm, 'mouseleave');
+      $timeout.flush();
+
+      expect(tooltipScope.isOpen).toBe(false);
+    });
+  });
+
   describe('with an is-open attribute', function() {
     beforeEach(inject(function ($compile) {
       scope.isOpen = false;
