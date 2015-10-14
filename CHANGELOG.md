@@ -1,3 +1,15 @@
+<a name="0.14.2"></a>
+## [0.14.2](https://github.com/angular-ui/bootstrap/compare/0.14.1...v0.14.2) (2015-10-14)
+
+
+### Bug Fixes
+
+* **progressbar:** fix percentage calculation ([feb689c](https://github.com/angular-ui/bootstrap/commit/feb689c)), closes [#4471](https://github.com/angular-ui/bootstrap/issues/4471) [#4588](https://github.com/angular-ui/bootstrap/issues/4588) [#4452](https://github.com/angular-ui/bootstrap/issues/4452)
+* **tooltip:** clean up stackedMap on scope destroy ([ebb5e18](https://github.com/angular-ui/bootstrap/commit/ebb5e18)), closes [#4610](https://github.com/angular-ui/bootstrap/issues/4610) [#4604](https://github.com/angular-ui/bootstrap/issues/4604)
+* **tooltip:** popup close delay not respected ([6daf871](https://github.com/angular-ui/bootstrap/commit/6daf871)), closes [#4597](https://github.com/angular-ui/bootstrap/issues/4597) [#4567](https://github.com/angular-ui/bootstrap/issues/4567)
+
+
+
 <a name="0.14.1"></a>
 ## [0.14.1](https://github.com/angular-ui/bootstrap/compare/0.14.0...v0.14.1) (2015-10-11)
 
