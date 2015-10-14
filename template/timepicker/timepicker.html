@@ -10,11 +10,11 @@
     </tr>
     <tr>
       <td class="form-group" ng-class="{'has-error': invalidHours}">
-        <input style="width:50px;" type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="{{::tabindex}}">
+        <input style="width:50px;" type="text" placeholder="HH" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="{{::tabindex}}">
       </td>
       <td>:</td>
       <td class="form-group" ng-class="{'has-error': invalidMinutes}">
-        <input style="width:50px;" type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="{{::tabindex}}">
+        <input style="width:50px;" type="text" placeholder="MM" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="{{::tabindex}}">
       </td>
       <td ng-show="showSeconds">:</td>
       <td class="form-group" ng-class="{'has-error': invalidSeconds}" ng-show="showSeconds">
