@@ -458,7 +458,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 .directive('uibDaypicker', function() {
   return {
     replace: true,
-    templateUrl: 'template/datepicker/day.html',
+    templateUrl: function(element, attrs) {
+      return attrs.templateUrl || 'template/datepicker/day.html';
+    },
     require: ['^?uibDatepicker', 'uibDaypicker', '^?datepicker'],
     controller: 'UibDaypickerController',
     link: function(scope, element, attrs, ctrls) {
@@ -473,7 +475,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 .directive('uibMonthpicker', function() {
   return {
     replace: true,
-    templateUrl: 'template/datepicker/month.html',
+    templateUrl: function(element, attrs) {
+      return attrs.templateUrl || 'template/datepicker/month.html';
+    },
     require: ['^?uibDatepicker', 'uibMonthpicker', '^?datepicker'],
     controller: 'UibMonthpickerController',
     link: function(scope, element, attrs, ctrls) {
@@ -488,7 +492,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 .directive('uibYearpicker', function() {
   return {
     replace: true,
-    templateUrl: 'template/datepicker/year.html',
+    templateUrl: function(element, attrs) {
+      return attrs.templateUrl || 'template/datepicker/year.html';
+    },
     require: ['^?uibDatepicker', 'uibYearpicker', '^?datepicker'],
     controller: 'UibYearpickerController',
     link: function(scope, element, attrs, ctrls) {
@@ -1034,7 +1040,7 @@ angular.module('ui.bootstrap.datepicker')
   var focusElement = function() {
     self.element[0].focus();
   };
-  
+
   $scope.$on('uib:datepicker.focus', focusElement);
 
   $scope.keydown = function(evt) {

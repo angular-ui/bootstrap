@@ -362,6 +362,25 @@ describe('datepicker directive', function() {
         expect(element.html()).toBe('baz');
       });
 
+      it('should support custom day, month and year templates', function() {
+        $templateCache.put('foo/day.html', '<div>day</div>');
+        $templateCache.put('foo/month.html', '<div>month</div>');
+        $templateCache.put('foo/year.html', '<div>year</div>');
+
+        $templateCache.put('foo/bar.html', '<div>' +
+          '<uib-daypicker template-url="foo/day.html"></uib-daypicker>' +
+          '<uib-monthpicker template-url="foo/month.html"></uib-monthpicker>' +
+          '<uib-yearpicker template-url="foo/year.html"></uib-yearpicker>' +
+        '</div>');
+
+        element = $compile('<uib-datepicker ng-model="date" template-url="foo/bar.html"></uib-datepicker>')($rootScope);
+        $rootScope.$digest();
+
+        var expectedHtml = '<div template-url="foo/day.html">day</div><div template-url="foo/month.html">month</div><div template-url="foo/year.html">year</div>';
+
+        expect(element.html()).toBe(expectedHtml);
+      });
+
       it('should expose the controller in the template', function() {
         $templateCache.put('template/datepicker/datepicker.html', '<div>{{datepicker.text}}</div>');
 
