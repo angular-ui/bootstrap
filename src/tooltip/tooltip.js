@@ -123,7 +123,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
           'animation="animation" ' +
           'is-open="isOpen"' +
           'origin-scope="origScope" ' +
-          'style="visibility: hidden; display: block;"' +
+          'style="visibility: hidden; display: block; top: -9999px; left: -9999px;"' +
           '>' +
         '</div>';
 
