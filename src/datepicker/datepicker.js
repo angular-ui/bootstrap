@@ -550,7 +550,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       dateFormat = datepickerPopupConfig.html5Types[attrs.type];
       isHtml5DateInput = true;
     } else {
-      dateFormat = attrs.datepickerPopup || datepickerPopupConfig.datepickerPopup;
+      dateFormat = attrs.datepickerPopup || attrs.uibDatepickerPopup || datepickerPopupConfig.datepickerPopup;
       attrs.$observe('uibDatepickerPopup', function(value, oldValue) {
           var newDateFormat = value || datepickerPopupConfig.datepickerPopup;
           // Invalidate the $modelValue to ensure that formatters re-run
