@@ -44,7 +44,7 @@ angular.module('ui.bootstrap.buttons', [])
   };
 })
 
-.directive('uibBtnCheckbox', ['$document', function($document) {
+.directive('uibBtnCheckbox', function() {
   return {
     require: ['uibBtnCheckbox', 'ngModel'],
     controller: 'UibButtonsController',
@@ -82,21 +82,9 @@ angular.module('ui.bootstrap.buttons', [])
           ngModelCtrl.$render();
         });
       });
-
-      //accessibility
-      element.on('keypress', function(e) {
-        if (attrs.disabled || e.which !== 32 || $document[0].activeElement !== element[0]) {
-          return;
-        }
-
-        scope.$apply(function() {
-          ngModelCtrl.$setViewValue(element.hasClass(buttonsCtrl.activeClass) ? getFalseValue() : getTrueValue());
-          ngModelCtrl.$render();
-        });
-      });
     }
   };
-}]);
+});
 
 /* Deprecated buttons below */
 
