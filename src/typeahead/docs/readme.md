@@ -27,7 +27,7 @@ The typeahead directives provide several attributes:
 * `typeahead-append-to-element-id`
    _(Defaults: false)_ : Should the typeahead popup be appended to an element id instead of the parent element?
 
-* `typeahead-editable` <i class="glyphicon glyphicon-eye-open"></i>
+* `typeahead-editable`
    _(Defaults: true)_ :
    Should it restrict model values to the ones selected from the popup only ?
    
