@@ -1,5 +1,5 @@
 describe('typeahead tests', function() {
-  var $scope, $compile, $document, $templateCache, $timeout;
+  var $scope, $compile, $document, $templateCache, $timeout, $window;
   var changeInputValueTo;
 
   beforeEach(module('ui.bootstrap.typeahead'));
@@ -25,7 +25,7 @@ describe('typeahead tests', function() {
       };
     });
   }));
-  beforeEach(inject(function(_$rootScope_, _$compile_, _$document_, _$templateCache_, _$timeout_, $sniffer) {
+  beforeEach(inject(function(_$rootScope_, _$compile_, _$document_, _$templateCache_, _$timeout_, _$window_, $sniffer) {
     $scope = _$rootScope_;
     $scope.source = ['foo', 'bar', 'baz'];
     $scope.states = [
@@ -36,6 +36,7 @@ describe('typeahead tests', function() {
     $document = _$document_;
     $templateCache = _$templateCache_;
     $timeout = _$timeout_;
+    $window = _$window_;
     changeInputValueTo = function(element, value) {
       var inputEl = findInput(element);
       inputEl.val(value);
@@ -870,6 +871,11 @@ describe('typeahead tests', function() {
   });
 
   describe('append to body', function() {
+    afterEach(function() {
+      angular.element($window).off('resize');
+      $document.find('body').off('scroll');
+    });
+
     it('append typeahead results to body', function() {
       var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true"></div>');
       changeInputValueTo(element, 'ba');
@@ -1012,6 +1018,34 @@ describe('typeahead tests', function() {
       expect(element).toBeOpenWithActive(3, 0);
     });
   });
+
+  describe('event listeners', function() {
+    afterEach(function() {
+      angular.element($window).off('resize');
+      $document.find('body').off('scroll');
+    });
+
+    it('should register event listeners when attached to body', function() {
+      spyOn(window, 'addEventListener');
+      spyOn(document.body, 'addEventListener');
+
+      var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true"></div>');
+
+      expect(window.addEventListener).toHaveBeenCalledWith('resize', jasmine.any(Function), false);
+      expect(document.body.addEventListener).toHaveBeenCalledWith('scroll', jasmine.any(Function), false);
+    });
+
+    it('should remove event listeners when attached to body', function() {
+      spyOn(window, 'removeEventListener');
+      spyOn(document.body, 'removeEventListener');
+
+      var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-append-to-body="true"></div>');
+      $scope.$destroy();
+
+      expect(window.removeEventListener).toHaveBeenCalledWith('resize', jasmine.any(Function), false);
+      expect(document.body.removeEventListener).toHaveBeenCalledWith('scroll', jasmine.any(Function), false);
+    });
+  });
 });
 
 /* Deprecation tests below */
@@ -1049,14 +1083,14 @@ describe('typeahead deprecation', function() {
     expect($log.warn.calls.argsFor(1)).toEqual(['typeahead is now deprecated. Use uib-typeahead instead.']);
     expect($log.warn.calls.argsFor(2)).toEqual(['typeahead-popup is now deprecated. Use uib-typeahead-popup instead.']);
   }));
-  
+
   it('should deprecate typeaheadMatch', inject(function($compile, $log, $rootScope, $templateCache, $sniffer){
     spyOn($log, 'warn');
-    
+
     var element = '<div typeahead-match index=\"$index\" match=\"match\" query=\"query\" template-url=\"templateUrl\"></div>';
     element = $compile(element)($rootScope);
     $rootScope.$digest();
-    
+
     expect($log.warn.calls.count()).toBe(1);
     expect($log.warn.calls.argsFor(0)).toEqual(['typeahead-match is now deprecated. Use uib-typeahead-match instead.']);
   }));

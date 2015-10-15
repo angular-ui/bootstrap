@@ -359,6 +359,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       if (appendToBody || appendToElementId) {
         $popup.remove();
       }
+
+      if (appendToBody) {
+        angular.element($window).unbind('resize', fireRecalculating);
+        $document.find('body').unbind('scroll', fireRecalculating);
+      }
       // Prevent jQuery cache memory leak
       popUpEl.remove();
     });
@@ -936,6 +941,11 @@ angular.module('ui.bootstrap.typeahead')
           $document.unbind('click', dismissClickHandler);
           if (appendToBody || appendToElementId) {
             $popup.remove();
+          }
+
+          if (appendToBody) {
+            angular.element($window).unbind('resize', fireRecalculating);
+            $document.find('body').unbind('scroll', fireRecalculating);
           }
           // Prevent jQuery cache memory leak
           popUpEl.remove();
