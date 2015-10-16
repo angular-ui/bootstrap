@@ -109,20 +109,21 @@ describe('buttons', function() {
     });
 
     describe('setting buttonConfig', function() {
-      var originalActiveClass, originalToggleEvent;
+      var uibButtonConfig, originalActiveClass, originalToggleEvent;
 
-      beforeEach(inject(function(uibButtonConfig) {
+      beforeEach(inject(function(_uibButtonConfig_) {
+        uibButtonConfig = _uibButtonConfig_;
         originalActiveClass = uibButtonConfig.activeClass;
         originalToggleEvent = uibButtonConfig.toggleEvent;
         uibButtonConfig.activeClass = false;
         uibButtonConfig.toggleEvent = false;
       }));
 
-      afterEach(inject(function(uibButtonConfig) {
+      afterEach(function() {
         // return it to the original value
         uibButtonConfig.activeClass = originalActiveClass;
         uibButtonConfig.toggleEvent = originalToggleEvent;
-      }));
+      });
 
       it('should use default config when buttonConfig.activeClass and buttonConfig.toggleEvent is false', function() {
         $scope.model = false;
@@ -130,6 +131,29 @@ describe('buttons', function() {
         expect(btn).not.toHaveClass('active');
 
         $scope.model = true;
+        $scope.$digest();
+        expect(btn).toHaveClass('active');
+      });
+
+      it('should be able to use a different active class', function() {
+        uibButtonConfig.activeClass = 'foo';
+        $scope.model = false;
+        var btn = compileButton('<button ng-model="model" uib-btn-checkbox>click</button>', $scope);
+        expect(btn).not.toHaveClass('foo');
+
+        $scope.model = true;
+        $scope.$digest();
+        expect(btn).toHaveClass('foo');
+      });
+
+      it('should be able to use a different toggle event', function() {
+        uibButtonConfig.toggleEvent = 'mouseenter';
+        $scope.model = false;
+        var btn = compileButton('<button ng-model="model" uib-btn-checkbox>click</button>', $scope);
+        expect(btn).not.toHaveClass('active');
+
+        btn.trigger('mouseenter');
+
         $scope.$digest();
         expect(btn).toHaveClass('active');
       });
@@ -157,7 +181,7 @@ describe('buttons', function() {
     }));
 
     //model -> UI
-    it('should work correctly set active class based on model', function() {
+    it('should set active class based on model', function() {
       var btns = compileButtons('<button ng-model="model" uib-btn-radio="1">click1</button><button ng-model="model" uib-btn-radio="2">click2</button>', $scope);
       expect(btns.eq(0)).not.toHaveClass('active');
       expect(btns.eq(1)).not.toHaveClass('active');
@@ -169,7 +193,7 @@ describe('buttons', function() {
     });
 
     //UI->model
-    it('should work correctly set active class based on model', function() {
+    it('should set active class via click', function() {
       var btns = compileButtons('<button ng-model="model" uib-btn-radio="1">click1</button><button ng-model="model" uib-btn-radio="2">click2</button>', $scope);
       expect($scope.model).toBeUndefined();
 
@@ -203,7 +227,7 @@ describe('buttons', function() {
       expect(btns.eq(1)).toHaveClass('active');
     });
 
-    it('should do nothing when click active radio', function() {
+    it('should do nothing when clicking an active radio', function() {
       $scope.model = 1;
       var btns = compileButtons('<button ng-model="model" uib-btn-radio="1">click1</button><button ng-model="model" uib-btn-radio="2">click2</button>', $scope);
       expect(btns.eq(0)).toHaveClass('active');
@@ -266,7 +290,7 @@ describe('buttons', function() {
       });
 
       //UI->model
-      it('should unset active class based on model', function() {
+      it('should unset active class via click', function() {
         var btns = compileButtons('<button ng-model="model" uib-btn-radio="1" uncheckable>click1</button><button ng-model="model" uib-btn-radio="2" uncheckable>click2</button>', $scope);
         expect($scope.model).toBeUndefined();
 
