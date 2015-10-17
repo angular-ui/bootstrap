@@ -16,7 +16,6 @@
     - [FAQ](#faq)
     - [PREFIX MIGRATION GUIDE](#prefix-migration-guide)
     - [Supported browsers](#supported-browsers)
-    - [Old Docs](#old-docs)
     - [Need help?](#need-help)
     - [Found a bug?](#found-a-bug)
 - [Contributing to the project](#contributing-to-the-project)
@@ -102,10 +101,6 @@ Directives from this repository are automatically tested with the following brow
 * Safari
 
 Modern mobile browsers should work without problems.
-
-## Old Docs
-
-For the time being, we don't have versioned docs (we are open for a good PR to fix that). If you need to read the old doc, please check the [wiki](https://github.com/angular-ui/bootstrap/wiki/Reading-previous-version-docs).
 
 ## Need help?
 Need help using UI Bootstrap?
