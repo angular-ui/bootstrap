@@ -46,11 +46,11 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch'], func
 var builderUrl = "http://50.116.42.77:3001";
 
 function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
-  $http.get('/versions-mapping.json')
+  $http.get('/bootstrap/versions-mapping.json')
     .then(function(result) {
       $scope.oldDocs = result.data;
     });
-    
+
   $scope.showBuildModal = function() {
     var modalInstance = $modal.open({
       templateUrl: 'buildModal.html',
