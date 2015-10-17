@@ -50,6 +50,16 @@
                     </ul>
                 </li>
                 <li><a href="#getting_started">Getting started</a></li>
+                <li class="dropdown" uib-dropdown>
+                    <a role="button" class="dropdown-toggle" uib-dropdown-toggle>
+                        Previous docs <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="version in oldDocs">
+                            <a ng-href="{{version.url}}">{{version.version}}</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <nav class="visible-xs" uib-collapse="!isCollapsed">

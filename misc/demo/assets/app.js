@@ -47,6 +47,12 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
 .controller('DownloadCtrl', DownloadCtrl);
 
 function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
+  // Grab old version docs
+  $http.get('/versions-mapping.json')
+    .then(function(result) {
+      $scope.oldDocs = result.data;
+    });
+
   $scope.showBuildModal = function() {
     var modalInstance = $uibModal.open({
       templateUrl: 'buildModal.html',
