@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
     get: function () {
       return $q.all({
         moduleMap: getModuleMap(),
-        rawFiles: getRawFiles()
+        rawFiles: getRawFiles(),
       });
     }
   };
@@ -46,14 +46,14 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
 .controller('SelectModulesCtrl', SelectModulesCtrl)
 .controller('DownloadCtrl', DownloadCtrl);
 
-function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
+function MainCtrl($scope, $http, $document, $modal, orderByFilter) {
   $http.get('/versions-mapping.json')
     .then(function(result) {
       $scope.oldDocs = result.data;
     });
     
   $scope.showBuildModal = function() {
-    var modalInstance = $uibModal.open({
+    var modalInstance = $modal.open({
       templateUrl: 'buildModal.html',
       controller: 'SelectModulesCtrl',
       resolve: {
@@ -68,7 +68,7 @@ function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
   };
 
   $scope.showDownloadModal = function() {
-    var modalInstance = $uibModal.open({
+    var modalInstance = $modal.open({
       templateUrl: 'downloadModal.html',
       controller: 'DownloadCtrl'
     });
@@ -290,7 +290,7 @@ var isOldBrowser;
      *   https://github.com/ssorallen/blob-feature-check/
      *   License: Public domain (http://unlicense.org)
      */
-    var url = window.URL;
+    var url = window.webkitURL || window.URL; // Safari 6 uses "webkitURL".
     var svg = new Blob(
         ['<svg xmlns=\'http://www.w3.org/2000/svg\'></svg>'],
         { type: 'image/svg+xml;charset=utf-8' }
