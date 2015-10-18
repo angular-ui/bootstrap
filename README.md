@@ -15,6 +15,7 @@
     - [Manual](#manual-download)
 - [Support](#support)
     - [FAQ](#faq)
+    - [Code of Conduct](#code-of-conduct)
     - [PREFIX MIGRATION GUIDE](#prefix-migration-guide)
     - [Supported browsers](#supported-browsers)
     - [Need help?](#need-help)
@@ -91,6 +92,10 @@ angular.module('myModule', [uibs]);
 ## FAQ
 
 https://github.com/angular-ui/bootstrap/wiki/FAQ
+
+# Code of Conduct
+
+Take a moment to read or [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## PREFIX MIGRATION GUIDE
 
