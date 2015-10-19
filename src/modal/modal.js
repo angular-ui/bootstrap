@@ -554,8 +554,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         backdrop: true, //can also be false or 'static'
         keyboard: true
       },
-      $get: ['$injector', '$rootScope', '$q', '$templateRequest', '$controller', '$uibModalStack',
-        function ($injector, $rootScope, $q, $templateRequest, $controller, $modalStack) {
+      $get: ['$injector', '$rootScope', '$q', '$templateRequest', '$controller', '$uibModalStack', '$modalSuppressWarning', '$log',
+        function ($injector, $rootScope, $q, $templateRequest, $controller, $modalStack, $modalSuppressWarning, $log) {
           var $modal = {};
 
           function getTemplatePromise(options) {
@@ -641,7 +641,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
                 //controllers
                 if (modalOptions.controller) {
                   ctrlLocals.$scope = modalScope;
-                  ctrlLocals.$modalInstance = modalInstance;
+                  ctrlLocals.$uibModalInstance = modalInstance;
+                  Object.defineProperty(ctrlLocals, '$modalInstance', {
+                    get: function() {
+                      if (!$modalSuppressWarning) {
+                        $log.warn('$modalInstance is now deprecated. Use $uibModalInstance instead.');
+                      }
+
+                      return modalInstance;
+                    }
+                  });
                   angular.forEach(modalOptions.resolve, function(value, key) {
                     ctrlLocals[key] = tplAndVars[resolveIter++];
                   });

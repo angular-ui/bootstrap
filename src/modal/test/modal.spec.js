@@ -531,9 +531,9 @@ describe('$uibModal', function () {
 
     describe('controller', function() {
       it('should accept controllers and inject modal instances', function() {
-        var TestCtrl = function($scope, $modalInstance) {
+        var TestCtrl = function($scope, $uibModalInstance) {
           $scope.fromCtrl = 'Content from ctrl';
-          $scope.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+          $scope.isModalInstance = angular.isObject($uibModalInstance) && angular.isFunction($uibModalInstance.close);
         };
 
         open({template: '<div>{{fromCtrl}} {{isModalInstance}}</div>', controller: TestCtrl});
@@ -541,9 +541,9 @@ describe('$uibModal', function () {
       });
 
       it('should accept controllerAs alias', function() {
-        $controllerProvider.register('TestCtrl', function($modalInstance) {
+        $controllerProvider.register('TestCtrl', function($uibModalInstance) {
           this.fromCtrl = 'Content from ctrl';
-          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+          this.isModalInstance = angular.isObject($uibModalInstance) && angular.isFunction($uibModalInstance.close);
         });
 
         open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl as test'});
@@ -551,9 +551,9 @@ describe('$uibModal', function () {
       });
 
       it('should respect the controllerAs property as an alternative for the controller-as syntax', function() {
-        $controllerProvider.register('TestCtrl', function($modalInstance) {
+        $controllerProvider.register('TestCtrl', function($uibModalInstance) {
           this.fromCtrl = 'Content from ctrl';
-          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+          this.isModalInstance = angular.isObject($uibModalInstance) && angular.isFunction($uibModalInstance.close);
         });
 
         open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: 'TestCtrl', controllerAs: 'test'});
@@ -561,17 +561,17 @@ describe('$uibModal', function () {
       });
 
       it('should allow defining in-place controller-as controllers', function() {
-        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($modalInstance) {
+        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($uibModalInstance) {
           this.fromCtrl = 'Content from ctrl';
-          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+          this.isModalInstance = angular.isObject($uibModalInstance) && angular.isFunction($uibModalInstance.close);
         }, controllerAs: 'test'});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
 
       it('should allow usage of bindToController', function() {
-        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($modalInstance) {
+        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($uibModalInstance) {
           this.fromCtrl = 'Content from ctrl';
-          this.isModalInstance = angular.isObject($modalInstance) && angular.isFunction($modalInstance.close);
+          this.isModalInstance = angular.isObject($uibModalInstance) && angular.isFunction($uibModalInstance.close);
         }, controllerAs: 'test', bindToController: true});
         expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
       });
@@ -1201,7 +1201,7 @@ describe('$modal deprecation', function() {
     inject(function($modal, $timeout, $log, $rootScope) {
       spyOn($log, 'warn');
 
-      $modal.open({template: '<div>Foo</div>'});
+      $modal.open({template: '<div>Foo</div>', controller: function($modalInstance) {}});
       $rootScope.$digest();
       $timeout.flush(0);
       expect($log.warn.calls.count()).toBe(0);
@@ -1229,16 +1229,17 @@ describe('$modal deprecation', function() {
         '</div>';
       $templateCache.put('template/modal/window.html', windowTemplate);
 
-      $modal.open({template: '<div>Foo</div>'});
+      $modal.open({template: '<div>Foo</div>', controller: function($modalInstance) {}});
       $rootScope.$digest();
       $timeout.flush(0);
 
-      expect($log.warn.calls.count()).toBe(5);
+      expect($log.warn.calls.count()).toBe(6);
       expect($log.warn.calls.argsFor(0)).toEqual(['$modal is now deprecated. Use $uibModal instead.']);
-      expect($log.warn.calls.argsFor(1)).toEqual(['$modalStack is now deprecated. Use $uibModalStack instead.']);
-      expect($log.warn.calls.argsFor(2)).toEqual(['modal-animation-class is now deprecated. Use uib-modal-animation-class instead.']);
+      expect($log.warn.calls.argsFor(1)).toEqual(['$modalInstance is now deprecated. Use $uibModalInstance instead.']);
+      expect($log.warn.calls.argsFor(2)).toEqual(['$modalStack is now deprecated. Use $uibModalStack instead.']);
       expect($log.warn.calls.argsFor(3)).toEqual(['modal-animation-class is now deprecated. Use uib-modal-animation-class instead.']);
-      expect($log.warn.calls.argsFor(4)).toEqual(['modal-transclude is now deprecated. Use uib-modal-transclude instead.']);
+      expect($log.warn.calls.argsFor(4)).toEqual(['modal-animation-class is now deprecated. Use uib-modal-animation-class instead.']);
+      expect($log.warn.calls.argsFor(5)).toEqual(['modal-transclude is now deprecated. Use uib-modal-transclude instead.']);
 
       $log.warn.calls.reset();
       $compile('<div modal-backdrop></div>')($rootScope);

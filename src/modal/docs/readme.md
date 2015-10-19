@@ -6,7 +6,7 @@ The `$uibModal` service has only one method: `open(options)` where available opt
 * `templateUrl` - a path to a template representing modal's content
 * `template` - inline template representing the modal's content
 * `scope` - a scope instance to be used for the modal's content (actually the `$uibModal` service is going to create a child scope of a provided scope). Defaults to `$rootScope`
-* `controller` - a controller for a modal instance - it can initialize scope used by modal. Accepts the "controller-as" syntax in the form 'SomeCtrl as myctrl'; can be injected with `$modalInstance`
+* `controller` - a controller for a modal instance - it can initialize scope used by modal. Accepts the "controller-as" syntax in the form 'SomeCtrl as myctrl'; can be injected with `$uibModalInstance`
 * `controllerAs` - an alternative to the controller-as syntax, matching the API of directive definitions. Requires the `controller` option to be provided as well
 * `bindToController` - when used with `controllerAs` & set to `true`, it will bind the $scope properties onto the controller directly
 * `resolve` - members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property for AngularJS routes

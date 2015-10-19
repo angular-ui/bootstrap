@@ -34,7 +34,7 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($scope
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
 
   $scope.items = items;
   $scope.selected = {
@@ -42,10 +42,10 @@ angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($s
   };
 
   $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
+    $uibModalInstance.close($scope.selected.item);
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $uibModalInstance.dismiss('cancel');
   };
 });
