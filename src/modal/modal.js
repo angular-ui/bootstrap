@@ -178,7 +178,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
 
           $q.when(animationPromise).then(function() {
-            var inputsWithAutofocus = element[0].querySelectorAll('[autofocus]');
+            var inputWithAutofocus = element[0].querySelector('[autofocus]');
             /**
              * Auto-focusing of a freshly-opened modal element causes any child elements
              * with the autofocus attribute to lose focus. This is an issue on touch
@@ -187,8 +187,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
              * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
              * the modal element if the modal does not contain an autofocus element.
              */
-            if (inputsWithAutofocus.length) {
-              inputsWithAutofocus[0].focus();
+            if (inputWithAutofocus) {
+              inputWithAutofocus.focus();
             } else {
               element[0].focus();
             }
@@ -838,7 +838,7 @@ angular.module('ui.bootstrap.modal')
 
 
             $q.when(animationPromise).then(function() {
-              var inputsWithAutofocus = element[0].querySelectorAll('[autofocus]');
+              var inputWithAutofocus = element[0].querySelector('[autofocus]');
               /**
                * Auto-focusing of a freshly-opened modal element causes any child elements
                * with the autofocus attribute to lose focus. This is an issue on touch
@@ -847,8 +847,8 @@ angular.module('ui.bootstrap.modal')
                * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
                * the modal element if the modal does not contain an autofocus element.
                */
-              if (inputsWithAutofocus.length) {
-                inputsWithAutofocus[0].focus();
+              if (inputWithAutofocus) {
+                inputWithAutofocus.focus();
               } else {
                 element[0].focus();
               }
