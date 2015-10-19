@@ -10,8 +10,9 @@ There are two versions of the popover: `uib-popover` and `uib-popover-template`:
   body.
 - `uib-popover-html` takes an expression that evaluates to an html string. *The user is responsible for ensuring the
   content is safe to put into the DOM!*
-- `uib-popover-template` takes text that specifies the location of a template to
-  use for the popover body. Note that this needs to be wrapped in a tag.
+- `uib-popover-template` a URL representing the location of a template to
+  use for the popover body. Note that the contents of this template need to be
+  wrapped in a tag, e.g., `<div></div>`.
 
 The popover directives provides several optional attributes to control how it
 will display:
