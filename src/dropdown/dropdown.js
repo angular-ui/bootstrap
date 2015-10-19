@@ -136,7 +136,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         if (!angular.isNumber(self.selectedOption)) {
           self.selectedOption = 0;
         } else {
-          self.selectedOption = (self.selectedOption === elems.length -1 ?
+          self.selectedOption = (self.selectedOption === elems.length - 1 ?
             self.selectedOption :
             self.selectedOption + 1);
         }
@@ -656,4 +656,3 @@ angular.module('ui.bootstrap.dropdown')
     }
   };
 }]);
-
