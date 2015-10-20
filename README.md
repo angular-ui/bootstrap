@@ -6,6 +6,7 @@
 
 ### Quick links
 - [Demo](#demo)
+- [Angular 2](#angular-2)
 - [Installation](#installation)
     - [NPM](#install-with-npm)
     - [Bower](#install-with-bower)
@@ -25,6 +26,10 @@
 # Demo
 
 Do you want to see directives in action? Visit http://angular-ui.github.io/bootstrap/!
+
+# Angular 2
+
+Are you interested in Angular 2? We are on our way! Check out [ng-bootstrap](https://github.com/ui-bootstrap/core). 
 
 # Installation
 
