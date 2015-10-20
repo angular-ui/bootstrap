@@ -550,7 +550,7 @@ describe('datepicker directive', function() {
           clickPreviousButton(5);
           expect(getTitle()).toBe('2005');
 
-          clickOption( 10 );
+          clickOption(10);
           expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
           expect(getTitle()).toBe('November 2005');
           expect(getOptions(true)).toEqual([
@@ -562,7 +562,7 @@ describe('datepicker directive', function() {
             ['04', '05', '06', '07', '08', '09', '10']
           ]);
 
-          clickOption( 17 );
+          clickOption(17);
           expect($rootScope.date).toEqual(new Date('November 16, 2005 15:30:00'));
         });
       });
@@ -1327,7 +1327,7 @@ describe('datepicker directive', function() {
         });
       });
 
-      describe('initially opened', function () {
+      describe('initially opened', function() {
         var wrapElement;
 
         beforeEach(inject(function(_$document_, _$sniffer_, _$timeout_) {
@@ -1399,7 +1399,7 @@ describe('datepicker directive', function() {
             ['26', '27', '28', '29', '30', '01', '02'],
             ['03', '04', '05', '06', '07', '08', '09']
           ]);
-          expectSelectedElement( 17 );
+          expectSelectedElement(17);
         });
 
         it('closes when click outside of calendar', function() {
@@ -1572,7 +1572,7 @@ describe('datepicker directive', function() {
               ['23', '24', '25', '26', '27', '28', '29'],
               ['30', '31', '01', '02', '03', '04', '05']
             ]);
-            expect(selectedElementIndex()).toEqual( 10 );
+            expect(selectedElementIndex()).toEqual(10);
           });
 
           it('works as datetime-local', function() {
@@ -1593,7 +1593,7 @@ describe('datepicker directive', function() {
               ['23', '24', '25', '26', '27', '28', '29'],
               ['30', '31', '01', '02', '03', '04', '05']
             ]);
-            expect(selectedElementIndex()).toEqual( 10 );
+            expect(selectedElementIndex()).toEqual(10);
           });
 
           it('works as month', function() {
@@ -1612,7 +1612,7 @@ describe('datepicker directive', function() {
               ['July', 'August', 'September'],
               ['October', 'November', 'December']
             ]);
-            expect(selectedElementIndex()).toEqual( 2 );
+            expect(selectedElementIndex()).toEqual(2);
           });
 
           function setupInputWithType(type) {
@@ -1626,7 +1626,7 @@ describe('datepicker directive', function() {
       });
 
       describe('attribute `datepickerOptions`', function() {
-        describe('show-weeks', function(){
+        describe('show-weeks', function() {
           beforeEach(function() {
             $rootScope.opts = {
               'show-weeks': false
@@ -2093,7 +2093,7 @@ describe('datepicker directive', function() {
           $rootScope.date = new Date();
         });
 
-        afterEach(function () {
+        afterEach(function() {
           $document.find('body').find('.dropdown-menu').remove();
         });
 
@@ -2530,7 +2530,6 @@ describe('datepicker deprecation', function() {
       expect($log.warn.calls.argsFor(2)).toEqual(['yearpicker is now deprecated. Use uib-yearpicker instead.']);
 
       $log.warn.calls.reset();
-
 
       element = $compile('<input type="date" datepicker-popup ng-model="dt" />')($rootScope);
       $rootScope.$digest();
