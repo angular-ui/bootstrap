@@ -1,12 +1,15 @@
 angular.module('ui.bootstrap.alert', [])
 
-.controller('UibAlertController', ['$scope', '$attrs', '$timeout', function($scope, $attrs, $timeout) {
+.controller('UibAlertController', ['$scope', '$attrs', '$interpolate', '$timeout', function($scope, $attrs, $interpolate, $timeout) {
   $scope.closeable = !!$attrs.close;
 
-  if (angular.isDefined($attrs.dismissOnTimeout)) {
+  var dismissOnTimeout = angular.isDefined($attrs.dismissOnTimeout) ?
+    $interpolate($attrs.dismissOnTimeout)($scope.$parent) : null;
+
+  if (dismissOnTimeout) {
     $timeout(function() {
       $scope.close();
-    }, parseInt($attrs.dismissOnTimeout, 10));
+    }, parseInt(dismissOnTimeout, 10));
   }
 }])
 

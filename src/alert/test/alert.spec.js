@@ -136,6 +136,19 @@ describe('uib-alert', function() {
     $timeout.flush();
     expect(scope.removeAlert).toHaveBeenCalled();
   });
+
+  it('should not close immediately with a dynamic dismiss-on-timeout', function() {
+    scope.removeAlert = jasmine.createSpy();
+    scope.dismissTime = 500;
+    $compile('<uib-alert close="removeAlert()" dismiss-on-timeout="{{dismissTime}}">Default alert!</uib-alert>')(scope);
+    scope.$digest();
+
+    $timeout.flush(100);
+    expect(scope.removeAlert).not.toHaveBeenCalled();
+
+    $timeout.flush(500);
+    expect(scope.removeAlert).toHaveBeenCalled();
+  });
 });
 
 /* Deprecation tests below */
