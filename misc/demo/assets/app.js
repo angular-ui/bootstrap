@@ -76,7 +76,7 @@ function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
   };
 }
 
-function SelectModulesCtrl($scope, $modalInstance, modules, buildFilesService) {
+function SelectModulesCtrl($scope, $uibModalInstance, modules, buildFilesService) {
   $scope.selectedModules = [];
   $scope.modules = modules;
 
@@ -89,11 +89,11 @@ function SelectModulesCtrl($scope, $modalInstance, modules, buildFilesService) {
   };
 
   $scope.downloadBuild = function () {
-    $modalInstance.close($scope.selectedModules);
+    $uibModalInstance.close($scope.selectedModules);
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss();
+    $uibModalInstance.dismiss();
   };
 
   $scope.isOldBrowser = function () {
@@ -242,7 +242,7 @@ function SelectModulesCtrl($scope, $modalInstance, modules, buildFilesService) {
   };
 }
 
-function DownloadCtrl($scope, $modalInstance) {
+function DownloadCtrl($scope, $uibModalInstance) {
   $scope.options = {
     minified: true,
     tpls: true
@@ -265,7 +265,7 @@ function DownloadCtrl($scope, $modalInstance) {
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss();
+    $uibModalInstance.dismiss();
   };
 }
 
