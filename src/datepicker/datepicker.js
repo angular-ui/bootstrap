@@ -143,17 +143,6 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     return arrays;
   };
 
-  // Fix a hard-reprodusible bug with timezones
-  // The bug depends on OS, browser, current timezone and current date
-  // i.e.
-  // var date = new Date(2014, 0, 1);
-  // console.log(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
-  // can result in "2013 11 31 23" because of the bug.
-  this.fixTimeZone = function(date) {
-    var hours = date.getHours();
-    date.setHours(hours === 23 ? hours + 2 : 0);
-  };
-
   $scope.select = function(date) {
     if ($scope.datepickerMode === self.minMode) {
       var dt = ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : new Date(0, 0, 0, 0, 0, 0, 0);
@@ -238,7 +227,6 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     var dates = new Array(n), current = new Date(startDate), i = 0, date;
     while (i < n) {
       date = new Date(current);
-      this.fixTimeZone(date);
       dates[i++] = date;
       current.setDate(current.getDate() + 1);
     }
@@ -248,8 +236,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   this._refreshView = function() {
     var year = this.activeDate.getFullYear(),
       month = this.activeDate.getMonth(),
-      firstDayOfMonth = new Date(year, month, 1),
-      difference = this.startingDay - firstDayOfMonth.getDay(),
+      firstDayOfMonth = new Date(this.activeDate);
+
+    firstDayOfMonth.setFullYear(year, month, 1);
+
+    var difference = this.startingDay - firstDayOfMonth.getDay(),
       numDisplayedFromPreviousMonth = (difference > 0) ? 7 - difference : - difference,
       firstDate = new Date(firstDayOfMonth);
 
@@ -340,8 +331,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         date;
 
     for (var i = 0; i < 12; i++) {
-      date = new Date(year, i, 1);
-      this.fixTimeZone(date);
+      date = new Date(this.activeDate);
+      date.setFullYear(year, i, 1);
       months[i] = angular.extend(this.createDateObject(date, this.formatMonth), {
         uid: scope.uniqueId + '-' + i
       });
@@ -395,8 +386,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     var years = new Array(range), date;
 
     for (var i = 0, start = getStartingYear(this.activeDate.getFullYear()); i < range; i++) {
-      date = new Date(start + i, 0, 1);
-      this.fixTimeZone(date);
+      date = new Date(this.activeDate);
+      date.setFullYear(start + i, 0, 1);
       years[i] = angular.extend(this.createDateObject(date, this.formatYear), {
         uid: scope.uniqueId + '-' + i
       });
