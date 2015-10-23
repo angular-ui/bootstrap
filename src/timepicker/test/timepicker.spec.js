@@ -1383,7 +1383,7 @@ describe('timepicker directive', function() {
   describe('when used with max', function() {
     var changeInputValueTo;
     beforeEach(inject(function($sniffer) {
-      element = $compile('<timepicker ng-model="time" max="max"></timepicker>')($rootScope);
+      element = $compile('<uib-timepicker ng-model="time" max="max"></uib-timepicker>')($rootScope);
       $rootScope.$digest();
       changeInputValueTo = function (inputEl, value) {
         inputEl.val(value);
@@ -1734,41 +1734,4 @@ describe('timepicker directive', function() {
       expect(element.html()).toBe('<div class="ng-binding">foo</div>');
     });
   });
-});
-
-/* Deprecation tests below */
-
-describe('timepicker deprecation', function() {
-  beforeEach(module('ui.bootstrap.timepicker'));
-  beforeEach(module('ngAnimateMock'));
-  beforeEach(module('template/timepicker/timepicker.html'));
-
-  it('should suppress warning', function() {
-    module(function($provide) {
-      $provide.value('$timepickerSuppressWarning', true);
-    });
-
-    inject(function($compile, $log, $rootScope) {
-      spyOn($log, 'warn');
-
-      $rootScope.time = new Date().setHours(14, 40, 0, 0);
-      var element = '<timepicker ng-model="time"></timepicker>';
-      element = $compile(element)($rootScope);
-      $rootScope.$digest();
-      expect($log.warn.calls.count()).toBe(0);
-    });
-  });
-
-  it('should give warning by default', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-
-      $rootScope.time = new Date().setHours(14, 40, 0, 0);
-    var element = '<timepicker ng-model="time"></timepicker>';
-    element = $compile(element)($rootScope);
-    $rootScope.$digest();
-
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['TimepickerController is now deprecated. Use UibTimepickerController instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['timepicker is now deprecated. Use uib-timepicker instead.']);
-  }));
 });
