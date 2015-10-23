@@ -49,32 +49,3 @@ describe('typeaheadHighlight', function () {
     expect(logSpy).toHaveBeenCalled();
   });
 });
-
-/* Deprecation tests below */
-
-describe('typeahead highlightFilter deprecated', function(){
-  var highlightFilter, $log, $sce, logSpy;
-
-  beforeEach(module('ui.bootstrap.typeahead'));
-
-  it('should supress the warning by default', function(){
-    module(function($provide) {
-      $provide.value('$typeaheadSuppressWarning', true);
-    });
-    
-    inject(function($compile, $log, $rootScope, typeaheadHighlightFilter, $sce){
-      spyOn($log, 'warn');
-      var highlightFilter = typeaheadHighlightFilter;
-      $sce.getTrustedHtml(highlightFilter('before match after', 'match'));
-      expect($log.warn.calls.count()).toBe(0);
-    });
-  });
-  
-  it('should decrecate typeaheadHighlightFilter', inject(function($compile, $log, $rootScope, typeaheadHighlightFilter, $sce){
-    spyOn($log, 'warn');
-    var highlightFilter = typeaheadHighlightFilter;
-    $sce.getTrustedHtml(highlightFilter('before match after', 'match'));
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['typeaheadHighlight is now deprecated. Use uibTypeaheadHighlight instead.']);
-  }));
-});
