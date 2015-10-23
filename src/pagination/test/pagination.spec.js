@@ -734,33 +734,3 @@ describe('pagination directive', function() {
     });
   });
 });
-
-describe('pagination deprecation', function() {
-  beforeEach(module('ui.bootstrap.pagination'));
-  beforeEach(module('template/pagination/pagination.html'));
-
-  it('should suppress warning', function() {
-    module(function($provide) {
-      $provide.value('$paginationSuppressWarning', true);
-    });
-
-    inject(function($compile, $log, $rootScope) {
-      spyOn($log, 'warn');
-
-      var element = $compile('<pagination></pagination>')($rootScope);
-      $rootScope.$digest();
-      expect($log.warn.calls.count()).toBe(0);
-    });
-  });
-
-  it('should give warning by default', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-
-    var element = $compile('<pagination></pagination>')($rootScope);
-    $rootScope.$digest();
-
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['PaginationController is now deprecated. Use UibPaginationController instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['pagination is now deprecated. Use uib-pagination instead.']);
-  }));
-});
