@@ -368,7 +368,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             if (isOpenParse) {
               scope.$watch(isOpenParse, function(val) {
                 /*jshint -W018 */
-                if (!val === ttScope.isOpen) {
+                if (ttScope && !val === ttScope.isOpen) {
                   toggleTooltipBind();
                 }
                 /*jshint +W018 */
