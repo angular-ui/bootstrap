@@ -217,17 +217,3 @@ angular.module('ui.bootstrap.dateparser', [])
     return true;
   }
 }]);
-
-/* Deprecated dateparser below */
-
-angular.module('ui.bootstrap.dateparser')
-
-.value('$dateParserSuppressWarning', false)
-
-.service('dateParser', ['$log', '$dateParserSuppressWarning', 'uibDateParser', function($log, $dateParserSuppressWarning, uibDateParser) {
-  if (!$dateParserSuppressWarning) {
-    $log.warn('dateParser is now deprecated. Use uibDateParser instead.');
-  }
-
-  angular.extend(this, uibDateParser);
-}]);
