@@ -1,3 +1,28 @@
+<a name="0.14.3"></a>
+## [0.14.3](https://github.com/angular-ui/bootstrap/compare/0.14.2...v0.14.3) (2015-10-23)
+
+
+### Bug Fixes
+
+* **alert:** allow interpolations with dismiss-on-timeout ([de24f46](https://github.com/angular-ui/bootstrap/commit/de24f46)), closes [#4665](https://github.com/angular-ui/bootstrap/issues/4665) [#4666](https://github.com/angular-ui/bootstrap/issues/4666)
+* **buttons:** double toggle on spacebar ([e8808d3](https://github.com/angular-ui/bootstrap/commit/e8808d3)), closes [#4474](https://github.com/angular-ui/bootstrap/issues/4474) [#4630](https://github.com/angular-ui/bootstrap/issues/4630)
+* **collapse:** fix collapse animation timing ([6d1cd0f](https://github.com/angular-ui/bootstrap/commit/6d1cd0f)), closes [#4493](https://github.com/angular-ui/bootstrap/issues/4493)
+* **collapse:** trigger digest after ([3144633](https://github.com/angular-ui/bootstrap/commit/3144633)), closes [#4647](https://github.com/angular-ui/bootstrap/issues/4647) [#4628](https://github.com/angular-ui/bootstrap/issues/4628) [#4561](https://github.com/angular-ui/bootstrap/issues/4561) [#4651](https://github.com/angular-ui/bootstrap/issues/4651)
+* **datepicker:** datepicker-popup nest in dropdown ([134086a](https://github.com/angular-ui/bootstrap/commit/134086a)), closes [#4197](https://github.com/angular-ui/bootstrap/issues/4197) [#4693](https://github.com/angular-ui/bootstrap/issues/4693)
+* **datepicker:** fix support for literal format on popup ([7c3c631](https://github.com/angular-ui/bootstrap/commit/7c3c631)), closes [#4635](https://github.com/angular-ui/bootstrap/issues/4635) [#4616](https://github.com/angular-ui/bootstrap/issues/4616)
+* **tooltip:** delay timeouts ([02425b8](https://github.com/angular-ui/bootstrap/commit/02425b8)), closes [#4621](https://github.com/angular-ui/bootstrap/issues/4621) [#4618](https://github.com/angular-ui/bootstrap/issues/4618)
+* **tooltip:** null scope check in isOpen watch ([1f94104](https://github.com/angular-ui/bootstrap/commit/1f94104)), closes [#4697](https://github.com/angular-ui/bootstrap/issues/4697) [#4683](https://github.com/angular-ui/bootstrap/issues/4683)
+* **tooltip:** scrollbar flashing ([6c82b2b](https://github.com/angular-ui/bootstrap/commit/6c82b2b)), closes [#4550](https://github.com/angular-ui/bootstrap/issues/4550) [#4623](https://github.com/angular-ui/bootstrap/issues/4623) [#4458](https://github.com/angular-ui/bootstrap/issues/4458)
+* **typeahead:** dangling event listeners ([94fb282](https://github.com/angular-ui/bootstrap/commit/94fb282)), closes [#4632](https://github.com/angular-ui/bootstrap/issues/4632) [#4636](https://github.com/angular-ui/bootstrap/issues/4636)
+
+### Features
+
+* **datepicker:** add templateUrl support for pickers ([1f65d87](https://github.com/angular-ui/bootstrap/commit/1f65d87)), closes [#4432](https://github.com/angular-ui/bootstrap/issues/4432)
+* **datepicker:** preserve timezone with model ([0d64aad](https://github.com/angular-ui/bootstrap/commit/0d64aad)), closes [#4676](https://github.com/angular-ui/bootstrap/issues/4676)
+* **modal:** support $uibModalInstance ([97fd37e](https://github.com/angular-ui/bootstrap/commit/97fd37e)), closes [#4638](https://github.com/angular-ui/bootstrap/issues/4638) [#4661](https://github.com/angular-ui/bootstrap/issues/4661)
+
+
+
 <a name="0.14.2"></a>
 ## [0.14.2](https://github.com/angular-ui/bootstrap/compare/0.14.1...v0.14.2) (2015-10-14)
 
