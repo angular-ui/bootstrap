@@ -33,7 +33,7 @@ describe('rating directive', function() {
       return angular.element(star).attr('title');
     });
   }
-  
+
   function triggerKeyDown(keyCode) {
     var e = $.Event('keydown');
     e.which = keyCode;
@@ -280,13 +280,13 @@ describe('rating directive', function() {
       expect(getState('on', 'off')).toEqual([true, true, true, true, true, false, false, false, false, false]);
     });
   });
-  
+
   describe('Default title', function() {
     it('should return the default title for each star', function() {
       expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
     });
   });
-  
+
   describe('shows different title when `max` attribute is greater than the titles array ', function() {
     var originalConfig = {};
     beforeEach(inject(function(uibRatingConfig) {
@@ -300,12 +300,12 @@ describe('rating directive', function() {
       // return it to the original state
       angular.extend(uibRatingConfig, originalConfig);
     }));
- 
+
    it('should return the default title for each star', function() {
       expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five', '6', '7', '8', '9', '10']);
     });
   });
-  
+
   describe('shows custom titles ', function() {
     it('should return the custom title for each star', function() {
       $rootScope.titles = [44,45,46];
@@ -325,37 +325,4 @@ describe('rating directive', function() {
       expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
     });
   });
-});
-
-/* Deprecation tests below */
-
-describe('rating deprecation', function() {
-  beforeEach(module('ui.bootstrap.rating'));
-  beforeEach(module('template/rating/rating.html'));
-
-  it('should suppress warning', function() {
-    module(function($provide) {
-      $provide.value('$ratingSuppressWarning', true);
-    });
-
-    inject(function($compile, $log, $rootScope) {
-      spyOn($log, 'warn');
-
-      var element = $compile('<rating ng-model="rate"></rating>')($rootScope);
-      $rootScope.$digest();
-
-      expect($log.warn.calls.count()).toBe(0);
-    });
-  });
-
-  it('should give warning by default', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-
-    var element = $compile('<rating ng-model="rate"></rating>')($rootScope);
-    $rootScope.$digest();
-
-    expect($log.warn.calls.count()).toBe(2);
-    expect($log.warn.calls.argsFor(0)).toEqual(['RatingController is now deprecated. Use UibRatingController instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['rating is now deprecated. Use uib-rating instead.']);
-  }));
 });
