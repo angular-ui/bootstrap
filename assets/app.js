@@ -48,7 +48,7 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
 
 function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
   // Grab old version docs
-  $http.get('/versions-mapping.json')
+  $http.get('/bootstrap/versions-mapping.json')
     .then(function(result) {
       $scope.oldDocs = result.data;
     });
