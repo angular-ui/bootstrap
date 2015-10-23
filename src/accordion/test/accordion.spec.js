@@ -139,7 +139,7 @@ describe('uib-accordion', function() {
     it('should allow custom templates', function() {
       $templateCache.put('foo/bar.html', '<div>baz</div>');
 
-      element = $compile('<accordion template-url="foo/bar.html"></accordion>')(scope);
+      element = $compile('<uib-accordion template-url="foo/bar.html"></uib-accordion>')(scope);
       scope.$digest();
       expect(element.html()).toBe('<div>baz</div>');
     });
@@ -582,54 +582,4 @@ describe('uib-accordion', function() {
       });
     });
   });
-});
-
-/* Deprecation tests below */
-
-describe('accordion deprecation', function() {
-  beforeEach(module('ui.bootstrap.accordion'));
-  beforeEach(module('ngAnimateMock'));
-  beforeEach(module('template/accordion/accordion.html'));
-  beforeEach(module('template/accordion/accordion-group.html'));
-
-  it('should suppress warning', function() {
-    module(function($provide) {
-      $provide.value('$accordionSuppressWarning', true);
-    });
-
-    inject(function($compile, $log, $rootScope) {
-      spyOn($log, 'warn');
-
-      var element =
-        '<accordion ng-init="a = [1,2,3]">' +
-          '<accordion-group heading="I get overridden">' +
-            '<div accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </div>' +
-            'Body' +
-          '</accordion-group>' +
-        '</accordion>';
-      element = $compile(element)($rootScope);
-      $rootScope.$digest();
-      expect($log.warn.calls.count()).toBe(0);
-    });
-  });
-
-  it('should give warning by default', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-
-    var element =
-      '<accordion ng-init="a = [1,2,3]">' +
-        '<accordion-group heading="I get overridden">' +
-          '<div accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </div>' +
-          'Body' +
-        '</accordion-group>' +
-      '</accordion>';
-    element = $compile(element)($rootScope);
-    $rootScope.$digest();
-
-    expect($log.warn.calls.count()).toBe(4);
-    expect($log.warn.calls.argsFor(0)).toEqual(['AccordionController is now deprecated. Use UibAccordionController instead.']);
-    expect($log.warn.calls.argsFor(1)).toEqual(['accordion-heading is now deprecated. Use uib-accordion-heading instead.']);
-    expect($log.warn.calls.argsFor(2)).toEqual(['accordion-group is now deprecated. Use uib-accordion-group instead.']);
-    expect($log.warn.calls.argsFor(3)).toEqual(['accordion is now deprecated. Use uib-accordion instead.']);
-  }));
 });
