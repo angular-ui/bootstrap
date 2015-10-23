@@ -47,8 +47,7 @@ angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAn
 .controller('DownloadCtrl', DownloadCtrl);
 
 function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
-  // Grab old version docs
-  $http.get('/versions-mapping.json')
+  $http.get('/bootstrap/versions-mapping.json')
     .then(function(result) {
       $scope.oldDocs = result.data;
     });
@@ -76,7 +75,7 @@ function MainCtrl($scope, $http, $document, $uibModal, orderByFilter) {
   };
 }
 
-function SelectModulesCtrl($scope, $uibModalInstance, modules, buildFilesService) {
+function SelectModulesCtrl($scope, $modalInstance, modules, buildFilesService) {
   $scope.selectedModules = [];
   $scope.modules = modules;
 
@@ -89,11 +88,11 @@ function SelectModulesCtrl($scope, $uibModalInstance, modules, buildFilesService
   };
 
   $scope.downloadBuild = function () {
-    $uibModalInstance.close($scope.selectedModules);
+    $modalInstance.close($scope.selectedModules);
   };
 
   $scope.cancel = function () {
-    $uibModalInstance.dismiss();
+    $modalInstance.dismiss();
   };
 
   $scope.isOldBrowser = function () {
@@ -242,7 +241,7 @@ function SelectModulesCtrl($scope, $uibModalInstance, modules, buildFilesService
   };
 }
 
-function DownloadCtrl($scope, $uibModalInstance) {
+function DownloadCtrl($scope, $modalInstance) {
   $scope.options = {
     minified: true,
     tpls: true
@@ -265,7 +264,7 @@ function DownloadCtrl($scope, $uibModalInstance) {
   };
 
   $scope.cancel = function () {
-    $uibModalInstance.dismiss();
+    $modalInstance.dismiss();
   };
 }
 
