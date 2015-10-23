@@ -130,36 +130,3 @@ describe('collapse directive', function() {
     });
   });
 });
-
-/* Deprecation tests below */
-
-describe('collapse deprecation', function() {
-  beforeEach(module('ui.bootstrap.collapse'));
-  beforeEach(module('ngAnimateMock'));
-
-  it('should suppress warning', function() {
-    module(function($provide) {
-      $provide.value('$collapseSuppressWarning', true);
-    });
-
-    inject(function($compile, $log, $rootScope) {
-      spyOn($log, 'warn');
-
-      var element = $compile('<div collapse="isCollapsed">Some Content</div>')($rootScope);
-      $rootScope.$digest();
-
-      expect($log.warn.calls.count()).toBe(0);
-    });
-  });
-
-  it('should give warning by default', inject(function($compile, $log, $rootScope) {
-    spyOn($log, 'warn');
-
-    var element = $compile('<div collapse="isCollapsed">Some Content</div>')($rootScope);
-    $rootScope.$digest();
-
-    expect($log.warn.calls.count()).toBe(1);
-    expect($log.warn.calls.argsFor(0)).toEqual(['collapse is now deprecated. Use uib-collapse instead.']);
-
-  }));
-});
