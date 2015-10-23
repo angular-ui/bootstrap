@@ -186,9 +186,18 @@
                     <p>Please check <a href="https://github.com/angular-ui/bootstrap/wiki/FAQ" target="_blank">our FAQ section</a> for common problems / solutions.</p>
                     <h3>Reading the documentation</h3>
                     <p>
-                      Each of the directives provided in <code>ui-bootstrap</code> have documentation and interactive Plunker examples. There is also a list of settings which outline the default
-                      values of settings, and whether they are readonly. In addition to this, some settings have an eye icon next to them like this <i class="glyphicon glyphicon-eye-open"></i>. The
-                      eye means that the setting has an Angular <a href="https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$watch" title="Angular $watch" target="_blank">$watch</a> listener applied to it.
+                        Each of the components provided in <code>ui-bootstrap</code> have documentation and interactive Plunker examples.
+                    </p>
+                    <p>
+                        For the directives, we list the different attributes with their default values, and whether they are readonly. In addition to this, some settings
+                        have an eye icon next to them like this <i class="glyphicon glyphicon-eye-open"></i>. The eye means that the setting has an Angular
+                        <a href="https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$watch" title="Angular $watch" target="_blank">$watch</a> listener applied to it.
+                    </p>
+                    <p>
+                        For the services (you will recognize them with the <code>$</code> prefix), we list all the possible parameters you can pass to them and their default values if any.
+                    </p>
+                    <p>
+                        Also, some components have default values that you can override globally within a <code>.config</code> function for example.
                     </p>
                 </section>
                 <% demoModules.forEach(function(module) { %>
