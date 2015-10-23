@@ -745,8 +745,8 @@ describe('tooltip positioning', function() {
   var $position;
 
   // load the tooltip code
-  beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider) {
-    $tooltipProvider.options({ animation: false });
+  beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
+    $uibTooltipProvider.options({ animation: false });
   }));
 
   // load the template
@@ -805,8 +805,8 @@ describe('tooltipHtml', function() {
   var elm, elmBody, elmScope, tooltipScope, scope;
 
   // load the tooltip code
-  beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider) {
-    $tooltipProvider.options({ animation: false });
+  beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
+    $uibTooltipProvider.options({ animation: false });
   }));
 
   // load the template
@@ -860,7 +860,7 @@ describe('tooltipHtml', function() {
   }));
 });
 
-describe('$tooltipProvider', function() {
+describe('$uibTooltipProvider', function() {
   var elm,
       elmBody,
       scope,
@@ -875,8 +875,8 @@ describe('$tooltipProvider', function() {
   }
 
   describe('popupDelay', function() {
-    beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider) {
-      $tooltipProvider.options({popupDelay: 1000});
+    beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
+      $uibTooltipProvider.options({popupDelay: 1000});
     }));
 
     // load the template
@@ -908,8 +908,8 @@ describe('$tooltipProvider', function() {
     var $body;
 
     beforeEach(module('template/tooltip/tooltip-popup.html'));
-    beforeEach(module('ui.bootstrap.tooltip', function($tooltipProvider) {
-      $tooltipProvider.options({ appendToBody: true });
+    beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
+      $uibTooltipProvider.options({ appendToBody: true });
     }));
 
     afterEach(function() {

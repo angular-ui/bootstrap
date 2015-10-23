@@ -613,10 +613,7 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     replace: true,
     scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-popup.html',
-    link: function(scope, element) {
-      element.addClass('tooltip');
-    }
+    templateUrl: 'template/tooltip/tooltip-popup.html'
   };
 })
 
@@ -629,10 +626,7 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
     replace: true,
     scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
       originScope: '&' },
-    templateUrl: 'template/tooltip/tooltip-template-popup.html',
-    link: function(scope, element) {
-      element.addClass('tooltip');
-    }
+    templateUrl: 'template/tooltip/tooltip-template-popup.html'
   };
 })
 
@@ -646,188 +640,12 @@ function ($animate ,  $sce ,  $compile ,  $templateRequest) {
   return {
     replace: true,
     scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-html-popup.html',
-    link: function(scope, element) {
-      element.addClass('tooltip');
-    }
+    templateUrl: 'template/tooltip/tooltip-html-popup.html'
   };
 })
 
 .directive('uibTooltipHtml', ['$uibTooltip', function($uibTooltip) {
   return $uibTooltip('uibTooltipHtml', 'tooltip', 'mouseenter', {
-    useContentExp: true
-  });
-}]);
-
-/* Deprecated tooltip below */
-
-angular.module('ui.bootstrap.tooltip')
-
-.value('$tooltipSuppressWarning', false)
-
-.provider('$tooltip', ['$uibTooltipProvider', function($uibTooltipProvider) {
-  angular.extend(this, $uibTooltipProvider);
-
-  this.$get = ['$log', '$tooltipSuppressWarning', '$injector', function($log, $tooltipSuppressWarning, $injector) {
-    if (!$tooltipSuppressWarning) {
-      $log.warn('$tooltip is now deprecated. Use $uibTooltip instead.');
-    }
-
-    return $injector.invoke($uibTooltipProvider.$get);
-  }];
-}])
-
-// This is mostly ngInclude code but with a custom scope
-.directive('tooltipTemplateTransclude', [
-         '$animate', '$sce', '$compile', '$templateRequest', '$log', '$tooltipSuppressWarning',
-function ($animate ,  $sce ,  $compile ,  $templateRequest,   $log,   $tooltipSuppressWarning) {
-  return {
-    link: function(scope, elem, attrs) {
-      if (!$tooltipSuppressWarning) {
-        $log.warn('tooltip-template-transclude is now deprecated. Use uib-tooltip-template-transclude instead.');
-      }
-
-      var origScope = scope.$eval(attrs.tooltipTemplateTranscludeScope);
-
-      var changeCounter = 0,
-        currentScope,
-        previousElement,
-        currentElement;
-
-      var cleanupLastIncludeContent = function() {
-        if (previousElement) {
-          previousElement.remove();
-          previousElement = null;
-        }
-        if (currentScope) {
-          currentScope.$destroy();
-          currentScope = null;
-        }
-        if (currentElement) {
-          $animate.leave(currentElement).then(function() {
-            previousElement = null;
-          });
-          previousElement = currentElement;
-          currentElement = null;
-        }
-      };
-
-      scope.$watch($sce.parseAsResourceUrl(attrs.tooltipTemplateTransclude), function(src) {
-        var thisChangeId = ++changeCounter;
-
-        if (src) {
-          //set the 2nd param to true to ignore the template request error so that the inner
-          //contents and scope can be cleaned up.
-          $templateRequest(src, true).then(function(response) {
-            if (thisChangeId !== changeCounter) { return; }
-            var newScope = origScope.$new();
-            var template = response;
-
-            var clone = $compile(template)(newScope, function(clone) {
-              cleanupLastIncludeContent();
-              $animate.enter(clone, elem);
-            });
-
-            currentScope = newScope;
-            currentElement = clone;
-
-            currentScope.$emit('$includeContentLoaded', src);
-          }, function() {
-            if (thisChangeId === changeCounter) {
-              cleanupLastIncludeContent();
-              scope.$emit('$includeContentError', src);
-            }
-          });
-          scope.$emit('$includeContentRequested', src);
-        } else {
-          cleanupLastIncludeContent();
-        }
-      });
-
-      scope.$on('$destroy', cleanupLastIncludeContent);
-    }
-  };
-}])
-
-.directive('tooltipClasses', ['$log', '$tooltipSuppressWarning', function($log, $tooltipSuppressWarning) {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      if (!$tooltipSuppressWarning) {
-        $log.warn('tooltip-classes is now deprecated. Use uib-tooltip-classes instead.');
-      }
-
-      if (scope.placement) {
-        element.addClass(scope.placement);
-      }
-      if (scope.popupClass) {
-        element.addClass(scope.popupClass);
-      }
-      if (scope.animation()) {
-        element.addClass(attrs.tooltipAnimationClass);
-      }
-    }
-  };
-}])
-
-.directive('tooltipPopup', ['$log', '$tooltipSuppressWarning', function($log, $tooltipSuppressWarning) {
-  return {
-    replace: true,
-    scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-popup.html',
-    link: function(scope, element) {
-      if (!$tooltipSuppressWarning) {
-        $log.warn('tooltip-popup is now deprecated. Use uib-tooltip-popup instead.');
-      }
-
-      element.addClass('tooltip');
-    }
-  };
-}])
-
-.directive('tooltip', ['$tooltip', function($tooltip) {
-  return $tooltip('tooltip', 'tooltip', 'mouseenter');
-}])
-
-.directive('tooltipTemplatePopup', ['$log', '$tooltipSuppressWarning', function($log, $tooltipSuppressWarning) {
-  return {
-    replace: true,
-    scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
-      originScope: '&' },
-    templateUrl: 'template/tooltip/tooltip-template-popup.html',
-    link: function(scope, element) {
-      if (!$tooltipSuppressWarning) {
-        $log.warn('tooltip-template-popup is now deprecated. Use uib-tooltip-template-popup instead.');
-      }
-
-      element.addClass('tooltip');
-    }
-  };
-}])
-
-.directive('tooltipTemplate', ['$tooltip', function($tooltip) {
-  return $tooltip('tooltipTemplate', 'tooltip', 'mouseenter', {
-    useContentExp: true
-  });
-}])
-
-.directive('tooltipHtmlPopup', ['$log', '$tooltipSuppressWarning', function($log, $tooltipSuppressWarning) {
-  return {
-    replace: true,
-    scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-html-popup.html',
-    link: function(scope, element) {
-      if (!$tooltipSuppressWarning) {
-        $log.warn('tooltip-html-popup is now deprecated. Use uib-tooltip-html-popup instead.');
-      }
-
-      element.addClass('tooltip');
-    }
-  };
-}])
-
-.directive('tooltipHtml', ['$tooltip', function($tooltip) {
-  return $tooltip('tooltipHtml', 'tooltip', 'mouseenter', {
     useContentExp: true
   });
 }]);
