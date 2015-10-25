@@ -19,6 +19,10 @@ All settings can be provided as attributes in the `<uib-timepicker>` or globally
  	_(Defaults: 1)_ :
  	 Number of minutes to increase or decrease when using a button.
 
+ * `second-step` <i class="glyphicon glyphicon-eye-open"></i>
+    _(Defaults: 1)_ :
+     Number of seconds to increase or decrease when using a button.
+
  * `show-meridian` <i class="glyphicon glyphicon-eye-open"></i>
  	_(Defaults: true)_ :
  	Whether to display 12H or 24H mode.
@@ -42,6 +46,10 @@ All settings can be provided as attributes in the `<uib-timepicker>` or globally
  * `show-spinners`
     _(Defaults: true)_ :
      Shows spinner arrows above and below the inputs
+
+ * `show_seconds`
+    _(Defaults: false)_ :
+     Shows seconds input
 
  * `min`
     _(Defaults: undefined)_ :
