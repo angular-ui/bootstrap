@@ -4,7 +4,6 @@ angular.module('ui.bootstrap.carousel', [])
   var self = this,
     slides = self.slides = $scope.slides = [],
     NEW_ANIMATE = angular.version.minor >= 4,
-    NO_TRANSITION = 'uib-noTransition',
     SLIDE_DIRECTION = 'uib-slideDirection',
     currentIndex = -1,
     currentInterval, isPlaying;
@@ -200,7 +199,7 @@ angular.module('ui.bootstrap.carousel', [])
   };
 
   $scope.$watch('noTransition', function(noTransition) {
-    $element.data(NO_TRANSITION, noTransition);
+    $animate.enabled($element, noTransition);
   });
 
 }])
@@ -257,8 +256,7 @@ angular.module('ui.bootstrap.carousel', [])
 .animation('.item', [
          '$injector', '$animate',
 function ($injector, $animate) {
-  var NO_TRANSITION = 'uib-noTransition',
-    SLIDE_DIRECTION = 'uib-slideDirection',
+  var SLIDE_DIRECTION = 'uib-slideDirection',
     $animateCss = null;
 
   if ($injector.has('$animateCss')) {
@@ -276,7 +274,7 @@ function ($injector, $animate) {
     beforeAddClass: function(element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
       if (className == 'active' && element.parent() && element.parent().parent() &&
-          !element.parent().parent().data(NO_TRANSITION)) {
+          !$animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
@@ -306,7 +304,7 @@ function ($injector, $animate) {
     beforeRemoveClass: function (element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
       if (className === 'active' && element.parent() && element.parent().parent() &&
-          !element.parent().parent().data(NO_TRANSITION)) {
+          !$animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
