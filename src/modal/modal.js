@@ -90,12 +90,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
         scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
           var done = setIsAsync();
-          if ($animateCss) {
-            $animateCss(element, {
-              removeClass: attrs.modalInClass
-            }).start().then(done);
+          if (scope.modalOptions.animation) {
+            if ($animateCss) {
+              $animateCss(element, {
+                removeClass: attrs.modalInClass
+              }).start().then(done);
+            } else {
+              $animate.removeClass(element, attrs.modalInClass).then(done);
+            }
           } else {
-            $animate.removeClass(element, attrs.modalInClass).then(done);
+            done();
           }
         });
       }
@@ -413,7 +417,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           backdrop: modal.backdrop,
           keyboard: modal.keyboard,
           openedClass: modal.openedClass,
-          windowTopClass: modal.windowTopClass
+          windowTopClass: modal.windowTopClass,
+          animation: modal.animation
         });
 
         openedClasses.put(modalBodyClass, modalInstance);
@@ -423,6 +428,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
         if (currBackdropIndex >= 0 && !backdropDomEl) {
           backdropScope = $rootScope.$new(true);
+          backdropScope.modalOptions = modal;
           backdropScope.index = currBackdropIndex;
           var angularBackgroundDomEl = angular.element('<div uib-modal-backdrop="modal-backdrop"></div>');
           angularBackgroundDomEl.attr('backdrop-class', modal.backdropClass);
