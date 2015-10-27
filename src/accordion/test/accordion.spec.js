@@ -146,7 +146,6 @@ describe('uib-accordion', function() {
   });
 
   describe('uib-accordion-group', function() {
-
     var scope, $compile;
     var element, groups;
     var findGroupLink = function(index) {
