@@ -58,10 +58,6 @@ angular.module('ui.bootstrap.carousel', [])
     restartTimer();
   }
 
-  $scope.$on('$destroy', function() {
-    destroyed = true;
-  });
-
   function getSlideByIndex(index) {
     if (angular.isUndefined(slides[index].index)) {
       return slides[index];
@@ -113,7 +109,10 @@ angular.module('ui.bootstrap.carousel', [])
 
   $scope.$watch('interval', restartTimer);
   $scope.$watchCollection('slides', resetTransition);
-  $scope.$on('$destroy', resetTimer);
+  $scope.$on('$destroy', function() {
+    destroyed = true;
+    resetTimer();
+  });
 
   function restartTimer() {
     resetTimer();
