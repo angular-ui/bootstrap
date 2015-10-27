@@ -259,6 +259,42 @@ describe('typeahead tests', function() {
       expect($scope.form.input.$error.editable).toBeFalsy();
     });
 
+    it('should clear view value after blur for typeahead-editable="false"', function () {
+        var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="false"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'not in matches');
+        expect($scope.result).toEqual(undefined);
+        expect(inputEl.val()).toEqual('not in matches');
+        inputEl.blur(); // input loses focus
+        expect($scope.result).toEqual(undefined);
+        expect(inputEl.val()).toEqual('');
+    });
+
+    it('should clear view value when no value selected for typeahead-editable="false" typeahead-select-on-blur="false"', function () {
+        var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="false" typeahead-select-on-blur="false"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'b');
+        expect($scope.result).toEqual(undefined);
+        expect(inputEl.val()).toEqual('b');
+        inputEl.blur(); // input loses focus
+        expect($scope.result).toEqual(undefined);
+        expect(inputEl.val()).toEqual('');
+    });
+
+    it('should not clear view value when there is match but no value selected for typeahead-editable="false" typeahead-select-on-blur="true"', function () {
+        var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="false" typeahead-select-on-blur="true"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'b');
+        expect($scope.result).toEqual(undefined);
+        expect(inputEl.val()).toEqual('b');
+        inputEl.blur(); // input loses focus
+        expect($scope.result).toEqual('bar');
+        expect(inputEl.val()).toEqual('bar');
+    });
+
     it('should bind loading indicator expression', inject(function($timeout) {
       $scope.isLoading = false;
       $scope.loadMatches = function(viewValue) {

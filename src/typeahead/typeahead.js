@@ -336,6 +336,9 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
           scope.select(scope.activeIdx);
         });
       }
+      if (!isEditable && modelCtrl.$error.editable) {
+          element.val('');
+      }
       hasFocus = false;
       selected = false;
     });
