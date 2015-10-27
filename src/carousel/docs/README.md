@@ -2,10 +2,44 @@ Carousel creates a carousel similar to bootstrap's image carousel.
 
 The carousel also offers support for touchscreen devices in the form of swiping. To enable swiping, load the `ngTouch` module as a dependency.
 
-Use a `<uib-carousel>` element with `<uib-slide>` elements inside it.  It will automatically cycle through the slides at a given rate, and a current-index variable will be kept in sync with the currently visible slide.
+Use a `<uib-carousel>` element with `<uib-slide>` elements inside it.
 
-Use the `no-wrap` attribute on a `<uib-carousel>` element to control the looping of slides; setting `no-wrap` to an expression which evaluates to a truthy value will prevent looping.
+### uib-carousel settings
 
-Use the `template-url` attribute on a `<uib-carousel>` or `<uib-slide>` element to specify the url of a custom template to override the default templates.
+* `interval`
+  _(Default: `none`)_ -
+  Sets an interval to cycle through the slides. You need a number bigger than 0 to make the interval work.
+  
+* `no-wrap`
+  _(Default: `false`)_ -
+  Disables the looping of slides. Setting `no-wrap` to an expression which evaluates to a truthy value will prevent looping.
+  
+* `no-pause`
+  _(Default: `false`)_ -
+  The interval pauses on mouseover. Setting this to truthy, disables this pause.
+  
+* `no-transition`
+  _(Default: `false`)_ -
+  Whether to disable the transition animation between slides. Setting this to truthy, disables this transition.
+  
+* `template-url`
+  _(Default: `template/carousel/carousel.html`)_ -
+  Add the ability to override the template used on the component.
+  
+### uib-slide settings
 
-Use the `actual` attribute on a `<uib-slide>` element to bind the slide model (or any object of interest) onto the slide directive's `$scope`, which makes it available for customization in the carousel template.
+* `active`
+  _(Default: `false`)_ -
+  Sets the slide as the active one.
+  
+* `actual`
+  _(Default: `none`)_ -
+  Use this attribute to bind the slide model (or any object of interest) onto the slide scope, which makes it available for customization in the carousel template.
+  
+* `index`
+  _(Default: `none`)_ -
+  Use this attribute to change how the slides are ordered.
+  
+* `template-url`
+  _(Default: `template/carousel/slide.html`)_ -
+  Add the ability to override the template used on the component.
