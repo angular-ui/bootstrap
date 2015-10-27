@@ -66,9 +66,8 @@ angular.module('ui.bootstrap.carousel', [])
     if (angular.isUndefined(slides[index].index)) {
       return slides[index];
     }
-    var i, len = slides.length;
-    for (i = 0; i < slides.length; ++i) {
-      if (slides[i].index == index) {
+    for (var i = 0, l = slides.length; i < l; ++i) {
+      if (slides[i].index === index) {
         return slides[i];
       }
     }
