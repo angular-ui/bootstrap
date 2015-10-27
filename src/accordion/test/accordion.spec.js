@@ -176,10 +176,10 @@ describe('uib-accordion', function() {
     describe('with static panels', function() {
       beforeEach(function() {
         var tpl =
-              '<uib-accordion>' +
-                '<uib-accordion-group heading="title 1">Content 1</uib-accordion-group>' +
-                '<uib-accordion-group heading="title 2">Content 2</uib-accordion-group>' +
-              '</uib-accordion>';
+          '<uib-accordion>' +
+            '<uib-accordion-group heading="title 1">Content 1</uib-accordion-group>' +
+            '<uib-accordion-group heading="title 2">Content 2</uib-accordion-group>' +
+          '</uib-accordion>';
         element = angular.element(tpl);
         $compile(element)(scope);
         scope.$digest();
@@ -362,10 +362,10 @@ describe('uib-accordion', function() {
     describe('is-open attribute with dynamic content', function() {
       beforeEach(function() {
         var tpl =
-              '<uib-accordion>' +
-                '<uib-accordion-group heading="title 1" is-open="open1"><div ng-repeat="item in items">{{item}}</div></uib-accordion-group>' +
-                '<uib-accordion-group heading="title 2" is-open="open2">Static content</uib-accordion-group>' +
-              '</uib-accordion>';
+          '<uib-accordion>' +
+            '<uib-accordion-group heading="title 1" is-open="open1"><div ng-repeat="item in items">{{item}}</div></uib-accordion-group>' +
+            '<uib-accordion-group heading="title 2" is-open="open2">Static content</uib-accordion-group>' +
+          '</uib-accordion>';
         element = angular.element(tpl);
         scope.items = ['Item 1', 'Item 2', 'Item 3'];
         scope.open1 = true;
@@ -426,9 +426,9 @@ describe('uib-accordion', function() {
       var groupBody;
       beforeEach(function() {
         var tpl =
-              '<uib-accordion>' +
-                '<uib-accordion-group heading="title 1" is-disabled="disabled">Content 1</uib-accordion-group>' +
-              '</uib-accordion>';
+          '<uib-accordion>' +
+            '<uib-accordion-group heading="title 1" is-disabled="disabled">Content 1</uib-accordion-group>' +
+          '</uib-accordion>';
         element = angular.element(tpl);
         scope.disabled = true;
         $compile(element)(scope);
