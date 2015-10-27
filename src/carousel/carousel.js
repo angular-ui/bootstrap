@@ -203,13 +203,12 @@ angular.module('ui.bootstrap.carousel', [])
 
 }])
 
-.directive('uibCarousel', [function() {
+.directive('uibCarousel', function() {
   return {
     transclude: true,
     replace: true,
     controller: 'UibCarouselController',
     controllerAs: 'carousel',
-    require: 'carousel',
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'template/carousel/carousel.html';
     },
@@ -220,12 +219,11 @@ angular.module('ui.bootstrap.carousel', [])
       noWrap: '&'
     }
   };
-}])
+})
 
 .directive('uibSlide', function() {
   return {
     require: '^uibCarousel',
-    restrict: 'EA',
     transclude: true,
     replace: true,
     templateUrl: function(element, attrs) {
