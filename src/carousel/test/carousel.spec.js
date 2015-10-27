@@ -77,8 +77,7 @@ describe('carousel', function() {
       expect(slide.html()).toBe('bar');
     });
 
-    it('should set the selected slide to active = true', function() {
-      expect(scope.slides[0].content).toBe('one');
+    it('should be able to select a slide via model changes', function() {
       testSlideActive(0);
       scope.$apply('slides[1].active=true');
       testSlideActive(1);
