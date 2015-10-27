@@ -273,8 +273,7 @@ function ($injector, $animate) {
   return {
     beforeAddClass: function(element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
-      if (className == 'active' && element.parent() && element.parent().parent() &&
-          !$animate.enabled(element)) {
+      if (className == 'active' && !$animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
@@ -303,8 +302,7 @@ function ($injector, $animate) {
     },
     beforeRemoveClass: function (element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
-      if (className === 'active' && element.parent() && element.parent().parent() &&
-          !$animate.enabled(element)) {
+      if (className === 'active' && !$animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction == 'next' ? 'left' : 'right';
