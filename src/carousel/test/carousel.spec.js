@@ -357,9 +357,9 @@ describe('carousel', function() {
     describe('slide order', function() {
       beforeEach(function() {
         scope.slides = [
-          {active:false,content:'one', id:1},
-          {active:false,content:'two', id:2},
-          {active:false,content:'three', id:3}
+          {active:false,content:'one', id:3},
+          {active:false,content:'two', id:1},
+          {active:false,content:'three', id:2}
         ];
         elm = $compile(
           '<uib-carousel interval="interval" no-transition="true" no-pause="nopause">' +
@@ -369,18 +369,17 @@ describe('carousel', function() {
           '</uib-carousel>'
         )(scope);
         scope.$apply();
-        scope.slides[0].id = 3;
-        scope.slides[1].id = 1;
-        scope.slides[2].id = 2;
-        scope.$apply();
       });
 
-      it('should change dom when an order of the slides was changed', function() {
-        testSlideActive(0);
+      it('should change dom when the order of the slides changes', function() {
+        scope.slides[0].id = 3;
+        scope.slides[1].id = 2;
+        scope.slides[2].id = 1;
+        scope.$apply();
         var contents = elm.find('div.item');
         expect(contents.length).toBe(3);
-        expect(contents.eq(0).text()).toBe('two');
-        expect(contents.eq(1).text()).toBe('three');
+        expect(contents.eq(0).text()).toBe('three');
+        expect(contents.eq(1).text()).toBe('two');
         expect(contents.eq(2).text()).toBe('one');
       });
 
