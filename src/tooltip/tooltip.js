@@ -252,9 +252,6 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
             // Hide the tooltip popup element.
             function hide() {
-              cancelShow();
-              cancelHide();
-
               if (!ttScope) {
                 return;
               }
@@ -307,9 +304,10 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             }
 
             function removeTooltip() {
+              cancelShow();
+              cancelHide();
               unregisterObservers();
 
-              transitionTimeout = null;
               if (tooltip) {
                 tooltip.remove();
                 tooltip = null;
@@ -501,8 +499,6 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
             // Make sure tooltip is destroyed and removed.
             scope.$on('$destroy', function onDestroyTooltip() {
-              cancelShow();
-              cancelHide();
               unregisterTriggers();
               removeTooltip();
               openedTooltips.remove(ttScope);
