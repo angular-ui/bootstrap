@@ -29,13 +29,21 @@ describe('date parser', function() {
       expectParse('11-08-13', 'dd-MM-yy', new Date(2013, 7, 11, 0));
     });
 
-    it('should work correctly for `M`', function() {
-      expectParse('8/11/2013', 'M/dd/yyyy', new Date(2013, 7, 11, 0));
-      expectParse('07.11.05', 'dd.M.yy', new Date(2005, 10, 7, 0));
-      expectParse('02-5-11', 'dd-M-yy', new Date(2011, 4, 2, 0));
-      expectParse('2/05/1980', 'M/dd/yyyy', new Date(1980, 1, 5, 0));
-      expectParse('1955/2/05', 'yyyy/M/dd', new Date(1955, 1, 5, 0));
-      expectParse('02-5-11', 'dd-M-yy', new Date(2011, 4, 2, 0));
+    it('should work correctly for `y`', function() {
+      expectParse('17.11.2013', 'dd.MM.y', new Date(2013, 10, 17, 0));
+      expectParse('31.12.2013', 'dd.MM.y', new Date(2013, 11, 31, 0));
+      expectParse('08-03-1991', 'dd-MM-y', new Date(1991, 2, 8, 0));
+      expectParse('03/05/1980', 'MM/dd/y', new Date(1980, 2, 5, 0));
+      expectParse('10.01/1983', 'dd.MM/y', new Date(1983, 0, 10, 0));
+      expectParse('11-09-1980', 'MM-dd-y', new Date(1980, 10, 9, 0));
+      expectParse('2011/02/05', 'y/MM/dd', new Date(2011, 1, 5, 0));
+    });
+
+    it('should work correctly for `MMMM`', function() {
+      expectParse('17.November.13', 'dd.MMMM.yy', new Date(2013, 10, 17, 0));
+      expectParse('05-March-1980', 'dd-MMMM-yyyy', new Date(1980, 2, 5, 0));
+      expectParse('February/05/1980', 'MMMM/dd/yyyy', new Date(1980, 1, 5, 0));
+      expectParse('1949/December/20', 'yyyy/MMMM/dd', new Date(1949, 11, 20, 0));
     });
 
     it('should work correctly for `MMM`', function() {
@@ -45,11 +53,13 @@ describe('date parser', function() {
       expectParse('1955/Feb/05', 'yyyy/MMM/dd', new Date(1955, 1, 5, 0));
     });
 
-    it('should work correctly for `MMMM`', function() {
-      expectParse('17.November.13', 'dd.MMMM.yy', new Date(2013, 10, 17, 0));
-      expectParse('05-March-1980', 'dd-MMMM-yyyy', new Date(1980, 2, 5, 0));
-      expectParse('February/05/1980', 'MMMM/dd/yyyy', new Date(1980, 1, 5, 0));
-      expectParse('1949/December/20', 'yyyy/MMMM/dd', new Date(1949, 11, 20, 0));
+    it('should work correctly for `M`', function() {
+      expectParse('8/11/2013', 'M/dd/yyyy', new Date(2013, 7, 11, 0));
+      expectParse('07.11.05', 'dd.M.yy', new Date(2005, 10, 7, 0));
+      expectParse('02-5-11', 'dd-M-yy', new Date(2011, 4, 2, 0));
+      expectParse('2/05/1980', 'M/dd/yyyy', new Date(1980, 1, 5, 0));
+      expectParse('1955/2/05', 'yyyy/M/dd', new Date(1955, 1, 5, 0));
+      expectParse('02-5-11', 'dd-M-yy', new Date(2011, 4, 2, 0));
     });
 
     it('should work correctly for `d`', function() {
@@ -60,12 +70,34 @@ describe('date parser', function() {
       expectParse('11-08-13', 'd-MM-yy', new Date(2013, 7, 11, 0));
     });
 
+    it('should work correctly for `EEEE`', function() {
+      expectParse('Sunday.17.November.13', 'EEEE.d.MMMM.yy', new Date(2013, 10, 17, 0));
+      expectParse('8-Friday-March-1991', 'd-EEEE-MMMM-yyyy', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/Tuesday', 'MMMM/d/yyyy/EEEE', new Date(1980, 1, 5, 0));
+      expectParse('1955/Saturday/February/5', 'yyyy/EEEE/MMMM/d', new Date(1955, 1, 5, 0));
+    });
+
+    it('should work correctly for `EEE`', function() {
+      expectParse('Sun.17.November.13', 'EEE.d.MMMM.yy', new Date(2013, 10, 17, 0));
+      expectParse('8-Fri-March-1991', 'd-EEE-MMMM-yyyy', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/Tue', 'MMMM/d/yyyy/EEE', new Date(1980, 1, 5, 0));
+      expectParse('1955/Sat/February/5', 'yyyy/EEE/MMMM/d', new Date(1955, 1, 5, 0));
+    });
+
     it('should work correctly for `HH`', function() {
       expectParse('22.March.15.22', 'd.MMMM.yy.HH', new Date(2015, 2, 22, 22));
       expectParse('8-March-1991-11', 'd-MMMM-yyyy-HH', new Date(1991, 2, 8, 11));
       expectParse('February/5/1980/00', 'MMMM/d/yyyy/HH', new Date(1980, 1, 5, 0));
       expectParse('1955/February/5 03', 'yyyy/MMMM/d HH', new Date(1955, 1, 5, 3));
       expectParse('11-08-13 23', 'd-MM-yy HH', new Date(2013, 7, 11, 23));
+    });
+
+    it('should work correctly for `H`', function() {
+      expectParse('22.March.15.22', 'd.MMMM.yy.H', new Date(2015, 2, 22, 22));
+      expectParse('8-March-1991-11', 'd-MMMM-yyyy-H', new Date(1991, 2, 8, 11));
+      expectParse('February/5/1980/0', 'MMMM/d/yyyy/H', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5 3', 'yyyy/MMMM/d H', new Date(1955, 1, 5, 3));
+      expectParse('11-08-13 23', 'd-MM-yy H', new Date(2013, 7, 11, 23));
     });
 
     it('should work correctly for `hh`', function() {
@@ -76,14 +108,6 @@ describe('date parser', function() {
       expectParse('1955/February/5 03', 'yyyy/MMMM/d hh', new Date(1955, 1, 5, 3));
       expectParse('11-08-13 23', 'd-MM-yy hh', undefined);
       expectParse('11-08-13 09', 'd-MM-yy hh', new Date(2013, 7, 11, 9));
-    });
-
-    it('should work correctly for `H`', function() {
-      expectParse('22.March.15.22', 'd.MMMM.yy.H', new Date(2015, 2, 22, 22));
-      expectParse('8-March-1991-11', 'd-MMMM-yyyy-H', new Date(1991, 2, 8, 11));
-      expectParse('February/5/1980/0', 'MMMM/d/yyyy/H', new Date(1980, 1, 5, 0));
-      expectParse('1955/February/5 3', 'yyyy/MMMM/d H', new Date(1955, 1, 5, 3));
-      expectParse('11-08-13 23', 'd-MM-yy H', new Date(2013, 7, 11, 23));
     });
 
     it('should work correctly for `h`', function() {
@@ -178,11 +202,11 @@ describe('date parser', function() {
 
   describe('with edge case', function() {
     it('should not work for invalid number of days in February', function() {
-      expect(dateParser.parse('29.02.2013', 'dd.MM.yyyy')).toBeUndefined();
+      expectParse('29.02.2013', 'dd.MM.yyyy', undefined);
     });
 
     it('should not work for 0 number of days', function() {
-      expect(dateParser.parse('00.02.2013', 'dd.MM.yyyy')).toBeUndefined();
+      expectParse('00.02.2013', 'dd.MM.yyyy', undefined);
     });
 
     it('should work for 29 days in February for leap years', function() {
@@ -190,27 +214,19 @@ describe('date parser', function() {
     });
 
     it('should not work for 31 days for some months', function() {
-      expect(dateParser.parse('31-04-2013', 'dd-MM-yyyy')).toBeUndefined();
-      expect(dateParser.parse('November 31, 2013', 'MMMM d, yyyy')).toBeUndefined();
-    });
-
-    it('should work when base date is a string', function() {
-      expect(dateParser.parse('01-02-2034', 'dd-MM-yyyy', '05-06-2078')).toEqual(new Date(2034, 1, 1));
-    });
-
-    it('should work when base date is an invalid date', function() {
-      expect(dateParser.parse('30-12-2015', 'dd-MM-yyyy', new Date('foo'))).toEqual(new Date(2015, 11, 30));
+      expectParse('31-04-2013', 'dd-MM-yyyy', undefined);
+      expectParse('November 31, 2013', 'MMMM d, yyyy', undefined);
     });
   });
 
   it('should not parse non-string inputs', function() {
-    expect(dateParser.parse(123456, 'dd.MM.yyyy')).toBe(123456);
+    expectParse(123456, 'dd.MM.yyyy', 123456);
     var date = new Date();
-    expect(dateParser.parse(date, 'dd.MM.yyyy')).toBe(date);
+    expectParse(date, 'dd.MM.yyyy', date);
   });
 
   it('should not parse if no format is specified', function() {
-    expect(dateParser.parse('21.08.1951', '')).toBe('21.08.1951');
+    expectParse('21.08.1951', '', '21.08.1951');
   });
 
   it('should reinitialize when locale changes', inject(function($locale) {
