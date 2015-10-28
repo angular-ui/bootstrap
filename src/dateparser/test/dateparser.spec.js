@@ -10,6 +10,10 @@ describe('date parser', function() {
     expect(dateParser.parse(input, format)).toEqual(date);
   }
 
+  function expectBaseParse(input, format, baseDate, date) {
+    expect(dateParser.parse(input, format, baseDate)).toEqual(date);
+  }
+
   describe('with custom formats', function() {
     it('should work correctly for `dd`, `MM`, `yyyy`', function() {
       expectParse('17.11.2013', 'dd.MM.yyyy', new Date(2013, 10, 17, 0));
@@ -217,6 +221,27 @@ describe('date parser', function() {
       expectParse('31-04-2013', 'dd-MM-yyyy', undefined);
       expectParse('November 31, 2013', 'MMMM d, yyyy', undefined);
     });
+  });
+
+  describe('base date', function() {
+    var baseDate;
+
+    beforeEach(function() {
+      baseDate = new Date(2010, 10, 10);
+    });
+
+    it('should pre-initialize our date with a base date', function() {
+      expect(expectBaseParse('2015', 'yyyy', baseDate, new Date(2015, 10, 10)));
+      expect(expectBaseParse('1', 'M', baseDate, new Date(2010, 0, 10)));
+      expect(expectBaseParse('1', 'd', baseDate, new Date(2010, 10, 1)));
+    });
+
+    it('should ignore the base date when it is an invalid date', inject(function($log) {
+      spyOn($log, 'warn');
+      expect(expectBaseParse('30-12', 'dd-MM', new Date('foo'), new Date(1900, 11, 30)));
+      expect(expectBaseParse('30-2015', 'dd-yyyy', 'I am a cat', new Date(2015, 0, 30)));
+      expect($log.warn).toHaveBeenCalledWith('dateparser:', 'baseDate is not a valid date');
+    }));
   });
 
   it('should not parse non-string inputs', function() {

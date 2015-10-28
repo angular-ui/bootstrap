@@ -162,11 +162,7 @@ angular.module('ui.bootstrap.dateparser', [])
         fields = {
           year: baseDate.getFullYear(),
           month: baseDate.getMonth(),
-          date: baseDate.getDate(),
-          hours: baseDate.getHours(),
-          minutes: baseDate.getMinutes(),
-          seconds: baseDate.getSeconds(),
-          milliseconds: baseDate.getMilliseconds()
+          date: baseDate.getDate()
         };
       } else {
         if (baseDate) {
@@ -185,9 +181,7 @@ angular.module('ui.bootstrap.dateparser', [])
       if (isValid(fields.year, fields.month, fields.date)) {
         if (angular.isDate(baseDate) && !isNaN(baseDate.getTime())) {
           dt = new Date(baseDate);
-          dt.setFullYear(fields.year, fields.month, fields.date,
-            fields.hours, fields.minutes, fields.seconds,
-            fields.milliseconds || 0);
+          dt.setFullYear(fields.year, fields.month, fields.date);
         } else {
           dt = new Date(fields.year, fields.month, fields.date,
             fields.hours, fields.minutes, fields.seconds,
