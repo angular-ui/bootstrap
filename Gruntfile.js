@@ -408,10 +408,10 @@ module.exports = function(grunt) {
           url: '/bootstrap/versioned-docs/' + version
         };
       });
-      jsContent[0] = {
+      jsContent.unshift({
         version: 'Current',
         url: '/bootstrap'
-      };
+      });
       grunt.file.write(versionsMappingFile, JSON.stringify(jsContent));
       grunt.log.writeln('File ' + versionsMappingFile.cyan + ' created.');
       done();
