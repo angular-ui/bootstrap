@@ -155,3 +155,7 @@ Depending on datepicker's current mode, the date may refer either to day, month 
  * `Ctrl`+`Up`: Move to an upper mode.
  * `Ctrl`+`Down`: Move to a lower mode.
  * `Esc`: Will close popup, and move focus to the input.
+
+**Notes**
+
+If the date a user enters falls outside of the min-/max-date range, a `dateDisabled` validation error will show on the form.
