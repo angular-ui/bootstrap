@@ -444,7 +444,7 @@ module.exports = function(grunt) {
       .replace(/\\/g, '\\\\')
       .replace(/'/g, "\\'")
       .replace(/\r?\n/g, '\\n');
-    js = "!angular.$$csp() && angular.element(document).find('head').prepend('<style type=\"text/css\">" + css + "</style>');";
+    js = "angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type=\"text/css\">" + css + "</style>'); })";
     state.js.push(js);
 
     return state;
