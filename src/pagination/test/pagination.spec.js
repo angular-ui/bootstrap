@@ -244,7 +244,7 @@ describe('pagination directive', function() {
     });
   });
 
-  describe('executes  `ng-change` expression', function() {
+  describe('executes `ng-change` expression', function() {
     beforeEach(function() {
       $rootScope.selectPageHandler = jasmine.createSpy('selectPageHandler');
       element = $compile('<uib-pagination total-items="total" ng-model="currentPage" ng-change="selectPageHandler()"></uib-pagination>')($rootScope);
