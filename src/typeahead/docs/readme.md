@@ -17,7 +17,7 @@ The typeahead directives provide several attributes:
    :
    Assignable angular expression to data-bind to
 
-* `typeahead` <i class="glyphicon glyphicon-eye-open"></i>
+* `uib-typeahead` <i class="glyphicon glyphicon-eye-open"></i>
    :
    Comprehension Angular expression (see [select directive](http://docs.angularjs.org/api/ng.directive:select))
 
@@ -30,7 +30,7 @@ The typeahead directives provide several attributes:
 * `typeahead-editable`
    _(Defaults: true)_ :
    Should it restrict model values to the ones selected from the popup only ?
-   
+
 * `typeahead-focus-first`
    _(Defaults: true)_ :
    Should the first match automatically be focused as you type?
