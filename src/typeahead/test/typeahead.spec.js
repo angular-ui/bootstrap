@@ -967,6 +967,85 @@ describe('typeahead tests', function() {
       expect($scope.result).toEqual($scope.states[0]);
     });
   });
+  
+  describe('input hint', function() {
+    var element;
+
+    beforeEach(function() {
+      element = prepareInputEl('<div><input ng-model="result" uib-typeahead="state.name for state in states| filter:$viewValue" typeahead-show-hint="true"></div>');
+    });
+
+    it('should show hint when input matches first match', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'Alas');
+      expect(hintEl.val()).toEqual('Alaska');
+    });
+
+    it('should not show hint when input does not match first match', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'las');
+      expect(hintEl.val()).toEqual('');
+    });
+
+    it('should reset hint when a match is clicked', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'Alas');
+      expect(hintEl.val()).toEqual('Alaska');
+
+      var match = findMatches(element).find('a').eq(0);
+      match.click();
+      $scope.$digest();
+      expect(hintEl.val()).toEqual('');
+    });
+
+    it('should reset hint when click outside', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'Alas');
+      expect(hintEl.val()).toEqual('Alaska');
+
+      $document.find('body').click();
+      $scope.$digest();
+      expect(hintEl.val()).toEqual('');
+    });
+
+    it('should reset hint on enter', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'Alas');
+      expect(hintEl.val()).toEqual('Alaska');
+      triggerKeyDown(element, 13);
+      expect(hintEl.val()).toEqual('');
+    });
+
+    it('should reset hint on tab', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'Alas');
+      expect(hintEl.val()).toEqual('Alaska');
+      triggerKeyDown(element, 9);
+      expect(hintEl.val()).toEqual('');
+    });
+
+    it('should reset hint on escape key', function() {
+      var hintEl = findInput(element);
+
+      expect(hintEl.val()).toEqual('');
+      changeInputValueTo(element, 'Alas');
+      expect(hintEl.val()).toEqual('Alaska');
+      triggerKeyDown(element, 27);
+      expect(hintEl.val()).toEqual('');
+    });
+  });
 
   describe('append to element id', function() {
     it('append typeahead results to element', function() {

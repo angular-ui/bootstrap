@@ -71,6 +71,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     //binding to a variable that indicates if dropdown is open
     var isOpenSetter = $parse(attrs.typeaheadIsOpen).assign || angular.noop;
 
+    var showHint = originalScope.$eval(attrs.typeaheadShowHint) || false;
+
     //INTERNAL VARIABLES
 
     //model setter executed upon match selection
@@ -111,6 +113,33 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       'aria-owns': popupId
     });
 
+    //add read-only input to show hint
+    if (showHint) {
+      var inputsContainer = angular.element('<div></div>');
+      inputsContainer.css('position', 'relative');
+      element.after(inputsContainer);
+      var hintInputElem = element.clone();
+      hintInputElem.attr('placeholder', '');
+      hintInputElem.val('');
+      hintInputElem.css({
+        'position': 'absolute',
+        'top': '0px',
+        'left': '0px',
+        'border-color': 'transparent',
+        'box-shadow': 'none',
+        'opacity': 1,
+        'background': 'none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255)',
+        'color': '#999'
+      });
+      element.css({
+        'position': 'relative',
+        'vertical-align': 'top',
+        'background-color': 'transparent'
+      });
+      inputsContainer.append(hintInputElem);
+      hintInputElem.after(element);
+    }
+
     //pop-up element used to display matches
     var popUpEl = angular.element('<div uib-typeahead-popup></div>');
     popUpEl.attr({
@@ -132,10 +161,17 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       popUpEl.attr('popup-template-url', attrs.typeaheadPopupTemplateUrl);
     }
 
+    var resetHint = function() {
+      if (showHint) {
+        hintInputElem.val('');
+      }
+    };
+
     var resetMatches = function() {
       scope.matches = [];
       scope.activeIdx = -1;
       element.attr('aria-expanded', false);
+      resetHint();
     };
 
     var getMatchId = function(index) {
@@ -195,6 +231,16 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
             //Select the single remaining option if user input matches
             if (selectOnExact && scope.matches.length === 1 && inputIsExactMatch(inputValue, 0)) {
               scope.select(0);
+            }
+
+            if (showHint) {
+              var firstLabel = scope.matches[0].label;
+              if (inputValue.length > 0 && firstLabel.slice(0, inputValue.length).toUpperCase() === inputValue.toUpperCase()) {
+                hintInputElem.val(inputValue + firstLabel.slice(inputValue.length));
+              }
+              else {
+                hintInputElem.val('');
+              }
             }
           } else {
             resetMatches();
@@ -377,6 +423,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       }
       // Prevent jQuery cache memory leak
       popUpEl.remove();
+
+      if (showHint) {
+          inputsContainer.remove();
+      }
     });
 
     var $popup = $compile(popUpEl)(scope);

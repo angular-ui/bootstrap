@@ -82,3 +82,7 @@ The typeahead directives provide several attributes:
 * `typeahead-is-open` <i class="glyphicon glyphicon-eye-open"></i>
    _(Defaults: angular.noop)_ :
    Binding to a variable that indicates if dropdown is open
+
+* `typeahead-show-hint`
+   _(Defaults: false)_ :
+   Should input show hint that matches the first option?
