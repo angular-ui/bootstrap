@@ -78,3 +78,7 @@ The typeahead directives provide several attributes:
 * `typeahead-focus-on-select`
    _(Defaults: true) :
    On selection, focus the input element the typeahead directive is associated with
+
+* `typeahead-is-open` <i class="glyphicon glyphicon-eye-open"></i>
+   _(Defaults: angular.noop)_ :
+   Binding to a variable that indicates if dropdown is open

@@ -588,6 +588,78 @@ describe('typeahead tests', function() {
     });
   });
 
+  describe('is-open indicator', function () {
+      var element;
+
+      beforeEach(function () {
+          element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-is-open="isOpen"></div>');
+      });
+
+      it('should bind is-open indicator as true when matches are returned', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+      });
+
+      it('should bind is-open indicator as false when no matches returned', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+          changeInputValueTo(element, 'not match');
+          expect($scope.isOpen).toBeFalsy();
+      });
+
+      it('should bind is-open indicator as false when a match is clicked', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+          var match = findMatches(element).find('a').eq(0);
+
+          match.click();
+          $scope.$digest();
+          expect($scope.isOpen).toBeFalsy();
+      });
+      it('should bind is-open indicator as false when click outside', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+          $document.find('body').click();
+          $scope.$digest();
+          expect($scope.isOpen).toBeFalsy();
+      });
+
+      it('should bind is-open indicator as false on enter', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+          triggerKeyDown(element, 13);
+          expect($scope.isOpen).toBeFalsy();
+      });
+
+      it('should bind is-open indicator as false on tab', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+          triggerKeyDown(element, 9);
+          expect($scope.isOpen).toBeFalsy();
+      });
+
+      it('should bind is-open indicator as false on escape key', function () {
+          expect($scope.isOpen).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isOpen).toBeTruthy();
+          triggerKeyDown(element, 27);
+          expect($scope.isOpen).toBeFalsy();
+      });
+
+      it('should bind is-open indicator as false input value smaller than a defined threshold', function () {
+          var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-is-open="isToggled" typeahead-min-length="2"></div>');
+          expect($scope.isToggled).toBeFalsy();
+          changeInputValueTo(element, 'b');
+          expect($scope.isToggled).toBeFalsy();
+      });
+  });
+
   describe('pop-up interaction', function() {
     var element;
 

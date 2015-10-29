@@ -68,6 +68,9 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     //If input matches an item of the list exactly, select it automatically
     var selectOnExact = attrs.typeaheadSelectOnExact ? originalScope.$eval(attrs.typeaheadSelectOnExact) : false;
 
+    //binding to a variable that indicates if dropdown is open
+    var isOpenSetter = $parse(attrs.typeaheadIsOpen).assign || angular.noop;
+
     //INTERNAL VARIABLES
 
     //model setter executed upon match selection
@@ -117,7 +120,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       select: 'select(activeIdx)',
       'move-in-progress': 'moveInProgress',
       query: 'query',
-      position: 'position'
+      position: 'position',
+      'assign-is-open': 'assignIsOpen(isOpen)'
     });
     //custom item template
     if (angular.isDefined(attrs.typeaheadTemplateUrl)) {
@@ -267,6 +271,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
     };
 
     resetMatches();
+
+    scope.assignIsOpen = function (isOpen) {
+        isOpenSetter(originalScope, isOpen);
+    };
 
     scope.select = function(activeIdx) {
       //called from within the $digest() cycle
@@ -463,7 +471,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         active: '=',
         position: '&',
         moveInProgress: '=',
-        select: '&'
+        select: '&',
+        assignIsOpen: '&',
       },
       replace: true,
       templateUrl: function(element, attrs) {
@@ -472,8 +481,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       link: function(scope, element, attrs) {
         scope.templateUrl = attrs.templateUrl;
 
-        scope.isOpen = function() {
-          return scope.matches.length > 0;
+        scope.isOpen = function () {
+          var isDropdownOpen = scope.matches.length > 0;
+          scope.assignIsOpen({ isOpen: isDropdownOpen });
+          return isDropdownOpen;
         };
 
         scope.isActive = function(matchIdx) {
