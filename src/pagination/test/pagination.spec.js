@@ -734,3 +734,27 @@ describe('pagination directive', function() {
     });
   });
 });
+
+describe('pagination directive', function() {
+  var $compile, $rootScope, element;
+  beforeEach(module('ui.bootstrap.pagination'));
+  beforeEach(module('template/pagination/pagination.html'));
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
+    $compile = _$compile_;
+    $rootScope = _$rootScope_;
+  }));
+
+  it('should retain the model value when total-items starts as undefined', function() {
+    $rootScope.currentPage = 5;
+    $rootScope.total = undefined;
+    element = $compile('<uib-pagination total-items="total" ng-model="currentPage"></uib-pagination>')($rootScope);
+    $rootScope.$digest();
+
+    expect($rootScope.currentPage).toBe(5);
+
+    $rootScope.total = 100;
+    $rootScope.$digest();
+
+    expect($rootScope.currentPage).toBe(5);
+  });
+});

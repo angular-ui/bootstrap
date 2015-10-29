@@ -16,22 +16,16 @@ angular.module('ui.bootstrap.pagination', [])
       $scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
         self.itemsPerPage = parseInt(value, 10);
         $scope.totalPages = self.calculateTotalPages();
+        updatePage();
       });
     } else {
       this.itemsPerPage = config.itemsPerPage;
     }
 
-    $scope.$watch('totalItems', function() {
-      $scope.totalPages = self.calculateTotalPages();
-    });
-
-    $scope.$watch('totalPages', function(value) {
-      setNumPages($scope.$parent, value); // Readonly variable
-
-      if ($scope.page > value) {
-        $scope.selectPage(value);
-      } else {
-        ngModelCtrl.$render();
+    $scope.$watch('totalItems', function(newTotal, oldTotal) {
+      if (angular.isDefined(newTotal) || newTotal !== oldTotal) {
+        $scope.totalPages = self.calculateTotalPages();
+        updatePage();
       }
     });
   };
@@ -71,6 +65,16 @@ angular.module('ui.bootstrap.pagination', [])
   $scope.noNext = function() {
     return $scope.page === $scope.totalPages;
   };
+
+  function updatePage() {
+    setNumPages($scope.$parent, $scope.totalPages); // Readonly variable
+
+    if ($scope.page > $scope.totalPages) {
+      $scope.selectPage($scope.totalPages);
+    } else {
+      ngModelCtrl.$render();
+    }
+  }
 }])
 
 .constant('uibPaginationConfig', {
@@ -111,7 +115,7 @@ angular.module('ui.bootstrap.pagination', [])
 
       // Setup configuration parameters
       var maxSize = angular.isDefined(attrs.maxSize) ? scope.$parent.$eval(attrs.maxSize) : paginationConfig.maxSize,
-          rotate = angular.isDefined(attrs.rotate) ? scope.$parent.$eval(attrs.rotate) : paginationConfig.rotate;
+        rotate = angular.isDefined(attrs.rotate) ? scope.$parent.$eval(attrs.rotate) : paginationConfig.rotate;
       scope.boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$parent.$eval(attrs.boundaryLinks) : paginationConfig.boundaryLinks;
       scope.directionLinks = angular.isDefined(attrs.directionLinks) ? scope.$parent.$eval(attrs.directionLinks) : paginationConfig.directionLinks;
 
