@@ -385,6 +385,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       }
     });
 
+    element.bind('focus', function () {
+      hasFocus = true;
+      if (minLength === 0 && !modelCtrl.$viewValue) {
+        getMatchesAsync(modelCtrl.$viewValue);
+      }
+    });
+
     element.bind('blur', function() {
       if (isSelectOnBlur && scope.matches.length && scope.activeIdx !== -1 && !selected) {
         selected = true;
@@ -393,7 +400,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         });
       }
       if (!isEditable && modelCtrl.$error.editable) {
-          element.val('');
+        modelCtrl.$viewValue = '';
+        element.val('');
       }
       hasFocus = false;
       selected = false;

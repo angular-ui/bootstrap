@@ -1204,6 +1204,14 @@ describe('typeahead tests', function() {
       changeInputValueTo(element, '');
       expect(element).toBeOpenWithActive(3, 0);
     });
+
+    it('should open typeahead when input is focused and value is empty if defined threshold is 0', function () {
+      var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-min-length="0"></div>');
+      var inputEl = findInput(element);
+      inputEl.focus();
+      $scope.$digest();
+      expect(element).toBeOpenWithActive(3, 0);
+    });
   });
 
   describe('event listeners', function() {

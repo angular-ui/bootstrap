@@ -45,7 +45,7 @@ The typeahead directives provide several attributes:
 
 * `typeahead-min-length` <i class="glyphicon glyphicon-eye-open"></i>
    _(Defaults: 1)_ :
-   Minimal no of characters that needs to be entered before typeahead kicks-in. Must be greater than or equal to 1.
+   Minimal no of characters that needs to be entered before typeahead kicks-in. Must be greater than or equal to 0.
 
 * `typeahead-no-results` <i class="glyphicon glyphicon-eye-open"></i>
    _(Defaults: angular.noop)_ :
