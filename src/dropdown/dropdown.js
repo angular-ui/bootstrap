@@ -1,6 +1,7 @@
 angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
 .constant('uibDropdownConfig', {
+  appendToOpenClass: 'uib-dropdown-open',
   openClass: 'open'
 })
 
@@ -69,6 +70,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   var self = this,
     scope = $scope.$new(), // create a child scope so we are not polluting original one
     templateScope,
+    appendToOpenClass = dropdownConfig.appendToOpenClass,
     openClass = dropdownConfig.openClass,
     getIsOpen,
     setIsOpen = angular.noop,
@@ -216,7 +218,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
     var openContainer = appendTo ? appendTo : $element;
 
-    $animate[isOpen ? 'addClass' : 'removeClass'](openContainer, openClass).then(function() {
+    $animate[isOpen ? 'addClass' : 'removeClass'](openContainer, appendTo ? appendToOpenClass : openClass).then(function() {
       if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
         toggleInvoker($scope, { open: !!isOpen });
       }
