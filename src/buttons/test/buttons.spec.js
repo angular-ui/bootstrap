@@ -162,7 +162,6 @@ describe('buttons', function() {
   });
 
   describe('radio', function() {
-
     var compileButtons = function(markup, scope) {
       var el = $compile('<div>'+markup+'</div>')(scope);
       scope.$digest();
