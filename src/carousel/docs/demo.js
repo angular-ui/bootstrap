@@ -1,4 +1,3 @@
-angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
 angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($scope) {
   $scope.myInterval = 5000;
   $scope.noWrapSlides = false;
