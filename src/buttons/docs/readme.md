@@ -24,6 +24,10 @@ With the buttons directive, we can make a group of buttons behave like a set of 
 * `uncheckable`
   _(Boolean attribute)_ -
   Whether a radio button can be unchecked or not.
+
+* `uib-uncheckable`
+  _(Default: null)_ -
+  An expression that evaluates to a truthy or falsy value that determines whether the `uncheckable` attribute is present
   
 ### Default settings `uibButtonConfig`
 

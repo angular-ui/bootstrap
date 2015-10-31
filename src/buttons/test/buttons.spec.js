@@ -322,5 +322,19 @@ describe('buttons', function() {
         expect(btns.eq(1)).not.toHaveClass('active');
       });
     });
+
+    describe('uibUncheckable', function() {
+      it('should set uncheckable', function() {
+        $scope.uncheckable = false;
+        var btns = compileButtons('<button ng-model="model" uib-btn-radio="1">click1</button><button ng-model="model" uib-btn-radio="2" uib-uncheckable="uncheckable">click2</button>', $scope);
+        expect(btns.eq(0).attr('uncheckable')).toBeUndefined();
+        expect(btns.eq(0).attr('uncheckable')).toBeUndefined();
+
+        $scope.uncheckable = true;
+        $scope.$digest();
+        expect(btns.eq(0).attr('uncheckable')).toBeUndefined();
+        expect(btns.eq(1).attr('uncheckable')).toBeDefined();
+      });
+    });
   });
 });
