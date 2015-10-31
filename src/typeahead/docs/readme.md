@@ -24,8 +24,8 @@ The typeahead directives provide several attributes:
 * `typeahead-append-to-body` <i class="glyphicon glyphicon-eye-open"></i>
    _(Defaults: false)_ : Should the typeahead popup be appended to $body instead of the parent element?
 
-* `typeahead-append-to-element-id`
-   _(Defaults: false)_ : Should the typeahead popup be appended to an element id instead of the parent element?
+* `typeahead-append-to`
+   _(Defaults: null)_ : Should the typeahead popup be appended to an element instead of the parent element?
 
 * `typeahead-editable`
    _(Defaults: true)_ :

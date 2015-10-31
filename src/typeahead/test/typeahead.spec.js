@@ -967,7 +967,7 @@ describe('typeahead tests', function() {
       expect($scope.result).toEqual($scope.states[0]);
     });
   });
-  
+
   describe('input hint', function() {
     var element;
 
@@ -1047,10 +1047,11 @@ describe('typeahead tests', function() {
     });
   });
 
-  describe('append to element id', function() {
+  describe('append to', function() {
     it('append typeahead results to element', function() {
       $document.find('body').append('<div id="myElement"></div>');
-      var element = prepareInputEl('<div><input name="input" ng-model="result" uib-typeahead="item for item in states | filter:$viewValue" typeahead-append-to-element-id="myElement"></div>');
+      $scope.myElement = $document.find('#myElement');
+      var element = prepareInputEl('<div><input name="input" ng-model="result" uib-typeahead="item for item in states | filter:$viewValue" typeahead-append-to="myElement"></div>');
       changeInputValueTo(element, 'al');
       expect($document.find('#myElement')).toBeOpenWithActive(2, 0);
       $document.find('#myElement').remove();

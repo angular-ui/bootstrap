@@ -61,7 +61,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
 
     var appendToBody =  attrs.typeaheadAppendToBody ? originalScope.$eval(attrs.typeaheadAppendToBody) : false;
 
-    var appendToElementId =  attrs.typeaheadAppendToElementId || false;
+    var appendTo = attrs.typeaheadAppendTo ?
+      originalScope.$eval(attrs.typeaheadAppendTo) : null;
 
     var focusFirst = originalScope.$eval(attrs.typeaheadFocusFirst) !== false;
 
@@ -423,7 +424,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
 
     originalScope.$on('$destroy', function() {
       $document.unbind('click', dismissClickHandler);
-      if (appendToBody || appendToElementId) {
+      if (appendToBody || appendTo) {
         $popup.remove();
       }
 
@@ -443,8 +444,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
 
     if (appendToBody) {
       $document.find('body').append($popup);
-    } else if (appendToElementId !== false) {
-      angular.element($document[0].getElementById(appendToElementId)).append($popup);
+    } else if (appendTo) {
+      angular.element(appendTo).eq(0).append($popup);
     } else {
       element.after($popup);
     }
