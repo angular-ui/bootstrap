@@ -1,5 +1,35 @@
 <style>
+  .nav-tabs > li > div {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .nav-tabs > li > div:hover {
+    border-color: #eee #eee #ddd;
+  }
+
+  .nav-tabs > li.active > div, .nav-tabs > li.active > div:hover {
+    color: #555;
+    cursor: default;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+  }
+
+  .nav > li > div {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+  }
+
+  .nav > li > div:hover {
+    background-color: #eee;
+  }
+
   .uib-tab > div {
+    color: #337ab7;
     cursor: pointer;
   }
 </style>
