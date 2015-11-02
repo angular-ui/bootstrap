@@ -541,7 +541,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
       link: function(scope, element, attrs) {
         scope.templateUrl = attrs.templateUrl;
 
-        scope.isOpen = function () {
+        scope.isOpen = function() {
           var isDropdownOpen = scope.matches.length > 0;
           scope.assignIsOpen({ isOpen: isDropdownOpen });
           return isDropdownOpen;
