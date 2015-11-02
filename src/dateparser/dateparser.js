@@ -12,94 +12,117 @@ angular.module('ui.bootstrap.dateparser', [])
 
     this.parsers = {};
 
-    formatCodeToRegex = {
-      'yyyy': {
+    formatCodeToRegex = [
+      {
+        key: 'yyyy',
         regex: '\\d{4}',
         apply: function(value) { this.year = +value; }
       },
-      'yy': {
+      {
+        key: 'yy',
         regex: '\\d{2}',
         apply: function(value) { this.year = +value + 2000; }
       },
-      'y': {
+      {
+        key: 'y',
         regex: '\\d{1,4}',
         apply: function(value) { this.year = +value; }
       },
-      'M!': {
+      {
+        key: 'M!',
         regex: '0?[1-9]|1[0-2]',
         apply: function(value) { this.month = value - 1; }
       },
-      'MMMM': {
+      {
+        key: 'MMMM',
         regex: $locale.DATETIME_FORMATS.MONTH.join('|'),
         apply: function(value) { this.month = $locale.DATETIME_FORMATS.MONTH.indexOf(value); }
       },
-      'MMM': {
+      {
+        key: 'MMM',
         regex: $locale.DATETIME_FORMATS.SHORTMONTH.join('|'),
         apply: function(value) { this.month = $locale.DATETIME_FORMATS.SHORTMONTH.indexOf(value); }
       },
-      'MM': {
+      {
+        key: 'MM',
         regex: '0[1-9]|1[0-2]',
         apply: function(value) { this.month = value - 1; }
       },
-      'M': {
+      {
+        key: 'M',
         regex: '[1-9]|1[0-2]',
         apply: function(value) { this.month = value - 1; }
       },
-      'd!': {
+      {
+        key: 'd!',
         regex: '[0-2]?[0-9]{1}|3[0-1]{1}',
         apply: function(value) { this.date = +value; }
       },
-      'dd': {
+      {
+        key: 'dd',
         regex: '[0-2][0-9]{1}|3[0-1]{1}',
         apply: function(value) { this.date = +value; }
       },
-      'd': {
+      {
+        key: 'd',
         regex: '[1-2]?[0-9]{1}|3[0-1]{1}',
         apply: function(value) { this.date = +value; }
       },
-      'EEEE': {
+      {
+        key: 'EEEE',
         regex: $locale.DATETIME_FORMATS.DAY.join('|')
       },
-      'EEE': {
+      {
+        key: 'EEE',
         regex: $locale.DATETIME_FORMATS.SHORTDAY.join('|')
       },
-      'HH': {
+      {
+        key: 'HH',
         regex: '(?:0|1)[0-9]|2[0-3]',
         apply: function(value) { this.hours = +value; }
       },
-      'hh': {
+      {
+        key: 'hh',
         regex: '0[0-9]|1[0-2]',
         apply: function(value) { this.hours = +value; }
       },
-      'H': {
+      {
+        key: 'H',
         regex: '1?[0-9]|2[0-3]',
         apply: function(value) { this.hours = +value; }
       },
-      'h': {
+      {
+        key: 'h',
         regex: '[0-9]|1[0-2]',
         apply: function(value) { this.hours = +value; }
       },
-      'mm': {
+      {
+        key: 'mm',
         regex: '[0-5][0-9]',
         apply: function(value) { this.minutes = +value; }
       },
-      'm': {
+      {
+        key: 'm',
         regex: '[0-9]|[1-5][0-9]',
         apply: function(value) { this.minutes = +value; }
       },
-      'sss': {
+      {
+        key: 'sss',
         regex: '[0-9][0-9][0-9]',
         apply: function(value) { this.milliseconds = +value; }
       },
-      'ss': {
+      {
+        key: 'ss',
         regex: '[0-5][0-9]',
         apply: function(value) { this.seconds = +value; }
       },
-      's': {
+      {
+        key: 's',
         regex: '[0-9]|[1-5][0-9]',
         apply: function(value) { this.seconds = +value; }
       },
-      'a': {
+      {
+        key: 'a',
         regex: $locale.DATETIME_FORMATS.AMPMS.join('|'),
         apply: function(value) {
           if (this.hours === 12) {
@@ -111,7 +134,7 @@ angular.module('ui.bootstrap.dateparser', [])
           }
         }
       }
-    };
+    ];
   };
 
   this.init();
@@ -148,15 +171,15 @@ angular.module('ui.bootstrap.dateparser', [])
       format = format.join('');
     }
 
-    angular.forEach(formatCodeToRegex, function(data, code) {
-      var index = format.indexOf(code);
+    angular.forEach(formatCodeToRegex, function(data) {
+      var index = format.indexOf(data.key);
 
       if (index > -1) {
         format = format.split('');
 
         regex[index] = '(' + data.regex + ')';
         format[index] = '$'; // Custom symbol to define consumed part of format
-        for (var i = index + 1, n = index + code.length; i < n; i++) {
+        for (var i = index + 1, n = index + data.key.length; i < n; i++) {
           regex[i] = '';
           format[i] = '$';
         }
