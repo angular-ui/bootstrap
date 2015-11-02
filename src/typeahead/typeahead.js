@@ -569,7 +569,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         match: '=',
         query: '='
       },
-      link:function(scope, element, attrs) {
+      link: function(scope, element, attrs) {
         var tplUrl = $parse(attrs.templateUrl)(scope.$parent) || 'template/typeahead/typeahead-match.html';
         $templateRequest(tplUrl).then(function(tplContent) {
           $compile(tplContent.trim())(scope, function(clonedElement) {
