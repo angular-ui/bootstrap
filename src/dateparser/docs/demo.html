@@ -1,0 +1,11 @@
+<div ng-controller="DateParserDemoCtrl">
+  <h4>Formatting codes playground</h4>
+  <p class="form-group">
+    <label>Define your format</label>
+    <input type="text" ng-model="format" class="form-control">
+  </p>
+  <p class="form-group">
+    <label>Result</label>
+    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" />
+  </p>
+</div>
