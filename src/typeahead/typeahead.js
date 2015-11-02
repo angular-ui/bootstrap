@@ -556,7 +556,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position'])
         };
 
         scope.selectMatch = function(activeIdx) {
-          scope.select({activeIdx:activeIdx});
+          scope.select({activeIdx: activeIdx});
         };
       }
     };
