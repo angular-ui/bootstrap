@@ -1243,3 +1243,49 @@ describe('typeahead tests', function() {
     });
   });
 });
+
+describe('typeahead tests', function() {
+  it('should allow directives in template to require parent controller', function() {
+    module('ui.bootstrap.typeahead');
+    module('ngSanitize');
+    module('template/typeahead/typeahead-popup.html');
+    module(function($compileProvider) {
+      $compileProvider
+        .directive('uibCustomParent', function() {
+          return {
+            controller: function() {
+              this.text = 'foo';
+            }
+          };
+        })
+        .directive('uibCustomDirective', function() {
+          return {
+            require: '^uibCustomParent',
+            link: function(scope, element, attrs, ctrl) {
+              scope.text = ctrl.text;
+            }
+          };
+        });
+    });
+
+    inject(function($compile, $rootScope, $sniffer, $templateCache) {
+      var element;
+      var $scope = $rootScope.$new();
+      $templateCache.put('template/typeahead/typeahead-match.html', '<div uib-custom-directive>{{text}}</div>');
+      $scope.states = [
+        {code: 'AL', name: 'Alaska'},
+        {code: 'CL', name: 'California'}
+      ];
+
+      element = $compile('<div uib-custom-parent><input ng-model="result" uib-typeahead="state.code as state.name + state.code for state in states"></div>')($scope);
+      $rootScope.$digest();
+
+      var inputEl = element.find('input');
+      inputEl.val('Al');
+      inputEl.trigger($sniffer.hasEvent('input') ? 'input' : 'change');
+      $scope.$digest();
+
+      expect(element.find('ul.dropdown-menu li').eq(0).find('[uib-custom-directive]').text()).toEqual('foo');
+    });
+  });
+});
