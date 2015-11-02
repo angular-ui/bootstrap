@@ -25,6 +25,10 @@ angular.module('ui.bootstrap.dateparser', [])
         regex: '\\d{1,4}',
         apply: function(value) { this.year = +value; }
       },
+      'M!': {
+        regex: '0?[1-9]|1[0-2]',
+        apply: function(value) { this.month = value - 1; }
+      },
       'MMMM': {
         regex: $locale.DATETIME_FORMATS.MONTH.join('|'),
         apply: function(value) { this.month = $locale.DATETIME_FORMATS.MONTH.indexOf(value); }
@@ -40,6 +44,10 @@ angular.module('ui.bootstrap.dateparser', [])
       'M': {
         regex: '[1-9]|1[0-2]',
         apply: function(value) { this.month = value - 1; }
+      },
+      'd!': {
+        regex: '[0-2]?[0-9]{1}|3[0-1]{1}',
+        apply: function(value) { this.date = +value; }
       },
       'dd': {
         regex: '[0-2][0-9]{1}|3[0-1]{1}',

@@ -53,7 +53,11 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
 * `M`
   _(Example: `3`)_ -
   Parses a numeric month.
-  
+
+* `M!`
+  _(Example: `3` or `03`)_ -
+  Parses a numeric month, but allowing an optional leading zero
+
 * `dd`
   _(Example: `05`, Leading 0)_ -
   Parses a numeric day.
@@ -61,6 +65,10 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
 * `d`
   _(Example: `5`)_ -
   Parses a numeric day.
+
+* `d!`
+  _(Example: `3` or `03`)_ -
+  Parses a numeric day, but allowing an optional leading zero
   
 * `EEEE`
   _(Example: `Sunday`, i18n support)_ -
