@@ -74,47 +74,54 @@ angular.module('ui.bootstrap.timepicker', [])
     max = isNaN(dt) ? undefined : dt;
   });
 
+  var disabled = false;
+  if ($attrs.ngDisabled) {
+    $scope.$parent.$watch($parse($attrs.ngDisabled), function(value) {
+      disabled = value;
+    });
+  }
+
   $scope.noIncrementHours = function() {
     var incrementedSelected = addMinutes(selected, hourStep * 60);
-    return incrementedSelected > max ||
+    return disabled || incrementedSelected > max ||
       (incrementedSelected < selected && incrementedSelected < min);
   };
 
   $scope.noDecrementHours = function() {
     var decrementedSelected = addMinutes(selected, -hourStep * 60);
-    return decrementedSelected < min ||
+    return disabled || decrementedSelected < min ||
       (decrementedSelected > selected && decrementedSelected > max);
   };
 
   $scope.noIncrementMinutes = function() {
     var incrementedSelected = addMinutes(selected, minuteStep);
-    return incrementedSelected > max ||
+    return disabled || incrementedSelected > max ||
       (incrementedSelected < selected && incrementedSelected < min);
   };
 
   $scope.noDecrementMinutes = function() {
     var decrementedSelected = addMinutes(selected, -minuteStep);
-    return decrementedSelected < min ||
+    return disabled || decrementedSelected < min ||
       (decrementedSelected > selected && decrementedSelected > max);
   };
 
   $scope.noIncrementSeconds = function() {
     var incrementedSelected = addSeconds(selected, secondStep);
-    return incrementedSelected > max ||
+    return disabled || incrementedSelected > max ||
       (incrementedSelected < selected && incrementedSelected < min);
   };
 
   $scope.noDecrementSeconds = function() {
     var decrementedSelected = addSeconds(selected, -secondStep);
-    return decrementedSelected < min ||
+    return disabled || decrementedSelected < min ||
       (decrementedSelected > selected && decrementedSelected > max);
   };
 
   $scope.noToggleMeridian = function() {
     if (selected.getHours() < 12) {
-      return addMinutes(selected, 12 * 60) > max;
+      return disabled || addMinutes(selected, 12 * 60) > max;
     } else {
-      return addMinutes(selected, -12 * 60) < min;
+      return disabled || addMinutes(selected, -12 * 60) < min;
     }
   };
 
@@ -200,17 +207,23 @@ angular.module('ui.bootstrap.timepicker', [])
     };
 
     hoursInputEl.bind('mousewheel wheel', function(e) {
-      $scope.$apply(isScrollingUp(e) ? $scope.incrementHours() : $scope.decrementHours());
+      if (!disabled) {
+        $scope.$apply(isScrollingUp(e) ? $scope.incrementHours() : $scope.decrementHours());
+      }
       e.preventDefault();
     });
 
     minutesInputEl.bind('mousewheel wheel', function(e) {
-      $scope.$apply(isScrollingUp(e) ? $scope.incrementMinutes() : $scope.decrementMinutes());
+      if (!disabled) {
+        $scope.$apply(isScrollingUp(e) ? $scope.incrementMinutes() : $scope.decrementMinutes());
+      }
       e.preventDefault();
     });
 
      secondsInputEl.bind('mousewheel wheel', function(e) {
-      $scope.$apply((isScrollingUp(e)) ? $scope.incrementSeconds() : $scope.decrementSeconds());
+      if (!disabled) {
+        $scope.$apply((isScrollingUp(e)) ? $scope.incrementSeconds() : $scope.decrementSeconds());
+      }
       e.preventDefault();
     });
   };
@@ -218,38 +231,44 @@ angular.module('ui.bootstrap.timepicker', [])
   // Respond on up/down arrowkeys
   this.setupArrowkeyEvents = function(hoursInputEl, minutesInputEl, secondsInputEl) {
     hoursInputEl.bind('keydown', function(e) {
-      if (e.which === 38) { // up
-        e.preventDefault();
-        $scope.incrementHours();
-        $scope.$apply();
-      } else if (e.which === 40) { // down
-        e.preventDefault();
-        $scope.decrementHours();
-        $scope.$apply();
+      if (!disabled) {
+        if (e.which === 38) { // up
+          e.preventDefault();
+          $scope.incrementHours();
+          $scope.$apply();
+        } else if (e.which === 40) { // down
+          e.preventDefault();
+          $scope.decrementHours();
+          $scope.$apply();
+        }
       }
     });
 
     minutesInputEl.bind('keydown', function(e) {
-      if (e.which === 38) { // up
-        e.preventDefault();
-        $scope.incrementMinutes();
-        $scope.$apply();
-      } else if (e.which === 40) { // down
-        e.preventDefault();
-        $scope.decrementMinutes();
-        $scope.$apply();
+      if (!disabled) {
+        if (e.which === 38) { // up
+          e.preventDefault();
+          $scope.incrementMinutes();
+          $scope.$apply();
+        } else if (e.which === 40) { // down
+          e.preventDefault();
+          $scope.decrementMinutes();
+          $scope.$apply();
+        }
       }
     });
 
     secondsInputEl.bind('keydown', function(e) {
-      if (e.which === 38) { // up
-        e.preventDefault();
-        $scope.incrementSeconds();
-        $scope.$apply();
-      } else if (e.which === 40) { // down
-        e.preventDefault();
-        $scope.decrementSeconds();
-        $scope.$apply();
+      if (!disabled) {
+        if (e.which === 38) { // up
+          e.preventDefault();
+          $scope.incrementSeconds();
+          $scope.$apply();
+        } else if (e.which === 40) { // down
+          e.preventDefault();
+          $scope.decrementSeconds();
+          $scope.$apply();
+        }
       }
     });
   };
