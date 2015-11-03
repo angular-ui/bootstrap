@@ -1362,12 +1362,12 @@ describe('timepicker directive', function() {
       expect(getTimeState(false,true)).toEqual(['02', '40', 'PM']);
       expect(getModelState(true)).toEqual([14, 40]);
 
-      hoursEl.trigger( downMouseWheelEvent );
+      hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState(false, true)).toEqual(['02', '40', 'PM']);
       expect(getModelState(true)).toEqual([14, 40]);
 
-      hoursEl.trigger( downKeydownEvent );
+      hoursEl.trigger(downKeydownEvent);
       $rootScope.$digest();
       expect(getTimeState(false, true)).toEqual(['02', '40', 'PM']);
       expect(getModelState(true)).toEqual([14, 40]);
