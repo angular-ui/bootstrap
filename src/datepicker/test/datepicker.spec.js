@@ -1226,6 +1226,47 @@ describe('datepicker directive', function() {
       });
     });
 
+    describe('disabled', function() {
+      beforeEach(function() {
+        element = $compile('<uib-datepicker ng-model="date" disabled></uib-datepicker>')($rootScope);
+        $rootScope.$digest();
+      });
+
+      it('should have all dates disabled', function() {
+        element.find('.uib-day button').each(function(idx, elem) {
+          expect($(elem).prop('disabled')).toBe(true);
+        });
+      });
+    });
+
+    describe('ng-disabled', function() {
+      beforeEach(function() {
+        $rootScope.disabled = false;
+        element = $compile('<uib-datepicker ng-model="date" ng-disabled="disabled"></uib-datepicker>')($rootScope);
+        $rootScope.$digest();
+      });
+
+      it('should toggle disabled state with value of ng-disabled', function() {
+        element.find('.uib-day button').each(function(idx, elem) {
+          expect($(elem).prop('disabled')).toBe(false);
+        });
+
+        $rootScope.disabled = true;
+        $rootScope.$digest();
+
+        element.find('.uib-day button').each(function(idx, elem) {
+          expect($(elem).prop('disabled')).toBe(true);
+        });
+
+        $rootScope.disabled = false;
+        $rootScope.$digest();
+
+        element.find('.uib-day button').each(function(idx, elem) {
+          expect($(elem).prop('disabled')).toBe(false);
+        });
+      });
+    });
+
     describe('setting datepickerPopupConfig', function() {
       var originalConfig = {};
       beforeEach(inject(function(uibDatepickerPopupConfig) {
@@ -2037,6 +2078,63 @@ describe('datepicker directive', function() {
           $rootScope.date = new Date();
           $rootScope.$digest();
           expect($rootScope.changeHandler).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('with disabled', function() {
+        var wrapElement;
+
+        beforeEach(function() {
+          $rootScope.isOpen = false;
+          wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup ng-required="true" ng-change="changeHandler()" is-open="isOpen" disabled><div>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('should not open the popup', function() {
+          $rootScope.isOpen = true;
+          $rootScope.$digest();
+
+          expect($rootScope.isOpen).toBe(false);
+          expect(wrapElement.find('ul').length).toBe(0);
+        });
+      });
+
+      describe('with ng-disabled', function() {
+        var wrapElement;
+
+        beforeEach(function() {
+          $rootScope.disabled = false;
+          $rootScope.isOpen = false;
+          wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup ng-required="true" ng-change="changeHandler()" is-open="isOpen" ng-disabled="disabled"><div>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('should not open the popup when disabled', function() {
+          $rootScope.isOpen = true;
+          $rootScope.$digest();
+
+          expect($rootScope.isOpen).toBe(true);
+          expect(wrapElement.find('ul').length).toBe(1);
+
+          $rootScope.isOpen = false;
+          $rootScope.$digest();
+
+          expect($rootScope.isOpen).toBe(false);
+          expect(wrapElement.find('ul').length).toBe(0);
+
+          $rootScope.disabled = true;
+          $rootScope.isOpen = true;
+          $rootScope.$digest();
+
+          expect($rootScope.isOpen).toBe(false);
+          expect(wrapElement.find('ul').length).toBe(0);
+
+          $rootScope.disabled = false;
+          $rootScope.isOpen = true;
+          $rootScope.$digest();
+
+          expect($rootScope.isOpen).toBe(true);
+          expect(wrapElement.find('ul').length).toBe(1);
         });
       });
 
