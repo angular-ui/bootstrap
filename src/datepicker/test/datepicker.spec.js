@@ -1224,7 +1224,6 @@ describe('datepicker directive', function() {
           expect(tr.eq(i).find('td').length).toEqual(7);
         }
       });
-
     });
 
     describe('setting datepickerPopupConfig', function() {
