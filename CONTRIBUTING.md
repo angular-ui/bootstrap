@@ -28,9 +28,7 @@ The best part is that you don't need to create plunks from scratch - you can use
 Unfortunately we are not able to investigate / fix bugs without a minimal reproduce scenario using http://plnkr.co/, so if we don't hear back from you we are going to close an issue that don't have enough info to be reproduced.
 
 
-## You want to contribute some code?
-
-**NOTE: We are migrating all our components to use a prefix, in the meantime you will see both the new and the old directives separated by a comment. If you want to contribute with code, make all your changes on top of that comment.** 
+## You want to contribute some code? 
 
 We are always looking for the quality contributions and will be happy to accept your Pull Requests as long as those adhere to some basic rules:
 
