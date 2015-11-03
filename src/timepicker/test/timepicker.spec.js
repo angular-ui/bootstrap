@@ -365,68 +365,66 @@ describe('timepicker directive', function() {
     expect(getModelState()).toEqual([14, 40, 25]);
 
     // UP
-    hoursEl.trigger( upMouseWheelEvent );
+    hoursEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['03', '40', '25', 'PM']);
     expect(getModelState()).toEqual([15, 40, 25]);
 
-    hoursEl.trigger( upMouseWheelEvent );
+    hoursEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '40', '25', 'PM']);
     expect(getModelState()).toEqual([16, 40, 25]);
 
-    minutesEl.trigger( upMouseWheelEvent );
+    minutesEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '41', '25', 'PM']);
     expect(getModelState()).toEqual([16, 41, 25]);
 
-    minutesEl.trigger( upMouseWheelEvent );
+    minutesEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '25', 'PM']);
     expect(getModelState()).toEqual([16, 42, 25]);
 
-    secondsEl.trigger( upMouseWheelEvent );
+    secondsEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '26', 'PM']);
     expect(getModelState()).toEqual([16, 42, 26]);
 
-    secondsEl.trigger( upMouseWheelEvent );
+    secondsEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '27', 'PM']);
     expect(getModelState()).toEqual([16, 42, 27]);
 
     // DOWN
-    secondsEl.trigger( downMouseWheelEvent );
+    secondsEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '26', 'PM']);
     expect(getModelState()).toEqual([16, 42, 26]);
 
-    secondsEl.trigger( downMouseWheelEvent );
+    secondsEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '25', 'PM']);
     expect(getModelState()).toEqual([16, 42, 25]);
 
-    minutesEl.trigger( downMouseWheelEvent );
+    minutesEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '41', '25', 'PM']);
     expect(getModelState()).toEqual([16, 41, 25]);
 
-    minutesEl.trigger( downMouseWheelEvent );
+    minutesEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '40', '25', 'PM']);
     expect(getModelState()).toEqual([16, 40, 25]);
 
-    hoursEl.trigger( downMouseWheelEvent );
+    hoursEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['03', '40', '25', 'PM']);
     expect(getModelState()).toEqual([15, 40, 25]);
 
-    hoursEl.trigger( downMouseWheelEvent );
+    hoursEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
     expect(getModelState()).toEqual([14, 40, 25]);
-
-
   });
 
   it('responds properly on "wheel" events', function() {
@@ -439,63 +437,63 @@ describe('timepicker directive', function() {
     expect(getModelState()).toEqual([14, 40, 25]);
 
     // UP
-    hoursEl.trigger( upMouseWheelEvent );
+    hoursEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['03', '40', '25', 'PM']);
     expect(getModelState()).toEqual([15, 40, 25]);
 
-    hoursEl.trigger( upMouseWheelEvent );
+    hoursEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '40', '25', 'PM']);
     expect(getModelState()).toEqual([16, 40, 25]);
 
-    minutesEl.trigger( upMouseWheelEvent );
+    minutesEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '41', '25', 'PM']);
     expect(getModelState()).toEqual([16, 41, 25]);
 
-    minutesEl.trigger( upMouseWheelEvent );
+    minutesEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '25', 'PM']);
     expect(getModelState()).toEqual([16, 42, 25]);
 
-    secondsEl.trigger( upMouseWheelEvent );
+    secondsEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '26', 'PM']);
     expect(getModelState()).toEqual([16, 42, 26]);
 
-    secondsEl.trigger( upMouseWheelEvent );
+    secondsEl.trigger(upMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '27', 'PM']);
     expect(getModelState()).toEqual([16, 42, 27]);
 
     // DOWN
-    secondsEl.trigger( downMouseWheelEvent );
+    secondsEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '26', 'PM']);
     expect(getModelState()).toEqual([16, 42, 26]);
 
-    secondsEl.trigger( downMouseWheelEvent );
+    secondsEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '25', 'PM']);
     expect(getModelState()).toEqual([16, 42, 25]);
 
-    minutesEl.trigger( downMouseWheelEvent );
+    minutesEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '41', '25', 'PM']);
     expect(getModelState()).toEqual([16, 41, 25]);
 
-    minutesEl.trigger( downMouseWheelEvent );
+    minutesEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '40', '25', 'PM']);
     expect(getModelState()).toEqual([16, 40, 25]);
 
-    hoursEl.trigger( downMouseWheelEvent );
+    hoursEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['03', '40', '25', 'PM']);
     expect(getModelState()).toEqual([15, 40, 25]);
 
-    hoursEl.trigger( downMouseWheelEvent );
+    hoursEl.trigger(downMouseWheelEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
     expect(getModelState()).toEqual([14, 40, 25]);
@@ -513,79 +511,79 @@ describe('timepicker directive', function() {
     expect(getModelState()).toEqual([14, 40, 25]);
 
     // UP
-    hoursEl.trigger( upKeydownEvent );
+    hoursEl.trigger(upKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['03', '40', '25', 'PM']);
     expect(getModelState()).toEqual([15, 40, 25]);
 
-    hoursEl.trigger( upKeydownEvent );
+    hoursEl.trigger(upKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '40', '25', 'PM']);
     expect(getModelState()).toEqual([16, 40, 25]);
 
-    minutesEl.trigger( upKeydownEvent );
+    minutesEl.trigger(upKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '41', '25', 'PM']);
     expect(getModelState()).toEqual([16, 41, 25]);
 
-    minutesEl.trigger( upKeydownEvent );
+    minutesEl.trigger(upKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '25', 'PM']);
     expect(getModelState()).toEqual([16, 42, 25]);
 
-    secondsEl.trigger( upKeydownEvent );
+    secondsEl.trigger(upKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '26', 'PM']);
     expect(getModelState()).toEqual([16, 42, 26]);
 
-    secondsEl.trigger( upKeydownEvent );
+    secondsEl.trigger(upKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '27', 'PM']);
     expect(getModelState()).toEqual([16, 42, 27]);
 
     // DOWN
-    secondsEl.trigger( downKeydownEvent );
+    secondsEl.trigger(downKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '26', 'PM']);
     expect(getModelState()).toEqual([16, 42, 26]);
 
-    secondsEl.trigger( downKeydownEvent );
+    secondsEl.trigger(downKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '42', '25', 'PM']);
     expect(getModelState()).toEqual([16, 42, 25]);
 
-    minutesEl.trigger( downKeydownEvent );
+    minutesEl.trigger(downKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '41', '25', 'PM']);
     expect(getModelState()).toEqual([16, 41, 25]);
 
-    minutesEl.trigger( downKeydownEvent );
+    minutesEl.trigger(downKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['04', '40', '25', 'PM']);
     expect(getModelState()).toEqual([16, 40, 25]);
 
-    hoursEl.trigger( downKeydownEvent );
+    hoursEl.trigger(downKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['03', '40', '25', 'PM']);
     expect(getModelState()).toEqual([15, 40, 25]);
 
-    hoursEl.trigger( downKeydownEvent );
+    hoursEl.trigger(downKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
     expect(getModelState()).toEqual([14, 40, 25]);
 
     // Other keydown
-    hoursEl.trigger( leftKeydownEvent );
+    hoursEl.trigger(leftKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
     expect(getModelState()).toEqual([14, 40, 25]);
 
-    minutesEl.trigger( leftKeydownEvent );
+    minutesEl.trigger(leftKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
     expect(getModelState()).toEqual([14, 40, 25]);
 
-    secondsEl.trigger( leftKeydownEvent );
+    secondsEl.trigger(leftKeydownEvent);
     $rootScope.$digest();
     expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
     expect(getModelState()).toEqual([14, 40, 25]);
@@ -680,34 +678,34 @@ describe('timepicker directive', function() {
       expect(getModelState()).toEqual([14, 0, 0]);
 
       // UP
-      hoursEl.trigger( upMouseWheelEvent );
+      hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '00', '00', 'PM']);
       expect(getModelState()).toEqual([16, 0, 0]);
 
-      minutesEl.trigger( upMouseWheelEvent );
+      minutesEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '30', '00', 'PM']);
       expect(getModelState()).toEqual([16, 30, 0]);
 
-      secondsEl.trigger( upMouseWheelEvent );
+      secondsEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '30', '30', 'PM']);
       expect(getModelState()).toEqual([16, 30, 30]);
 
       // DOWN
 
-      secondsEl.trigger( downMouseWheelEvent );
+      secondsEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '30', '00', 'PM']);
       expect(getModelState()).toEqual([16, 30, 0]);
 
-      minutesEl.trigger( downMouseWheelEvent );
+      minutesEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '00', '00', 'PM']);
       expect(getModelState()).toEqual([16, 0, 0]);
 
-      hoursEl.trigger( downMouseWheelEvent );
+      hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '00', '00', 'PM']);
       expect(getModelState()).toEqual([14, 0, 0]);
@@ -723,34 +721,34 @@ describe('timepicker directive', function() {
       expect(getModelState()).toEqual([14, 0, 0]);
 
       // UP
-      hoursEl.trigger( upMouseWheelEvent );
+      hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '00', '00', 'PM']);
       expect(getModelState()).toEqual([16, 0, 0]);
 
-      minutesEl.trigger( upMouseWheelEvent );
+      minutesEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '30', '00', 'PM']);
       expect(getModelState()).toEqual([16, 30, 0]);
 
-      secondsEl.trigger( upMouseWheelEvent );
+      secondsEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '30', '30', 'PM']);
       expect(getModelState()).toEqual([16, 30, 30]);
 
       // DOWN
 
-      secondsEl.trigger( downMouseWheelEvent );
+      secondsEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '30', '00', 'PM']);
       expect(getModelState()).toEqual([16, 30, 0]);
 
-      minutesEl.trigger( downMouseWheelEvent );
+      minutesEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['04', '00', '00', 'PM']);
       expect(getModelState()).toEqual([16, 0, 0]);
 
-      hoursEl.trigger( downMouseWheelEvent );
+      hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '00', '00', 'PM']);
       expect(getModelState()).toEqual([14, 0, 0]);
@@ -946,6 +944,7 @@ describe('timepicker directive', function() {
       element = $compile('<uib-timepicker ng-model="time"></uib-timepicker>')($rootScope);
       $rootScope.$digest();
     }));
+
     afterEach(inject(function(uibTimepickerConfig) {
       // return it to the original state
       angular.extend(uibTimepickerConfig, originalConfig);
