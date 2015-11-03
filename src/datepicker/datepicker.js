@@ -280,7 +280,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 
   this.compare = function(date1, date2) {
-    return (new Date(date1.getFullYear(), date1.getMonth(), date1.getDate()) - new Date(date2.getFullYear(), date2.getMonth(), date2.getDate()));
+    var _date1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    var _date2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    _date1.setFullYear(date1.getFullYear());
+    _date2.setFullYear(date2.getFullYear());
+    return _date1 - _date2;
   };
 
   function getISO8601WeekNumber(date) {
@@ -343,7 +347,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 
   this.compare = function(date1, date2) {
-    return new Date(date1.getFullYear(), date1.getMonth()) - new Date(date2.getFullYear(), date2.getMonth());
+    var _date1 = new Date(date1.getFullYear(), date1.getMonth());
+    var _date2 = new Date(date2.getFullYear(), date2.getMonth());
+    _date1.setFullYear(date1.getFullYear());
+    _date2.setFullYear(date2.getFullYear());
+    return _date1 - _date2;
   };
 
   this.handleKeyDown = function(key, evt) {

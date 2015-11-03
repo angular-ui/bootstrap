@@ -246,6 +246,7 @@ angular.module('ui.bootstrap.dateparser', [])
           dt = new Date(fields.year, fields.month, fields.date,
             fields.hours, fields.minutes, fields.seconds,
             fields.milliseconds || 0);
+          dt.setFullYear(fields.year);
         }
       }
 
