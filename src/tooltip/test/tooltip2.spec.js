@@ -24,7 +24,7 @@ describe('tooltip directive', function() {
               pass: util.equals(ttipElements.length, noOfOpened, customEqualityTesters)
             };
 
-            if (result.message) {
+            if (result.pass) {
               result.message = 'Expected "' + angular.mock.dump(ttipElements) + '" not to have "' + ttipElements.length + '" opened tooltips.';
             } else {
               result.message = 'Expected "' + angular.mock.dump(ttipElements) + '" to have "' + ttipElements.length + '" opened tooltips.';
