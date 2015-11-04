@@ -281,7 +281,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
       function removeModalWindow(modalInstance, elementToReceiveFocus) {
         var modalWindow = openedWindows.get(modalInstance).value;
-        var appendToElement = $document.find(modalWindow.appendTo).eq(0);
+        var appendToElement = modalWindow.appendTo;
 
         //clean up the stack
         openedWindows.remove(modalInstance);
@@ -424,7 +424,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
         openedClasses.put(modalBodyClass, modalInstance);
 
-        var appendToElement = $document.find(modal.appendTo).eq(0),
+        var appendToElement = modal.appendTo,
             currBackdropIndex = backdropIndex();
 
         if (!appendToElement.length) {
@@ -565,8 +565,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         backdrop: true, //can also be false or 'static'
         keyboard: true
       },
-      $get: ['$injector', '$rootScope', '$q', '$templateRequest', '$controller', '$uibModalStack',
-        function ($injector, $rootScope, $q, $templateRequest, $controller, $modalStack) {
+      $get: ['$injector', '$rootScope', '$q', '$document', '$templateRequest', '$controller', '$uibModalStack',
+        function ($injector, $rootScope, $q, $document, $templateRequest, $controller, $modalStack) {
           var $modal = {};
 
           function getTemplatePromise(options) {
@@ -614,7 +614,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
             //merge and clean up options
             modalOptions = angular.extend({}, $modalProvider.options, modalOptions);
             modalOptions.resolve = modalOptions.resolve || {};
-            modalOptions.appendTo = modalOptions.appendTo || 'body';
+            modalOptions.appendTo = modalOptions.appendTo || $document.find('body').eq(0);
 
             //verify options
             if (!modalOptions.template && !modalOptions.templateUrl) {
