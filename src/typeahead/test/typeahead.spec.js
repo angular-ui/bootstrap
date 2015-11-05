@@ -295,6 +295,24 @@ describe('typeahead tests', function() {
         expect(inputEl.val()).toEqual('bar');
     });
 
+    it('should support changing the editable property to limit model bindings to matches only', function() {
+      $scope.isEditable = true;
+      var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="isEditable"></div>');
+      $scope.isEditable = false;
+      $scope.$digest();
+      changeInputValueTo(element, 'not in matches');
+      expect($scope.result).toEqual(undefined);
+    });
+
+    it('should support changing the editable property to bind view value to model even if not part of matches', function() {
+      $scope.isEditable = false;
+      var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="isEditable"></div>');
+      $scope.isEditable = true;
+      $scope.$digest();
+      changeInputValueTo(element, 'not in matches');
+      expect($scope.result).toEqual('not in matches');
+    });
+
     it('should bind loading indicator expression', inject(function($timeout) {
       $scope.isLoading = false;
       $scope.loadMatches = function(viewValue) {
