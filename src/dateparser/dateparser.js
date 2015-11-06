@@ -133,6 +133,18 @@ angular.module('ui.bootstrap.dateparser', [])
             this.hours += 12;
           }
         }
+      },
+      {
+        key: 'Z',
+        regex: '[+-]\\d{4}',
+        apply: function(value) {
+          var matches = value.match(/([+-])(\d{2})(\d{2})/),
+            sign = matches[1],
+            hours = matches[2],
+            minutes = matches[3];
+          this.hours += toInt(sign + hours);
+          this.minutes += toInt(sign + minutes);
+        }
       }
     ];
   };
@@ -185,7 +197,11 @@ angular.module('ui.bootstrap.dateparser', [])
         }
         format = format.join('');
 
-        map.push({ index: index, apply: data.apply });
+        map.push({
+          index: index,
+          apply: data.apply,
+          matcher: data.regex
+        });
       }
     });
 
@@ -214,15 +230,19 @@ angular.module('ui.bootstrap.dateparser', [])
     var parser = this.parsers[format],
         regex = parser.regex,
         map = parser.map,
-        results = input.match(regex);
-
+        results = input.match(regex),
+        tzOffset = false;
     if (results && results.length) {
       var fields, dt;
       if (angular.isDate(baseDate) && !isNaN(baseDate.getTime())) {
         fields = {
           year: baseDate.getFullYear(),
           month: baseDate.getMonth(),
-          date: baseDate.getDate()
+          date: baseDate.getDate(),
+          hours: baseDate.getHours(),
+          minutes: baseDate.getMinutes(),
+          seconds: baseDate.getSeconds(),
+          milliseconds: baseDate.getMilliseconds()
         };
       } else {
         if (baseDate) {
@@ -232,21 +252,32 @@ angular.module('ui.bootstrap.dateparser', [])
       }
 
       for (var i = 1, n = results.length; i < n; i++) {
-        var mapper = map[i-1];
+        var mapper = map[i - 1];
+        if (mapper.matcher === 'Z') {
+          tzOffset = true;
+        }
+
         if (mapper.apply) {
           mapper.apply.call(fields, results[i]);
         }
       }
 
+      var datesetter = tzOffset ? Date.prototype.setUTCFullYear :
+        Date.prototype.setFullYear;
+      var timesetter = tzOffset ? Date.prototype.setUTCHours :
+        Date.prototype.setHours;
+
       if (isValid(fields.year, fields.month, fields.date)) {
-        if (angular.isDate(baseDate) && !isNaN(baseDate.getTime())) {
+        if (angular.isDate(baseDate) && !isNaN(baseDate.getTime()) && !tzOffset) {
           dt = new Date(baseDate);
-          dt.setFullYear(fields.year, fields.month, fields.date);
+          datesetter.call(dt, fields.year, fields.month, fields.date);
+          timesetter.call(dt, fields.hours, fields.minutes,
+            fields.seconds, fields.milliseconds);
         } else {
-          dt = new Date(fields.year, fields.month, fields.date,
-            fields.hours, fields.minutes, fields.seconds,
-            fields.milliseconds || 0);
-          dt.setFullYear(fields.year);
+          dt = new Date(0);
+          datesetter.call(dt, fields.year, fields.month, fields.date);
+          timesetter.call(dt, fields.hours || 0, fields.minutes || 0,
+            fields.seconds || 0, fields.milliseconds || 0);
         }
       }
 
@@ -270,5 +301,9 @@ angular.module('ui.bootstrap.dateparser', [])
     }
 
     return true;
+  }
+
+  function toInt(str) {
+    return parseInt(str, 10);
   }
 }]);

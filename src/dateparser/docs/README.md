@@ -117,6 +117,10 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
 * `a`
   _(Example: `10AM`)_ -
   Parses a 12 hours time with AM/PM.
+
+* `Z'
+  _(Example: `-0800`)_ -
+  Parses the timezone offset in a signed 4 digit representation
   
 \* The ones marked with `Leading 0`, needs a leading 0 for values less than 10. Exception being milliseconds which needs it for values under 100.
 

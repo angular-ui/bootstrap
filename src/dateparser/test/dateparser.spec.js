@@ -224,6 +224,16 @@ describe('date parser', function() {
       expectParse('11-08-13 09AM', 'd-MM-yy hha', new Date(2013, 7, 11, 9));
       expectParse('11-08-13 09PM', 'd-MM-yy hha', new Date(2013, 7, 11, 21));
     });
+
+    it('should work correctly for `Z`', function() {
+      expectParse('22.March.15 -0700', 'd.MMMM.yy Z', new Date(2015, 2, 21, 17, 0, 0));
+      expectParse('8-March-1991 +0800', 'd-MMMM-yyyy Z', new Date(1991, 2, 8, 8, 0, 0));
+      expectParse('February/5/1980 -0200', 'MMMM/d/yyyy Z', new Date(1980, 1, 4, 22, 0, 0));
+      expectParse('1955/February/5 +0400', 'yyyy/MMMM/d Z', new Date(1955, 1, 5, 4, 0, 0));
+      expectParse('11-08-13 -1234', 'd-MM-yy Z', new Date(2013, 7, 10, 11, 26, 0));
+      expectParse('22.March.15.22:33:4 -1200', 'd.MMMM.yy.HH:mm:s Z', new Date(2015, 2, 22, 10, 33, 4));
+      expectParse('22.March.15.22:3:4 +1500', 'd.MMMM.yy.HH:m:s Z', new Date(2015, 2, 23, 13, 3, 4));
+    });
   });
 
   describe('with predefined formats', function() {
