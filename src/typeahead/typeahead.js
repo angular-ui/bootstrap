@@ -59,7 +59,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
     var inputFormatter = attrs.typeaheadInputFormatter ? $parse(attrs.typeaheadInputFormatter) : undefined;
 
-    var appendToBody =  attrs.typeaheadAppendToBody ? originalScope.$eval(attrs.typeaheadAppendToBody) : false;
+    var appendToBody = attrs.typeaheadAppendToBody ? originalScope.$eval(attrs.typeaheadAppendToBody) : false;
 
     var appendTo = attrs.typeaheadAppendTo ?
       originalScope.$eval(attrs.typeaheadAppendTo) : null;
@@ -83,9 +83,9 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       if (angular.isFunction(parsedModel(originalScope)) &&
         ngModelOptions && ngModelOptions.$options && ngModelOptions.$options.getterSetter) {
         return invokeModelSetter(scope, {$$$p: newValue});
-      } else {
-        return parsedModel.assign(scope, newValue);
       }
+
+      return parsedModel.assign(scope, newValue);
     };
 
     //expressions used by typeahead
@@ -114,12 +114,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       'aria-owns': popupId
     });
 
+    var inputsContainer, hintInputElem;
     //add read-only input to show hint
     if (showHint) {
-      var inputsContainer = angular.element('<div></div>');
+      inputsContainer = angular.element('<div></div>');
       inputsContainer.css('position', 'relative');
       element.after(inputsContainer);
-      var hintInputElem = element.clone();
+      hintInputElem = element.clone();
       hintInputElem.attr('placeholder', '');
       hintInputElem.val('');
       hintInputElem.css({
@@ -204,7 +205,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       $q.when(parserResult.source(originalScope, locals)).then(function(matches) {
         //it might happen that several async queries were in progress if a user were typing fast
         //but we are interested only in responses that correspond to the current view value
-        var onCurrentRequest = (inputValue === modelCtrl.$viewValue);
+        var onCurrentRequest = inputValue === modelCtrl.$viewValue;
         if (onCurrentRequest && hasFocus) {
           if (matches && matches.length > 0) {
             scope.activeIdx = focusFirst ? 0 : -1;
@@ -469,16 +470,16 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
         if (isEditable) {
           return inputValue;
-        } else {
-          if (!inputValue) {
-            // Reset in case user had typed something previously.
-            modelCtrl.$setValidity('editable', true);
-            return null;
-          } else {
-            modelCtrl.$setValidity('editable', false);
-            return undefined;
-          }
         }
+
+        if (!inputValue) {
+          // Reset in case user had typed something previously.
+          modelCtrl.$setValidity('editable', true);
+          return null;
+        }
+
+        modelCtrl.$setValidity('editable', false);
+        return undefined;
       });
 
       modelCtrl.$formatters.push(function(modelValue) {
@@ -495,16 +496,16 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         if (inputFormatter) {
           locals.$model = modelValue;
           return inputFormatter(originalScope, locals);
-        } else {
-          //it might happen that we don't have enough info to properly render input value
-          //we need to check for this situation and simply return model value if we can't apply custom formatting
-          locals[parserResult.itemName] = modelValue;
-          candidateViewValue = parserResult.viewMapper(originalScope, locals);
-          locals[parserResult.itemName] = undefined;
-          emptyViewValue = parserResult.viewMapper(originalScope, locals);
-
-          return candidateViewValue !== emptyViewValue ? candidateViewValue : modelValue;
         }
+
+        //it might happen that we don't have enough info to properly render input value
+        //we need to check for this situation and simply return model value if we can't apply custom formatting
+        locals[parserResult.itemName] = modelValue;
+        candidateViewValue = parserResult.viewMapper(originalScope, locals);
+        locals[parserResult.itemName] = undefined;
+        emptyViewValue = parserResult.viewMapper(originalScope, locals);
+
+        return candidateViewValue !== emptyViewValue ? candidateViewValue : modelValue;
       });
     };
   }])
@@ -528,7 +529,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         position: '&',
         moveInProgress: '=',
         select: '&',
-        assignIsOpen: '&',
+        assignIsOpen: '&'
       },
       replace: true,
       templateUrl: function(element, attrs) {
@@ -544,7 +545,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         };
 
         scope.isActive = function(matchIdx) {
-          return scope.active == matchIdx;
+          return scope.active === matchIdx;
         };
 
         scope.selectActive = function(matchIdx) {
@@ -594,7 +595,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       if (!isSanitizePresent && containsHtml(matchItem)) {
         $log.warn('Unsafe use of typeahead please use ngSanitize'); // Warn the user about the danger
       }
-      matchItem = query? ('' + matchItem).replace(new RegExp(escapeRegexp(query), 'gi'), '<strong>$&</strong>') : matchItem; // Replaces the capture string with a the same string inside of a "strong" tag
+      matchItem = query ? ('' + matchItem).replace(new RegExp(escapeRegexp(query), 'gi'), '<strong>$&</strong>') : matchItem; // Replaces the capture string with a the same string inside of a "strong" tag
       if (!isSanitizePresent) {
         matchItem = $sce.trustAsHtml(matchItem); // If $sanitize is not present we pack the string in a $sce object for the ng-bind-html directive
       }

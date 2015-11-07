@@ -57,9 +57,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 /**
  * A helper directive for the $modal service. It creates a backdrop element.
  */
-  .directive('uibModalBackdrop', [
-           '$animate', '$injector', '$uibModalStack',
-  function($animate ,  $injector,   $modalStack) {
+  .directive('uibModalBackdrop', ['$animate', '$injector', '$uibModalStack',
+  function($animate, $injector, $modalStack) {
     var $animateCss = null;
 
     if ($injector.has('$animateCss')) {
@@ -106,8 +105,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     }
   }])
 
-  .directive('uibModalWindow', [
-           '$uibModalStack', '$q', '$animate', '$animateCss',
+  .directive('uibModalWindow', ['$uibModalStack', '$q', '$animate', '$animateCss',
   function($modalStack, $q, $animate, $animateCss) {
     return {
       scope: {
@@ -125,7 +123,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
         scope.close = function(evt) {
           var modal = $modalStack.getTop();
-          if (modal && modal.value.backdrop && modal.value.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
+          if (modal && modal.value.backdrop &&
+            modal.value.backdrop !== 'static' &&
+            evt.target === evt.currentTarget) {
             evt.preventDefault();
             evt.stopPropagation();
             $modalStack.dismiss(modal.key, 'backdrop click');
@@ -145,7 +145,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         // Observe function will be called on next digest cycle after compilation, ensuring that the DOM is ready.
         // In order to use this way of finding whether DOM is ready, we need to observe a scope property used in modal's template.
         attrs.$observe('modalRender', function(value) {
-          if (value == 'true') {
+          if (value === 'true') {
             modalRenderDeferObj.resolve();
           }
         });
@@ -219,15 +219,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     };
   })
 
-  .factory('$uibModalStack', [
-             '$animate', '$animateCss', '$timeout', '$document', '$compile', '$rootScope',
-             '$q',
-             '$$multiMap',
-             '$$stackedMap',
-    function($animate ,   $animateCss,   $timeout ,  $document ,  $compile ,  $rootScope ,
-              $q,
-              $$multiMap,
-              $$stackedMap) {
+  .factory('$uibModalStack', ['$animate', '$animateCss', '$timeout', '$document',
+    '$compile', '$rootScope', '$q', '$$multiMap', '$$stackedMap',
+    function($animate, $animateCss, $timeout, $document, $compile, $rootScope, $q, $$multiMap, $$stackedMap) {
       var OPENED_MODAL_CLASS = 'modal-open';
 
       var backdropDomEl, backdropScope;
@@ -296,7 +290,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
       function checkRemoveBackdrop() {
         //remove backdrop if no longer needed
-        if (backdropDomEl && backdropIndex() == -1) {
+        if (backdropDomEl && backdropIndex() === -1) {
           var backdropScopeRef = backdropScope;
           removeAfterAnimate(backdropDomEl, backdropScope, function() {
             backdropScopeRef = null;
@@ -552,7 +546,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
           function getTemplatePromise(options) {
             return options.template ? $q.when(options.template) :
-              $templateRequest(angular.isFunction(options.templateUrl) ? (options.templateUrl)() : options.templateUrl);
+              $templateRequest(angular.isFunction(options.templateUrl) ?
+                options.templateUrl() : options.templateUrl);
           }
 
           function getResolvePromises(resolves) {

@@ -1,18 +1,8 @@
-/* jshint node: true */
 var markdown = require('node-markdown').Markdown;
 var fs = require('fs');
 
 module.exports = function(grunt) {
-
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-html2js');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-conventional-changelog');
-  grunt.loadNpmTasks('grunt-ddescribe-iit');
+  require('load-grunt-tasks')(grunt);
 
   // Project configuration.
   grunt.util.linefeed = '\n';
@@ -50,7 +40,6 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['src/**/*.js'],
-        //we don't need to jshint here, it slows down everything else
         tasks: ['karma:watch:run']
       }
     },
@@ -124,11 +113,8 @@ module.exports = function(grunt) {
         }]
       }
     },
-    jshint: {
-      files: ['Gruntfile.js','src/**/*.js'],
-      options: {
-        jshintrc: '.jshintrc'
-      }
+    eslint: {
+      files: ['Gruntfile.js','src/**/*.js']
     },
     karma: {
       options: {
@@ -197,7 +183,7 @@ module.exports = function(grunt) {
 
   //register before and after test tasks so we've don't have to change cli
   //options on the google's CI server
-  grunt.registerTask('before-test', ['enforce', 'ddescribe-iit', 'jshint', 'html2js']);
+  grunt.registerTask('before-test', ['enforce', 'ddescribe-iit', 'eslint', 'html2js']);
   grunt.registerTask('after-test', ['build', 'copy']);
 
   //Rename our watch task to 'delta', then make actual 'watch'
@@ -427,7 +413,6 @@ module.exports = function(grunt) {
    * https://github.com/angular/angular.js/blob/36831eccd1da37c089f2141a2c073a6db69f3e1d/lib/grunt/utils.js#L121-L145
    */
   function processCSS(state, minify, file) {
-    /* jshint quotmark: false */
     var css = fs.readFileSync(file).toString(),
       js;
     state.css.push(css);

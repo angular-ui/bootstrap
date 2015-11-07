@@ -17,7 +17,7 @@ angular.module('ui.bootstrap.stackedMap', [])
           },
           get: function(key) {
             for (var i = 0; i < stack.length; i++) {
-              if (key == stack[i].key) {
+              if (key === stack[i].key) {
                 return stack[i];
               }
             }
@@ -35,7 +35,7 @@ angular.module('ui.bootstrap.stackedMap', [])
           remove: function(key) {
             var idx = -1;
             for (var i = 0; i < stack.length; i++) {
-              if (key == stack[i].key) {
+              if (key === stack[i].key) {
                 idx = i;
                 break;
               }

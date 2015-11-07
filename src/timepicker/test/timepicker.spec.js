@@ -16,7 +16,7 @@ describe('timepicker directive', function() {
   }));
 
   function newTime(hours, minutes, seconds) {
-    seconds =  seconds ? seconds : 0;
+    seconds = seconds ? seconds : 0;
     var time = new Date();
     time.setHours(hours);
     time.setMinutes(minutes);
@@ -35,9 +35,11 @@ describe('timepicker directive', function() {
     for (var i = 0; i < limit; i ++) {
       state.push(inputs.eq(i).val());
     }
+
     if (withoutMeridian !== true) {
       state.push(getMeridianButton().text());
     }
+
     return state;
   }
 
@@ -358,7 +360,7 @@ describe('timepicker directive', function() {
 
     doClick(up);
     expect(getTimeState()).toEqual(['01', '00', '25', 'AM']);
-    expect(getModelState()).toEqual([01, 0, 25]);
+    expect(getModelState()).toEqual([1, 0, 25]);
 
     doClick(down);
     expect(getTimeState()).toEqual(['12', '00', '25', 'AM']);
@@ -373,7 +375,7 @@ describe('timepicker directive', function() {
     $rootScope.time = newTime(23, 50, 20);
     $rootScope.$digest();
 
-    var date =  $rootScope.time.getDate();
+    var date = $rootScope.time.getDate();
     var up = getHoursButton(true);
     doClick(up);
 
@@ -387,7 +389,7 @@ describe('timepicker directive', function() {
     $rootScope.time = newTime(0, 0, 0);
     $rootScope.$digest();
 
-    var date =  $rootScope.time.getDate();
+    var date = $rootScope.time.getDate();
     var up = getMinutesButton(true);
     doClick(up, 2);
     expect(getTimeState()).toEqual(['12', '30', '00', 'AM']);
@@ -835,12 +837,12 @@ describe('timepicker directive', function() {
   });
 
   describe('without seconds mode',function(){
-     beforeEach(function(){
-        $rootScope.displaysSeconds = false;
-        $rootScope.time = newTime(14,40,35);
-        element = $compile('<uib-timepicker ng-model="time" show-seconds="displaysSeconds"></uib-timepicker>')($rootScope);
-        $rootScope.$digest();
-     });
+    beforeEach(function(){
+      $rootScope.displaysSeconds = false;
+      $rootScope.time = newTime(14,40,35);
+      element = $compile('<uib-timepicker ng-model="time" show-seconds="displaysSeconds"></uib-timepicker>')($rootScope);
+      $rootScope.$digest();
+    });
 
     it('increases / decreases hours when arrows are clicked', function() {
       var up = getHoursButton(true);

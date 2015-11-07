@@ -325,7 +325,8 @@ describe('progressbar directive', function() {
         $rootScope.max = 433;
         $rootScope.$digest();
         var totalWidth = 0;
-        for (var i = 0; i < 3; i++) {
+        var i;
+        for (i = 0; i < 3; i++) {
           totalWidth += parseFloat(getBar(i).css('width'));
         }
         expect(totalWidth.toFixed(2)).toBe('100.00');

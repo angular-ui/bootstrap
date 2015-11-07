@@ -153,11 +153,11 @@ angular.module('ui.bootstrap.pagination', [])
           if (rotate) {
             // Current page is displayed in the middle of the visible ones
             startPage = Math.max(currentPage - Math.floor(maxSize / 2), 1);
-            endPage   = startPage + maxSize - 1;
+            endPage = startPage + maxSize - 1;
 
             // Adjust if limit is exceeded
             if (endPage > totalPages) {
-              endPage   = totalPages;
+              endPage = totalPages;
               startPage = endPage - maxSize + 1;
             }
           } else {
@@ -176,7 +176,7 @@ angular.module('ui.bootstrap.pagination', [])
         }
 
         // Add links to move between page sets
-        if (isMaxSized && maxSize > 0 &&  (!rotate || forceEllipses || boundaryLinkNumbers)) {
+        if (isMaxSized && maxSize > 0 && (!rotate || forceEllipses || boundaryLinkNumbers)) {
           if (startPage > 1) {
             if (!boundaryLinkNumbers || startPage > 3) { //need ellipsis for all options unless range is too close to beginning
             var previousPageSet = makePage(startPage - 1, '...', false);

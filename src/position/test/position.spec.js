@@ -25,9 +25,9 @@ describe('position elements', function () {
             };
 
             if (result.pass) {
-              result.message = 'Expected "('  + actual.top + ', ' + actual.left +  ')" not to be positioned at (' + top + ', ' + left + ')';
+              result.message = 'Expected "(' + actual.top + ', ' + actual.left + ')" not to be positioned at (' + top + ', ' + left + ')';
             } else {
-              result.message = 'Expected "('  + actual.top + ', ' + actual.left +  ')" to be positioned at (' + top + ', ' + left + ')';
+              result.message = 'Expected "(' + actual.top + ', ' + actual.left + ')" to be positioned at (' + top + ', ' + left + ')';
             }
 
             return result;

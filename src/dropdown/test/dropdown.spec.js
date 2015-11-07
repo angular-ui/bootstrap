@@ -438,7 +438,7 @@ describe('dropdownToggle', function() {
   describe('`auto-close` option', function() {
     function dropdown(autoClose) {
       return $compile('<li uib-dropdown ' +
-        (autoClose === void 0 ? '' : 'auto-close="'+autoClose+'"') +
+        (autoClose === undefined ? '' : 'auto-close="' + autoClose + '"') +
         '><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
     }
 

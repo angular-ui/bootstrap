@@ -317,7 +317,7 @@ angular.module('ui.bootstrap.dateparser', [])
     }
 
     if (month === 1 && date > 28) {
-      return date === 29 && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0);
+      return date === 29 && (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0);
     }
 
     if (month === 3 || month === 5 || month === 8 || month === 10) {

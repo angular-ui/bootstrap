@@ -30,7 +30,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   // Configuration attributes
   angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle',
                    'showWeeks', 'startingDay', 'yearRange', 'shortcutPropagation'], function(key, index) {
-    self[key] = angular.isDefined($attrs[key]) ? (index < 6 ? $interpolate($attrs[key])($scope.$parent) : $scope.$parent.$eval($attrs[key])) : datepickerConfig[key];
+    self[key] = angular.isDefined($attrs[key]) ?
+      index < 6 ? $interpolate($attrs[key])($scope.$parent) :
+        $scope.$parent.$eval($attrs[key]) :
+      datepickerConfig[key];
   });
 
   // Watchable date attributes
@@ -50,7 +53,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       $scope.$parent.$watch($parse($attrs[key]), function(value) {
         self[key] = angular.isDefined(value) ? value : $attrs[key];
         $scope[key] = self[key];
-        if ((key == 'minMode' && self.modes.indexOf($scope.datepickerMode) < self.modes.indexOf(self[key])) || (key == 'maxMode' && self.modes.indexOf($scope.datepickerMode) > self.modes.indexOf(self[key]))) {
+        if (key === 'minMode' && self.modes.indexOf($scope.datepickerMode) < self.modes.indexOf(self[key]) ||
+          key === 'maxMode' && self.modes.indexOf($scope.datepickerMode) > self.modes.indexOf(self[key])) {
           $scope.datepickerMode = self[key];
         }
       });
@@ -118,7 +122,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       this._refreshView();
 
       var date = ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null;
-      ngModelCtrl.$setValidity('dateDisabled', !date || (this.element && !this.isDisabled(date)));
+      ngModelCtrl.$setValidity('dateDisabled', !date ||
+        this.element && !this.isDisabled(date));
     }
   };
 
@@ -135,7 +140,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 
   this.isDisabled = function(date) {
-    return $scope.disabled || ((this.minDate && this.compare(date, this.minDate) < 0) || (this.maxDate && this.compare(date, this.maxDate) > 0) || ($attrs.dateDisabled && $scope.dateDisabled({date: date, mode: $scope.datepickerMode})));
+    return $scope.disabled ||
+      this.minDate && this.compare(date, this.minDate) < 0 ||
+      this.maxDate && this.compare(date, this.maxDate) > 0 ||
+      $attrs.dateDisabled && $scope.dateDisabled({date: date, mode: $scope.datepickerMode});
   };
 
   this.customClass = function(date) {
@@ -173,7 +181,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   $scope.toggleMode = function(direction) {
     direction = direction || 1;
 
-    if (($scope.datepickerMode === self.maxMode && direction === 1) || ($scope.datepickerMode === self.minMode && direction === -1)) {
+    if ($scope.datepickerMode === self.maxMode && direction === 1 ||
+      $scope.datepickerMode === self.minMode && direction === -1) {
       return;
     }
 
@@ -222,7 +231,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   this.step = { months: 1 };
   this.element = $element;
   function getDaysInMonth(year, month) {
-    return ((month === 1) && (year % 4 === 0) && ((year % 100 !== 0) || (year % 400 === 0))) ? 29 : DAYS_IN_MONTH[month];
+    return month === 1 && year % 4 === 0 &&
+      (year % 100 !== 0 || year % 400 === 0) ? 29 : DAYS_IN_MONTH[month];
   }
 
   this.init = function(ctrl) {
@@ -249,7 +259,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     firstDayOfMonth.setFullYear(year, month, 1);
 
     var difference = this.startingDay - firstDayOfMonth.getDay(),
-      numDisplayedFromPreviousMonth = (difference > 0) ? 7 - difference : - difference,
+      numDisplayedFromPreviousMonth = difference > 0 ?
+        7 - difference : - difference,
       firstDate = new Date(firstDayOfMonth);
 
     if (numDisplayedFromPreviousMonth > 0) {
@@ -704,12 +715,12 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       date = new Date();
     }
 
-    return ((scope.watchData.minDate && scope.compare(date, cache.minDate) < 0) ||
-      (scope.watchData.maxDate && scope.compare(date, cache.maxDate) > 0));
+    return scope.watchData.minDate && scope.compare(date, cache.minDate) < 0 ||
+      scope.watchData.maxDate && scope.compare(date, cache.maxDate) > 0;
   };
 
   scope.compare = function(date1, date2) {
-    return (new Date(date1.getFullYear(), date1.getMonth(), date1.getDate()) - new Date(date2.getFullYear(), date2.getMonth(), date2.getDate()));
+    return new Date(date1.getFullYear(), date1.getMonth(), date1.getDate()) - new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
   };
 
   // Inner change
@@ -791,18 +802,22 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
     if (!viewValue) {
       return null;
-    } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
+    }
+
+    if (angular.isDate(viewValue) && !isNaN(viewValue)) {
       return viewValue;
-    } else if (angular.isString(viewValue)) {
+    }
+
+    if (angular.isString(viewValue)) {
       var date = dateParser.parse(viewValue, dateFormat, scope.date);
       if (isNaN(date)) {
         return undefined;
-      } else {
-        return date;
       }
-    } else {
-      return undefined;
+
+      return date;
     }
+
+    return undefined;
   }
 
   function validator(modelValue, viewValue) {
@@ -815,16 +830,21 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     if (angular.isNumber(value)) {
       value = new Date(value);
     }
+
     if (!value) {
       return true;
-    } else if (angular.isDate(value) && !isNaN(value)) {
+    }
+
+    if (angular.isDate(value) && !isNaN(value)) {
       return true;
-    } else if (angular.isString(value)) {
+    }
+
+    if (angular.isString(value)) {
       var date = dateParser.parse(value, dateFormat);
       return !isNaN(date);
-    } else {
-      return false;
     }
+
+    return false;
   }
 
   function documentClickBind(event) {

@@ -242,9 +242,8 @@ angular.module('ui.bootstrap.carousel', [])
   };
 })
 
-.animation('.item', [
-        '$animate', '$animateCss',
-function($animate,   $animateCss) {
+.animation('.item', ['$animate', '$animateCss',
+function($animate, $animateCss) {
   var SLIDE_DIRECTION = 'uib-slideDirection';
 
   function removeClass(element, className, callback) {
@@ -257,10 +256,10 @@ function($animate,   $animateCss) {
   return {
     beforeAddClass: function(element, className, done) {
       // Due to transclusion, noTransition property is on parent's scope
-      if (className == 'active' && !$animate.enabled(element)) {
+      if (className === 'active' && !$animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
-        var directionClass = direction == 'next' ? 'left' : 'right';
+        var directionClass = direction === 'next' ? 'left' : 'right';
         var removeClassFn = removeClass.bind(this, element,
           directionClass + ' ' + direction, done);
         element.addClass(direction);
@@ -280,7 +279,7 @@ function($animate,   $animateCss) {
       if (className === 'active' && !$animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
-        var directionClass = direction == 'next' ? 'left' : 'right';
+        var directionClass = direction === 'next' ? 'left' : 'right';
         var removeClassFn = removeClass.bind(this, element, directionClass, done);
 
         $animateCss(element, {addClass: directionClass})

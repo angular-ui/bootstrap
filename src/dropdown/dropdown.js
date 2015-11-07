@@ -34,7 +34,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     // unbound this event handler. So check openScope before proceeding.
     if (!openScope) { return; }
 
-    if (evt && openScope.getAutoClose() === 'disabled')  { return ; }
+    if (evt && openScope.getAutoClose() === 'disabled') { return ; }
 
     var toggleElement = openScope.getToggleElement();
     if (evt && toggleElement && toggleElement[0].contains(evt.target)) {
@@ -142,21 +142,21 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
   scope.focusDropdownEntry = function(keyCode) {
     var elems = self.dropdownMenu ? //If append to body is used.
-      (angular.element(self.dropdownMenu).find('a')) :
-      ($element.find('ul').eq(0).find('a'));
+      angular.element(self.dropdownMenu).find('a') :
+      $element.find('ul').eq(0).find('a');
 
     switch (keyCode) {
-      case (40): {
+      case 40: {
         if (!angular.isNumber(self.selectedOption)) {
           self.selectedOption = 0;
         } else {
-          self.selectedOption = (self.selectedOption === elems.length - 1 ?
+          self.selectedOption = self.selectedOption === elems.length - 1 ?
             self.selectedOption :
-            self.selectedOption + 1);
+            self.selectedOption + 1;
         }
         break;
       }
-      case (38): {
+      case 38: {
         if (!angular.isNumber(self.selectedOption)) {
           self.selectedOption = elems.length - 1;
         } else {
@@ -196,7 +196,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         css.right = 'auto';
       } else {
         css.left = 'auto';
-        css.right = (window.innerWidth - (pos.left + $element.prop('offsetWidth'))) + 'px';
+        css.right = window.innerWidth -
+          (pos.left + $element.prop('offsetWidth')) + 'px';
       }
 
       // Need to adjust our positioning to be relative to the appendTo container
@@ -209,7 +210,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         if (!rightalign) {
           css.left = pos.left - appendOffset.left + 'px';
         } else {
-          css.right = (window.innerWidth - (pos.left  - appendOffset.left + $element.prop('offsetWidth'))) + 'px';
+          css.right = window.innerWidth -
+            (pos.left - appendOffset.left + $element.prop('offsetWidth')) + 'px';
         }
       }
 
@@ -314,7 +316,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
           var elems = dropdownCtrl.dropdownMenu.find('a');
 
           switch (e.which) {
-            case (40): { // Down
+            case 40: { // Down
               if (!angular.isNumber(dropdownCtrl.selectedOption)) {
                 dropdownCtrl.selectedOption = 0;
               } else {
@@ -323,7 +325,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
               }
               break;
             }
-            case (38): { // Up
+            case 38: { // Up
               if (!angular.isNumber(dropdownCtrl.selectedOption)) {
                 dropdownCtrl.selectedOption = elems.length - 1;
               } else {

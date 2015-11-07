@@ -46,7 +46,7 @@ describe('carousel', function() {
 
     function testSlideActive(slideIndex) {
       for (var i = 0; i < scope.slides.length; i++) {
-        if (i == slideIndex) {
+        if (i === slideIndex) {
           expect(scope.slides[i].active).toBe(true);
         } else {
           expect(scope.slides[i].active).not.toBe(true);
