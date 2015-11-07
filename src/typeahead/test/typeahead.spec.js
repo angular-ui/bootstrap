@@ -4,8 +4,8 @@ describe('typeahead tests', function() {
 
   beforeEach(module('ui.bootstrap.typeahead'));
   beforeEach(module('ngSanitize'));
-  beforeEach(module('template/typeahead/typeahead-popup.html'));
-  beforeEach(module('template/typeahead/typeahead-match.html'));
+  beforeEach(module('uib/template/typeahead/typeahead-popup.html'));
+  beforeEach(module('uib/template/typeahead/typeahead-match.html'));
   beforeEach(module(function($compileProvider) {
     $compileProvider.directive('formatter', function() {
       return {
@@ -1248,7 +1248,7 @@ describe('typeahead tests', function() {
   it('should allow directives in template to require parent controller', function() {
     module('ui.bootstrap.typeahead');
     module('ngSanitize');
-    module('template/typeahead/typeahead-popup.html');
+    module('uib/template/typeahead/typeahead-popup.html');
     module(function($compileProvider) {
       $compileProvider
         .directive('uibCustomParent', function() {
@@ -1271,7 +1271,7 @@ describe('typeahead tests', function() {
     inject(function($compile, $rootScope, $sniffer, $templateCache) {
       var element;
       var $scope = $rootScope.$new();
-      $templateCache.put('template/typeahead/typeahead-match.html', '<div uib-custom-directive>{{text}}</div>');
+      $templateCache.put('uib/template/typeahead/typeahead-match.html', '<div uib-custom-directive>{{text}}</div>');
       $scope.states = [
         {code: 'AL', name: 'Alaska'},
         {code: 'CL', name: 'California'}

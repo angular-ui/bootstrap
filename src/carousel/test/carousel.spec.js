@@ -12,7 +12,7 @@ describe('carousel', function() {
       });
     }
   }));
-  beforeEach(module('template/carousel/carousel.html', 'template/carousel/slide.html'));
+  beforeEach(module('uib/template/carousel/carousel.html', 'uib/template/carousel/slide.html'));
 
   var $rootScope, $compile, $controller, $interval, $templateCache;
   beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$interval_, _$templateCache_) {
@@ -495,7 +495,7 @@ describe('carousel', function() {
     });
 
     it('should be exposed in the template', inject(function($templateCache) {
-      $templateCache.put('template/carousel/carousel.html', '<div>{{carousel.text}}</div>');
+      $templateCache.put('uib/template/carousel/carousel.html', '<div>{{carousel.text}}</div>');
 
       var scope = $rootScope.$new();
       var elm = $compile('<uib-carousel interval="bar" no-transition="false" no-pause="true"></uib-carousel>')(scope);

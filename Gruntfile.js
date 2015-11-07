@@ -112,7 +112,10 @@ module.exports = function(grunt) {
       dist: {
         options: {
           module: null, // no bundle module for all the html2js templates
-          base: '.'
+          base: '.',
+          rename: function(moduleName) {
+            return 'uib/' + moduleName;
+          }
         },
         files: [{
           expand: true,

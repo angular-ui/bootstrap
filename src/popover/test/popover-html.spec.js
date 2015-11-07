@@ -9,7 +9,7 @@ describe('popover', function() {
   beforeEach(module('ui.bootstrap.popover'));
 
   // load the template
-  beforeEach(module('template/popover/popover-html.html'));
+  beforeEach(module('uib/template/popover/popover-html.html'));
 
   beforeEach(inject(function($rootScope, $compile, $sce) {
     elmBody = angular.element(

@@ -1,7 +1,7 @@
 describe('pagination directive', function() {
   var $compile, $rootScope, $document, $templateCache, body, element;
   beforeEach(module('ui.bootstrap.pagination'));
-  beforeEach(module('template/pagination/pagination.html'));
+  beforeEach(module('uib/template/pagination/pagination.html'));
   beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _$templateCache_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -55,7 +55,7 @@ describe('pagination directive', function() {
   });
 
   it('exposes the controller to the template', function() {
-    $templateCache.put('template/pagination/pagination.html', '<div>{{pagination.randomText}}</div>');
+    $templateCache.put('uib/template/pagination/pagination.html', '<div>{{pagination.randomText}}</div>');
     var scope = $rootScope.$new();
 
     element = $compile('<uib-pagination></uib-pagination>')(scope);
@@ -922,7 +922,7 @@ describe('pagination directive', function() {
 describe('pagination directive', function() {
   var $compile, $rootScope, element;
   beforeEach(module('ui.bootstrap.pagination'));
-  beforeEach(module('template/pagination/pagination.html'));
+  beforeEach(module('uib/template/pagination/pagination.html'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;

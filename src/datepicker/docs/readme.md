@@ -86,7 +86,7 @@ All settings can be provided as attributes in the `uib-datepicker` or globally c
   An option to disable or enable shortcut's event propagation.
 
  * `template-url`
-  _(Default: 'template/datepicker/datepicker.html')_ :
+  _(Default: 'uib/template/datepicker/datepicker.html')_ :
   Allows overriding of default template of the datepicker
 
 
@@ -120,11 +120,11 @@ Specific settings for the `uib-datepicker-popup`, that can globally configured t
  	Whether to close calendar when a date is chosen.
 
  * `datepicker-popup-template-url`
-  _(Default: 'template/datepicker/popup.html')_ :
+  _(Default: 'uib/template/datepicker/popup.html')_ :
   Allows overriding of default template of the popup
 
  * `datepicker-template-url`
-  _(Default: 'template/datepicker/datepicker.html')_ :
+  _(Default: 'uib/template/datepicker/datepicker.html')_ :
   Allows overriding of default template of the datepicker used in popup
 
  * `datepicker-append-to-body`

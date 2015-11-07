@@ -9,8 +9,8 @@ describe('popover template', function() {
   beforeEach(module('ui.bootstrap.popover'));
 
   // load the template
-  beforeEach(module('template/popover/popover.html'));
-  beforeEach(module('template/popover/popover-template.html'));
+  beforeEach(module('uib/template/popover/popover.html'));
+  beforeEach(module('uib/template/popover/popover-template.html'));
 
   beforeEach(inject(function($templateCache) {
     $templateCache.put('myUrl', [200, '<span>{{ myTemplateText }}</span>', {}]);

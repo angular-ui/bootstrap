@@ -33,7 +33,7 @@ The body of each accordion group is transcluded into the body of the collapsible
   Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own.  This must be a string.
 
 * `template-url`
-  _(Default: `template/accordion/accordion-group.html`)_ -
+  _(Default: `uib/template/accordion/accordion-group.html`)_ -
   Add the ability to override the template used on the component.
   
 ### Default settings `uibAccordionConfig`

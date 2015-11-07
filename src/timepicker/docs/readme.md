@@ -62,3 +62,7 @@ All settings can be provided as attributes in the `<uib-timepicker>` or globally
  * `tabindex`
     _(Defaults: 0)_ :
      Sets tabindex for each control in timepicker
+
+ * `template-url`
+    _(Defaults: uib/template/timepicker/timepicker.html)_ :
+     Add the ability to override the template used on the component.

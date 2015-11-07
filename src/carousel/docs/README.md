@@ -23,7 +23,7 @@ Use a `<uib-carousel>` element with `<uib-slide>` elements inside it.
   Whether to disable the transition animation between slides. Setting this to truthy, disables this transition.
   
 * `template-url`
-  _(Default: `template/carousel/carousel.html`)_ -
+  _(Default: `uib/template/carousel/carousel.html`)_ -
   Add the ability to override the template used on the component.
   
 ### uib-slide settings
@@ -41,5 +41,5 @@ Use a `<uib-carousel>` element with `<uib-slide>` elements inside it.
   Use this attribute to change how the slides are ordered.
   
 * `template-url`
-  _(Default: `template/carousel/slide.html`)_ -
+  _(Default: `uib/template/carousel/slide.html`)_ -
   Add the ability to override the template used on the component.

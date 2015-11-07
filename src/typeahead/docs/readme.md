@@ -60,11 +60,11 @@ The typeahead directives provide several attributes:
    Should it automatically select an item when there is one option that exactly matches the user input?
 
 * `typeahead-template-url` <i class="glyphicon glyphicon-eye-open"></i>
-   :
+   _(Defaults: `uib/template/typeahead/typeahead-match.html`)_ :
    Set custom item template
 
 * `typeahead-popup-template-url`
-   _(Defaults: `template/typeahead/typeahead-popup.html`)_ :
+   _(Defaults: `uib/template/typeahead/typeahead-popup.html`)_ :
    Set custom popup template
 
 * `typeahead-wait-ms` <i class="glyphicon glyphicon-eye-open"></i>

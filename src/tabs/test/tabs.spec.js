@@ -2,8 +2,8 @@ describe('tabs', function() {
   var elm, scope;
 
   beforeEach(module('ui.bootstrap.tabs'));
-  beforeEach(module('template/tabs/tabset.html'));
-  beforeEach(module('template/tabs/tab.html'));
+  beforeEach(module('uib/template/tabs/tabset.html'));
+  beforeEach(module('uib/template/tabs/tab.html'));
 
   function titles() {
     return elm.find('ul.nav-tabs li');
