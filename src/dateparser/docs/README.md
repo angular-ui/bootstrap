@@ -121,6 +121,21 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
 * `Z`
   _(Example: `-0800`)_ -
   Parses the timezone offset in a signed 4 digit representation
+
+* `ww`
+  _(Example: `03`, Leading 0)_ -
+  Parses the week number
+
+* `w`
+  _(Example: `03`)_ -
+  Parses the week number
+
+* `G`, `GG`, `GGG`
+  _(Example: `AD`)_ -
+  Parses the era (`AD` or `BC`)
+* `GGGG`
+  _(Example: `Anno Domini`)_ -
+  Parses the long form of the era (`Anno Domini` or `Before Christ`)
   
 \* The ones marked with `Leading 0`, needs a leading 0 for values less than 10. Exception being milliseconds which needs it for values under 100.
 

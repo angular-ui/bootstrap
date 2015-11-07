@@ -234,6 +234,60 @@ describe('date parser', function() {
       expectParse('22.March.15.22:33:4 -1200', 'd.MMMM.yy.HH:mm:s Z', new Date(2015, 2, 22, 10, 33, 4));
       expectParse('22.March.15.22:3:4 +1500', 'd.MMMM.yy.HH:m:s Z', new Date(2015, 2, 23, 13, 3, 4));
     });
+
+    it('should work correctly for `ww`', function() {
+      expectParse('17.November.13.45', 'd.MMMM.yy.ww', new Date(2013, 10, 17, 0));
+      expectParse('8-March-1991-09', 'd-MMMM-yyyy-ww', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/05', 'MMMM/d/yyyy/ww', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5/04', 'yyyy/MMMM/d/ww', new Date(1955, 1, 5, 0));
+      expectParse('11-08-13 44', 'd-MM-yy ww', new Date(2013, 7, 11, 0));
+      expectParse('0001/03/6 10', 'yyyy/MM/d ww', oldDate);
+    });
+
+    it('should work correctly for `w`', function() {
+      expectParse('17.November.13.45', 'd.MMMM.yy.w', new Date(2013, 10, 17, 0));
+      expectParse('8-March-1991-9', 'd-MMMM-yyyy-w', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/5', 'MMMM/d/yyyy/w', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5/4', 'yyyy/MMMM/d/w', new Date(1955, 1, 5, 0));
+      expectParse('11-08-13 44', 'd-MM-yy w', new Date(2013, 7, 11, 0));
+      expectParse('0001/03/6 10', 'yyyy/MM/d w', oldDate);
+    });
+
+    it('should work correctly for `G`', function() {
+      expectParse('17.November.13.AD', 'd.MMMM.yy.G', new Date(2013, 10, 17, 0));
+      expectParse('8-March-1991-BC', 'd-MMMM-yyyy-G', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/AD', 'MMMM/d/yyyy/G', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5/BC', 'yyyy/MMMM/d/G', new Date(1955, 1, 5, 0));
+      expectParse('11-08-13 AD', 'd-MM-yy G', new Date(2013, 7, 11, 0));
+      expectParse('0001/03/6 BC', 'yyyy/MM/d G', oldDate);
+    });
+
+    it('should work correctly for `GG`', function() {
+      expectParse('17.November.13.AD', 'd.MMMM.yy.GG', new Date(2013, 10, 17, 0));
+      expectParse('8-March-1991-BC', 'd-MMMM-yyyy-GG', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/AD', 'MMMM/d/yyyy/GG', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5/BC', 'yyyy/MMMM/d/GG', new Date(1955, 1, 5, 0));
+      expectParse('11-08-13 AD', 'd-MM-yy GG', new Date(2013, 7, 11, 0));
+      expectParse('0001/03/6 BC', 'yyyy/MM/d GG', oldDate);
+    });
+
+    it('should work correctly for `GGG`', function() {
+      expectParse('17.November.13.AD', 'd.MMMM.yy.GGG', new Date(2013, 10, 17, 0));
+      expectParse('8-March-1991-BC', 'd-MMMM-yyyy-GGG', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/AD', 'MMMM/d/yyyy/GGG', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5/BC', 'yyyy/MMMM/d/GGG', new Date(1955, 1, 5, 0));
+      expectParse('11-08-13 AD', 'd-MM-yy GGG', new Date(2013, 7, 11, 0));
+      expectParse('0001/03/6 BC', 'yyyy/MM/d GGG', oldDate);
+    });
+
+    it('should work correctly for `GGGG`', function() {
+      expectParse('17.November.13.Anno Domini', 'd.MMMM.yy.GGGG', new Date(2013, 10, 17, 0));
+      expectParse('8-March-1991-Before Christ', 'd-MMMM-yyyy-GGGG', new Date(1991, 2, 8, 0));
+      expectParse('February/5/1980/Anno Domini', 'MMMM/d/yyyy/GGGG', new Date(1980, 1, 5, 0));
+      expectParse('1955/February/5/Before Christ', 'yyyy/MMMM/d/GGGG', new Date(1955, 1, 5, 0));
+      expectParse('11-08-13 Anno Domini', 'd-MM-yy GGGG', new Date(2013, 7, 11, 0));
+      expectParse('0001/03/6 Before Christ', 'yyyy/MM/d GGGG', oldDate);
+    });
   });
 
   describe('with predefined formats', function() {
