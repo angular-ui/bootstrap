@@ -301,6 +301,8 @@ angular.module('ui.bootstrap.timepicker', [])
       var hours = getHoursFromTemplate(),
         minutes = getMinutesFromTemplate();
 
+      ngModelCtrl.$setDirty();
+
       if (angular.isDefined(hours) && angular.isDefined(minutes)) {
         selected.setHours(hours);
         selected.setMinutes(minutes);
@@ -329,6 +331,8 @@ angular.module('ui.bootstrap.timepicker', [])
       var minutes = getMinutesFromTemplate(),
         hours = getHoursFromTemplate();
 
+      ngModelCtrl.$setDirty();
+
       if (angular.isDefined(minutes) && angular.isDefined(hours)) {
         selected.setHours(hours);
         selected.setMinutes(minutes);
@@ -355,6 +359,8 @@ angular.module('ui.bootstrap.timepicker', [])
 
     $scope.updateSeconds = function() {
       var seconds = getSecondsFromTemplate();
+
+      ngModelCtrl.$setDirty();
 
       if (angular.isDefined(seconds)) {
         selected.setSeconds(seconds);
@@ -504,6 +510,10 @@ angular.module('ui.bootstrap.timepicker', [])
         $scope.meridian = $scope.meridian === meridians[0] ? meridians[1] : meridians[0];
       }
     }
+  };
+
+  $scope.blur = function() {
+    ngModelCtrl.$setTouched();
   };
 }])
 

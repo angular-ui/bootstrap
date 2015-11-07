@@ -1,5 +1,5 @@
 describe('timepicker directive', function() {
-  var $rootScope, $compile, $templateCache, element;
+  var $rootScope, $compile, $templateCache, element, modelCtrl;
 
   beforeEach(module('ui.bootstrap.timepicker'));
   beforeEach(module('template/timepicker/timepicker.html'));
@@ -11,6 +11,8 @@ describe('timepicker directive', function() {
 
     element = $compile('<uib-timepicker ng-model="time"></uib-timepicker>')($rootScope);
     $rootScope.$digest();
+
+    modelCtrl = element.controller('ngModel');
   }));
 
   function newTime(hours, minutes, seconds) {
@@ -117,7 +119,11 @@ describe('timepicker directive', function() {
   });
 
   it('should be pristine', function() {
-    expect(element.controller('ngModel').$pristine).toBe(true);
+    expect(modelCtrl.$pristine).toBe(true);
+  });
+
+  it('should be untouched', function() {
+    expect(modelCtrl.$untouched).toBe(true);
   });
 
   it('has `selected` current time when model is initially cleared', function() {
@@ -190,6 +196,51 @@ describe('timepicker directive', function() {
     doClick(down);
     expect(getTimeState()).toEqual(['02', '40', '24', 'PM']);
     expect(getModelState()).toEqual([14, 40, 24]);
+  });
+
+  it('should be dirty when input changes', function() {
+    var upHours = getHoursButton(true);
+    var upMinutes = getMinutesButton(true);
+    var upSeconds = getSecondsButton(true);
+
+    doClick(upHours);
+    expect(modelCtrl.$dirty).toBe(true);
+
+    modelCtrl.$setPristine();
+
+    doClick(upMinutes);
+    expect(modelCtrl.$dirty).toBe(true);
+
+    modelCtrl.$setPristine();
+
+    doClick(upSeconds);
+    expect(modelCtrl.$dirty).toBe(true);
+  });
+
+  it('should be touched when input blurs', function() {
+    var inputs = element.find('input');
+    var hoursInput = inputs.eq(0),
+      minutesInput = inputs.eq(1),
+      secondsInput = inputs.eq(2);
+
+    hoursInput.val(12);
+    $rootScope.$digest();
+    hoursInput.blur();
+    expect(modelCtrl.$touched).toBe(true);
+
+    modelCtrl.$setUntouched();
+
+    minutesInput.val(20);
+    $rootScope.$digest();
+    hoursInput.blur();
+    expect(modelCtrl.$touched).toBe(true);
+
+    modelCtrl.$setUntouched();
+
+    secondsInput.val(9);
+    $rootScope.$digest();
+    hoursInput.blur();
+    expect(modelCtrl.$touched).toBe(true);
   });
 
   it('meridian button has correct type', function() {
