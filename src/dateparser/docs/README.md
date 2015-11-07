@@ -118,7 +118,7 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
   _(Example: `10AM`)_ -
   Parses a 12 hours time with AM/PM.
 
-* `Z'
+* `Z`
   _(Example: `-0800`)_ -
   Parses the timezone offset in a signed 4 digit representation
   
