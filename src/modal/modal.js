@@ -107,14 +107,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
   }])
 
   .directive('uibModalWindow', [
-           '$uibModalStack', '$q', '$animate', '$injector',
-  function($modalStack ,  $q ,  $animate,   $injector) {
-    var $animateCss = null;
-
-    if ($injector.has('$animateCss')) {
-      $animateCss = $injector.get('$animateCss');
-    }
-
+           '$uibModalStack', '$q', '$animate', '$animateCss',
+  function($modalStack, $q, $animate, $animateCss) {
     return {
       scope: {
         index: '@'
@@ -160,13 +154,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           var animationPromise = null;
 
           if (attrs.modalInClass) {
-            if ($animateCss) {
-              animationPromise = $animateCss(element, {
-                addClass: attrs.modalInClass
-              }).start();
-            } else {
-              animationPromise = $animate.addClass(element, attrs.modalInClass);
-            }
+            animationPromise = $animateCss(element, {
+              addClass: attrs.modalInClass
+            }).start();
 
             scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
               var done = setIsAsync();
@@ -230,22 +220,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
   })
 
   .factory('$uibModalStack', [
-             '$animate', '$timeout', '$document', '$compile', '$rootScope',
+             '$animate', '$animateCss', '$timeout', '$document', '$compile', '$rootScope',
              '$q',
-             '$injector',
              '$$multiMap',
              '$$stackedMap',
-    function($animate ,  $timeout ,  $document ,  $compile ,  $rootScope ,
+    function($animate ,   $animateCss,   $timeout ,  $document ,  $compile ,  $rootScope ,
               $q,
-              $injector,
               $$multiMap,
               $$stackedMap) {
-      var $animateCss = null;
-
-      if ($injector.has('$animateCss')) {
-        $animateCss = $injector.get('$animateCss');
-      }
-
       var OPENED_MODAL_CLASS = 'modal-open';
 
       var backdropDomEl, backdropScope;
@@ -350,15 +332,12 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           }
           afterAnimating.done = true;
 
-          if ($animateCss) {
-            $animateCss(domEl, {
-              event: 'leave'
-            }).start().then(function() {
-              domEl.remove();
-            });
-          } else {
-            $animate.leave(domEl);
-          }
+          $animateCss(domEl, {
+            event: 'leave'
+          }).start().then(function() {
+            domEl.remove();
+          });
+
           scope.$destroy();
           if (done) {
             done();
@@ -441,7 +420,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
             angularBackgroundDomEl.attr('modal-animation', 'true');
           }
           backdropDomEl = $compile(angularBackgroundDomEl)(backdropScope);
-          appendToElement.append(backdropDomEl);
+          $animate.enter(backdropDomEl, appendToElement);
         }
 
         var angularDomEl = angular.element('<div uib-modal-window="modal-window"></div>');
@@ -460,8 +439,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         var modalDomEl = $compile(angularDomEl)(modal.scope);
         openedWindows.top().value.modalDomEl = modalDomEl;
         openedWindows.top().value.modalOpener = modalOpener;
-        appendToElement.append(modalDomEl);
-        appendToElement.addClass(modalBodyClass);
+        $animate.enter(modalDomEl, appendToElement)
+          .then(function() {
+            $animate.addClass(appendToElement, modalBodyClass);
+          });
 
         $modalStack.clearFocusListCache();
       };

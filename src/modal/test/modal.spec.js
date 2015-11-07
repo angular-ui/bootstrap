@@ -888,6 +888,8 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>'
         });
 
+        $animate.flush();
+
         expect(body).toHaveClass('modal-open');
       });
 
@@ -896,6 +898,8 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
         });
+
+        $animate.flush();
 
         expect(body).toHaveClass('foo');
         expect(body).not.toHaveClass('modal-open');
@@ -906,6 +910,8 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
         });
+
+        $animate.flush();
 
         expect(body).toHaveClass('foo');
 
@@ -920,6 +926,8 @@ describe('$uibModal', function () {
           openedClass: 'foo'
         });
 
+        $animate.flush();
+
         expect(body).toHaveClass('foo');
         expect(body).not.toHaveClass('modal-open');
 
@@ -927,6 +935,8 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'bar'
         });
+
+        $animate.flush();
 
         expect(body).toHaveClass('foo');
         expect(body).toHaveClass('bar');
@@ -936,6 +946,8 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
         });
+
+        $animate.flush();
 
         expect(body).toHaveClass('foo');
         expect(body).toHaveClass('bar');
@@ -1009,9 +1021,11 @@ describe('$uibModal', function () {
       expect(body).not.toHaveClass('modal-open');
 
       var modal1 = open({template: '<div>Content1</div>'});
+      $animate.flush();
       expect(body).toHaveClass('modal-open');
 
       var modal2 = open({template: '<div>Content1</div>'});
+      $animate.flush();
       expect(body).toHaveClass('modal-open');
 
       dismiss(modal1);
