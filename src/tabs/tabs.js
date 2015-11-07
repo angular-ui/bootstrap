@@ -91,7 +91,6 @@ angular.module('ui.bootstrap.tabs', [])
  */
 .directive('uibTabset', function() {
   return {
-    restrict: 'EA',
     transclude: true,
     replace: true,
     scope: {
@@ -189,7 +188,6 @@ angular.module('ui.bootstrap.tabs', [])
 .directive('uibTab', ['$parse', function($parse) {
   return {
     require: '^uibTabset',
-    restrict: 'EA',
     replace: true,
     templateUrl: 'template/tabs/tab.html',
     transclude: true,
