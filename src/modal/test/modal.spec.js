@@ -6,9 +6,23 @@ describe('$uibModal', function () {
   beforeEach(module('ui.bootstrap.modal'));
   beforeEach(module('uib/template/modal/backdrop.html'));
   beforeEach(module('uib/template/modal/window.html'));
-  beforeEach(module(function(_$controllerProvider_, _$uibModalProvider_){
+  beforeEach(module(function(_$controllerProvider_, _$uibModalProvider_, $compileProvider) {
     $controllerProvider = _$controllerProvider_;
     $uibModalProvider = _$uibModalProvider_;
+    $compileProvider.directive('parentDirective', function() {
+      return {
+        controller: function() {
+          this.text = 'foo';
+        }
+      };
+    }).directive('childDirective', function() {
+      return {
+        require: '^parentDirective',
+        link: function(scope, elem, attrs, ctrl) {
+          scope.text = ctrl.text;
+        }
+      };
+    });
   }));
 
   beforeEach(inject(function(_$animate_, _$rootScope_, _$document_, _$compile_, _$templateCache_, _$timeout_, _$q_, _$uibModal_, _$uibModalStack_) {
@@ -144,10 +158,12 @@ describe('$uibModal', function () {
     element.trigger(e);
   }
 
-  function open(modalOptions) {
+  function open(modalOptions, noFlush) {
     var modal = $uibModal.open(modalOptions);
     $rootScope.$digest();
-    $timeout.flush(0);
+    if (!noFlush) {
+      $animate.flush();
+    }
     return modal;
   }
 
@@ -376,9 +392,8 @@ describe('$uibModal', function () {
 
     it('should expose a promise linked to the templateUrl / resolve promises and reject it if needed', function() {
       var modal = open({template: '<div>Content</div>', resolve: {
-          ok: function() {return $q.reject('ko');}
-        }}
-      );
+        ok: function() {return $q.reject('ko');}
+      }}, true);
       expect(modal.opened).toBeRejectedWith('ko');
     });
 
@@ -633,10 +648,11 @@ describe('$uibModal', function () {
           value: function() {
             return $timeout(function() { return 'Promise'; }, 100);
           }
-        }));
+        }), true);
         expect($document).toHaveModalsOpen(0);
 
         $timeout.flush();
+        $animate.flush();
         expect($document).toHaveModalOpenWithContent('Promise', 'div');
       });
 
@@ -647,7 +663,7 @@ describe('$uibModal', function () {
           value: function() {
             return deferred.promise;
           }
-        }));
+        }), true);
         expect($document).toHaveModalsOpen(0);
 
         deferred.reject('error in test');
@@ -858,6 +874,8 @@ describe('$uibModal', function () {
         expect($document.find('section').children('div.modal').length).toBe(0);
         open({template: '<div>Content</div>', appendTo: element});
         expect($document.find('section').children('div.modal').length).toBe(1);
+
+        element.remove();
       });
 
       it('should throw error if appendTo element is not found', function() {
@@ -873,6 +891,17 @@ describe('$uibModal', function () {
 
         dismiss(modal);
         expect($document).toHaveModalsOpen(0);
+      });
+
+      it('should allow requiring parent directive from appendTo target', function() {
+        var element = $compile('<section parent-directive>Some content</section>')($rootScope);
+        angular.element(document.body).append(element);
+
+        open({template: '<div child-directive>{{text}}</div>', appendTo: element});
+        $animate.flush();
+        expect($document.find('[child-directive]').text()).toBe('foo');
+
+        element.remove();
       });
     });
 
@@ -1008,7 +1037,7 @@ describe('$uibModal', function () {
       expect($document).toHaveModalsOpen(2);
     });
 
-    it('multiple modals should not interfere with default options', function() {
+    it('should not interfere with default options', function() {
       var modal1 = open({template: '<div>Modal1</div>', backdrop: false});
       var modal2 = open({template: '<div>Modal2</div>'});
       $rootScope.$digest();
@@ -1084,7 +1113,7 @@ describe('$uibModal', function () {
           } else {
             expected += i;
           }
-          ds[x] = {index:i, deferred:$q.defer(), reject:reject};
+          ds[x] = {index: i, deferred: $q.defer(), reject: reject};
 
           var scope = $rootScope.$new();
           scope.index = i;
@@ -1094,7 +1123,7 @@ describe('$uibModal', function () {
             resolve: {
               x: function() { return ds[x].deferred.promise; }
             }
-          }).opened.then(function() {
+          }, true).opened.then(function() {
             expect($uibModalStack.getTop().value.modalScope.index).toEqual(i);
             actual += i;
           });
@@ -1102,9 +1131,9 @@ describe('$uibModal', function () {
 
         angular.forEach(ds, function(d, i) {
           if (d.reject) {
-            d.deferred.reject('rejected:' + d.index );
+            d.deferred.reject('rejected:' + d.index);
           } else {
-            d.deferred.resolve('resolved:' + d.index );
+            d.deferred.resolve('resolved:' + d.index);
           }
           $rootScope.$digest();
         });
@@ -1138,13 +1167,39 @@ describe('$uibModal', function () {
         _permute(0);
       }
 
-      permute(2, function(a) { test(a); });
-      permute(2, function(a) { test(a.map(function(x, i) { return {reject:x}; })); });
-      permute(2, function(a) { test(a.map(function(x, i) { return i === 0 ? {reject:x} : x; })); });
-      permute(3, function(a) { test(a); });
-      permute(3, function(a) { test(a.map(function(x, i) { return {reject:x}; })); });
-      permute(3, function(a) { test(a.map(function(x, i) { return i === 0 ? {reject:x} : x; })); });
-      permute(3, function(a) { test(a.map(function(x, i) { return i === 1 ? {reject:x} : x; })); });
+      permute(2, function(a) {
+        test(a);
+      });
+      permute(2, function(a) {
+        test(a.map(function(x, i) {
+          return {reject:x};
+        }));
+      });
+      permute(2, function(a) {
+        test(a.map(function(x, i) {
+          return i === 0 ? {reject: x} : x;
+        }));
+      });
+      permute(3, function(a) {
+        test(a);
+      });
+      permute(3, function(a) {
+        test(a.map(function(x, i) {
+          return {reject: x};
+        }));
+      });
+      permute(3, function(a) {
+        test(a.map(function(x, i) {
+          return i === 0 ? {reject: x} : x;
+        }));
+      });
+      permute(3, function(a) {
+        test(a.map(function(x, i) {
+          return i === 1 ? {reject: x} : x;
+        }));
+      });
+
+      $animate.flush();
     });
 
     it('should have top class only on top window', function () {
@@ -1213,6 +1268,7 @@ describe('$uibModal', function () {
       var called;
 
       called = false;
+
       close(open({
         template: '<div>content</div>',
         controller: function($scope) {

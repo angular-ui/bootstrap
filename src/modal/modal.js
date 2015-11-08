@@ -219,9 +219,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     };
   })
 
-  .factory('$uibModalStack', ['$animate', '$animateCss', '$timeout', '$document',
+  .factory('$uibModalStack', ['$animate', '$animateCss', '$document',
     '$compile', '$rootScope', '$q', '$$multiMap', '$$stackedMap',
-    function($animate, $animateCss, $timeout, $document, $compile, $rootScope, $q, $$multiMap, $$stackedMap) {
+    function($animate, $animateCss, $document, $compile, $rootScope, $q, $$multiMap, $$stackedMap) {
       var OPENED_MODAL_CLASS = 'modal-open';
 
       var backdropDomEl, backdropScope;
@@ -430,13 +430,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           angularDomEl.attr('modal-animation', 'true');
         }
 
-        var modalDomEl = $compile(angularDomEl)(modal.scope);
-        openedWindows.top().value.modalDomEl = modalDomEl;
-        openedWindows.top().value.modalOpener = modalOpener;
-        $animate.enter(modalDomEl, appendToElement)
+        $animate.enter(angularDomEl, appendToElement)
           .then(function() {
+            $compile(angularDomEl)(modal.scope);
             $animate.addClass(appendToElement, modalBodyClass);
           });
+
+        openedWindows.top().value.modalDomEl = angularDomEl;
+        openedWindows.top().value.modalOpener = modalOpener;
 
         $modalStack.clearFocusListCache();
       };
