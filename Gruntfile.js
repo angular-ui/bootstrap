@@ -221,6 +221,9 @@ module.exports = function(grunt) {
     function enquote(str) {
       return '"' + str + '"';
     }
+    function enquoteUibDir(str) {
+      return enquote('uib/' + str);
+    }
 
     var module = {
       name: name,
@@ -230,7 +233,7 @@ module.exports = function(grunt) {
       cssFiles: grunt.file.expand('src/'+name+'/*.css'),
       tplFiles: grunt.file.expand('template/'+name+'/*.html'),
       tpljsFiles: grunt.file.expand('template/'+name+'/*.html.js'),
-      tplModules: grunt.file.expand('template/'+name+'/*.html').map(enquote),
+      tplModules: grunt.file.expand('template/'+name+'/*.html').map(enquoteUibDir),
       dependencies: dependenciesForModule(name),
       docs: {
         md: grunt.file.expand('src/'+name+'/docs/*.md')
