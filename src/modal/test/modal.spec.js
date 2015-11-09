@@ -725,7 +725,6 @@ describe('$uibModal', function () {
     });
 
     describe('backdrop', function() {
-
       it('should not have any backdrop element if backdrop set to false', function() {
         var modal = open({
           template: '<div>No backdrop</div>',
