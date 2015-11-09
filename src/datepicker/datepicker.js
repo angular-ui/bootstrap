@@ -27,13 +27,14 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   // Modes chain
   this.modes = ['day', 'month', 'year'];
 
-  // Configuration attributes
-  angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle',
-                   'showWeeks', 'startingDay', 'yearRange', 'shortcutPropagation'], function(key, index) {
-    self[key] = angular.isDefined($attrs[key]) ?
-      index < 6 ? $interpolate($attrs[key])($scope.$parent) :
-        $scope.$parent.$eval($attrs[key]) :
-      datepickerConfig[key];
+  // Interpolated configuration attributes
+  angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle'], function(key) {
+    self[key] = angular.isDefined($attrs[key]) ? $interpolate($attrs[key])($scope.$parent) : datepickerConfig[key];
+  });
+
+  // Evaled configuration attributes
+  angular.forEach(['showWeeks', 'startingDay', 'yearRange', 'shortcutPropagation'], function(key) {
+    self[key] = angular.isDefined($attrs[key]) ? $scope.$parent.$eval($attrs[key]) : datepickerConfig[key];
   });
 
   // Watchable date attributes
@@ -650,9 +651,11 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       datepickerEl.attr('date-disabled', 'dateDisabled({ date: date, mode: mode })');
     }
 
-    if (attrs.showWeeks) {
-      datepickerEl.attr('show-weeks', attrs.showWeeks);
-    }
+    angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle', 'showWeeks', 'startingDay', 'yearRange'], function(key) {
+      if (angular.isDefined(attrs[key])) {
+        datepickerEl.attr(cameltoDash(key), attrs[key]);
+      }
+    });
 
     if (attrs.customClass) {
       datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');

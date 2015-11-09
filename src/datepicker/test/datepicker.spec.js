@@ -2304,6 +2304,69 @@ describe('datepicker directive', function() {
           expect(focused).toBe(true);
         });
       });
+
+      describe('pass through attributes', function() {
+        var wrapElement;
+        describe('formatting', function() {
+          beforeEach(function() {
+            $rootScope.dayTitle = 'MMMM, yy';
+            wrapElement = $compile('<div><input uib-datepicker-popup ng-model="date"' +
+              'is-open="true"' +
+              'format-day="d"' +
+              'format-day-header="EEEE"' +
+              'format-day-title="{{dayTitle}}"' +
+              'format-month="MMM"' +
+              'format-month-title="yy"' +
+              'format-year="yy"' +
+              'year-range="10"></input></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+          });
+
+          it('changes the title format in `day` mode', function() {
+            expect(getTitle()).toBe('September, 10');
+          });
+
+          it('changes the title & months format in `month` mode', function() {
+            clickTitleButton();
+            assignElements(wrapElement);
+            expect(getTitle()).toBe('10');
+            expect(getOptions()).toEqual([
+              ['Jan', 'Feb', 'Mar'],
+              ['Apr', 'May', 'Jun'],
+              ['Jul', 'Aug', 'Sep'],
+              ['Oct', 'Nov', 'Dec']
+            ]);
+          });
+
+          it('changes the title, year format & range in `year` mode', function() {
+            clickTitleButton();
+            assignElements(wrapElement);
+            clickTitleButton();
+            assignElements(wrapElement);
+            expect(getTitle()).toBe('01 - 10');
+            expect(getOptions()).toEqual([
+              ['01', '02', '03', '04', '05'],
+              ['06', '07', '08', '09', '10']
+            ]);
+          });
+
+          it('shows day labels', function() {
+            expect(getLabels(true)).toEqual(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+          });
+
+          it('changes the day format', function() {
+            expect(getOptions(true)).toEqual([
+              ['29', '30', '31', '1', '2', '3', '4'],
+              ['5', '6', '7', '8', '9', '10', '11'],
+              ['12', '13', '14', '15', '16', '17', '18'],
+              ['19', '20', '21', '22', '23', '24', '25'],
+              ['26', '27', '28', '29', '30', '1', '2'],
+              ['3', '4', '5', '6', '7', '8', '9']
+            ]);
+          });
+        });
+      });
     });
 
     describe('with empty initial state', function() {
