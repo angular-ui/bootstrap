@@ -675,7 +675,7 @@ describe('$uibModal', function () {
 
       it('should support injection with minification-safe syntax in resolve functions', function() {
         open(modalDefinition('<div>{{value.id}}</div>', {
-          value: ['$locale', function (e) {
+          value: ['$locale', function(e) {
             return e;
           }]
         }));
