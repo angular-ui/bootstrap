@@ -436,6 +436,14 @@ describe('carousel', function() {
       }
     });
 
+    it('should expose .next()', function() {
+      expect(ctrl.next).toEqual(scope.next);
+    });
+
+    it('should expose .prev()', function() {
+      expect(ctrl.prev).toEqual(scope.prev);
+    });
+
     describe('addSlide', function() {
       it('should set first slide to active = true and the rest to false', function() {
         angular.forEach(ctrl.slides, function(slide, i) {

@@ -74,7 +74,7 @@ angular.module('ui.bootstrap.carousel', [])
     return angular.isDefined(slide.index) ? +slide.index : slides.indexOf(slide);
   };
 
-  $scope.next = function() {
+  self.next = $scope.next = function() {
     var newIndex = (self.getCurrentIndex() + 1) % slides.length;
 
     if (newIndex === 0 && $scope.noWrap()) {
@@ -85,7 +85,7 @@ angular.module('ui.bootstrap.carousel', [])
     return self.select(getSlideByIndex(newIndex), 'next');
   };
 
-  $scope.prev = function() {
+  self.prev = $scope.prev = function() {
     var newIndex = self.getCurrentIndex() - 1 < 0 ? slides.length - 1 : self.getCurrentIndex() - 1;
 
     if ($scope.noWrap() && newIndex === slides.length - 1) {
