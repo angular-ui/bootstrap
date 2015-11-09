@@ -682,8 +682,6 @@ describe('$uibModal', function () {
 
         expect($document).toHaveModalOpenWithContent('en-us', 'div');
       });
-
-      //TODO: resolves with dependency injection - do we want to support them?
     });
 
     describe('scope', function() {
