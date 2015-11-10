@@ -9,4 +9,8 @@ angular.module('ui.bootstrap.demo').controller('TabsDemoCtrl', function ($scope,
       $window.alert('You\'ve selected the alert tab!');
     });
   };
+
+  $scope.model = {
+    name: 'Tabs'
+  };
 });

@@ -32,6 +32,10 @@
     color: #337ab7;
     cursor: pointer;
   }
+
+  form.tab-form-demo .tab-pane {
+    margin: 20px 20px;
+  }
 </style>
 
 <div ng-controller="TabsDemoCtrl">
@@ -72,4 +76,30 @@
     <uib-tab heading="SJ">Short Labeled Justified content</uib-tab>
     <uib-tab heading="Long Justified">Long Labeled Justified content</uib-tab>
   </uib-tabset>
+
+  <hr />
+
+  Tabs using nested forms:
+  <form name="outerForm" class="tab-form-demo">
+    <uib-tabset>
+      <uib-tab heading="Form Tab">
+        <ng-form name="nestedForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" required ng-model="model.name"/>
+          </div>
+        </ng-form>
+      </uib-tab>
+      <uib-tab heading="Tab One">
+        Some Tab Content
+      </uib-tab>
+      <uib-tab heading="Tab Two">
+        More Tab Content
+      </uib-tab>
+    </uib-tabset>
+  </form>
+  Model:
+  <pre>{{ model | json }}</pre>
+  Nested Form:
+  <pre>{{ outerForm.nestedForm | json }}</pre>
 </div>
