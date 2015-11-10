@@ -10,7 +10,7 @@ There are three versions of the tooltip: `uib-tooltip`, `uib-tooltip-template`, 
 - `uib-tooltip-html` takes
   whatever HTML is provided and displays it in a tooltip; *The user is responsible for ensuring the
   content is safe to put into the DOM!*
-- `uib-tooltip-html-unsafe` -- deprecated in favour of `tooltip-html`
+- `uib-tooltip-html-unsafe` -- deprecated in favour of `uib-tooltip-html`
 
 The tooltip directives provide several optional attributes to control how they
 will display:
