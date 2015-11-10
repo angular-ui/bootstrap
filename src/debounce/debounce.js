@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.debounce', [])
 
       return function() {
         var self = this;
-        var args = Array.prototype.slice(arguments);
+        var args = Array.prototype.slice.call(arguments);
         if (timeoutPromise) {
           $timeout.cancel(timeoutPromise);
         }
