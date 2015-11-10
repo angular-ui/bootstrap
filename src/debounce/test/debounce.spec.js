@@ -1,5 +1,5 @@
 describe('$$debounce', function() {
-  var $$debounce, $timeout, debouncedFunction, i, args;
+  var $$debounce, $timeout, debouncedFunction, i;
 
   beforeEach(module('ui.bootstrap.debounce'));
   beforeEach(inject(function(_$$debounce_, _$timeout_) {
@@ -7,7 +7,6 @@ describe('$$debounce', function() {
     $timeout = _$timeout_;
     i = 0;
     debouncedFunction = $$debounce(function() {
-      args = Array.prototype.slice.call(arguments);
       i++;
     }, 100);
   }));
@@ -37,12 +36,5 @@ describe('$$debounce', function() {
     $timeout.flush(50);
 
     expect(i).toBe(1);
-  });
-
-  it('should properly pass arguments to debounced function', function() {
-    debouncedFunction(1, 2, 3);
-    $timeout.flush(100);
-
-    expect(args).toEqual([1, 2, 3]);
   });
 });
