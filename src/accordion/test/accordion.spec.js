@@ -426,6 +426,29 @@ describe('uib-accordion', function() {
       });
     });
 
+    describe('is-open attribute with custom class', function() {
+      beforeEach(function() {
+        var tpl =
+          '<uib-accordion>' +
+            '<uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}" is-open="group.open" class="testClass">{{group.content}}</uib-accordion-group>' +
+          '</uib-accordion>';
+        element = angular.element(tpl);
+        scope.groups = [
+          {name: 'title 1', content: 'Content 1', open: false},
+          {name: 'title 2', content: 'Content 2', open: true}
+        ];
+        $compile(element)(scope);
+        scope.$digest();
+
+        groups = element.find('.panel');
+      });
+
+      it('should add "panel-open" class', function(){
+        expect(groups.eq(0)).not.toHaveClass('panel-open');
+        expect(groups.eq(1)).toHaveClass('panel-open');
+      });
+    });
+
     describe('`is-disabled` attribute', function() {
       var groupBody;
       beforeEach(function() {
