@@ -480,10 +480,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'uib/template/datepicker/day.html';
     },
-    require: ['^?uibDatepicker', 'uibDaypicker', '^?datepicker'],
+    require: ['^uibDatepicker', 'uibDaypicker'],
     controller: 'UibDaypickerController',
     link: function(scope, element, attrs, ctrls) {
-      var datepickerCtrl = ctrls[0] || ctrls[2],
+      var datepickerCtrl = ctrls[0],
         daypickerCtrl = ctrls[1];
 
       daypickerCtrl.init(datepickerCtrl);
@@ -497,10 +497,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'uib/template/datepicker/month.html';
     },
-    require: ['^?uibDatepicker', 'uibMonthpicker', '^?datepicker'],
+    require: ['^uibDatepicker', 'uibMonthpicker'],
     controller: 'UibMonthpickerController',
     link: function(scope, element, attrs, ctrls) {
-      var datepickerCtrl = ctrls[0] || ctrls[2],
+      var datepickerCtrl = ctrls[0],
         monthpickerCtrl = ctrls[1];
 
       monthpickerCtrl.init(datepickerCtrl);
@@ -514,10 +514,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'uib/template/datepicker/year.html';
     },
-    require: ['^?uibDatepicker', 'uibYearpicker', '^?datepicker'],
+    require: ['^uibDatepicker', 'uibYearpicker'],
     controller: 'UibYearpickerController',
     link: function(scope, element, attrs, ctrls) {
-      var ctrl = ctrls[0] || ctrls[2];
+      var ctrl = ctrls[0];
       angular.extend(ctrl, ctrls[1]);
       ctrl.yearpickerInit();
 
