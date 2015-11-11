@@ -43,7 +43,7 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   var afterTomorrow = new Date();
-  afterTomorrow.setDate(tomorrow.getDate() + 2);
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
   $scope.events =
     [
       {
