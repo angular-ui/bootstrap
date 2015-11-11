@@ -1,145 +1,150 @@
-A clean, flexible, and fully customizable date picker.
+Our datepicker is flexible and fully customizable.
 
-User can navigate through months and years.
-The datepicker shows dates that come from other than the main month being displayed. These other dates are also selectable.
+You can navigate through days, months and years.
 
-Everything is formatted using the [date filter](http://docs.angularjs.org/api/ng.filter:date) and thus is also localized.
+It comes in two formats, an inline `uib-datepicker` and an `uib-datepicker-popup` to be embedded in an input.
 
-### Datepicker Settings ###
+The datepicker has 3 modes:
 
-All settings can be provided as attributes in the `uib-datepicker` or globally configured through the `uibDatepickerConfig`.
+* `day` - In this mode you're presented with a 6-week calendar for a specified month.
+* `month` - In this mode you can select a month within a selected year.
+* `year` - In this mode you are presented with a range of years (20 by default).
 
- * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
- 	:
- 	The date object.
+### uib-datepicker settings ###
 
- * `datepicker-mode` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: 'day')_ :
-   Current mode of the datepicker _(day|month|year)_. Can be used to initialize datepicker to specific mode.
+* `custom-class (date, mode)`
+  _(Default: `null`)_ -
+  An optional expression to add classes based on passing a date and current mode.
 
- * `min-date` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Default: null)_ :
- 	Defines the minimum available date.
+* `date-disabled (date, mode)`
+  _(Default: `null`)_ -
+  An optional expression to disable visible options based on passing a date and current mode.
 
- * `max-date` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Default: null)_ :
- 	Defines the maximum available date.
+* `datepicker-mode`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `day`)_ -
+  Current mode of the datepicker _(day|month|year)_. Can be used to initialize the datepicker in a specific mode.
 
- * `date-disabled (date, mode)`
- 	_(Default: null)_ :
- 	An optional expression to disable visible options based on passing date and current mode _(day|month|year)_.
+* `format-day`
+  _(Default: `dd`)_ -
+  Format of day in month.
 
- * `custom-class (date, mode)`
- 	_(Default: null)_ :
- 	An optional expression to add classes based on passing date and current mode _(day|month|year)_. 	
+* `format-month`
+  _(Default: `MMMM`)_ -
+  Format of month in year.
 
- * `show-weeks`
- 	_(Defaults: true)_ :
- 	Whether to display week numbers.
+* `format-year`
+  _(Default: `yyyy`)_ -
+  Format of year in year range.
 
- * `starting-day`
- 	_(Defaults: 0)_ :
- 	Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
+* `format-day-header`
+  _(Default: `EEE`)_ -
+  Format of day in week header.
 
- * `init-date`
- 	:
- 	The initial date view when no model value is specified.
+* `format-day-title`
+  _(Default: `MMMM yyyy`)_ -
+  Format of title when selecting day.
 
- * `min-mode`
-   _(Defaults: 'day')_ :
-   Set a lower limit for mode.
+* `format-month-title`
+  _(Default: `yyyy`)_ -
+  Format of title when selecting month.  
 
- * `max-mode`
-   _(Defaults: 'year')_ :
-   Set an upper limit for mode.
+* `init-date`
+  _(Default: `null`)_ -
+  The initial date view when no model value is specified.
 
- * `format-day`
- 	_(Default: 'dd')_ :
- 	Format of day in month.
+* `max-date`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `null`)_ -
+  Defines the maximum available date.
 
- * `format-month`
- 	_(Default: 'MMMM')_ :
- 	Format of month in year.
+* `max-mode`
+  _(Default: `year`)_ -
+  Sets an upper limit for mode.
 
- * `format-year`
- 	_(Default: 'yyyy')_ :
- 	Format of year in year range.
+* `min-date`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `null`)_ -
+  Defines the minimum available date.
 
- * `format-day-header`
- 	_(Default: 'EEE')_ :
- 	Format of day in week header.
+* `min-mode`
+  _(Default: `day`)_ -
+  Sets a lower limit for mode.
 
- * `format-day-title`
- 	_(Default: 'MMMM yyyy')_ :
- 	Format of title when selecting day.
+* `ng-model`
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  The date object. Needs to be a Javascript Date object.
 
- * `format-month-title`
- 	_(Default: 'yyyy')_ :
- 	Format of title when selecting month.
+* `shortcut-propagation`
+  _(Default: `false`)_ -
+  An option to disable the propagation of the keydown event.
 
- * `year-range`
- 	_(Default: 20)_ :
- 	Number of years displayed in year selection.
+* `show-weeks`
+  _(Default: `true`)_ -
+  Whether to display week numbers.
 
- * `shortcut-propagation`
-  _(Default: false)_ :
-  An option to disable or enable shortcut's event propagation.
+* `starting-day`
+  _(Default: `0`)_ -
+  Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
 
- * `template-url`
-  _(Default: 'uib/template/datepicker/datepicker.html')_ :
-  Allows overriding of default template of the datepicker
+* `template-url`
+  _(Default: `uib/template/datepicker/datepicker.html`)_ -
+  Add the ability to override the template used on the component.
 
+* `year-range`
+  _(Default: `20`)_ -
+  Number of years displayed in year selection.
 
-### Popup Settings ###
+### uib-datepicker-popup settings ###
 
-Options for datepicker can be passed as JSON using the `datepicker-options` attribute.
-Specific settings for the `uib-datepicker-popup`, that can globally configured through the `uibDatepickerPopupConfig`, are:
+Options for the uib-datepicker must be passed as JSON using the `datepicker-options` attribute. This list is only for popup settings.
 
- * `uib-datepicker-popup`
- 	_(Default: 'yyyy-MM-dd')_ :
- 	The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. `yyyy-MM-dd h 'o\'clock'`
+* `clear-text`
+  _(Default: `Clear`)_ -
+  The text to display for the clear button.
 
- * `show-button-bar`
- 	_(Default: true)_ :
- 	Whether to display a button bar underneath the datepicker.
+* `close-on-date-selection`
+  _(Default: `true`)_ -
+  Whether to close calendar when a date is chosen.
 
- * `current-text`
- 	_(Default: 'Today')_ :
- 	The text to display for the current day button.
+* `close-text`
+  _(Default: `Done`)_ -
+  The text to display for the close button.
 
- * `clear-text`
- 	_(Default: 'Clear')_ :
- 	The text to display for the clear button.
+* `current-text`
+  _(Default: `Today')_ -
+  The text to display for the current day button.
 
- * `close-text`
- 	_(Default: 'Done')_ :
- 	The text to display for the close button.
+* `datepicker-append-to-body`
+  _(Default: `false`)_ -
+  Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`.
 
- * `close-on-date-selection`
- 	_(Default: true)_ :
- 	Whether to close calendar when a date is chosen.
+* `datepicker-popup-template-url`
+  _(Default: `uib/template/datepicker/popup.html`)_ -
+  Add the ability to override the template used on the component.
 
- * `datepicker-popup-template-url`
-  _(Default: 'uib/template/datepicker/popup.html')_ :
-  Allows overriding of default template of the popup
+* `datepicker-template-url`
+  _(Default: `uib/template/datepicker/datepicker.html`)_ -
+  Add the ability to override the template used on the component (inner uib-datepicker).  
 
- * `datepicker-template-url`
-  _(Default: 'uib/template/datepicker/datepicker.html')_ :
-  Allows overriding of default template of the datepicker used in popup
+* `is-open`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether or not to show the datepicker.
 
- * `datepicker-append-to-body`
-  _(Default: false)_:
-  Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `uibDatepickerPopupConfig.appendToBody`.
+* `on-open-focus`
+  _(Default: `true`)_ -
+  Whether or not to focus the datepicker popup upon opening.
 
- * `is-open` <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: false)_:
-  Whether to show the datepicker.
+* `show-button-bar`
+  _(Default: `true`)_ -
+  Whether or not to display a button bar underneath the uib-datepicker.
 
- * `on-open-focus`
-  _(Default: true)_:
-  Whether to focus the datepicker popup upon opening.
+* `uib-datepicker-popup`
+  _(Default: `yyyy-MM-dd`)_ -
+  The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. `yyyy-MM-dd h 'o\'clock'`
 
-### Keyboard Support ###
+### Keyboard support ###
 
 Depending on datepicker's current mode, the date may refer either to day, month or year. Accordingly, the term view refers either to a month, year or year range.
 
