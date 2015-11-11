@@ -20,8 +20,12 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
   $scope.toggleMin();
   $scope.maxDate = new Date(2020, 5, 22);
 
-  $scope.open = function($event) {
-    $scope.status.opened = true;
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.open2 = function() {
+    $scope.popup2.opened = true;
   };
 
   $scope.setDate = function(year, month, day) {
@@ -36,7 +40,11 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
 
-  $scope.status = {
+  $scope.popup1 = {
+    opened: false
+  };
+
+  $scope.popup2 = {
     opened: false
   };
 
