@@ -40,7 +40,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   // Watchable date attributes
   angular.forEach(['minDate', 'maxDate'], function(key) {
     if ($attrs[key]) {
-      $scope.$parent.$watch($parse($attrs[key]), function(value) {
+      $scope.$parent.$watch($attrs[key], function(value) {
         self[key] = value ? new Date(value) : null;
         self.refreshView();
       });
@@ -51,17 +51,15 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   angular.forEach(['minMode', 'maxMode'], function(key) {
     if ($attrs[key]) {
-      $scope.$parent.$watch($parse($attrs[key]), function(value) {
-        self[key] = angular.isDefined(value) ? value : $attrs[key];
-        $scope[key] = self[key];
+      $scope.$parent.$watch($attrs[key], function(value) {
+        self[key] = $scope[key] = angular.isDefined(value) ? value : $attrs[key];
         if (key === 'minMode' && self.modes.indexOf($scope.datepickerMode) < self.modes.indexOf(self[key]) ||
           key === 'maxMode' && self.modes.indexOf($scope.datepickerMode) > self.modes.indexOf(self[key])) {
           $scope.datepickerMode = self[key];
         }
       });
     } else {
-      self[key] = datepickerConfig[key] || null;
-      $scope[key] = self[key];
+      self[key] = $scope[key] = datepickerConfig[key] || null;
     }
   });
 
@@ -82,7 +80,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   $scope.disabled = angular.isDefined($attrs.disabled) || false;
   if (angular.isDefined($attrs.ngDisabled)) {
-    $scope.$parent.$watch($parse($attrs.ngDisabled), function(disabled) {
+    $scope.$parent.$watch($attrs.ngDisabled, function(disabled) {
       $scope.disabled = disabled;
       self.refreshView();
     });
@@ -268,7 +266,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       firstDate.setDate(-numDisplayedFromPreviousMonth + 1);
     }
 
-    // 42 is the number of days on a six-month calendar
+    // 42 is the number of days on a six-week calendar
     var days = this.getDates(firstDate, 42);
     for (var i = 0; i < 42; i ++) {
       days[i] = angular.extend(this.createDateObject(days[i], this.formatDay), {
@@ -320,11 +318,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     var date = this.activeDate.getDate();
 
     if (key === 'left') {
-      date = date - 1;   // up
+      date = date - 1;
     } else if (key === 'up') {
-      date = date - 7;   // down
+      date = date - 7;
     } else if (key === 'right') {
-      date = date + 1;   // down
+      date = date + 1;
     } else if (key === 'down') {
       date = date + 7;
     } else if (key === 'pageup' || key === 'pagedown') {
@@ -378,11 +376,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     var date = this.activeDate.getMonth();
 
     if (key === 'left') {
-      date = date - 1;   // up
+      date = date - 1;
     } else if (key === 'up') {
-      date = date - 3;   // down
+      date = date - 3;
     } else if (key === 'right') {
-      date = date + 1;   // down
+      date = date + 1;
     } else if (key === 'down') {
       date = date + 3;
     } else if (key === 'pageup' || key === 'pagedown') {
@@ -433,11 +431,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     var date = this.activeDate.getFullYear();
 
     if (key === 'left') {
-      date = date - 1;   // up
+      date = date - 1;
     } else if (key === 'up') {
-      date = date - 5;   // down
+      date = date - 5;
     } else if (key === 'right') {
-      date = date + 1;   // down
+      date = date + 1;
     } else if (key === 'down') {
       date = date + 5;
     } else if (key === 'pageup' || key === 'pagedown') {
