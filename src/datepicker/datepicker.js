@@ -589,7 +589,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       throw new Error('uibDatepickerPopup must have a date format specified.');
     }
 
-    if (isHtml5DateInput && attrs.datepickerPopup) {
+    if (isHtml5DateInput && attrs.uibDatepickerPopup) {
       throw new Error('HTML5 date input types do not support custom formats.');
     }
 

@@ -1,4 +1,4 @@
-describe('datepicker directive', function() {
+describe('datepicker', function() {
   var $rootScope, $compile, $templateCache, element;
   beforeEach(module('ui.bootstrap.datepicker'));
   beforeEach(module('uib/template/datepicker/datepicker.html'));
@@ -205,8 +205,7 @@ describe('datepicker directive', function() {
       $templateCache = _$templateCache_;
     }));
 
-
-    describe('', function() {
+    describe('basic functionality', function() {
       beforeEach(function() {
         element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
         $rootScope.$digest();
@@ -1824,6 +1823,41 @@ describe('datepicker directive', function() {
         });
       });
 
+      describe('format errors', function() {
+        var originalConfig = {};
+        beforeEach(inject(function(uibDatepickerPopupConfig) {
+          angular.extend(originalConfig, uibDatepickerPopupConfig);
+          uibDatepickerPopupConfig.datepickerPopup = null;
+        }));
+        afterEach(inject(function(uibDatepickerPopupConfig) {
+          // return it to the original state
+          angular.extend(uibDatepickerPopupConfig, originalConfig);
+        }));
+
+        it('should throw an error if there is no format', function() {
+          expect(function() {
+            $compile('<div><input ng-model="date" uib-datepicker-popup><div>')($rootScope);
+          }).toThrow(new Error('uibDatepickerPopup must have a date format specified.'));
+        });
+
+        it('should throw an error if the format changes to null without fallback', function() {
+          $rootScope.format = 'dd-MMMM-yyyy';
+          $compile('<div><input ng-model="date" uib-datepicker-popup="{{format}}"><div>')($rootScope);
+          $rootScope.$digest();
+
+          expect(function() {
+            $rootScope.format = null;
+            $rootScope.$digest();
+          }).toThrow(new Error('uibDatepickerPopup must have a date format specified.'));
+        });
+
+        it('should thrown an error on date inputs with custom formats', function() {
+          expect(function() {
+            $compile('<div><input type="date" ng-model="date" uib-datepicker-popup="dd-yyyy-MMM"><div>')($rootScope);
+          }).toThrow(new Error('HTML5 date input types do not support custom formats.'));
+        });
+      });
+
       describe('european format', function() {
         it('dd.MM.yyyy', function() {
           var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup="dd.MM.yyyy"><div>')($rootScope);
@@ -2318,7 +2352,7 @@ describe('datepicker directive', function() {
               'format-month="MMM"' +
               'format-month-title="yy"' +
               'format-year="yy"' +
-              'year-range="10"></input></div>')($rootScope);
+              'year-range="10" /></div>')($rootScope);
             $rootScope.$digest();
             assignElements(wrapElement);
           });
@@ -2365,6 +2399,13 @@ describe('datepicker directive', function() {
               ['3', '4', '5', '6', '7', '8', '9']
             ]);
           });
+        });
+
+        it('should set dateDisabled on the inner datepicker', function() {
+          var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup is-open="true" date-disabled="dateDisabledHandler(date, mode)"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+          expect(dropdownEl.find('div').attr('date-disabled')).toBe('dateDisabled({ date: date, mode: mode })');
         });
       });
     });
