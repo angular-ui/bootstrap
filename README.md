@@ -95,7 +95,7 @@ https://github.com/angular-ui/bootstrap/wiki/FAQ
 
 # Code of Conduct
 
-Take a moment to read or [Code of Conduct](CODE_OF_CONDUCT.md)
+Take a moment to read our [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## PREFIX MIGRATION GUIDE
 
