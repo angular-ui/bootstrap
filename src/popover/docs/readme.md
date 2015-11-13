@@ -18,8 +18,22 @@ The popover directives provides several optional attributes to control how it
 will display:
 
 - `popover-title`: A string to display as a fancy title.
-- `popover-placement`: Where to place it? Defaults to "top", but also accepts
-  "bottom", "left", "right".
+- `popover-placement`: Where to place it? Defaults to "top". Passing in 'auto' seperated by a space before the placement will
+  enable auto positioning, e.g: "auto bottom-left". The popover will attempt to position where it fits in
+  the closest scrollable ancestor. Accepts:
+
+   - "top" - popover on top, horizontally centered on host element.
+   - "top-left" - popover on top, left edge aligned with host element left edge.
+   - "top-right" - popover on top, right edge aligned with host element right edge.
+   - "bottom" - popover on bottom, horizontally centered on host element.
+   - "bottom-left" - popover on bottom, left edge aligned with host element left edge.
+   - "bottom-right" - popover on bottom, right edge aligned with host element right edge.
+   - "left" - popover on left, vertically centered on host element.
+   - "left-top" - popover on left, top edge aligned with host element top edge.
+   - "left-bottom" - popover on left, bottom edge aligned with host element bottom edge.
+   - "right" - popover on right, vertically centered on host element.
+   - "right-top" - popover on right, top edge aligned with host element top edge.
+   - "right-bottom" - popover on right, bottom edge aligned with host element bottom edge.
 - `popover-animation`: Should it fade in and out? Defaults to "true".
 - `popover-popup-delay`: For how long should the user have to have the mouse
   over the element before the popover shows (in milliseconds)? Defaults to 0.

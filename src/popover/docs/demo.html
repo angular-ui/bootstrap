@@ -25,11 +25,12 @@
     </script>
     <hr />
     <h4>Positional</h4>
-    <button popover-placement="top" uib-popover="On the Top!" type="button" class="btn btn-default">Top</button>
-    <button popover-placement="left" uib-popover="On the Left!" type="button" class="btn btn-default">Left</button>
-    <button popover-placement="right" uib-popover="On the Right!" type="button" class="btn btn-default">Right</button>
-    <button popover-placement="bottom" uib-popover="On the Bottom!" type="button" class="btn btn-default">Bottom</button>
-    
+    <div class="form-group">
+      <label>Popover placement</label>
+      <select class="form-control" ng-model="placement.selected" ng-options="o as o for o in placement.options"></select>
+    </div>
+    <button popover-placement="{{placement.selected}}" uib-popover="On the {{placement.selected}}" type="button" class="btn btn-default">Popover {{placement.selected}}</button>
+
     <hr />
     <h4>Triggers</h4>
     <p>

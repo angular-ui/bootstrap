@@ -14,8 +14,22 @@ There are three versions of the tooltip: `uib-tooltip`, `uib-tooltip-template`, 
 The tooltip directives provide several optional attributes to control how they
 will display:
 
-- `tooltip-placement`: Where to place it? Defaults to "top", but also accepts
-  "bottom", "left", "right".
+- `tooltip-placement`: Where to place it? Defaults to "top". Passing in 'auto' seperated by a space before the placement will
+  enable auto positioning, e.g: "auto bottom-left". The tooltip will attempt to position where it fits in
+  the closest scrollable ancestor. Accepts:
+
+   - "top" - tooltip on top, horizontally centered on host element.
+   - "top-left" - tooltip on top, left edge aligned with host element left edge.
+   - "top-right" - tooltip on top, right edge aligned with host element right edge.
+   - "bottom" - tooltip on bottom, horizontally centered on host element.
+   - "bottom-left" - tooltip on bottom, left edge aligned with host element left edge.
+   - "bottom-right" - tooltip on bottom, right edge aligned with host element right edge.
+   - "left" - tooltip on left, vertically centered on host element.
+   - "left-top" - tooltip on left, top edge aligned with host element top edge.
+   - "left-bottom" - tooltip on left, bottom edge aligned with host element bottom edge.
+   - "right" - tooltip on right, vertically centered on host element.
+   - "right-top" - tooltip on right, top edge aligned with host element top edge.
+   - "right-bottom" - tooltip on right, bottom edge aligned with host element bottom edge.
 - `tooltip-animation`: Should it fade in and out? Defaults to "true".
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
@@ -60,11 +74,12 @@ methods are available:
 - `setTriggers(obj)`: Extends the default trigger mappings mentioned above
   with mappings of your own. E.g. `{ 'openTrigger': 'closeTrigger' }`.
 - `options(obj)`: Provide a set of defaults for certain tooltip and popover
-  attributes. Currently supports 'placement', 'animation', 'popupDelay', and
+  attributes. Currently supports 'placement', 'placementClassPrefix', 'animation', 'popupDelay', and
   `appendToBody`. Here are the defaults:
 
   <pre>
   placement: 'top',
+  placementClassPrefix: '',
   animation: true,
   popupDelay: 0,
   popupCloseDelay: 500,

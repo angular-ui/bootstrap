@@ -13,6 +13,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
   // The default options tooltip and popover.
   var defaultOptions = {
     placement: 'top',
+    placementClassPrefix: '',
     animation: true,
     popupDelay: 0,
     popupCloseDelay: 0,
@@ -158,11 +159,32 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                   tooltip.css({ top: 0, left: 0 });
 
                   // Now set the calculated positioning.
-                  var ttCss = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
-                  ttCss.top += 'px';
-                  ttCss.left += 'px';
-                  ttCss.visibility = 'visible';
-                  tooltip.css(ttCss);
+                  var ttPosition = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
+                  tooltip.css({ top: ttPosition.top + 'px', left: ttPosition.left + 'px', visibility: 'visible' });
+
+                  // If the placement class is prefixed, still need
+                  // to remove the TWBS standard class.
+                  if (options.placementClassPrefix) {
+                    tooltip.removeClass('top bottom left right');
+                  }
+
+                  tooltip.removeClass(
+                    options.placementClassPrefix + 'top ' +
+                    options.placementClassPrefix + 'top-left ' +
+                    options.placementClassPrefix + 'top-right ' +
+                    options.placementClassPrefix + 'bottom ' +
+                    options.placementClassPrefix + 'bottom-left ' +
+                    options.placementClassPrefix + 'bottom-right ' +
+                    options.placementClassPrefix + 'left ' +
+                    options.placementClassPrefix + 'left-top ' +
+                    options.placementClassPrefix + 'left-bottom ' +
+                    options.placementClassPrefix + 'right ' +
+                    options.placementClassPrefix + 'right-top ' +
+                    options.placementClassPrefix + 'right-bottom');
+
+                  var placement = ttPosition.placement.split('-');
+                  tooltip.addClass(placement[0], options.placementClassPrefix + ttPosition.placement);
+                  $position.positionArrow(tooltip, ttPosition.placement);
 
                   positionTimeout = null;
                 }, 0, false);
@@ -608,12 +630,20 @@ function ($animate, $sce, $compile, $templateRequest) {
  * They must not be animated as they're expected to be present on the tooltip on
  * initialization.
  */
-.directive('uibTooltipClasses', function() {
+.directive('uibTooltipClasses', ['$uibPosition', function($uibPosition) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
+      // need to set the primary position so the
+      // arrow has space during position measure.
+      // tooltip.positionTooltip()
       if (scope.placement) {
-        element.addClass(scope.placement);
+        // // There are no top-left etc... classes
+        // // in TWBS, so we need the primary position.
+        var position = $uibPosition.parsePlacement(scope.placement);
+        element.addClass(position[0]);
+      } else {
+        element.addClass('top');
       }
 
       if (scope.popupClass) {
@@ -625,7 +655,7 @@ function ($animate, $sce, $compile, $templateRequest) {
       }
     }
   };
-})
+}])
 
 .directive('uibTooltipPopup', function() {
   return {

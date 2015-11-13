@@ -1,0 +1,34 @@
+<div ng-controller="PositionDemoCtrl">
+  <h4>$uibPosition service</h4>
+  <div id="posdemoparent" ng-style="{'overflow': (parentScrollable && 'scroll'), 'position': (parentRelative && 'relative')}" style="border: 1px solid #ccc; padding: 15px;">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="parentScrollable"> Parent scrollable
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="parentRelative"> Parent relative
+      </label>
+    </div>
+    <button id="posdemobtn" class="btn btn-default" ng-click="getValues()">Get values</button>
+
+    <div id="posdemodiv" style="width: 100px; height: 100px; margin: 15px 0; padding: 10px; background-color: #f8f8f8; border: 1px solid #ccc;">
+      Demo element
+    </div>
+  </div>
+  <br />
+  offsetParent: {{elemVals.offsetParent}}
+  <br />
+  scrollParent: {{elemVals.scrollParent}}
+  <br />
+  scrollbarWidth: {{scrollbarWidth}}
+  <br />
+  position: {{elemVals.position}}
+  <br />
+  offset: {{elemVals.offset}}
+  <br />
+  viewportOffset: {{elemVals.viewportOffset}}
+  <br />
+  positionElements: {{elemVals.positionElements}}
+</div>
