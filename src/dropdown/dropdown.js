@@ -264,11 +264,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       scope.isOpen = false;
     }
   });
-
-  var offDestroy = $scope.$on('$destroy', function() {
-    scope.$destroy();
-  });
-  scope.$on('$destroy', offDestroy);
 }])
 
 .directive('uibDropdown', function() {
