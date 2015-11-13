@@ -30,10 +30,6 @@ describe('uib-dropdown', function() {
     element.trigger(e);
   };
 
-  var isFocused = function(elm) {
-    return elm[0] === document.activeElement;
-  };
-
   describe('basic', function() {
     function dropdown() {
       return $compile('<li uib-dropdown><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
@@ -44,78 +40,78 @@ describe('uib-dropdown', function() {
     });
 
     it('should toggle on `a` click', function() {
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
     it('should toggle when an option is clicked', function() {
       $document.find('body').append(element);
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
 
       var optionEl = element.find('ul > li').eq(0).find('a').eq(0);
       optionEl.click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
     it('should close on document click', function() {
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       $document.click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
     it('should close on escape key & focus toggle element', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
       triggerKeyDown($document, 27);
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
-      expect(isFocused(element.find('a'))).toBe(true);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
+      expect(element.find('a')).toHaveFocus();
     });
 
     it('should not close on backspace key', function() {
       clickDropdownToggle();
       triggerKeyDown($document, 8);
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
     });
 
     it('should close on $location change', function() {
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       $rootScope.$broadcast('$locationChangeSuccess');
       $rootScope.$apply();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
     it('should only allow one dropdown to be open at once', function() {
       var elm1 = dropdown();
       var elm2 = dropdown();
-      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
-      expect(elm2.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm1).not.toHaveClass(dropdownConfig.openClass);
+      expect(elm2).not.toHaveClass(dropdownConfig.openClass);
 
       clickDropdownToggle( elm1 );
-      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
-      expect(elm2.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm1).toHaveClass(dropdownConfig.openClass);
+      expect(elm2).not.toHaveClass(dropdownConfig.openClass);
 
       clickDropdownToggle( elm2 );
-      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
-      expect(elm2.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(elm1).not.toHaveClass(dropdownConfig.openClass);
+      expect(elm2).toHaveClass(dropdownConfig.openClass);
     });
 
     it('should not toggle if the element has `disabled` class', function() {
       var elm = $compile('<li uib-dropdown><a class="disabled" uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
       clickDropdownToggle( elm );
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm).not.toHaveClass(dropdownConfig.openClass);
     });
 
     it('should not toggle if the element is disabled', function() {
       var elm = $compile('<li uib-dropdown><button disabled="disabled" uib-dropdown-toggle></button><ul><li>Hello</li></ul></li>')($rootScope);
       elm.find('button').click();
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm).not.toHaveClass(dropdownConfig.openClass);
     });
 
     it('should not toggle if the element has `ng-disabled` as true', function() {
@@ -123,12 +119,12 @@ describe('uib-dropdown', function() {
       var elm = $compile('<li uib-dropdown><div ng-disabled="isdisabled" uib-dropdown-toggle></div><ul><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
       elm.find('div').click();
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm).not.toHaveClass(dropdownConfig.openClass);
 
       $rootScope.isdisabled = false;
       $rootScope.$digest();
       elm.find('div').click();
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(elm).toHaveClass(dropdownConfig.openClass);
     });
 
     it('should unbind events on scope destroy', function() {
@@ -138,13 +134,13 @@ describe('uib-dropdown', function() {
 
       var buttonEl = elm.find('button');
       buttonEl.click();
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(elm).toHaveClass(dropdownConfig.openClass);
       buttonEl.click();
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm).not.toHaveClass(dropdownConfig.openClass);
 
       $scope.$destroy();
       buttonEl.click();
-      expect(elm.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(elm).not.toHaveClass(dropdownConfig.openClass);
     });
 
     // issue 270
@@ -152,11 +148,11 @@ describe('uib-dropdown', function() {
       var checkboxEl = $compile('<input type="checkbox" ng-click="clicked = true" />')($rootScope);
       $rootScope.$digest();
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
       expect($rootScope.clicked).toBeFalsy();
 
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       expect($rootScope.clicked).toBeFalsy();
 
       checkboxEl.click();
@@ -178,13 +174,13 @@ describe('uib-dropdown', function() {
     // pr/issue 3274
     it('should not raise $digest:inprog if dismissed during a digest cycle', function() {
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
 
       $rootScope.$apply(function() {
         $document.click();
       });
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
   });
 
@@ -260,11 +256,11 @@ describe('uib-dropdown', function() {
     it('toggles open class on container', function() {
       var container = $document.find('#dropdown-container');
 
-      expect(container.hasClass('uib-dropdown-open')).toBe(false);
+      expect(container).not.toHaveClass('uib-dropdown-open');
       element.find('[uib-dropdown-toggle]').click();
-      expect(container.hasClass('uib-dropdown-open')).toBe(true);
+      expect(container).toHaveClass('uib-dropdown-open');
       element.find('[uib-dropdown-toggle]').click();
-      expect(container.hasClass('uib-dropdown-open')).toBe(false);
+      expect(container).not.toHaveClass('uib-dropdown-open');
     });
 
     it('removes the menu when the dropdown is removed', function() {
@@ -293,10 +289,10 @@ describe('uib-dropdown', function() {
     it('should close without errors on $location change', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var optionEl = element.find('ul > li').eq(0).find('a').eq(0);
       optionEl.click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
   });
 
@@ -309,7 +305,7 @@ describe('uib-dropdown', function() {
       });
 
       it('should be open initially', function() {
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
       });
 
       it('should change `is-open` binding when toggles', function() {
@@ -320,7 +316,7 @@ describe('uib-dropdown', function() {
       it('should toggle when `is-open` changes', function() {
         $rootScope.isopen = false;
         $rootScope.$digest();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
 
       it('focus toggle element when opening', function() {
@@ -328,10 +324,10 @@ describe('uib-dropdown', function() {
         clickDropdownToggle();
         $rootScope.isopen = false;
         $rootScope.$digest();
-        expect(isFocused(element.find('a'))).toBe(false);
+        expect(element.find('a')).not.toHaveFocus();
         $rootScope.isopen = true;
         $rootScope.$digest();
-        expect(isFocused(element.find('a'))).toBe(true);
+        expect(element.find('a')).toHaveFocus();
       });
     });
 
@@ -343,13 +339,13 @@ describe('uib-dropdown', function() {
       });
 
       it('should be open initially', function() {
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
       });
 
       it('should toggle when `is-open` changes', function() {
         $rootScope.isopen = false;
         $rootScope.$digest();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
     });
   });
@@ -449,17 +445,17 @@ describe('uib-dropdown', function() {
       it('should close on document click if no auto-close is specified', function() {
         element = dropdown();
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         $document.click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
 
       it('should close on document click if empty auto-close is specified', function() {
         element = dropdown('');
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         $document.click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
     });
 
@@ -467,9 +463,9 @@ describe('uib-dropdown', function() {
       it('auto-close="disabled"', function() {
         element = dropdown('disabled');
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         $document.click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
       });
 
       it('control with is-open', function() {
@@ -477,22 +473,22 @@ describe('uib-dropdown', function() {
         element = $compile('<li uib-dropdown is-open="isopen" auto-close="disabled"><a href uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
 
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         //should remain open
         $document.click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         //now should close
         $rootScope.isopen = false;
         $rootScope.$digest();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
 
       it('should close anyway if toggle is clicked', function() {
         element = dropdown('disabled');
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
 
       it('should close anyway if esc is pressed', function() {
@@ -500,31 +496,31 @@ describe('uib-dropdown', function() {
         $document.find('body').append(element);
         clickDropdownToggle();
         triggerKeyDown($document, 27);
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
-        expect(isFocused(element.find('a'))).toBe(true);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
+        expect(element.find('a')).toHaveFocus();
       });
 
       it('should close anyway if another dropdown is opened', function() {
         var elm1 = dropdown('disabled');
         var elm2 = dropdown();
-        expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
-        expect(elm2.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(elm1).not.toHaveClass(dropdownConfig.openClass);
+        expect(elm2).not.toHaveClass(dropdownConfig.openClass);
         clickDropdownToggle(elm1);
-        expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
-        expect(elm2.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(elm1).toHaveClass(dropdownConfig.openClass);
+        expect(elm2).not.toHaveClass(dropdownConfig.openClass);
         clickDropdownToggle(elm2);
-        expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
-        expect(elm2.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(elm1).not.toHaveClass(dropdownConfig.openClass);
+        expect(elm2).toHaveClass(dropdownConfig.openClass);
       });
 
       it('should not close on $locationChangeSuccess if auto-close="disabled"', function() {
         var elm1 = dropdown('disabled');
-        expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(elm1).not.toHaveClass(dropdownConfig.openClass);
         clickDropdownToggle(elm1);
-        expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(elm1).toHaveClass(dropdownConfig.openClass);
         $rootScope.$broadcast('$locationChangeSuccess');
         $rootScope.$digest();
-        expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(elm1).toHaveClass(dropdownConfig.openClass);
       });
     });
 
@@ -532,22 +528,22 @@ describe('uib-dropdown', function() {
       it('should close only on a click outside of the dropdown menu', function() {
         element = dropdown('outsideClick');
         clickDropdownToggle();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         element.find('ul li a').click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        expect(element).toHaveClass(dropdownConfig.openClass);
         $document.click();
-        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+        expect(element).not.toHaveClass(dropdownConfig.openClass);
       });
 
       it('should work with dropdown-append-to-body', function() {
         element = $compile('<li uib-dropdown dropdown-append-to-body auto-close="outsideClick"><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
         clickDropdownToggle();
         var dropdownMenu = $document.find('#dropdown-menu');
-        expect(dropdownMenu.parent().hasClass(dropdownConfig.appendToOpenClass)).toBe(true);
+        expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
         dropdownMenu.find('li').eq(0).trigger('click');
-        expect(dropdownMenu.parent().hasClass(dropdownConfig.appendToOpenClass)).toBe(true);
+        expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
         $document.click();
-        expect(dropdownMenu.parent().hasClass(dropdownConfig.appendToOpenClass)).toBe(false);
+        expect(dropdownMenu.parent()).not.toHaveClass(dropdownConfig.appendToOpenClass);
       });
     });
   });
@@ -565,18 +561,18 @@ describe('uib-dropdown', function() {
       clickDropdownToggle();
       triggerKeyDown($document, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var optionEl = element.find('ul').eq(0).find('a').eq(0);
-      expect(isFocused(optionEl)).toBe(true);
+      expect(optionEl).toHaveFocus();
     });
 
     it('should not focus first list element when down arrow pressed if closed', function() {
       $document.find('body').append(element);
       triggerKeyDown($document, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
-      expect(isFocused(focusEl)).toBe(false);
+      expect(focusEl).not.toHaveFocus();
     });
 
     it('should focus second list element when down arrow pressed twice', function() {
@@ -585,19 +581,19 @@ describe('uib-dropdown', function() {
       triggerKeyDown($document, 40);
       triggerKeyDown($document, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
-      expect(isFocused(focusEl)).toBe(true);
+      expect(focusEl).toHaveFocus();
     });
 
     it('should not focus first list element when up arrow pressed after dropdown toggled', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
 
       triggerKeyDown($document, 38);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
-      expect(isFocused(focusEl)).toBe(false);
+      expect(focusEl).not.toHaveFocus();
     });
 
     it('should focus last list element when up arrow pressed after dropdown toggled', function() {
@@ -605,9 +601,9 @@ describe('uib-dropdown', function() {
       clickDropdownToggle();
       triggerKeyDown($document, 38);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
-      expect(isFocused(focusEl)).toBe(true);
+      expect(focusEl).toHaveFocus();
     });
 
     it('should not change focus when other keys are pressed', function() {
@@ -615,10 +611,10 @@ describe('uib-dropdown', function() {
       clickDropdownToggle();
       triggerKeyDown($document, 37);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a');
-      expect(isFocused(focusEl[0])).toBe(false);
-      expect(isFocused(focusEl[1])).toBe(false);
+      expect(focusEl[0]).not.toHaveFocus();
+      expect(focusEl[1]).not.toHaveFocus();
     });
 
     it('should focus first list element when down arrow pressed 2x and up pressed 1x', function() {
@@ -629,9 +625,9 @@ describe('uib-dropdown', function() {
 
       triggerKeyDown($document, 38);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
-      expect(isFocused(focusEl)).toBe(true);
+      expect(focusEl).toHaveFocus();
     });
 
     it('should stay focused on final list element if down pressed at list end', function() {
@@ -640,12 +636,12 @@ describe('uib-dropdown', function() {
       triggerKeyDown($document, 40);
       triggerKeyDown($document, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
-      expect(isFocused(focusEl)).toBe(true);
+      expect(focusEl).toHaveFocus();
 
       triggerKeyDown($document, 40);
-      expect(isFocused(focusEl)).toBe(true);
+      expect(focusEl).toHaveFocus();
     });
 
     it('should close if esc is pressed while focused', function() {
@@ -655,12 +651,12 @@ describe('uib-dropdown', function() {
 
       triggerKeyDown($document, 40);
 
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
-      expect(isFocused(focusEl)).toBe(true);
+      expect(focusEl).toHaveFocus();
 
       triggerKeyDown($document, 27);
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
     describe('with dropdown-append-to-body', function() {
@@ -679,9 +675,9 @@ describe('uib-dropdown', function() {
 
         var dropdownMenu = $document.find('#dropdown-menu');
 
-        expect(dropdownMenu.parent().hasClass(dropdownConfig.appendToOpenClass)).toBe(true);
+        expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
         var focusEl = $document.find('ul').eq(0).find('a');
-        expect(isFocused(focusEl)).toBe(true);
+        expect(focusEl).toHaveFocus();
       });
 
       it('should focus second list element when down arrow pressed twice', function() {
@@ -691,11 +687,11 @@ describe('uib-dropdown', function() {
 
         var dropdownMenu = $document.find('#dropdown-menu');
 
-        expect(dropdownMenu.parent().hasClass(dropdownConfig.appendToOpenClass)).toBe(true);
+        expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
         var elem1 = $document.find('ul');
         var elem2 = elem1.find('a');
         var focusEl = $document.find('ul').eq(0).find('a').eq(1);
-        expect(isFocused(focusEl)).toBe(true);
+        expect(focusEl).toHaveFocus();
       });
     });
   });
