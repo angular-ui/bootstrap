@@ -547,7 +547,7 @@ describe('dropdownToggle', function() {
 
   describe('`keyboard-nav` option', function() {
     function dropdown() {
-      return $compile('<li uib-dropdown uib-keyboard-nav><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown keyboard-nav><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
     }
     beforeEach(function() {
       element = dropdown();
@@ -586,7 +586,7 @@ describe('dropdownToggle', function() {
 
   describe('`keyboard-nav` option', function() {
     function dropdown() {
-      return $compile('<li uib-dropdown uib-keyboard-nav><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown keyboard-nav><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
     }
     beforeEach(function() {
       element = dropdown();
@@ -699,7 +699,7 @@ describe('dropdownToggle', function() {
 
   describe('`keyboard-nav` option with `dropdown-append-to-body` option', function() {
     function dropdown() {
-      return $compile('<li uib-dropdown dropdown-append-to-body uib-keyboard-nav><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown dropdown-append-to-body keyboard-nav><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -709,7 +709,7 @@ describe('dropdownToggle', function() {
     it('should focus first list element when down arrow pressed', function() {
       clickDropdownToggle();
 
-      triggerKeyDown(element, 40);
+      triggerKeyDown($document, 40);
 
       var dropdownMenu = $document.find('#dropdown-menu');
 
@@ -720,8 +720,8 @@ describe('dropdownToggle', function() {
 
     it('should focus second list element when down arrow pressed twice', function() {
       clickDropdownToggle();
-      triggerKeyDown(element, 40);
-      triggerKeyDown(element, 40);
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
 
       var dropdownMenu = $document.find('#dropdown-menu');
 
