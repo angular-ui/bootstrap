@@ -22,6 +22,12 @@ describe('$uibModal', function () {
           scope.text = ctrl.text;
         }
       };
+    }).directive('focusMe', function() {
+      return {
+        link: function(scope, elem, attrs) {
+          elem.focus();
+        }
+      };
     });
   }));
 
@@ -403,6 +409,24 @@ describe('$uibModal', function () {
         $animate.flush();
         $rootScope.$digest();
         expect(angular.element('#auto-focus-element')).toHaveFocus();
+
+        close(modal, 'closed ok');
+
+        expect(modal.result).toBeResolvedWith('closed ok');
+      }
+
+      openAndCloseModalWithAutofocusElement();
+      openAndCloseModalWithAutofocusElement();
+    });
+
+    it('should not focus on the element that has autofocus attribute when the modal is opened and something in the modal already has focus and the animations have finished', function() {
+      function openAndCloseModalWithAutofocusElement() {
+
+        var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus><input type="text" id="pre-focus-element" focus-me></div>'});
+        $animate.flush();
+        $rootScope.$digest();
+        expect(angular.element('#auto-focus-element')).not.toHaveFocus();
+        expect(angular.element('#pre-focus-element')).toHaveFocus();
 
         close(modal, 'closed ok');
 
@@ -846,7 +870,7 @@ describe('$uibModal', function () {
         expect($document.find('.modal-backdrop')).not.toHaveClass('fade');
       });
     });
-    
+
     describe('appendTo', function() {
       it('should be added to body by default', function() {
         var modal = open({template: '<div>Content</div>'});
