@@ -5,7 +5,7 @@ angular.module('ui.bootstrap.timepicker', [])
   minuteStep: 1,
   secondStep: 1,
   showMeridian: true,
-  showSeconds:false,
+  showSeconds: false,
   meridians: null,
   readonlyInput: false,
   mousewheel: true,
