@@ -26,7 +26,7 @@
     "block-scoped-var": 2,
     "complexity": 2,
     "curly": 2,
-    "dot-notation": 2,
+    "dot-notation": [2, {"allowKeywords": false}],
     "eqeqeq": 2,
     "guard-for-in": 2,
     "semi": 2,
