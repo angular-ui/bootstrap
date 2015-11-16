@@ -1,21 +1,48 @@
-
 Dropdown is a simple directive which will toggle a dropdown menu on click or programmatically.
-You can either use `is-open` to toggle or add inside a `<a uib-dropdown-toggle>` element to toggle it when is clicked.
-There is also the `on-toggle(open)` optional expression fired when dropdown changes state.
 
-Add `dropdown-append-to-body` to the `uib-dropdown` element to append to the inner `dropdown-menu` to the body.
-This is useful when the dropdown button is inside a div with `overflow: hidden`, and the menu would otherwise be hidden.
+This directive is composed by three parts:
 
-Pass an [angular.element](https://docs.angularjs.org/api/ng/function/angular.element) object as the `dropdown-append-to` attribute on the `dropdown` element to append the inner `dropdown-menu` to the passed in element. This is particularly useful when appending to the body element isn't possible, perhaps because the dropdown button is enclosed in a scrollable container. Explore the demo on the left to see this in action. Expand the three different dropdowns and try scrolling inside the containing element.
+* `uib-dropdown` which transforms a node into a dropdown.
+* `uib-dropdown-toggle` which allows the dropdown to be toggled via click. This directive is optional.
+* `uib-dropdown-menu` which transforms a node into the popup menu.
 
-Add `uib-keyboard-nav` to the `uib-dropdown` element to enable navigation of dropdown list elements with the arrow keys.
+### uib-dropdown settings
 
-By default the dropdown will automatically close if any of its elements is clicked, you can change this behavior by setting the `auto-close` option as follows:
+* `append-to`
+  _(Default: `null`)_ -
+  Appends the inner dropdown-menu to an arbitrary DOM element.
 
-  * `always` - (Default) automatically closes the dropdown when any of its elements is clicked.
-  * `outsideClick` - closes the dropdown automatically only when the user clicks any element outside the dropdown.
-  * `disabled` - disables the auto close. You can then control the open/close status of the dropdown manually, by using `is-open`. Please notice that the dropdown will still close if the toggle is clicked, the `esc` key is pressed or another dropdown is open. The dropdown will no longer close on `$locationChangeSuccess` events.
+* `auto-close`
+  _(Default: `always`)_ -
+  Controls the behavior of the menu when clicked.
+  * `always` - Automatically closes the dropdown when any of its elements is clicked.
+  * `disabled` - Disables the auto close. You can control it manually with `is-open`. It still gets closed if the toggle is clicked, `esc` is pressed or another dropdown is open. It also won't be closed on `$locationchangeSuccess`.
+  * `outsideClick` - Closes the dropdown automatically only when the user clicks any element outside the dropdown.
+  
+* `append-to-body`
+  _(Default: `false`)_ -
+  Appends the inner dropdown-menu to the body element.
 
-Optionally, you may specify a template for the dropdown menu using the `template-url` attribute. This is especially useful when you have multiple similar dropdowns in a repeater and you want to keep your HTML output lean and your number of scopes to a minimum. The template has full access to the scope in which the dropdown lies.
+* `is-open`
+  _(Default: `false`)_ -
+  Defines whether or not the dropdown-menu is open. The `uib-dropdown-toggle` will toggle this attribute on click.
+  
+* `keyboard-nav`:
+  _(Default: `false`)_ -
+  Enables navigation of dropdown list elements with the arrow keys.
+  
+### uib-dropdown-menu settings
 
-Example: `<ul class="uib-dropdown-menu" template-url="custom-dropdown.html"></ul>`.
+* `template-url`
+  _(Default: `none`)_ -
+  You may specify a template for the dropdown menu. Check the demos for an example.
+  
+### Default settings `uibDropdownConfig`
+
+* `appendToOpenClass`
+  _(Default: `uib-dropdown-open`)_ -
+  Class to apply when the dropdown is open and appended to a different DOM element.
+  
+* `openClass`
+  _(Default: `open`)_ -
+  Class to apply when the dropdown is open.
