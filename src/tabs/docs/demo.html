@@ -33,6 +33,17 @@
     cursor: pointer;
   }
 
+  .nav-tabs > li.disabled > div { 
+    color: #999; 
+  }
+
+  .nav-tabs>li.disabled>div:hover, .nav-tabs>li.disabled>div:focus {
+    color: #999;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: not-allowed;
+  }
+
   form.tab-form-demo .tab-pane {
     margin: 20px 20px;
   }
