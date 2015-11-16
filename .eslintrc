@@ -29,6 +29,7 @@
     "dot-notation": 2,
     "eqeqeq": 2,
     "guard-for-in": 2,
+    "semi": 2,
     "no-alert": 2,
     "no-caller": 2,
     "no-case-declarations": 2,
