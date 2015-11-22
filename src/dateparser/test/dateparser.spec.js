@@ -310,23 +310,20 @@ describe('date parser', function() {
 
   describe('with value literals', function() {
     it('should work with multiple literals', function() {
-      expect(dateParser.parse('29 de January de 2013', 'd \'de\' MMMM \'de\' y')).toEqual(new Date(2013, 0, 29));
+      expect(dateParser.parse('29 de January de 2013', 'd `de` MMMM `de` y')).toEqual(new Date(2013, 0, 29));
+      expect(dateParser.parse('22.March.15 12 o\'clock', 'd.MMMM.yy h `o\'clock`')).toEqual(new Date(2015, 2, 22, 12));
     });
 
-    it('should work with escaped single quote', function() {
-      expect(dateParser.parse('22.March.15 12 o\'clock', 'd.MMMM.yy h \'o\'\'clock\'')).toEqual(new Date(2015, 2, 22, 12));
-    });
-
-    it('should work with only a single quote', function() {
-      expect(dateParser.parse('22.March.15 \'', 'd.MMMM.yy \'\'\'')).toEqual(new Date(2015, 2, 22));
+    it('should work with only a backtick', function() {
+      expect(dateParser.parse('22.March.15 `', 'd.MMMM.yy `\`\``')).toEqual(new Date(2015, 2, 22));
     });
 
     it('should work with trailing literal', function() {
-      expect(dateParser.parse('year 2013', '\'year\' y')).toEqual(new Date(2013, 0, 1));
+      expect(dateParser.parse('year 2013', '`year` y')).toEqual(new Date(2013, 0, 1));
     });
 
     it('should work without whitespace', function() {
-      expect(dateParser.parse('year:2013', '\'year:\'y')).toEqual(new Date(2013, 0, 1));
+      expect(dateParser.parse('year:2013', '`year:`y')).toEqual(new Date(2013, 0, 1));
     });
   });
 

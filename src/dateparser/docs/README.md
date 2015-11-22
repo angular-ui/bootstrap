@@ -140,3 +140,5 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
 \* The ones marked with `Leading 0`, needs a leading 0 for values less than 10. Exception being milliseconds which needs it for values under 100.
 
 \** It also supports `fullDate|longDate|medium|mediumDate|mediumTime|short|shortDate|shortTime` as the format for parsing.
+
+\*** It supports template literals as a string between the backtick `\`` character, i.e. `\`The Date is\` MM/DD/YYYY`. If one wants the literal backtick character, one must use `\`\`\`\``.
