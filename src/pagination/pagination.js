@@ -24,7 +24,7 @@ angular.module('ui.bootstrap.pagination', [])
 
     $scope.$watch('totalItems', function(newTotal, oldTotal) {
       if (angular.isDefined(newTotal) || newTotal !== oldTotal) {
-      $scope.totalPages = self.calculateTotalPages();
+        $scope.totalPages = self.calculateTotalPages();
         updatePage();
       }
     });
