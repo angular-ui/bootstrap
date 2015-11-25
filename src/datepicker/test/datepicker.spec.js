@@ -2339,6 +2339,51 @@ describe('datepicker', function() {
         });
       });
 
+      describe('altInputFormats', function() {
+        describe('datepickerPopupConfig.altInputFormats', function() {
+          var originalConfig = {};
+          beforeEach(inject(function(uibDatepickerPopupConfig) {
+            angular.extend(originalConfig, uibDatepickerPopupConfig);
+            uibDatepickerPopupConfig.datepickerPopup = 'MM-dd-yyyy';
+            uibDatepickerPopupConfig.altInputFormats = ['M!/d!/yyyy'];
+
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+          }));
+
+          afterEach(inject(function(uibDatepickerPopupConfig) {
+            // return it to the original state
+            angular.extend(uibDatepickerPopupConfig, originalConfig);
+          }));
+
+          it('changes date format', function() {
+            changeInputValueTo(inputEl, '11/8/1980');
+
+            expect($rootScope.date.getFullYear()).toEqual(1980);
+            expect($rootScope.date.getMonth()).toEqual(10);
+            expect($rootScope.date.getDate()).toEqual(8);
+          });
+        });
+
+        describe('attribute `alt-input-formats`', function() {
+          beforeEach(function() {
+            $rootScope.date = new Date('November 9, 1980');
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup="MMMM d yyyy" alt-input-formats="[\'M!/d!/yyyy\']" is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+          });
+
+          it('should accept alternate input formats', function() {
+            changeInputValueTo(inputEl, '11/8/1980');
+
+            expect($rootScope.date.getFullYear()).toEqual(1980);
+            expect($rootScope.date.getMonth()).toEqual(10);
+            expect($rootScope.date.getDate()).toEqual(8);
+          });
+        });
+      });
+
       describe('pass through attributes', function() {
         var wrapElement;
         describe('formatting', function() {
