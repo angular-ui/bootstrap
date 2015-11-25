@@ -41,8 +41,8 @@ will display:
   after the close trigger event? Defaults to 0.
 - `popover-trigger`: What should trigger the show of the popover? See the
   `tooltip` directive for supported values.
-- `popover-append-to-body`: Should the tooltip be appended to `$body` instead of
-  the parent element?
+- `popover-append-to-body`_(Default: false)_: Should the popover be appended to `$body` instead of
+  the parent element?  Note that the presence of this attribute without a value implies `true`.
 - `popover-is-open` <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: false)_:
   Whether to show the popover.

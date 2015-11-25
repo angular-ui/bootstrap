@@ -39,8 +39,8 @@ will display:
   Note: this attribute is no longer observable. See `tooltip-enable`.
 - `tooltip-enable`: Is it enabled? It will enable or disable the configured
   `tooltip-trigger`.
-- `tooltip-append-to-body`: Should the tooltip be appended to `$body` instead of
-  the parent element?
+- `tooltip-append-to-body`_(Default: false)_: Should the tooltip be appended to `$body` instead of
+  the parent element?  Note that the presence of this attribute without a value implies `true`.
 - `tooltip-class`: Custom class to be applied to the tooltip.
 - `tooltip-is-open` <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: false)_:
