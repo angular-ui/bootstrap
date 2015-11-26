@@ -54,7 +54,7 @@ describe('pager directive', function() {
   });
 
   it('exposes the controller on the template', function() {
-    $templateCache.put('uib/template/pager/pager.html', '<div>{{pagination.text}}</div>');
+    $templateCache.put('uib/template/pager/pager.html', '<div>{{pager.text}}</div>');
 
     element = $compile('<uib-pager></uib-pager>')($rootScope);
     $rootScope.$digest();

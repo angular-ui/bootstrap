@@ -17,7 +17,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
     },
     require: ['uibPager', '?ngModel'],
     controller: 'UibPaginationController',
-    controllerAs: 'pagination',
+    controllerAs: 'pager',
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'uib/template/pager/pager.html';
     },
