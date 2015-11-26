@@ -26,7 +26,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
       var paginationCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
       if (!ngModelCtrl) {
-         return; // do nothing if no ng-model
+        return; // do nothing if no ng-model
       }
 
       scope.align = angular.isDefined(attrs.align) ? scope.$parent.$eval(attrs.align) : pagerConfig.align;
