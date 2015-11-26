@@ -9,7 +9,6 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
 
 .directive('uibPager', ['uibPagerConfig', function(pagerConfig) {
   return {
-    restrict: 'EA',
     scope: {
       totalItems: '=',
       previousText: '@',
