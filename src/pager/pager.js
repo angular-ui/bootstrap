@@ -1,4 +1,10 @@
-angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
+angular.module('ui.bootstrap.pager', ['ui.bootstrap.paging'])
+
+.controller('UibPagerController', ['$scope', '$attrs', 'uibPaging', 'uibPagerConfig', function($scope, $attrs, uibPaging, uibPagerConfig) {
+  $scope.align = angular.isDefined($attrs.align) ? $scope.$parent.$eval($attrs.align) : uibPagerConfig.align;
+
+  uibPaging.create(this, $scope, $attrs);
+}])
 
 .constant('uibPagerConfig', {
   itemsPerPage: 10,
@@ -7,7 +13,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
   align: true
 })
 
-.directive('uibPager', ['uibPagerConfig', function(pagerConfig) {
+.directive('uibPager', ['uibPagerConfig', function(uibPagerConfig) {
   return {
     scope: {
       totalItems: '=',
@@ -16,7 +22,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
       ngDisabled: '='
     },
     require: ['uibPager', '?ngModel'],
-    controller: 'UibPaginationController',
+    controller: 'UibPagerController',
     controllerAs: 'pager',
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'uib/template/pager/pager.html';
@@ -29,8 +35,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.pagination'])
         return; // do nothing if no ng-model
       }
 
-      scope.align = angular.isDefined(attrs.align) ? scope.$parent.$eval(attrs.align) : pagerConfig.align;
-      paginationCtrl.init(ngModelCtrl, pagerConfig);
+      paginationCtrl.init(ngModelCtrl, uibPagerConfig);
     }
   };
 }]);
