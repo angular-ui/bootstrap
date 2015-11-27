@@ -91,10 +91,14 @@ The datepicker has 3 modes:
   _(Default: `uib/template/datepicker/datepicker.html`)_ -
   Add the ability to override the template used on the component.
 
-* `year-range`
-  _(Default: `20`)_ -
-  Number of years displayed in year selection.
-  
+* `year-rows`
+  _(Default: `4`)_ -
+  Number of rows displayed in year selection.
+
+* `year-columns`
+  _(Default: `5`)_ -
+  Number of columns displayed in year selection.
+
 * `ng-model-options`
   _(Default: {})_ -
   allowInvalid support. [More on ngModelOptions](https://docs.angularjs.org/api/ng/directive/ngModelOptions).

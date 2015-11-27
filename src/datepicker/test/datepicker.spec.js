@@ -1108,7 +1108,8 @@ describe('datepicker', function() {
           'format-month="MMM"' +
           'format-month-title="yy"' +
           'format-year="yy"' +
-          'year-range="10"></uib-datepicker>')($rootScope);
+          'year-rows="3"' +
+          'year-columns="4"></uib-datepicker>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -1132,10 +1133,11 @@ describe('datepicker', function() {
         clickTitleButton();
         clickTitleButton();
 
-        expect(getTitle()).toBe('01 - 10');
+        expect(getTitle()).toBe('05 - 16');
         expect(getOptions()).toEqual([
-          ['01', '02', '03', '04', '05'],
-          ['06', '07', '08', '09', '10']
+          ['05', '06', '07', '08'],
+          ['09', '10', '11', '12'],
+          ['13', '14', '15', '16']
         ]);
       });
 
@@ -1166,7 +1168,8 @@ describe('datepicker', function() {
         uibDatepickerConfig.formatDayTitle = 'MMM, yy';
         uibDatepickerConfig.formatMonthTitle = 'yy';
         uibDatepickerConfig.showWeeks = false;
-        uibDatepickerConfig.yearRange = 10;
+        uibDatepickerConfig.yearRows = 2;
+        uibDatepickerConfig.yearColumns = 5;
         uibDatepickerConfig.startingDay = 6;
 
         element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
@@ -2435,7 +2438,8 @@ describe('datepicker', function() {
               'format-month="MMM"' +
               'format-month-title="yy"' +
               'format-year="yy"' +
-              'year-range="10" /></div>')($rootScope);
+              'year-rows="3"' +
+              'year-columns="4"></uib-datepicker>')($rootScope);
             $rootScope.$digest();
             assignElements(wrapElement);
           });
@@ -2461,10 +2465,11 @@ describe('datepicker', function() {
             assignElements(wrapElement);
             clickTitleButton();
             assignElements(wrapElement);
-            expect(getTitle()).toBe('01 - 10');
+            expect(getTitle()).toBe('05 - 16');
             expect(getOptions()).toEqual([
-              ['01', '02', '03', '04', '05'],
-              ['06', '07', '08', '09', '10']
+              ['05', '06', '07', '08'],
+              ['09', '10', '11', '12'],
+              ['13', '14', '15', '16']
             ]);
           });
 
