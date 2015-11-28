@@ -188,7 +188,7 @@ describe('uib-dropdown', function() {
     function dropdown() {
       $templateCache.put('custom.html', '<ul class="uib-dropdown-menu"><li>Item 1</li></ul>');
 
-      return $compile('<li uib-dropdown><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" template-url="custom.html"></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown><a href uib-dropdown-toggle></a><ul uib-dropdown-menu template-url="custom.html"></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -210,7 +210,7 @@ describe('uib-dropdown', function() {
 
   describe('using dropdown-append-to-body', function() {
     function dropdown() {
-      return $compile('<li uib-dropdown dropdown-append-to-body><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown dropdown-append-to-body><a href uib-dropdown-toggle></a><ul uib-dropdown-menu id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -355,7 +355,7 @@ describe('uib-dropdown', function() {
       beforeEach(function() {
         $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
         $rootScope.isopen = false;
-        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)"  is-open="isopen"><a uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)" is-open="isopen"><a uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -536,7 +536,7 @@ describe('uib-dropdown', function() {
       });
 
       it('should work with dropdown-append-to-body', function() {
-        element = $compile('<li uib-dropdown dropdown-append-to-body auto-close="outsideClick"><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown dropdown-append-to-body auto-close="outsideClick"><a href uib-dropdown-toggle></a><ul uib-dropdown-menu id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
         clickDropdownToggle();
         var dropdownMenu = $document.find('#dropdown-menu');
         expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
@@ -661,7 +661,7 @@ describe('uib-dropdown', function() {
 
     describe('with dropdown-append-to-body', function() {
       function dropdown() {
-        return $compile('<li uib-dropdown dropdown-append-to-body keyboard-nav><a href uib-dropdown-toggle></a><ul class="uib-dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+        return $compile('<li uib-dropdown dropdown-append-to-body keyboard-nav><a href uib-dropdown-toggle></a><ul uib-dropdown-menu id="dropdown-menu"><li><a href>Hello On Body</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
       }
 
       beforeEach(function() {

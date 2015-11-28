@@ -277,7 +277,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
 .directive('uibDropdownMenu', function() {
   return {
-    restrict: 'AC',
+    restrict: 'A',
     require: '?^uibDropdown',
     link: function(scope, element, attrs, dropdownCtrl) {
       if (!dropdownCtrl || angular.isDefined(attrs.dropdownNested)) {

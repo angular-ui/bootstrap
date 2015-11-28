@@ -6,6 +6,8 @@ This directive is composed by three parts:
 * `uib-dropdown-toggle` which allows the dropdown to be toggled via click. This directive is optional.
 * `uib-dropdown-menu` which transforms a node into the popup menu.
 
+Each of these parts need to be used as attribute directives.
+
 ### uib-dropdown settings
 
 * `append-to`
