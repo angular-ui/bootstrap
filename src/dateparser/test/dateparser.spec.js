@@ -387,4 +387,116 @@ describe('date parser', function() {
 
     expect(dateParser.init).toHaveBeenCalled();
   }));
+
+
+  describe('timezone functions', function() {
+    describe('toTimezone', function() {
+      it('adjusts date: PST - EST', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toWestDate = dateParser.toTimezone(date, 'PST');
+        var toEastDate = dateParser.toTimezone(date, 'EST');
+        expect(toWestDate.getTime() - toEastDate.getTime()).toEqual(1000 * 60 * 60 * 3);
+      });
+
+      it('adjusts date: GMT-0500 - GMT+0500', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toWestDate = dateParser.toTimezone(date, 'GMT-0500');
+        var toEastDate = dateParser.toTimezone(date, 'GMT+0500');
+        expect(toWestDate.getTime() - toEastDate.getTime()).toEqual(1000 * 60 * 60 * 10);
+      });
+
+      it('adjusts date: -600 - +600', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toWestDate = dateParser.toTimezone(date, '-600');
+        var toEastDate = dateParser.toTimezone(date, '+600');
+        expect(toWestDate.getTime() - toEastDate.getTime()).toEqual(1000 * 60 * 60 * 12);
+      });
+
+      it('tolerates null date', function() {
+        var date = null;
+        var toNullDate = dateParser.toTimezone(date, '-600');
+        expect(toNullDate).toEqual(date);
+      });
+
+      it('tolerates null timezone', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toNullTimezoneDate = dateParser.toTimezone(date, null);
+        expect(toNullTimezoneDate).toEqual(date);
+      });
+    });
+
+    describe('fromTimezone', function() {
+      it('adjusts date: PST - EST', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var fromWestDate = dateParser.fromTimezone(date, 'PST');
+        var fromEastDate = dateParser.fromTimezone(date, 'EST');
+        expect(fromWestDate.getTime() - fromEastDate.getTime()).toEqual(1000 * 60 * 60 * -3);
+      });
+
+      it('adjusts date: GMT-0500 - GMT+0500', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var fromWestDate = dateParser.fromTimezone(date, 'GMT-0500');
+        var fromEastDate = dateParser.fromTimezone(date, 'GMT+0500');
+        expect(fromWestDate.getTime() - fromEastDate.getTime()).toEqual(1000 * 60 * 60 * -10);
+      });
+
+      it('adjusts date: -600 - +600', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var fromWestDate = dateParser.fromTimezone(date, '-600');
+        var fromEastDate = dateParser.fromTimezone(date, '+600');
+        expect(fromWestDate.getTime() - fromEastDate.getTime()).toEqual(1000 * 60 * 60 * -12);
+      });
+
+      it('tolerates null date', function() {
+        var date = null;
+        var toNullDate = dateParser.fromTimezone(date, '-600');
+        expect(toNullDate).toEqual(date);
+      });
+
+      it('tolerates null timezone', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toNullTimezoneDate = dateParser.fromTimezone(date, null);
+        expect(toNullTimezoneDate).toEqual(date);
+      });
+    });
+
+    describe('timezoneToOffset', function() {
+      it('calculates minutes off from current timezone', function() {
+        var offsetMinutesUtc = dateParser.timezoneToOffset('UTC');
+        var offsetMinutesUtcPlus1 = dateParser.timezoneToOffset('GMT+0100');
+        expect(offsetMinutesUtc - offsetMinutesUtcPlus1).toEqual(60);
+      });
+    });
+
+    describe('addDateMinutes', function() {
+      it('adds minutes to a date', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var oneHourMore = dateParser.addDateMinutes(date, 60);
+        expect(oneHourMore).toEqual(new Date('2008-01-01T01:00:00.000Z'));
+      });
+    });
+
+    describe('convertTimezoneToLocal', function() {
+      it('adjusts date: PST - EST', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toWestDate = dateParser.convertTimezoneToLocal(date, 'PST');
+        var toEastDate = dateParser.convertTimezoneToLocal(date, 'EST');
+        expect(toWestDate.getTime() - toEastDate.getTime()).toEqual(1000 * 60 * 60 * 3);
+      });
+
+      it('adjusts date: GMT-0500 - GMT+0500', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toWestDate = dateParser.convertTimezoneToLocal(date, 'GMT-0500');
+        var toEastDate = dateParser.convertTimezoneToLocal(date, 'GMT+0500');
+        expect(toWestDate.getTime() - toEastDate.getTime()).toEqual(1000 * 60 * 60 * 10);
+      });
+
+      it('adjusts date: -600 - +600', function() {
+        var date = new Date('2008-01-01T00:00:00.000Z');
+        var toWestDate = dateParser.convertTimezoneToLocal(date, '-600');
+        var toEastDate = dateParser.convertTimezoneToLocal(date, '+600');
+        expect(toWestDate.getTime() - toEastDate.getTime()).toEqual(1000 * 60 * 60 * 12);
+      });
+    });
+  });
 });

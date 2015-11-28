@@ -110,6 +110,14 @@ describe('datepicker', function() {
     });
   }
 
+  function getSelectedElement(index) {
+    var buttons = getAllOptionsEl();
+    var el = $.grep(buttons, function(button, idx) {
+      return angular.element(button).hasClass('btn-info');
+    })[0];
+    return angular.element(el);
+  }
+
   function triggerKeyDown(element, key, ctrl) {
     var keyCodes = {
       'enter': 13,
@@ -1333,6 +1341,70 @@ describe('datepicker', function() {
       });
     });
 
+    describe('datepickerConfig ngModelOptions', function() {
+      describe('timezone', function() {
+        var originalConfig = {};
+        beforeEach(inject(function(uibDatepickerConfig) {
+          angular.extend(originalConfig, uibDatepickerConfig);
+          uibDatepickerConfig.ngModelOptions = { timezone: '+600' };
+          $rootScope.date = new Date('2005-11-07T10:00:00.000Z');
+          element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        }));
+
+        afterEach(inject(function(uibDatepickerConfig) {
+          // return it to the original state
+          angular.extend(uibDatepickerConfig, originalConfig);
+        }));
+
+        it('sets date to appropriate date', function() {
+          expectSelectedElement(8);
+        });
+
+        it('updates the input when a day is clicked', function() {
+          clickOption(9);
+          expect($rootScope.date).toEqual(new Date('2005-11-08T10:00:00.000Z'));
+        });
+
+        it('init date', function() {
+          $rootScope.initDate = new Date('2006-01-01T00:00:00.000Z');
+          $rootScope.date = null;
+          element = $compile('<uib-datepicker ng-model="date" init-date="initDate"><uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+
+          expect(getTitle()).toEqual('January 2006');
+        });
+
+        it('min date', function() {
+          $rootScope.minDate = new Date('2010-10-01T00:00:00.000Z');
+          element = $compile('<uib-datepicker ng-model="date" min-date="minDate"><uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+
+          expect(getSelectedElement().prop('disabled')).toBe(true);
+        });
+      });
+    });
+
+    describe('uib-datepicker ng-model-options', function() {
+      describe('timezone', function() {
+        beforeEach(inject(function() {
+          $rootScope.date = new Date('2005-11-07T10:00:00.000Z');
+          $rootScope.ngModelOptions = { timezone: '+600'};
+          element = $compile('<uib-datepicker ng-model="date" ng-model-options="ngModelOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        }));
+
+        it('sets date to appropriate date', function() {
+          expectSelectedElement(8);
+        });
+
+        it('updates the input when a day is clicked', function() {
+          clickOption(9);
+          expect($rootScope.date).toEqual(new Date('2005-11-08T10:00:00.000Z'));
+        });
+      });
+    });
+
     describe('setting datepickerPopupConfig', function() {
       var originalConfig = {};
       beforeEach(inject(function(uibDatepickerPopupConfig) {
@@ -1858,19 +1930,19 @@ describe('datepicker', function() {
           expect(inputEl.val()).toBe('10-January-1983');
         });
       });
-      
+
       describe('custom format with time', function() {
         beforeEach(inject(function() {
       		var wrapElement = $compile('<div><input type="text" ng-model="date" uib-datepicker-popup="MMM-d-yyyy h:mm a" is-open="false"><div>')($rootScope);
       		$rootScope.$digest();
       		assignElements(wrapElement);
         }));
-    
+
         it('updates the model correctly when the input value changes', function() {
       		$rootScope.date = new Date(2015, 10, 24, 10, 0);
       		$rootScope.$digest();
       		expect(inputEl.val()).toBe('Nov-24-2015 10:00 AM');
-      
+
       		inputEl.val('Nov-24-2015 11:00 AM').trigger('input');
       		$rootScope.$digest();
       		expect($rootScope.date).toEqual(new Date(2015, 10, 24, 11, 0));
@@ -2561,6 +2633,133 @@ describe('datepicker', function() {
           $rootScope.$digest();
           assignElements(wrapElement);
           expect(dropdownEl.find('div').attr('date-disabled')).toBe('dateDisabled({ date: date, mode: mode })');
+        });
+      });
+    });
+
+    describe('uibDatepickerConfig ngModelOptions', function() {
+      describe('timezone', function() {
+        var inputEl, dropdownEl, $document, $sniffer, $timeout;
+
+        function assignElements(wrapElement) {
+          inputEl = wrapElement.find('input');
+          dropdownEl = wrapElement.find('ul');
+          element = dropdownEl.find('table');
+        }
+
+        beforeEach(inject(function(uibDatepickerConfig) {
+          uibDatepickerConfig.ngModelOptions = { timezone: '+600' };
+          $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
+          $rootScope.isopen = true;
+          var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="MM/dd/yyyy" is-open="isopen"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapper);
+        }));
+
+        afterEach(inject(function (uibDatepickerConfig) {
+          // return it to the original state
+          uibDatepickerConfig.ngModelOptions = {};
+        }));
+
+        it('interprets the date appropriately', function() {
+          expect(inputEl.val()).toBe('09/30/2010');
+        });
+
+        it('updates the input when a day is clicked', function() {
+          clickOption(17);
+          expect(inputEl.val()).toBe('09/15/2010');
+          expect($rootScope.date).toEqual(new Date('2010-09-15T10:00:00.000Z'));
+        });
+
+        it('shows the correct title', function() {
+          expect(getTitle()).toBe('September 2010');
+        });
+
+        it('init date', function() {
+          $rootScope.initDate = new Date('2006-01-01T00:00:00.000Z');
+          $rootScope.date = null;
+          var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" init-date="initDate" is-open="true"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapper);
+
+          expect(getTitle()).toBe('January 2006');
+        });
+
+        it('min date', function() {
+          $rootScope.minDate = new Date('2010-10-01T00:00:00.000Z');
+          var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" min-date="minDate" is-open="true"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapper);
+
+          expect(getSelectedElement().prop('disabled')).toBe(true);
+        });
+      });
+    });
+
+    describe('ng-model-options', function() {
+      describe('timezone', function() {
+        var inputEl, dropdownEl, $document, $sniffer, $timeout;
+
+        function assignElements(wrapElement) {
+          inputEl = wrapElement.find('input');
+          dropdownEl = wrapElement.find('ul');
+          element = dropdownEl.find('table');
+        }
+
+        beforeEach(function() {
+          $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
+          $rootScope.ngModelOptions = { timezone: '+600' };
+          $rootScope.isopen = true;
+          var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="MM/dd/yyyy" ng-model-options="ngModelOptions" is-open="isopen"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapper);
+        });
+
+        it('interprets the date appropriately', function() {
+          expect(inputEl.val()).toBe('09/30/2010');
+        });
+
+        it('has `selected` only the correct day', function() {
+          expectSelectedElement(32);
+        });
+
+        it('updates the input when a day is clicked', function() {
+          clickOption(17);
+          expect(inputEl.val()).toBe('09/15/2010');
+          expect($rootScope.date).toEqual(new Date('2010-09-15T10:00:00.000Z'));
+        });
+      });
+
+      describe('timezone HTML5 date input', function() {
+        var inputEl, dropdownEl, $document, $sniffer, $timeout;
+
+        function assignElements(wrapElement) {
+          inputEl = wrapElement.find('input');
+          dropdownEl = wrapElement.find('ul');
+          element = dropdownEl.find('table');
+        }
+
+        beforeEach(function() {
+          $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
+          $rootScope.ngModelOptions = { timezone: '+600' };
+          $rootScope.isopen = true;
+          var wrapper = $compile('<div><input type="date" ng-model="date" uib-datepicker-popup ng-model-options="ngModelOptions" is-open="isopen"></div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapper);
+        });
+
+        it('interprets the date appropriately', function() {
+          expect(inputEl.val()).toBe('2010-09-30');
+        });
+
+        it('has `selected` only the correct day', function() {
+          expectSelectedElement(32);
+        });
+
+        it('updates the input when a day is clicked', function() {
+          clickOption(17);
+          expect(inputEl.val()).toBe('2010-09-15');
+          expect($rootScope.date).toEqual(new Date('2010-09-15T10:00:00.000Z'));
         });
       });
     });

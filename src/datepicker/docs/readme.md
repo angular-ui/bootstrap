@@ -100,9 +100,10 @@ The datepicker has 3 modes:
   Number of columns displayed in year selection.
 
 * `ng-model-options`
-  _(Default: {})_ -
-  allowInvalid support. [More on ngModelOptions](https://docs.angularjs.org/api/ng/directive/ngModelOptions).
-
+  _(Default: `{}`)_ -
+  Supported properties:
+  * allowInvalid
+  * timezone
 
 ### uib-datepicker-popup settings ###
 
