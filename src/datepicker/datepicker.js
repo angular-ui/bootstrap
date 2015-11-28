@@ -42,7 +42,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   angular.forEach(['minDate', 'maxDate'], function(key) {
     if ($attrs[key]) {
       $scope.$parent.$watch($attrs[key], function(value) {
-        self[key] = value ? new Date(value) : null;
+        self[key] = value ? angular.isDate(value) ? new Date(value) : new Date(dateFilter(value, 'medium')) : null;
         self.refreshView();
       });
     } else {
@@ -631,10 +631,10 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       if (attrs[key]) {
         var getAttribute = $parse(attrs[key]);
         scope.$parent.$watch(getAttribute, function(value) {
-          scope.watchData[key] = value;
           if (key === 'minDate' || key === 'maxDate') {
-            cache[key] = new Date(value);
+            cache[key] = angular.isDate(value) ? new Date(value) : new Date(dateFilter(value, 'medium'));
           }
+          scope.watchData[key] = cache[key] || value;
         });
         datepickerEl.attr(cameltoDash(key), 'watchData.' + key);
 

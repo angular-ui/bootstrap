@@ -965,6 +965,20 @@ describe('datepicker', function() {
 
     });
 
+    describe('`min-date` attribute', function () {
+      beforeEach(function() {
+        element = $compile('<uib-datepicker ng-model="date" min-date="\'2010-09-05\'"></uib-datepicker>')($rootScope);
+        $rootScope.$digest();
+      });
+
+      it('accepts literals, \'yyyy-MM-dd\' case', function() {
+        var buttons = getAllOptionsEl();
+        angular.forEach(buttons, function(button, index) {
+          expect(angular.element(button).prop('disabled')).toBe(index < 7);
+        });
+      });
+    });
+
     describe('`max-date` attribute', function() {
       beforeEach(function() {
         $rootScope.maxdate = new Date('September 25, 2010');
@@ -2010,6 +2024,17 @@ describe('datepicker', function() {
 
             expect(buttons.eq(0).prop('disabled')).toBe(true);
           });
+
+          it('should disable today button if before min date, yyyy-MM-dd case', inject(function(dateFilter) {
+            var minDate = new Date(new Date().setDate(new Date().getDate() + 1));
+            var literalMinDate = dateFilter(minDate, 'yyyy-MM-dd');
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" min-date="\'' + literalMinDate + '\'" is-open="true"><div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+            assignButtonBar();
+
+            expect(buttons.eq(0).prop('disabled')).toBe(true);
+          }));
 
           it('should disable today button if after max date', function() {
             $rootScope.maxDate = new Date().setDate(new Date().getDate() - 2);
