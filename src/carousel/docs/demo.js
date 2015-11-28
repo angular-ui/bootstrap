@@ -19,7 +19,7 @@ angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($sc
     assignNewIndexesToSlides(indexes);
   };
 
-  for (var i=0; i<4; i++) {
+  for (var i = 0; i < 4; i++) {
     $scope.addSlide();
   }
 
@@ -34,7 +34,7 @@ angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($sc
   function generateIndexesArray() {
     var indexes = [];
     for (var i = 0; i < currIndex; ++i) {
-      indexes[i]=i;
+      indexes[i] = i;
     }
     return shuffle(indexes);
   }
@@ -43,8 +43,8 @@ angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($sc
   function shuffle(array) {
     var tmp, current, top = array.length;
 
-    if(top) {
-      while(--top) {
+    if (top) {
+      while (--top) {
         current = Math.floor(Math.random() * (top + 1));
         tmp = array[current];
         array[current] = array[top];
