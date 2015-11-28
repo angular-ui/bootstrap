@@ -190,9 +190,8 @@ angular.module('ui.bootstrap.carousel', [])
   };
 
   $scope.$watch('noTransition', function(noTransition) {
-    $animate.enabled($element, noTransition);
+    $animate.enabled($element, !noTransition);
   });
-
 }])
 
 .directive('uibCarousel', function() {
@@ -255,8 +254,7 @@ function($animate, $animateCss) {
 
   return {
     beforeAddClass: function(element, className, done) {
-      // Due to transclusion, noTransition property is on parent's scope
-      if (className === 'active' && !$animate.enabled(element)) {
+      if (className === 'active' && $animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction === 'next' ? 'left' : 'right';
@@ -275,8 +273,7 @@ function($animate, $animateCss) {
       done();
     },
     beforeRemoveClass: function (element, className, done) {
-      // Due to transclusion, noTransition property is on parent's scope
-      if (className === 'active' && !$animate.enabled(element)) {
+      if (className === 'active' && $animate.enabled(element)) {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction === 'next' ? 'left' : 'right';
