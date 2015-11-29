@@ -28,7 +28,7 @@ angular.module('ui.bootstrap.carousel', [])
 
     angular.extend(slide, {direction: direction, active: true});
     angular.extend(self.currentSlide || {}, {direction: direction, active: false});
-    if ($animate.enabled() && !$scope.noTransition && !$scope.$currentTransition &&
+    if ($animate.enabled($element) && !$scope.$currentTransition &&
       slide.$element && self.slides.length > 1) {
       slide.$element.data(SLIDE_DIRECTION, slide.direction);
       if (self.currentSlide && self.currentSlide.$element) {
