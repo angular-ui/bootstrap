@@ -241,8 +241,8 @@ angular.module('ui.bootstrap.carousel', [])
   };
 })
 
-.animation('.item', ['$animate', '$animateCss',
-function($animate, $animateCss) {
+.animation('.item', ['$animateCss',
+function($animateCss) {
   var SLIDE_DIRECTION = 'uib-slideDirection';
 
   function removeClass(element, className, callback) {
@@ -254,7 +254,7 @@ function($animate, $animateCss) {
 
   return {
     beforeAddClass: function(element, className, done) {
-      if (className === 'active' && $animate.enabled(element)) {
+      if (className === 'active') {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction === 'next' ? 'left' : 'right';
@@ -273,7 +273,7 @@ function($animate, $animateCss) {
       done();
     },
     beforeRemoveClass: function (element, className, done) {
-      if (className === 'active' && $animate.enabled(element)) {
+      if (className === 'active') {
         var stopped = false;
         var direction = element.data(SLIDE_DIRECTION);
         var directionClass = direction === 'next' ? 'left' : 'right';
