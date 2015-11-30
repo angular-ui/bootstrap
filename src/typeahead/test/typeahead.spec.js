@@ -947,8 +947,10 @@ describe('typeahead tests', function() {
 
       expect($scope.test.typeahead.$error.parse).toBeUndefined();
     });
+  });
 
-    it('issue #3823 - should support ng-model-options getterSetter', function() {
+  describe('ng-model-options', function() {
+    it('should support getterSetter', function() {
       function resultSetter(state) {
         return state;
       }
@@ -959,6 +961,113 @@ describe('typeahead tests', function() {
       triggerKeyDown(element, 13);
 
       expect($scope.result).toBe(resultSetter);
+    });
+
+    describe('debounce as a number', function() {
+      it('should work with selecting via keyboard', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: 400}" uib-typeahead="state as state.name for state in states | filter:$viewvalue"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+        triggerKeyDown(element, 13);
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(400);
+
+        expect($scope.result).toBe('Alaska');
+      });
+
+      it('should work with select on exact', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: 400}" uib-typeahead="state as state.name for state in states | filter:$viewvalue" typeahead-select-on-exact="true"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(400);
+
+        expect($scope.result).toBe('Alaska');
+      });
+
+      it('should work with selecting a match via click', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: 400}" uib-typeahead="state as state.name for state in states | filter:$viewvalue"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+        var match = $(findMatches(element)[0]).find('a')[0];
+
+        $(match).click();
+        $scope.$digest();
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(400);
+
+        expect($scope.result).toBe('Alaska');
+      });
+    });
+
+    describe('debounce as an object', function() {
+      it('should work with selecting via keyboard', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: {default: 400, blur: 500}}" uib-typeahead="state as state.name for state in states | filter:$viewvalue"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+        triggerKeyDown(element, 13);
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(400);
+
+        expect($scope.result).toBe('Alaska');
+      });
+
+      it('should work with select on exact', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: {default: 400, blur: 500}}" uib-typeahead="state as state.name for state in states | filter:$viewvalue" typeahead-select-on-exact="true"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(400);
+
+        expect($scope.result).toBe('Alaska');
+      });
+
+      it('should work with selecting a match via click', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: {default: 400, blur: 500}}" uib-typeahead="state as state.name for state in states | filter:$viewvalue"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+        var match = $(findMatches(element)[0]).find('a')[0];
+
+        $(match).click();
+        $scope.$digest();
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(400);
+
+        expect($scope.result).toBe('Alaska');
+      });
+
+      it('should work when blurring and select on blur', function() {
+        element = prepareInputEl('<div><input name="typeahead" ng-model="result" ng-model-options="{debounce: {default: 400, blur: 500}}" uib-typeahead="state as state.name for state in states | filter:$viewvalue" typeahead-select-on-blur="true"></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'Alaska');
+        element.blur();
+        $scope.$digest();
+
+        expect($scope.result).not.toBe('Alaska');
+
+        $timeout.flush(500);
+
+        expect($scope.result).toBe('Alaska');
+      });
     });
   });
 

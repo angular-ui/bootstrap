@@ -64,6 +64,10 @@
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
 
+    <h4>ngModelOptions support</h4>
+    <pre>Model: {{ngModelOptionsSelected | json}}</pre>
+    <input type="text" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control">
+
     <h4>Custom templates for results</h4>
     <pre>Model: {{customSelected | json}}</pre>
     <input type="text" ng-model="customSelected" placeholder="Custom template" uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true">

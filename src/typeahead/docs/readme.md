@@ -17,6 +17,10 @@ The typeahead directives provide several attributes:
    :
    Assignable angular expression to data-bind to
 
+* `ng-model-options`
+   :
+   Options for ng-model (see [ng-model-options directive](https://docs.angularjs.org/api/ng/directive/ngModelOptions)). Currently supports the `debounce` and `getterSetter` options
+
 * `uib-typeahead` <i class="glyphicon glyphicon-eye-open"></i>
    :
    Comprehension Angular expression (see [select directive](http://docs.angularjs.org/api/ng.directive:select))

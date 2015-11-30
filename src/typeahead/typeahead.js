@@ -155,7 +155,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       'move-in-progress': 'moveInProgress',
       query: 'query',
       position: 'position',
-      'assign-is-open': 'assignIsOpen(isOpen)'
+      'assign-is-open': 'assignIsOpen(isOpen)',
+      debounce: 'debounceUpdate'
     });
     //custom item template
     if (angular.isDefined(attrs.typeaheadTemplateUrl)) {
@@ -235,7 +236,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
             //Select the single remaining option if user input matches
             if (selectOnExact && scope.matches.length === 1 && inputIsExactMatch(inputValue, 0)) {
-              scope.select(0);
+              if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
+                $$debounce(function() {
+                  scope.select(0);
+                }, angular.isNumber(scope.debounceUpdate) ? scope.debounceUpdate : scope.debounceUpdate['default']);
+              } else {
+                scope.select(0);
+              }
             }
 
             if (showHint) {
@@ -319,7 +326,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     resetMatches();
 
     scope.assignIsOpen = function (isOpen) {
-        isOpenSetter(originalScope, isOpen);
+      isOpenSetter(originalScope, isOpen);
     };
 
     scope.select = function(activeIdx) {
@@ -369,7 +376,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         case 9:
         case 13:
           scope.$apply(function () {
-            scope.select(scope.activeIdx);
+            if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
+              $$debounce(function() {
+                scope.select(scope.activeIdx);
+              }, angular.isNumber(scope.debounceUpdate) ? scope.debounceUpdate : scope.debounceUpdate['default']);
+            } else {
+              scope.select(scope.activeIdx);
+            }
           });
           break;
         case 27:
@@ -402,7 +415,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       if (isSelectOnBlur && scope.matches.length && scope.activeIdx !== -1 && !selected) {
         selected = true;
         scope.$apply(function() {
-          scope.select(scope.activeIdx);
+          if (angular.isObject(scope.debounceUpdate) && angular.isNumber(scope.debounceUpdate.blur)) {
+            $$debounce(function() {
+              scope.select(scope.activeIdx);
+            }, scope.debounceUpdate.blur);
+          } else {
+            scope.select(scope.activeIdx);
+          }
         });
       }
       if (!isEditable && modelCtrl.$error.editable) {
@@ -458,6 +477,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     this.init = function(_modelCtrl, _ngModelOptions) {
       modelCtrl = _modelCtrl;
       ngModelOptions = _ngModelOptions;
+
+      scope.debounceUpdate = modelCtrl.$options && $parse(modelCtrl.$options.debounce)(originalScope);
 
       //plug into $parsers pipeline to open a typeahead on view changes initiated from DOM
       //$parsers kick-in on all the changes coming from the view as well as manually triggered by $setViewValue
@@ -529,7 +550,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     };
   })
 
-  .directive('uibTypeaheadPopup', function() {
+  .directive('uibTypeaheadPopup', ['$$debounce', function($$debounce) {
     return {
       scope: {
         matches: '=',
@@ -538,7 +559,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         position: '&',
         moveInProgress: '=',
         select: '&',
-        assignIsOpen: '&'
+        assignIsOpen: '&',
+        debounce: '&'
       },
       replace: true,
       templateUrl: function(element, attrs) {
@@ -562,11 +584,18 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         };
 
         scope.selectMatch = function(activeIdx) {
-          scope.select({activeIdx: activeIdx});
+          var debounce = scope.debounce();
+          if (angular.isNumber(debounce) || angular.isObject(debounce)) {
+            $$debounce(function() {
+              scope.select({activeIdx: activeIdx});
+            }, angular.isNumber(debounce) ? debounce : debounce['default']);
+          } else {
+            scope.select({activeIdx: activeIdx});
+          }
         };
       }
     };
-  })
+  }])
 
   .directive('uibTypeaheadMatch', ['$templateRequest', '$compile', '$parse', function($templateRequest, $compile, $parse) {
     return {
