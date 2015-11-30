@@ -306,7 +306,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         }
       }
 
-      function removeAfterAnimate(domEl, scope, done) {
+      function removeAfterAnimate(domEl, scope, done, closedDeferred) {
         var asyncDeferred;
         var asyncPromise = null;
         var setIsAsync = function() {
@@ -336,6 +336,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
             event: 'leave'
           }).start().then(function() {
             domEl.remove();
+            if (closedDeferred) {
+              closedDeferred.resolve();
+            }
           });
 
           scope.$destroy();
@@ -392,6 +395,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         openedWindows.add(modalInstance, {
           deferred: modal.deferred,
           renderDeferred: modal.renderDeferred,
+          closedDeferred: modal.closedDeferred,
           modalScope: modal.scope,
           backdrop: modal.backdrop,
           keyboard: modal.keyboard,
@@ -579,12 +583,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           $modal.open = function(modalOptions) {
             var modalResultDeferred = $q.defer();
             var modalOpenedDeferred = $q.defer();
+            var modalClosedDeferred = $q.defer();
             var modalRenderDeferred = $q.defer();
 
             //prepare an instance of a modal to be injected into controllers and returned to a caller
             var modalInstance = {
               result: modalResultDeferred.promise,
               opened: modalOpenedDeferred.promise,
+              closed: modalClosedDeferred.promise,
               rendered: modalRenderDeferred.promise,
               close: function (result) {
                 return $modalStack.close(modalInstance, result);
@@ -655,6 +661,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
                   scope: modalScope,
                   deferred: modalResultDeferred,
                   renderDeferred: modalRenderDeferred,
+                  closedDeferred: modalClosedDeferred,
                   content: tplAndVars[0],
                   animation: modalOptions.animation,
                   backdrop: modalOptions.backdrop,
