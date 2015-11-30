@@ -365,23 +365,29 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
       evt.preventDefault();
 
-      if (evt.which === 40) {
-        scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
-        scope.$digest();
-        popUpEl.children()[scope.activeIdx].scrollIntoView(false);
-      } else if (evt.which === 38) {
-        scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
-        scope.$digest();
-        popUpEl.children()[scope.activeIdx].scrollIntoView(false);
-      } else if (evt.which === 13 || evt.which === 9) {
-        scope.$apply(function () {
-          scope.select(scope.activeIdx);
-        });
-      } else if (evt.which === 27) {
-        evt.stopPropagation();
+      switch (evt.which) {
+        case 9:
+        case 13:
+          scope.$apply(function () {
+            scope.select(scope.activeIdx);
+          });
+          break;
+        case 27:
+          evt.stopPropagation();
 
-        resetMatches();
-        scope.$digest();
+          resetMatches();
+          scope.$digest();
+          break;
+        case 38:
+          scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
+          scope.$digest();
+          popUpEl.children()[scope.activeIdx].scrollIntoView(false);
+          break;
+        case 40:
+          scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
+          scope.$digest();
+          popUpEl.children()[scope.activeIdx].scrollIntoView(false);
+          break;
       }
     });
 
