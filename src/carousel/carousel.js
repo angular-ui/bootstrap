@@ -97,7 +97,7 @@ angular.module('ui.bootstrap.carousel', [])
   };
 
   $scope.isActive = function(slide) {
-     return self.currentSlide === slide;
+    return self.currentSlide === slide;
   };
 
   $scope.$watch('interval', restartTimer);
