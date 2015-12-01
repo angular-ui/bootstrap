@@ -12,15 +12,18 @@ describe('carousel', function() {
       });
     }
   }));
+  beforeEach(module('ngAnimateMock'));
   beforeEach(module('uib/template/carousel/carousel.html', 'uib/template/carousel/slide.html'));
 
-  var $rootScope, $compile, $controller, $interval, $templateCache;
-  beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$interval_, _$templateCache_) {
+  var $rootScope, $compile, $controller, $interval, $templateCache, $timeout, $animate;
+  beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$interval_, _$templateCache_, _$timeout_, _$animate_) {
     $rootScope = _$rootScope_;
     $compile = _$compile_;
     $controller = _$controller_;
     $interval = _$interval_;
     $templateCache = _$templateCache_;
+    $timeout = _$timeout_;
+    $animate = _$animate_;
   }));
 
   describe('basics', function() {
@@ -291,11 +294,13 @@ describe('carousel', function() {
       scope.$apply('slides[2].active = true');
       testSlideActive(2);
       scope.$apply('slides.splice(0,1)');
+      $timeout.flush(0);
       expect(elm.find('div.item').length).toBe(2);
       testSlideActive(1);
       $interval.flush(scope.interval);
       testSlideActive(0);
       scope.$apply('slides.splice(1,1)');
+      $timeout.flush(0);
       expect(elm.find('div.item').length).toBe(1);
       testSlideActive(0);
     });
@@ -323,6 +328,39 @@ describe('carousel', function() {
       carouselScope.$currentTransition = null;
       next.click();
       testSlideActive(1);
+    });
+
+    it('should buffer the slides if transition is clicked and only transition to the last requested', function() {
+      var carouselScope = elm.children().scope();
+
+      testSlideActive(0);
+      carouselScope.$currentTransition = null;
+      carouselScope.select(carouselScope.slides[1]);
+      $animate.flush();
+
+      testSlideActive(1);
+
+      carouselScope.$currentTransition = true;
+      carouselScope.select(carouselScope.slides[2]);
+      scope.$apply();
+
+      testSlideActive(1);
+
+      carouselScope.select(carouselScope.slides[0]);
+      scope.$apply();
+
+      testSlideActive(1);
+
+      carouselScope.$currentTransition = null;
+      $interval.flush(scope.interval);
+      $animate.flush();
+
+      testSlideActive(2);
+
+      $interval.flush(scope.interval);
+      $animate.flush();
+
+      testSlideActive(0);
     });
 
     it('issue 1414 - should not continue running timers after scope is destroyed', function() {
@@ -468,13 +506,16 @@ describe('carousel', function() {
       it('should remove slide and change active slide if needed', function() {
         expect(ctrl.slides.length).toBe(4);
         ctrl.removeSlide(ctrl.slides[0]);
+        $timeout.flush(0);
         expect(ctrl.slides.length).toBe(3);
         expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
         ctrl.select(ctrl.slides[2]);
         ctrl.removeSlide(ctrl.slides[2]);
+        $timeout.flush(0);
         expect(ctrl.slides.length).toBe(2);
         expect(ctrl.currentSlide).toBe(ctrl.slides[1]);
         ctrl.removeSlide(ctrl.slides[0]);
+        $timeout.flush(0);
         expect(ctrl.slides.length).toBe(1);
         expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
       });

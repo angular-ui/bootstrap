@@ -1,11 +1,11 @@
 angular.module('ui.bootstrap.carousel', [])
 
-.controller('UibCarouselController', ['$scope', '$element', '$interval', '$animate', function($scope, $element, $interval, $animate) {
+.controller('UibCarouselController', ['$scope', '$element', '$interval', '$timeout', '$animate', function($scope, $element, $interval, $timeout, $animate) {
   var self = this,
     slides = self.slides = $scope.slides = [],
     SLIDE_DIRECTION = 'uib-slideDirection',
     currentIndex = -1,
-    currentInterval, isPlaying;
+    currentInterval, isPlaying, bufferedTransitions = [];
   self.currentSlide = null;
 
   var destroyed = false;
@@ -19,6 +19,8 @@ angular.module('ui.bootstrap.carousel', [])
     //Prevent this user-triggered transition from occurring if there is already one in progress
     if (nextSlide && nextSlide !== self.currentSlide && !$scope.$currentTransition) {
       goNext(nextSlide, nextIndex, direction);
+    } else if (nextSlide && nextSlide !== self.currentSlide && $scope.$currentTransition) {
+      bufferedTransitions.push(nextSlide);
     }
   };
 
@@ -40,6 +42,14 @@ angular.module('ui.bootstrap.carousel', [])
         if (phase === 'close') {
           $scope.$currentTransition = null;
           $animate.off('addClass', element);
+          if (bufferedTransitions.length) {
+            var nextSlide = bufferedTransitions.pop();
+            var nextIndex = $scope.indexOfSlide(nextSlide);
+            var nextDirection = nextIndex > self.getCurrentIndex() ? 'next' : 'prev';
+            clearBufferedTransitions();
+
+            goNext(nextSlide, nextIndex, nextDirection);
+          }
         }
       });
     }
@@ -134,6 +144,13 @@ angular.module('ui.bootstrap.carousel', [])
   function resetTransition(slides) {
     if (!slides.length) {
       $scope.$currentTransition = null;
+      clearBufferedTransitions();
+    }
+  }
+
+  function clearBufferedTransitions() {
+    while (bufferedTransitions.length) {
+      bufferedTransitions.shift();
     }
   }
 
@@ -155,6 +172,10 @@ angular.module('ui.bootstrap.carousel', [])
     slides.push(slide);
     //if this is the first slide or the slide is set to active, select it
     if (slides.length === 1 || slide.active) {
+      if ($scope.$currentTransition) {
+        $scope.$currentTransition = null;
+      }
+
       self.select(slides[slides.length - 1]);
       if (slides.length === 1) {
         $scope.play();
@@ -170,22 +191,30 @@ angular.module('ui.bootstrap.carousel', [])
         return +a.index > +b.index;
       });
     }
+
+    var bufferedIndex = bufferedTransitions.indexOf(slide);
+    if (bufferedIndex !== -1) {
+      bufferedTransitions.splice(bufferedIndex, 1);
+    }
     //get the index of the slide inside the carousel
     var index = slides.indexOf(slide);
     slides.splice(index, 1);
-    if (slides.length > 0 && slide.active) {
-      if (index >= slides.length) {
-        self.select(slides[index - 1]);
-      } else {
-        self.select(slides[index]);
+    $timeout(function() {
+      if (slides.length > 0 && slide.active) {
+        if (index >= slides.length) {
+          self.select(slides[index - 1]);
+        } else {
+          self.select(slides[index]);
+        }
+      } else if (currentIndex > index) {
+        currentIndex--;
       }
-    } else if (currentIndex > index) {
-      currentIndex--;
-    }
+    });
 
     //clean the currentSlide when no more slide
     if (slides.length === 0) {
       self.currentSlide = null;
+      clearBufferedTransitions();
     }
   };
 
