@@ -24,8 +24,6 @@ template/**/*.js
 .git
 docs
 misc
-src
-template
 .editorconfig
 .gitattributes
 .gitignore
@@ -37,3 +35,6 @@ karma.conf.js
 ROADMAP.md
 
 dist/assets
+dist/index.html
+dist/versions-mapping.json
+dist/*-SNAPSHOT*

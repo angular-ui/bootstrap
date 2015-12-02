@@ -4,6 +4,12 @@
   "version": "1.0.0-SNAPSHOT",
   "homepage": "http://angular-ui.github.io/bootstrap/",
   "dependencies": {},
+  "directories": {
+    "lib": "src/"
+  },
+  "files": [
+    "dist/", "src/", "template/"
+  ],
   "scripts":{
     "test": "grunt"
   },
