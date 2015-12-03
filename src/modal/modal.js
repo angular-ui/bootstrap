@@ -75,9 +75,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     };
 
     function linkFn(scope, element, attrs) {
-      // Temporary fix for prefixing
-      element.addClass('modal-backdrop');
-
       if (attrs.modalInClass) {
         if ($animateCss) {
           $animateCss(element, {
