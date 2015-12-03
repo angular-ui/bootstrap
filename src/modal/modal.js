@@ -57,14 +57,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 /**
  * A helper directive for the $modal service. It creates a backdrop element.
  */
-  .directive('uibModalBackdrop', ['$animate', '$injector', '$uibModalStack',
-  function($animate, $injector, $modalStack) {
-    var $animateCss = null;
-
-    if ($injector.has('$animateCss')) {
-      $animateCss = $injector.get('$animateCss');
-    }
-
+  .directive('uibModalBackdrop', ['$animateCss', '$injector', '$uibModalStack',
+  function($animateCss, $injector, $modalStack) {
     return {
       replace: true,
       templateUrl: 'uib/template/modal/backdrop.html',
@@ -76,24 +70,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
     function linkFn(scope, element, attrs) {
       if (attrs.modalInClass) {
-        if ($animateCss) {
-          $animateCss(element, {
-            addClass: attrs.modalInClass
-          }).start();
-        } else {
-          $animate.addClass(element, attrs.modalInClass);
-        }
+        $animateCss(element, {
+          addClass: attrs.modalInClass
+        }).start();
 
         scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
           var done = setIsAsync();
           if (scope.modalOptions.animation) {
-            if ($animateCss) {
-              $animateCss(element, {
-                removeClass: attrs.modalInClass
-              }).start().then(done);
-            } else {
-              $animate.removeClass(element, attrs.modalInClass).then(done);
-            }
+            $animateCss(element, {
+              removeClass: attrs.modalInClass
+            }).start().then(done);
           } else {
             done();
           }
