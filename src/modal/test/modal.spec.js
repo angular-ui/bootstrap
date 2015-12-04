@@ -527,6 +527,46 @@ describe('$uibModal', function () {
 
       initialPage.remove();
     });
+
+    it('should change focus to first element when tab key is pressed when keyboard is false', function() {
+      var initialPage = angular.element('<a href="#" id="cannot-get-focus-from-modal">Outland link</a>');
+      angular.element(document.body).append(initialPage);
+      initialPage.focus();
+
+      open({
+        template:'<a href="#" id="tab-focus-link"><input type="text" id="tab-focus-input1"/><input type="text" id="tab-focus-input2"/>' +
+        '<button id="tab-focus-button">Open me!</button>',
+        keyboard: false
+      });
+      expect($document).toHaveModalsOpen(1);
+
+      var lastElement = angular.element(document.getElementById('tab-focus-button'));
+      lastElement.focus();
+      triggerKeyDown(lastElement, 9);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link');
+
+      initialPage.remove();
+    });
+
+    it('should change focus to last element when shift+tab keys are pressed when keyboard is false', function() {
+      var initialPage = angular.element('<a href="#" id="cannot-get-focus-from-modal">Outland link</a>');
+      angular.element(document.body).append(initialPage);
+      initialPage.focus();
+
+      open({
+        template:'<a href="#" id="tab-focus-link"><input type="text" id="tab-focus-input1"/><input type="text" id="tab-focus-input2"/>' +
+        '<button id="tab-focus-button">Open me!</button>',
+        keyboard: false
+      });
+      expect($document).toHaveModalsOpen(1);
+
+      var lastElement = angular.element(document.getElementById('tab-focus-link'));
+      lastElement.focus();
+      triggerKeyDown(lastElement, 9, true);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
+
+      initialPage.remove();
+    });
   });
 
   describe('default options can be changed in a provider', function() {

@@ -351,13 +351,15 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         }
 
         var modal = openedWindows.top();
-        if (modal && modal.value.keyboard) {
+        if (modal) {
           switch (evt.which) {
             case 27: {
-              evt.preventDefault();
-              $rootScope.$apply(function() {
-                $modalStack.dismiss(modal.key, 'escape key press');
-              });
+              if (modal.value.keyboard) {
+                evt.preventDefault();
+                $rootScope.$apply(function() {
+                  $modalStack.dismiss(modal.key, 'escape key press');
+                });
+              }
               break;
             }
             case 9: {
