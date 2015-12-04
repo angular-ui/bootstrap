@@ -2343,10 +2343,10 @@ describe('datepicker', function() {
         describe('datepickerPopupConfig.altInputFormats', function() {
           var originalConfig = {};
           beforeEach(inject(function(uibDatepickerPopupConfig) {
+            $rootScope.date = new Date('November 9, 1980');
             angular.extend(originalConfig, uibDatepickerPopupConfig);
             uibDatepickerPopupConfig.datepickerPopup = 'MM-dd-yyyy';
             uibDatepickerPopupConfig.altInputFormats = ['M!/d!/yyyy'];
-
             var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup is-open="true"></div>')($rootScope);
             $rootScope.$digest();
             assignElements(wrapElement);
@@ -2364,6 +2364,12 @@ describe('datepicker', function() {
             expect($rootScope.date.getMonth()).toEqual(10);
             expect($rootScope.date.getDate()).toEqual(8);
           });
+
+          it('changes the datepicker', function() {
+            expect(selectedElementIndex()).toEqual(14);
+            changeInputValueTo(inputEl, '11/8/1980');
+            expect(selectedElementIndex()).toEqual(13);
+          });
         });
 
         describe('attribute `alt-input-formats`', function() {
@@ -2380,6 +2386,12 @@ describe('datepicker', function() {
             expect($rootScope.date.getFullYear()).toEqual(1980);
             expect($rootScope.date.getMonth()).toEqual(10);
             expect($rootScope.date.getDate()).toEqual(8);
+          });
+
+          it('changes the datepicker', function() {
+            expect(selectedElementIndex()).toEqual(14);
+            changeInputValueTo(inputEl, '11/8/1980');
+            expect(selectedElementIndex()).toEqual(13);
           });
         });
       });

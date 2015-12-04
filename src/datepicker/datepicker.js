@@ -679,7 +679,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
     // Detect changes in the view from the text box
     ngModel.$viewChangeListeners.push(function() {
-      scope.date = dateParser.parse(ngModel.$viewValue, dateFormat, scope.date);
+      scope.date = parseDateString(ngModel.$viewValue);
     });
 
     element.bind('keydown', inputKeydownBind);
@@ -797,6 +797,19 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     return string.replace(/([A-Z])/g, function($1) { return '-' + $1.toLowerCase(); });
   }
 
+  function parseDateString(viewValue) {
+    var date = dateParser.parse(viewValue, dateFormat, scope.date);
+    if (isNaN(date)) {
+      for (var i = 0; i < altInputFormats.length; i++) {
+        date = dateParser.parse(viewValue, altInputFormats[i], scope.date);
+        if (!isNaN(date)) {
+          return date;
+        }
+      }
+    }
+    return date;
+  }
+
   function parseDate(viewValue) {
     if (angular.isNumber(viewValue)) {
       // presumably timestamp to date object
@@ -812,15 +825,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     }
 
     if (angular.isString(viewValue)) {
-      var date = dateParser.parse(viewValue, dateFormat, scope.date);
-      if (isNaN(date)) {
-        for (var i = 0; i < altInputFormats.length; i++) {
-          date = dateParser.parse(viewValue, altInputFormats[i], scope.date);
-          if (!isNaN(date)) {
-            break;
-          }
-        }
-      }
+      var date = parseDateString(viewValue);
       if (isNaN(date)) {
         return undefined;
       }
@@ -851,16 +856,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     }
 
     if (angular.isString(value)) {
-      var date = dateParser.parse(value, dateFormat);
-      if (isNaN(date)) {
-        for (var i = 0; i < altInputFormats.length; i++) {
-          date = dateParser.parse(value, altInputFormats[i]);
-          if (!isNaN(date)) {
-            break;
-          }
-        }
-      }
-      return !isNaN(date);
+      return !isNaN(parseDateString(viewValue));
     }
 
     return false;
