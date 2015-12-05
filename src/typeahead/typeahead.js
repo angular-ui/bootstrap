@@ -271,8 +271,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
     // bind events only if appendToBody params exist - performance feature
     if (appendToBody) {
-      angular.element($window).bind('resize', fireRecalculating);
-      $document.find('body').bind('scroll', fireRecalculating);
+      angular.element($window).on('resize', fireRecalculating);
+      $document.find('body').on('scroll', fireRecalculating);
     }
 
     // Declare the debounced function outside recalculating for
@@ -357,7 +357,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     };
 
     //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(27)
-    element.bind('keydown', function(evt) {
+    element.on('keydown', function(evt) {
       //typeahead is open and an "interesting" key was pressed
       if (scope.matches.length === 0 || HOT_KEYS.indexOf(evt.which) === -1) {
         return;
@@ -444,17 +444,17 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       }
     };
 
-    $document.bind('click', dismissClickHandler);
+    $document.on('click', dismissClickHandler);
 
     originalScope.$on('$destroy', function() {
-      $document.unbind('click', dismissClickHandler);
+      $document.off('click', dismissClickHandler);
       if (appendToBody || appendTo) {
         $popup.remove();
       }
 
       if (appendToBody) {
-        angular.element($window).unbind('resize', fireRecalculating);
-        $document.find('body').unbind('scroll', fireRecalculating);
+        angular.element($window).off('resize', fireRecalculating);
+        $document.find('body').off('scroll', fireRecalculating);
       }
       // Prevent jQuery cache memory leak
       popUpEl.remove();
