@@ -331,7 +331,13 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         }
       }
 
-      $document.bind('keydown', function(evt) {
+      $document.on('keydown', keydownListener);
+
+      $rootScope.$on('$destroy', function() {
+        $document.off('keydown', keydownListener);
+      });
+
+      function keydownListener(evt) {
         if (evt.isDefaultPrevented()) {
           return evt;
         }
@@ -369,7 +375,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
             }
           }
         }
-      });
+      }
 
       $modalStack.open = function(modalInstance, modal) {
         var modalOpener = $document[0].activeElement,

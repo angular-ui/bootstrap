@@ -154,6 +154,7 @@ describe('$uibModal', function () {
     body.find('div.modal').remove();
     body.find('div.modal-backdrop').remove();
     body.removeClass('modal-open');
+    $document.off('keydown');
   });
 
   function triggerKeyDown(element, keyCode, shiftKey) {

@@ -37,6 +37,10 @@ describe('tooltip directive', function() {
     });
   });
 
+  afterEach(function() {
+    $document.off('keypress');
+  });
+
   function compileTooltip(ttipMarkup) {
     var fragment = $compile('<div>' + ttipMarkup + '</div>')($rootScope);
     $rootScope.$digest();

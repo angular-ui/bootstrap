@@ -71,7 +71,13 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
    */
   this.$get = ['$window', '$compile', '$timeout', '$document', '$uibPosition', '$interpolate', '$rootScope', '$parse', '$$stackedMap', function($window, $compile, $timeout, $document, $position, $interpolate, $rootScope, $parse, $$stackedMap) {
     var openedTooltips = $$stackedMap.createNew();
-    $document.on('keypress', function(e) {
+    $document.on('keypress', keypressListener);
+
+    $rootScope.$on('$destroy', function() {
+      $document.off('keypress', keypressListener);
+    });
+
+    function keypressListener(e) {
       if (e.which === 27) {
         var last = openedTooltips.top();
         if (last) {
@@ -80,7 +86,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
           last = null;
         }
       }
-    });
+    }
 
     return function $tooltip(ttType, prefix, defaultTriggerShow, options) {
       options = angular.extend({}, defaultOptions, globalOptions, options);

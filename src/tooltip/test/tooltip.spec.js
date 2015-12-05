@@ -26,6 +26,10 @@ describe('tooltip', function() {
     tooltipScope = elmScope.$$childTail;
   }));
 
+  afterEach(function() {
+    $document.off('keypress');
+  });
+
   function trigger(element, evt) {
     evt = new Event(evt);
 

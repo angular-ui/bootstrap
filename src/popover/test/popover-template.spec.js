@@ -3,7 +3,8 @@ describe('popover template', function() {
       elmBody,
       scope,
       elmScope,
-      tooltipScope;
+      tooltipScope,
+      $document;
 
   // load the popover code
   beforeEach(module('ui.bootstrap.popover'));
@@ -16,7 +17,8 @@ describe('popover template', function() {
     $templateCache.put('myUrl', [200, '<span>{{ myTemplateText }}</span>', {}]);
   }));
 
-  beforeEach(inject(function($rootScope, $compile) {
+  beforeEach(inject(function($rootScope, $compile, _$document_) {
+    $document = _$document_;
     elmBody = angular.element(
       '<div><span uib-popover-template="templateUrl">Selector Text</span></div>'
     );
@@ -30,6 +32,10 @@ describe('popover template', function() {
     elmScope = elm.scope();
     tooltipScope = elmScope.$$childTail;
   }));
+
+  afterEach(function() {
+    $document.off('keypress');
+  });
 
   it('should open on click', inject(function() {
     elm.trigger('click');
