@@ -201,6 +201,7 @@ angular.module('ui.bootstrap.tabs', [])
     controller: function() {
       //Empty controller so other directives can require being 'under' a tab
     },
+    controllerAs: 'tab',
     link: function(scope, elm, attrs, tabsetCtrl, transclude) {
       scope.$watch('active', function(active) {
         if (active) {

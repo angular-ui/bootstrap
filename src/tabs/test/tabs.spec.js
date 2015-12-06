@@ -192,6 +192,33 @@ describe('tabs', function() {
     });
   });
 
+  describe('uib-tab', function() {
+    var $compile, $templateCache;
+
+    beforeEach(inject(function($rootScope, _$compile_, _$templateCache_) {
+      scope = $rootScope;
+      $compile = _$compile_;
+      $templateCache = _$templateCache_;
+    }));
+
+    it('should expose the controller on the view', function() {
+      $templateCache.put('uib/template/tabs/tab.html', '<li class="uib-tab">{{tab.text}}</li>');
+
+      elm = $compile('<uib-tabset><uib-tab heading="Tab"></uib-tab></uib-tabset>')(scope);
+      scope.$digest();
+
+      var tab = titles().eq(0);
+      var ctrl = tab.controller('uibTab');
+
+      expect(ctrl).toBeDefined();
+
+      ctrl.text = 'foo';
+      scope.$digest();
+
+      expect(tab.text().trim()).toBe('foo');
+    });
+  });
+
   describe('ng-repeat', function() {
     var $compile, $rootScope;
     beforeEach(inject(function(_$compile_, _$rootScope_) {
