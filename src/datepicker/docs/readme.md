@@ -94,6 +94,11 @@ The datepicker has 3 modes:
 * `year-range`
   _(Default: `20`)_ -
   Number of years displayed in year selection.
+  
+* `ng-model-options`
+  _(Default: {})_ -
+  allowInvalid support. [More on ngModelOptions](https://docs.angularjs.org/api/ng/directive/ngModelOptions).
+
 
 ### uib-datepicker-popup settings ###
 

@@ -826,14 +826,12 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
     if (angular.isString(viewValue)) {
       var date = parseDateString(viewValue);
-      if (isNaN(date)) {
-        return undefined;
+      if (!isNaN(date)) {
+        return date;
       }
-
-      return date;
     }
 
-    return undefined;
+    return ngModel.$options && ngModel.$options.allowInvalid ? viewValue : undefined;
   }
 
   function validator(modelValue, viewValue) {

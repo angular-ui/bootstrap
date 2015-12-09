@@ -1266,6 +1266,32 @@ describe('datepicker', function() {
       });
     });
 
+    describe('ngModelOptions allowInvalid', function() {
+      var $sniffer, inputEl;
+
+      beforeEach(inject(function(_$sniffer_) {
+        $sniffer = _$sniffer_;
+
+        $rootScope.date = new Date('September 30, 2010 15:30:00');
+        $rootScope.modelOptions = {allowInvalid: true};
+        element = $compile('<div><input ng-model="date" ng-model-options="modelOptions" uib-datepicker-popup></div>')($rootScope);
+        inputEl = element.find('input');
+        $rootScope.$digest();
+      }));
+
+      function changeInputValueTo(el, value) {
+        el.val(value);
+        el.trigger($sniffer.hasEvent('input') ? 'input' : 'change');
+        $rootScope.$digest();
+      }
+
+      it('should update ng-model even if the date is invalid when allowInvalid is true', function() {
+        changeInputValueTo(inputEl, 'pizza');
+        expect($rootScope.date).toBe('pizza');
+        expect(inputEl.val()).toBe('pizza');
+      });
+    });
+
     describe('setting datepickerPopupConfig', function() {
       var originalConfig = {};
       beforeEach(inject(function(uibDatepickerPopupConfig) {
