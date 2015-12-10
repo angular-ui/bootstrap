@@ -663,11 +663,21 @@ describe('$uibModal', function () {
       });
 
       it('should allow usage of bindToController', function() {
-        open({template: '<div>{{test.fromCtrl}} {{test.isModalInstance}}</div>', controller: function($uibModalInstance) {
-          this.fromCtrl = 'Content from ctrl';
-          this.isModalInstance = angular.isObject($uibModalInstance) && angular.isFunction($uibModalInstance.close);
-        }, controllerAs: 'test', bindToController: true});
-        expect($document).toHaveModalOpenWithContent('Content from ctrl true', 'div');
+        var $scope = $rootScope.$new(true);
+        $scope.foo = 'bar';
+        open({
+          template: '<div>{{test.fromCtrl}} {{test.closeDismissPresent()}} {{test.foo}}</div>',
+          controller: function($uibModalInstance) {
+            this.fromCtrl = 'Content from ctrl';
+            this.closeDismissPresent = function() {
+              return angular.isFunction(this.$close) && angular.isFunction(this.$dismiss);
+            };
+          },
+          controllerAs: 'test',
+          bindToController: true,
+          scope: $scope
+        });
+        expect($document).toHaveModalOpenWithContent('Content from ctrl true bar', 'div');
       });
     });
 

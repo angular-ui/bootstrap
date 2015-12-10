@@ -616,8 +616,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
             samePromise = promiseChain = $q.all([promiseChain])
               .then(resolveWithTemplate, resolveWithTemplate)
               .then(function resolveSuccess(tplAndVars) {
+                var providedScope = modalOptions.scope || $rootScope;
 
-                var modalScope = (modalOptions.scope || $rootScope).$new();
+                var modalScope = providedScope.$new();
                 modalScope.$close = modalInstance.close;
                 modalScope.$dismiss = modalInstance.dismiss;
 
@@ -641,7 +642,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
                   ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
                   if (modalOptions.controllerAs) {
                     if (modalOptions.bindToController) {
-                      angular.extend(ctrlInstance, modalScope);
+                      ctrlInstance.$close = modalScope.$close;
+                      ctrlInstance.$dismiss = modalScope.$dismiss;
+                      angular.extend(ctrlInstance, providedScope);
                     }
 
                     modalScope[modalOptions.controllerAs] = ctrlInstance;
