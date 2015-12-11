@@ -368,7 +368,6 @@ describe('$uibModal', function () {
     });
 
     it('should reject returned promise on dismiss', function() {
-
       var modal = open({template: '<div>Content</div>'});
       dismiss(modal, 'esc');
 
