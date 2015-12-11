@@ -1141,6 +1141,17 @@ describe('$uibModal', function () {
       expect($document).toHaveModalsOpen(0);
     });
 
+    it('should be able to dismiss all modals at once', function() {
+      var modal1 = open({template: '<div>Modal1</div>'});
+      var modal2 = open({template: '<div>Modal2</div>'});
+      expect($document).toHaveModalsOpen(2);
+
+      $uibModalStack.dismissAll();
+      $animate.flush();
+      $animate.flush();
+      expect($document).toHaveModalsOpen(0);
+    });
+
     it('should not close any modals on ESC if the topmost one does not allow it', function() {
       var modal1 = open({template: '<div>Modal1</div>'});
       var modal2 = open({template: '<div>Modal2</div>', keyboard: false});
