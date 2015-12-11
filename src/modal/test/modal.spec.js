@@ -1128,7 +1128,7 @@ describe('$uibModal', function () {
   });
 
   describe('multiple modals', function() {
-    it('it should allow opening of multiple modals', function() {
+    it('should allow opening of multiple modals', function() {
       var modal1 = open({template: '<div>Modal1</div>'});
       var modal2 = open({template: '<div>Modal2</div>'});
       expect($document).toHaveModalsOpen(2);
