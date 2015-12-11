@@ -79,6 +79,15 @@ describe('uib-dropdown', function() {
       expect(element).toHaveClass(dropdownConfig.openClass);
     });
 
+    it('should not close on right click', function() {
+      clickDropdownToggle();
+      element.find('ul a').trigger({
+        type: 'mousedown',
+        which: 3
+      });
+      expect(element).toHaveClass(dropdownConfig.openClass);
+    });
+
     it('should close on $location change', function() {
       clickDropdownToggle();
       expect(element).toHaveClass(dropdownConfig.openClass);

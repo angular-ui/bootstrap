@@ -36,6 +36,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
     if (evt && openScope.getAutoClose() === 'disabled') { return; }
 
+    if (evt && evt.which === 3) { return; }
+
     var toggleElement = openScope.getToggleElement();
     if (evt && toggleElement && toggleElement[0].contains(evt.target)) {
       return;
