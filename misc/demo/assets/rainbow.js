@@ -311,9 +311,9 @@ window['Rainbow'] = (function() {
                     _processPattern(regex, pattern, code, callback);
                 };
 
-                // every 100 items we process let's call set timeout
+                // every 50 items we process let's call set timeout
                 // to let the ui breathe a little
-                return match_counter % 100 > 0 ? nextCall() : setTimeout(nextCall, 0);
+                return match_counter % 50 > 0 ? nextCall() : setTimeout(nextCall, 0);
             };
 
         // if this is not a child match and it falls inside of another
