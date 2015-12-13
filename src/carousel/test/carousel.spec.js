@@ -474,65 +474,63 @@ describe('carousel', function() {
       }
     });
 
-    describe('addSlide', function() {
-      it('should set first slide to active = true and the rest to false', function() {
-        angular.forEach(ctrl.slides, function(slide, i) {
-          if (i !== 0) {
-            expect(slide.active).not.toBe(true);
-          } else {
-            expect(slide.active).toBe(true);
-          }
-        });
+    it('should set first slide to active = true and the rest to false', function() {
+      angular.forEach(ctrl.slides, function(slide, i) {
+        if (i !== 0) {
+          expect(slide.active).not.toBe(true);
+        } else {
+          expect(slide.active).toBe(true);
+        }
       });
+    });
 
-      it('should add new slide and change active to true if active is true on the added slide', function() {
-        var newSlide = {active: true};
-        expect(ctrl.slides.length).toBe(4);
-        ctrl.addSlide(newSlide);
-        expect(ctrl.slides.length).toBe(5);
-        expect(ctrl.slides[4].active).toBe(true);
-        expect(ctrl.slides[0].active).toBe(false);
-      });
+    it('should add new slide and change active to true if active is true on the added slide', function() {
+      var newSlide = {active: true};
+      expect(ctrl.slides.length).toBe(4);
+      ctrl.addSlide(newSlide);
+      expect(ctrl.slides.length).toBe(5);
+      expect(ctrl.slides[4].active).toBe(true);
+      expect(ctrl.slides[0].active).toBe(false);
+    });
 
-      it('should add a new slide and not change the active slide', function() {
-        var newSlide = {active: false};
-        expect(ctrl.slides.length).toBe(4);
-        ctrl.addSlide(newSlide);
-        expect(ctrl.slides.length).toBe(5);
-        expect(ctrl.slides[4].active).toBe(false);
-        expect(ctrl.slides[0].active).toBe(true);
-      });
+    it('should add a new slide and not change the active slide', function() {
+      var newSlide = {active: false};
+      expect(ctrl.slides.length).toBe(4);
+      ctrl.addSlide(newSlide);
+      expect(ctrl.slides.length).toBe(5);
+      expect(ctrl.slides[4].active).toBe(false);
+      expect(ctrl.slides[0].active).toBe(true);
+    });
 
-      it('should remove slide and change active slide if needed', function() {
-        expect(ctrl.slides.length).toBe(4);
-        ctrl.removeSlide(ctrl.slides[0]);
-        $timeout.flush(0);
-        expect(ctrl.slides.length).toBe(3);
-        expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
-        ctrl.select(ctrl.slides[2]);
-        ctrl.removeSlide(ctrl.slides[2]);
-        $timeout.flush(0);
-        expect(ctrl.slides.length).toBe(2);
-        expect(ctrl.currentSlide).toBe(ctrl.slides[1]);
-        ctrl.removeSlide(ctrl.slides[0]);
-        $timeout.flush(0);
-        expect(ctrl.slides.length).toBe(1);
-        expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
-      });
+    it('should remove slide and change active slide if needed', function() {
+      expect(ctrl.slides.length).toBe(4);
+      ctrl.removeSlide(ctrl.slides[0]);
+      $timeout.flush(0);
+      expect(ctrl.slides.length).toBe(3);
+      expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
+      ctrl.select(ctrl.slides[2]);
+      ctrl.removeSlide(ctrl.slides[2]);
+      $timeout.flush(0);
+      expect(ctrl.slides.length).toBe(2);
+      expect(ctrl.currentSlide).toBe(ctrl.slides[1]);
+      ctrl.removeSlide(ctrl.slides[0]);
+      $timeout.flush(0);
+      expect(ctrl.slides.length).toBe(1);
+      expect(ctrl.currentSlide).toBe(ctrl.slides[0]);
+    });
 
-      it('issue 1414 - should not continue running timers after scope is destroyed', function() {
-        spyOn(scope, 'next').and.callThrough();
-        scope.interval = 2000;
-        scope.$digest();
+    it('issue 1414 - should not continue running timers after scope is destroyed', function() {
+      spyOn(scope, 'next').and.callThrough();
+      scope.interval = 2000;
+      scope.$digest();
 
-        $interval.flush(scope.interval);
-        expect(scope.next.calls.count()).toBe(1);
+      $interval.flush(scope.interval);
+      expect(scope.next.calls.count()).toBe(1);
 
-        scope.$destroy();
+      scope.$destroy();
 
-        $interval.flush(scope.interval);
-        expect(scope.next.calls.count()).toBe(1);
-      });
+      $interval.flush(scope.interval);
+      expect(scope.next.calls.count()).toBe(1);
     });
 
     it('should be exposed in the template', inject(function($templateCache) {
