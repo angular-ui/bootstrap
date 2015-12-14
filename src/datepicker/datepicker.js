@@ -746,6 +746,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
   scope.keydown = function(evt) {
     if (evt.which === 27) {
+      evt.stopPropagation();
       scope.isOpen = false;
       element[0].focus();
     }
