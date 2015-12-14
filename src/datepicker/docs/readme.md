@@ -147,7 +147,7 @@ Options for the uib-datepicker must be passed as JSON using the `datepicker-opti
 
 * `uib-datepicker-popup`
   _(Default: `yyyy-MM-dd`)_ -
-  The format for displayed dates. This string can take string literals by surrounding the value with backticks, i.e. `yyyy-MM-dd h ``o'clock``.
+  The format for displayed dates. This string can take string literals by surrounding the value with backticks, i.e. ``yyyy-MM-dd h `o'clock``.
 
  * `alt-input-formats`
   _(Default: `[]`)_:
