@@ -1,4 +1,4 @@
-var markdown = require('node-markdown').Markdown;
+var marked = require('marked');
 var fs = require('fs');
 
 module.exports = function(grunt) {
@@ -237,7 +237,9 @@ module.exports = function(grunt) {
       dependencies: dependenciesForModule(name),
       docs: {
         md: grunt.file.expand('src/'+name+'/docs/*.md')
-          .map(grunt.file.read).map(markdown).join('\n'),
+          .map(grunt.file.read).map(function(str) {
+            return marked(str);
+          }).join('\n'),
         js: grunt.file.expand('src/'+name+'/docs/*.js')
           .map(grunt.file.read).join('\n'),
         html: grunt.file.expand('src/'+name+'/docs/*.html')

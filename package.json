@@ -38,7 +38,7 @@
     "karma-firefox-launcher": "^0.1.4",
     "karma-jasmine": "^0.3.5",
     "load-grunt-tasks": "^3.3.0",
-    "node-markdown": "0.1.1",
+    "marked": "^0.3.5",
     "semver": "^5.0.1",
     "shelljs": "^0.5.1"
   },
