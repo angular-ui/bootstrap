@@ -1834,6 +1834,24 @@ describe('datepicker', function() {
           expect(inputEl.val()).toBe('10-January-1983');
         });
       });
+      
+      describe('custom format with time', function() {
+        beforeEach(inject(function() {
+      		var wrapElement = $compile('<div><input type="text" ng-model="date" uib-datepicker-popup="MMM-d-yyyy h:mm a" is-open="false"><div>')($rootScope);
+      		$rootScope.$digest();
+      		assignElements(wrapElement);
+        }));
+    
+        it('updates the model correctly when the input value changes', function() {
+      		$rootScope.date = new Date(2015, 10, 24, 10, 0);
+      		$rootScope.$digest();
+      		expect(inputEl.val()).toBe('Nov-24-2015 10:00 AM');
+      
+      		inputEl.val('Nov-24-2015 11:00 AM').trigger('input');
+      		$rootScope.$digest();
+      		expect($rootScope.date).toEqual(new Date(2015, 10, 24, 11, 0));
+        });
+      });
 
       describe('dynamic custom format', function() {
         beforeEach(inject(function() {
