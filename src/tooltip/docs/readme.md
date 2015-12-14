@@ -33,7 +33,7 @@ will display:
 - `tooltip-animation`: Should it fade in and out? Defaults to "true".
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
-- `tooltip-close-popup-delay`: For how long should the tooltip remain open
+- `tooltip-popup-close-delay`: For how long should the tooltip remain open
   after the close trigger event? Defaults to 0.
 - `tooltip-trigger`: What should trigger a show of the tooltip? Supports a space separated list of event names.
   Note: this attribute is no longer observable. See `tooltip-enable`.
