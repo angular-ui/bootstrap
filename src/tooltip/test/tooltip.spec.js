@@ -966,6 +966,48 @@ describe('$uibTooltipProvider', function() {
       expect($body.children().length).toEqual(bodyLength + 1);
     }));
 
+    it('should append to the body when only attribute present', inject(function($rootScope, $compile, $document) {
+      $body = $document.find('body');
+      elmBody = angular.element(
+        '<div><span uib-tooltip="tooltip text" tooltip-append-to-body>Selector Text</span></div>'
+      );
+
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      var bodyLength = $body.children().length;
+      trigger(elm, 'mouseenter');
+
+      expect(tooltipScope.isOpen).toBe(true);
+      expect(elmBody.children().length).toBe(1);
+      expect($body.children().length).toEqual(bodyLength + 1);
+    }));
+
+    it('should not append to the body when attribute value is false', inject(function($rootScope, $compile, $document) {
+      $body = $document.find('body');
+      elmBody = angular.element(
+        '<div><span uib-tooltip="tooltip text" tooltip-append-to-body="false">Selector Text</span></div>'
+      );
+
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      var bodyLength = $body.children().length;
+      trigger(elm, 'mouseenter');
+
+      expect(tooltipScope.isOpen).toBe(true);
+      expect(elmBody.children().length).toBe(2);
+      expect($body.children().length).toEqual(bodyLength);
+    }));
+
     it('should close on location change', inject(function($rootScope, $compile) {
       elmBody = angular.element(
         '<div><span uib-tooltip="tooltip text">Selector Text</span></div>'

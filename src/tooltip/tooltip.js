@@ -533,7 +533,14 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             var animation = scope.$eval(attrs[prefix + 'Animation']);
             ttScope.animation = angular.isDefined(animation) ? !!animation : options.animation;
 
-            var appendToBodyVal = scope.$eval(attrs[prefix + 'AppendToBody']);
+            var appendToBodyVal;
+            var appendKey = prefix + 'AppendToBody';
+            if (appendKey in attrs && attrs[appendKey] === undefined) {
+              appendToBodyVal = true;
+            } else {
+              appendToBodyVal = scope.$eval(attrs[appendKey]);
+            }
+
             appendToBody = angular.isDefined(appendToBodyVal) ? appendToBodyVal : appendToBody;
 
             // if a tooltip is attached to <body> we need to remove it on
