@@ -4,6 +4,12 @@ angular.module('ui.bootstrap.collapse', [])
     var $animateCss = $injector.has('$animateCss') ? $injector.get('$animateCss') : null;
     return {
       link: function(scope, element, attrs) {
+        if (!scope.$eval(attrs.uibCollapse)) {
+          element.addClass('in')
+            .addClass('collapse')
+            .css({height: 'auto'});
+        }
+
         function expand() {
           element.removeClass('collapse')
             .addClass('collapsing')
