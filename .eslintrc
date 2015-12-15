@@ -1,4 +1,8 @@
 {
+  "env": {
+    "browser": true,
+    "es6": true
+  },
   "rules": {
     "comma-dangle": 2,
     "no-cond-assign": 2,

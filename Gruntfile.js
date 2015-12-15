@@ -103,7 +103,7 @@ module.exports = function(grunt) {
           module: null, // no bundle module for all the html2js templates
           base: '.',
           rename: function(moduleName) {
-            return 'uib/' + moduleName;
+            return `uib/${moduleName}`;
           }
         },
         files: [{
@@ -194,7 +194,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['before-test', 'test', 'after-test']);
 
-  grunt.registerTask('enforce', 'Install commit message enforce script if it doesn\'t exist', function() {
+  grunt.registerTask('enforce', `Install commit message enforce script if it doesn't exist`, function() {
     if (!grunt.file.exists('.git/hooks/commit-msg')) {
       grunt.file.copy('misc/validate-commit-msg.js', '.git/hooks/commit-msg');
       require('fs').chmodSync('.git/hooks/commit-msg', '0755');
@@ -227,22 +227,22 @@ module.exports = function(grunt) {
 
     var module = {
       name: name,
-      moduleName: enquote('ui.bootstrap.' + name),
+      moduleName: enquote(`ui.bootstrap.${name}`),
       displayName: ucwords(breakup(name, ' ')),
-      srcFiles: grunt.file.expand('src/'+name+'/*.js'),
-      cssFiles: grunt.file.expand('src/'+name+'/*.css'),
-      tplFiles: grunt.file.expand('template/'+name+'/*.html'),
-      tpljsFiles: grunt.file.expand('template/'+name+'/*.html.js'),
-      tplModules: grunt.file.expand('template/'+name+'/*.html').map(enquoteUibDir),
+      srcFiles: grunt.file.expand(`src/${name}/*.js`),
+      cssFiles: grunt.file.expand(`src/${name}/*.css`),
+      tplFiles: grunt.file.expand(`template/${name}/*.html`),
+      tpljsFiles: grunt.file.expand(`template/${name}/*.html.js`),
+      tplModules: grunt.file.expand(`template/${name}/*.html`).map(enquoteUibDir),
       dependencies: dependenciesForModule(name),
       docs: {
-        md: grunt.file.expand('src/'+name+'/docs/*.md')
+        md: grunt.file.expand(`src/${name}/docs/*.md`)
           .map(grunt.file.read).map(function(str) {
             return marked(str);
           }).join('\n'),
-        js: grunt.file.expand('src/'+name+'/docs/*.js')
+        js: grunt.file.expand(`src/${name}/docs/*.js`)
           .map(grunt.file.read).join('\n'),
-        html: grunt.file.expand('src/'+name+'/docs/*.html')
+        html: grunt.file.expand(`src/${name}/docs/*.html`)
           .map(grunt.file.read).join('\n')
       }
     };
@@ -399,7 +399,7 @@ module.exports = function(grunt) {
       var jsContent = versions.map(function(version) {
         return {
           version: version,
-          url: '/bootstrap/versioned-docs/' + version
+          url: `/bootstrap/versioned-docs/${version}`
         };
       });
       jsContent.unshift({
@@ -407,7 +407,7 @@ module.exports = function(grunt) {
         url: '/bootstrap'
       });
       grunt.file.write(versionsMappingFile, JSON.stringify(jsContent));
-      grunt.log.writeln('File ' + versionsMappingFile.cyan + ' created.');
+      grunt.log.writeln(`File ${versionsMappingFile.cyan} created.`);
       done();
     });
 
@@ -422,7 +422,7 @@ module.exports = function(grunt) {
       js;
     state.css.push(css);
 
-    if(minify){
+    if (minify) {
       css = css
         .replace(/\r?\n/g, '')
         .replace(/\/\*.*?\*\//g, '')
@@ -437,7 +437,7 @@ module.exports = function(grunt) {
       .replace(/\\/g, '\\\\')
       .replace(/'/g, "\\'")
       .replace(/\r?\n/g, '\\n');
-    js = "angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type=\"text/css\">" + css + "</style>'); })";
+    js = `angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">${css}</style>'); })`;
     state.js.push(js);
 
     return state;
