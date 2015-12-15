@@ -1,3 +1,51 @@
+describe('$uibResolve', function() {
+  beforeEach(module('ui.bootstrap.modal'));
+
+  it('should resolve invocables and return promise with object of resolutions', function() {
+    module(function($provide) {
+      $provide.factory('bar', function() {
+        return 'bar';
+      });
+    });
+
+    inject(function($q, $rootScope, $uibResolve) {
+      $uibResolve.resolve({
+        foo: 'bar',
+        bar: $q.resolve('baz'),
+        baz: function() {
+          return 'boo';
+        }
+      }).then(function(resolves) {
+          expect(resolves).toEqual({
+            foo: 'bar',
+            bar: 'baz',
+            baz: 'boo'
+          });
+        });
+
+      $rootScope.$digest();
+    });
+  });
+
+  describe('with custom resolver', function() {
+    beforeEach(module(function($provide, $uibResolveProvider) {
+      $provide.factory('$resolve', function() {
+        return {
+          resolve: jasmine.createSpy()
+        };
+      });
+
+      $uibResolveProvider.setResolver('$resolve');
+    }));
+
+    it('should call $resolve.resolve', inject(function($uibResolve, $resolve) {
+      $uibResolve.resolve({foo: 'bar'}, {}, null, null);
+
+      expect($resolve.resolve).toHaveBeenCalledWith({foo: 'bar'}, {}, null, null);
+    }));
+  });
+});
+
 describe('$uibModal', function () {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $uibModal, $uibModalStack, $uibModalProvider;
@@ -1430,3 +1478,4 @@ describe('$uibModal', function () {
     });
   });
 });
+
