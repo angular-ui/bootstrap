@@ -1,47 +1,131 @@
-`$uibModal` is a service to quickly create AngularJS-powered modal windows.
-Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
+`$uibModal` is a service to create modal windows.
+Creating modals is straightforward: create a template, a controller and reference them when using `$uibModal`.
 
-The `$uibModal` service has only one method: `open(options)` where available options are like follows:
+The `$uibModal` service has only one method: `open(options)`.
 
-* `templateUrl` - a path to a template representing modal's content
-* `template` - inline template representing the modal's content
-* `scope` - a scope instance to be used for the modal's content (actually the `$uibModal` service is going to create a child scope of a provided scope). Defaults to `$rootScope`
-* `controller` - a controller for a modal instance - it can initialize scope used by modal. Accepts the "controller-as" syntax in the form 'SomeCtrl as myctrl'; can be injected with `$uibModalInstance`
-* `controllerAs` - an alternative to the controller-as syntax, matching the API of directive definitions. Requires the `controller` option to be provided as well
-* `bindToController` - when used with `controllerAs` & set to `true`, it will bind the $scope properties onto the controller directly
-* `resolve` - members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property for AngularJS routes
-* `animation` - set to false to disable animations on new modal/backdrop. Does not toggle animations for modals/backdrops that are already displayed.
-* `backdrop` - controls presence of a backdrop. Allowed values: true (default), false (no backdrop), `'static'` - backdrop is present but modal window is not closed when clicking outside of the modal window.
-* `keyboard` - indicates whether the dialog should be closable by hitting the ESC key, defaults to true
-* `backdropClass` - additional CSS class(es) to be added to a modal backdrop template
-* `windowClass` - additional CSS class(es) to be added to a modal window template
-* `windowTopClass` - CSS class(es) to be added to the top modal window
-* `windowTemplateUrl` - a path to a template overriding modal's window template
-* `size` - optional suffix of modal window class. The value used is appended to the `modal-` class, i.e. a value of `sm` gives `modal-sm`
-* `openedClass` - class added to the `body` element when the modal is opened. Defaults to `modal-open`
-* `appendTo` - Appends the modal to a specific element. appendTo must be an `angular.element`. Defaults to `body` element. Example: `appendTo: $document.find('aside').eq(0)`. 
+### $uibModal's open function
+
+#### options parameter
+
+* `animation`
+  _(Type: `boolean`, Default: `true`)_ -
+  Set to false to disable animations on new modal/backdrop. Does not toggle animations for modals/backdrops that are already displayed.
+  
+* `appendTo` 
+  _(Type: `angular.element`, Default: `body`: Example: `$document.find('aside').eq(0)`)_ -
+  Appends the modal to a specific element.
+  
+* `backdrop`
+  _(Type: `boolean|string`, Default: `true`)_ -
+  Controls presence of a backdrop. Allowed values: `true` (default), `false` (no backdrop), `'static'` (disables modal closing by click on the backdrop).
+  
+* `backdropClass`
+  _(Type: `string`)_ -
+  Additional CSS class(es) to be added to a modal backdrop template.
+
+* `bindToController`
+  _(Type: `boolean`, Default: `false`)_ -
+  When used with `controllerAs` & set to `true`, it will bind the $scope properties onto the controller.
+
+* `controller`
+  _(Type: `function|string`, Example: `MyModalController`)_ -
+  A controller for the modal instance. Allows the controller-as syntax. Has a special `$uibModalInstance` injectable to access the modal instance.
+
+* `controllerAs`
+  _(Type: `string`, Example: `ctrl`)_ - 
+  An alternative to the controller-as syntax. Requires the `controller` option to be provided as well.
+
+* `keyboard` - 
+  _(Type: `boolean`, Default: `true`)_ -
+  Indicates whether the dialog should be closable by hitting the ESC key.
+
+* `openedClass`
+  _(Type: `string`, Default: `modal-open`)_ -
+  Class added to the `body` element when the modal is opened.
+
+* `resolve`
+  _(Type: `Object`)_ -
+  Members that will be resolved and passed to the controller as locals; it is equivalent of the `resolve` property in the router.
+
+* `scope`
+  _(Type: `$scope`)_ -
+  The parent scope instance to be used for the modal's content. Defaults to `$rootScope`.
+
+* `size`
+  _(Type: `string`, Example: `lg`)_ -
+  Optional suffix of modal window class. The value used is appended to the `modal-` class, i.e. a value of `sm` gives `modal-sm`.
+
+* `template`
+  _(Type: `string`)_ -
+  Inline template representing the modal's content.
+
+* `templateUrl`
+  _(Type: `string`)_ -
+  A path to a template representing modal's content. You need either a `template` or `templateUrl`.
+
+* `windowClass`
+  _(Type: `string`)_ -
+  Additional CSS class(es) to be added to a modal window template.
+
+* `windowTemplateUrl`
+  _(Type: `string`, Default: `uib/template/modal/window.html`)_ -
+  A path to a template overriding modal's window template.
+
+* `windowTopClass`
+  _(Type: `string`)_ -
+  CSS class(es) to be added to the top modal window.
 
 Global defaults may be set for `$uibModal` via `$uibModalProvider.options`.
+  
+#### return
 
 The `open` method returns a modal instance, an object with the following properties:
 
-* `close(result)` - a method that can be used to close a modal, passing a result
-* `dismiss(reason)` - a method that can be used to dismiss a modal, passing a reason
-* `result` - a promise that is resolved when a modal is closed and rejected when a modal is dismissed
-* `opened` - a promise that is resolved when a modal gets opened after downloading content's template and resolving all variables
-* `closed` - a promise that is resolved when a modal is closed and the animation completes
-* `rendered` - a promise that is resolved when a modal is rendered. 
+* `close(result)`
+  _(Type: `function`)_ -
+  Can be used to close a modal, passing a result.
 
-In addition the scope associated with modal's content is augmented with 2 methods:
+* `dismiss(reason)`
+  _(Type: `function`)_ -
+  Can be used to dismiss a modal, passing a reason.
+
+* `result`
+  _(Type: `promise`)_ -
+  Is resolved when a modal is closed and rejected when a modal is dismissed.
+
+* `opened`
+  _(Type: `promise`)_ -
+  Is resolved when a modal gets opened after downloading content's template and resolving all variables.
+
+* `closed`
+  _(Type: `promise`)_ -
+  Is resolved when a modal is closed and the animation completes.
+
+* `rendered`
+  _(Type: `promise`)_ -
+  Is resolved when a modal is rendered. 
+  
+---
+
+The scope associated with modal's content is augmented with:
 
 * `$close(result)`
+  _(Type: `function`)_ -
+  A method that can be used to close a modal, passing a result.
+
 * `$dismiss(reason)`
+  _(Type: `function`)_ -
+  A method that can be used to dismiss a modal, passing a reason.
 
 Those methods make it easy to close a modal window without a need to create a dedicated controller.
 
-If the $scope is destroyed via unexpected mechanism, such as it being passed in the modal options and a $route/$state transition occurs, the modal will be dismissed with the value `$uibUnscheduledDestruction`.
+---
 
-Finally, a `modal.closing` event is broadcast to the modal scope before the modal closes.  If the listener calls 
-preventDefault on the event, then the modal will remain open.  The $close and $dismiss methods return true if the 
-event was allowed.  The event itself includes a parameter for the result/reason and a boolean parameter that indicates
-whether the modal is being closed (true) or dismissed.
+Events fired:
+
+* `$uibUnscheduledDestruction` - 
+  This event is fired if the $scope is destroyed via unexpected mechanism, such as it being passed in the modal options and a $route/$state transition occurs. The modal will also be dismissed.
+  
+* `modal.closing` -
+  This event is broadcast to the modal scope before the modal closes. If the listener calls preventDefault() on the event, then the modal will remain open.
+  Also, the `$close` and `$dismiss` methods returns true if the event was executed. This event also includes a parameter for the result/reason and a boolean that indicates whether the modal is being closed (true) or dismissed.
