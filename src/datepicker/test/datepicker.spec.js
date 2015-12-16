@@ -205,6 +205,26 @@ describe('datepicker', function() {
       $templateCache = _$templateCache_;
     }));
 
+    describe('with no initial date', function() {
+      beforeEach(function() {
+        jasmine.clock().install();
+      });
+
+      afterEach(function() {
+        jasmine.clock().uninstall();
+      });
+
+      it('should have an active date equal to the current date', function() {
+        var baseTime = new Date(2015, 2, 23);
+        jasmine.clock().mockDate(baseTime);
+
+        element = $compile('<uib-datepicker ng-model="fooDate"></uib-datepicker')($rootScope);
+        $rootScope.$digest();
+
+        expect(element.controller('uibDatepicker').activeDate.getTime()).toEqual(baseTime.getTime());
+      });
+    });
+
     describe('basic functionality', function() {
       beforeEach(function() {
         element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
@@ -241,6 +261,10 @@ describe('datepicker', function() {
 
       it('value is correct', function() {
         expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+      });
+
+      it('has activeDate value of model', function() {
+        expect(element.controller('uibDatepicker').activeDate).toEqual(new Date('September 30, 2010 15:30:00'));
       });
 
       it('has `selected` only the correct day', function() {

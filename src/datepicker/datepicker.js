@@ -98,6 +98,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   this.init = function(ngModelCtrl_) {
     ngModelCtrl = ngModelCtrl_;
 
+    if (ngModelCtrl.$modelValue) {
+      this.activeDate = ngModelCtrl.$modelValue;
+    }
+
     ngModelCtrl.$render = function() {
       self.render();
     };
