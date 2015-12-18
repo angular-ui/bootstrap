@@ -233,6 +233,50 @@ describe('datepicker', function() {
       });
     });
 
+    it('should support custom templates', function() {
+      $templateCache.put('foo/bar.html', '<div>baz</div>');
+
+      element = $compile('<uib-datepicker ng-model="date" template-url="foo/bar.html"></uib-datepicker>')($rootScope);
+      $rootScope.$digest();
+
+      expect(element.html()).toBe('baz');
+    });
+
+    it('should support custom day, month and year templates', function() {
+      $templateCache.put('foo/day.html', '<div>day</div>');
+      $templateCache.put('foo/month.html', '<div>month</div>');
+      $templateCache.put('foo/year.html', '<div>year</div>');
+
+      $templateCache.put('foo/bar.html', '<div>' +
+        '<uib-daypicker template-url="foo/day.html"></uib-daypicker>' +
+        '<uib-monthpicker template-url="foo/month.html"></uib-monthpicker>' +
+        '<uib-yearpicker template-url="foo/year.html"></uib-yearpicker>' +
+      '</div>');
+
+      element = $compile('<uib-datepicker ng-model="date" template-url="foo/bar.html"></uib-datepicker>')($rootScope);
+      $rootScope.$digest();
+
+      var expectedHtml = '<div template-url="foo/day.html">day</div><div template-url="foo/month.html">month</div><div template-url="foo/year.html">year</div>';
+
+      expect(element.html()).toBe(expectedHtml);
+    });
+
+    it('should expose the controller in the template', function() {
+      $templateCache.put('uib/template/datepicker/datepicker.html', '<div>{{datepicker.text}}</div>');
+
+      element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
+      $rootScope.$digest();
+
+      var ctrl = element.controller('uib-datepicker');
+      expect(ctrl).toBeDefined();
+      expect(element.html()).toBe('');
+
+      ctrl.text = 'baz';
+      $rootScope.$digest();
+
+      expect(element.html()).toBe('baz');
+    });
+
     describe('basic functionality', function() {
       beforeEach(function() {
         element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
@@ -382,50 +426,6 @@ describe('datepicker', function() {
         expect(getTitle()).toBe('February 2014');
         clickPreviousButton();
         expect(getTitle()).toBe('January 2014');
-      });
-
-      it('should support custom templates', function() {
-        $templateCache.put('foo/bar.html', '<div>baz</div>');
-
-        element = $compile('<uib-datepicker ng-model="date" template-url="foo/bar.html"></uib-datepicker>')($rootScope);
-        $rootScope.$digest();
-
-        expect(element.html()).toBe('baz');
-      });
-
-      it('should support custom day, month and year templates', function() {
-        $templateCache.put('foo/day.html', '<div>day</div>');
-        $templateCache.put('foo/month.html', '<div>month</div>');
-        $templateCache.put('foo/year.html', '<div>year</div>');
-
-        $templateCache.put('foo/bar.html', '<div>' +
-          '<uib-daypicker template-url="foo/day.html"></uib-daypicker>' +
-          '<uib-monthpicker template-url="foo/month.html"></uib-monthpicker>' +
-          '<uib-yearpicker template-url="foo/year.html"></uib-yearpicker>' +
-        '</div>');
-
-        element = $compile('<uib-datepicker ng-model="date" template-url="foo/bar.html"></uib-datepicker>')($rootScope);
-        $rootScope.$digest();
-
-        var expectedHtml = '<div template-url="foo/day.html">day</div><div template-url="foo/month.html">month</div><div template-url="foo/year.html">year</div>';
-
-        expect(element.html()).toBe(expectedHtml);
-      });
-
-      it('should expose the controller in the template', function() {
-        $templateCache.put('uib/template/datepicker/datepicker.html', '<div>{{datepicker.text}}</div>');
-
-        element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
-        $rootScope.$digest();
-
-        var ctrl = element.controller('uib-datepicker');
-        expect(ctrl).toBeDefined();
-        expect(element.html()).toBe('');
-
-        ctrl.text = 'baz';
-        $rootScope.$digest();
-
-        expect(element.html()).toBe('baz');
       });
 
       describe('when `model` changes', function() {
@@ -1634,69 +1634,6 @@ describe('datepicker', function() {
           });
         });
 
-        describe('works with ngModelOptions', function () {
-          var $timeout;
-
-          beforeEach(inject(function(_$document_, _$sniffer_, _$timeout_) {
-            $document = _$document_;
-            $timeout = _$timeout_;
-            $rootScope.isopen = true;
-            $rootScope.date = new Date('September 30, 2010 15:30:00');
-            var wrapElement = $compile('<div><input ng-model="date" ' +
-              'ng-model-options="{ debounce: 10000 }" ' +
-              'uib-datepicker-popup is-open="isopen"><div>')($rootScope);
-            $rootScope.$digest();
-            assignElements(wrapElement);
-          }));
-
-          it('should change model and update calendar after debounce timeout', function() {
-            changeInputValueTo(inputEl, '1980-03-05');
-
-            expect($rootScope.date.getFullYear()).toEqual(2010);
-            expect($rootScope.date.getMonth()).toEqual(9 - 1);
-            expect($rootScope.date.getDate()).toEqual(30);
-
-            expect(getOptions(true)).toEqual([
-              ['29', '30', '31', '01', '02', '03', '04'],
-              ['05', '06', '07', '08', '09', '10', '11'],
-              ['12', '13', '14', '15', '16', '17', '18'],
-              ['19', '20', '21', '22', '23', '24', '25'],
-              ['26', '27', '28', '29', '30', '01', '02'],
-              ['03', '04', '05', '06', '07', '08', '09']
-            ]);
-
-            // No changes yet
-            $timeout.flush(2000);
-            expect($rootScope.date.getFullYear()).toEqual(2010);
-            expect($rootScope.date.getMonth()).toEqual(9 - 1);
-            expect($rootScope.date.getDate()).toEqual(30);
-
-            expect(getOptions(true)).toEqual([
-              ['29', '30', '31', '01', '02', '03', '04'],
-              ['05', '06', '07', '08', '09', '10', '11'],
-              ['12', '13', '14', '15', '16', '17', '18'],
-              ['19', '20', '21', '22', '23', '24', '25'],
-              ['26', '27', '28', '29', '30', '01', '02'],
-              ['03', '04', '05', '06', '07', '08', '09']
-            ]);
-
-            $timeout.flush(10000);
-            expect($rootScope.date.getFullYear()).toEqual(1980);
-            expect($rootScope.date.getMonth()).toEqual(2);
-            expect($rootScope.date.getDate()).toEqual(5);
-
-            expect(getOptions(true)).toEqual([
-              ['24', '25', '26', '27', '28', '29', '01'],
-              ['02', '03', '04', '05', '06', '07', '08'],
-              ['09', '10', '11', '12', '13', '14', '15'],
-              ['16', '17', '18', '19', '20', '21', '22'],
-              ['23', '24', '25', '26', '27', '28', '29'],
-              ['30', '31', '01', '02', '03', '04', '05']
-            ]);
-            expectSelectedElement( 10 );
-          });
-        });
-
         describe('works with HTML5 date input types', function() {
           var date2 = new Date('October 1, 2010 12:34:56.789');
           beforeEach(inject(function(_$document_) {
@@ -1774,7 +1711,69 @@ describe('datepicker', function() {
             assignElements(wrapElement);
           }
         });
+      });
 
+      describe('works with ngModelOptions', function() {
+        var $timeout;
+
+        beforeEach(inject(function(_$document_, _$sniffer_, _$timeout_) {
+          $document = _$document_;
+          $timeout = _$timeout_;
+          $rootScope.isopen = true;
+          $rootScope.date = new Date('September 30, 2010 15:30:00');
+          var wrapElement = $compile('<div><input ng-model="date" ' +
+            'ng-model-options="{ debounce: 10000 }" ' +
+            'uib-datepicker-popup is-open="isopen"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        }));
+
+        it('should change model and update calendar after debounce timeout', function() {
+          changeInputValueTo(inputEl, '1980-03-05');
+
+          expect($rootScope.date.getFullYear()).toEqual(2010);
+          expect($rootScope.date.getMonth()).toEqual(9 - 1);
+          expect($rootScope.date.getDate()).toEqual(30);
+
+          expect(getOptions(true)).toEqual([
+            ['29', '30', '31', '01', '02', '03', '04'],
+            ['05', '06', '07', '08', '09', '10', '11'],
+            ['12', '13', '14', '15', '16', '17', '18'],
+            ['19', '20', '21', '22', '23', '24', '25'],
+            ['26', '27', '28', '29', '30', '01', '02'],
+            ['03', '04', '05', '06', '07', '08', '09']
+          ]);
+
+          // No changes yet
+          $timeout.flush(2000);
+          expect($rootScope.date.getFullYear()).toEqual(2010);
+          expect($rootScope.date.getMonth()).toEqual(9 - 1);
+          expect($rootScope.date.getDate()).toEqual(30);
+
+          expect(getOptions(true)).toEqual([
+            ['29', '30', '31', '01', '02', '03', '04'],
+            ['05', '06', '07', '08', '09', '10', '11'],
+            ['12', '13', '14', '15', '16', '17', '18'],
+            ['19', '20', '21', '22', '23', '24', '25'],
+            ['26', '27', '28', '29', '30', '01', '02'],
+            ['03', '04', '05', '06', '07', '08', '09']
+          ]);
+
+          $timeout.flush(10000);
+          expect($rootScope.date.getFullYear()).toEqual(1980);
+          expect($rootScope.date.getMonth()).toEqual(2);
+          expect($rootScope.date.getDate()).toEqual(5);
+
+          expect(getOptions(true)).toEqual([
+            ['24', '25', '26', '27', '28', '29', '01'],
+            ['02', '03', '04', '05', '06', '07', '08'],
+            ['09', '10', '11', '12', '13', '14', '15'],
+            ['16', '17', '18', '19', '20', '21', '22'],
+            ['23', '24', '25', '26', '27', '28', '29'],
+            ['30', '31', '01', '02', '03', '04', '05']
+          ]);
+          expectSelectedElement( 10 );
+        });
       });
 
       describe('attribute `datepickerOptions`', function() {
@@ -2244,6 +2243,7 @@ describe('datepicker', function() {
             expect(inputEl.hasClass('ng-valid')).toBeTruthy();
           });
         });
+
         describe('`ng-required is false`', function() {
           beforeEach(inject(function() {
             $rootScope.date = '';
@@ -2405,6 +2405,7 @@ describe('datepicker', function() {
           expect($body.children().length).toEqual(bodyLength + 1);
           expect(elm.children().length).toEqual(1);
         });
+
         it('should be removed on scope destroy', function() {
           var $body = $document.find('body'),
               bodyLength = $body.children().length,
@@ -2638,19 +2639,26 @@ describe('datepicker', function() {
     });
 
     describe('uibDatepickerConfig ngModelOptions', function() {
+      var inputEl, dropdownEl;
+
+      function assignElements(wrapElement) {
+        inputEl = wrapElement.find('input');
+        dropdownEl = wrapElement.find('ul');
+        element = dropdownEl.find('table');
+      }
+
+      beforeEach(inject(function(uibDatepickerConfig) {
+        uibDatepickerConfig.ngModelOptions = { timezone: '+600' };
+        $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
+        $rootScope.isopen = true;
+      }));
+
+      afterEach(inject(function(uibDatepickerConfig) {
+        uibDatepickerConfig.ngModelOptions = {};
+      }));
+
       describe('timezone', function() {
-        var inputEl, dropdownEl, $document, $sniffer, $timeout;
-
-        function assignElements(wrapElement) {
-          inputEl = wrapElement.find('input');
-          dropdownEl = wrapElement.find('ul');
-          element = dropdownEl.find('table');
-        }
-
         beforeEach(inject(function(uibDatepickerConfig) {
-          uibDatepickerConfig.ngModelOptions = { timezone: '+600' };
-          $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
-          $rootScope.isopen = true;
           var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="MM/dd/yyyy" is-open="isopen"></div>')($rootScope);
           $rootScope.$digest();
           assignElements(wrapper);
@@ -2674,25 +2682,25 @@ describe('datepicker', function() {
         it('shows the correct title', function() {
           expect(getTitle()).toBe('September 2010');
         });
+      });
 
-        it('init date', function() {
-          $rootScope.initDate = new Date('2006-01-01T00:00:00.000Z');
-          $rootScope.date = null;
-          var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" init-date="initDate" is-open="true"><div>')($rootScope);
-          $rootScope.$digest();
-          assignElements(wrapper);
+      it('timezone interprets init date appropriately', function() {
+        $rootScope.initDate = new Date('2006-01-01T00:00:00.000Z');
+        $rootScope.date = null;
+        var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" init-date="initDate" is-open="true"><div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapper);
 
-          expect(getTitle()).toBe('January 2006');
-        });
+        expect(getTitle()).toBe('January 2006');
+      });
 
-        it('min date', function() {
-          $rootScope.minDate = new Date('2010-10-01T00:00:00.000Z');
-          var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" min-date="minDate" is-open="true"><div>')($rootScope);
-          $rootScope.$digest();
-          assignElements(wrapper);
+      it('timezone interprets min date appropriately', function() {
+        $rootScope.minDate = new Date('2010-10-01T00:00:00.000Z');
+        var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="yyyy-MM-dd" min-date="minDate" is-open="true"><div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapper);
 
-          expect(getSelectedElement().prop('disabled')).toBe(true);
-        });
+        expect(getSelectedElement().prop('disabled')).toBe(true);
       });
     });
 
@@ -2980,11 +2988,11 @@ describe('datepicker', function() {
 
       describe('last week(s) in december', function() {
         beforeEach(inject(function() {
-         $rootScope.date = new Date('December 07, 2014');
+          $rootScope.date = new Date('December 07, 2014');
         }));
 
         it('in next year', function() {
-           element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
+          element = $compile('<uib-datepicker ng-model="date"></uib-datepicker>')($rootScope);
           $rootScope.$digest();
 
           expect(getWeeks()).toEqual(['49', '50', '51', '52', '1', '2']);
