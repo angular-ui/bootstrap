@@ -5,6 +5,7 @@ The body of each accordion group is transcluded into the body of the collapsible
 ### uib-accordion settings
 
 * `close-others`
+  <small class="badge">$</small>
   _(Default: `true`)_ -
   Control whether expanding an item will cause the other items to close.
   
@@ -19,11 +20,13 @@ The body of each accordion group is transcluded into the body of the collapsible
   The clickable text on the group's header. You need one to be able to click on the header for toggling.
 
 * `is-disabled`
+  <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
    Whether the accordion group is disabled or not.
 
 * `is-open`
+  <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether accordion group is open or closed.
