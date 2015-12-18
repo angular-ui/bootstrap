@@ -193,9 +193,13 @@
                         Each of the components provided in <code>ui-bootstrap</code> have documentation and interactive Plunker examples.
                     </p>
                     <p>
-                        For the directives, we list the different attributes with their default values, and whether they are readonly. In addition to this, some settings
-                        have an eye icon next to them like this <i class="glyphicon glyphicon-eye-open"></i>. The eye means that the setting has an Angular
-                        <a href="https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$watch" title="Angular $watch" target="_blank">$watch</a> listener applied to it.
+                        For the directives, we list the different attributes with their default values. In addition to this, some settings have a badge on it:
+
+                        <ul>
+                            <li><i class="glyphicon glyphicon-eye-open"></i> - This setting has an angular $watch listener applied to it.</li>
+                            <li><small class="badge">$</small> - This setting expects an angular expression instead of a literal string. If the expression support a boolean, you can pass it directly.</li>
+                            <li><small class="badge">readonly</small> - This setting is readonly.</li>
+                        </ul>
                     </p>
                     <p>
                         For the services (you will recognize them with the <code>$</code> prefix), we list all the possible parameters you can pass to them and their default values if any.
