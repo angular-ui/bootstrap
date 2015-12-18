@@ -642,7 +642,16 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       });
     }
 
-    angular.forEach(['minMode', 'maxMode', 'minDate', 'maxDate', 'datepickerMode', 'initDate', 'shortcutPropagation'], function(key) {
+    angular.forEach(['minMode', 'maxMode'], function(key) {
+      if (attrs[key]) {
+        scope.$parent.$watch(function() { return attrs[key]; }, function(value) {
+          scope.watchData[key] = value;
+        });
+        datepickerEl.attr(cameltoDash(key), 'watchData.' + key);
+      }
+    });
+
+    angular.forEach(['minDate', 'maxDate', 'datepickerMode', 'initDate', 'shortcutPropagation'], function(key) {
       if (attrs[key]) {
         var getAttribute = $parse(attrs[key]);
         scope.$parent.$watch(getAttribute, function(value) {
