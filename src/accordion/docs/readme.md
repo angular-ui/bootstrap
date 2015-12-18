@@ -14,6 +14,10 @@ The body of each accordion group is transcluded into the body of the collapsible
 
 ### uib-accordion-group settings
 
+* `heading`
+  _(Default: `none`)_ -
+  The clickable text on the group's header. You need one to be able to click on the header for toggling.
+
 * `is-disabled`
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
@@ -23,10 +27,6 @@ The body of each accordion group is transcluded into the body of the collapsible
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether accordion group is open or closed.
-
-* `heading`
-  _(Default: `none`)_ -
-  The clickable text on the group's header. You need one to be able to click on the header for toggling.
 
 * `panel-class` 
   _(Default: `panel-default`)_ -
