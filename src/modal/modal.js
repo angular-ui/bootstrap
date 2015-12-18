@@ -308,7 +308,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         //move focus to specified element if available, or else to body
         if (elementToReceiveFocus && elementToReceiveFocus.focus) {
           elementToReceiveFocus.focus();
-        } else {
+        } else if (appendToElement.focus) {
           appendToElement.focus();
         }
       }
