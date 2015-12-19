@@ -2,32 +2,38 @@ With the buttons directive, we can make a group of buttons behave like a set of 
 
 ### uib-btn-checkbox settings
 
-* `ng-model` -
-  Model where we set the checkbox status. By default `true` or `false`.
+* `btn-checkbox-false`
+  _(Default: `false`)_ -
+  Sets the value for the unchecked status.
   
 * `btn-checkbox-true`
   _(Default: `true`)_ -
   Sets the value for the checked status.
-
-* `btn-checkbox-false`
-  _(Default: `false`)_ -
-  Sets the value for the unchecked status.
+  
+* `ng-model`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  Model where we set the checkbox status. By default `true` or `false`.
 
 ### uib-btn-radio settings
 
+* `ng-model`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  Model where we set the radio status. All radio buttons in a group should use the same `ng-model`.
+    
 * `uib-btn-radio` -
+  <small class="badge">$</small>
   Value to assign to the `ng-model` if we check this radio button.
 
-* `ng-model` -
-  Model where we set the radio status. All radio buttons in a group should use the same `ng-model`.
+* `uib-uncheckable`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  An expression that evaluates to a truthy or falsy value that determines whether the `uncheckable` attribute is present.
   
 * `uncheckable`
   _(Boolean attribute)_ -
   Whether a radio button can be unchecked or not.
-
-* `uib-uncheckable`
-  _(Default: null)_ -
-  An expression that evaluates to a truthy or falsy value that determines whether the `uncheckable` attribute is present
   
 ### Default settings `uibButtonConfig`
 
