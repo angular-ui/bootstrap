@@ -7,9 +7,8 @@ angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($sc
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;
     slides.push({
-      image: '//placekitten.com/' + newWidth + '/300',
-      text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-      ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4],
+      image: '//lorempixel.com/' + newWidth + '/300',
+      text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
       id: currIndex++
     });
   };
