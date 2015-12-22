@@ -3,6 +3,7 @@
 ### uib-collapse settings
 
 * `uib-collapse`
+  <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether the element should be collapsed or not.
