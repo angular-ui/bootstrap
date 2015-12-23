@@ -13,77 +13,114 @@ The datepicker has 3 modes:
 ### uib-datepicker settings ###
 
 * `custom-class (date, mode)`
+  <small class="badge">$</small>
   _(Default: `null`)_ -
   An optional expression to add classes based on passing a date and current mode.
 
 * `date-disabled (date, mode)`
+  <small class="badge">$</small>
   _(Default: `null`)_ -
   An optional expression to disable visible options based on passing a date and current mode.
 
 * `datepicker-mode`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `day`)_ -
   Current mode of the datepicker _(day|month|year)_. Can be used to initialize the datepicker in a specific mode.
 
 * `format-day`
+  <small class="badge">C</small>
   _(Default: `dd`)_ -
   Format of day in month.
 
 * `format-month`
+  <small class="badge">C</small>
   _(Default: `MMMM`)_ -
   Format of month in year.
 
 * `format-year`
+  <small class="badge">C</small>
   _(Default: `yyyy`)_ -
   Format of year in year range.
 
 * `format-day-header`
+  <small class="badge">C</small>
   _(Default: `EEE`)_ -
   Format of day in week header.
 
 * `format-day-title`
+  <small class="badge">C</small>
   _(Default: `MMMM yyyy`)_ -
   Format of title when selecting day.
 
 * `format-month-title`
+  <small class="badge">C</small>
   _(Default: `yyyy`)_ -
   Format of title when selecting month.  
 
 * `init-date`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `null`)_ -
   The initial date view when no model value is specified.
 
 * `max-date`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `null`)_ -
   Defines the maximum available date.
 
 * `max-mode`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+    <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `year`)_ -
   Sets an upper limit for mode.
 
 * `min-date`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `null`)_ -
   Defines the minimum available date.
 
 * `min-mode`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `day`)_ -
   Sets a lower limit for mode.
 
 * `ng-model`
+  <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i> -
   The date object. Needs to be a Javascript Date object.
+  
+* `ng-model-options`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `{}`)_ -
+  Supported properties:
+  * allowInvalid
+  * timezone
 
 * `shortcut-propagation`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `false`)_ -
   An option to disable the propagation of the keydown event.
 
 * `show-weeks`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `true`)_ -
   Whether to display week numbers.
 
 * `starting-day`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `0`)_ -
   Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
 
@@ -92,71 +129,91 @@ The datepicker has 3 modes:
   Add the ability to override the template used on the component.
 
 * `year-rows`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `4`)_ -
   Number of rows displayed in year selection.
 
 * `year-columns`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `5`)_ -
   Number of columns displayed in year selection.
-
-* `ng-model-options`
-  _(Default: `{}`)_ -
-  Supported properties:
-  * allowInvalid
-  * timezone
 
 ### uib-datepicker-popup settings ###
 
 Options for the uib-datepicker must be passed as JSON using the `datepicker-options` attribute. This list is only for popup settings.
 
+* `alt-input-formats`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `[]`)_ -
+  A list of alternate formats acceptable for manual entry.
+
 * `clear-text`
+  <small class="badge">C</small>
   _(Default: `Clear`)_ -
   The text to display for the clear button.
 
 * `close-on-date-selection`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `true`)_ -
   Whether to close calendar when a date is chosen.
 
 * `close-text`
+  <small class="badge">C</small>
   _(Default: `Done`)_ -
   The text to display for the close button.
 
 * `current-text`
+  <small class="badge">C</small>
   _(Default: `Today`)_ -
   The text to display for the current day button.
 
 * `datepicker-append-to-body`
-  _(Default: `false`)_ -
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `false`, Config: `appendToBody`)_ -
   Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`.
 
 * `datepicker-popup-template-url`
+  <small class="badge">C</small>
   _(Default: `uib/template/datepicker/popup.html`)_ -
   Add the ability to override the template used on the component.
 
 * `datepicker-template-url`
+  <small class="badge">C</small>
   _(Default: `uib/template/datepicker/datepicker.html`)_ -
   Add the ability to override the template used on the component (inner uib-datepicker).  
 
 * `is-open`
+  <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether or not to show the datepicker.
 
 * `on-open-focus`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `true`)_ -
   Whether or not to focus the datepicker popup upon opening.
 
 * `show-button-bar`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `true`)_ -
   Whether or not to display a button bar underneath the uib-datepicker.
+  
+* `type`
+  <small class="badge">C</small>
+  _(Default: `text`, Config: `html5Types`)_ -
+  You can override the input type to be _(date|datetime-local|month)_. That will change the date format of the popup.
 
 * `uib-datepicker-popup`
-  _(Default: `yyyy-MM-dd`)_ -
+  <small class="badge">C</small>
+  _(Default: `yyyy-MM-dd`, Config: `datepickerConfig`)_ -
   The format for displayed dates. This string can take string literals by surrounding the value with backticks, i.e. ``yyyy-MM-dd h `o'clock` ``.
-
- * `alt-input-formats`
-  _(Default: `[]`)_:
-  A list of alternate formats acceptable for manual entry.
 
 ### Keyboard support ###
 
