@@ -6,6 +6,7 @@ The body of each accordion group is transcluded into the body of the collapsible
 
 * `close-others`
   <small class="badge">$</small>
+  <small class="badge">C</small>
   _(Default: `true`)_ -
   Control whether expanding an item will cause the other items to close.
   
@@ -38,12 +39,6 @@ The body of each accordion group is transcluded into the body of the collapsible
 * `template-url`
   _(Default: `uib/template/accordion/accordion-group.html`)_ -
   Add the ability to override the template used on the component.
-  
-### Default settings `uibAccordionConfig`
-
-* `closeOthers`
-  _(Default: `true`)_ -
-  Control whether expanding an item will cause the other items to close.
 
 ### Accordion heading
 
