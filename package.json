@@ -10,6 +10,7 @@
   "files": [
     "dist/", "src/", "template/"
   ],
+  "main": "index.js",
   "scripts":{
     "test": "grunt"
   },
