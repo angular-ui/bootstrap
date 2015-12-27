@@ -35,7 +35,7 @@ With the buttons directive, we can make a group of buttons behave like a set of 
   _(Boolean attribute)_ -
   Whether a radio button can be unchecked or not.
   
-### Default settings `uibButtonConfig`
+### Additional settings `uibButtonConfig`
 
 * `activeClass`
   _(Default: `active`)_ -
