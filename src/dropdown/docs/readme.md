@@ -10,10 +10,6 @@ Each of these parts need to be used as attribute directives.
 
 ### uib-dropdown settings
 
-* `append-to`
-  _(Default: `null`)_ -
-  Appends the inner dropdown-menu to an arbitrary DOM element.
-
 * `auto-close`
   _(Default: `always`)_ -
   Controls the behavior of the menu when clicked.
@@ -21,15 +17,24 @@ Each of these parts need to be used as attribute directives.
   * `disabled` - Disables the auto close. You can control it manually with `is-open`. It still gets closed if the toggle is clicked, `esc` is pressed or another dropdown is open. It also won't be closed on `$locationchangeSuccess`.
   * `outsideClick` - Closes the dropdown automatically only when the user clicks any element outside the dropdown.
   
-* `append-to-body`
+* `dropdown-append-to`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  Appends the inner dropdown-menu to an arbitrary DOM element.
+
+* `dropdown-append-to-body`
+  <small class="badge">B</small>
   _(Default: `false`)_ -
   Appends the inner dropdown-menu to the body element.
 
 * `is-open`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Defines whether or not the dropdown-menu is open. The `uib-dropdown-toggle` will toggle this attribute on click.
   
 * `keyboard-nav`:
+  <small class="badge">B</small>
   _(Default: `false`)_ -
   Enables navigation of dropdown list elements with the arrow keys.
   
