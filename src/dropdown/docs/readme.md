@@ -39,7 +39,7 @@ Each of these parts need to be used as attribute directives.
   _(Default: `none`)_ -
   You may specify a template for the dropdown menu. Check the demos for an example.
   
-### Default settings `uibDropdownConfig`
+### Additional settings `uibDropdownConfig`
 
 * `appendToOpenClass`
   _(Default: `uib-dropdown-open`)_ -
