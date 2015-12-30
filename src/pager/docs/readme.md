@@ -27,13 +27,13 @@ A lightweight pager directive that is focused on providing previous/next paging 
   
 * `ng-model`
   <small class="badge">$</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
+  <i class="glyphicon glyphicon-eye-open"></i> -
   Current page number. First page is 1.
   
 * `num-pages`
   <small class="badge">$</small>
   <small class="badge">readonly</small>
-  _(Defaults: `angular.noop`)_ :
+  _(Defaults: `angular.noop`)_ -
   An optional expression assigned the total number of pages to display.
 
 * `previous-text`
@@ -47,5 +47,5 @@ A lightweight pager directive that is focused on providing previous/next paging 
   
 * `total-items`
   <small class="badge">$</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
+  <i class="glyphicon glyphicon-eye-open"></i> -
   Total number of items in all pages.
