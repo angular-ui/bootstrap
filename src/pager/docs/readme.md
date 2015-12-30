@@ -11,7 +11,7 @@ A lightweight pager directive that is focused on providing previous/next paging 
   <small class="badge">$</small>
   <small class="badge">C</small>
   <i class="glyphicon glyphicon-eye-open"></i>
-  _(Defaults: `10`)_ -
+  _(Default: `10`)_ -
   Maximum number of items per page. A value less than one indicates all items on one page.
   
 * `next-text`
@@ -33,7 +33,7 @@ A lightweight pager directive that is focused on providing previous/next paging 
 * `num-pages`
   <small class="badge">$</small>
   <small class="badge">readonly</small>
-  _(Defaults: `angular.noop`)_ -
+  _(Default: `angular.noop`)_ -
   An optional expression assigned the total number of pages to display.
 
 * `previous-text`
