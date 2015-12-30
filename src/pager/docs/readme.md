@@ -1,6 +1,6 @@
 A lightweight pager directive that is focused on providing previous/next paging functionality
 
-### uib-pager settings ###
+### uib-pager settings
 
 * `align`
   <small class="badge">C</small>
