@@ -1,114 +1,182 @@
 The `$uibPosition` service provides a set of DOM utilities used internally to absolute-position an element in relation to another element (tooltips, popovers, typeaheads etc...).
 
-### getRawNode(element)
-  Takes a jQuery/jqLite element and converts it to a raw DOM element.
+#### getRawNode(element)
+
+Takes a jQuery/jqLite element and converts it to a raw DOM element.
 
 ##### parameters
 
-* `element` _(Type 'object')_ - The element to convert.
+* `element`
+  _(Type: `object`)_ -
+  The element to convert.
 
 ##### returns
 
-  _(Type 'element')_ - A raw DOM element.
+* _(Type: `element`)_ -
+  A raw DOM element.
 
-### parseSyle(element)
-  Parses a numeric style value to a number.  Strips units and will return 0 for invalid (NaN) numbers.
+#### parseStyle(element)
+
+Parses a numeric style value to a number.  Strips units and will return 0 for invalid (NaN) numbers.
 
 ##### parameters
 
-* `value` _(Type 'string')_ - The style value to parse.
+* `value`
+  _(Type: `string`)_ -
+  The style value to parse.
 
 ##### returns
 
-  _(Type 'number')_ - The numeric value of the style property.
+* _(Type: `number`)_ -
+  The numeric value of the style property.
 
-### offsetParent(element)
-  Gets the closest positioned ancestor.
+#### offsetParent(element)
+
+Gets the closest positioned ancestor.
 
 ##### parameters
 
-* `element` _(Type 'element')_ - The element to get the offset parent for.
+* `element`
+  _(Type: `element`)_ -
+  The element to get the offset parent for.
 
 ##### returns
 
-  _(Type 'element')_ - The closest positioned ancestor.
+* _(Type: `element`)_ -
+  The closest positioned ancestor.
 
-### scrollbarWidth()
-  Calculates the browser scrollbar width and caches the result for future calls.  Concept from the TWBS measureScrollbar() function in [modal.js](https://github.com/twbs/bootstrap/blob/master/js/modal.js).
+#### scrollbarWidth()
+
+Calculates the browser scrollbar width and caches the result for future calls.  Concept from the TWBS measureScrollbar() function in [modal.js](https://github.com/twbs/bootstrap/blob/master/js/modal.js).
 
 ##### returns
 
-  _(Type 'number')_ - The width of the browser scrollbar.
+* _(Type: `number`)_ -
+  The width of the browser scrollbar.
 
-### scrollParent(element, includeHidden)
-  Gets the closest scrollable ancestor.  Concept from the jQueryUI [scrollParent.js](https://github.com/jquery/jquery-ui/blob/master/ui/scroll-parent.js).
+#### scrollParent(element, includeHidden)
+ 
+Gets the closest scrollable ancestor.  Concept from the jQueryUI [scrollParent.js](https://github.com/jquery/jquery-ui/blob/master/ui/scroll-parent.js).
 
 ##### parameters
 
-* `element` _(Type 'element')_ - The element to get the closest scrollable ancestor for.
+* `element`
+  _(Type: `element`)_ -
+  The element to get the closest scrollable ancestor for.
 
-* `includeHidden` _(Type 'boolean', optional - default is false)_ - Should scroll style of 'hidden' be considered.
+* `includeHidden`
+  _(Type: `boolean`, Default: `false`, optional)_ - Should scroll style of 'hidden' be considered.
 
 ##### returns
 
-  _(Type 'element')_ - The closest scrollable ancestor.
+* _(Type: `element`)_ -
+  The closest scrollable ancestor.
 
-### position(element, includeMargins)
-  A read-only equivalent of jQuery's [position](http://api.jquery.com/position/) function, distance to closest positioned ancestor. Does not account for margins by default like jQuery's position.
+#### position(element, includeMargins)
+
+A read-only equivalent of jQuery's [position](http://api.jquery.com/position/) function, distance to closest positioned ancestor. Does not account for margins by default like jQuery's position.
 
 ##### parameters
 
-* `element` _(Type 'element')_ - The element to get the position for.
+* `element` _(Type: `element`)_ -
+  The element to get the position for.
 
-* `includeMagins` _(Type 'boolean', optional - default is false)_ - Should margins be accounted for.
+* `includeMargins` _(Type: `boolean`, Default: `false`, optional)_ -
+  Should margins be accounted for.
 
 ##### returns
 
-  _(Type 'object')_ - An object with the following properties:
+An object with the following properties:
 
-* width: _(Type 'number')_ The width of the element.
-* height: _(Type 'number')_ The height of the element.
-* top: _(Type 'number')_ Distance to top edge of offset parent.
-* left: _(Type 'number')_ Distance to left edge of offset parent.
+* `width`
+  _(Type: `number`)_ -
+  The width of the element.
+  
+* `height`
+  _(Type: `number`)_ -
+  The height of the element.
+  
+* `top`
+  _(Type: `number`)_ -
+  Distance to top edge of offset parent.
+  
+* `left`
+  _(Type: `number`)_ -
+  Distance to left edge of offset parent.
 
-### offset(element)
-  A read-only equivalent of jQuery's [offset](http://api.jquery.com/offset/) function, distance to viewport.
+#### offset(element)
+ 
+A read-only equivalent of jQuery's [offset](http://api.jquery.com/offset/) function, distance to viewport.
 
 ##### parameters
 
-* `element` _(Type 'element')_ - The element to get the offset for.
+* `element`
+  _(Type: `element`)_ -
+  The element to get the offset for.
 
 ##### returns
 
-  _(Type 'object')_ - An object with the following properties:
+An object with the following properties:
 
-* width: _(Type 'number')_ The width of the element.
-* height: _(Type 'number')_ The height of the element.
-* top: _(Type 'number')_ Distance to top edge of the viewport.
-* left: _(Type 'number')_ Distance to left edge of the viewport.
-
-### viewportOffset(element, useDocument, includePadding)
-  Gets the elements available space relative to the closest scrollable ancestor.  Accounts for padding, border, and scrollbar width.
-  Right and bottom dimensions represent the distance to the respective edge of the viewport element, not the top and left edge.
-  If the element edge extends beyond the viewport, a negative value will be reported.
+* `width`
+  _(Type: `number`)_ -
+  The width of the element.
+  
+* `height`
+  _(Type: `number`)_ -
+  The height of the element.
+  
+* `top`
+  _(Type: `number`)_ -
+  Distance to top edge of the viewport.
+  
+* `left`
+  _(Type: `number`)_ -
+  Distance to left edge of the viewport.
+  
+#### viewportOffset(element, useDocument, includePadding)
+  
+Gets the elements available space relative to the closest scrollable ancestor.  Accounts for padding, border, and scrollbar width.
+Right and bottom dimensions represent the distance to the respective edge of the viewport element, not the top and left edge.
+If the element edge extends beyond the viewport, a negative value will be reported.
 
 ##### parameters
 
-* `element` _(Type 'element')_ - The element to get the viewport offset for.
-* `useDocument` _(Type 'boolean', optional - default is false)_ - Should the viewport be the document element instead of the first scrollable element.
-* `includePadding` _(Type 'boolean', optional - default is true)_ - Should the padding on the viewport element be accounted for, default is true.
+* `element`
+  _(Type: `element`)_ -
+  The element to get the viewport offset for.
+  
+* `useDocument`
+  _(Type: `boolean`, Default: `false`, optional)_ -
+  Should the viewport be the document element instead of the first scrollable element.
+  
+* `includePadding`
+  _(Type: `boolean`, Default: `true`, optional)_ -
+  Should the padding on the viewport element be accounted for, default is true.
 
 ##### returns
 
-  _(Type 'object')_ - An object with the following properties:
+An object with the following properties:
 
-* top: _(Type 'number')_ Distance to top content edge of the viewport.
-* bottom: _(Type 'number')_ Distance to bottom content edge of the viewport.
-* left: _(Type 'number')_ Distance to left content edge of the viewport.
-* right: _(Type 'number')_ Distance to right content edge of the viewport.
+* `top`
+  _(Type: `number`)_ -
+  Distance to top content edge of the viewport.
+  
+* `bottom`
+  _(Type: `number`)_ -
+  Distance to bottom content edge of the viewport.
+  
+* `left`
+  _(Type: `number`)_ -
+  Distance to left content edge of the viewport.
+  
+* `right`
+  _(Type: `number`)_ -
+  Distance to right content edge of the viewport.
 
-### parsePlacement(placement)
-  Gets an array of placement values parsed from a placement string. Along with the 'auto' indicator, supported placement strings are:
+#### parsePlacement(placement)
+ 
+Gets an array of placement values parsed from a placement string. Along with the 'auto' indicator, supported placement strings are:
 
 * top: element on top, horizontally centered on host element.
 * top-left: element on top, left edge aligned with host element left edge.
@@ -129,39 +197,74 @@ If the primary and secondary placement values do not match 'top, bottom, left, r
 
 ##### parameters
 
-* `placement` _(Type 'string', e.g. 'auto top-left')_ - The placement string to parse.
+* `placement`
+  _(Type: `string`, Example: `auto top-left`)_ -
+  The placement string to parse.
 
 ##### returns
 
-  _(Type 'array')_ - An array with the following values:
+An array with the following values:
 
-* [0]: _(Type 'string')_ - The primary placement.
-* [1]: _(Type 'string')_ - The secondary placement.
-* [2]: _(Type 'boolean')_ - Is auto place enabled.
+* `[0]`
+  _(Type: `string`)_ -
+  The primary placement.
+  
+* `[1]`
+  _(Type: `string`)_ -
+  The secondary placement.
+  
+* `[2]`
+  _(Type: `boolean`)_ -
+  Is auto place enabled.
 
-### positionElements(hostElement, targetElement, placement, appendToBody)
-  Gets gets coordinates for an element to be positioned relative to another element.
+#### positionElements(hostElement, targetElement, placement, appendToBody)
+
+Gets gets coordinates for an element to be positioned relative to another element.
 
 ##### parameters
 
- * `hostElement` _(Type 'element')_ - The element to position against.
- * `targetElement` _(Type 'element')_ - The element to position.
- * `placement` _(Type 'string', optional - default is top)_ - The placement for the target element.  See the parsePlacement() function for
-   available options.  If 'auto' placement is used, the viewportOffset() function is used to decide where the targetElement will fit.
- * `appendToBody` _(Type 'boolean', optional - default is false)_ - Should the coordinates be cacluated from the body element.
+* `hostElement`
+  _(Type: `element`)_ -
+  The element to position against.
+  
+* `targetElement`
+  _(Type: `element`)_ -
+  The element to position.
+  
+* `placement`
+  _(Type: `string`, Default: `top`, optional)_ -
+  The placement for the target element.  See the parsePlacement() function for available options.  If 'auto' placement is used, the viewportOffset() function is used to decide where the targetElement will fit.
+
+* `appendToBody`
+  _(Type: `boolean`, Default: `false`, optional)_ -
+  Should the coordinates be cacluated from the body element.
 
 ##### returns
 
-   _(Type 'object')_ - An object with the following properties:
+An object with the following properties:
 
- * top: _(Type 'number')_ The targetElement top value.
- * left: _(Type 'number')_ The targetElement left value.
- * right: _(Type 'number')_ The resolved placement with 'auto' removed.
+* `top`
+  _(Type: `number`)_ -
+  The targetElement top value.
+  
+* `left`
+  _(Type: `number`)_ -
+  The targetElement left value.
+  
+* `right`
+  _(Type: `number`)_ -
+  The resolved placement with 'auto' removed.
 
-### positionArrow(element, placement)
-  Positions the tooltip and popover arrow elements when using placement options beyond the standard top, left, bottom, or right.
+#### positionArrow(element, placement)
+
+Positions the tooltip and popover arrow elements when using placement options beyond the standard top, left, bottom, or right.
 
 ##### parameters
 
-  * `element` _(Type 'element')_ - The element to position the arrow element for.
-  * `placement` _(Type 'string')_ - The placement for the element.
+* `element` 
+  _(Type: `element`)_ - 
+  The element to position the arrow element for.
+  
+* `placement`
+  _(Type: `string`)_ -
+  The placement for the element.
