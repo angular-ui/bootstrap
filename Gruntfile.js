@@ -158,7 +158,7 @@ module.exports = function(grunt) {
       }
     },
     shell: {
-      //We use %version% and evluate it at run-time, because <%= pkg.version %>
+      //We use %version% and evaluate it at run-time, because <%= pkg.version %>
       //is only evaluated once
       'release-prepare': [
         'grunt before-test after-test',
