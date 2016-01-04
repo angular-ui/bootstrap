@@ -42,7 +42,7 @@ All these settings are available for the three types of tooltips.
 * `tooltip-placement`
   <small class="badge">C</small>
   _(Default: `top`, Config: `placement`)_ -
-  Passing in 'auto' seperated by a space before the placement will enable auto positioning, e.g: "auto bottom-left". The tooltip will attempt to position where it fits in the closest scrollable ancestor. Accepts:
+  Passing in 'auto' separated by a space before the placement will enable auto positioning, e.g: "auto bottom-left". The tooltip will attempt to position where it fits in the closest scrollable ancestor. Accepts:
 
    * `top` - tooltip on top, horizontally centered on host element.
    * `top-left` - tooltip on top, left edge aligned with host element left edge.
