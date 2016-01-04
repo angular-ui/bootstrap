@@ -55,7 +55,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
   };
 
   /**
-   * This is a helper function for translating camel-case to snake-case.
+   * This is a helper function for translating camel-case to snake_case.
    */
   function snake_case(name) {
     var regexp = /[A-Z]/g;
@@ -348,9 +348,9 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             }
 
             /**
-             * Set the inital scope values. Once
+             * Set the initial scope values. Once
              * the tooltip is created, the observers
-             * will be added to keep things in synch.
+             * will be added to keep things in sync.
              */
             function prepareTooltip() {
               ttScope.title = attrs[prefix + 'Title'];

@@ -1,5 +1,4 @@
 <div ng-controller="TooltipDemoCtrl">
-    <h4>Positional</h4>
     <div class="form-group">
       <label>Tooltip placement</label>
       <select class="form-control" ng-model="placement.selected" ng-options="o as o for o in placement.options"></select>
@@ -49,23 +48,27 @@
       I can have a custom class. <a href="#" uib-tooltip="I can have a custom class applied to me!" tooltip-class="customClass">Check me out!</a>
     </p>
 
-    <form role="form">
-      <div class="form-group">
-        <label>Or use custom triggers, like focus: </label>
-        <input type="text" value="Click me!" uib-tooltip="See? Now click away..." tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
-      </div>
 
-      <div class="form-group" ng-class="{'has-error' : !inputModel}">
-        <label>Disable tooltips conditionally:</label>
-        <input type="text" ng-model="inputModel" class="form-control"
-          placeholder="Hover over this for a tooltip until this is filled"
-          uib-tooltip="Enter something in this input field to disable this tooltip"
-          tooltip-placement="top"
-          tooltip-trigger="mouseenter"
-          tooltip-enable="!inputModel" />
-      </div>
-    </form>
+    <div class="form-group">
+      <label>Or use custom triggers, like focus: </label>
+      <input type="text" value="Click me!" uib-tooltip="See? Now click away..." tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
+    </div>
 
+    <div class="form-group" ng-class="{'has-error' : !inputModel}">
+      <label>Disable tooltips conditionally:</label>
+      <input type="text" ng-model="inputModel" class="form-control"
+             placeholder="Hover over this for a tooltip until this is filled"
+             uib-tooltip="Enter something in this input field to disable this tooltip"
+             tooltip-placement="top"
+             tooltip-trigger="mouseenter"
+             tooltip-enable="!inputModel" />
+    </div>
+    <div class="form-group">
+      <label>
+        Open tooltips <span uib-tooltip="Hello!" tooltip-is-open="tooltipIsOpen" tooltip-placement="bottom">conditionally.</span>
+      </label>
+      <button ng-click="tooltipIsOpen = !tooltipIsOpen">Toggle tooltip</button>
+    </div>
     <script type="text/ng-template" id="myTooltipTemplate.html">
       <span>Special Tooltip with <strong>markup</strong> and {{ dynamicTooltipText }}</span>
     </script>
