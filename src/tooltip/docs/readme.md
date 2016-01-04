@@ -2,7 +2,7 @@ A lightweight, extensible directive for fancy tooltip creation. The tooltip
 directive supports multiple placements, optional transition animation, and more.
 
 There are three versions of the tooltip: `uib-tooltip`, `uib-tooltip-template`, and
-`uib-tooltip-html-unsafe`:
+`uib-tooltip-html`:
 
 * `uib-tooltip` -
   Takes text only and will escape any HTML provided.
@@ -20,20 +20,20 @@ All these settings are available for the three types of tooltips.
   <small class="badge">C</small>
   _(Default: `true`, Config: `animation`)_ -
   Should it fade in and out?
-  
+
 * `tooltip-append-to-body`
   <small class="badge">$</small>
   _(Default: `false`)_ -
   Should the tooltip be appended to '$body' instead of the parent element?
-  
+
 * `tooltip-class` -
   Custom class to be applied to the tooltip.
-  
+
 * `tooltip-enable`
   <small class="badge">$</small>
   _(Default: `true`)_ -
   Is it enabled? It will enable or disable the configured tooltip-trigger.
-  
+
 * `tooltip-is-open`
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
@@ -43,7 +43,7 @@ All these settings are available for the three types of tooltips.
   <small class="badge">C</small>
   _(Default: `top`, Config: `placement`)_ -
   Passing in 'auto' seperated by a space before the placement will enable auto positioning, e.g: "auto bottom-left". The tooltip will attempt to position where it fits in the closest scrollable ancestor. Accepts:
-  
+
    * `top` - tooltip on top, horizontally centered on host element.
    * `top-left` - tooltip on top, left edge aligned with host element left edge.
    * `top-right` - tooltip on top, right edge aligned with host element right edge.
@@ -56,7 +56,7 @@ All these settings are available for the three types of tooltips.
    * `right` - tooltip on right, vertically centered on host element.
    * `right-top` - tooltip on right, top edge aligned with host element top edge.
    * `right-bottom` - tooltip on right, bottom edge aligned with host element bottom edge.
-  
+
 * `tooltip-popup-close-delay`
   <small class="badge">C</small>
   _(Default: `0`, Config: `popupCloseDelay`)_ -
@@ -66,7 +66,7 @@ All these settings are available for the three types of tooltips.
   <small class="badge">C</small>
   _(Default: `0`, Config: `popupDelay`)_ -
   Popup delay in milliseconds until it opens.
-  
+
 * `tooltip-trigger`
   _(Default: `mouseenter`)_ -
   What should trigger a show of the tooltip? Supports a space separated list of event names (see below).
@@ -98,7 +98,7 @@ methods are available:
 * `setTriggers(obj)`
   _(Example: `{ 'openTrigger': 'closeTrigger' }`)_ -
   Extends the default trigger mappings mentioned above with mappings of your own.
-  
+
 * `options(obj)` -
   Provide a set of defaults for certain tooltip and popover attributes. Currently supports the ones with the <small class="badge">C</small> badge.
 
