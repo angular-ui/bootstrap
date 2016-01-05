@@ -1337,6 +1337,7 @@ describe('typeahead tests', function() {
       var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-min-length="0"></div>');
       var inputEl = findInput(element);
       inputEl.focus();
+      $timeout.flush();
       $scope.$digest();
       expect(element).toBeOpenWithActive(3, 0);
     });

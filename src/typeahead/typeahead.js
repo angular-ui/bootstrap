@@ -407,7 +407,9 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     element.bind('focus', function () {
       hasFocus = true;
       if (minLength === 0 && !modelCtrl.$viewValue) {
-        getMatchesAsync(modelCtrl.$viewValue);
+        $timeout(function() {
+          getMatchesAsync(modelCtrl.$viewValue);
+        }, 0);
       }
     });
 
