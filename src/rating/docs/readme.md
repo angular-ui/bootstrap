@@ -1,41 +1,51 @@
 Rating directive that will take care of visualising a star rating bar.
 
-### Settings ###
+### uib-rating settings
 
-#### `<uib-rating>` ####
+* `max`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `5`)_ -
+  Changes the number of icons.
 
- * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
- 	:
- 	The current rate.
+* `ng-model`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  The current rate.
 
- * `max`
- 	_(Defaults: 5)_ :
- 	Changes the number of icons.
+* `on-hover(value)`
+  <small class="badge">$</small> -
+  An optional expression called when user's mouse is over a particular icon.
 
- * `readonly` <i class="icon-eye-open"></i>
- 	_(Defaults: false)_ :
- 	Prevent user's interaction.
+* `on-leave()`
+  <small class="badge">$</small> -
+  An optional expression called when user's mouse leaves the control altogether.
 
- * `titles`
- 	_(Defaults: ["one", "two", "three", "four", "five"])_ :
- 	An array of Strings defining titles for all icons 
+* `rating-states`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  An array of objects defining properties for all icons. In default template, `stateOn` & `stateOff` property is used to specify the icon's class.
 
- * `on-hover(value)`
- 	:
- 	An optional expression called when user's mouse is over a particular icon.
+* `readonly`
+  <small class="badge">$</small>
+  <i class="icon-eye-open"></i>
+  _(Default: `false`)_ -
+  Prevent user's interaction.
 
- * `on-leave()`
- 	:
- 	An optional expression called when user's mouse leaves the control altogether.
+* `titles`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: ['one', 'two', 'three', 'four', 'five']`)_ -
+  An array of strings defining titles for all icons.
 
- * `state-on`
- 	_(Defaults: null)_ :
- 	A variable used in template to specify the state (class, src, etc) for selected icons.
+* `state-off`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `null`)_ -
+  A variable used in the template to specify the state for unselected icons.
 
- * `state-off`
- 	_(Defaults: null)_ :
- 	A variable used in template to specify the state for unselected icons.
-
- * `rating-states`
- 	_(Defaults: null)_ :
- 	An array of objects defining properties for all icons. In default template, `stateOn` & `stateOff` property is used to specify the icon's class.
+* `state-on`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `null`)_ -
+ 	A variable used in the template to specify the state (class, src, etc) for selected icons.
