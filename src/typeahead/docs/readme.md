@@ -55,9 +55,9 @@ The typeahead directives provide several attributes:
    _(Defaults: angular.noop)_ :
    Binding to a variable that indicates if no matching results were found
 
-* `typeahead-on-select($item, $model, $label)`
+* `typeahead-on-select($item, $model, $label, $event)`
    _(Defaults: null)_ :
-   A callback executed when a match is selected
+   A callback executed when a match is selected. $event can be undefined if selection not triggered from a user event.
 
 * `typeahead-select-on-exact`
    _(Defaults: false)_ :

@@ -151,7 +151,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       id: popupId,
       matches: 'matches',
       active: 'activeIdx',
-      select: 'select(activeIdx)',
+      select: 'select(activeIdx, evt)',
       'move-in-progress': 'moveInProgress',
       query: 'query',
       position: 'position',
@@ -202,7 +202,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       return false;
     };
 
-    var getMatchesAsync = function(inputValue) {
+    var getMatchesAsync = function(inputValue, evt) {
       var locals = {$viewValue: inputValue};
       isLoadingSetter(originalScope, true);
       isNoResultsSetter(originalScope, false);
@@ -238,10 +238,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
             if (selectOnExact && scope.matches.length === 1 && inputIsExactMatch(inputValue, 0)) {
               if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
                 $$debounce(function() {
-                  scope.select(0);
+                  scope.select(0, evt);
                 }, angular.isNumber(scope.debounceUpdate) ? scope.debounceUpdate : scope.debounceUpdate['default']);
               } else {
-                scope.select(0);
+                scope.select(0, evt);
               }
             }
 
@@ -329,7 +329,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       isOpenSetter(originalScope, isOpen);
     };
 
-    scope.select = function(activeIdx) {
+    scope.select = function(activeIdx, evt) {
       //called from within the $digest() cycle
       var locals = {};
       var model, item;
@@ -344,7 +344,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       onSelectCallback(originalScope, {
         $item: item,
         $model: model,
-        $label: parserResult.viewMapper(originalScope, locals)
+        $label: parserResult.viewMapper(originalScope, locals),
+        $event: evt
       });
 
       resetMatches();
@@ -378,10 +379,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
           scope.$apply(function () {
             if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
               $$debounce(function() {
-                scope.select(scope.activeIdx);
+                scope.select(scope.activeIdx, evt);
               }, angular.isNumber(scope.debounceUpdate) ? scope.debounceUpdate : scope.debounceUpdate['default']);
             } else {
-              scope.select(scope.activeIdx);
+              scope.select(scope.activeIdx, evt);
             }
           });
           break;
@@ -404,25 +405,25 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       }
     });
 
-    element.bind('focus', function () {
+    element.bind('focus', function (evt) {
       hasFocus = true;
       if (minLength === 0 && !modelCtrl.$viewValue) {
         $timeout(function() {
-          getMatchesAsync(modelCtrl.$viewValue);
+          getMatchesAsync(modelCtrl.$viewValue, evt);
         }, 0);
       }
     });
 
-    element.bind('blur', function() {
+    element.bind('blur', function(evt) {
       if (isSelectOnBlur && scope.matches.length && scope.activeIdx !== -1 && !selected) {
         selected = true;
         scope.$apply(function() {
           if (angular.isObject(scope.debounceUpdate) && angular.isNumber(scope.debounceUpdate.blur)) {
             $$debounce(function() {
-              scope.select(scope.activeIdx);
+              scope.select(scope.activeIdx, evt);
             }, scope.debounceUpdate.blur);
           } else {
-            scope.select(scope.activeIdx);
+            scope.select(scope.activeIdx, evt);
           }
         });
       }
@@ -585,14 +586,14 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
           scope.active = matchIdx;
         };
 
-        scope.selectMatch = function(activeIdx) {
+        scope.selectMatch = function(activeIdx, evt) {
           var debounce = scope.debounce();
           if (angular.isNumber(debounce) || angular.isObject(debounce)) {
             $$debounce(function() {
-              scope.select({activeIdx: activeIdx});
+              scope.select({activeIdx: activeIdx, evt: evt});
             }, angular.isNumber(debounce) ? debounce : debounce['default']);
           } else {
-            scope.select({activeIdx: activeIdx});
+            scope.select({activeIdx: activeIdx, evt: evt});
           }
         };
       }

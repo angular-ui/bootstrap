@@ -478,12 +478,13 @@ describe('typeahead tests', function() {
     });
 
     it('should invoke select callback on select', function() {
-      $scope.onSelect = function($item, $model, $label) {
+      $scope.onSelect = function($item, $model, $label, $event) {
         $scope.$item = $item;
         $scope.$model = $model;
         $scope.$label = $label;
+        $scope.$event = $event;
       };
-      var element = prepareInputEl('<div><input ng-model="result" typeahead-on-select="onSelect($item, $model, $label)" uib-typeahead="state.code as state.name for state in states | filter:$viewValue"></div>');
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-on-select="onSelect($item, $model, $label, $event)" uib-typeahead="state.code as state.name for state in states | filter:$viewValue"></div>');
 
       changeInputValueTo(element, 'Alas');
       triggerKeyDown(element, 13);
@@ -492,6 +493,7 @@ describe('typeahead tests', function() {
       expect($scope.$item).toEqual($scope.states[0]);
       expect($scope.$model).toEqual('AL');
       expect($scope.$label).toEqual('Alaska');
+      expect($scope.$event.type).toEqual("keydown");
     });
 
     it('should correctly update inputs value on mapping where label is not derived from the model', function() {
