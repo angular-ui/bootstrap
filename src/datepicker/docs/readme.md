@@ -10,7 +10,7 @@ The datepicker has 3 modes:
 * `month` - In this mode you can select a month within a selected year.
 * `year` - In this mode you are presented with a range of years (20 by default).
 
-### uib-datepicker settings ###
+### uib-datepicker settings
 
 * `custom-class (date, mode)`
   <small class="badge">$</small>
@@ -140,7 +140,7 @@ The datepicker has 3 modes:
   _(Default: `5`)_ -
   Number of columns displayed in year selection.
 
-### uib-datepicker-popup settings ###
+### uib-datepicker-popup settings
 
 Options for the uib-datepicker must be passed as JSON using the `datepicker-options` attribute. This list is only for popup settings.
 
@@ -215,7 +215,7 @@ Options for the uib-datepicker must be passed as JSON using the `datepicker-opti
   _(Default: `yyyy-MM-dd`, Config: `datepickerConfig`)_ -
   The format for displayed dates. This string can take string literals by surrounding the value with backticks, i.e. ``yyyy-MM-dd h `o'clock` ``.
 
-### Keyboard support ###
+### Keyboard support
 
 Depending on datepicker's current mode, the date may refer either to day, month or year. Accordingly, the term view refers either to a month, year or year range.
 
