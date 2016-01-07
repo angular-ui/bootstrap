@@ -1,40 +1,48 @@
 AngularJS version of the tabs directive.
 
-### Settings ###
+### uib-tabset settings
 
-#### `<uib-tabset>` ####
+* `justified`
+  <small class="badge">$</small>
+  _(Default: `false`)_ -
+  Whether tabs fill the container and have a consistent width.
 
- * `vertical`
- 	_(Defaults: false)_ :
- 	Whether tabs appear vertically stacked.
+* `type`
+  _(Defaults: `tabs`)_ -
+  Navigation type. Possible values are 'tabs' and 'pills'.
 
- * `justified`
- 	_(Defaults: false)_ :
- 	Whether tabs fill the container and have a consistent width.
+* `vertical`
+  <small class="badge">$</small>
+  _(Default: `false`)_ -
+  Whether tabs appear vertically stacked.
 
- * `type`
- 	_(Defaults: 'tabs')_ :
- 	Navigation type. Possible values are 'tabs' and 'pills'.
+### uib-tab settings
 
-#### `<uib-tab>` ####
+* `active`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether tab is currently selected.
+  
+* `deselect()`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  An optional expression called when tab is deactivated.
 
- * `heading` or `<uib-tab-heading>`
- 	:
- 	Heading text or HTML markup.
+* `disable`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether tab is clickable and can be activated.
 
- * `active` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Defaults: false)_ :
- 	Whether tab is currently selected.
+* `heading` -
+  Heading text.
 
- * `disable` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Defaults: false)_ :
- 	Whether tab is clickable and can be activated.
- 	Note that this was previously the `disabled` attribute, which is now deprecated.
+* `select()`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  An optional expression called when tab is activated.
 
- * `select()`
- 	_(Defaults: null)_ :
- 	An optional expression called when tab is activated.
-    
- * `deselect()`
- 	_(Defaults: null)_ :
- 	An optional expression called when tab is deactivated.
+### Tabset heading
+
+Instead of the `heading` attribute on the `uib-tabset`, you can use an `uib-tab-heading` element inside a tabset that will be used as the tabset's header. There you can use HTML as well.
