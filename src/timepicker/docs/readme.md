@@ -1,68 +1,99 @@
 A lightweight & configurable timepicker directive.
 
-### Settings ###
+### uib-timepicker settings
 
-All settings can be provided as attributes in the `<uib-timepicker>` or globally configured through the `uibTimepickerConfig`.
+* `arrowkeys`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `true`)_ -
+  Whether user can use up/down arrow keys inside the hours & minutes input to increase or decrease its values.
 
- * `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
- 	:
- 	The Date object that provides the time state.
+* `hour-step`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `1`)_ -
+  Number of hours to increase or decrease when using a button.
+  
+* `max`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `undefined`)_ -
+  Maximum time a user can select.
 
-  * `template-url` (Defaults: `template/timepicker/timepicker.html`) :
-    Add the ability to override the template used on the component.
+* `meridians`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `null`)_ -
+  Meridian labels based on locale. To override you must supply an array like `['AM', 'PM']`.
 
- * `hour-step` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Defaults: 1)_ :
- 	 Number of hours to increase or decrease when using a button.
+* `min`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `undefined`)_ -
+  Minimum time a user can select
 
- * `minute-step` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Defaults: 1)_ :
- 	 Number of minutes to increase or decrease when using a button.
+* `minute-step`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `1`)_ -
+  Number of minutes to increase or decrease when using a button.
+  
+* `mousewheel`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `true`)_ -
+  Whether user can scroll inside the hours & minutes input to increase or decrease its values.
 
- * `second-step` <i class="glyphicon glyphicon-eye-open"></i>
-    _(Defaults: 1)_ :
-     Number of seconds to increase or decrease when using a button.
+* `ng-disabled`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether or not to disable the component.
 
- * `show-meridian` <i class="glyphicon glyphicon-eye-open"></i>
- 	_(Defaults: true)_ :
- 	Whether to display 12H or 24H mode.
+* `ng-model`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  Date object that provides the time state.
 
- * `meridians`
- 	_(Defaults: null)_ :
- 	 Meridian labels based on locale. To override you must supply an array like ['AM', 'PM'].
+* `readonly-input`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `false`)_ -
+  Whether user can type inside the hours & minutes input.
 
- * `readonly-input`
- 	_(Defaults: false)_ :
- 	 Whether user can type inside the hours & minutes input.
+* `second-step`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `1`)_ -
+  Number of seconds to increase or decrease when using a button.
 
- * `mousewheel`
-    _(Defaults: true)_ :
-     Whether user can scroll inside the hours & minutes input to increase or decrease it's values.
+* `show-meridian`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `true`)_ -
+  Whether to display 12H or 24H mode.
 
- * `arrowkeys`
-    _(Defaults: true)_ :
-     Whether user can use up/down arrowkeys inside the hours & minutes input to increase or decrease it's values.
+* `show-seconds`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Show seconds input.
 
- * `show-spinners`
-    _(Defaults: true)_ :
-     Shows spinner arrows above and below the inputs
+* `show-spinners`
+  <small class="badge">$</small>
+  <small class="badge">C</small>
+  _(Default: `true`)_ -
+  Show spinner arrows above and below the inputs.
 
- * `show_seconds`
-    _(Defaults: false)_ :
-     Shows seconds input
+* `tabindex`
+  _(Defaults: `0`)_ -
+  Sets tabindex for each control in the timepicker.
 
- * `min`
-    _(Defaults: undefined)_ :
-     Minimum time a user can select
-
- * `max`
-    _(Defaults: undefined)_ :
-     Maximum time a user can select
-
- * `tabindex`
-    _(Defaults: 0)_ :
-     Sets tabindex for each control in timepicker
-
- * `template-url`
-    _(Defaults: uib/template/timepicker/timepicker.html)_ :
-     Add the ability to override the template used on the component.
+* `template-url`
+  _(Defaults: `uib/template/timepicker/timepicker.html`)_ -
+  Add the ability to override the template used on the component.
