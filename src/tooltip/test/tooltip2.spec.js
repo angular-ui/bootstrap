@@ -56,9 +56,7 @@ describe('tooltip directive', function() {
   }
 
   function trigger(element, evt) {
-    evt = new Event(evt);
-
-    element[0].dispatchEvent(evt);
+    element.trigger(evt);
     element.scope().$$childTail.$digest();
   }
 

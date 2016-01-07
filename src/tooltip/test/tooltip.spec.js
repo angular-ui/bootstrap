@@ -31,9 +31,7 @@ describe('tooltip', function() {
   });
 
   function trigger(element, evt) {
-    evt = new Event(evt);
-
-    element[0].dispatchEvent(evt);
+    element.trigger(evt);
     element.scope().$$childTail.$digest();
   }
 
@@ -750,9 +748,7 @@ describe('tooltipWithDifferentSymbols', function() {
     }));
 
     function trigger(element, evt) {
-      evt = new Event(evt);
-
-      element[0].dispatchEvent(evt);
+      element.trigger(evt);
       element.scope().$$childTail.$digest();
     }
 
@@ -798,9 +794,7 @@ describe('tooltip positioning', function() {
   }));
 
   function trigger(element, evt) {
-    evt = new Event(evt);
-
-    element[0].dispatchEvent(evt);
+    element.trigger(evt);
     element.scope().$$childTail.$digest();
   }
 
@@ -856,9 +850,7 @@ describe('tooltipHtml', function() {
   }));
 
   function trigger(element, evt) {
-    evt = new Event(evt);
-
-    element[0].dispatchEvent(evt);
+    element.trigger(evt);
     element.scope().$$childTail.$digest();
   }
 
@@ -897,9 +889,7 @@ describe('$uibTooltipProvider', function() {
       tooltipScope;
 
   function trigger(element, evt) {
-    evt = new Event(evt);
-
-    element[0].dispatchEvent(evt);
+    element.trigger(evt);
     element.scope().$$childTail.$digest();
   }
 
@@ -1030,7 +1020,7 @@ describe('$uibTooltipProvider', function() {
   });
 
   describe('triggers', function() {
-    describe('triggers with a mapped value', function() {
+    describe('with a mapped value', function() {
       beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
         $uibTooltipProvider.options({trigger: 'focus'});
       }));
@@ -1077,7 +1067,7 @@ describe('$uibTooltipProvider', function() {
       }));
     });
 
-    describe('triggers with a custom mapped value', function() {
+    describe('with a custom mapped value', function() {
       beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
         $uibTooltipProvider.setTriggers({ customOpenTrigger: 'foo bar' });
         $uibTooltipProvider.options({trigger: 'customOpenTrigger'});
