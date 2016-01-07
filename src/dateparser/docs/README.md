@@ -141,4 +141,4 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
 
 \** It also supports `fullDate|longDate|medium|mediumDate|mediumTime|short|shortDate|shortTime` as the format for parsing.
 
-\*** It supports template literals as a string between the single quote `'` character, i.e. `\`The Date is\` MM/DD/YYYY`. If one wants the literal single quote character, one must use `''''`.
+\*** It supports template literals as a string between the single quote `'` character, i.e. `'The Date is' MM/DD/YYYY`. If one wants the literal single quote character, one must use `''''`.
