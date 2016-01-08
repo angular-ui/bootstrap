@@ -32,7 +32,7 @@ With the buttons directive, we can make a group of buttons behave like a set of 
   An expression that evaluates to a truthy or falsy value that determines whether the `uncheckable` attribute is present.
   
 * `uncheckable`
-  _(Boolean attribute)_ -
+  <small class="badge">B</small> -
   Whether a radio button can be unchecked or not.
   
 ### Additional settings `uibButtonConfig`
