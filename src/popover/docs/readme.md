@@ -8,10 +8,8 @@ There are three versions of the popover: `uib-popover` and `uib-popover-template
 
 * `uib-popover`
   Takes text only and will escape any HTML provided for the popover body.
-  
 * `uib-popover-html`
-  Takes an expression that evaluates to an html string. *The user is responsible for ensuring the content is safe to put into the DOM!*
-
+  Takes an expression that evaluates to an HTML string. Note that this HTML is not compiled. If compilation is required, please use the `uib-popover-template` attribute option instead.  *The user is responsible for ensuring the content is safe to put into the DOM!*
 * `uib-popover-template`
   A URL representing the location of a template to use for the popover body. Note that the contents of this template need to be wrapped in a tag, e.g., `<div></div>`.
 
