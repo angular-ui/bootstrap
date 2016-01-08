@@ -46,7 +46,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     var isEditable = originalScope.$eval(attrs.typeaheadEditable) !== false;
     originalScope.$watch(attrs.typeaheadEditable, function (newVal) {
       isEditable = newVal !== false;
-    }); 
+    });
 
     //binding to a variable that indicates if matches are being retrieved asynchronously
     var isLoadingSetter = $parse(attrs.typeaheadLoading).assign || angular.noop;
@@ -395,12 +395,12 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         case 38:
           scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
           scope.$digest();
-          popUpEl.children()[scope.activeIdx].scrollIntoView(false);
+          popUpEl.find('li')[scope.activeIdx].scrollIntoView(false);
           break;
         case 40:
           scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
           scope.$digest();
-          popUpEl.children()[scope.activeIdx].scrollIntoView(false);
+          popUpEl.find('li')[scope.activeIdx].scrollIntoView(false);
           break;
       }
     });
