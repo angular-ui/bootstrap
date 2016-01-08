@@ -116,7 +116,7 @@
 * pager: As part of the split of the pager component from the
 pagination component, this changes the controllerAs use to `pager` from
 `pagination`
-* dropdown: `keyboard-nav` for the dropdown is not longer a directive and to use it you have to use `keyboard-nav` instead of `uib-keyboard-nav`.
+* dropdown: `keyboard-nav` for the dropdown is no longer a directive and to use it you have to use `keyboard-nav` instead of `uib-keyboard-nav`.
 * All virtual templates in UI Bootstrap now are prefixed
 with `uib/` - if one is overriding the templates via `$templateCache` path
 or manually building the templates from the UI Bootstrap repository, one
