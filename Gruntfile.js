@@ -22,12 +22,14 @@ module.exports = function(grunt) {
       cssInclude: '',
       cssFileBanner: '/* Include this file in your html if you are using the CSP mode. */\n\n',
       cssFileDest: '<%= dist %>/<%= filename %>-<%= pkg.version %>-csp.css',
-      banner: ['/*',
-               ' * <%= pkg.name %>',
-               ' * <%= pkg.homepage %>\n',
-               ' * Version: <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>',
-               ' * License: <%= pkg.license %>',
-               ' */\n'].join('\n')
+      banner: `/*
+                * <%= pkg.name %>
+                * <%= pkg.homepage %>
+
+                * Version: <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>
+                * License: <%= pkg.license %>
+                */
+              `
     },
     delta: {
       docs: {
@@ -219,10 +221,10 @@ module.exports = function(grunt) {
       });
     }
     function enquote(str) {
-      return '"' + str + '"';
+      return `"${str}"`;
     }
     function enquoteUibDir(str) {
-      return enquote('uib/' + str);
+      return enquote(`uib/${str}`);
     }
 
     var module = {
@@ -237,9 +239,7 @@ module.exports = function(grunt) {
       dependencies: dependenciesForModule(name),
       docs: {
         md: grunt.file.expand(`src/${name}/docs/*.md`)
-          .map(grunt.file.read).map(function(str) {
-            return marked(str);
-          }).join('\n'),
+          .map(grunt.file.read).map((str) => marked(str)).join('\n'),
         js: grunt.file.expand(`src/${name}/docs/*.js`)
           .map(grunt.file.read).join('\n'),
         html: grunt.file.expand(`src/${name}/docs/*.html`)
@@ -301,19 +301,17 @@ module.exports = function(grunt) {
     } else {
       grunt.file.expand({
         filter: 'isDirectory', cwd: '.'
-      }, 'src/*').forEach(function(dir) {
+      }, 'src/*').forEach((dir) => {
         findModule(dir.split('/')[1]);
       });
     }
 
     var modules = grunt.config('modules');
     grunt.config('srcModules', _.pluck(modules, 'moduleName'));
-    grunt.config('tplModules', _.pluck(modules, 'tplModules').filter(function(tpls) { return tpls.length > 0;} ));
+    grunt.config('tplModules', _.pluck(modules, 'tplModules').filter((tpls) => tpls.length > 0));
     grunt.config('demoModules', modules
-      .filter(function(module) {
-        return module.docs.md && module.docs.js && module.docs.html;
-      })
-      .sort(function(a, b) {
+      .filter((module) => module.docs.md && module.docs.js && module.docs.html)
+      .sort((a, b) => {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
         return 0;
@@ -332,9 +330,7 @@ module.exports = function(grunt) {
     }
 
     var moduleFileMapping = _.clone(modules, true);
-    moduleFileMapping.forEach(function (module) {
-      delete module.docs;
-    });
+    moduleFileMapping.forEach((module) => delete module.docs);
 
     grunt.config('moduleFileMapping', moduleFileMapping);
 
@@ -350,14 +346,14 @@ module.exports = function(grunt) {
     grunt.task.run(['concat', 'uglify', 'makeModuleMappingFile', 'makeRawFilesJs', 'makeVersionsMappingFile']);
   });
 
-  grunt.registerTask('test', 'Run tests on singleRun karma server', function () {
+  grunt.registerTask('test', 'Run tests on singleRun karma server', function() {
     //this task can be executed in 3 different environments: local, Travis-CI and Jenkins-CI
     //we need to take settings for each one into account
     if (process.env.TRAVIS) {
       grunt.task.run('karma:travis');
     } else {
       var isToRunJenkinsTask = !!this.args.length;
-      if(grunt.option('coverage')) {
+      if (grunt.option('coverage')) {
         var karmaOptions = grunt.config.get('karma.options'),
           coverageOpts = grunt.config.get('karma.coverage');
         grunt.util._.extend(karmaOptions, coverageOpts);
@@ -367,7 +363,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('makeModuleMappingFile', function () {
+  grunt.registerTask('makeModuleMappingFile', function() {
     var _ = grunt.util._;
     var moduleMappingJs = 'dist/assets/module-mapping.json';
     var moduleMappings = grunt.config('moduleFileMapping');
@@ -377,7 +373,7 @@ module.exports = function(grunt) {
     grunt.log.writeln('File ' + moduleMappingJs.cyan + ' created.');
   });
 
-  grunt.registerTask('makeRawFilesJs', function () {
+  grunt.registerTask('makeRawFilesJs', function() {
     var _ = grunt.util._;
     var jsFilename = 'dist/assets/raw-files.json';
     var genRawFilesJs = require('./misc/raw-files-generator');
@@ -386,7 +382,7 @@ module.exports = function(grunt) {
                   grunt.config('meta.banner'), grunt.config('meta.cssFileBanner'));
   });
 
-  grunt.registerTask('makeVersionsMappingFile', function () {
+  grunt.registerTask('makeVersionsMappingFile', function() {
     var done = this.async();
 
     var exec = require('child_process').exec;
