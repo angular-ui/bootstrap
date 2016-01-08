@@ -70,7 +70,7 @@
 
     <h4>Custom templates for results</h4>
     <pre>Model: {{customSelected | json}}</pre>
-    <input type="text" ng-model="customSelected" placeholder="Custom template" uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true">
+    <input type="text" ng-model="customSelected" placeholder="Custom template" uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
 
     <h4>Custom popup templates for typeahead's dropdown</h4>
     <pre>Model: {{customPopupSelected | json}}</pre>

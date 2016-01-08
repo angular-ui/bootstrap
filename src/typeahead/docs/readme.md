@@ -11,82 +11,107 @@ The `sourceArray` expression can use a special `$viewValue` variable that corres
 
 This directive works with promises, meaning you can retrieve matches using the `$http` service with minimal effort.
 
-The typeahead directives provide several attributes:
+### uib-typeahead settings
 
-* `ng-model` <i class="glyphicon glyphicon-eye-open"></i>
-   :
-   Assignable angular expression to data-bind to
+* `ng-model`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  Assignable angular expression to data-bind to.
 
 * `ng-model-options`
-   :
-   Options for ng-model (see [ng-model-options directive](https://docs.angularjs.org/api/ng/directive/ngModelOptions)). Currently supports the `debounce` and `getterSetter` options
-
-* `uib-typeahead` <i class="glyphicon glyphicon-eye-open"></i>
-   :
-   Comprehension Angular expression (see [select directive](http://docs.angularjs.org/api/ng.directive:select))
-
-* `typeahead-append-to-body` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: false)_ : Should the typeahead popup be appended to $body instead of the parent element?
+  <small class="badge">$</small> -
+  Options for ng-model (see [ng-model-options directive](https://docs.angularjs.org/api/ng/directive/ngModelOptions)). Currently supports the `debounce` and `getterSetter` options.
 
 * `typeahead-append-to`
-   _(Defaults: null)_ : Should the typeahead popup be appended to an element instead of the parent element?
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  Should the typeahead popup be appended to an element instead of the parent element?
 
-* `typeahead-editable` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: true)_ :
-   Should it restrict model values to the ones selected from the popup only ?
+* `typeahead-append-to-body`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Should the typeahead popup be appended to $body instead of the parent element?
+
+* `typeahead-editable`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `true`)_ -
+  Should it restrict model values to the ones selected from the popup only?
 
 * `typeahead-focus-first`
-   _(Defaults: true)_ :
-   Should the first match automatically be focused as you type?
-
-* `typeahead-input-formatter` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: undefined)_ :
-   Format the ng-model result after selection
-
-* `typeahead-loading` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: angular.noop)_ :
-   Binding to a variable that indicates if matches are being retrieved asynchronously
-
-* `typeahead-min-length` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: 1)_ :
-   Minimal no of characters that needs to be entered before typeahead kicks-in. Must be greater than or equal to 0.
-
-* `typeahead-no-results` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: angular.noop)_ :
-   Binding to a variable that indicates if no matching results were found
-
-* `typeahead-on-select($item, $model, $label, $event)`
-   _(Defaults: null)_ :
-   A callback executed when a match is selected. $event can be undefined if selection not triggered from a user event.
-
-* `typeahead-select-on-exact`
-   _(Defaults: false)_ :
-   Should it automatically select an item when there is one option that exactly matches the user input?
-
-* `typeahead-template-url` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: `uib/template/typeahead/typeahead-match.html`)_ :
-   Set custom item template
-
-* `typeahead-popup-template-url`
-   _(Defaults: `uib/template/typeahead/typeahead-popup.html`)_ :
-   Set custom popup template
-
-* `typeahead-wait-ms` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: 0)_ :
-   Minimal wait time after last character typed before typeahead kicks-in
-
-* `typeahead-select-on-blur`
-   _(Defaults: false)_ :
-   On blur, select the currently highlighted match
+  <small class="badge">$</small>
+  _(Default: `true`)_ -
+  Should the first match automatically be focused as you type?
 
 * `typeahead-focus-on-select`
-   _(Defaults: true) :
-   On selection, focus the input element the typeahead directive is associated with
+  _(Default: `true`)_ -
+  On selection, focus the input element the typeahead directive is associated with.
 
-* `typeahead-is-open` <i class="glyphicon glyphicon-eye-open"></i>
-   _(Defaults: angular.noop)_ :
-   Binding to a variable that indicates if dropdown is open
+* `typeahead-input-formatter`
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `undefined`)_ -
+  Format the ng-model result after selection.
+
+* `typeahead-is-open`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `angular.noop`)_ -
+  Binding to a variable that indicates if the dropdown is open.
+
+* `typeahead-loading`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `angular.noop`)_ -
+  Binding to a variable that indicates if matches are being retrieved asynchronously.
+
+* `typeahead-min-length`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `1`)_ -
+  Minimal no of characters that needs to be entered before typeahead kicks-in. Must be greater than or equal to 0.
+
+* `typeahead-no-results`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `angular.noop`)_ -
+  Binding to a variable that indicates if no matching results were found.
+
+* `typeahead-on-select($item, $model, $label, $event)`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  A callback executed when a match is selected. $event can be undefined if selection not triggered from a user event.
+
+* `typeahead-popup-template-url`
+  _(Default: `uib/template/typeahead/typeahead-popup.html`)_ -
+  Set custom popup template.
+
+* `typeahead-select-on-blur`
+  <small class="badge">$</small>
+  _(Default: `false`)_ -
+  On blur, select the currently highlighted match.
+
+* `typeahead-select-on-exact`
+  <small class="badge">$</small>
+  _(Default: `false`)_ -
+  Should it automatically select an item when there is one option that exactly matches the user input?
 
 * `typeahead-show-hint`
-   _(Defaults: false)_ :
-   Should input show hint that matches the first option?
+  <small class="badge">$</small>
+  _(Default: `false`)_ -
+  Should input show hint that matches the first option?
+
+* `typeahead-template-url`
+  _(Default: `uib/template/typeahead/typeahead-match.html`)_ -
+  Set custom item template.
+
+* `typeahead-wait-ms`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `0`)_ -
+  Minimal wait time after last character typed before typeahead kicks-in.
+
+* `uib-typeahead`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  Comprehension Angular expression (see [select directive](http://docs.angularjs.org/api/ng.directive:select)).
