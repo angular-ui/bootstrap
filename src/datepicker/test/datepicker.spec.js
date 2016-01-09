@@ -1948,6 +1948,30 @@ describe('datepicker', function() {
         });
       });
 
+      describe('custom format with optional leading zeroes', function() {
+        beforeEach(inject(function() {
+          var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup="d!-M!-yyyy" is-open="true"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        }));
+
+        it('to display the correct value in input', function() {
+          expect(inputEl.val()).toBe('30-09-2010');
+        });
+
+        it('updates the input when a day is clicked', function() {
+          clickOption(10);
+          expect(inputEl.val()).toBe('08-09-2010');
+          expect($rootScope.date).toEqual(new Date('September 8, 2010 15:30:00'));
+        });
+
+        it('updates the input correctly when model changes', function() {
+          $rootScope.date = new Date('December 25, 1983 10:00:00');
+          $rootScope.$digest();
+          expect(inputEl.val()).toBe('25-12-1983');
+        });
+      });
+
       describe('dynamic custom format', function() {
         beforeEach(inject(function() {
           $rootScope.format = 'dd-MMMM-yyyy';
