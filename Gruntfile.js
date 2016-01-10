@@ -263,7 +263,7 @@ module.exports = function(grunt) {
 
   function dependenciesForModule(name) {
     var deps = [];
-    grunt.file.expand('src/' + name + '/*.js')
+    grunt.file.expand(`src/${name}/*.js`)
     .map(grunt.file.read)
     .forEach(function(contents) {
       //Strategy: find where module is declared,
