@@ -52,11 +52,22 @@ describe('collapse directive', function() {
     assertCallbacks({ collapsed: true });
   });
 
+  it('should not trigger any animation on initialization if isCollapsed = true', function() {
+    var wrapperFn = function() {
+      $animate.flush();
+    };
+
+    scope.isCollapsed = true;
+    compileFn(scope);
+    scope.$digest();
+
+    expect(wrapperFn).toThrowError(/No pending animations ready to be closed or flushed/);
+  });
+
   it('should collapse if isCollapsed = true on subsequent use', function() {
     scope.isCollapsed = false;
     compileFn(scope);
     scope.$digest();
-    $animate.flush();
     initCallbacks();
     scope.isCollapsed = true;
     scope.$digest();
@@ -65,21 +76,38 @@ describe('collapse directive', function() {
     assertCallbacks({ collapsing: true, collapsed: true });
   });
 
-  it('should be shown on initialization if isCollapsed = false', function() {
+  it('should show after toggled from collapsed', function() {
     initCallbacks();
-    scope.isCollapsed = false;
+    scope.isCollapsed = true;
     compileFn(scope);
+    scope.$digest();
+    expect(element.height()).toBe(0);
+    assertCallbacks({ collapsed: true });
+    scope.collapsed.calls.reset();
+
+    scope.isCollapsed = false;
     scope.$digest();
     $animate.flush();
     expect(element.height()).not.toBe(0);
     assertCallbacks({ expanding: true, expanded: true });
   });
 
+  it('should not trigger any animation on initialization if isCollapsed = false', function() {
+    var wrapperFn = function() {
+      $animate.flush();
+    };
+
+    scope.isCollapsed = false;
+    compileFn(scope);
+    scope.$digest();
+
+    expect(wrapperFn).toThrowError(/No pending animations ready to be closed or flushed/);
+  });
+
   it('should expand if isCollapsed = false on subsequent use', function() {
     scope.isCollapsed = false;
     compileFn(scope);
     scope.$digest();
-    $animate.flush();
     scope.isCollapsed = true;
     scope.$digest();
     $animate.flush();
@@ -95,7 +123,6 @@ describe('collapse directive', function() {
     scope.isCollapsed = false;
     compileFn(scope);
     scope.$digest();
-    $animate.flush();
     scope.isCollapsed = true;
     scope.$digest();
     $animate.flush();
@@ -114,7 +141,6 @@ describe('collapse directive', function() {
     scope.isCollapsed = false;
     compileFn(scope);
     scope.$digest();
-    $animate.flush();
     expect(element.attr('aria-expanded')).toBe('true');
 
     scope.isCollapsed = true;
@@ -127,7 +153,6 @@ describe('collapse directive', function() {
     scope.isCollapsed = false;
     compileFn(scope);
     scope.$digest();
-    $animate.flush();
     expect(element.attr('aria-hidden')).toBe('false');
 
     scope.isCollapsed = true;
@@ -153,7 +178,6 @@ describe('collapse directive', function() {
       scope.exp = false;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = true;
       scope.$digest();
@@ -164,7 +188,6 @@ describe('collapse directive', function() {
       scope.exp = true;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = false;
       scope.$digest();

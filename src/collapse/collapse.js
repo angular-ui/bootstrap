@@ -12,10 +12,16 @@ angular.module('ui.bootstrap.collapse', [])
         if (!scope.$eval(attrs.uibCollapse)) {
           element.addClass('in')
             .addClass('collapse')
+            .attr('aria-expanded', true)
+            .attr('aria-hidden', false)
             .css({height: 'auto'});
         }
 
         function expand() {
+          if (element.hasClass('collapse') && element.hasClass('in')) {
+            return;
+          }
+
           $q.resolve(expandingExpr(scope))
             .then(function() {
               element.removeClass('collapse')
