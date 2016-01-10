@@ -102,6 +102,7 @@ angular.module('ui.bootstrap.carousel', [])
       goNext(nextSlide, nextIndex, direction);
     } else if (nextSlide && nextSlide !== self.currentSlide && $scope.$currentTransition) {
       bufferedTransitions.push(nextSlide);
+      nextSlide.active = false;
     }
   };
 
