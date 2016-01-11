@@ -95,5 +95,6 @@ A lightweight & configurable timepicker directive.
   Sets tabindex for each control in the timepicker.
 
 * `template-url`
+  <small class="badge">C</small>
   _(Defaults: `uib/template/timepicker/timepicker.html`)_ -
   Add the ability to override the template used on the component.

@@ -1077,7 +1077,7 @@ describe('timepicker directive', function() {
     });
   });
 
-  describe('setting uibTimepickerConfig tmeplate url', function() {
+  describe('setting uibTimepickerConfig template url', function() {
     var originalConfig = {};
     var newTemplateUrl = 'foo/bar.html';
     beforeEach(inject(function(_$compile_, _$rootScope_, uibTimepickerConfig) {
@@ -2168,7 +2168,7 @@ describe('timepicker directive', function() {
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
       expect(getModelState()).toEqual([14, 40, 25]);
-    
+
       hoursEl.trigger(upMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
@@ -2184,7 +2184,7 @@ describe('timepicker directive', function() {
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
       expect(getModelState()).toEqual([14, 40, 25]);
-    
+
       hoursEl.trigger(downMouseWheelEvent);
       $rootScope.$digest();
       expect(getTimeState()).toEqual(['02', '40', '25', 'PM']);
