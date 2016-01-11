@@ -1,47 +1,50 @@
-<style>
-  .nav-tabs > li > div {
+<style type="text/css">
+  .uib-tab > div {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    outline: 0;
+    color: #337ab7;
+  }
+  .uib-tab > div:focus,
+  .uib-tab > div:hover {
+    background-color: #eee;
+    color: #23527c;
+  }
+  .uib-tab.disabled > div {
+    color: #777;
+  }
+  .uib-tab.disabled > div:focus,
+  .uib-tab.disabled > div:hover {
+    color: #777;
+    cursor: not-allowed;
+    background-color: transparent;
+  }
+  .nav-tabs > .uib-tab > div {
     margin-right: 2px;
     line-height: 1.42857143;
     border: 1px solid transparent;
     border-radius: 4px 4px 0 0;
   }
-
-  .nav-tabs > li > div:hover {
+  .nav-tabs > .uib-tab > div:hover {
     border-color: #eee #eee #ddd;
   }
-
-  .nav-tabs > li.active > div, .nav-tabs > li.active > div:hover {
+  .nav-tabs > .uib-tab.active > div,
+  .nav-tabs > .uib-tab.active > div:focus,
+  .nav-tabs > .uib-tab.active > div:hover {
     color: #555;
     cursor: default;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-bottom-color: transparent;
+    background-color: #fff;
+    border-color: #ddd #ddd transparent #ddd;
   }
-
-  .nav > li > div {
-    position: relative;
-    display: block;
-    padding: 10px 15px;
+  .nav-pills > .uib-tab > div {
+    border-radius: 4px;
   }
-
-  .nav > li > div:hover {
-    background-color: #eee;
-  }
-
-  .uib-tab > div {
-    color: #337ab7;
-    cursor: pointer;
-  }
-
-  .nav-tabs > li.disabled > div { 
-    color: #999; 
-  }
-
-  .nav-tabs>li.disabled>div:hover, .nav-tabs>li.disabled>div:focus {
-    color: #999;
-    text-decoration: none;
-    background-color: transparent;
-    cursor: not-allowed;
+  .nav-pills > .uib-tab.active > div,
+  .nav-pills > .uib-tab.active > div:focus,
+  .nav-pills > .uib-tab.active > div:hover {
+    color: #fff;
+    background-color: #337ab7;
   }
 
   form.tab-form-demo .tab-pane {
