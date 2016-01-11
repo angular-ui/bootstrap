@@ -1077,6 +1077,28 @@ describe('timepicker directive', function() {
     });
   });
 
+  describe('setting uibTimepickerConfig tmeplate url', function() {
+    var originalConfig = {};
+    var newTemplateUrl = 'foo/bar.html';
+    beforeEach(inject(function(_$compile_, _$rootScope_, uibTimepickerConfig) {
+      angular.extend(originalConfig, uibTimepickerConfig);
+      $templateCache.put(newTemplateUrl, '<div>baz</div>');
+      uibTimepickerConfig.templateUrl = newTemplateUrl;
+
+      element = $compile('<uib-timepicker ng-model="time"></uib-timepicker>')($rootScope);
+      $rootScope.$digest();
+    }));
+    afterEach(inject(function(uibTimepickerConfig) {
+      // return it to the original state
+      angular.extend(uibTimepickerConfig, originalConfig);
+    }));
+
+    it('should use a custom template', function() {
+      expect(element[0].tagName.toLowerCase()).toBe('div');
+      expect(element.html()).toBe('baz');
+    });
+  });
+
   describe('$formatter', function() {
     var ngModel,
       date;

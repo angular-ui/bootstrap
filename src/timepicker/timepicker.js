@@ -10,7 +10,8 @@ angular.module('ui.bootstrap.timepicker', [])
   readonlyInput: false,
   mousewheel: true,
   arrowkeys: true,
-  showSpinners: true
+  showSpinners: true,
+  templateUrl: 'uib/template/timepicker/timepicker.html'
 })
 
 .controller('UibTimepickerController', ['$scope', '$element', '$attrs', '$parse', '$log', '$locale', 'uibTimepickerConfig', function($scope, $element, $attrs, $parse, $log, $locale, timepickerConfig) {
@@ -519,7 +520,7 @@ angular.module('ui.bootstrap.timepicker', [])
   };
 }])
 
-.directive('uibTimepicker', function() {
+.directive('uibTimepicker', function(uibTimepickerConfig) {
   return {
     require: ['uibTimepicker', '?^ngModel'],
     controller: 'UibTimepickerController',
@@ -527,7 +528,7 @@ angular.module('ui.bootstrap.timepicker', [])
     replace: true,
     scope: {},
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/timepicker/timepicker.html';
+      return attrs.templateUrl || uibTimepickerConfig.templateUrl;
     },
     link: function(scope, element, attrs, ctrls) {
       var timepickerCtrl = ctrls[0], ngModelCtrl = ctrls[1];
