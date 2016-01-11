@@ -372,7 +372,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       }
 
       evt.preventDefault();
-
+      var target;
       switch (evt.which) {
         case 9:
         case 13:
@@ -395,12 +395,14 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         case 38:
           scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
           scope.$digest();
-          popUpEl.find('li')[scope.activeIdx].scrollIntoView(false);
+          target = popUpEl.find('li')[scope.activeIdx];
+          target.parentNode.scrollTop = target.offsetTop;
           break;
         case 40:
           scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
           scope.$digest();
-          popUpEl.find('li')[scope.activeIdx].scrollIntoView(false);
+          target = popUpEl.find('li')[scope.activeIdx];
+          target.parentNode.scrollTop = target.offsetTop;
           break;
       }
     });

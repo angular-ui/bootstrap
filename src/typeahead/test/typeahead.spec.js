@@ -689,23 +689,36 @@ describe('typeahead tests', function() {
 
     it('should activate prev/next matches on up/down keys', function() {
       changeInputValueTo(element, 'b');
-      expect(element).toBeOpenWithActive(2, 0);
+      var parentNode = element.find('ul').eq(0)[0];
+      var liIndex;
+
+      liIndex = 0;
+      expect(element).toBeOpenWithActive(2, liIndex);
+      expect(parentNode.scrollTop).toEqual(element.find('li').eq(liIndex)[0].offsetTop);
 
       // Down arrow key
       triggerKeyDown(element, 40);
-      expect(element).toBeOpenWithActive(2, 1);
+      liIndex = 1;
+      expect(element).toBeOpenWithActive(2, liIndex);
+      expect(parentNode.scrollTop).toEqual(element.find('li').eq(liIndex)[0].offsetTop);
 
       // Down arrow key goes back to first element
       triggerKeyDown(element, 40);
-      expect(element).toBeOpenWithActive(2, 0);
+      liIndex = 0;
+      expect(element).toBeOpenWithActive(2, liIndex);
+      expect(parentNode.scrollTop).toEqual(element.find('li').eq(liIndex)[0].offsetTop);
 
       // Up arrow key goes back to last element
       triggerKeyDown(element, 38);
-      expect(element).toBeOpenWithActive(2, 1);
+      liIndex = 1;
+      expect(element).toBeOpenWithActive(2, liIndex);
+      expect(parentNode.scrollTop).toEqual(element.find('li').eq(liIndex)[0].offsetTop);
 
       // Up arrow key goes back to first element
       triggerKeyDown(element, 38);
-      expect(element).toBeOpenWithActive(2, 0);
+      liIndex = 0;
+      expect(parentNode.scrollTop).toEqual(element.find('li').eq(liIndex)[0].offsetTop);
+      expect(element).toBeOpenWithActive(2, liIndex);
     });
 
     it('should close popup on escape key', function() {
