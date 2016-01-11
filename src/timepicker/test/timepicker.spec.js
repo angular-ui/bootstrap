@@ -1181,7 +1181,6 @@ describe('timepicker directive', function() {
       expect(getModelState()).toEqual([14, 9, 25]);
     });
 
-
     it('updates seconds & pads on input change & pads on blur', function() {
       var el = getSecondsInputEl();
 
@@ -1214,7 +1213,7 @@ describe('timepicker directive', function() {
     it('clears model when input minutes is invalid & alerts the UI', function() {
       var el = getMinutesInputEl();
 
-      changeInputValueTo(el, 'pizza');
+      changeInputValueTo(el, '8a');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('has-error')).toBe(true);
       expect(element.hasClass('ng-invalid-time')).toBe(true);
@@ -1225,7 +1224,6 @@ describe('timepicker directive', function() {
       expect(el.parent().hasClass('has-error')).toBe(false);
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
-
 
     it('clears model when input seconds is invalid & alerts the UI', function() {
       var el = getSecondsInputEl();

@@ -52,14 +52,14 @@ angular.module('ui.bootstrap.timepicker', [])
   var hourStep = timepickerConfig.hourStep;
   if ($attrs.hourStep) {
     $scope.$parent.$watch($parse($attrs.hourStep), function(value) {
-      hourStep = parseInt(value, 10);
+      hourStep = +value;
     });
   }
 
   var minuteStep = timepickerConfig.minuteStep;
   if ($attrs.minuteStep) {
     $scope.$parent.$watch($parse($attrs.minuteStep), function(value) {
-      minuteStep = parseInt(value, 10);
+      minuteStep = +value;
     });
   }
 
@@ -129,7 +129,7 @@ angular.module('ui.bootstrap.timepicker', [])
   var secondStep = timepickerConfig.secondStep;
   if ($attrs.secondStep) {
     $scope.$parent.$watch($parse($attrs.secondStep), function(value) {
-      secondStep = parseInt(value, 10);
+      secondStep = +value;
     });
   }
 
@@ -161,7 +161,7 @@ angular.module('ui.bootstrap.timepicker', [])
 
   // Get $scope.hours in 24H mode if valid
   function getHoursFromTemplate() {
-    var hours = parseInt($scope.hours, 10);
+    var hours = +$scope.hours;
     var valid = $scope.showMeridian ? hours > 0 && hours < 13 :
       hours >= 0 && hours < 24;
     if (!valid) {
@@ -180,12 +180,12 @@ angular.module('ui.bootstrap.timepicker', [])
   }
 
   function getMinutesFromTemplate() {
-    var minutes = parseInt($scope.minutes, 10);
+    var minutes = +$scope.minutes;
     return minutes >= 0 && minutes < 60 ? minutes : undefined;
   }
 
   function getSecondsFromTemplate() {
-    var seconds = parseInt($scope.seconds, 10);
+    var seconds = +$scope.seconds;
     return seconds >= 0 && seconds < 60 ? seconds : undefined;
   }
 
