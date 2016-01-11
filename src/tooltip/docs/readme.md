@@ -6,9 +6,11 @@ There are three versions of the tooltip: `uib-tooltip`, `uib-tooltip-template`, 
 
 * `uib-tooltip` -
   Takes text only and will escape any HTML provided.
-* `uib-tooltip-html` -
+* `uib-tooltip-html`
+  <small class="badge">$</small> -
   Takes an expression that evaluates to an HTML string. Note that this HTML is not compiled. If compilation is required, please use the `uib-tooltip-template` attribute option instead. *The user is responsible for ensuring the content is safe to put into the DOM!*
-* `uib-tooltip-template` -
+* `uib-tooltip-template`
+  <small class="badge">$</small> -
   Takes text that specifies the location of a template to use for the tooltip. Note that this needs to be wrapped in a tag.
 
 ### uib-tooltip-* settings
