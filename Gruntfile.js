@@ -251,7 +251,7 @@ module.exports = function(grunt) {
       css: [],
       js: []
     };
-    module.cssFiles.forEach(processCSS.bind(null, styles, true));
+    module.cssFiles.forEach(processCSS.bind(null, module.name, styles, true));
     if (styles.css.length) {
       module.css = styles.css.join('\n');
       module.cssJs = styles.js.join('\n');
@@ -413,7 +413,7 @@ module.exports = function(grunt) {
    * Logic from AngularJS
    * https://github.com/angular/angular.js/blob/36831eccd1da37c089f2141a2c073a6db69f3e1d/lib/grunt/utils.js#L121-L145
    */
-  function processCSS(state, minify, file) {
+  function processCSS(moduleName, state, minify, file) {
     var css = fs.readFileSync(file).toString(),
       js;
     state.css.push(css);
@@ -433,7 +433,7 @@ module.exports = function(grunt) {
       .replace(/\\/g, '\\\\')
       .replace(/'/g, "\\'")
       .replace(/\r?\n/g, '\\n');
-    js = `angular.module('ui.bootstrap.carousel').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">${css}</style>'); });`;
+    js = `angular.module('ui.bootstrap.${moduleName}').run(function() {!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">${css}</style>'); });`;
     state.js.push(js);
 
     return state;
