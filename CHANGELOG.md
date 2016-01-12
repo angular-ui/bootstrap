@@ -1,3 +1,13 @@
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/angular-ui/bootstrap/compare/v1.0.1...v1.0.2) (2016-01-12)
+
+
+### Bug Fixes
+
+* **tabs:** fix csp check ([74be568](https://github.com/angular-ui/bootstrap/commit/74be568)), closes [#5214](https://github.com/angular-ui/bootstrap/issues/5214)
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/angular-ui/bootstrap/compare/1.0.0...v1.0.1) (2016-01-12)
 
