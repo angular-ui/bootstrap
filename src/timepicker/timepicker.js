@@ -520,7 +520,7 @@ angular.module('ui.bootstrap.timepicker', [])
   };
 }])
 
-.directive('uibTimepicker', function(uibTimepickerConfig) {
+.directive('uibTimepicker', ['uibTimepickerConfig', function(uibTimepickerConfig) {
   return {
     require: ['uibTimepicker', '?^ngModel'],
     controller: 'UibTimepickerController',
@@ -538,4 +538,4 @@ angular.module('ui.bootstrap.timepicker', [])
       }
     }
   };
-});
+}]);
