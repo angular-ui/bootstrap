@@ -22,14 +22,14 @@ module.exports = function(grunt) {
       cssInclude: '',
       cssFileBanner: '/* Include this file in your html if you are using the CSP mode. */\n\n',
       cssFileDest: '<%= dist %>/<%= filename %>-<%= pkg.version %>-csp.css',
-      banner: `/*
-                * <%= pkg.name %>
-                * <%= pkg.homepage %>
-
-                * Version: <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>
-                * License: <%= pkg.license %>
-                */
-              `
+      banner: [
+        '/*',
+        '* <%= pkg.name %>',
+        '* <%= pkg.homepage %>\n',
+        '* Version: <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>',
+        '* License: <%= pkg.license %>',
+        '*/'
+      ].join('\n')
     },
     delta: {
       docs: {
