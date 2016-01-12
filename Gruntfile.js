@@ -24,11 +24,11 @@ module.exports = function(grunt) {
       cssFileDest: '<%= dist %>/<%= filename %>-<%= pkg.version %>-csp.css',
       banner: [
         '/*',
-        '* <%= pkg.name %>',
-        '* <%= pkg.homepage %>\n',
-        '* Version: <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>',
-        '* License: <%= pkg.license %>',
-        '*/'
+        ' * <%= pkg.name %>',
+        ' * <%= pkg.homepage %>\n',
+        ' * Version: <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>',
+        ' * License: <%= pkg.license %>',
+        ' */'
       ].join('\n')
     },
     delta: {
