@@ -1,3 +1,24 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/angular-ui/bootstrap/compare/1.0.0...v1.0.1) (2016-01-12)
+
+
+### Bug Fixes
+
+* **build:** add ; after script ([9d0269e](https://github.com/angular-ui/bootstrap/commit/9d0269e)), closes [#5197](https://github.com/angular-ui/bootstrap/issues/5197) [#5196](https://github.com/angular-ui/bootstrap/issues/5196)
+* **carousel:** reset active for buffered transitions ([36fca74](https://github.com/angular-ui/bootstrap/commit/36fca74)), closes [#5195](https://github.com/angular-ui/bootstrap/issues/5195) [#5178](https://github.com/angular-ui/bootstrap/issues/5178)
+* **datepicker:** fix error message ([aa010b0](https://github.com/angular-ui/bootstrap/commit/aa010b0)), closes [#5198](https://github.com/angular-ui/bootstrap/issues/5198) [#5191](https://github.com/angular-ui/bootstrap/issues/5191)
+* **datepicker:** fix usage of non-standard format ([428beaf](https://github.com/angular-ui/bootstrap/commit/428beaf)), closes [#5188](https://github.com/angular-ui/bootstrap/issues/5188) [#5187](https://github.com/angular-ui/bootstrap/issues/5187)
+* **timepicker:** prevent mixture of numbers and letters ([9e9c6cf](https://github.com/angular-ui/bootstrap/commit/9e9c6cf)), closes [#5201](https://github.com/angular-ui/bootstrap/issues/5201) [#5085](https://github.com/angular-ui/bootstrap/issues/5085)
+* **timepicker:** use correct disabled expression ([71afeeb](https://github.com/angular-ui/bootstrap/commit/71afeeb)), closes [#5185](https://github.com/angular-ui/bootstrap/issues/5185) [#5182](https://github.com/angular-ui/bootstrap/issues/5182)
+* **typeahead:** scroll only parent element ([3dac5e3](https://github.com/angular-ui/bootstrap/commit/3dac5e3)), closes [#5212](https://github.com/angular-ui/bootstrap/issues/5212) [#5180](https://github.com/angular-ui/bootstrap/issues/5180)
+
+### Features
+
+* **tabs:** add CSS to css file ([db7adf7](https://github.com/angular-ui/bootstrap/commit/db7adf7)), closes [#5211](https://github.com/angular-ui/bootstrap/issues/5211)
+* **timepicker:** add templateUrl in timepickerConfig ([4b0e381](https://github.com/angular-ui/bootstrap/commit/4b0e381)), closes [#5087](https://github.com/angular-ui/bootstrap/issues/5087) [#5200](https://github.com/angular-ui/bootstrap/issues/5200)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/angular-ui/bootstrap/compare/0.14.3...v1.0.0) (2016-01-08)
 
