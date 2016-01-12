@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/angular-ui/bootstrap/compare/v1.0.2...v1.0.3) (2016-01-12)
+
+
+### Bug Fixes
+
+* **timepicker:** fix injection ([627a451](https://github.com/angular-ui/bootstrap/commit/627a451))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/angular-ui/bootstrap/compare/v1.0.1...v1.0.2) (2016-01-12)
 
