@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th><button type="button" class="btn btn-default btn-sm pull-left uib-left" ng-click="move(-1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-left"></i></button></th>
-      <th><button id="{{::uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button" class="btn btn-default btn-sm uib-title" ng-click="toggleMode()" ng-disabled="datepickerMode === maxMode" tabindex="-1" style="width:100%;"><strong>{{title}}</strong></button></th>
+      <th><button id="{{::uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button" class="btn btn-default btn-sm uib-title" ng-click="toggleMode()" ng-disabled="datepickerMode === maxMode" tabindex="-1"><strong>{{title}}</strong></button></th>
       <th><button type="button" class="btn btn-default btn-sm pull-right uib-right" ng-click="move(1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-right"></i></button></th>
     </tr>
   </thead>
@@ -11,7 +11,7 @@
       <td ng-repeat="dt in row" class="uib-month text-center" role="gridcell"
         id="{{::dt.uid}}"
         ng-class="::dt.customClass">
-        <button type="button" style="min-width:100%;" class="btn btn-default"
+        <button type="button" class="btn btn-default"
           uib-is-class="
             'btn-info' for selectedDt,
             'active' for activeDt
