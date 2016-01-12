@@ -213,12 +213,16 @@ describe('$uibModal', function () {
     element.trigger(e);
   }
 
-  function open(modalOptions, noFlush) {
+  function open(modalOptions, noFlush, noDigest) {
     var modal = $uibModal.open(modalOptions);
-    $rootScope.$digest();
-    if (!noFlush) {
-      $animate.flush();
+
+    if (!noDigest) {
+      $rootScope.$digest();
+      if (!noFlush) {
+        $animate.flush();
+      }      
     }
+
     return modal;
   }
 
@@ -259,6 +263,46 @@ describe('$uibModal', function () {
       expect($document).toHaveModalsOpen(0);
 
       expect($document).not.toHaveBackdrop();
+    });
+
+    it('should compile modal before inserting into DOM', function() {
+      var topModal;
+      var modalInstance = {
+        result: $q.defer(),
+        opened: $q.defer(),
+        closed: $q.defer(),
+        rendered: $q.defer(),
+        close: function (result) {
+          return $uibModalStack.close(modalInstance, result);
+        },
+        dismiss: function (reason) {
+          return $uibModalStack.dismiss(modalInstance, reason);
+        }
+      };
+      var expectedText = 'test';
+
+      $uibModalStack.open(modalInstance, {
+        appendTo: angular.element(document.body),
+        scope: $rootScope.$new(),
+        deferred: modalInstance.result,
+        renderDeferred: modalInstance.rendered,
+        closedDeferred: modalInstance.closed,
+        content: '<div id="test">{{\'' + expectedText + '\'}}</div>'
+      });
+
+      topModal = $uibModalStack.getTop();
+
+      expect(topModal.value.modalDomEl.find('#test').length).toEqual(0);
+      expect(angular.element('#test').length).toEqual(0);
+
+      $rootScope.$digest();
+
+      expect(topModal.value.modalDomEl.find('#test').text()).toEqual(expectedText);
+      expect(angular.element('#test').text()).toEqual(expectedText);
+
+      $animate.flush();
+
+      close(modalInstance, 'closing in test', true);
     });
 
     it('should not throw an exception on a second dismiss', function() {
@@ -364,7 +408,6 @@ describe('$uibModal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal = open({template: '<div>Content<button>inside modal</button></div>'});
-      $animate.flush();
       $rootScope.$digest();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(1);
@@ -389,7 +432,6 @@ describe('$uibModal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal = open({template: '<div>Content</div>'});
-      $animate.flush();
       $rootScope.$digest();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(1);
@@ -468,7 +510,6 @@ describe('$uibModal', function () {
     it('should focus on the element that has autofocus attribute when the modal is open/reopen and the animations have finished', function() {
       function openAndCloseModalWithAutofocusElement() {
         var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'});
-        $animate.flush();
         $rootScope.$digest();
         expect(angular.element('#auto-focus-element')).toHaveFocus();
 
@@ -485,7 +526,6 @@ describe('$uibModal', function () {
       function openAndCloseModalWithAutofocusElement() {
 
         var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus><input type="text" id="pre-focus-element" focus-me></div>'});
-        $animate.flush();
         $rootScope.$digest();
         expect(angular.element('#auto-focus-element')).not.toHaveFocus();
         expect(angular.element('#pre-focus-element')).toHaveFocus();
@@ -501,11 +541,11 @@ describe('$uibModal', function () {
 
     it('should wait until the in animation is finished before attempting to focus the modal or autofocus element', function() {
       function openAndCloseModalWithAutofocusElement() {
-        var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'});
+        var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus></div>'}, true, true);
         expect(angular.element('#auto-focus-element')).not.toHaveFocus();
 
-        $animate.flush();
         $rootScope.$digest();
+        $animate.flush();
 
         expect(angular.element('#auto-focus-element')).toHaveFocus();
 
@@ -521,11 +561,11 @@ describe('$uibModal', function () {
         element.focus();
         expect(document.activeElement.tagName).toBe('A');
 
-        var modal = open({template: '<div><input type="text"></div>'});
+        var modal = open({template: '<div><input type="text"></div>'}, true, true);
         expect(document.activeElement.tagName).toBe('A');
 
-        $animate.flush();
         $rootScope.$digest();
+        $animate.flush();
 
         expect(document.activeElement.tagName).toBe('DIV');
 
@@ -788,7 +828,6 @@ describe('$uibModal', function () {
         expect($document).toHaveModalsOpen(0);
 
         $timeout.flush();
-        $animate.flush();
         expect($document).toHaveModalOpenWithContent('Promise', 'div');
       });
 
@@ -886,14 +925,12 @@ describe('$uibModal', function () {
 
       it('should contain backdrop in classes on each modal opening', function() {
         var modal = open({ template: '<div>With backdrop</div>' });
-        $animate.flush();
         var backdropEl = $document.find('body > div.modal-backdrop');
         expect(backdropEl).toHaveClass('in');
 
         dismiss(modal);
 
         modal = open({ template: '<div>With backdrop</div>' });
-        $animate.flush();
         backdropEl = $document.find('body > div.modal-backdrop');
         expect(backdropEl).toHaveClass('in');
 
@@ -1031,7 +1068,6 @@ describe('$uibModal', function () {
         angular.element(document.body).append(element);
 
         open({template: '<div child-directive>{{text}}</div>', appendTo: element});
-        $animate.flush();
         expect($document.find('[child-directive]').text()).toBe('foo');
 
         element.remove();
@@ -1050,8 +1086,6 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>'
         });
 
-        $animate.flush();
-
         expect(body).toHaveClass('modal-open');
       });
 
@@ -1060,8 +1094,6 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
         });
-
-        $animate.flush();
 
         expect(body).toHaveClass('foo');
         expect(body).not.toHaveClass('modal-open');
@@ -1072,8 +1104,6 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
         });
-
-        $animate.flush();
 
         expect(body).toHaveClass('foo');
 
@@ -1088,8 +1118,6 @@ describe('$uibModal', function () {
           openedClass: 'foo'
         });
 
-        $animate.flush();
-
         expect(body).toHaveClass('foo');
         expect(body).not.toHaveClass('modal-open');
 
@@ -1097,8 +1125,6 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'bar'
         });
-
-        $animate.flush();
 
         expect(body).toHaveClass('foo');
         expect(body).toHaveClass('bar');
@@ -1108,8 +1134,6 @@ describe('$uibModal', function () {
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
         });
-
-        $animate.flush();
 
         expect(body).toHaveClass('foo');
         expect(body).toHaveClass('bar');
@@ -1232,11 +1256,9 @@ describe('$uibModal', function () {
       expect(body).not.toHaveClass('modal-open');
 
       var modal1 = open({template: '<div>Content1</div>'});
-      $animate.flush();
       expect(body).toHaveClass('modal-open');
 
       var modal2 = open({template: '<div>Content1</div>'});
-      $animate.flush();
       expect(body).toHaveClass('modal-open');
 
       dismiss(modal1);
@@ -1254,14 +1276,12 @@ describe('$uibModal', function () {
       expect(document.activeElement.tagName).toBe('A');
 
       var modal1 = open({template: '<div>Modal1<button id="focus">inside modal1</button></div>'});
-      $animate.flush();
       $rootScope.$digest();
       document.getElementById('focus').focus();
       expect(document.activeElement.tagName).toBe('BUTTON');
       expect($document).toHaveModalsOpen(1);
 
       var modal2 = open({template: '<div>Modal2</div>'});
-      $animate.flush();
       $rootScope.$digest();
       expect(document.activeElement.tagName).toBe('DIV');
       expect($document).toHaveModalsOpen(2);

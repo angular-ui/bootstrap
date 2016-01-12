@@ -477,9 +477,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           angularDomEl.attr('modal-animation', 'true');
         }
 
-        $animate.enter(angularDomEl, appendToElement)
+        $animate.enter($compile(angularDomEl)(modal.scope), appendToElement)
           .then(function() {
-            $compile(angularDomEl)(modal.scope);
             $animate.addClass(appendToElement, modalBodyClass);
           });
 
