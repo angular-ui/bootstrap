@@ -1,0 +1,53 @@
+/* Include this file in your html if you are using the CSP mode. */
+
+.ng-animate.item:not(.left):not(.right) {
+  -webkit-transition: 0s ease-in-out left;
+  transition: 0s ease-in-out left
+}
+.uib-tab > div {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  outline: 0;
+  color: #337ab7;
+}
+.uib-tab > div:focus,
+.uib-tab > div:hover {
+  background-color: #eee;
+  color: #23527c;
+}
+.uib-tab.disabled > div {
+  color: #777;
+}
+.uib-tab.disabled > div:focus,
+.uib-tab.disabled > div:hover {
+  color: #777;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+.nav-tabs > .uib-tab > div {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+.nav-tabs > .uib-tab > div:hover {
+  border-color: #eee #eee #ddd;
+}
+.nav-tabs > .uib-tab.active > div,
+.nav-tabs > .uib-tab.active > div:focus,
+.nav-tabs > .uib-tab.active > div:hover {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border-color: #ddd #ddd transparent #ddd;
+}
+.nav-pills > .uib-tab > div {
+  border-radius: 4px;
+}
+.nav-pills > .uib-tab.active > div,
+.nav-pills > .uib-tab.active > div:focus,
+.nav-pills > .uib-tab.active > div:hover {
+  color: #fff;
+  background-color: #337ab7;
+}
