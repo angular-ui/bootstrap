@@ -189,7 +189,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                     options.placementClassPrefix + 'right-bottom');
 
                   var placement = ttPosition.placement.split('-');
-                  tooltip.addClass(placement[0], options.placementClassPrefix + ttPosition.placement);
+                  tooltip.addClass(placement[0] + ' ' + options.placementClassPrefix + ttPosition.placement);
                   $position.positionArrow(tooltip, ttPosition.placement);
 
                   positionTimeout = null;
