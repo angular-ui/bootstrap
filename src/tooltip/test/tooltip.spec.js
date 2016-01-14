@@ -1128,4 +1128,35 @@ describe('$uibTooltipProvider', function() {
       }));
     });
   });
+
+  describe('placementClassPrefix', function() {
+    beforeEach(module('ui.bootstrap.tooltip', function($uibTooltipProvider) {
+      $uibTooltipProvider.options({placementClassPrefix: 'uib-'});
+    }));
+
+    // load the template
+    beforeEach(module('uib/template/tooltip/tooltip-popup.html'));
+
+    it('should add the classes', inject(function($rootScope, $compile, $timeout) {
+      elmBody = angular.element(
+        '<div><span uib-tooltip="tooltip text" tooltip-placement="top-right"></span></div>'
+      );
+
+      scope = $rootScope;
+      $compile(elmBody)(scope);
+      scope.$digest();
+      elm = elmBody.find('span');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      expect(elmBody.children().length).toBe(1);
+
+      trigger(elm, 'mouseenter');
+      $timeout.flush();
+
+      var tooltipElm = elmBody.find('.tooltip');
+      expect(tooltipElm.hasClass('top')).toBe(true);
+      expect(tooltipElm.hasClass('uib-top-right')).toBe(true);
+    }));
+  });
 });
