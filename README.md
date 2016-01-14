@@ -37,7 +37,14 @@ Are you interested in Angular 2? We are on our way! Check out [ng-bootstrap](htt
 Installation is easy as UI Bootstrap has minimal dependencies - only the AngularJS and Twitter Bootstrap's CSS are required.
 Note: Since version 0.13.0, UI Bootstrap depends on [ngAnimate](https://docs.angularjs.org/api/ngAnimate) for transitions and animations, such as the accordion, carousel, etc. Include `ngAnimate` in the module dependencies for your app in order to enable animation.
 
-Additionally, it is strongly recommended that for UI Bootstrap 0.13.3 and higher you use Angular 1.3.18 or higher due to animation fixes.
+## Angular Requirements
+* UI Bootstrap 1.0 and higher _requires_ Angular 1.4.x or higher and it has been tested with Angular 1.4.8.
+* UI Bootstrap 0.14.3 is the _last_ version that supports Angular 1.3.x.
+* UI Bootstrap 0.12.0 is the _last_ version that supports Angular 1.2.x.
+
+## Bootstrap Requirements
+* UI Bootstrap requires Bootstrap CSS version 3.x or higher and it has been tested with Bootstrap CSS 3.3.6.
+* UI Bootstrap 0.8 is the _last_ version that supports Bootstrap CSS 2.3.x.
 
 #### Install with NPM
 
