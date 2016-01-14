@@ -235,3 +235,5 @@ Depending on datepicker's current mode, the date may refer either to day, month 
 **Notes**
 
 If the date a user enters falls outside of the min-/max-date range, a `dateDisabled` validation error will show on the form.
+
+If using this directive on input type date, a native browser datepicker could also appear.
