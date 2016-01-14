@@ -7,8 +7,9 @@
 }
 .uib-tab > div:focus,
 .uib-tab > div:hover {
-  background-color: #eee;
   color: #23527c;
+  cursor: pointer;
+  background-color: #eee;
 }
 .uib-tab.disabled > div {
   color: #777;
