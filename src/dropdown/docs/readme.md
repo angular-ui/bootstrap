@@ -38,6 +38,10 @@ Each of these parts need to be used as attribute directives.
   _(Default: `false`)_ -
   Enables navigation of dropdown list elements with the arrow keys.
 
+* `on-toggle(open)`
+  <small class="badge">$</small> -
+  An optional expression called when the dropdown menu is opened or closed.
+
 ### uib-dropdown-menu settings
 
 * `template-url`
