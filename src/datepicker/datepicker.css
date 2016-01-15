@@ -6,7 +6,7 @@
   min-width: 100%;
 }
 
-.uib-datepicker-popup {
+.uib-datepicker-popup.dropdown-menu {
   display: block;
 }
 
