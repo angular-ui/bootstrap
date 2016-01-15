@@ -61,10 +61,10 @@ describe('tabs', function() {
     it('should create clickable titles', function() {
       var t = titles();
       expect(t.length).toBe(2);
-      expect(t.find('> div').eq(0).text()).toBe('First Tab 1');
+      expect(t.find('> a').eq(0).text()).toBe('First Tab 1');
       //It should put the uib-tab-heading element into the 'a' title
-      expect(t.find('> div').eq(1).children().is('uib-tab-heading')).toBe(true);
-      expect(t.find('> div').eq(1).children().html()).toBe('<b>Second</b> Tab 2');
+      expect(t.find('> a').eq(1).children().is('uib-tab-heading')).toBe(true);
+      expect(t.find('> a').eq(1).children().html()).toBe('<b>Second</b> Tab 2');
     });
 
     it('should bind tabs content and set first tab active', function() {
@@ -76,7 +76,7 @@ describe('tabs', function() {
     });
 
     it('should change active on click', function() {
-      titles().eq(1).find('> div').click();
+      titles().eq(1).find('> a').click();
       expect(contents().eq(1)).toHaveClass('active');
       expect(titles().eq(0)).not.toHaveClass('active');
       expect(titles().eq(1)).toHaveClass('active');
@@ -85,17 +85,17 @@ describe('tabs', function() {
     });
 
     it('should call select callback on select', function() {
-      titles().eq(1).find('> div').click();
+      titles().eq(1).find('> a').click();
       expect(scope.selectSecond).toHaveBeenCalled();
-      titles().eq(0).find('> div').click();
+      titles().eq(0).find('> a').click();
       expect(scope.selectFirst).toHaveBeenCalled();
     });
 
     it('should call deselect callback on deselect', function() {
-      titles().eq(1).find('> div').click();
-      titles().eq(0).find('> div').click();
+      titles().eq(1).find('> a').click();
+      titles().eq(0).find('> a').click();
       expect(scope.deselectSecond).toHaveBeenCalled();
-      titles().eq(1).find('> div').click();
+      titles().eq(1).find('> a').click();
       expect(scope.deselectFirst).toHaveBeenCalled();
     });
   });
@@ -181,13 +181,13 @@ describe('tabs', function() {
       execOrder = [];
 
       // Select second tab
-      titles().eq(1).find('> div').click();
+      titles().eq(1).find('> a').click();
       expect(execOrder).toEqual([ 'deselect1', 'select2' ]);
 
       execOrder = [];
 
       // Select again first tab
-      titles().eq(0).find('> div').click();
+      titles().eq(0).find('> a').click();
       expect(execOrder).toEqual([ 'deselect2', 'select1' ]);
     });
   });
@@ -277,7 +277,7 @@ describe('tabs', function() {
     });
 
     it('should switch active when clicking', function() {
-      titles().eq(3).find('> div').click();
+      titles().eq(3).find('> a').click();
       expectTabActive(scope.tabs[3]);
     });
 
@@ -344,7 +344,7 @@ describe('tabs', function() {
     }));
 
     function heading() {
-      return elm.find('ul li > div').children();
+      return elm.find('ul li > a').children();
     }
 
     it('should create a heading bound to myHtml', function() {
@@ -406,7 +406,7 @@ describe('tabs', function() {
 
     it('should preserve correct ordering', function() {
       function titles() {
-        return elm.find('ul.nav-tabs li > div');
+        return elm.find('ul.nav-tabs li > a');
       }
       scope.$apply();
       expect(titles().length).toBe(9);
@@ -549,7 +549,7 @@ describe('tabs', function() {
       expectContents(['Hello', 'content 1', 'content 2', 'content 3']);
 
       // Select last tab
-      titles().find('> div').eq(3).click();
+      titles().find('> a').eq(3).click();
       expect(contents().eq(3)).toHaveClass('active');
       expect(titles().eq(3)).toHaveClass('active');
 
@@ -563,7 +563,7 @@ describe('tabs', function() {
       expect(contents().eq(2)).toHaveClass('active');
 
       // Select 2nd tab ("tab 1")
-      titles().find('> div').eq(1).click();
+      titles().find('> a').eq(1).click();
       expect(titles().eq(1)).toHaveClass('active');
       expect(contents().eq(1)).toHaveClass('active');
 
@@ -659,10 +659,10 @@ describe('tabs', function() {
     }
 
     it('should not switch active when clicking on title', function() {
-      titles().eq(2).find('> div').click();
+      titles().eq(2).find('> a').click();
       expectTabActive(scope.tabs[2]);
 
-      titles().eq(3).find('> div').click();
+      titles().eq(3).find('> a').click();
       expectTabActive(scope.tabs[2]);
     });
 

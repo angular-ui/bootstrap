@@ -23,7 +23,7 @@ AngularJS version of the tabs directive.
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether tab is currently selected.
-  
+
 * `deselect()`
   <small class="badge">$</small>
   _(Default: `null`)_ -
@@ -46,3 +46,7 @@ AngularJS version of the tabs directive.
 ### Tabset heading
 
 Instead of the `heading` attribute on the `uib-tabset`, you can use an `uib-tab-heading` element inside a tabset that will be used as the tabset's header. There you can use HTML as well.
+
+### Known issues
+
+To use clickable elements within the tab, you have override the tab template to use div elements instead of anchor elements, and replicate the desired styles from Bootstrap's CSS. This is due to browsers interpreting anchor elements as the target of any click event, which triggers routing when certain elements such as buttons are nested inside the anchor element.
