@@ -9,7 +9,7 @@ The body of each accordion group is transcluded into the body of the collapsible
   <small class="badge">C</small>
   _(Default: `true`)_ -
   Control whether expanding an item will cause the other items to close.
-  
+
 * `template-url`
   _(Default: `template/accordion/accordion.html`)_ -
   Add the ability to override the template used on the component.
@@ -32,7 +32,7 @@ The body of each accordion group is transcluded into the body of the collapsible
   _(Default: `false`)_ -
   Whether accordion group is open or closed.
 
-* `panel-class` 
+* `panel-class`
   _(Default: `panel-default`)_ -
   Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own.  This must be a string.
 
@@ -43,3 +43,7 @@ The body of each accordion group is transcluded into the body of the collapsible
 ### Accordion heading
 
 Instead of the `heading` attribute on the `uib-accordion-group`, you can use an `uib-accordion-heading` element inside a group that will be used as the group's header.
+
+### Known issues
+
+To use clickable elements within the accordion, you have override the accordion-group template to use div elements instead of anchor elements, and add `cursor: pointer` in your CSS. This is due to browsers interpreting anchor elements as the target of any click event, which triggers routing when certain elements such as buttons are nested inside the anchor element.
