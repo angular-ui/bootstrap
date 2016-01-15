@@ -994,7 +994,6 @@ describe('datepicker', function() {
           expect(angular.element(button).prop('disabled')).toBe(false);
         });
       });
-
     });
 
     describe('`min-date` attribute', function () {
@@ -1200,6 +1199,38 @@ describe('datepicker', function() {
           ['26', '27', '28', '29', '30', '1', '2'],
           ['3', '4', '5', '6', '7', '8', '9']
         ]);
+      });
+    });
+
+    describe('gc', function() {
+      var datepickerScope;
+      beforeEach(function() {
+        $rootScope.minDate = new Date();
+        $rootScope.maxDate = new Date();
+        $rootScope.maxDate.setDate($rootScope.maxDate.getDate() + 1);
+        $rootScope.minMode = 'day';
+        $rootScope.maxMode = 'year';
+        $rootScope.initDate = new Date();
+        element = $compile('<uib-datepicker ng-model="date" min-date="minDate" max-date="maxDate" min-mode="minMode" max-mode="maxMode" init-date="initDate"></uib-datepicker>')($rootScope);
+        $rootScope.$digest();
+        datepickerScope = element.isolateScope();
+      });
+
+      it('should appropriately clean up $watch expressions', function() {
+        expect($rootScope.$$watchers.length).toBe(6);
+        ['minDate', 'maxDate', 'minMode', 'maxMode', 'initDate'].forEach(function(prop) {
+          var $$watcher;
+          $rootScope.$$watchers.forEach(function($$watch) {
+            if ($$watch.exp === prop) {
+              $$watcher = $$watch;
+            }
+          });
+          expect(angular.isObject($$watcher)).toBe(true);
+        });
+
+        datepickerScope.$destroy();
+
+        expect($rootScope.$$watchers.length).toBe(1);
       });
     });
 
@@ -2817,6 +2848,29 @@ describe('datepicker', function() {
           expect(inputEl.val()).toBe('2010-09-15');
           expect($rootScope.date).toEqual(new Date('2010-09-15T10:00:00.000Z'));
         });
+      });
+    });
+
+    describe('gc', function() {
+      var popupScope;
+      beforeEach(function() {
+        $rootScope.minDate = new Date();
+        $rootScope.maxDate = new Date();
+        $rootScope.maxDate.setDate($rootScope.maxDate.getDate() + 1);
+        $rootScope.minMode = 'day';
+        $rootScope.maxMode = 'year';
+        $rootScope.initDate = new Date();
+        element = $compile('<div><input ng-model="date" uib-datepicker-popup min-date="minDate" max-date="maxDate" min-mode="minMode" max-mode="maxMode" init-date="initDate"></uib-datepicker>')($rootScope);
+        $rootScope.$digest();
+        popupScope = element.find('input').isolateScope();
+      });
+
+      it('should appropriately clean up $watch expressions', function() {
+        expect($rootScope.$$watchers.length).toBe(4);
+
+        popupScope.$destroy();
+
+        expect($rootScope.$$watchers.length).toBe(1);
       });
     });
 

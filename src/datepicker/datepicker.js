@@ -26,7 +26,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   function($scope, $attrs, $parse, $interpolate, $log, dateFilter, datepickerConfig, $datepickerSuppressError, dateParser) {
   var self = this,
       ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl;
-      ngModelOptions = {};
+      ngModelOptions = {},
+      watchListeners = [];
 
   // Modes chain
   this.modes = ['day', 'month', 'year'];
@@ -44,10 +45,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   // Watchable date attributes
   angular.forEach(['minDate', 'maxDate'], function(key) {
     if ($attrs[key]) {
-      $scope.$parent.$watch($attrs[key], function(value) {
+      watchListeners.push($scope.$parent.$watch($attrs[key], function(value) {
         self[key] = value ? angular.isDate(value) ? dateParser.fromTimezone(new Date(value), ngModelOptions.timezone) : new Date(dateFilter(value, 'medium')) : null;
         self.refreshView();
-      });
+      }));
     } else {
       self[key] = datepickerConfig[key] ? dateParser.fromTimezone(new Date(datepickerConfig[key]), ngModelOptions.timezone) : null;
     }
@@ -55,13 +56,13 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   angular.forEach(['minMode', 'maxMode'], function(key) {
     if ($attrs[key]) {
-      $scope.$parent.$watch($attrs[key], function(value) {
+      watchListeners.push($scope.$parent.$watch($attrs[key], function(value) {
         self[key] = $scope[key] = angular.isDefined(value) ? value : $attrs[key];
         if (key === 'minMode' && self.modes.indexOf($scope.datepickerMode) < self.modes.indexOf(self[key]) ||
           key === 'maxMode' && self.modes.indexOf($scope.datepickerMode) > self.modes.indexOf(self[key])) {
           $scope.datepickerMode = self[key];
         }
-      });
+      }));
     } else {
       self[key] = $scope[key] = datepickerConfig[key] || null;
     }
@@ -72,22 +73,22 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   if (angular.isDefined($attrs.initDate)) {
     this.activeDate = dateParser.fromTimezone($scope.$parent.$eval($attrs.initDate), ngModelOptions.timezone) || new Date();
-    $scope.$parent.$watch($attrs.initDate, function(initDate) {
+    watchListeners.push($scope.$parent.$watch($attrs.initDate, function(initDate) {
       if (initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)) {
         self.activeDate = dateParser.fromTimezone(initDate, ngModelOptions.timezone);
         self.refreshView();
       }
-    });
+    }));
   } else {
     this.activeDate = new Date();
   }
 
   $scope.disabled = angular.isDefined($attrs.disabled) || false;
   if (angular.isDefined($attrs.ngDisabled)) {
-    $scope.$parent.$watch($attrs.ngDisabled, function(disabled) {
+    watchListeners.push($scope.$parent.$watch($attrs.ngDisabled, function(disabled) {
       $scope.disabled = disabled;
       self.refreshView();
-    });
+    }));
   }
 
   $scope.isActive = function(dateObject) {
@@ -248,6 +249,13 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       self.refreshView();
     }
   };
+
+  $scope.$on("$destroy", function() {
+    //Clear all watch listeners on destroy
+    while (watchListeners.length) {
+      watchListeners.shift()();
+    }
+  });
 }])
 
 .controller('UibDaypickerController', ['$scope', '$element', 'dateFilter', function(scope, $element, dateFilter) {
@@ -573,12 +581,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
 .controller('UibDatepickerPopupController', ['$scope', '$element', '$attrs', '$compile', '$parse', '$document', '$rootScope', '$uibPosition', 'dateFilter', 'uibDateParser', 'uibDatepickerPopupConfig', '$timeout', 'uibDatepickerConfig',
 function(scope, element, attrs, $compile, $parse, $document, $rootScope, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout, datepickerConfig) {
-  var self = this;
   var cache = {},
     isHtml5DateInput = false;
   var dateFormat, closeOnDateSelection, appendToBody, onOpenFocus,
     datepickerPopupTemplateUrl, datepickerTemplateUrl, popupEl, datepickerEl,
-    ngModel, ngModelOptions, $popup, altInputFormats;
+    ngModel, ngModelOptions, $popup, altInputFormats, watchListeners = [];
 
   scope.watchData = {};
 
@@ -683,7 +690,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       if (attrs[key]) {
         var getAttribute = $parse(attrs[key]);
 
-        scope.$parent.$watch(getAttribute, function(value) {
+        watchListeners.push(scope.$parent.$watch(getAttribute, function(value) {
           if (key === 'minDate' || key === 'maxDate') {
             if (value === null) {
               cache[key] = null;
@@ -697,7 +704,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
           } else {
             scope.watchData[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
           }
-        });
+        }));
 
         datepickerEl.attr(cameltoDash(key), 'watchData.' + key);
       }
@@ -729,7 +736,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
         }
         scope.date = dateParser.fromTimezone(value, ngModelOptions.timezone);
         dateFormat = dateFormat.replace(/M!/, 'MM')
-          .replace(/d!/, 'dd');
+            .replace(/d!/, 'dd');
 
         return dateFilter(scope.date, dateFormat);
       });
@@ -769,6 +776,11 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       $popup.remove();
       element.unbind('keydown', inputKeydownBind);
       $document.unbind('click', documentClickBind);
+
+      //Clear all watch listeners on destroy
+      while (watchListeners.length) {
+        watchListeners.shift()();
+      }
     });
   };
 
@@ -782,7 +794,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     }
 
     return scope.watchData.minDate && scope.compare(date, cache.minDate) < 0 ||
-      scope.watchData.maxDate && scope.compare(date, cache.maxDate) > 0;
+        scope.watchData.maxDate && scope.compare(date, cache.maxDate) > 0;
   };
 
   scope.compare = function(date1, date2) {
@@ -832,9 +844,9 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
   scope.disabled = angular.isDefined(attrs.disabled) || false;
   if (attrs.ngDisabled) {
-    scope.$parent.$watch($parse(attrs.ngDisabled), function(disabled) {
+    watchListeners.push(scope.$parent.$watch($parse(attrs.ngDisabled), function(disabled) {
       scope.disabled = disabled;
-    });
+    }));
   }
 
   scope.$watch('isOpen', function(value) {
