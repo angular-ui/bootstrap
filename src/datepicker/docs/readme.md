@@ -213,7 +213,7 @@ Options for the uib-datepicker must be passed as JSON using the `datepicker-opti
 * `uib-datepicker-popup`
   <small class="badge">C</small>
   _(Default: `yyyy-MM-dd`, Config: `datepickerConfig`)_ -
-  The format for displayed dates. This string can take string literals by surrounding the value with backticks, i.e. ``yyyy-MM-dd h `o'clock` ``.
+  The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. `yyyy-MM-dd h 'o\'clock'`.
 
 ### Keyboard support
 
