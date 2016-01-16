@@ -8,6 +8,7 @@ angular.module('ui.bootstrap.paging', [])
     create: function(ctrl, $scope, $attrs) {
       ctrl.setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
       ctrl.ngModelCtrl = { $setViewValue: angular.noop }; // nullModelCtrl
+      ctrl._watchers = [];
 
       ctrl.init = function(ngModelCtrl, config) {
         ctrl.ngModelCtrl = ngModelCtrl;
@@ -18,11 +19,11 @@ angular.module('ui.bootstrap.paging', [])
         };
 
         if ($attrs.itemsPerPage) {
-          $scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
+          ctrl._watchers.push($scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
             ctrl.itemsPerPage = parseInt(value, 10);
             $scope.totalPages = ctrl.calculateTotalPages();
             ctrl.updatePage();
-          });
+          }));
         } else {
           ctrl.itemsPerPage = config.itemsPerPage;
         }
@@ -80,6 +81,12 @@ angular.module('ui.bootstrap.paging', [])
           ctrl.ngModelCtrl.$render();
         }
       };
+
+      $scope.$on('$destroy', function() {
+        while (ctrl._watchers.length) {
+          ctrl._watchers.shift()();
+        }
+      });
     }
   };
 }]);

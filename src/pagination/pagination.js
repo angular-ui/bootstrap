@@ -12,10 +12,10 @@ angular.module('ui.bootstrap.pagination', ['ui.bootstrap.paging'])
   uibPaging.create(this, $scope, $attrs);
 
   if ($attrs.maxSize) {
-    $scope.$parent.$watch($parse($attrs.maxSize), function(value) {
+    ctrl._watchers.push($scope.$parent.$watch($parse($attrs.maxSize), function(value) {
       maxSize = parseInt(value, 10);
       ctrl.render();
-    });
+    }));
   }
 
   // Create page object used in template

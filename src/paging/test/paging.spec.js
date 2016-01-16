@@ -253,4 +253,18 @@ describe('paging factory', function() {
       expect(ctrl.ngModelCtrl.$render).toHaveBeenCalled();
     });
   });
+
+  describe('gc', function() {
+    it('should clear watchers', function() {
+      var watcher1 = jasmine.createSpy('watcher1'),
+        watcher2 = jasmine.createSpy('watcher2');
+      ctrl._watchers = [watcher1, watcher2];
+
+      $scope.$destroy();
+
+      expect(ctrl._watchers.length).toBe(0);
+      expect(watcher1).toHaveBeenCalled();
+      expect(watcher2).toHaveBeenCalled();
+    });
+  });
 });
