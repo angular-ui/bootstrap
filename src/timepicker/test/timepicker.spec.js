@@ -2191,4 +2191,21 @@ describe('timepicker directive', function() {
       expect(getModelState()).toEqual([14, 40, 25]);
     });
   });
+
+  describe('gc', function() {
+    var $scope;
+    beforeEach(inject(function() {
+      $scope = $rootScope.$new();
+      element = $compile('<uib-timepicker ng-model="time"></uib-timepicker>')($scope);
+      $rootScope.$digest();
+    }));
+
+    it('should clean up watchers', function() {
+      expect($scope.$$watchers.length > 1).toBe(true);
+
+      element.isolateScope().$destroy();
+
+      expect($scope.$$watchers.length).toBe(1);
+    });
+  });
 });
