@@ -17,13 +17,12 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   ngModelOptions: {},
   shortcutPropagation: false,
   showWeeks: true,
-  startingDay: 0,
   yearColumns: 5,
   yearRows: 4
 })
 
-.controller('UibDatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$log', 'dateFilter', 'uibDatepickerConfig', '$datepickerSuppressError', 'uibDateParser',
-  function($scope, $attrs, $parse, $interpolate, $log, dateFilter, datepickerConfig, $datepickerSuppressError, dateParser) {
+.controller('UibDatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$locale', '$log', 'dateFilter', 'uibDatepickerConfig', '$datepickerSuppressError', 'uibDateParser',
+  function($scope, $attrs, $parse, $interpolate, $locale, $log, dateFilter, datepickerConfig, $datepickerSuppressError, dateParser) {
   var self = this,
       ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl;
       ngModelOptions = {},
@@ -38,9 +37,18 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   });
 
   // Evaled configuration attributes
-  angular.forEach(['showWeeks', 'startingDay', 'yearRows', 'yearColumns', 'shortcutPropagation'], function(key) {
-    self[key] = angular.isDefined($attrs[key]) ? $scope.$parent.$eval($attrs[key]) : datepickerConfig[key];
+  angular.forEach(['showWeeks', 'yearRows', 'yearColumns', 'shortcutPropagation'], function(key) {
+    self[key] = angular.isDefined($attrs[key]) ?
+      $scope.$parent.$eval($attrs[key]) : datepickerConfig[key];
   });
+
+  if (angular.isDefined($attrs.startingDay)) {
+    self.startingDay = $scope.$parent.$eval($attrs.startingDay);
+  } else if (angular.isNumber(datepickerConfig.startingDay)) {
+    self.startingDay = datepickerConfig.startingDay;
+  } else {
+    self.startingDay = ($locale.DATETIME_FORMATS.FIRSTDAYOFWEEK + 8) % 7;
+  }
 
   // Watchable date attributes
   angular.forEach(['minDate', 'maxDate'], function(key) {

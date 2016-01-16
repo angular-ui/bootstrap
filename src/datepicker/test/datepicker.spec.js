@@ -1254,6 +1254,9 @@ describe('datepicker', function() {
       }));
       afterEach(inject(function(uibDatepickerConfig) {
         // return it to the original state
+        Object.keys(uibDatepickerConfig).forEach(function(key) {
+          delete uibDatepickerConfig[key];
+        });
         angular.extend(uibDatepickerConfig, originalConfig);
       }));
 

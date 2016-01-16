@@ -95,7 +95,7 @@ The datepicker has 3 modes:
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i> -
   The date object. Needs to be a Javascript Date object.
-  
+
 * `ng-model-options`
   <small class="badge">$</small>
   <small class="badge">C</small>
@@ -119,7 +119,7 @@ The datepicker has 3 modes:
 * `starting-day`
   <small class="badge">$</small>
   <small class="badge">C</small>
-  _(Default: `0`)_ -
+  _(Default: `$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK`)_ -
   Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
 
 * `template-url`
@@ -174,7 +174,7 @@ The popup is a wrapper that you can use in an input to toggle a datepicker. To c
   <small class="badge">C</small>
   _(Default: `false`, Config: `appendToBody`)_ -
   Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`.
-  
+
 * `datepicker-options`
   <small class="badge">$</small> -
   An object with any combination of the datepicker settings (in camelCase) used to configure the wrapped datepicker.
@@ -206,7 +206,7 @@ The popup is a wrapper that you can use in an input to toggle a datepicker. To c
   <small class="badge">C</small>
   _(Default: `true`)_ -
   Whether or not to display a button bar underneath the uib-datepicker.
-  
+
 * `type`
   <small class="badge">C</small>
   _(Default: `text`, Config: `html5Types`)_ -
