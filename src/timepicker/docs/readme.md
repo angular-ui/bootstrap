@@ -14,7 +14,7 @@ A lightweight & configurable timepicker directive.
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `1`)_ -
   Number of hours to increase or decrease when using a button.
-  
+
 * `max`
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
@@ -39,7 +39,7 @@ A lightweight & configurable timepicker directive.
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `1`)_ -
   Number of minutes to increase or decrease when using a button.
-  
+
 * `mousewheel`
   <small class="badge">$</small>
   <small class="badge">C</small>
@@ -98,3 +98,7 @@ A lightweight & configurable timepicker directive.
   <small class="badge">C</small>
   _(Defaults: `uib/template/timepicker/timepicker.html`)_ -
   Add the ability to override the template used on the component.
+
+ **Notes**
+
+ If the model value is updated (i.e. via `Date.prototype.setDate`), you must update the model value by breaking the reference by `modelValue = new Date(modelValue)` in order to have the timepicker update.
