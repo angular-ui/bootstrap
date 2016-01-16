@@ -142,7 +142,7 @@ The datepicker has 3 modes:
 
 ### uib-datepicker-popup settings
 
-Options for the uib-datepicker must be passed as JSON using the `datepicker-options` attribute. This list is only for popup settings.
+The popup is a wrapper that you can use in an input to toggle a datepicker. To configure the datepicker, use `datepicker-options`.
 
 * `alt-input-formats`
   <small class="badge">$</small>
@@ -176,6 +176,10 @@ Options for the uib-datepicker must be passed as JSON using the `datepicker-opti
   <small class="badge">C</small>
   _(Default: `false`, Config: `appendToBody`)_ -
   Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`.
+  
+* `datepicker-options`
+  <small class="badge">$</small> -
+  An object with any combination of the datepicker settings (in camelCase) used to configure the wrapped datepicker.
 
 * `datepicker-popup-template-url`
   <small class="badge">C</small>
@@ -214,6 +218,9 @@ Options for the uib-datepicker must be passed as JSON using the `datepicker-opti
   <small class="badge">C</small>
   _(Default: `yyyy-MM-dd`, Config: `datepickerConfig`)_ -
   The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. `yyyy-MM-dd h 'o\'clock'`.
+
+**Note:** With the exception of `ng-model[-options]` and `templateUrl`, you can configure the wrapped datepicker using its attributes in the popup as well.
+But beware **this possibility may be deprecated on the near future.**
 
 ### Keyboard support
 
