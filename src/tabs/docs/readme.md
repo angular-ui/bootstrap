@@ -25,8 +25,7 @@ AngularJS version of the tabs directive.
   Whether tab is currently selected.
 
 * `deselect()`
-  <small class="badge">$</small>
-  _(Default: `null`)_ -
+  <small class="badge">$</small> -
   An optional expression called when tab is deactivated.
 
 * `disable`
@@ -39,8 +38,7 @@ AngularJS version of the tabs directive.
   Heading text.
 
 * `select()`
-  <small class="badge">$</small>
-  _(Default: `null`)_ -
+  <small class="badge">$</small> -
   An optional expression called when tab is activated.
 
 ### Tabset heading

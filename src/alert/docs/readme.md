@@ -2,9 +2,8 @@ This directive can be used both to generate alerts from static and dynamic model
 
 ### uib-alert settings
 
-* `close`
-  <small class="badge">$</small>
-  _(Default: `none`)_ -
+* `close()`
+  <small class="badge">$</small> -
   A callback function that gets fired when an `alert` is closed. If the attribute exists, a close button is displayed as well.
   
 * `dismiss-on-timeout`

@@ -13,13 +13,11 @@ The datepicker has 3 modes:
 ### uib-datepicker settings
 
 * `custom-class (date, mode)`
-  <small class="badge">$</small>
-  _(Default: `null`)_ -
+  <small class="badge">$</small> -
   An optional expression to add classes based on passing a date and current mode.
 
 * `date-disabled (date, mode)`
-  <small class="badge">$</small>
-  _(Default: `null`)_ -
+  <small class="badge">$</small> -
   An optional expression to disable visible options based on passing a date and current mode.
 
 * `datepicker-mode`
