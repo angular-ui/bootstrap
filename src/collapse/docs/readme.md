@@ -2,28 +2,29 @@
 
 ### uib-collapse settings
 
-* `uib-collapse`
-  <small class="badge">$</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `false`)_ -
-  Whether the element should be collapsed or not.
+* `collapsed()`
+  <small class="badge">$</small> -
+  An optional expression called after the element finished collapsing.
 
 * `collapsing()`
   <small class="badge">$</small> -
   An optional expression called before the element begins collapsing.
   If the expression returns a promise, animation won't start until the promise resolves.
   If the returned promise is rejected, collapsing will be cancelled.
-  
-* `collapsed()`
+
+* `expanded()`
   <small class="badge">$</small> -
-  An optional expression called after the element finished collapsing.
-  
+  An optional expression called after the element finished expanding.
+
 * `expanding()`
   <small class="badge">$</small> -
   An optional expression called before the element begins expanding.
   If the expression returns a promise, animation won't start until the promise resolves.
   If the returned promise is rejected, expanding will be cancelled.
-  
-* `expanded()`
-  <small class="badge">$</small> -
-  An optional expression called after the element finished expanding.
+
+* `uib-collapse`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether the element should be collapsed or not.
+
