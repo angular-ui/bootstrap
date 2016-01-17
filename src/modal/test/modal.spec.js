@@ -46,7 +46,7 @@ describe('$uibResolve', function() {
   });
 });
 
-describe('$uibModal', function () {
+describe('$uibModal', function() {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $uibModal, $uibModalStack, $uibModalProvider;
 
@@ -220,7 +220,7 @@ describe('$uibModal', function () {
       $rootScope.$digest();
       if (!noFlush) {
         $animate.flush();
-      }      
+      }
     }
 
     return modal;
@@ -1498,4 +1498,3 @@ describe('$uibModal', function () {
     });
   });
 });
-
