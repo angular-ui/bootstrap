@@ -1,3 +1,44 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/angular-ui/bootstrap/compare/v1.0.3...v1.1.0) (2016-01-18)
+
+
+### Bug Fixes
+
+* **collapse:** avoid initial animation when expanded ([57219aa](https://github.com/angular-ui/bootstrap/commit/57219aa)), closes [#5199](https://github.com/angular-ui/bootstrap/issues/5199) [#4414](https://github.com/angular-ui/bootstrap/issues/4414) [#5192](https://github.com/angular-ui/bootstrap/issues/5192)
+* **datepicker:** allow expressions for minMode/maxMode ([7e93ec9](https://github.com/angular-ui/bootstrap/commit/7e93ec9)), closes [#5264](https://github.com/angular-ui/bootstrap/issues/5264) [#5268](https://github.com/angular-ui/bootstrap/issues/5268) [#5240](https://github.com/angular-ui/bootstrap/issues/5240)
+* **datepicker:** fix popup CSS ([b3e6d17](https://github.com/angular-ui/bootstrap/commit/b3e6d17)), closes [#5258](https://github.com/angular-ui/bootstrap/issues/5258)
+* **datepicker:** fix popup element garbage collection ([2cb3bc2](https://github.com/angular-ui/bootstrap/commit/2cb3bc2)), closes [#5274](https://github.com/angular-ui/bootstrap/issues/5274) [#5058](https://github.com/angular-ui/bootstrap/issues/5058)
+* **datepicker:** pass through null ([78ba137](https://github.com/angular-ui/bootstrap/commit/78ba137)), closes [#5275](https://github.com/angular-ui/bootstrap/issues/5275) [#5238](https://github.com/angular-ui/bootstrap/issues/5238)
+* **modal:** change to compile before appending ([1dbad8a](https://github.com/angular-ui/bootstrap/commit/1dbad8a)), closes [#5224](https://github.com/angular-ui/bootstrap/issues/5224) [#5183](https://github.com/angular-ui/bootstrap/issues/5183)
+* **paging:** garbage collect parent $watchers ([32b88f1](https://github.com/angular-ui/bootstrap/commit/32b88f1)), closes [#5276](https://github.com/angular-ui/bootstrap/issues/5276)
+* **position:** positionArrow descendant selector ([9f4c3a5](https://github.com/angular-ui/bootstrap/commit/9f4c3a5)), closes [#5246](https://github.com/angular-ui/bootstrap/issues/5246) [#5230](https://github.com/angular-ui/bootstrap/issues/5230)
+* **position:** positionArrow descendant selector ([e8b6a83](https://github.com/angular-ui/bootstrap/commit/e8b6a83)), closes [#5246](https://github.com/angular-ui/bootstrap/issues/5246) [#5230](https://github.com/angular-ui/bootstrap/issues/5230)
+* **tab:** revert template change ([907c851](https://github.com/angular-ui/bootstrap/commit/907c851)), closes [#5262](https://github.com/angular-ui/bootstrap/issues/5262) [#5254](https://github.com/angular-ui/bootstrap/issues/5254)
+* **tabs:** fix tab css cursor ([a47580e](https://github.com/angular-ui/bootstrap/commit/a47580e)), closes [#5250](https://github.com/angular-ui/bootstrap/issues/5250) [#5247](https://github.com/angular-ui/bootstrap/issues/5247)
+* **timepicker:** garbage collect parent watchers ([3f809af](https://github.com/angular-ui/bootstrap/commit/3f809af)), closes [#5277](https://github.com/angular-ui/bootstrap/issues/5277)
+* **tooltip:** fix addClass signature ([6a2d91b](https://github.com/angular-ui/bootstrap/commit/6a2d91b)), closes [#5235](https://github.com/angular-ui/bootstrap/issues/5235)
+* **typeahead:** add guard for destroyed $scope ([e105e85](https://github.com/angular-ui/bootstrap/commit/e105e85)), closes [#5267](https://github.com/angular-ui/bootstrap/issues/5267)
+* **typeahead:** fix css selector ([00ac93e](https://github.com/angular-ui/bootstrap/commit/00ac93e)), closes [#5251](https://github.com/angular-ui/bootstrap/issues/5251)
+
+### Features
+
+* **collapse:** add callback hooks ([446364a](https://github.com/angular-ui/bootstrap/commit/446364a)), closes [#5194](https://github.com/angular-ui/bootstrap/issues/5194) [#5226](https://github.com/angular-ui/bootstrap/issues/5226)
+* **datepicker:** extract inline styles to stylesheet ([6843ab6](https://github.com/angular-ui/bootstrap/commit/6843ab6)), closes [#5215](https://github.com/angular-ui/bootstrap/issues/5215)
+* **datepicker:** use $locale for starting day ([332eefb](https://github.com/angular-ui/bootstrap/commit/332eefb)), closes [#4954](https://github.com/angular-ui/bootstrap/issues/4954) [#5281](https://github.com/angular-ui/bootstrap/issues/5281)
+* **timepicker:** add placeholder for seconds input ([717ea69](https://github.com/angular-ui/bootstrap/commit/717ea69)), closes [#5257](https://github.com/angular-ui/bootstrap/issues/5257)
+* **timepicker:** move inline styles to stylesheet ([b658b03](https://github.com/angular-ui/bootstrap/commit/b658b03)), closes [#5218](https://github.com/angular-ui/bootstrap/issues/5218)
+* **typeahead:** add title to matches ([f523361](https://github.com/angular-ui/bootstrap/commit/f523361)), closes [#5252](https://github.com/angular-ui/bootstrap/issues/5252)
+* **typeahead:** move inline style to stylesheet ([e8201d1](https://github.com/angular-ui/bootstrap/commit/e8201d1)), closes [#5219](https://github.com/angular-ui/bootstrap/issues/5219)
+
+
+### BREAKING CHANGES
+
+* tab: This undoes the prior change to the template using div
+elements. If one wishes to use div elements, one must override the
+template in one's app and provide the necessary CSS
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/angular-ui/bootstrap/compare/v1.0.2...v1.0.3) (2016-01-12)
 
