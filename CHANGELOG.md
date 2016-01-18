@@ -1,3 +1,9 @@
+<a name="1.1.1-SNAPSHOT"></a>
+## [1.1.1-SNAPSHOT](https://github.com/angular-ui/bootstrap/compare/v1.1.0...v1.1.1-SNAPSHOT) (2016-01-18)
+
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/angular-ui/bootstrap/compare/v1.0.2...v1.0.3) (2016-01-12)
 
