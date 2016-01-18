@@ -404,7 +404,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
               $modalStack.loadFocusElementList(modal);
               var focusChanged = false;
               if (evt.shiftKey) {
-                if ($modalStack.isFocusInFirstItem(evt)) {
+                if ($modalStack.isFocusInFirstItem(evt) || $modalStack.isModalFocused(evt, modal)) {
                   focusChanged = $modalStack.focusLastFocusableElement();
                 }
               } else {
@@ -543,6 +543,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
         if (focusableElementList.length > 0) {
           focusableElementList[focusableElementList.length - 1].focus();
           return true;
+        }
+        return false;
+      };
+
+      $modalStack.isModalFocused = function(evt, modalWindow) {
+        if (evt && modalWindow) {
+          var modalDomEl = modalWindow.value.modalDomEl;
+          if (modalDomEl && modalDomEl.length) {
+            return (evt.target || evt.srcElement) === modalDomEl[0];
+          }
         }
         return false;
       };

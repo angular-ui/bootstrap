@@ -620,11 +620,15 @@ describe('$uibModal', function() {
         template:'<a href="#" id="tab-focus-link"><input type="text" id="tab-focus-input1"/><input type="text" id="tab-focus-input2"/>' +
         '<button id="tab-focus-button">Open me!</button>'
       });
+      $rootScope.$digest();
       expect($document).toHaveModalsOpen(1);
+
+      triggerKeyDown(angular.element(document.activeElement), 9, true);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
 
       var lastElement = angular.element(document.getElementById('tab-focus-link'));
       lastElement.focus();
-      triggerKeyDown(lastElement, 9, true);
+      triggerKeyDown(angular.element(document.activeElement), 9, true);
       expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
 
       initialPage.remove();
@@ -660,11 +664,15 @@ describe('$uibModal', function() {
         '<button id="tab-focus-button">Open me!</button>',
         keyboard: false
       });
+      $rootScope.$digest();
       expect($document).toHaveModalsOpen(1);
+
+      triggerKeyDown(angular.element(document.activeElement), 9, true);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
 
       var lastElement = angular.element(document.getElementById('tab-focus-link'));
       lastElement.focus();
-      triggerKeyDown(lastElement, 9, true);
+      triggerKeyDown(angular.element(document.activeElement), 9, true);
       expect(document.activeElement.getAttribute('id')).toBe('tab-focus-button');
 
       initialPage.remove();
