@@ -760,7 +760,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       scope.date = parseDateString(ngModel.$viewValue);
     });
 
-    element.bind('keydown', inputKeydownBind);
+    element.on('keydown', inputKeydownBind);
 
     $popup = $compile(popupEl)(scope);
     // Prevent jQuery cache memory leak (template is now redundant after linking)
@@ -782,8 +782,8 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       }
 
       $popup.remove();
-      element.unbind('keydown', inputKeydownBind);
-      $document.unbind('click', documentClickBind);
+      element.off('keydown', inputKeydownBind);
+      $document.off('click', documentClickBind);
 
       //Clear all watch listeners on destroy
       while (watchListeners.length) {
@@ -867,13 +867,13 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
           if (onOpenFocus) {
             scope.$broadcast('uib:datepicker.focus');
           }
-          $document.bind('click', documentClickBind);
+          $document.on('click', documentClickBind);
         }, 0, false);
       } else {
         scope.isOpen = false;
       }
     } else {
-      $document.unbind('click', documentClickBind);
+      $document.off('click', documentClickBind);
     }
   });
 
