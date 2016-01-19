@@ -1271,6 +1271,29 @@ describe('timepicker directive', function() {
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
+    it('should not be invalid when the model is cleared', function() {
+      var elH = getHoursInputEl();
+      var elM = getMinutesInputEl();
+      var elS = getSecondsInputEl();
+
+      $rootScope.time = newTime(10, 20, 30);
+      $rootScope.$digest();
+
+      expect(getModelState()).toEqual([10, 20, 30]);
+
+      changeInputValueTo(elH, '');
+      elH.blur();
+      $rootScope.$digest();
+      changeInputValueTo(elM, '');
+      elM.blur();
+      $rootScope.$digest();
+      changeInputValueTo(elS, '');
+      elS.blur();
+      $rootScope.$digest();
+
+      expect(element.hasClass('ng-invalid-time')).toBe(false);
+    });
+
     it('timepicker1 leaves view alone when hours are invalid and minutes are updated', function() {
       var hoursEl = getHoursInputEl(),
         minutesEl = getMinutesInputEl();
