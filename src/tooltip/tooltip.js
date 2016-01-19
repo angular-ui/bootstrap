@@ -287,7 +287,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
               // First things first: we don't show it anymore.
               ttScope.$evalAsync(function() {
-                if(ttScope){
+                if (ttScope) {
                   ttScope.isOpen = false;
                   assignIsOpen(false);
                   // And now we remove it from the DOM. However, if we have animation, we
@@ -310,6 +310,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                 $timeout.cancel(hideTimeout);
                 hideTimeout = null;
               }
+
               if (transitionTimeout) {
                 $timeout.cancel(transitionTimeout);
                 transitionTimeout = null;
