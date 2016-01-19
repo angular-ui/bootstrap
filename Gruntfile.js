@@ -393,6 +393,7 @@ module.exports = function(grunt) {
       // Let's remove the oldest 14 versions.
       var versions = stdout.split('\n').slice(0, -14);
       var jsContent = versions.map(function(version) {
+        version = version.replace(/^v/, '');
         return {
           version: version,
           url: `/bootstrap/versioned-docs/${version}`
