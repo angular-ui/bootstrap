@@ -1,6 +1,9 @@
 A lightweight, extensible directive for fancy tooltip creation. The tooltip
 directive supports multiple placements, optional transition animation, and more.
 
+__Note to mobile developers__:  Please note that while tooltips may work correctly on mobile devices (including tablets),
+  we have made the decision to not officially support such a use-case because it does not make sense from a UX perspective.
+
 There are three versions of the tooltip: `uib-tooltip`, `uib-tooltip-template`, and
 `uib-tooltip-html`:
 

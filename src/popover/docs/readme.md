@@ -4,6 +4,9 @@ directive supports multiple placements, optional transition animation, and more.
 Like the Bootstrap jQuery plugin, the popover **requires** the tooltip
 module.
 
+__Note to mobile developers__:  Please note that while popovers may work correctly on mobile devices (including tablets),
+  we have made the decision to not officially support such a use-case because it does not make sense from a UX perspective.
+
 There are three versions of the popover: `uib-popover` and `uib-popover-template`, and `uib-tooltip-html`:
 
 * `uib-popover` -
