@@ -2,7 +2,7 @@
 # [1.1.0](https://github.com/angular-ui/bootstrap/compare/v1.0.3...v1.1.0) (2016-01-18)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **collapse:** avoid initial animation when expanded ([57219aa](https://github.com/angular-ui/bootstrap/commit/57219aa)), closes [#5199](https://github.com/angular-ui/bootstrap/issues/5199) [#4414](https://github.com/angular-ui/bootstrap/issues/4414) [#5192](https://github.com/angular-ui/bootstrap/issues/5192)
 * **datepicker:** allow expressions for minMode/maxMode ([7e93ec9](https://github.com/angular-ui/bootstrap/commit/7e93ec9)), closes [#5264](https://github.com/angular-ui/bootstrap/issues/5264) [#5268](https://github.com/angular-ui/bootstrap/issues/5268) [#5240](https://github.com/angular-ui/bootstrap/issues/5240)
@@ -18,7 +18,7 @@
 * **typeahead:** add guard for destroyed $scope ([e105e85](https://github.com/angular-ui/bootstrap/commit/e105e85)), closes [#5267](https://github.com/angular-ui/bootstrap/issues/5267)
 * **typeahead:** fix css selector ([00ac93e](https://github.com/angular-ui/bootstrap/commit/00ac93e)), closes [#5251](https://github.com/angular-ui/bootstrap/issues/5251)
 
-### Features
+## Features
 
 * **collapse:** add callback hooks ([446364a](https://github.com/angular-ui/bootstrap/commit/446364a)), closes [#5194](https://github.com/angular-ui/bootstrap/issues/5194) [#5226](https://github.com/angular-ui/bootstrap/issues/5226)
 * **datepicker:** extract inline styles to stylesheet ([6843ab6](https://github.com/angular-ui/bootstrap/commit/6843ab6)), closes [#5215](https://github.com/angular-ui/bootstrap/issues/5215)
@@ -29,7 +29,7 @@
 * **typeahead:** move inline style to stylesheet ([e8201d1](https://github.com/angular-ui/bootstrap/commit/e8201d1)), closes [#5219](https://github.com/angular-ui/bootstrap/issues/5219)
 
 
-### BREAKING CHANGES
+## BREAKING CHANGES
 
 * tab: This undoes the prior change to the template using div
 elements. If one wishes to use div elements, one must override the
@@ -38,30 +38,30 @@ template in one's app and provide the necessary CSS
 
 
 <a name="1.0.3"></a>
-## [1.0.3](https://github.com/angular-ui/bootstrap/compare/v1.0.2...v1.0.3) (2016-01-12)
+# [1.0.3](https://github.com/angular-ui/bootstrap/compare/v1.0.2...v1.0.3) (2016-01-12)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **timepicker:** fix injection ([627a451](https://github.com/angular-ui/bootstrap/commit/627a451))
 
 
 
 <a name="1.0.2"></a>
-## [1.0.2](https://github.com/angular-ui/bootstrap/compare/v1.0.1...v1.0.2) (2016-01-12)
+# [1.0.2](https://github.com/angular-ui/bootstrap/compare/v1.0.1...v1.0.2) (2016-01-12)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **tabs:** fix csp check ([74be568](https://github.com/angular-ui/bootstrap/commit/74be568)), closes [#5214](https://github.com/angular-ui/bootstrap/issues/5214)
 
 
 
 <a name="1.0.1"></a>
-## [1.0.1](https://github.com/angular-ui/bootstrap/compare/1.0.0...v1.0.1) (2016-01-12)
+# [1.0.1](https://github.com/angular-ui/bootstrap/compare/1.0.0...v1.0.1) (2016-01-12)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **build:** add ; after script ([9d0269e](https://github.com/angular-ui/bootstrap/commit/9d0269e)), closes [#5197](https://github.com/angular-ui/bootstrap/issues/5197) [#5196](https://github.com/angular-ui/bootstrap/issues/5196)
 * **carousel:** reset active for buffered transitions ([36fca74](https://github.com/angular-ui/bootstrap/commit/36fca74)), closes [#5195](https://github.com/angular-ui/bootstrap/issues/5195) [#5178](https://github.com/angular-ui/bootstrap/issues/5178)
@@ -71,7 +71,7 @@ template in one's app and provide the necessary CSS
 * **timepicker:** use correct disabled expression ([71afeeb](https://github.com/angular-ui/bootstrap/commit/71afeeb)), closes [#5185](https://github.com/angular-ui/bootstrap/issues/5185) [#5182](https://github.com/angular-ui/bootstrap/issues/5182)
 * **typeahead:** scroll only parent element ([3dac5e3](https://github.com/angular-ui/bootstrap/commit/3dac5e3)), closes [#5212](https://github.com/angular-ui/bootstrap/issues/5212) [#5180](https://github.com/angular-ui/bootstrap/issues/5180)
 
-### Features
+## Features
 
 * **tabs:** add CSS to css file ([db7adf7](https://github.com/angular-ui/bootstrap/commit/db7adf7)), closes [#5211](https://github.com/angular-ui/bootstrap/issues/5211)
 * **timepicker:** add templateUrl in timepickerConfig ([4b0e381](https://github.com/angular-ui/bootstrap/commit/4b0e381)), closes [#5087](https://github.com/angular-ui/bootstrap/issues/5087) [#5200](https://github.com/angular-ui/bootstrap/issues/5200)
@@ -82,7 +82,7 @@ template in one's app and provide the necessary CSS
 # [1.0.0](https://github.com/angular-ui/bootstrap/compare/0.14.3...v1.0.0) (2016-01-08)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **accordion:** ensure panelOpen class is present ([0917623](https://github.com/angular-ui/bootstrap/commit/0917623)), closes [#4849](https://github.com/angular-ui/bootstrap/issues/4849) [#4870](https://github.com/angular-ui/bootstrap/issues/4870)
 * **accordion:** fix unexpected routing ([df211bd](https://github.com/angular-ui/bootstrap/commit/df211bd)), closes [#4792](https://github.com/angular-ui/bootstrap/issues/4792)
@@ -117,7 +117,7 @@ template in one's app and provide the necessary CSS
 * **typeahead:** use correct selector ([e1e6e1b](https://github.com/angular-ui/bootstrap/commit/e1e6e1b)), closes [#5168](https://github.com/angular-ui/bootstrap/issues/5168) [#5167](https://github.com/angular-ui/bootstrap/issues/5167)
 * allow library to be loaded async ([a851636](https://github.com/angular-ui/bootstrap/commit/a851636)), closes [#4775](https://github.com/angular-ui/bootstrap/issues/4775) [#3665](https://github.com/angular-ui/bootstrap/issues/3665)
 
-### Features
+## Features
 
 * **accordion:** remove deprecated code ([0010aff](https://github.com/angular-ui/bootstrap/commit/0010aff)), closes [#4706](https://github.com/angular-ui/bootstrap/issues/4706)
 * **alert:** remove deprecated code ([21e852b](https://github.com/angular-ui/bootstrap/commit/21e852b)), closes [#4714](https://github.com/angular-ui/bootstrap/issues/4714)
@@ -184,13 +184,13 @@ template in one's app and provide the necessary CSS
 * **typeahead:** add show-hint option ([ef82ad1](https://github.com/angular-ui/bootstrap/commit/ef82ad1)), closes [#2570](https://github.com/angular-ui/bootstrap/issues/2570) [#4784](https://github.com/angular-ui/bootstrap/issues/4784)
 * **typeahead:** remove deprecated code ([606d419](https://github.com/angular-ui/bootstrap/commit/606d419)), closes [#4711](https://github.com/angular-ui/bootstrap/issues/4711)
 
-### Reverts
+## Reverts
 
 * **dateparser:** change template literal to ' ([f40066a](https://github.com/angular-ui/bootstrap/commit/f40066a)), closes [#5091](https://github.com/angular-ui/bootstrap/issues/5091)
 * **progressbar:** remove min-width ([ed7e460](https://github.com/angular-ui/bootstrap/commit/ed7e460)), closes [#5141](https://github.com/angular-ui/bootstrap/issues/5141)
 
 
-### BREAKING CHANGES
+## BREAKING CHANGES
 
 * all: All of the deprecated services/directives/etc. are removed - one must use all prefixed versions instead
 * pager: As part of the split of the pager component from the
@@ -222,10 +222,10 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 
 
 <a name="0.14.3"></a>
-## [0.14.3](https://github.com/angular-ui/bootstrap/compare/0.14.2...v0.14.3) (2015-10-23)
+# [0.14.3](https://github.com/angular-ui/bootstrap/compare/0.14.2...v0.14.3) (2015-10-23)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **alert:** allow interpolations with dismiss-on-timeout ([de24f46](https://github.com/angular-ui/bootstrap/commit/de24f46)), closes [#4665](https://github.com/angular-ui/bootstrap/issues/4665) [#4666](https://github.com/angular-ui/bootstrap/issues/4666)
 * **buttons:** double toggle on spacebar ([e8808d3](https://github.com/angular-ui/bootstrap/commit/e8808d3)), closes [#4474](https://github.com/angular-ui/bootstrap/issues/4474) [#4630](https://github.com/angular-ui/bootstrap/issues/4630)
@@ -238,7 +238,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **tooltip:** scrollbar flashing ([6c82b2b](https://github.com/angular-ui/bootstrap/commit/6c82b2b)), closes [#4550](https://github.com/angular-ui/bootstrap/issues/4550) [#4623](https://github.com/angular-ui/bootstrap/issues/4623) [#4458](https://github.com/angular-ui/bootstrap/issues/4458)
 * **typeahead:** dangling event listeners ([94fb282](https://github.com/angular-ui/bootstrap/commit/94fb282)), closes [#4632](https://github.com/angular-ui/bootstrap/issues/4632) [#4636](https://github.com/angular-ui/bootstrap/issues/4636)
 
-### Features
+## Features
 
 * **datepicker:** add templateUrl support for pickers ([1f65d87](https://github.com/angular-ui/bootstrap/commit/1f65d87)), closes [#4432](https://github.com/angular-ui/bootstrap/issues/4432)
 * **datepicker:** preserve timezone with model ([0d64aad](https://github.com/angular-ui/bootstrap/commit/0d64aad)), closes [#4676](https://github.com/angular-ui/bootstrap/issues/4676)
@@ -247,10 +247,10 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 
 
 <a name="0.14.2"></a>
-## [0.14.2](https://github.com/angular-ui/bootstrap/compare/0.14.1...v0.14.2) (2015-10-14)
+# [0.14.2](https://github.com/angular-ui/bootstrap/compare/0.14.1...v0.14.2) (2015-10-14)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **progressbar:** fix percentage calculation ([feb689c](https://github.com/angular-ui/bootstrap/commit/feb689c)), closes [#4471](https://github.com/angular-ui/bootstrap/issues/4471) [#4588](https://github.com/angular-ui/bootstrap/issues/4588) [#4452](https://github.com/angular-ui/bootstrap/issues/4452)
 * **tooltip:** clean up stackedMap on scope destroy ([ebb5e18](https://github.com/angular-ui/bootstrap/commit/ebb5e18)), closes [#4610](https://github.com/angular-ui/bootstrap/issues/4610) [#4604](https://github.com/angular-ui/bootstrap/issues/4604)
@@ -259,10 +259,10 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 
 
 <a name="0.14.1"></a>
-## [0.14.1](https://github.com/angular-ui/bootstrap/compare/0.14.0...v0.14.1) (2015-10-11)
+# [0.14.1](https://github.com/angular-ui/bootstrap/compare/0.14.0...v0.14.1) (2015-10-11)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **accordion:** make deprecated controller work with 1.3.x ([c5e6042](https://github.com/angular-ui/bootstrap/commit/c5e6042)), closes [#4574](https://github.com/angular-ui/bootstrap/issues/4574)
 * **alert:** make deprecated controller work with 1.3.x ([e8c8ee6](https://github.com/angular-ui/bootstrap/commit/e8c8ee6)), closes [#4576](https://github.com/angular-ui/bootstrap/issues/4576)
@@ -276,7 +276,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **tabs:** make deprecated controller work with 1.3.x ([685bd6a](https://github.com/angular-ui/bootstrap/commit/685bd6a)), closes [#4583](https://github.com/angular-ui/bootstrap/issues/4583)
 * **timepicker:** make deprecated controller work with 1.3.x ([00f60ee](https://github.com/angular-ui/bootstrap/commit/00f60ee)), closes [#4584](https://github.com/angular-ui/bootstrap/issues/4584)
 
-### Features
+## Features
 
 * **timepicker:** add accessibility improvements ([4ebecbc](https://github.com/angular-ui/bootstrap/commit/4ebecbc)), closes [#4569](https://github.com/angular-ui/bootstrap/issues/4569) [#4573](https://github.com/angular-ui/bootstrap/issues/4573)
 
@@ -286,7 +286,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 # [0.14.0](https://github.com/angular-ui/bootstrap/compare/0.13.4...0.14.0) (2015-10-09)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **accordion:** coerce to boolean ([b864aa9](https://github.com/angular-ui/bootstrap/commit/b864aa9)), closes [#4385](https://github.com/angular-ui/bootstrap/issues/4385)
 * **accordion:** re-expose AccordionController ([5382226](https://github.com/angular-ui/bootstrap/commit/5382226)), closes [#4524](https://github.com/angular-ui/bootstrap/issues/4524)
@@ -318,7 +318,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **tooltip:** properly gc popupTimeout ([ff52f52](https://github.com/angular-ui/bootstrap/commit/ff52f52)), closes [#2786](https://github.com/angular-ui/bootstrap/issues/2786)
 * **tooltip:** set `visibility: hidden` to avoid flicker ([f7cb8bc](https://github.com/angular-ui/bootstrap/commit/f7cb8bc)), closes [#4342](https://github.com/angular-ui/bootstrap/issues/4342)
 
-### Features
+## Features
 
 * **accordion:** use uib- prefix ([0328a76](https://github.com/angular-ui/bootstrap/commit/0328a76)), closes [#4389](https://github.com/angular-ui/bootstrap/issues/4389)
 * **accordion:** use uib- prefix ([298ec8c](https://github.com/angular-ui/bootstrap/commit/298ec8c)), closes [#4503](https://github.com/angular-ui/bootstrap/issues/4503)
@@ -347,21 +347,21 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **typeahead:** add customClass support for dropdown ([fa1cdfc](https://github.com/angular-ui/bootstrap/commit/fa1cdfc)), closes [#4332](https://github.com/angular-ui/bootstrap/issues/4332) [#4410](https://github.com/angular-ui/bootstrap/issues/4410)
 * **typeahead:** add uib- prefix ([9e5e1a2](https://github.com/angular-ui/bootstrap/commit/9e5e1a2)), closes [#4542](https://github.com/angular-ui/bootstrap/issues/4542)
 
-### Reverts
+## Reverts
 
 * **dropdown:** undo adding of `open` class on body ([6f9f1fc](https://github.com/angular-ui/bootstrap/commit/6f9f1fc))
 
 
-### BREAKING CHANGES
+## BREAKING CHANGES
 
 * Removes focus on datepicker on selection of a date via keyboard for accessibility reasons
 
 
 <a name="0.13.4"></a>
-## [0.13.4](https://github.com/angular-ui/bootstrap/compare/0.13.3...0.13.4) (2015-09-03)
+# [0.13.4](https://github.com/angular-ui/bootstrap/compare/0.13.3...0.13.4) (2015-09-03)
 
 
-### Bug Fixes
+## Bug Fixes
 
 * **accordion:** add custom open class support ([575eb85](https://github.com/angular-ui/bootstrap/commit/575eb85)), closes [#4198](https://github.com/angular-ui/bootstrap/issues/4198)
 * **datepicker:** ensure the original target is not in popup ([9b2f7ac](https://github.com/angular-ui/bootstrap/commit/9b2f7ac)), closes [#4316](https://github.com/angular-ui/bootstrap/issues/4316) [#4314](https://github.com/angular-ui/bootstrap/issues/4314)
@@ -381,7 +381,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **typeahead:** release references on destruction ([695db9d](https://github.com/angular-ui/bootstrap/commit/695db9d)), closes [#4299](https://github.com/angular-ui/bootstrap/issues/4299) [#4298](https://github.com/angular-ui/bootstrap/issues/4298)
 * **typeahead:** use ng-bind-html ([bb9fa1a](https://github.com/angular-ui/bootstrap/commit/bb9fa1a)), closes [#3463](https://github.com/angular-ui/bootstrap/issues/3463) [#4073](https://github.com/angular-ui/bootstrap/issues/4073)
 
-### Features
+## Features
 
 * **accordion:** allow custom panel class ([5ee23a4](https://github.com/angular-ui/bootstrap/commit/5ee23a4)), closes [#4242](https://github.com/angular-ui/bootstrap/issues/4242) [#3968](https://github.com/angular-ui/bootstrap/issues/3968)
 * **accordion:** support spacebar to toggle group ([aa5a991](https://github.com/angular-ui/bootstrap/commit/aa5a991)), closes [#4319](https://github.com/angular-ui/bootstrap/issues/4319) [#4249](https://github.com/angular-ui/bootstrap/issues/4249)
@@ -401,7 +401,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **typeahead:** add custom popup template support ([4b02648](https://github.com/angular-ui/bootstrap/commit/4b02648)), closes [#4320](https://github.com/angular-ui/bootstrap/issues/4320) [#3774](https://github.com/angular-ui/bootstrap/issues/3774)
 
 
-### Breaking Changes
+## Breaking Changes
 
 * **buttons**
   * hide nested `<input>` elements on `btn-radio` and `btn-checkbox` directives.
@@ -442,10 +442,10 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 
 
 <a name"0.13.3"></a>
-### 0.13.3 (2015-08-09)
+# 0.13.3 (2015-08-09)
 
 
-#### Bug Fixes
+## Bug Fixes
 
 * **accordion:**
   * add `open` class when expanded ([ead15e37](https://github.com/angular-ui/bootstrap/commit/ead15e37), closes [#4152](https://github.com/angular-ui/bootstrap/issues/4152), [#3419](https://github.com/angular-ui/bootstrap/issues/3419))
@@ -474,7 +474,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
 * **typeahead:** return `null` if empty ([c7d3a660](https://github.com/angular-ui/bootstrap/commit/c7d3a660), closes [#4078](https://github.com/angular-ui/bootstrap/issues/4078), [#3176](https://github.com/angular-ui/bootstrap/issues/3176))
 
 
-#### Features
+## Features
 
 * **accordion:**
   * add `controllerAs` support ([9865ee8e](https://github.com/angular-ui/bootstrap/commit/9865ee8e), closes [#4138](https://github.com/angular-ui/bootstrap/issues/4138))
@@ -506,7 +506,7 @@ $scope.typeaheadContainer = angular.element(document.querySelector('#typeaheadCo
   * add multiple trigger support ([ca9196fa](https://github.com/angular-ui/bootstrap/commit/ca9196fa), closes [#3987](https://github.com/angular-ui/bootstrap/issues/3987), [#4077](https://github.com/angular-ui/bootstrap/issues/4077))
 
 
-#### Breaking Changes
+## Breaking Changes
 
 * add `open` class to accordion group when expanded
 
@@ -529,10 +529,10 @@ Closes #4080
 
 
 <a name"0.13.2"></a>
-### 0.13.2 (2015-08-02)
+# 0.13.2 (2015-08-02)
 
 
-#### Bug Fixes
+## Bug Fixes
 
 * **accordion:** apply disabled style to accordion-header ([0643fd3e](https://github.com/angular-ui/bootstrap/commit/0643fd3e), closes [#3599](https://github.com/angular-ui/bootstrap/issues/3599), [#3233](https://github.com/angular-ui/bootstrap/issues/3233))
 * **buttons:** respect disabled attribute ([42e1af5c](https://github.com/angular-ui/bootstrap/commit/42e1af5c), closes [#4026](https://github.com/angular-ui/bootstrap/issues/4026), [#4013](https://github.com/angular-ui/bootstrap/issues/4013))
@@ -563,7 +563,7 @@ Closes #4080
   * only reset matches if matches are present ([97e077e1](https://github.com/angular-ui/bootstrap/commit/97e077e1), closes [#3119](https://github.com/angular-ui/bootstrap/issues/3119))
 
 
-#### Features
+## Features
 
 * **build:** add support for npm publishing ([27f7ca26](https://github.com/angular-ui/bootstrap/commit/27f7ca26), closes [#3108](https://github.com/angular-ui/bootstrap/issues/3108))
 * **modal:** trap focus in modal for tabbing ([a028d2aa](https://github.com/angular-ui/bootstrap/commit/a028d2aa), closes [#3689](https://github.com/angular-ui/bootstrap/issues/3689), [#4004](https://github.com/angular-ui/bootstrap/issues/4004), [#738](https://github.com/angular-ui/bootstrap/issues/738))
@@ -575,10 +575,10 @@ Closes #4080
 
 
 <a name"0.13.1"></a>
-### 0.13.1 (2015-07-23)
+# 0.13.1 (2015-07-23)
 
 
-#### Bug Fixes
+## Bug Fixes
 
 * **accordion:** add CSP compliance for accordion & typeahead ([fb302c60](https://github.com/angular-ui/bootstrap/commit/fb302c60), closes [#3909](https://github.com/angular-ui/bootstrap/issues/3909), [#3904](https://github.com/angular-ui/bootstrap/issues/3904))
 * **alert:**
@@ -616,7 +616,7 @@ Closes #4080
   * add href to show cursor as pointer ([195e520e](https://github.com/angular-ui/bootstrap/commit/195e520e), closes [#3649](https://github.com/angular-ui/bootstrap/issues/3649))
 
 
-#### Features
+## Features
 
 * **alert:** pass $event to close() ([44e06425](https://github.com/angular-ui/bootstrap/commit/44e06425), closes [#3828](https://github.com/angular-ui/bootstrap/issues/3828), [#3827](https://github.com/angular-ui/bootstrap/issues/3827))
 * **carousel:** add `noWrap` option to prevent re-cycling of slides ([7fb3840f](https://github.com/angular-ui/bootstrap/commit/7fb3840f), closes [#3462](https://github.com/angular-ui/bootstrap/issues/3462), [#3397](https://github.com/angular-ui/bootstrap/issues/3397))
@@ -636,10 +636,10 @@ Closes #4080
 
 
 <a name="0.13.0"></a>
-## 0.13.0 (2015-05-02)
+# 0.13.0 (2015-05-02)
 
 
-#### Bug Fixes
+## Bug Fixes
 
 * **accordion:**
   * Made accordion heading tab-able for IE9-10 ([6abad509](https://github.com/angular-ui/bootstrap/commit/6abad509cd4d44c3ca432f2f21c9ecea0a206b53))
@@ -700,7 +700,7 @@ Closes #4080
   * $compile match template after adding to DOM ([03446c56](https://github.com/angular-ui/bootstrap/commit/03446c56335d5ee0970f9730af215fea1dd53f48))
 
 
-#### Features
+## Features
 
 * **dateparser:**
   * Add support for HH, H, mm, m, ss, s formats ([971a1b57](https://github.com/angular-ui/bootstrap/commit/971a1b57394c1e1088564e0809c1341620586aa0), closes [#2509](https://github.com/angular-ui/bootstrap/issues/2509), [#3159](https://github.com/angular-ui/bootstrap/issues/3159), [#3417](https://github.com/angular-ui/bootstrap/issues/3417))
