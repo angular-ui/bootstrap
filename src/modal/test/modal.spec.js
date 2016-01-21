@@ -480,16 +480,30 @@ describe('$uibModal', function() {
 
     it('should resolve the closed promise when modal is closed', function() {
       var modal = open({template: '<div>Content</div>'});
+      var closed = false;
       close(modal, 'closed ok');
 
-      expect(modal.closed).toBeResolvedWith(undefined);
+      modal.closed.then(function() {
+        closed = true;
+      });
+
+      $rootScope.$digest();
+
+      expect(closed).toBe(true);
     });
 
     it('should resolve the closed promise when modal is dismissed', function() {
       var modal = open({template: '<div>Content</div>'});
+      var closed = false;
       dismiss(modal, 'esc');
 
-      expect(modal.closed).toBeResolvedWith(undefined);
+      modal.closed.then(function() {
+        closed = true;
+      });
+
+      $rootScope.$digest();
+
+      expect(closed).toBe(true);
     });
 
     it('should expose a promise linked to the templateUrl / resolve promises', function() {

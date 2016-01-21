@@ -302,7 +302,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           openedClasses.remove(modalBodyClass, modalInstance);
           appendToElement.toggleClass(modalBodyClass, openedClasses.hasKey(modalBodyClass));
           toggleTopWindowClass(true);
-        });
+        }, modalWindow.closedDeferred);
         checkRemoveBackdrop();
 
         //move focus to specified element if available, or else to body
