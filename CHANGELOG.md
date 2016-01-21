@@ -101,6 +101,7 @@ template in one's app and provide the necessary CSS
 * **datepicker:** update with alternative format ([fd88dcb](https://github.com/angular-ui/bootstrap/commit/fd88dcb)), closes [#5014](https://github.com/angular-ui/bootstrap/issues/5014)
 * **debounce:** fix argument slicing ([e196be8](https://github.com/angular-ui/bootstrap/commit/e196be8)), closes [#4859](https://github.com/angular-ui/bootstrap/issues/4859) [#4860](https://github.com/angular-ui/bootstrap/issues/4860)
 * **dropdown:** do not close on right click ([bf1768e](https://github.com/angular-ui/bootstrap/commit/bf1768e)), closes [#5052](https://github.com/angular-ui/bootstrap/issues/5052) [#5051](https://github.com/angular-ui/bootstrap/issues/5051)
+* **dropdown:** remove class support for uib-dropdown-menu directive ([43535cf](https://github.com/angular-ui/bootstrap/commit/43535cf)), closes [#4753](https://github.com/angular-ui/bootstrap/issues/4753)
 * **dropdown:** remove extra uib-keyboard-nav ([57f72b2](https://github.com/angular-ui/bootstrap/commit/57f72b2)), closes [#4891](https://github.com/angular-ui/bootstrap/issues/4891)
 * **modal:** add focus check for IE ([a5c2a5b](https://github.com/angular-ui/bootstrap/commit/a5c2a5b)), closes [#5097](https://github.com/angular-ui/bootstrap/issues/5097) [#5096](https://github.com/angular-ui/bootstrap/issues/5096)
 * **modal:** clean up animation when disabled ([972dee6](https://github.com/angular-ui/bootstrap/commit/972dee6)), closes [#4740](https://github.com/angular-ui/bootstrap/issues/4740) [#4672](https://github.com/angular-ui/bootstrap/issues/4672)
@@ -197,6 +198,7 @@ template in one's app and provide the necessary CSS
 pagination component, this changes the controllerAs use to `pager` from
 `pagination`
 * dropdown: `keyboard-nav` for the dropdown is no longer a directive and to use it you have to use `keyboard-nav` instead of `uib-keyboard-nav`.
+* dropdown: remove class support for `uib-dropdown-menu` directive.
 * All virtual templates in UI Bootstrap now are prefixed
 with `uib/` - if one is overriding the templates via `$templateCache` path
 or manually building the templates from the UI Bootstrap repository, one
