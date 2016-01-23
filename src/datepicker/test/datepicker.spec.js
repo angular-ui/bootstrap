@@ -1849,6 +1849,110 @@ describe('datepicker', function() {
             expect(getTitle()).toBe('November 1980');
           });
         });
+
+        describe('min-date', function() {
+          it('should be able to specify a min-date through options', function() {
+            $rootScope.opts = {
+              minDate: new Date('September 12, 2010'),
+              shortcutPropagation: 'dog'
+            };
+
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+
+            var buttons = getAllOptionsEl();
+            angular.forEach(buttons, function(button, index) {
+              expect(angular.element(button).prop('disabled')).toBe(index < 14);
+            });
+
+            $rootScope.opts.minDate = new Date('September 13, 2010');
+            $rootScope.$digest();
+            buttons = getAllOptionsEl();
+            angular.forEach(buttons, function(button, index) {
+              expect(angular.element(button).prop('disabled')).toBe(index < 15);
+            });
+          });
+        });
+
+        describe('max-date', function() {
+          it('should be able to specify a max-date through options', function() {
+            $rootScope.opts = {
+              maxDate: new Date('September 25, 2010')
+            };
+
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+
+            var buttons = getAllOptionsEl();
+            angular.forEach(buttons, function(button, index) {
+              expect(angular.element(button).prop('disabled')).toBe(index > 27);
+            });
+
+            $rootScope.opts.maxDate = new Date('September 15, 2010');
+            $rootScope.$digest();
+            buttons = getAllOptionsEl();
+            angular.forEach(buttons, function(button, index) {
+              expect(angular.element(button).prop('disabled')).toBe(index > 17);
+            });
+          });
+        });
+
+        describe('min-mode', function() {
+          it('should be able to specify min-mode through options', function() {
+            $rootScope.opts = {
+              minMode: 'month'
+            };
+
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+
+            expect(getTitle()).toBe('2010');
+          });
+        });
+
+        describe('max-mode', function() {
+          it('should be able to specify max-mode through options', function() {
+            $rootScope.opts = {
+              maxMode: 'month'
+            };
+
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+
+            expect(getTitle()).toBe('September 2010');
+            clickTitleButton();
+            assignElements(wrapElement);
+            expect(getTitle()).toBe('2010');
+            clickTitleButton();
+            assignElements(wrapElement);
+            expect(getTitle()).toBe('2010');
+          });
+        });
+
+        describe('datepicker-mode', function() {
+          beforeEach(inject(function() {
+            $rootScope.date = new Date('August 11, 2013');
+            $rootScope.opts = {
+              datepickerMode: 'month'
+            };
+            var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
+            $rootScope.$digest();
+            assignElements(wrapElement);
+          }));
+
+          it('shows the correct title', function() {
+            expect(getTitle()).toBe('2013');
+          });
+
+          it('updates binding', function() {
+            clickTitleButton();
+            expect($rootScope.opts.datepickerMode).toBe('year');
+          });
+        });
       });
 
       describe('attribute `init-date`', function() {

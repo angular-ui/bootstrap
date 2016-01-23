@@ -659,15 +659,14 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
       }
     }
 
-    if (attrs.datepickerOptions) {
-      var options = scope.$parent.$eval(attrs.datepickerOptions);
-      if (options && options.initDate) {
-        scope.initDate = dateParser.fromTimezone(options.initDate, ngModelOptions.timezone);
-        datepickerEl.attr('init-date', 'initDate');
-        delete options.initDate;
-      }
-      angular.forEach(options, function(value, option) {
-        datepickerEl.attr(cameltoDash(option), value);
+    if (scope.datepickerOptions) {
+      angular.forEach(scope.datepickerOptions, function(value, option) {
+        // Ignore this options, will be managed later
+        if (['minDate', 'maxDate', 'minMode', 'maxMode', 'initDate', 'datepickerMode'].indexOf(option) === -1) {
+          datepickerEl.attr(cameltoDash(option), value);
+        } else {
+          datepickerEl.attr(cameltoDash(option), 'datepickerOptions.' + option);
+        }
       });
     }
 
@@ -984,6 +983,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     require: ['ngModel', 'uibDatepickerPopup'],
     controller: 'UibDatepickerPopupController',
     scope: {
+      datepickerOptions: '=?',
       isOpen: '=?',
       currentText: '@',
       clearText: '@',
