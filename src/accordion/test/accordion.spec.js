@@ -123,6 +123,12 @@ describe('uib-accordion', function() {
       $templateCache = _$templateCache_;
     }));
 
+    it('should be a tablist', function() {
+      element = $compile('<uib-accordion></uib-accordion>')(scope);
+      scope.$digest();
+      expect(element.html()).toContain('role="tablist"');
+    });
+
     it('should expose the controller on the view', function() {
       $templateCache.put('uib/template/accordion/accordion.html', '<div>{{accordion.text}}</div>');
 
@@ -150,6 +156,9 @@ describe('uib-accordion', function() {
   describe('uib-accordion-group', function() {
     var scope, $compile;
     var element, groups;
+    var findGroupHeading = function(index) {
+      return groups.eq(index).find('.panel-heading').eq(0);
+    };
     var findGroupLink = function(index) {
       return groups.eq(index).find('.accordion-toggle').eq(0);
     };
@@ -177,6 +186,7 @@ describe('uib-accordion', function() {
 
     describe('with static panels', function() {
       beforeEach(function() {
+        spyOn(Math, 'random').and.returnValue(0.1);
         var tpl =
           '<uib-accordion>' +
             '<uib-accordion-group heading="title 1">Content 1</uib-accordion-group>' +
@@ -204,20 +214,26 @@ describe('uib-accordion', function() {
         findGroupLink(0).click();
         scope.$digest();
         expect(findGroupBody(0).scope().isOpen).toBe(true);
+        expect(findGroupHeading(0).html()).toContain('aria-expanded="true"');
 
         findGroupLink(1).click();
         scope.$digest();
         expect(findGroupBody(0).scope().isOpen).toBe(false);
+        expect(findGroupHeading(0).html()).toContain('aria-expanded="false"');
         expect(findGroupBody(1).scope().isOpen).toBe(true);
+        expect(findGroupHeading(1).html()).toContain('aria-expanded="true"');
       });
 
       it('should toggle element on click', function() {
         findGroupLink(0).click();
         scope.$digest();
         expect(findGroupBody(0).scope().isOpen).toBe(true);
+        expect(groups.eq(0).html()).toContain('aria-hidden="false"');
+
         findGroupLink(0).click();
         scope.$digest();
         expect(findGroupBody(0).scope().isOpen).toBe(false);
+        expect(groups.eq(0).html()).toContain('aria-hidden="true"');
       });
 
       it('should add, by default, "panel-open" when opened', function() {
@@ -255,6 +271,16 @@ describe('uib-accordion', function() {
         findGroupLink(0).trigger(e);
 
         expect(group).not.toHaveClass('panel-open');
+      });
+
+      it('should generate an Id for the heading', function() {
+        var groupScope = findGroupBody(0).scope();
+        expect(groupScope.headingId).toEqual('accordiongroup-' + groupScope.$id + '-1000-tab');
+      });
+
+      it('should generate an Id for the panel', function() {
+        var groupScope = findGroupBody(0).scope();
+        expect(groupScope.panelId).toEqual('accordiongroup-' + groupScope.$id + '-1000-panel');
       });
     });
 
