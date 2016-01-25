@@ -27,6 +27,29 @@ The datepicker has 3 modes:
   _(Default: `day`)_ -
   Current mode of the datepicker _(day|month|year)_. Can be used to initialize the datepicker in a specific mode.
 
+* `datepicker-options`
+  <small class="badge">$</small> -
+  An optional object to configure the datepicker in one place. If this attribute is used, all supported options must be specified instead of the attributes.
+
+  The supported options are:
+
+  - formatDay
+  - formatDayHeader
+  - formatDayTitle
+  - formatMonth
+  - formatMonthTitle
+  - formatYear
+  - initDate
+  - maxDate
+  - maxMode
+  - minDate
+  - minMode
+  - shortcutPropagation
+  - showWeeks
+  - startingDay
+  - yearColumns
+  - yearRows
+
 * `format-day`
   <small class="badge">C</small>
   _(Default: `dd`)_ -

@@ -866,7 +866,301 @@ describe('datepicker', function() {
       });
     });
 
-    describe('attribute `starting-day`', function () {
+    describe('attribute `datepicker-options`', function() {
+      describe('startingDay', function() {
+        beforeEach(function() {
+          $rootScope.datepickerOptions = {
+            startingDay: 1
+          };
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="datepickerOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('shows the day labels rotated', function() {
+          expect(getLabels(true)).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+        });
+
+        it('renders the calendar days correctly', function() {
+          expect(getOptions(true)).toEqual([
+            ['30', '31', '01', '02', '03', '04', '05'],
+            ['06', '07', '08', '09', '10', '11', '12'],
+            ['13', '14', '15', '16', '17', '18', '19'],
+            ['20', '21', '22', '23', '24', '25', '26'],
+            ['27', '28', '29', '30', '01', '02', '03'],
+            ['04', '05', '06', '07', '08', '09', '10']
+          ]);
+        });
+
+        it('renders the week numbers correctly', function() {
+          expect(getWeeks()).toEqual(['35', '36', '37', '38', '39', '40']);
+        });
+      });
+
+      describe('showWeeks', function() {
+        beforeEach(function() {
+          $rootScope.datepickerOptions = {
+            showWeeks: false
+          };
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="datepickerOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('hides week numbers based on variable', function() {
+          expect(getLabelsRow().find('th').length).toEqual(7);
+          var tr = element.find('tbody').find('tr');
+          for (var i = 0; i < 5; i++) {
+            expect(tr.eq(i).find('td').length).toEqual(7);
+          }
+        });
+      });
+
+      describe('minDate', function() {
+        beforeEach(function() {
+          $rootScope.datepickerOptions = {
+            minDate: new Date('September 12, 2010')
+          };
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="datepickerOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('disables appropriate days in current month', function() {
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index < 14);
+          });
+        });
+
+        it('disables appropriate days when min date changes', function() {
+          $rootScope.datepickerOptions.minDate = new Date('September 5, 2010');
+          $rootScope.$digest();
+
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index < 7);
+          });
+        });
+
+        it('invalidates when model is a disabled date', function() {
+          $rootScope.datepickerOptions.minDate = new Date('September 5, 2010');
+          $rootScope.date = new Date('September 2, 2010');
+          $rootScope.$digest();
+          expect(element.hasClass('ng-invalid')).toBeTruthy();
+          expect(element.hasClass('ng-invalid-date-disabled')).toBeTruthy();
+        });
+
+        it('disables all days in previous month', function() {
+          clickPreviousButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(true);
+          });
+        });
+
+        it('disables no days in next month', function() {
+          clickNextButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+        });
+
+        it('disables appropriate months in current year', function() {
+          clickTitleButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index < 8);
+          });
+        });
+
+        it('disables all months in previous year', function() {
+          clickTitleButton();
+          clickPreviousButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(true);
+          });
+        });
+
+        it('disables no months in next year', function() {
+          clickTitleButton();
+          clickNextButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+        });
+
+        it('enables everything before if it is cleared', function() {
+          $rootScope.datepickerOptions.minDate = null;
+          $rootScope.date = new Date('December 20, 1949');
+          $rootScope.$digest();
+
+          clickTitleButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+        });
+
+        it('accepts literals, \'yyyy-MM-dd\' case', function() {
+          $rootScope.datepickerOptions.minDate = '2010-09-05';
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="datepickerOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index < 7);
+          });
+        });
+      });
+
+      describe('maxDate', function() {
+        beforeEach(function() {
+          $rootScope.datepickerOptions = {
+            maxDate: new Date('September 25, 2010')
+          };
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="datepickerOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('disables appropriate days in current month', function() {
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index > 27);
+          });
+        });
+
+        it('disables appropriate days when max date changes', function() {
+          $rootScope.datepickerOptions.maxDate = new Date('September 18, 2010');
+          $rootScope.$digest();
+
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index > 20);
+          });
+        });
+
+        it('invalidates when model is a disabled date', function() {
+          $rootScope.datepickerOptions.maxDate = new Date('September 18, 2010');
+          $rootScope.$digest();
+          expect(element.hasClass('ng-invalid')).toBeTruthy();
+          expect(element.hasClass('ng-invalid-date-disabled')).toBeTruthy();
+        });
+
+        it('disables no days in previous month', function() {
+          clickPreviousButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+        });
+
+        it('disables all days in next month', function() {
+          clickNextButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(true);
+          });
+        });
+
+        it('disables appropriate months in current year', function() {
+          clickTitleButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index > 8);
+          });
+        });
+
+        it('disables no months in previous year', function() {
+          clickTitleButton();
+          clickPreviousButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+        });
+
+        it('disables all months in next year', function() {
+          clickTitleButton();
+          clickNextButton();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(true);
+          });
+        });
+
+        it('enables everything after if it is cleared', function() {
+          $rootScope.datepickerOptions.maxDate = null;
+          $rootScope.$digest();
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+        });
+      });
+
+      describe('formatting', function() {
+        beforeEach(function() {
+          $rootScope.datepickerOptions = {
+            formatDay: 'd',
+            formatDayHeader: 'EEEE',
+            formatDayTitle: 'MMMM, yy',
+            formatMonth: 'MMM',
+            formatMonthTitle: 'yy',
+            formatYear: 'yy',
+            yearColumns: 4,
+            yearRows: 3
+          };
+          element = $compile('<uib-datepicker ng-model="date"' +
+            'datepicker-options="datepickerOptions"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('changes the title format in `day` mode', function() {
+          expect(getTitle()).toBe('September, 10');
+        });
+
+        it('changes the title & months format in `month` mode', function() {
+          clickTitleButton();
+
+          expect(getTitle()).toBe('10');
+          expect(getOptions()).toEqual([
+            ['Jan', 'Feb', 'Mar'],
+            ['Apr', 'May', 'Jun'],
+            ['Jul', 'Aug', 'Sep'],
+            ['Oct', 'Nov', 'Dec']
+          ]);
+        });
+
+        it('changes the title, year format & range in `year` mode', function() {
+          clickTitleButton();
+          clickTitleButton();
+
+          expect(getTitle()).toBe('05 - 16');
+          expect(getOptions()).toEqual([
+            ['05', '06', '07', '08'],
+            ['09', '10', '11', '12'],
+            ['13', '14', '15', '16']
+          ]);
+        });
+
+        it('shows day labels', function() {
+          expect(getLabels(true)).toEqual(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+        });
+
+        it('changes the day format', function() {
+          expect(getOptions(true)).toEqual([
+            ['29', '30', '31', '1', '2', '3', '4'],
+            ['5', '6', '7', '8', '9', '10', '11'],
+            ['12', '13', '14', '15', '16', '17', '18'],
+            ['19', '20', '21', '22', '23', '24', '25'],
+            ['26', '27', '28', '29', '30', '1', '2'],
+            ['3', '4', '5', '6', '7', '8', '9']
+          ]);
+        });
+      });
+    });
+
+    describe('attribute `starting-day`', function() {
       beforeEach(function() {
         $rootScope.startingDay = 1;
         element = $compile('<uib-datepicker ng-model="date" starting-day="startingDay"></uib-datepicker>')($rootScope);
@@ -909,7 +1203,7 @@ describe('datepicker', function() {
       });
     });
 
-    describe('`min-date` attribute', function () {
+    describe('`min-date` attribute', function() {
       beforeEach(function() {
         $rootScope.mindate = new Date('September 12, 2010');
         element = $compile('<uib-datepicker ng-model="date" min-date="mindate"></uib-datepicker>')($rootScope);
@@ -1088,7 +1382,7 @@ describe('datepicker', function() {
       });
     });
 
-    describe('date-disabled expression', function () {
+    describe('date-disabled expression', function() {
       beforeEach(function() {
         $rootScope.dateDisabledHandler = jasmine.createSpy('dateDisabledHandler');
         element = $compile('<uib-datepicker ng-model="date" date-disabled="dateDisabledHandler(date, mode)"></uib-datepicker>')($rootScope);
