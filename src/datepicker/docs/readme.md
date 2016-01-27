@@ -142,7 +142,7 @@ The datepicker has 3 modes:
 * `starting-day`
   <small class="badge">$</small>
   <small class="badge">C</small>
-  _(Default: `$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK`)_ -
+  *(Default: `$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK`)* -
   Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
 
 * `template-url`
