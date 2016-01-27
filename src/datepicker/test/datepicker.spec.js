@@ -2103,7 +2103,7 @@ describe('datepicker', function() {
         describe('show-weeks', function() {
           beforeEach(function() {
             $rootScope.opts = {
-              'show-weeks': false
+              showWeeks: false
             };
             var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
             $rootScope.$digest();
@@ -2123,7 +2123,7 @@ describe('datepicker', function() {
           beforeEach(function() {
             $rootScope.date = null;
             $rootScope.opts = {
-              'initDate': new Date('November 9, 1980')
+              initDate: new Date('November 9, 1980')
             };
             var wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
             $rootScope.$digest();

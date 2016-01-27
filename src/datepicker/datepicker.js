@@ -767,14 +767,11 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     }
 
     if (scope.datepickerOptions) {
-      angular.forEach(scope.datepickerOptions, function(value, option) {
-        // Ignore this options, will be managed later
-        if (['minDate', 'maxDate', 'minMode', 'maxMode', 'initDate', 'datepickerMode'].indexOf(option) === -1) {
-          datepickerEl.attr(cameltoDash(option), value);
-        } else {
-          datepickerEl.attr(cameltoDash(option), 'datepickerOptions.' + option);
-        }
-      });
+      datepickerEl.attr('datepicker-options', 'datepickerOptions');
+
+      if (angular.isDefined(scope.datepickerOptions.datepickerMode)) {
+        datepickerEl.attr('datepicker-mode', 'datepickerOptions.datepickerMode');
+      }
     }
 
     angular.forEach(['minMode', 'maxMode', 'datepickerMode', 'shortcutPropagation'], function(key) {
