@@ -998,25 +998,6 @@ describe('$uibTooltipProvider', function() {
       expect($body.children().length).toEqual(bodyLength);
     }));
 
-    it('should close on location change', inject(function($rootScope, $compile) {
-      elmBody = angular.element(
-        '<div><span uib-tooltip="tooltip text">Selector Text</span></div>'
-      );
-
-      scope = $rootScope;
-      $compile(elmBody)(scope);
-      scope.$digest();
-      elm = elmBody.find('span');
-      elmScope = elm.scope();
-      tooltipScope = elmScope.$$childTail;
-
-      trigger(elm, 'mouseenter');
-      expect(tooltipScope.isOpen).toBe(true);
-
-      scope.$broadcast('$locationChangeSuccess');
-      scope.$digest();
-      expect(tooltipScope.isOpen).toBe(false);
-    }));
   });
 
   describe('triggers', function() {

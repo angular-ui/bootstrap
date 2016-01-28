@@ -540,18 +540,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             }
 
             appendToBody = angular.isDefined(appendToBodyVal) ? appendToBodyVal : appendToBody;
-
-            // if a tooltip is attached to <body> we need to remove it on
-            // location change as its parent scope will probably not be destroyed
-            // by the change.
-            if (appendToBody) {
-              scope.$on('$locationChangeSuccess', function closeTooltipOnLocationChangeSuccess() {
-                if (ttScope.isOpen) {
-                  hide();
-                }
-              });
-            }
-
+            
             // Make sure tooltip is destroyed and removed.
             scope.$on('$destroy', function onDestroyTooltip() {
               unregisterTriggers();
