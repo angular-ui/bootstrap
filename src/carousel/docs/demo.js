@@ -7,7 +7,7 @@ angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($sc
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;
     slides.push({
-      image: '//lorempixel.com/' + newWidth + '/300',
+      image: 'http://lorempixel.com/' + newWidth + '/300',
       text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
       id: currIndex++
     });
