@@ -247,10 +247,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
             if (showHint) {
               var firstLabel = scope.matches[0].label;
-              if (inputValue.length > 0 && firstLabel.slice(0, inputValue.length).toUpperCase() === inputValue.toUpperCase()) {
+              if (angular.isString(inputValue) &&
+                inputValue.length > 0 &&
+                firstLabel.slice(0, inputValue.length).toUpperCase() === inputValue.toUpperCase()) {
                 hintInputElem.val(inputValue + firstLabel.slice(inputValue.length));
-              }
-              else {
+              } else {
                 hintInputElem.val('');
               }
             }
