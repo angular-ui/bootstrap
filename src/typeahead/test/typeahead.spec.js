@@ -196,6 +196,30 @@ describe('typeahead tests', function() {
       expect(element).toBeClosed();
     });
 
+
+    it('should support changing min-length', function() {
+        $scope.typeAheadMinLength = 2;	
+        var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-min-length="typeAheadMinLength"></div>');
+
+        changeInputValueTo(element, 'b');
+
+        expect(element).toBeClosed();
+
+        $scope.typeAheadMinLength = 0;
+        $scope.$digest();
+        changeInputValueTo(element, '');
+
+        expect(element).toBeOpenWithActive(3, 0);
+
+        $scope.typeAheadMinLength = 2;
+        $scope.$digest();
+        changeInputValueTo(element, 'b');
+
+        expect(element).toBeClosed();
+    });
+
+
+
     it('should support custom model selecting function', function() {
       $scope.updaterFn = function(selectedItem) {
         return 'prefix' + selectedItem;
