@@ -1,3 +1,21 @@
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/angular-ui/bootstrap/compare/1.1.1...v1.1.2) (2016-02-01)
+
+
+### Bug Fixes
+
+* **datepicker:** fix validation for M! & d! ([c3b1431](https://github.com/angular-ui/bootstrap/commit/c3b1431)), closes [#5376](https://github.com/angular-ui/bootstrap/issues/5376) [#5225](https://github.com/angular-ui/bootstrap/issues/5225)
+* **modal:** ensure shift+tab is trapped in modal ([d2621e3](https://github.com/angular-ui/bootstrap/commit/d2621e3)), closes [#5294](https://github.com/angular-ui/bootstrap/issues/5294) [#5229](https://github.com/angular-ui/bootstrap/issues/5229)
+* **tooltip:** prevent closing on $locationChangeSuccess ([48c9cd8](https://github.com/angular-ui/bootstrap/commit/48c9cd8)), closes [#5360](https://github.com/angular-ui/bootstrap/issues/5360) [#5337](https://github.com/angular-ui/bootstrap/issues/5337)
+* **typeahead:** add guard for no $viewValue ([dbe9e81](https://github.com/angular-ui/bootstrap/commit/dbe9e81)), closes [#5358](https://github.com/angular-ui/bootstrap/issues/5358) [#5357](https://github.com/angular-ui/bootstrap/issues/5357)
+
+### Features
+
+* **accordion:** add aria tags ([61cdef1](https://github.com/angular-ui/bootstrap/commit/61cdef1)), closes [#5338](https://github.com/angular-ui/bootstrap/issues/5338)
+* **datepicker:** add datepickerOptions support ([e58c42c](https://github.com/angular-ui/bootstrap/commit/e58c42c)), closes [#5340](https://github.com/angular-ui/bootstrap/issues/5340)
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/angular-ui/bootstrap/compare/v1.1.0...v1.1.1) (2016-01-25)
 
