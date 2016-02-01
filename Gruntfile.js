@@ -1,5 +1,6 @@
 var marked = require('marked');
 var fs = require('fs');
+var _ = require('lodash');
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
@@ -399,6 +400,7 @@ module.exports = function(grunt) {
           url: `/bootstrap/versioned-docs/${version}`
         };
       });
+      jsContent = _.sortBy(jsContent, 'version').reverse();
       jsContent.unshift({
         version: 'Current',
         url: '/bootstrap'
