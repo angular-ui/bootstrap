@@ -133,6 +133,30 @@ describe('progressbar directive', function() {
     });
   });
 
+  describe('"max" attribute using object', function() {
+    beforeEach(inject(function() {
+      element = $compile('<uib-progressbar max="settings.max" animate="false" value="settings.value">{{settings.value}}/{{settings.max}}</uib-progressbar>')($rootScope);
+      $rootScope.$digest();
+    }));
+
+    it('should not modify outside object', function() {
+      if (typeof $rootScope.settings === 'object') {
+        // angular set's up the nested object therefore we have to check like this to avoid test crash
+        expect($rootScope.settings.max).toBeUndefined();
+      }
+      expect($rootScope.settings).toBeUndefined();
+      expect(getBar(0).attr('aria-valuemax')).toBe('100');
+      $rootScope.settings = {
+        max: 300,
+        value: 40
+      };
+      $rootScope.$digest();
+      expect($rootScope.settings.max).toBe(300);
+      expect(getBar(0).attr('aria-valuemax')).toBe('300');
+    });
+  });
+
+
   describe('"type" attribute', function() {
     beforeEach(inject(function() {
       $rootScope.type = 'success';
