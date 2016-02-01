@@ -13,6 +13,7 @@
     - [NuGet](#install-with-nuget)
     - [Custom](#custom-build)
     - [Manual](#manual-download)
+- [Webpack](#webpack)
 - [Support](#support)
     - [FAQ](#faq)
     - [Code of Conduct](#code-of-conduct)
@@ -86,13 +87,28 @@ When you are done downloading all the dependencies and project files the only re
 angular.module('myModule', ['ui.bootstrap']);
 ```
 
-If you're a Browserify or Webpack user, you can do:
+# Webpack
+
+To use this project with webpack, follow the [NPM](#install-with-npm) instructions. Now, if you want to use only the accordion, you can do:
 
 ```js
-var uibs = require('angular-ui-bootstrap');
+import accordion from 'angular-ui-bootstrap/src/accordion';
 
-angular.module('myModule', [uibs]);
+angular.module('myModule', [accordion]);
 ```
+
+You can import all the pieces you need in the same way:
+
+```js
+import accordion from 'angular-ui-bootstrap/src/accordion';
+import datepicker from 'angular-ui-bootstrap/src/datepicker';
+
+angular.module('myModule', [accordion, datepicker]);
+```
+
+This will load all the dependencies (if any) and also the templates (if any).
+
+Be sure to have a loader able to process `css` files like `css-loader`.
 
 # Support
 

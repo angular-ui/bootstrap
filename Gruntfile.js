@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         tasks: ['html2js', 'karma:watch:run']
       },
       js: {
-        files: ['src/**/*.js'],
+        files: ['src/**/*.js', '!src/**/index.js'],
         tasks: ['karma:watch:run']
       }
     },
@@ -231,7 +231,7 @@ module.exports = function(grunt) {
       name: name,
       moduleName: enquote(`ui.bootstrap.${name}`),
       displayName: ucwords(breakup(name, ' ')),
-      srcFiles: grunt.file.expand(`src/${name}/*.js`),
+      srcFiles: grunt.file.expand([`src/${name}/*.js`, `!src/${name}/index.js`]),
       cssFiles: grunt.file.expand(`src/${name}/*.css`),
       tplFiles: grunt.file.expand(`template/${name}/*.html`),
       tpljsFiles: grunt.file.expand(`template/${name}/*.html.js`),
@@ -263,7 +263,7 @@ module.exports = function(grunt) {
 
   function dependenciesForModule(name) {
     var deps = [];
-    grunt.file.expand(`src/${name}/*.js`)
+    grunt.file.expand([`src/${name}/*.js`, `!src/${name}/index.js`])
     .map(grunt.file.read)
     .forEach(function(contents) {
       //Strategy: find where module is declared,
