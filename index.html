@@ -15,7 +15,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.js"></script>
-    <script src="ui-bootstrap-tpls-1.1.1.min.js"></script>
+    <script src="ui-bootstrap-tpls-1.1.2.min.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
@@ -84,7 +84,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(1.1.1)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(1.1.2)</small>
                 </button>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
@@ -195,7 +195,7 @@
                             0.12.0 is the last version that supports AngularJS 1.2.x.</li>
                         <li><a href="http://angularjs.org" target="_blank">Angular-animate</a> (the version should match with your angular's, tested with 1.4.9) if you plan in using animations, you need to load angular-animate as well.</li>
                         <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version 3.3.6).
-                            This version of the library (1.1.1) works only with Bootstrap CSS in version 3.x.
+                            This version of the library (1.1.2) works only with Bootstrap CSS in version 3.x.
                             0.8.0 is the last version of this library that supports Bootstrap CSS in version 2.3.x.
                         </li>
                     </ul>
@@ -366,7 +366,7 @@ Add the ability to override the template used on the component.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -537,7 +537,7 @@ Defines the type of the alert. Go to <a href="http://getbootstrap.com/components
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -692,7 +692,7 @@ Event used to toggle the buttons.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -890,7 +890,7 @@ Add the ability to override the template used on the component.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -938,7 +938,7 @@ Add the ability to override the template used on the component.</p>
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;
     slides.push({
-      image: &#x27;//lorempixel.com/&#x27; + newWidth + &#x27;/300&#x27;,
+      image: &#x27;http://lorempixel.com/&#x27; + newWidth + &#x27;/300&#x27;,
       text: [&#x27;Nice image&#x27;,&#x27;Awesome photograph&#x27;,&#x27;That is so cool&#x27;,&#x27;I love that&#x27;][slides.length % 4],
       id: currIndex++
     });
@@ -1001,7 +1001,7 @@ Add the ability to override the template used on the component.</p>
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;
     slides.push({
-      image: '//lorempixel.com/' + newWidth + '/300',
+      image: 'http://lorempixel.com/' + newWidth + '/300',
       text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
       id: currIndex++
     });
@@ -1105,7 +1105,7 @@ Whether the element should be collapsed or not.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -1306,7 +1306,7 @@ Parses the long form of the era (<code>Anno Domini</code> or <code>Before Christ
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'dateparser')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'dateparser')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -1433,6 +1433,29 @@ An optional expression to disable visible options based on passing a date and cu
 <em>(Default: <code>day</code>)</em> -
 Current mode of the datepicker <em>(day|month|year)</em>. Can be used to initialize the datepicker in a specific mode.</p>
 </li>
+<li><p><code>datepicker-options</code>
+<small class="badge">$</small> -
+An optional object to configure the datepicker in one place. If this attribute is used, all supported options must be specified instead of the attributes.</p>
+<p>The supported options are:</p>
+<ul>
+<li>formatDay</li>
+<li>formatDayHeader</li>
+<li>formatDayTitle</li>
+<li>formatMonth</li>
+<li>formatMonthTitle</li>
+<li>formatYear</li>
+<li>initDate</li>
+<li>maxDate</li>
+<li>maxMode</li>
+<li>minDate</li>
+<li>minMode</li>
+<li>shortcutPropagation</li>
+<li>showWeeks</li>
+<li>startingDay</li>
+<li>yearColumns</li>
+<li>yearRows</li>
+</ul>
+</li>
 <li><p><code>format-day</code>
 <small class="badge">C</small>
 <em>(Default: <code>dd</code>)</em> -
@@ -1527,7 +1550,7 @@ Whether to display week numbers.</p>
 <li><p><code>starting-day</code>
 <small class="badge">$</small>
 <small class="badge">C</small>
-_(Default: <code>$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK</code>)_ -
+<em>(Default: <code>$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK</code>)</em> -
 Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).</p>
 </li>
 <li><p><code>template-url</code>
@@ -1654,7 +1677,7 @@ But beware <strong>this possibility may be deprecated on the near future.</stron
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -2117,7 +2140,7 @@ Class to apply when the dropdown is open.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -2498,7 +2521,7 @@ Also, the <code>$close</code> and <code>$dismiss</code> methods returns true if 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -2717,7 +2740,7 @@ Total number of items in all pages.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'pager')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'pager')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -2886,7 +2909,7 @@ Total number of items in all pages.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -3130,7 +3153,7 @@ Provide a set of defaults for certain tooltip and popover attributes. Currently 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -3549,7 +3572,7 @@ The placement for the element.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'position')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'position')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -3761,7 +3784,7 @@ Title to use as label (for accessibility).</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -3968,7 +3991,7 @@ A variable used in the template to specify the state for unselected icons.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -4175,7 +4198,7 @@ An optional expression called when tab is activated.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -4442,7 +4465,7 @@ Add the ability to override the template used on the component.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -4749,7 +4772,7 @@ Provide a set of defaults for certain tooltip and popover attributes. Currently 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -5099,7 +5122,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.1', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.4.9', '3.3.6', '1.1.2', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset>
                                     <uib-tab heading="Markup">
@@ -5322,7 +5345,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('1.1.1')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 1.1.1</a>
+        <a class="btn btn-primary" ng-href="{{download('1.1.2')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 1.1.2</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
@@ -5633,7 +5656,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
         <a class="btn btn-default" ng-click="cancel()">Close</a>
         <a class="btn btn-primary" ng-hide="isOldBrowser()"
             ng-disabled="isOldBrowser() !== false && !selectedModules.length"
-            ng-click="selectedModules.length && build(selectedModules, '1.1.1')">
+            ng-click="selectedModules.length && build(selectedModules, '1.1.2')">
             <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
         </a>
     </div>
