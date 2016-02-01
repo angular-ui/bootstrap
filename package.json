@@ -8,10 +8,12 @@
     "lib": "src/"
   },
   "files": [
-    "dist/", "src/", "template/"
+    "dist/",
+    "src/",
+    "template/"
   ],
   "main": "index.js",
-  "scripts":{
+  "scripts": {
     "test": "grunt"
   },
   "repository": {
@@ -39,6 +41,7 @@
     "karma-firefox-launcher": "^0.1.4",
     "karma-jasmine": "^0.3.5",
     "load-grunt-tasks": "^3.3.0",
+    "lodash": "^4.1.0",
     "marked": "^0.3.5",
     "semver": "^5.0.1",
     "shelljs": "^0.5.1"
