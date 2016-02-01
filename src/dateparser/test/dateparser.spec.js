@@ -8,6 +8,10 @@ describe('date parser', function() {
     oldDate.setFullYear(1);
   }));
 
+  function expectFilter(date, format, display) {
+    expect(dateParser.filter(date, format)).toEqual(display);
+  }
+
   function expectParse(input, format, date) {
     expect(dateParser.parse(input, format)).toEqual(date);
   }
@@ -15,6 +19,249 @@ describe('date parser', function() {
   function expectBaseParse(input, format, baseDate, date) {
     expect(dateParser.parse(input, format, baseDate)).toEqual(date);
   }
+
+  describe('filter', function() {
+    it('should work correctly for `dd`, `MM`, `yyyy`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'dd.MM.yyyy', '17.11.2013');
+      expectFilter(new Date(2013, 11, 31, 0), 'dd.MM.yyyy', '31.12.2013');
+      expectFilter(new Date(1991, 2, 8, 0), 'dd-MM-yyyy', '08-03-1991');
+      expectFilter(new Date(1980, 2, 5, 0), 'MM/dd/yyyy', '03/05/1980');
+      expectFilter(new Date(1983, 0, 10, 0), 'dd.MM/yyyy', '10.01/1983');
+      expectFilter(new Date(1980, 10, 9, 0), 'MM-dd-yyyy', '11-09-1980');
+      expectFilter(new Date(2011, 1, 5, 0), 'yyyy/MM/dd', '2011/02/05');
+      expectFilter(oldDate, 'yyyy/MM/dd', '0001/03/06');
+    });
+
+    it('should work correctly for `yy`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'dd.MM.yy', '17.11.13');
+      expectFilter(new Date(2011, 4, 2, 0), 'dd-MM-yy', '02-05-11');
+      expectFilter(new Date(2080, 1, 5, 0), 'MM/dd/yy', '02/05/80');
+      expectFilter(new Date(2055, 1, 5, 0), 'yy/MM/dd', '55/02/05');
+      expectFilter(new Date(2013, 7, 11, 0), 'dd-MM-yy', '11-08-13');
+    });
+
+    it('should work correctly for `y`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'dd.MM.y', '17.11.2013');
+      expectFilter(new Date(2013, 11, 31, 0), 'dd.MM.y', '31.12.2013');
+      expectFilter(new Date(1991, 2, 8, 0), 'dd-MM-y', '08-03-1991');
+      expectFilter(new Date(1980, 2, 5, 0), 'MM/dd/y', '03/05/1980');
+      expectFilter(new Date(1983, 0, 10, 0), 'dd.MM/y', '10.01/1983');
+      expectFilter(new Date(1980, 10, 9, 0), 'MM-dd-y', '11-09-1980');
+      expectFilter(new Date(2011, 1, 5, 0), 'y/MM/dd', '2011/02/05');
+    });
+
+    it('should work correctly for `MMMM`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'dd.MMMM.yy', '17.November.13');
+      expectFilter(new Date(1980, 2, 5, 0), 'dd-MMMM-yyyy', '05-March-1980');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/dd/yyyy', 'February/05/1980');
+      expectFilter(new Date(1949, 11, 20, 0), 'yyyy/MMMM/dd', '1949/December/20');
+      expectFilter(oldDate, 'yyyy/MMMM/dd', '0001/March/06');
+    });
+
+    it('should work correctly for `MMM`', function() {
+      expectFilter(new Date(2010, 8, 30, 0), 'dd.MMM.yy', '30.Sep.10');
+      expectFilter(new Date(2011, 4, 2, 0), 'dd-MMM-yy', '02-May-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMM/dd/yyyy', 'Feb/05/1980');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/MMM/dd', '1955/Feb/05');
+      expectFilter(oldDate, 'yyyy/MMM/dd', '0001/Mar/06');
+    });
+
+    it('should work correctly for `M`', function() {
+      expectFilter(new Date(2013, 7, 11, 0), 'M/dd/yyyy', '8/11/2013');
+      expectFilter(new Date(2005, 10, 7, 0), 'dd.M.yy', '07.11.05');
+      expectFilter(new Date(2011, 4, 2, 0), 'dd-M-yy', '02-5-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'M/dd/yyyy', '2/05/1980');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/M/dd', '1955/2/05');
+      expectFilter(new Date(2011, 4, 2, 0), 'dd-M-yy', '02-5-11');
+    });
+
+    it('should work correctly for `M!`', function() {
+      expectFilter(new Date(2013, 7, 11, 0), 'M!/dd/yyyy', '08/11/2013');
+      expectFilter(new Date(2005, 10, 7, 0), 'dd.M!.yy', '07.11.05');
+      expectFilter(new Date(2011, 4, 2, 0), 'dd-M!-yy', '02-05-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'M!/dd/yyyy', '02/05/1980');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/M!/dd', '1955/02/05');
+      expectFilter(new Date(2011, 4, 2, 0), 'dd-M!-yy', '02-05-11');
+      expectFilter(oldDate, 'yyyy/M!/dd', '0001/03/06');
+    });
+
+    it('should work correctly for `d`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy', '17.November.13');
+      expectFilter(new Date(1991, 2, 8, 0), 'd-MMMM-yyyy', '8-March-1991');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy', 'February/5/1980');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/MMMM/d', '1955/February/5');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy', '11-08-13');
+      expectFilter(oldDate, 'yyyy/MM/d', '0001/03/6');
+    });
+
+    it('should work correctly for `d!`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd!.MMMM.yy', '17.November.13');
+      expectFilter(new Date(1991, 2, 8, 0), 'd!-MMMM-yyyy', '08-March-1991');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d!/yyyy', 'February/05/1980');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/MMMM/d!', '1955/February/05');
+      expectFilter(new Date(2013, 7, 11, 0), 'd!-MM-yy', '11-08-13');
+      expectFilter(oldDate, 'yyyy/MM/d!', '0001/03/06');
+    });
+
+    it('should work correctly for `EEEE`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'EEEE.d.MMMM.yy', 'Sunday.17.November.13');
+      expectFilter(new Date(1991, 2, 8, 0), 'd-EEEE-MMMM-yyyy', '8-Friday-March-1991');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/EEEE', 'February/5/1980/Tuesday');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/EEEE/MMMM/d', '1955/Saturday/February/5');
+    });
+
+    it('should work correctly for `EEE`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'EEE.d.MMMM.yy', 'Sun.17.November.13');
+      expectFilter(new Date(1991, 2, 8, 0), 'd-EEE-MMMM-yyyy', '8-Fri-March-1991');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/EEE', 'February/5/1980/Tue');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/EEE/MMMM/d', '1955/Sat/February/5');
+    });
+
+    it('should work correctly for `HH`', function() {
+      expectFilter(new Date(2015, 2, 22, 22), 'd.MMMM.yy.HH', '22.March.15.22');
+      expectFilter(new Date(1991, 2, 8, 11), 'd-MMMM-yyyy-HH', '8-March-1991-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/HH', 'February/5/1980/00');
+      expectFilter(new Date(1955, 1, 5, 3), 'yyyy/MMMM/d HH', '1955/February/5 03');
+      expectFilter(new Date(2013, 7, 11, 23), 'd-MM-yy HH', '11-08-13 23');
+    });
+
+    it('should work correctly for `H`', function() {
+      expectFilter(new Date(2015, 2, 22, 22), 'd.MMMM.yy.H', '22.March.15.22');
+      expectFilter(new Date(1991, 2, 8, 11), 'd-MMMM-yyyy-H', '8-March-1991-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/H', 'February/5/1980/0');
+      expectFilter(new Date(1955, 1, 5, 3), 'yyyy/MMMM/d H', '1955/February/5 3');
+      expectFilter(new Date(2013, 7, 11, 23), 'd-MM-yy H', '11-08-13 23');
+    });
+
+    it('should work correctly for `hh`', function() {
+      expectFilter(new Date(2015, 2, 22, 12), 'd.MMMM.yy.hh', '22.March.15.12');
+      expectFilter(new Date(1991, 2, 8, 11), 'd-MMMM-yyyy-hh', '8-March-1991-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/hh', 'February/5/1980/12');
+      expectFilter(new Date(1955, 1, 5, 3), 'yyyy/MMMM/d hh', '1955/February/5 03');
+      expectFilter(new Date(2013, 7, 11, 9), 'd-MM-yy hh', '11-08-13 09');
+    });
+
+    it('should work correctly for `h`', function() {
+      expectFilter(new Date(2015, 2, 22, 12), 'd.MMMM.yy.h', '22.March.15.12');
+      expectFilter(new Date(1991, 2, 8, 11), 'd-MMMM-yyyy-h', '8-March-1991-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/h', 'February/5/1980/12');
+      expectFilter(new Date(1955, 1, 5, 3), 'yyyy/MMMM/d h', '1955/February/5 3');
+      expectFilter(new Date(2013, 7, 11, 3), 'd-MM-yy h', '11-08-13 3');
+    });
+
+    it('should work correctly for `mm`', function() {
+      expectFilter(new Date(2015, 2, 22, 0, 22), 'd.MMMM.yy.mm', '22.March.15.22');
+      expectFilter(new Date(1991, 2, 8, 0, 59), 'd-MMMM-yyyy-mm', '8-March-1991-59');
+      expectFilter(new Date(1980, 1, 5, 0, 0), 'MMMM/d/yyyy/mm', 'February/5/1980/00');
+      expectFilter(new Date(1955, 1, 5, 0, 3), 'yyyy/MMMM/d mm', '1955/February/5 03');
+      expectFilter(new Date(2013, 7, 11, 0, 46), 'd-MM-yy mm', '11-08-13 46');
+      expectFilter(new Date(2015, 2, 22, 22, 33), 'd.MMMM.yy.HH:mm', '22.March.15.22:33');
+      expectFilter(new Date(2015, 2, 22, 2, 1), 'd.MMMM.yy.H:mm', '22.March.15.2:01');
+    });
+
+    it('should work correctly for `m`', function() {
+      expectFilter(new Date(2015, 2, 22, 0, 22), 'd.MMMM.yy.m', '22.March.15.22');
+      expectFilter(new Date(1991, 2, 8, 0, 59), 'd-MMMM-yyyy-m', '8-March-1991-59');
+      expectFilter(new Date(1980, 1, 5, 0, 0), 'MMMM/d/yyyy/m', 'February/5/1980/0');
+      expectFilter(new Date(1955, 1, 5, 0, 3), 'yyyy/MMMM/d m', '1955/February/5 3');
+      expectFilter(new Date(2013, 7, 11, 0, 46), 'd-MM-yy m', '11-08-13 46');
+      expectFilter(new Date(2015, 2, 22, 22, 3), 'd.MMMM.yy.HH:m', '22.March.15.22:3');
+      expectFilter(new Date(2015, 2, 22, 2, 1), 'd.MMMM.yy.H:m', '22.March.15.2:1');
+    });
+
+    it('should work correctly for `sss`', function() {
+      expectFilter(new Date(2015, 2, 22, 0, 0, 0, 123), 'd.MMMM.yy.sss', '22.March.15.123');
+      expectFilter(new Date(1991, 2, 8, 0, 0, 0, 59), 'd-MMMM-yyyy-sss', '8-March-1991-059');
+      expectFilter(new Date(1980, 1, 5, 0, 0, 0), 'MMMM/d/yyyy/sss', 'February/5/1980/000');
+      expectFilter(new Date(1955, 1, 5, 0, 0, 0, 3), 'yyyy/MMMM/d sss', '1955/February/5 003');
+      expectFilter(new Date(2013, 7, 11, 0, 0, 0, 46), 'd-MM-yy sss', '11-08-13 046');
+      expectFilter(new Date(2015, 2, 22, 22, 33, 0, 44), 'd.MMMM.yy.HH:mm:sss', '22.March.15.22:33:044');
+      expectFilter(new Date(2015, 2, 22, 0, 0, 0, 1), 'd.MMMM.yy.H:m:sss', '22.March.15.0:0:001');
+    });
+
+    it('should work correctly for `ss`', function() {
+      expectFilter(new Date(2015, 2, 22, 0, 0, 22), 'd.MMMM.yy.ss', '22.March.15.22');
+      expectFilter(new Date(1991, 2, 8, 0, 0, 59), 'd-MMMM-yyyy-ss', '8-March-1991-59');
+      expectFilter(new Date(1980, 1, 5, 0, 0, 0), 'MMMM/d/yyyy/ss', 'February/5/1980/00');
+      expectFilter(new Date(1955, 1, 5, 0, 0, 3), 'yyyy/MMMM/d ss', '1955/February/5 03');
+      expectFilter(new Date(2013, 7, 11, 0, 0, 46), 'd-MM-yy ss', '11-08-13 46');
+      expectFilter(new Date(2015, 2, 22, 22, 33, 44), 'd.MMMM.yy.HH:mm:ss', '22.March.15.22:33:44');
+      expectFilter(new Date(2015, 2, 22, 0, 0, 1), 'd.MMMM.yy.H:m:ss', '22.March.15.0:0:01');
+    });
+
+    it('should work correctly for `s`', function() {
+      expectFilter(new Date(2015, 2, 22, 0, 0, 22), 'd.MMMM.yy.s', '22.March.15.22');
+      expectFilter(new Date(1991, 2, 8, 0, 0, 59), 'd-MMMM-yyyy-s', '8-March-1991-59');
+      expectFilter(new Date(1980, 1, 5, 0, 0, 0), 'MMMM/d/yyyy/s', 'February/5/1980/0');
+      expectFilter(new Date(1955, 1, 5, 0, 0, 3), 'yyyy/MMMM/d s', '1955/February/5 3');
+      expectFilter(new Date(2013, 7, 11, 0, 0, 46), 'd-MM-yy s', '11-08-13 46');
+      expectFilter(new Date(2015, 2, 22, 22, 33, 4), 'd.MMMM.yy.HH:mm:s', '22.March.15.22:33:4');
+      expectFilter(new Date(2015, 2, 22, 22, 3, 4), 'd.MMMM.yy.HH:m:s', '22.March.15.22:3:4');
+    });
+
+    it('should work correctly for `a`', function() {
+      expectFilter(new Date(2015, 2, 22, 10), 'd.MMMM.yy.hha', '22.March.15.10AM');
+      expectFilter(new Date(2015, 2, 22, 22), 'd.MMMM.yy.hha', '22.March.15.10PM');
+      expectFilter(new Date(1991, 2, 8, 11), 'd-MMMM-yyyy-hha', '8-March-1991-11AM');
+      expectFilter(new Date(1991, 2, 8, 23), 'd-MMMM-yyyy-hha', '8-March-1991-11PM');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/hha', 'February/5/1980/12AM');
+      expectFilter(new Date(1980, 1, 5, 12), 'MMMM/d/yyyy/hha', 'February/5/1980/12PM');
+      expectFilter(new Date(1955, 1, 5, 3), 'yyyy/MMMM/d hha', '1955/February/5 03AM');
+      expectFilter(new Date(1955, 1, 5, 15), 'yyyy/MMMM/d hha', '1955/February/5 03PM');
+      expectFilter(new Date(2013, 7, 11, 9), 'd-MM-yy hha', '11-08-13 09AM');
+      expectFilter(new Date(2013, 7, 11, 21), 'd-MM-yy hha', '11-08-13 09PM');
+    });
+
+    it('should work correctly for `ww`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy.ww', '17.November.13.47');
+      expectFilter(new Date(1991, 2, 8, 0), 'd-MMMM-yyyy-ww', '8-March-1991-10');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/ww', 'February/5/1980/06');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/MMMM/d/ww', '1955/February/5/05');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy ww', '11-08-13 33');
+      expectFilter(oldDate, 'yyyy/MM/d ww', '0001/03/6 10');
+    });
+
+    it('should work correctly for `w`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy.w', '17.November.13.47');
+      expectFilter(new Date(1991, 2, 8, 0), 'd-MMMM-yyyy-w', '8-March-1991-10');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/w', 'February/5/1980/6');
+      expectFilter(new Date(1955, 1, 5, 0), 'yyyy/MMMM/d/w', '1955/February/5/5');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy w', '11-08-13 33');
+      expectFilter(oldDate, 'yyyy/MM/d w', '0001/03/6 10');
+    });
+
+    it('should work correctly for `G`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy.G', '17.November.13.AD');
+      expectFilter(new Date(-1991, 2, 8, 0), 'd-MMMM-yyyy-G', '8-March-1991-BC');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/G', 'February/5/1980/AD');
+      expectFilter(new Date(-1955, 1, 5, 0), 'yyyy/MMMM/d/G', '1955/February/5/BC');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy G', '11-08-13 AD');
+    });
+
+    it('should work correctly for `GG`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy.GG', '17.November.13.AD');
+      expectFilter(new Date(-1991, 2, 8, 0), 'd-MMMM-yyyy-GG', '8-March-1991-BC');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/GG', 'February/5/1980/AD');
+      expectFilter(new Date(-1955, 1, 5, 0), 'yyyy/MMMM/d/GG', '1955/February/5/BC');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy GG', '11-08-13 AD');
+    });
+
+    it('should work correctly for `GGG`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy.GGG', '17.November.13.AD');
+      expectFilter(new Date(-1991, 2, 8, 0), 'd-MMMM-yyyy-GGG', '8-March-1991-BC');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/GGG', 'February/5/1980/AD');
+      expectFilter(new Date(-1955, 1, 5, 0), 'yyyy/MMMM/d/GGG', '1955/February/5/BC');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy GGG', '11-08-13 AD');
+    });
+
+    it('should work correctly for `GGGG`', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy.GGGG', '17.November.13.Anno Domini');
+      expectFilter(new Date(-1991, 2, 8, 0), 'd-MMMM-yyyy-GGGG', '8-March-1991-Before Christ');
+      expectFilter(new Date(1980, 1, 5, 0), 'MMMM/d/yyyy/GGGG', 'February/5/1980/Anno Domini');
+      expectFilter(new Date(-1955, 1, 5, 0), 'yyyy/MMMM/d/GGGG', '1955/February/5/Before Christ');
+      expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy GGGG', '11-08-13 Anno Domini');
+    });
+  });
 
   describe('with custom formats', function() {
     it('should work correctly for `dd`, `MM`, `yyyy`', function() {
@@ -390,7 +637,6 @@ describe('date parser', function() {
 
     expect(dateParser.init).toHaveBeenCalled();
   }));
-
 
   describe('timezone functions', function() {
     describe('toTimezone', function() {
