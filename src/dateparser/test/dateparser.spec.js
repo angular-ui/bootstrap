@@ -261,6 +261,10 @@ describe('date parser', function() {
       expectFilter(new Date(-1955, 1, 5, 0), 'yyyy/MMMM/d/GGGG', '1955/February/5/Before Christ');
       expectFilter(new Date(2013, 7, 11, 0), 'd-MM-yy GGGG', '11-08-13 Anno Domini');
     });
+
+    it('should work correctly for literal text', function() {
+      expectFilter(new Date(2013, 10, 17, 0), 'dd.MM.yyyy foo', '17.11.2013 foo');
+    });
   });
 
   describe('with custom formats', function() {

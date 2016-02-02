@@ -322,11 +322,13 @@ angular.module('ui.bootstrap.dateparser', [])
         _format = _format.replace(match[1] + mapper.key, '');
       }
 
+      var endStr = i === map.length - 1 ? _format : '';
+
       if (mapper.apply) {
-        return str + mapper.apply.call(null, date);
+        return str + mapper.apply.call(null, date) + endStr;
       }
 
-      return str;
+      return str + endStr;
     }, '');
   };
 
