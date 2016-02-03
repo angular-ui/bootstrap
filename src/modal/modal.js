@@ -201,6 +201,12 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
 
           $q.when(animationPromise).then(function() {
+            // Notify {@link $modalStack} that modal is rendered.
+            var modal = $modalStack.getTop();
+            if (modal) {
+              $modalStack.modalRendered(modal.key);
+            }
+
             /**
              * If something within the freshly-opened modal already has focus (perhaps via a
              * directive that causes focus). then no need to try and focus anything.
@@ -222,12 +228,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
               }
             }
           });
-
-          // Notify {@link $modalStack} that modal is rendered.
-          var modal = $modalStack.getTop();
-          if (modal) {
-            $modalStack.modalRendered(modal.key);
-          }
         });
       }
     };

@@ -305,6 +305,42 @@ describe('$uibModal', function() {
       close(modalInstance, 'closing in test', true);
     });
 
+    it('should resolve rendered promise when animation is complete', function() {
+      var modalInstance = {
+        result: $q.defer(),
+        opened: $q.defer(),
+        closed: $q.defer(),
+        rendered: $q.defer(),
+        close: function (result) {
+          return $uibModalStack.close(modalInstance, result);
+        },
+        dismiss: function (reason) {
+          return $uibModalStack.dismiss(modalInstance, reason);
+        }
+      };
+      var rendered = false;
+      modalInstance.rendered.promise.then(function() {
+        rendered = true;
+      });
+
+      $uibModalStack.open(modalInstance, {
+        appendTo: angular.element(document.body),
+        scope: $rootScope.$new(),
+        deferred: modalInstance.result,
+        renderDeferred: modalInstance.rendered,
+        closedDeferred: modalInstance.closed,
+        content: '<div id="test">test</div>'
+      });
+
+      $rootScope.$digest();
+
+      expect(rendered).toBe(false);
+
+      $animate.flush();
+
+      expect(rendered).toBe(true);
+    });
+
     it('should not throw an exception on a second dismiss', function() {
       var modal = open({template: '<div>Content</div>'});
 
