@@ -31,7 +31,7 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($scope
 
 });
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
 angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
