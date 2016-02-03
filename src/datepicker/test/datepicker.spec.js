@@ -1638,6 +1638,57 @@ describe('datepicker', function() {
       });
     });
 
+    describe('basic popup', function() {
+      var wrapElement, inputEl, dropdownEl;
+
+      function assignElements(wrapElement) {
+        inputEl = wrapElement.find('input');
+        dropdownEl = wrapElement.find('ul');
+        element = dropdownEl.find('table');
+      }
+
+      beforeEach(function() {
+        $rootScope.date = new Date('September 30, 2010 15:30:00');
+        $rootScope.isopen = true;
+        wrapElement = $compile('<div><input ng-model="date" uib-datepicker-popup is-open="isopen"></div>')($rootScope);
+        $rootScope.$digest();
+        assignElements(wrapElement);
+      });
+
+      it('should stop click event from bubbling from today button', function() {
+        var bubbled = false;
+        wrapElement.on('click', function() {
+          bubbled = true;
+        });
+
+        wrapElement.find('.uib-datepicker-current').trigger('click');
+
+        expect(bubbled).toBe(false);
+      });
+
+      it('should stop click event from bubbling from clear button', function() {
+        var bubbled = false;
+        wrapElement.on('click', function() {
+          bubbled = true;
+        });
+
+        wrapElement.find('.uib-clear').trigger('click');
+
+        expect(bubbled).toBe(false);
+      });
+
+      it('should stop click event from bubbling from close button', function() {
+        var bubbled = false;
+        wrapElement.on('click', function() {
+          bubbled = true;
+        });
+
+        wrapElement.find('.uib-close').trigger('click');
+
+        expect(bubbled).toBe(false);
+      });
+    });
+
     describe('ngModelOptions allowInvalid', function() {
       var $sniffer, inputEl;
 

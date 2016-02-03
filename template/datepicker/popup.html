@@ -2,11 +2,11 @@
   <ul class="uib-datepicker-popup dropdown-menu" dropdown-nested ng-if="isOpen" ng-style="{top: position.top+'px', left: position.left+'px'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
     <li ng-transclude></li>
     <li ng-if="showButtonBar" class="uib-button-bar">
-    <span class="btn-group pull-left">
-      <button type="button" class="btn btn-sm btn-info uib-datepicker-current" ng-click="select('today')" ng-disabled="isDisabled('today')">{{ getText('current') }}</button>
-      <button type="button" class="btn btn-sm btn-danger uib-clear" ng-click="select(null)">{{ getText('clear') }}</button>
-    </span>
-      <button type="button" class="btn btn-sm btn-success pull-right uib-close" ng-click="close()">{{ getText('close') }}</button>
+      <span class="btn-group pull-left">
+        <button type="button" class="btn btn-sm btn-info uib-datepicker-current" ng-click="select('today', $event)" ng-disabled="isDisabled('today')">{{ getText('current') }}</button>
+        <button type="button" class="btn btn-sm btn-danger uib-clear" ng-click="select(null, $event)">{{ getText('clear') }}</button>
+      </span>
+      <button type="button" class="btn btn-sm btn-success pull-right uib-close" ng-click="close($event)">{{ getText('close') }}</button>
     </li>
   </ul>
 </div>

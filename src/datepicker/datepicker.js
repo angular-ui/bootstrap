@@ -939,7 +939,9 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     }
   };
 
-  scope.select = function(date) {
+  scope.select = function(date, evt) {
+    evt.stopPropagation();
+
     if (date === 'today') {
       var today = new Date();
       if (angular.isDate(scope.date)) {
@@ -952,7 +954,9 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     scope.dateSelection(date);
   };
 
-  scope.close = function() {
+  scope.close = function(evt) {
+    evt.stopPropagation();
+
     scope.isOpen = false;
     element[0].focus();
   };
