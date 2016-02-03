@@ -23,7 +23,6 @@
 ### Bug Fixes
 
 * **datepicker:** allow using min/max mode/date with datepickerOptions ([97af6a9](https://github.com/angular-ui/bootstrap/commit/97af6a9)), closes [#5334](https://github.com/angular-ui/bootstrap/issues/5334) [#5315](https://github.com/angular-ui/bootstrap/issues/5315)
-* **doc:** fix changelog for issue 5186 ([8f94fe8](https://github.com/angular-ui/bootstrap/commit/8f94fe8)), closes [#4753](https://github.com/angular-ui/bootstrap/issues/4753) [#5186](https://github.com/angular-ui/bootstrap/issues/5186) [#5325](https://github.com/angular-ui/bootstrap/issues/5325)
 * **modal:** fix modal closed resolution ([d5a48ea](https://github.com/angular-ui/bootstrap/commit/d5a48ea)), closes [#5322](https://github.com/angular-ui/bootstrap/issues/5322) [#5326](https://github.com/angular-ui/bootstrap/issues/5326)
 
 
