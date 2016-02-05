@@ -309,7 +309,7 @@ describe('tabs', function() {
       scope.select = jasmine.createSpy();
       elm = $compile([
         '<uib-tabset>',
-        '  <uib-tab ng-repeat="t in tabs" active="t.active" select="select()">',
+        '  <uib-tab ng-repeat="t in tabs" active="t.active" select="t.select()">',
         '    <uib-tab-heading><b>heading</b> {{index}}</uib-tab-heading>',
         '    content {{$index}}',
         '  </uib-tab>',
