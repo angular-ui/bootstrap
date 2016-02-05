@@ -205,6 +205,1460 @@ describe('datepicker', function() {
     });
   });
 
+  // TODO: Remove on next minor release
+  describe('uibDatepickerAttributeWarning', function() {
+    var $compile,
+      $log,
+      $scope;
+
+    it('should not log warning for datepickerOptions usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.opts = {};
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-options="opts"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatDay attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-day="dd"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker formatDay attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatDay attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-day="dd"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatMonth attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-month="MMMM"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker formatMonth attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatMonth attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-month="MMMM"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatYear attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-year="yyyy"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker formatYear attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatYear attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-year="yyyy"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatDayHeader attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-day-header="EEE"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker formatDayHeader attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatDayHeader attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-day-header="EEE"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatDayTitle attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-day-title="MMMM yyyy"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker formatDayTitle attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatDayTitle attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-day-title="MMMM yyyy"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatMonthTitle attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-month-title="yyyy"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker formatMonthTitle attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatMonthTitle attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" format-month-title="yyyy"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for showWeeks attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" show-weeks="true"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker showWeeks attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for showWeeks attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" show-weeks="true"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for shortcutPropagation attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" shortcut-propagation="false"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker shortcutPropagation attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for shortcutPropagation attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" shortcut-propagation="false"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for yearColumns attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" year-columns="5"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker yearColumns attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for yearColumns attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" year-columns="5"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for yearRows attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" year-rows="4"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker yearRows attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for yearRows attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" year-rows="5"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for minDate attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+      $scope.minDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" min-date="minDate"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker minDate attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for minDate attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+      $scope.minDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" min-date="minDate"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for maxDate attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+      $scope.maxDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" max-date="maxDate"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker maxDate attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for maxDate attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+      $scope.maxDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" max-date="maxDate"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for minMode attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" min-mode="year"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker minMode attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for minMode attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" min-mode="year"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for maxMode attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" max-mode="day"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker maxMode attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for maxMode attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" max-mode="day"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for initDate attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+      $scope.initDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" init-date="initDate"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker initDate attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for initDate attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date()
+      };
+      $scope.initDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" init-date="initDate"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+  });
+
+  // TODO: Remove on next minor release
+  describe('uibDatepickerPopupAttributeWarning', function() {
+    var $compile,
+      $log,
+      $scope;
+
+    it('should not log warning for datepickerOptions usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.opts = {};
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-options="opts"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for closeOnDateSelection attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup close-on-date-selection="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for closeOnDateSelection attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup close-on-date-selection="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for appendToBody attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup append-to-body="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for appendToBody attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup append-to-body="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for onOpenFocus attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup on-open-focus="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for onOpenFocus attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup on-open-focus="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for datepickerPopupTemplateUrl attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-popup-template-url="uib/template/datepicker/popup.html"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for datepickerPopupTemplateUrl attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-popup-template-url="uib/template/datepicker/popup.html"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for datepickerTemplateUrl attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-template-url="uib/template/datepicker/datepicker.html"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for datepickerTemplateUrl attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup datepicker-template-url="uib/template/datepicker/datepicker.html"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for altInputFormats attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.formats = [];
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup alt-input-formats="formats"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for altInputFormats attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.formats = [];
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup alt-input-formats="formats"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for showButtonBar attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup show-button-bar="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for showButtonBar attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup show-button-bar="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for minMode attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup min-mode="year"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for minMode attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup min-mode="year"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for maxMode attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup max-mode="day"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for maxMode attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup max-mode="day"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for shortcutPropagation attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup shortcut-propagation="false"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for shortcutPropagation attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup shortcut-propagation="false"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for minDate attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.minDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup min-date="minDate"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for minDate attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.minDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup min-date="minDate"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for maxDate attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.maxDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup max-date="maxDate"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for maxDate attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.maxDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup max-date="maxDate"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for initDate attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.initDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup init-date="initDate"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for initDate attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+      $scope.initDate = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup init-date="initDate"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatDay attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day="dd"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatDay attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day="dd"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatMonth attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-month="MMMM"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatMonth attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-month="MMMM"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatYear attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-year="yyyy"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatYear attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-year="yyyy"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatDayHeader attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day-header="EEE"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatDayHeader attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day-header="EEE"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatDayTitle attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day-title="MMMM"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatDayTitle attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day-title="MMMM"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for formatMonthTitle attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-month-title="MMMM yyyy"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for formatMonthTitle attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup format-month-title="MMMM yyyy"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for showWeeks attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup show-weeks="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for showWeeks attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup show-weeks="true"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for startingDay attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup starting-day="0"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for startingDay attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup starting-day="0"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for yearColumns attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup year-columns="4"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for yearColumns attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup year-columns="4"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should log warning for yearRows attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup year-rows="5"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for yearRows attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerPopupAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.date = new Date();
+
+      spyOn($log, 'warn');
+      element = $compile('<div><input ng-model="date" uib-datepicker-popup year-rows="5"></div>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+  });
+
   describe('', function() {
     beforeEach(inject(function(_$compile_, _$rootScope_, _$templateCache_) {
       $compile = _$compile_;

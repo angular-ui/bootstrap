@@ -1,6 +1,7 @@
 angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootstrap.isClass', 'ui.bootstrap.position'])
 
 .value('$datepickerSuppressError', false)
+.value('uibDatepickerAttributeWarning', true)
 
 .constant('uibDatepickerConfig', {
   datepickerMode: 'day',
@@ -21,8 +22,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   yearRows: 4
 })
 
-.controller('UibDatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$locale', '$log', 'dateFilter', 'uibDatepickerConfig', '$datepickerSuppressError', 'uibDateParser',
-  function($scope, $attrs, $parse, $interpolate, $locale, $log, dateFilter, datepickerConfig, $datepickerSuppressError, dateParser) {
+.controller('UibDatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$locale', '$log', 'dateFilter', 'uibDatepickerConfig', '$datepickerSuppressError', 'uibDatepickerAttributeWarning', 'uibDateParser',
+  function($scope, $attrs, $parse, $interpolate, $locale, $log, dateFilter, datepickerConfig, $datepickerSuppressError, datepickerAttributeWarning, dateParser) {
   var self = this,
       ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl;
       ngModelOptions = {},
@@ -130,15 +131,27 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     // Interpolated configuration attributes
     angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle'], function(key) {
       self[key] = angular.isDefined($attrs[key]) ? $interpolate($attrs[key])($scope.$parent) : datepickerConfig[key];
+
+      if (angular.isDefined($attrs[key]) && datepickerAttributeWarning) {
+        $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
+      }
     });
 
     // Evaled configuration attributes
     angular.forEach(['showWeeks', 'yearRows', 'yearColumns', 'shortcutPropagation'], function(key) {
       self[key] = angular.isDefined($attrs[key]) ?
         $scope.$parent.$eval($attrs[key]) : datepickerConfig[key];
+
+      if (angular.isDefined($attrs[key]) && datepickerAttributeWarning) {
+        $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
+      }
     });
 
     if (angular.isDefined($attrs.startingDay)) {
+      if (datepickerAttributeWarning) {
+        $log.warn('uib-datepicker startingDay attribute usage is deprecated, use datepicker-options attribute instead');
+      }
+
       self.startingDay = $scope.$parent.$eval($attrs.startingDay);
     } else if (angular.isNumber(datepickerConfig.startingDay)) {
       self.startingDay = datepickerConfig.startingDay;
@@ -149,6 +162,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     // Watchable date attributes
     angular.forEach(['minDate', 'maxDate'], function(key) {
       if ($attrs[key]) {
+        if (datepickerAttributeWarning) {
+          $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
+        }
+
         watchListeners.push($scope.$parent.$watch($attrs[key], function(value) {
           if (value) {
             if (angular.isDate(value)) {
@@ -169,6 +186,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
     angular.forEach(['minMode', 'maxMode'], function(key) {
       if ($attrs[key]) {
+        if (datepickerAttributeWarning) {
+          $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
+        }
+
         watchListeners.push($scope.$parent.$watch($attrs[key], function(value) {
           self[key] = $scope[key] = angular.isDefined(value) ? value : $attrs[key];
           if (key === 'minMode' && self.modes.indexOf($scope.datepickerMode) < self.modes.indexOf(self[key]) ||
@@ -182,6 +203,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     });
 
     if (angular.isDefined($attrs.initDate)) {
+      if (datepickerAttributeWarning) {
+        $log.warn('uib-datepicker initDate attribute usage is deprecated, use datepicker-options attribute instead');
+      }
+
       this.activeDate = dateParser.fromTimezone($scope.$parent.$eval($attrs.initDate), ngModelOptions.timezone) || new Date();
       watchListeners.push($scope.$parent.$watch($attrs.initDate, function(initDate) {
         if (initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)) {
@@ -194,7 +219,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     }
   }
 
-  $scope.datepickerMode = $scope.datepickerMode || datepickerConfig.datepickerMode;
+  $scope.datepickerMode = $scope.datepickerMode ||
+    datepickerConfig.datepickerMode;
   $scope.uniqueId = 'datepicker-' + $scope.$id + '-' + Math.floor(Math.random() * 10000);
 
   $scope.disabled = angular.isDefined($attrs.disabled) || false;
@@ -673,6 +699,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 })
 
+.value('uibDatepickerPopupAttributeWarning', true)
+
 .constant('uibDatepickerPopupConfig', {
   altInputFormats: [],
   appendToBody: false,
@@ -692,8 +720,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   showButtonBar: true
 })
 
-.controller('UibDatepickerPopupController', ['$scope', '$element', '$attrs', '$compile', '$parse', '$document', '$rootScope', '$uibPosition', 'dateFilter', 'uibDateParser', 'uibDatepickerPopupConfig', '$timeout', 'uibDatepickerConfig',
-function(scope, element, attrs, $compile, $parse, $document, $rootScope, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout, datepickerConfig) {
+.controller('UibDatepickerPopupController', ['$scope', '$element', '$attrs', '$compile', '$log', '$parse', '$document', '$rootScope', '$uibPosition', 'dateFilter', 'uibDateParser', 'uibDatepickerPopupConfig', '$timeout', 'uibDatepickerConfig', 'uibDatepickerPopupAttributeWarning',
+function(scope, element, attrs, $compile, $log, $parse, $document, $rootScope, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout, datepickerConfig, datepickerPopupAttributeWarning) {
   var cache = {},
     isHtml5DateInput = false;
   var dateFormat, closeOnDateSelection, appendToBody, onOpenFocus,
@@ -705,14 +733,50 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
   this.init = function(_ngModel_) {
     ngModel = _ngModel_;
     ngModelOptions = _ngModel_.$options || datepickerConfig.ngModelOptions;
-    closeOnDateSelection = angular.isDefined(attrs.closeOnDateSelection) ? scope.$parent.$eval(attrs.closeOnDateSelection) : datepickerPopupConfig.closeOnDateSelection;
-    appendToBody = angular.isDefined(attrs.datepickerAppendToBody) ? scope.$parent.$eval(attrs.datepickerAppendToBody) : datepickerPopupConfig.appendToBody;
-    onOpenFocus = angular.isDefined(attrs.onOpenFocus) ? scope.$parent.$eval(attrs.onOpenFocus) : datepickerPopupConfig.onOpenFocus;
-    datepickerPopupTemplateUrl = angular.isDefined(attrs.datepickerPopupTemplateUrl) ? attrs.datepickerPopupTemplateUrl : datepickerPopupConfig.datepickerPopupTemplateUrl;
-    datepickerTemplateUrl = angular.isDefined(attrs.datepickerTemplateUrl) ? attrs.datepickerTemplateUrl : datepickerPopupConfig.datepickerTemplateUrl;
-    altInputFormats = angular.isDefined(attrs.altInputFormats) ? scope.$parent.$eval(attrs.altInputFormats) : datepickerPopupConfig.altInputFormats;
+    if (angular.isDefined(scope.datepickerOptions)) {
+      closeOnDateSelection = angular.isDefined(scope.datepickerOptions.closeOnDateSelection) ?
+        scope.datepickerOptions.closeOnDateSelection :
+        datepickerPopupConfig.closeOnDateSelection;
+      appendToBody = angular.isDefined(scope.datepickerOptions.datepickerAppendToBody) ?
+        scope.datepickerOptions.datepickerAppendToBody :
+        datepickerPopupConfig.datepickerAppendToBody;
+      onOpenFocus = angular.isDefined(scope.datepickerOptions.onOpenFocus) ?
+        scope.datepickerOptions.onOpenFocus :
+        datepickerPopupConfig.onOpenFocus;
+      datepickerPopupTemplateUrl = angular.isDefined(scope.datepickerOptions.datepickerPopupTemplateUrl) ?
+        scope.datepickerOptions.datepickerPopupTemplateUrl :
+        datepickerPopupConfig.datepickerPopupTemplateUrl;
+      datepickerTemplateUrl = angular.isDefined(scope.datepickerOptions.datepickerTemplateUrl) ?
+        scope.datepickerOptions.datepickerTemplateUrl : datepickerPopupConfig.datepickerTemplateUrl;
+      altInputFormats = angular.isDefined(scope.datepickerOptions.altInputFormats) ?
+        scope.datepickerOptions.altInputFormats :
+        datepickerPopupConfig.altInputFormats;
+    } else {
+      if (datepickerPopupAttributeWarning) {
+        $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      }
 
-    scope.showButtonBar = angular.isDefined(attrs.showButtonBar) ? scope.$parent.$eval(attrs.showButtonBar) : datepickerPopupConfig.showButtonBar;
+      closeOnDateSelection = angular.isDefined(attrs.closeOnDateSelection) ?
+        scope.$parent.$eval(attrs.closeOnDateSelection) :
+        datepickerPopupConfig.closeOnDateSelection;
+      appendToBody = angular.isDefined(attrs.datepickerAppendToBody) ?
+        scope.$parent.$eval(attrs.datepickerAppendToBody) :
+        datepickerPopupConfig.appendToBody;
+      onOpenFocus = angular.isDefined(attrs.onOpenFocus) ?
+        scope.$parent.$eval(attrs.onOpenFocus) : datepickerPopupConfig.onOpenFocus;
+      datepickerPopupTemplateUrl = angular.isDefined(attrs.datepickerPopupTemplateUrl) ?
+        attrs.datepickerPopupTemplateUrl :
+        datepickerPopupConfig.datepickerPopupTemplateUrl;
+      datepickerTemplateUrl = angular.isDefined(attrs.datepickerTemplateUrl) ?
+        attrs.datepickerTemplateUrl : datepickerPopupConfig.datepickerTemplateUrl;
+      altInputFormats = angular.isDefined(attrs.altInputFormats) ?
+        scope.$parent.$eval(attrs.altInputFormats) :
+        datepickerPopupConfig.altInputFormats;
+
+      scope.showButtonBar = angular.isDefined(attrs.showButtonBar) ?
+        scope.$parent.$eval(attrs.showButtonBar) :
+        datepickerPopupConfig.showButtonBar;
+    }
 
     if (datepickerPopupConfig.html5Types[attrs.type]) {
       dateFormat = datepickerPopupConfig.html5Types[attrs.type];
@@ -774,6 +838,10 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
     angular.forEach(['minMode', 'maxMode', 'datepickerMode', 'shortcutPropagation'], function(key) {
       if (attrs[key]) {
+        if (key !== 'datepickerMode' && datepickerPopupAttributeWarning) {
+          $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+        }
+
         var getAttribute = $parse(attrs[key]);
         var propConfig = {
           get: function() {
@@ -797,6 +865,10 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
     angular.forEach(['minDate', 'maxDate', 'initDate'], function(key) {
       if (attrs[key]) {
+        if (datepickerPopupAttributeWarning) {
+          $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+        }
+
         var getAttribute = $parse(attrs[key]);
 
         watchListeners.push(scope.$parent.$watch(getAttribute, function(value) {
@@ -826,6 +898,10 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
 
     angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle', 'showWeeks', 'startingDay', 'yearRows', 'yearColumns'], function(key) {
       if (angular.isDefined(attrs[key])) {
+        if (datepickerPopupAttributeWarning) {
+          $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+        }
+
         datepickerEl.attr(cameltoDash(key), attrs[key]);
       }
     });
