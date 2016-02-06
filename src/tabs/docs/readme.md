@@ -2,6 +2,11 @@ AngularJS version of the tabs directive.
 
 ### uib-tabset settings
 
+* `active`
+  <small class="badge">$</small>
+  _(Default: Index of first tab)_ -
+  Active index of tab.
+
 * `justified`
   <small class="badge">$</small>
   _(Default: `false`)_ -
@@ -36,6 +41,9 @@ AngularJS version of the tabs directive.
 
 * `heading` -
   Heading text.
+
+* `index` -
+  Tab index.
 
 * `select()`
   <small class="badge">$</small> -

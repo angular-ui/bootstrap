@@ -2,66 +2,103 @@ angular.module('ui.bootstrap.tabs', [])
 
 .controller('UibTabsetController', ['$scope', function ($scope) {
   var ctrl = this,
-      tabs = ctrl.tabs = $scope.tabs = [];
+    oldIndex;
+  ctrl.tabs = [];
 
-  ctrl.select = function(selectedTab) {
-    angular.forEach(tabs, function(tab) {
-      if (tab.active && tab !== selectedTab) {
-        tab.active = false;
-        tab.onDeselect();
-        selectedTab.selectCalled = false;
+  ctrl.select = function(index) {
+    if (!destroyed) {
+      var previousIndex = findTabIndex(oldIndex);
+      var previousSelected = ctrl.tabs[previousIndex];
+      if (previousSelected) {
+        previousSelected.tab.onDeselect();
+        previousSelected.tab.active = false;
       }
-    });
-    selectedTab.active = true;
-    // only call select if it has not already been called
-    if (!selectedTab.selectCalled) {
-      selectedTab.onSelect();
-      selectedTab.selectCalled = true;
+
+      var selected = ctrl.tabs[index];
+      if (selected) {
+        selected.tab.onSelect();
+        selected.tab.active = true;
+        ctrl.active = selected.index;
+        oldIndex = selected.index;
+      } else if (!selected && angular.isNumber(oldIndex)) {
+        ctrl.active = null;
+        oldIndex = null;
+      }
     }
   };
 
   ctrl.addTab = function addTab(tab) {
-    tabs.push(tab);
-    // we can't run the select function on the first tab
-    // since that would select it twice
-    if (tabs.length === 1 && tab.active !== false) {
-      tab.active = true;
-    } else if (tab.active) {
-      ctrl.select(tab);
-    } else {
-      tab.active = false;
+    ctrl.tabs.push({
+      tab: tab,
+      index: tab.index
+    });
+    ctrl.tabs.sort(function(t1, t2) {
+      if (t1.index > t2.index) {
+        return 1;
+      }
+
+      if (t1.index < t2.index) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    if (tab.index === ctrl.active || !angular.isNumber(ctrl.active) && ctrl.tabs.length === 1) {
+      var newActiveIndex = findTabIndex(tab.index);
+      ctrl.select(newActiveIndex);
     }
   };
 
   ctrl.removeTab = function removeTab(tab) {
-    var index = tabs.indexOf(tab);
-    //Select a new tab if the tab to be removed is selected and not destroyed
-    if (tab.active && tabs.length > 1 && !destroyed) {
-      //If this is the last tab, select the previous tab. else, the next tab.
-      var newActiveIndex = index === tabs.length - 1 ? index - 1 : index + 1;
-      ctrl.select(tabs[newActiveIndex]);
+    var index = findTabIndex(tab.index);
+
+    if (tab.index === ctrl.active) {
+      var newActiveTabIndex = index === ctrl.tabs.length - 1 ?
+        index - 1 : index + 1 % ctrl.tabs.length;
+      ctrl.select(newActiveTabIndex);
     }
-    tabs.splice(index, 1);
+
+    ctrl.tabs.splice(index, 1);
   };
+
+  $scope.$watch('tabset.active', function(val) {
+    if (angular.isNumber(val) && val !== oldIndex) {
+      ctrl.select(findTabIndex(val));
+    }
+  });
 
   var destroyed;
   $scope.$on('$destroy', function() {
     destroyed = true;
   });
+
+  function findTabIndex(index) {
+    for (var i = 0; i < ctrl.tabs.length; i++) {
+      if (ctrl.tabs[i].index === index) {
+        return i;
+      }
+    }
+  }
 }])
 
 .directive('uibTabset', function() {
   return {
     transclude: true,
     replace: true,
-    scope: {
+    scope: {},
+    bindToController: {
+      active: '=',
       type: '@'
     },
     controller: 'UibTabsetController',
+    controllerAs: 'tabset',
     templateUrl: 'uib/template/tabs/tabset.html',
     link: function(scope, element, attrs) {
-      scope.vertical = angular.isDefined(attrs.vertical) ? scope.$parent.$eval(attrs.vertical) : false;
-      scope.justified = angular.isDefined(attrs.justified) ? scope.$parent.$eval(attrs.justified) : false;
+      scope.vertical = angular.isDefined(attrs.vertical) ?
+        scope.$parent.$eval(attrs.vertical) : false;
+      scope.justified = angular.isDefined(attrs.justified) ?
+        scope.$parent.$eval(attrs.justified) : false;
     }
   };
 })
@@ -73,8 +110,8 @@ angular.module('ui.bootstrap.tabs', [])
     templateUrl: 'uib/template/tabs/tab.html',
     transclude: true,
     scope: {
-      active: '=?',
       heading: '@',
+      index: '=',
       onSelect: '&select', //This callback is called in contentHeadingTransclude
                           //once it inserts the tab's content into the dom
       onDeselect: '&deselect'
@@ -84,12 +121,6 @@ angular.module('ui.bootstrap.tabs', [])
     },
     controllerAs: 'tab',
     link: function(scope, elm, attrs, tabsetCtrl, transclude) {
-      scope.$watch('active', function(active) {
-        if (active) {
-          tabsetCtrl.select(scope);
-        }
-      });
-
       scope.disabled = false;
       if (attrs.disable) {
         scope.$parent.$watch($parse(attrs.disable), function(value) {
@@ -99,7 +130,15 @@ angular.module('ui.bootstrap.tabs', [])
 
       scope.select = function() {
         if (!scope.disabled) {
-          scope.active = true;
+          var index;
+          for (var i = 0; i < tabsetCtrl.tabs.length; i++) {
+            if (tabsetCtrl.tabs[i].tab === scope) {
+              index = i;
+              break;
+            }
+          }
+
+          tabsetCtrl.select(index);
         }
       };
 
@@ -135,7 +174,7 @@ angular.module('ui.bootstrap.tabs', [])
     restrict: 'A',
     require: '^uibTabset',
     link: function(scope, elm, attrs) {
-      var tab = scope.$eval(attrs.uibTabContentTransclude);
+      var tab = scope.$eval(attrs.uibTabContentTransclude).tab;
 
       //Now our tab is ready to be transcluded: both the tab heading area
       //and the tab content area are loaded.  Transclude 'em both.
