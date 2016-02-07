@@ -28,7 +28,7 @@ The best part is that you don't need to create plunks from scratch - you can use
 Unfortunately we are not able to investigate / fix bugs without a minimal reproduce scenario using http://plnkr.co/, so if we don't hear back from you we are going to close an issue that don't have enough info to be reproduced.
 
 
-## You want to contribute some code? 
+## You want to contribute some code?
 
 We are always looking for the quality contributions and will be happy to accept your Pull Requests as long as those adhere to some basic rules:
 
@@ -42,4 +42,4 @@ We are always looking for the quality contributions and will be happy to accept 
 * Please assure that you are submitting quality code, specifically make sure that:
   * your directive has accompanying tests and all the tests are passing; don't hesitate to contact us (angular-ui@googlegroups.com) if you need any help with unit testing
   * your PR doesn't break the build; check the Travis-CI build status after opening a PR and push corrective commits if anything goes wrong
-  * your commits conform to the conventions established [here](https://github.com/ajoslin/conventional-changelog/blob/master/conventions/angular.md)
+  * your commits conform to the conventions established [here](https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md)
