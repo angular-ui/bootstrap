@@ -27,6 +27,16 @@ AngularJS version of the tabs directive.
 
 ### uib-tab settings
 
+* `active`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: `false`)_ -
+  Whether tab is currently selected.
+
+* `classes`
+  <small class="badge">$</small> -
+   An optional string of space-separated CSS classes.
+
 * `deselect()`
   <small class="badge">$</small> -
   An optional expression called when tab is deactivated.

@@ -119,6 +119,7 @@ angular.module('ui.bootstrap.tabs', [])
     scope: {
       heading: '@',
       index: '=?',
+      classes: '@?',
       onSelect: '&select', //This callback is called in contentHeadingTransclude
                           //once it inserts the tab's content into the dom
       onDeselect: '&deselect'
@@ -141,6 +142,10 @@ angular.module('ui.bootstrap.tabs', [])
         } else {
           scope.index = 0;
         }
+      }
+
+      if (angular.isUndefined(attrs.classes)) {
+        scope.classes = '';
       }
 
       scope.select = function() {

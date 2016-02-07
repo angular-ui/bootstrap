@@ -34,16 +34,18 @@ describe('tabs', function() {
       scope.first = '1';
       scope.second = '2';
       scope.active = 1;
+      scope.firstClass = 'first-class';
+      scope.secondClass = 'second-class-1 second-class-2';
       scope.selectFirst = jasmine.createSpy();
       scope.selectSecond = jasmine.createSpy();
       scope.deselectFirst = jasmine.createSpy();
       scope.deselectSecond = jasmine.createSpy();
       elm = $compile([
         '<uib-tabset class="hello" data-pizza="pepperoni" active="active">',
-        '  <uib-tab index="1" heading="First Tab {{first}}" select="selectFirst()" deselect="deselectFirst()">',
+        '  <uib-tab index="1" heading="First Tab {{first}}" classes="{{firstClass}}" select="selectFirst()" deselect="deselectFirst()">',
         '    first content is {{first}}',
         '  </uib-tab>',
-        '  <uib-tab index="2" select="selectSecond()" deselect="deselectSecond()">',
+        '  <uib-tab index="2" classes="{{secondClass}}" select="selectSecond()" deselect="deselectSecond()">',
         '    <uib-tab-heading><b>Second</b> Tab {{second}}</uib-tab-heading>',
         '    second content is {{second}}',
         '  </uib-tab>',
@@ -75,6 +77,15 @@ describe('tabs', function() {
       expect(titles().eq(0)).toHaveClass('active');
       expect(titles().eq(1)).not.toHaveClass('active');
       expect(scope.active).toBe(1);
+    });
+
+    it('should set optional classes on each tab', function() {
+      expect(titles().eq(0)).toHaveClass(scope.firstClass);
+
+      var secondClassArr = scope.secondClass.split(' ');
+      secondClassArr.forEach(function(clazz) {
+        expect(titles().eq(1)).toHaveClass(clazz);
+      });
     });
 
     it('should change active on click', function() {
