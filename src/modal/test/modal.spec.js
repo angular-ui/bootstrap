@@ -622,6 +622,8 @@ describe('$uibModal', function() {
         close(modal, 'closed ok');
 
         expect(modal.result).toBeResolvedWith('closed ok');
+
+        element.remove();
       }
 
       openAndCloseModalWithAutofocusElement();
@@ -1093,6 +1095,8 @@ describe('$uibModal', function() {
         var modal = open({template: '<div>Content</div>', appendTo: element});
 
         expect($document).not.toHaveModalOpenWithContent('Content', 'div');
+
+        element.remove();
       });
 
       it('should be added to appendTo element if appendTo is passed', function() {
