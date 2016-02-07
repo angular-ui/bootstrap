@@ -85,7 +85,7 @@ angular.module('ui.bootstrap.rating', [])
   return {
     require: ['uibRating', 'ngModel'],
     scope: {
-      readonly: '=?',
+      readonly: '=?readOnly',
       onHover: '&',
       onLeave: '&'
     },
