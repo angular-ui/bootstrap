@@ -3,7 +3,7 @@ AngularJS version of the tabs directive.
 ### uib-tabset settings
 
 * `active`
-  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: Index of first tab)_ -
   Active index of tab.
 
@@ -23,12 +23,6 @@ AngularJS version of the tabs directive.
 
 ### uib-tab settings
 
-* `active`
-  <small class="badge">$</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `false`)_ -
-  Whether tab is currently selected.
-
 * `deselect()`
   <small class="badge">$</small> -
   An optional expression called when tab is deactivated.
@@ -43,7 +37,7 @@ AngularJS version of the tabs directive.
   Heading text.
 
 * `index` -
-  Tab index.
+  Tab index. Must be unique.
 
 * `select()`
   <small class="badge">$</small> -
