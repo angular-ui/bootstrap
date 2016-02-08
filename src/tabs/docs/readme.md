@@ -4,7 +4,7 @@ AngularJS version of the tabs directive.
 
 * `active`
   <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: Index of first tab)_ -
+  _(Default: `Index of first tab`)_ -
   Active index of tab.
 
 * `justified`
