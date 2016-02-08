@@ -33,7 +33,7 @@ AngularJS version of the tabs directive.
 
 * `deselect()`
   <small class="badge">$</small> -
-  An optional expression called when tab is deactivated.
+  An optional expression called when tab is deactivated. Supports $event in template for expression.
 
 * `disable`
   <small class="badge">$</small>
@@ -49,7 +49,7 @@ AngularJS version of the tabs directive.
 
 * `select()`
   <small class="badge">$</small> -
-  An optional expression called when tab is activated.
+  An optional expression called when tab is activated. Supports $event in template for expression.
 
 * `template-url`
   _(Default: `uib/template/tabs/tab.html`)_ -

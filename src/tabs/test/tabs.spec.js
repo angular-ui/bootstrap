@@ -42,10 +42,10 @@ describe('tabs', function() {
       scope.deselectSecond = jasmine.createSpy();
       elm = $compile([
         '<uib-tabset class="hello" data-pizza="pepperoni" active="active">',
-        '  <uib-tab index="1" heading="First Tab {{first}}" classes="{{firstClass}}" select="selectFirst()" deselect="deselectFirst()">',
+        '  <uib-tab index="1" heading="First Tab {{first}}" classes="{{firstClass}}" select="selectFirst($event)" deselect="deselectFirst($event)">',
         '    first content is {{first}}',
         '  </uib-tab>',
-        '  <uib-tab index="2" classes="{{secondClass}}" select="selectSecond()" deselect="deselectSecond()">',
+        '  <uib-tab index="2" classes="{{secondClass}}" select="selectSecond($event)" deselect="deselectSecond($event)">',
         '    <uib-tab-heading><b>Second</b> Tab {{second}}</uib-tab-heading>',
         '    second content is {{second}}',
         '  </uib-tab>',
@@ -97,19 +97,25 @@ describe('tabs', function() {
     });
 
     it('should call select callback on select', function() {
+      expect(scope.selectFirst.calls.count()).toBe(1);
       titles().eq(1).find('> a').click();
       expect(scope.selectSecond).toHaveBeenCalled();
+      expect(scope.selectSecond.calls.argsFor(0)[0].target).toBe(titles().eq(1).find('> a')[0]);
       titles().eq(0).find('> a').click();
       expect(scope.selectFirst).toHaveBeenCalled();
+      expect(scope.selectFirst.calls.argsFor(1)[0].target).toBe(titles().eq(0).find('> a')[0]);
     });
 
     it('should call deselect callback on deselect', function() {
       titles().eq(1).find('> a').click();
       expect(scope.deselectFirst).toHaveBeenCalled();
+      expect(scope.deselectFirst.calls.argsFor(0)[0].target).toBe(titles().eq(1).find('> a')[0]);
       titles().eq(0).find('> a').click();
       expect(scope.deselectSecond).toHaveBeenCalled();
+      expect(scope.deselectSecond.calls.argsFor(0)[0].target).toBe(titles().eq(0).find('> a')[0]);
       titles().eq(1).find('> a').click();
       expect(scope.deselectFirst.calls.count()).toBe(2);
+      expect(scope.deselectFirst.calls.argsFor(1)[0].target).toBe(titles().eq(1).find('> a')[0]);
     });
   });
 

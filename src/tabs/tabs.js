@@ -5,18 +5,22 @@ angular.module('ui.bootstrap.tabs', [])
     oldIndex;
   ctrl.tabs = [];
 
-  ctrl.select = function(index) {
+  ctrl.select = function(index, evt) {
     if (!destroyed) {
       var previousIndex = findTabIndex(oldIndex);
       var previousSelected = ctrl.tabs[previousIndex];
       if (previousSelected) {
-        previousSelected.tab.onDeselect();
+        previousSelected.tab.onDeselect({
+          $event: evt
+        });
         previousSelected.tab.active = false;
       }
 
       var selected = ctrl.tabs[index];
       if (selected) {
-        selected.tab.onSelect();
+        selected.tab.onSelect({
+          $event: evt
+        });
         selected.tab.active = true;
         ctrl.active = selected.index;
         oldIndex = selected.index;
@@ -148,7 +152,7 @@ angular.module('ui.bootstrap.tabs', [])
         scope.classes = '';
       }
 
-      scope.select = function() {
+      scope.select = function(evt) {
         if (!scope.disabled) {
           var index;
           for (var i = 0; i < tabsetCtrl.tabs.length; i++) {
@@ -158,7 +162,7 @@ angular.module('ui.bootstrap.tabs', [])
             }
           }
 
-          tabsetCtrl.select(index);
+          tabsetCtrl.select(index, evt);
         }
       };
 
