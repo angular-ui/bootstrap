@@ -191,6 +191,24 @@ describe('tabs', function() {
     });
   });
 
+  describe('custom template', function() {
+    var $compile, $templateCache;
+    beforeEach(inject(function($rootScope, _$compile_, _$templateCache_) {
+      scope = $rootScope;
+      $compile = _$compile_;
+      $templateCache = _$templateCache_;
+    }));
+
+    it('should support custom templates', function() {
+      $templateCache.put('foo/bar.html', '<div>baz</div>');
+
+      elm = $compile('<uib-tabset template-url="foo/bar.html"></uib-tabset>')(scope);
+      scope.$digest();
+
+      expect(elm.html()).toBe('baz');
+    });
+  });
+
   describe('uib-tab', function() {
     var $compile, $templateCache;
 
@@ -215,6 +233,17 @@ describe('tabs', function() {
       scope.$digest();
 
       expect(tab.text().trim()).toBe('foo');
+    });
+
+    it('should support custom templates', function() {
+      $templateCache.put('foo/bar.html', '<li>baz</li>');
+
+      elm = $compile('<uib-tabset><uib-tab template-url="foo/bar.html"></uib-tab></uib-tabset>')(scope);
+      scope.$digest();
+
+      var tabTitle = titles().eq(0);
+
+      expect(tabTitle.html()).toBe('baz');
     });
   });
 

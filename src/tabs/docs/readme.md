@@ -12,6 +12,10 @@ AngularJS version of the tabs directive.
   _(Default: `false`)_ -
   Whether tabs fill the container and have a consistent width.
 
+  * `template-url`
+  _(Default: `uib/template/tabs/tabset.html`)_ -
+  A URL representing the location of a template to use for the main component.
+
 * `type`
   _(Defaults: `tabs`)_ -
   Navigation type. Possible values are 'tabs' and 'pills'.
@@ -42,6 +46,10 @@ AngularJS version of the tabs directive.
 * `select()`
   <small class="badge">$</small> -
   An optional expression called when tab is activated.
+
+* `template-url`
+  _(Default: `uib/template/tabs/tab.html`)_ -
+  A URL representing the location of a template to use for the tab heading.
 
 ### Tabset heading
 
