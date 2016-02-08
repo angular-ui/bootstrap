@@ -78,7 +78,7 @@ The datepicker has 3 modes:
 * `format-month-title`
   <small class="badge">C</small>
   _(Default: `yyyy`)_ -
-  Format of title when selecting month.  
+  Format of title when selecting month.
 
 * `init-date`
   <small class="badge">$</small>
@@ -210,7 +210,7 @@ The popup is a wrapper that you can use in an input to toggle a datepicker. To c
 * `datepicker-template-url`
   <small class="badge">C</small>
   _(Default: `uib/template/datepicker/datepicker.html`)_ -
-  Add the ability to override the template used on the component (inner uib-datepicker).  
+  Add the ability to override the template used on the component (inner uib-datepicker).
 
 * `is-open`
   <small class="badge">$</small>
@@ -234,6 +234,24 @@ The popup is a wrapper that you can use in an input to toggle a datepicker. To c
   <small class="badge">C</small>
   _(Default: `text`, Config: `html5Types`)_ -
   You can override the input type to be _(date|datetime-local|month)_. That will change the date format of the popup.
+
+* `popup-placement`
+   <small class="badge">C</small>
+   _(Default: `auto bottom-left`, Config: 'placement')_ -
+  Passing in 'auto' separated by a space before the placement will enable auto positioning, e.g: "auto bottom-left". The popup will attempt to position where it fits in the closest scrollable ancestor. Accepts:
+
+   * `top` - popup on top, horizontally centered on input element.
+   * `top-left` - popup on top, left edge aligned with input element left edge.
+   * `top-right` - popup on top, right edge aligned with input element right edge.
+   * `bottom` - popup on bottom, horizontally centered on input element.
+   * `bottom-left` - popup on bottom, left edge aligned with input element left edge.
+   * `bottom-right` - popup on bottom, right edge aligned with input element right edge.
+   * `left` - popup on left, vertically centered on input element.
+   * `left-top` - popup on left, top edge aligned with input element top edge.
+   * `left-bottom` - popup on left, bottom edge aligned with input element bottom edge.
+   * `right` - popup on right, vertically centered on input element.
+   * `right-top` - popup on right, top edge aligned with input element top edge.
+   * `right-bottom` - popup on right, bottom edge aligned with input element bottom edge.
 
 * `uib-datepicker-popup`
   <small class="badge">C</small>
