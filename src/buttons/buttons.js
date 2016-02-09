@@ -44,7 +44,7 @@ angular.module('ui.bootstrap.buttons', [])
 
       if (attrs.uibUncheckable) {
         scope.$watch(uncheckableExpr, function(uncheckable) {
-          attrs.$set('uncheckable', uncheckable ? '' : null);
+          attrs.$set('uncheckable', uncheckable ? '' : undefined);
         });
       }
     }
