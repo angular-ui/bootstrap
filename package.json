@@ -8,6 +8,7 @@
     "lib": "src/"
   },
   "files": [
+    "index.js",
     "dist/",
     "src/",
     "template/"
