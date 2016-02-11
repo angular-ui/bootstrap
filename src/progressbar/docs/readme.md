@@ -11,7 +11,7 @@ It supports multiple (stacked) `<uib-bar>` into the same `<uib-progress>` elemen
 
 * `type`
   _(Default: `null`)_ -
-  Bootstrap style type. Possible values are 'success', 'info', 'warning', and, 'error' to use Bootstrap's pre-existing styling, or any desired custom suffix.
+  Bootstrap style type. Possible values are 'success', 'info', 'warning', and, 'danger' to use Bootstrap's pre-existing styling, or any desired custom suffix.
 
 * `max`
   <small class="badge">$</small>
