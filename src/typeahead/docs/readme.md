@@ -94,12 +94,12 @@ This directive works with promises, meaning you can retrieve matches using the `
 * `typeahead-select-on-exact`
   <small class="badge">$</small>
   _(Default: `false`)_ -
-  Should it automatically select an item when there is one option that exactly matches the user input?
+  Automatically select the item when it is the only one that exactly matches the user input.
 
 * `typeahead-show-hint`
   <small class="badge">$</small>
   _(Default: `false`)_ -
-  Should input show hint that matches the first option?
+  Show hint when the first option matches.
 
 * `typeahead-template-url`
   _(Default: `uib/template/typeahead/typeahead-match.html`)_ -
