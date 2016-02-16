@@ -479,7 +479,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
 
         $animate.enter($compile(angularDomEl)(modal.scope), appendToElement)
           .then(function() {
-            $animate.addClass(appendToElement, modalBodyClass);
+            if (!modal.scope.$$uibDestructionScheduled) {
+              $animate.addClass(appendToElement, modalBodyClass);
+            }
           });
 
         openedWindows.top().value.modalDomEl = angularDomEl;

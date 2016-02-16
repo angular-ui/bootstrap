@@ -1219,6 +1219,16 @@ describe('$uibModal', function() {
         expect(body).not.toHaveClass('bar');
         expect(body).not.toHaveClass('modal-open');
       });
+
+      it('should not add the modal-open class if modal is closed before animation', function() {
+        var modal = open({
+          template: '<div>dummy modal</div>'
+        }, true);
+
+        close(modal);
+
+        expect(body).not.toHaveClass('modal-open');
+      });
     });
   });
 
