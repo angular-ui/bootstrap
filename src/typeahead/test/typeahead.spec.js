@@ -1211,6 +1211,11 @@ describe('typeahead tests', function() {
       triggerKeyDown(element, 27);
       expect(hintEl.val()).toEqual('');
     });
+
+    it("should set tab index on hint input element", function(){
+      var hintEl = findInput(element);
+      expect(hintEl.attr('tabindex')).toEqual('-1');
+    });
   });
 
   describe('append to', function() {

@@ -129,6 +129,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       element.after(inputsContainer);
       hintInputElem = element.clone();
       hintInputElem.attr('placeholder', '');
+      hintInputElem.attr('tabindex', '-1');
       hintInputElem.val('');
       hintInputElem.css({
         'position': 'absolute',
