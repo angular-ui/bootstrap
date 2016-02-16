@@ -88,7 +88,7 @@ angular.module('ui.bootstrap.tabs', [])
     replace: true,
     scope: {},
     bindToController: {
-      active: '=',
+      active: '=?',
       type: '@'
     },
     controller: 'UibTabsetController',
@@ -101,6 +101,9 @@ angular.module('ui.bootstrap.tabs', [])
         scope.$parent.$eval(attrs.vertical) : false;
       scope.justified = angular.isDefined(attrs.justified) ?
         scope.$parent.$eval(attrs.justified) : false;
+      if (angular.isUndefined(attrs.active)) {
+        scope.active = 0;
+      }
     }
   };
 })
@@ -115,7 +118,7 @@ angular.module('ui.bootstrap.tabs', [])
     transclude: true,
     scope: {
       heading: '@',
-      index: '=',
+      index: '=?',
       onSelect: '&select', //This callback is called in contentHeadingTransclude
                           //once it inserts the tab's content into the dom
       onDeselect: '&deselect'
@@ -130,6 +133,14 @@ angular.module('ui.bootstrap.tabs', [])
         scope.$parent.$watch($parse(attrs.disable), function(value) {
           scope.disabled = !! value;
         });
+      }
+
+      if (angular.isUndefined(attrs.index)) {
+        if (tabsetCtrl.tabs && tabsetCtrl.tabs.length) {
+          scope.index = Math.max.apply(null, tabsetCtrl.tabs.map(function(t) { return t.index; })) + 1;
+        } else {
+          scope.index = 0;
+        }
       }
 
       scope.select = function() {

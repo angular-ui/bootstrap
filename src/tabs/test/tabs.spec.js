@@ -153,6 +153,41 @@ describe('tabs', function() {
     });
   });
 
+  describe('without active binding and index attributes', function() {
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+      scope.first = '1';
+      scope.second = '2';
+      elm = $compile([
+        '<uib-tabset>',
+        '  <uib-tab heading="First Tab {{first}}">',
+        '    first content is {{first}}',
+        '  </uib-tab>',
+        '  <uib-tab heading="Second Tab {{second}}">',
+        '    second content is {{second}}',
+        '  </uib-tab>',
+        '</uib-tabset>'
+      ].join('\n'))(scope);
+      scope.$apply();
+      return elm;
+    }));
+
+    it('should bind tabs content and set first tab active', function() {
+      expectContents(['first content is 1', 'second content is 2']);
+      expect(titles().eq(0)).toHaveClass('active');
+      expect(titles().eq(1)).not.toHaveClass('active');
+      expect(elm.controller('uibTabset').active).toBe(0);
+    });
+
+    it('should change active on click', function() {
+      titles().eq(1).find('> a').click();
+      expect(contents().eq(1)).toHaveClass('active');
+      expect(titles().eq(0)).not.toHaveClass('active');
+      expect(titles().eq(1)).toHaveClass('active');
+      expect(elm.controller('uibTabset').active).toBe(1);
+    });
+  });
+
   describe('tab callback order', function() {
     var execOrder;
     beforeEach(inject(function($compile, $rootScope) {
@@ -579,7 +614,7 @@ describe('tabs', function() {
   describe('remove', function() {
     it('should remove title tabs when elements are destroyed and change selection', inject(function($controller, $compile, $rootScope) {
       scope = $rootScope.$new();
-      elm = $compile('<uib-tabset active="active"><uib-tab heading="1">Hello</uib-tab><uib-tab index="$index" ng-repeat="i in list" heading="tab {{i}}">content {{i}}</uib-tab></uib-tabset>')(scope);
+      elm = $compile('<uib-tabset active="active"><uib-tab index="0" heading="1">Hello</uib-tab><uib-tab index="$index + 1" ng-repeat="i in list" heading="tab {{i}}">content {{i}}</uib-tab></uib-tabset>')(scope);
       scope.$apply();
 
       expectTitles(['1']);
