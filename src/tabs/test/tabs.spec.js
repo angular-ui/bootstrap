@@ -56,6 +56,9 @@ describe('tabs', function() {
     it('should pass class and other attributes on to tab template', function() {
       expect(elm).toHaveClass('hello');
       expect(elm.attr('data-pizza')).toBe('pepperoni');
+      //Ensure that we have bootstrap 4 link class so things are future proofed.
+      var link = $(elm.find('a')[0]);
+      expect(link).toHaveClass('nav-link');
     });
 
     it('should create clickable titles', function() {
