@@ -41,6 +41,20 @@ describe('$uibPosition service', function () {
     });
   });
 
+  describe('rawnode', function() {
+    it('returns the raw DOM element from an angular element', function() {
+      var angularEl = angular.element('<div></div>');
+      var el = $uibPosition.getRawNode(angularEl);
+      expect(el.nodeName).toBe('DIV');
+    });
+
+    it('returns the raw DOM element from a select element', function() {
+      var angularEl = angular.element('<select><option value="value">value</option></select>');
+      var el = $uibPosition.getRawNode(angularEl);
+      expect(el.nodeName).toBe('SELECT');
+    });
+  });
+
   describe('offset', function() {
     it('returns getBoundingClientRect by default', function() {
       var el = angular.element('<div>Foo</div>');

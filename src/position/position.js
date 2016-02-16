@@ -33,7 +33,7 @@ angular.module('ui.bootstrap.position', [])
        * @returns {element} A HTML element.
        */
       getRawNode: function(elem) {
-        return elem[0] || elem;
+        return elem.nodeName ? elem : elem[0] || elem;
       },
 
       /**
