@@ -1,0 +1,22 @@
+[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,
+[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,
+[uib-popover-popup].popover.top-left > .arrow,
+[uib-popover-popup].popover.top-right > .arrow,
+[uib-popover-popup].popover.bottom-left > .arrow,
+[uib-popover-popup].popover.bottom-right > .arrow,
+[uib-popover-popup].popover.left-top > .arrow,
+[uib-popover-popup].popover.left-bottom > .arrow,
+[uib-popover-popup].popover.right-top > .arrow,
+[uib-popover-popup].popover.right-bottom > .arrow {
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  margin: 0;
+}
