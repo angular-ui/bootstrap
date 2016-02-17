@@ -64,10 +64,14 @@ describe('typeahead tests', function() {
     return findDropDown(element).find('li');
   };
 
-  var triggerKeyDown = function(element, keyCode) {
+  var triggerKeyDown = function(element, keyCode, options) {
+    options = options || {};
     var inputEl = findInput(element);
     var e = $.Event('keydown');
     e.which = keyCode;
+    if (options.shiftKey) {
+      e.shiftKey = true;
+    }
     inputEl.trigger(e);
   };
 
@@ -1346,6 +1350,23 @@ describe('typeahead tests', function() {
 
     // tab key should close the dropdown when nothing is focused
     triggerKeyDown(element, 9);
+    expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
+    expect($scope.select_count).toEqual(0);
+    expect(element).toBeClosed();
+  });
+
+  it("should not capture tab when shift key is pressed", function(){
+    $scope.select_count = 0;
+    $scope.onSelect = function($item, $model, $label) {
+      $scope.select_count = $scope.select_count + 1;
+    };
+    var element = prepareInputEl('<div><input ng-model="result" ng-keydown="keyDownEvent = $event" uib-typeahead="item for item in source | filter:$viewValue" typeahead-on-select="onSelect($item, $model, $label)" typeahead-focus-first="false"></div>');
+    changeInputValueTo(element, 'b');
+
+    // down key should be captured and focus first element
+    triggerKeyDown(element, 40);
+
+    triggerKeyDown(element, 9, {shiftKey: true});
     expect($scope.keyDownEvent.isDefaultPrevented()).toBeFalsy();
     expect($scope.select_count).toEqual(0);
     expect(element).toBeClosed();
