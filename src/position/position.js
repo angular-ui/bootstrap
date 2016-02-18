@@ -91,6 +91,23 @@ angular.module('ui.bootstrap.position', [])
       },
 
       /**
+       * Checks to see if the element is scrollable.
+       *
+       * @param {element} elem - The element to check.
+       * @param {boolean=} [includeHidden=false] - Should scroll style of 'hidden' be considered,
+       *   default is false.
+       *
+       * @returns {boolean} Whether the element is scrollable.
+       */
+      isScrollable: function(elem, includeHidden) {
+        elem = this.getRawNode(elem);
+
+        var overflowRegex = includeHidden ? OVERFLOW_REGEX.hidden : OVERFLOW_REGEX.normal;
+        var elemStyle = $window.getComputedStyle(elem);
+        return overflowRegex.test(elemStyle.overflow + elemStyle.overflowY + elemStyle.overflowX);
+      },
+
+      /**
        * Provides the closest scrollable ancestor.
        * A port of the jQuery UI scrollParent method:
        * https://github.com/jquery/jquery-ui/blob/master/ui/scroll-parent.js
