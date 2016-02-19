@@ -826,6 +826,27 @@ describe('$uibModal', function() {
         });
         expect($document).toHaveModalOpenWithContent('Content from ctrl true bar', 'div');
       });
+
+      it('should have $onInit called', function() {
+        var $scope = $rootScope.$new(true);
+        var $onInit = jasmine.createSpy('$onInit');
+        $scope.foo = 'bar';
+        open({
+          template: '<div>{{test.fromCtrl}} {{test.closeDismissPresent()}} {{test.foo}}</div>',
+          controller: function($uibModalInstance) {
+            this.$onInit = $onInit;
+            this.fromCtrl = 'Content from ctrl';
+            this.closeDismissPresent = function() {
+              return angular.isFunction(this.$close) && angular.isFunction(this.$dismiss);
+            };
+          },
+          controllerAs: 'test',
+          bindToController: true,
+          scope: $scope
+        });
+        expect($document).toHaveModalOpenWithContent('Content from ctrl true bar', 'div');
+        expect($onInit).toHaveBeenCalled();
+      });
     });
 
     describe('resolve', function() {
