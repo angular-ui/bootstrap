@@ -230,6 +230,47 @@ describe('datepicker', function() {
       expect($log.warn).not.toHaveBeenCalled();
     });
 
+    it('should log warning for datepickerMode attribute usage', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date(),
+        mode: 'day'
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-mode="mode"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker datepickerMode attribute usage is deprecated, use datepicker-options attribute instead');
+    });
+
+    it('should suppress warning for datepickerMode attribute usage', function() {
+      module(function($provide) {
+        $provide.value('uibDatepickerAttributeWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      $scope.locals = {
+        date: new Date(),
+        mode: 'day'
+      };
+
+      spyOn($log, 'warn');
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-mode="mode"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
     it('should log warning for formatDay attribute usage', function() {
       inject(function(_$log_, _$rootScope_, _$compile_) {
         $log = _$log_;
