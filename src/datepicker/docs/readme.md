@@ -33,6 +33,9 @@ The datepicker has 3 modes:
 
   The supported options are:
 
+  - customClass
+  - dateDisabled
+  - datepickerMode
   - formatDay
   - formatDayHeader
   - formatDayTitle
