@@ -1207,10 +1207,13 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
   function positionPopup() {
     if ($scope.isOpen) {
-      var dpElement = $popup[0].querySelector('.uib-datepicker-popup');
+      var dpElement = angular.element($popup[0].querySelector('.uib-datepicker-popup'));
       var placement = $attrs.popupPlacement ? $attrs.popupPlacement : datepickerPopupConfig.placement;
       var position = $position.positionElements($element, dpElement, placement, appendToBody);
-      angular.element(dpElement).css({top: position.top + 'px', left: position.left + 'px', visibility: 'visible'});
+      dpElement.css({top: position.top + 'px', left: position.left + 'px'});
+      if (dpElement.hasClass('uib-position-measure')) {
+        dpElement.removeClass('uib-position-measure');
+      }
     }
   }
 

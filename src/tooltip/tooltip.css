@@ -20,3 +20,7 @@
   right: auto;
   margin: 0;
 }
+
+[uib-popover-popup].popover {
+  display: block !important;
+}

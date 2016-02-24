@@ -9,10 +9,7 @@
 .uib-datepicker-popup.dropdown-menu {
   display: block;
   float: none;
-  visibility: hidden;
   margin: 0;
-  top: -9999px;
-  left: -9999px;
 }
 
 .uib-button-bar {
