@@ -3645,6 +3645,30 @@ describe('datepicker', function() {
         });
       });
 
+      describe('works with ngModelOptions updateOn : "default"', function() {
+        var $timeout, wrapElement;
+
+        beforeEach(inject(function(_$document_, _$sniffer_, _$timeout_) {
+          $document = _$document_;
+          $timeout = _$timeout_;
+          $rootScope.isopen = true;
+          $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
+          wrapElement = $compile('<div><input ng-model="date" ' +
+            'ng-model-options="{ updateOn: \'default\' }" ' +
+            'uib-datepicker-popup is-open="isopen"><div>')($rootScope);
+          $rootScope.$digest();
+          assignElements(wrapElement);
+        }));
+
+        it('should close the popup and update the input when a day is clicked', function() {
+          clickOption(17);
+          assignElements(wrapElement);
+          expect(dropdownEl.length).toBe(0);
+          expect(inputEl.val()).toBe('2010-09-15');
+          expect($rootScope.date).toEqual(new Date('2010-09-15T10:00:00.000Z'));
+        });
+      });
+
       describe('attribute `datepickerOptions`', function() {
         describe('show-weeks', function() {
           beforeEach(function() {

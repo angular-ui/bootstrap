@@ -836,6 +836,11 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     popupEl = angular.element('<div uib-datepicker-popup-wrap><div uib-datepicker></div></div>');
     $scope.ngModelOptions = angular.copy(ngModelOptions);
     $scope.ngModelOptions.timezone = null;
+    if ($scope.ngModelOptions.updateOnDefault === true) {
+      $scope.ngModelOptions.updateOn = $scope.ngModelOptions.updateOn ?
+        $scope.ngModelOptions.updateOn + ' default' : 'default';
+    }
+
     popupEl.attr({
       'ng-model': 'date',
       'ng-model-options': 'ngModelOptions',
