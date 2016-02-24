@@ -771,50 +771,26 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
   this.init = function(_ngModel_) {
     ngModel = _ngModel_;
     ngModelOptions = _ngModel_.$options || datepickerConfig.ngModelOptions;
-    if (angular.isDefined($scope.datepickerOptions)) {
-      closeOnDateSelection = angular.isDefined($scope.datepickerOptions.closeOnDateSelection) ?
-        $scope.datepickerOptions.closeOnDateSelection :
-        datepickerPopupConfig.closeOnDateSelection;
-      appendToBody = angular.isDefined($scope.datepickerOptions.datepickerAppendToBody) ?
-        $scope.datepickerOptions.datepickerAppendToBody :
-        datepickerPopupConfig.datepickerAppendToBody;
-      onOpenFocus = angular.isDefined($scope.datepickerOptions.onOpenFocus) ?
-        $scope.datepickerOptions.onOpenFocus :
-        datepickerPopupConfig.onOpenFocus;
-      datepickerPopupTemplateUrl = angular.isDefined($scope.datepickerOptions.datepickerPopupTemplateUrl) ?
-        $scope.datepickerOptions.datepickerPopupTemplateUrl :
-        datepickerPopupConfig.datepickerPopupTemplateUrl;
-      datepickerTemplateUrl = angular.isDefined($scope.datepickerOptions.datepickerTemplateUrl) ?
-        $scope.datepickerOptions.datepickerTemplateUrl : datepickerPopupConfig.datepickerTemplateUrl;
-      altInputFormats = angular.isDefined($scope.datepickerOptions.altInputFormats) ?
-        $scope.datepickerOptions.altInputFormats :
-        datepickerPopupConfig.altInputFormats;
-    } else {
-      if (datepickerPopupAttributeWarning) {
-        $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
-      }
+    closeOnDateSelection = angular.isDefined($attrs.closeOnDateSelection) ?
+      $scope.$parent.$eval($attrs.closeOnDateSelection) :
+      datepickerPopupConfig.closeOnDateSelection;
+    appendToBody = angular.isDefined($attrs.datepickerAppendToBody) ?
+      $scope.$parent.$eval($attrs.datepickerAppendToBody) :
+      datepickerPopupConfig.appendToBody;
+    onOpenFocus = angular.isDefined($attrs.onOpenFocus) ?
+      $scope.$parent.$eval($attrs.onOpenFocus) : datepickerPopupConfig.onOpenFocus;
+    datepickerPopupTemplateUrl = angular.isDefined($attrs.datepickerPopupTemplateUrl) ?
+      $attrs.datepickerPopupTemplateUrl :
+      datepickerPopupConfig.datepickerPopupTemplateUrl;
+    datepickerTemplateUrl = angular.isDefined($attrs.datepickerTemplateUrl) ?
+      $attrs.datepickerTemplateUrl : datepickerPopupConfig.datepickerTemplateUrl;
+    altInputFormats = angular.isDefined($attrs.altInputFormats) ?
+      $scope.$parent.$eval($attrs.altInputFormats) :
+      datepickerPopupConfig.altInputFormats;
 
-      closeOnDateSelection = angular.isDefined($attrs.closeOnDateSelection) ?
-        $scope.$parent.$eval($attrs.closeOnDateSelection) :
-        datepickerPopupConfig.closeOnDateSelection;
-      appendToBody = angular.isDefined($attrs.datepickerAppendToBody) ?
-        $scope.$parent.$eval($attrs.datepickerAppendToBody) :
-        datepickerPopupConfig.appendToBody;
-      onOpenFocus = angular.isDefined($attrs.onOpenFocus) ?
-        $scope.$parent.$eval($attrs.onOpenFocus) : datepickerPopupConfig.onOpenFocus;
-      datepickerPopupTemplateUrl = angular.isDefined($attrs.datepickerPopupTemplateUrl) ?
-        $attrs.datepickerPopupTemplateUrl :
-        datepickerPopupConfig.datepickerPopupTemplateUrl;
-      datepickerTemplateUrl = angular.isDefined($attrs.datepickerTemplateUrl) ?
-        $attrs.datepickerTemplateUrl : datepickerPopupConfig.datepickerTemplateUrl;
-      altInputFormats = angular.isDefined($attrs.altInputFormats) ?
-        $scope.$parent.$eval($attrs.altInputFormats) :
-        datepickerPopupConfig.altInputFormats;
-
-      $scope.showButtonBar = angular.isDefined($attrs.showButtonBar) ?
-        $scope.$parent.$eval($attrs.showButtonBar) :
-        datepickerPopupConfig.showButtonBar;
-    }
+    $scope.showButtonBar = angular.isDefined($attrs.showButtonBar) ?
+      $scope.$parent.$eval($attrs.showButtonBar) :
+      datepickerPopupConfig.showButtonBar;
 
     if (datepickerPopupConfig.html5Types[$attrs.type]) {
       dateFormat = datepickerPopupConfig.html5Types[$attrs.type];
