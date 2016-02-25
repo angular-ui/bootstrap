@@ -856,7 +856,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     angular.forEach(['minMode', 'maxMode', 'datepickerMode', 'shortcutPropagation'], function(key) {
       if ($attrs[key]) {
         if (datepickerPopupAttributeWarning) {
-          $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+          $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
         }
 
         var getAttribute = $parse($attrs[key]);
@@ -883,7 +883,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     angular.forEach(['minDate', 'maxDate', 'initDate'], function(key) {
       if ($attrs[key]) {
         if (datepickerPopupAttributeWarning) {
-          $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+          $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
         }
 
         var getAttribute = $parse($attrs[key]);
@@ -911,7 +911,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
     if ($attrs.dateDisabled) {
       if (datepickerPopupAttributeWarning) {
-        $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+        $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
       }
 
       datepickerEl.attr('date-disabled', 'dateDisabled({ date: date, mode: mode })');
@@ -920,7 +920,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle', 'showWeeks', 'startingDay', 'yearRows', 'yearColumns'], function(key) {
       if (angular.isDefined($attrs[key])) {
         if (datepickerPopupAttributeWarning) {
-          $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+          $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
         }
 
         datepickerEl.attr(cameltoDash(key), $attrs[key]);
@@ -929,7 +929,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
     if ($attrs.customClass) {
       if (datepickerPopupAttributeWarning) {
-        $log.warn('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+        $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
       }
 
       datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');

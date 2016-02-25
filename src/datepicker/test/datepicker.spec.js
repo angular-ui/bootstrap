@@ -981,7 +981,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup custom-class="true"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for customClass attribute usage', function() {
@@ -1016,7 +1016,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup date-disabled="true"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for dateDisabled attribute usage', function() {
@@ -1051,7 +1051,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup min-mode="year"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for minMode attribute usage', function() {
@@ -1086,7 +1086,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup max-mode="day"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for maxMode attribute usage', function() {
@@ -1121,7 +1121,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup shortcut-propagation="false"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for shortcutPropagation attribute usage', function() {
@@ -1157,7 +1157,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup min-date="minDate"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for minDate attribute usage', function() {
@@ -1194,7 +1194,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup max-date="maxDate"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for maxDate attribute usage', function() {
@@ -1231,7 +1231,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup init-date="initDate"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for initDate attribute usage', function() {
@@ -1267,7 +1267,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day="dd"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for formatDay attribute usage', function() {
@@ -1302,7 +1302,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup format-month="MMMM"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for formatMonth attribute usage', function() {
@@ -1337,7 +1337,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup format-year="yyyy"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for formatYear attribute usage', function() {
@@ -1372,7 +1372,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day-header="EEE"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for formatDayHeader attribute usage', function() {
@@ -1407,7 +1407,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup format-day-title="MMMM"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for formatDayTitle attribute usage', function() {
@@ -1442,7 +1442,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup format-month-title="MMMM yyyy"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for formatMonthTitle attribute usage', function() {
@@ -1477,7 +1477,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup show-weeks="true"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for showWeeks attribute usage', function() {
@@ -1512,7 +1512,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup starting-day="0"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for startingDay attribute usage', function() {
@@ -1547,7 +1547,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup year-columns="4"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for yearColumns attribute usage', function() {
@@ -1582,7 +1582,7 @@ describe('datepicker', function() {
       element = $compile('<div><input ng-model="date" uib-datepicker-popup year-rows="5"></div>')($scope);
       $scope.$digest();
 
-      expect($log.warn).toHaveBeenCalledWith('uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
+      expect($log.warn).toHaveBeenCalledWith('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
     });
 
     it('should suppress warning for yearRows attribute usage', function() {
