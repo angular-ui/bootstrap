@@ -119,6 +119,8 @@ The scope associated with modal's content is augmented with:
 
 Those methods make it easy to close a modal window without a need to create a dedicated controller.
 
+Also, when using `bindToController`, you can define an `$onInit` method in the controller that will fire upon initialization.
+
 ---
 
 Events fired:
