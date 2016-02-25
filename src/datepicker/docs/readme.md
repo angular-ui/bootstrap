@@ -12,111 +12,6 @@ The datepicker has 3 modes:
 
 ### uib-datepicker settings
 
-* `custom-class (date, mode)`
-  <small class="badge">$</small> -
-  An optional expression to add classes based on passing a date and current mode.
-
-* `date-disabled (date, mode)`
-  <small class="badge">$</small> -
-  An optional expression to disable visible options based on passing a date and current mode.
-
-* `datepicker-mode`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `day`)_ -
-  Current mode of the datepicker _(day|month|year)_. Can be used to initialize the datepicker in a specific mode.
-
-* `datepicker-options`
-  <small class="badge">$</small> -
-  An optional object to configure the datepicker in one place. If this attribute is used, all supported options must be specified instead of the attributes.
-
-  The supported options are:
-
-  - customClass
-  - dateDisabled
-  - datepickerMode
-  - formatDay
-  - formatDayHeader
-  - formatDayTitle
-  - formatMonth
-  - formatMonthTitle
-  - formatYear
-  - initDate
-  - maxDate
-  - maxMode
-  - minDate
-  - minMode
-  - shortcutPropagation
-  - showWeeks
-  - startingDay
-  - yearColumns
-  - yearRows
-
-* `format-day`
-  <small class="badge">C</small>
-  _(Default: `dd`)_ -
-  Format of day in month.
-
-* `format-month`
-  <small class="badge">C</small>
-  _(Default: `MMMM`)_ -
-  Format of month in year.
-
-* `format-year`
-  <small class="badge">C</small>
-  _(Default: `yyyy`)_ -
-  Format of year in year range.
-
-* `format-day-header`
-  <small class="badge">C</small>
-  _(Default: `EEE`)_ -
-  Format of day in week header.
-
-* `format-day-title`
-  <small class="badge">C</small>
-  _(Default: `MMMM yyyy`)_ -
-  Format of title when selecting day.
-
-* `format-month-title`
-  <small class="badge">C</small>
-  _(Default: `yyyy`)_ -
-  Format of title when selecting month.
-
-* `init-date`
-  <small class="badge">$</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `null`)_ -
-  The initial date view when no model value is specified.
-
-* `max-date`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `null`)_ -
-  Defines the maximum available date.
-
-* `max-mode`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-    <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `year`)_ -
-  Sets an upper limit for mode.
-
-* `min-date`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `null`)_ -
-  Defines the minimum available date.
-
-* `min-mode`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `day`)_ -
-  Sets a lower limit for mode.
-
 * `ng-model`
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i> -
@@ -129,39 +24,111 @@ The datepicker has 3 modes:
   Supported properties:
   * allowInvalid
   * timezone
-
-* `shortcut-propagation`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  _(Default: `false`)_ -
-  An option to disable the propagation of the keydown event.
-
-* `show-weeks`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  _(Default: `true`)_ -
-  Whether to display week numbers.
-
-* `starting-day`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  *(Default: `$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK`)* -
-  Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
-
+  
 * `template-url`
   _(Default: `uib/template/datepicker/datepicker.html`)_ -
   Add the ability to override the template used on the component.
+  
+Apart from the previous settings, to configure the uib-datepicker you need to create an object in Javascript with all the options and use it on the `datepicker-options` attribute:
 
-* `year-rows`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  _(Default: `4`)_ -
-  Number of rows displayed in year selection.
+* `datepicker-options`
+  <small class="badge">$</small> -
+  An object to configure the datepicker in one place.
 
-* `year-columns`
-  <small class="badge">$</small>
-  <small class="badge">C</small>
-  _(Default: `5`)_ -
+  * `customClass (date, mode)` -
+    An optional expression to add classes based on passing a date and current mode.
+  
+  * `dateDisabled (date, mode)` -
+    An optional expression to disable visible options based on passing a date and current mode.
+  
+  * `datepickerMode`
+    <small class="badge">C</small>
+    <i class="glyphicon glyphicon-eye-open"></i>
+    _(Default: `day`)_ -
+    Current mode of the datepicker _(day|month|year)_. Can be used to initialize the datepicker in a specific mode.
+  
+  * `formatDay`
+    <small class="badge">C</small>
+    _(Default: `dd`)_ -
+    Format of day in month.
+  
+  * `formatMonth`
+    <small class="badge">C</small>
+    _(Default: `MMMM`)_ -
+    Format of month in year.
+  
+  * `formatYear`
+    <small class="badge">C</small>
+    _(Default: `yyyy`)_ -
+    Format of year in year range.
+  
+  * `formatDayHeader`
+    <small class="badge">C</small>
+    _(Default: `EEE`)_ -
+    Format of day in week header.
+  
+  * `formatDayTitle`
+    <small class="badge">C</small>
+    _(Default: `MMMM yyyy`)_ -
+    Format of title when selecting day.
+  
+  * `formatMonthTitle`
+    <small class="badge">C</small>
+    _(Default: `yyyy`)_ -
+    Format of title when selecting month.
+  
+  * `initDate`
+    <i class="glyphicon glyphicon-eye-open"></i>
+    _(Default: `null`)_ -
+    The initial date view when no model value is specified.
+  
+  * `maxDate`
+    <small class="badge">C</small>
+    <i class="glyphicon glyphicon-eye-open"></i>
+    _(Default: `null`)_ -
+    Defines the maximum available date.
+  
+  * `maxMode`
+    <small class="badge">C</small>
+      <i class="glyphicon glyphicon-eye-open"></i>
+    _(Default: `year`)_ -
+    Sets an upper limit for mode.
+  
+  * `minDate`
+    <small class="badge">C</small>
+    <i class="glyphicon glyphicon-eye-open"></i>
+    _(Default: `null`)_ -
+    Defines the minimum available date.
+  
+  * `minMode`
+    <small class="badge">C</small>
+    <i class="glyphicon glyphicon-eye-open"></i>
+    _(Default: `day`)_ -
+    Sets a lower limit for mode.
+  
+  * `shortcutPropagation`
+    <small class="badge">C</small>
+    _(Default: `false`)_ -
+    An option to disable the propagation of the keydown event.
+  
+  * `showWeeks`
+    <small class="badge">C</small>
+    _(Default: `true`)_ -
+    Whether to display week numbers.
+  
+  * `startingDay`
+    <small class="badge">C</small>
+    *(Default: `$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK`)* -
+    Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
+
+  * `yearRows`
+    <small class="badge">C</small>
+    _(Default: `4`)_ -
+    Number of rows displayed in year selection.
+  
+  * `yearColumns`
+    <small class="badge">C</small>
+    _(Default: `5`)_ -
   Number of columns displayed in year selection.
 
 ### uib-datepicker-popup settings
@@ -260,9 +227,6 @@ The popup is a wrapper that you can use in an input to toggle a datepicker. To c
   <small class="badge">C</small>
   _(Default: `yyyy-MM-dd`, Config: `datepickerConfig`)_ -
   The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. `yyyy-MM-dd h 'o\'clock'`.
-
-**Note:** With the exception of `ng-model[-options]` and `templateUrl`, you can configure the wrapped datepicker using its attributes in the popup as well.
-But beware **this possibility may be deprecated on the near future.**
 
 ### Keyboard support
 
