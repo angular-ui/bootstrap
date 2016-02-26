@@ -74,7 +74,8 @@ A lightweight pagination directive that is focused on ... providing pagination &
   _(Default: `angular.noop`)_ -
   An optional expression assigned the total number of pages to display.
 
-* `page-label`-
+* `page-label`
+  _(Default: `angular.identity`)_ -
   An optional expression to override the page label based on passing the current page indexes. Supports page number with `$page` in the template.
 
 * `previous-text`
