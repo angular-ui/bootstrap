@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/angular-ui/bootstrap/compare/1.2.0...v1.2.1) (2016-02-27)
+
+
+### Bug Fixes
+
+* **popover:** add missing selector ([70c1c90](https://github.com/angular-ui/bootstrap/commit/70c1c90)), closes [#5549](https://github.com/angular-ui/bootstrap/issues/5549)
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/angular-ui/bootstrap/compare/1.1.2...v1.2.0) (2016-02-26)
 
