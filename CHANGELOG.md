@@ -63,6 +63,7 @@ template
 * datepicker: This adds extra CSS for the datepicker for the left and right header buttons - one can override this appropriately with any selector of class priority higher than 1
 * datepicker: This breaks any snake-cased key usage, i.e.
 `show-weeks`. Convert all keys used to camelCase.
+* tab: Make the `active` attribute optional and move to `tabset` element.
 
 
 
