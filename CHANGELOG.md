@@ -64,6 +64,7 @@ template
 * datepicker: This breaks any snake-cased key usage, i.e.
 `show-weeks`. Convert all keys used to camelCase.
 * tab: Make the `active` attribute optional and move to `tabset` element.
+* carousel: the `active` attribute is now required on the `uib-carousel` element and a unique `index` attribute is required on each `uib-slide` element.
 
 
 
