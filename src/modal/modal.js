@@ -361,9 +361,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
           }
           afterAnimating.done = true;
 
-          $animateCss(domEl, {
-            event: 'leave'
-          }).start().then(function() {
+          $animate.leave(domEl).then(function() {
             domEl.remove();
             if (closedDeferred) {
               closedDeferred.resolve();
