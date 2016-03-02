@@ -815,6 +815,7 @@ describe('$uibModal', function() {
         open({
           template: '<div>{{test.fromCtrl}} {{test.closeDismissPresent()}} {{test.foo}}</div>',
           controller: function($uibModalInstance) {
+            expect(this.foo).toEqual($scope.foo);
             this.fromCtrl = 'Content from ctrl';
             this.closeDismissPresent = function() {
               return angular.isFunction(this.$close) && angular.isFunction(this.$dismiss);
