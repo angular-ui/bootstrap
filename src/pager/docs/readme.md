@@ -42,7 +42,7 @@ A lightweight pager directive that is focused on providing previous/next paging 
   Text for Previous button.
 
 * `template-url`
-  _(Default: `template/pagination/pager.html`)_ -
+  _(Default: `uib/template/pager/pager.html`)_ -
   Override the template for the component with a custom provided template.
   
 * `total-items`
