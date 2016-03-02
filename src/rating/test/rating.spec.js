@@ -107,6 +107,7 @@ describe('rating directive', function() {
 
     expect(getState()).toEqual([true, true, false, false, false]);
     expect(element.attr('aria-valuenow')).toBe('2');
+    expect(element.attr('aria-valuetext')).toBe('two');
   });
 
   it('shows different number of icons when `max` attribute is set', function() {
