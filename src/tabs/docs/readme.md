@@ -5,7 +5,7 @@ AngularJS version of the tabs directive.
 * `active`
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `Index of first tab`)_ -
-  Active index of tab.
+  Active index of tab. Setting this to an existing tab index will make that tab active.
 
 * `justified`
   <small class="badge">$</small>
@@ -31,7 +31,7 @@ AngularJS version of the tabs directive.
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
-  Whether tab is currently selected.
+  Whether tab is currently selected. Note that this is purely for CSS and will not physically set this tab to active.
 
 * `classes`
   <small class="badge">$</small> -
