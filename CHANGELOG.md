@@ -1,3 +1,20 @@
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/angular-ui/bootstrap/compare/1.2.1...v1.2.2) (2016-03-03)
+
+
+### Bug Fixes
+
+* **Gruntfile:** add per module flag ([a816251](https://github.com/angular-ui/bootstrap/commit/a816251)), closes [#5567](https://github.com/angular-ui/bootstrap/issues/5567)
+* **modal:** fire ng-leave on close ([299f751](https://github.com/angular-ui/bootstrap/commit/299f751)), closes [#5556](https://github.com/angular-ui/bootstrap/issues/5556) [#5399](https://github.com/angular-ui/bootstrap/issues/5399)
+* **modal:** fix bindToController props ([5e43870](https://github.com/angular-ui/bootstrap/commit/5e43870)), closes [#5569](https://github.com/angular-ui/bootstrap/issues/5569)
+* **position:** add CSS for webpack support ([d68086f](https://github.com/angular-ui/bootstrap/commit/d68086f)), closes [#5561](https://github.com/angular-ui/bootstrap/issues/5561)
+* **rating:** fix usage of aria-valuetext ([4369800](https://github.com/angular-ui/bootstrap/commit/4369800)), closes [#5573](https://github.com/angular-ui/bootstrap/issues/5573) [#5571](https://github.com/angular-ui/bootstrap/issues/5571)
+* **tabs:** update doc and fix tab demo ([9d74d6c](https://github.com/angular-ui/bootstrap/commit/9d74d6c)), closes [#5575](https://github.com/angular-ui/bootstrap/issues/5575) [#5551](https://github.com/angular-ui/bootstrap/issues/5551)
+* **tests:** add style tag once ([cc2d1b9](https://github.com/angular-ui/bootstrap/commit/cc2d1b9)), closes [#5557](https://github.com/angular-ui/bootstrap/issues/5557) [#5548](https://github.com/angular-ui/bootstrap/issues/5548)
+* **tooltip:** import CSS ([c8922a2](https://github.com/angular-ui/bootstrap/commit/c8922a2)), closes [#5552](https://github.com/angular-ui/bootstrap/issues/5552)
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/angular-ui/bootstrap/compare/1.2.0...v1.2.1) (2016-02-27)
 
