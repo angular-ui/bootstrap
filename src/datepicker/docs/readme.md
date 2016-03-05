@@ -21,7 +21,7 @@ The datepicker has 3 modes:
   <small class="badge">$</small>
   <small class="badge">C</small>
   _(Default: `{}`)_ -
-  Supported properties:
+  Supported [angular ngModelOptions](https://docs.angularjs.org/api/ng/directive/ngModelOptions):
   * allowInvalid
   * timezone
   
