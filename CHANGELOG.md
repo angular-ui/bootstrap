@@ -1,3 +1,22 @@
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/angular-ui/bootstrap/compare/1.2.2...v1.2.3) (2016-03-06)
+
+
+### Bug Fixes
+
+* **dropdown:** correctly update isOpen ([aac0d2b](https://github.com/angular-ui/bootstrap/commit/aac0d2b)), closes [#5589](https://github.com/angular-ui/bootstrap/issues/5589) [#3261](https://github.com/angular-ui/bootstrap/issues/3261)
+* **modal:** switch to $animate ([dd62c73](https://github.com/angular-ui/bootstrap/commit/dd62c73)), closes [#5585](https://github.com/angular-ui/bootstrap/issues/5585) [#5298](https://github.com/angular-ui/bootstrap/issues/5298)
+* **position:** auto position append to body ([a516178](https://github.com/angular-ui/bootstrap/commit/a516178)), closes [#5582](https://github.com/angular-ui/bootstrap/issues/5582) [#5576](https://github.com/angular-ui/bootstrap/issues/5576)
+* **tabs:** support heading with : ([a945dd2](https://github.com/angular-ui/bootstrap/commit/a945dd2)), closes [#5590](https://github.com/angular-ui/bootstrap/issues/5590) [#5568](https://github.com/angular-ui/bootstrap/issues/5568)
+* **typeahead:** change to original scope ([7949494](https://github.com/angular-ui/bootstrap/commit/7949494)), closes [#5588](https://github.com/angular-ui/bootstrap/issues/5588) [#5467](https://github.com/angular-ui/bootstrap/issues/5467)
+* **typeahead:** update isOpen on escape ([313ba83](https://github.com/angular-ui/bootstrap/commit/313ba83)), closes [#5579](https://github.com/angular-ui/bootstrap/issues/5579) [#5587](https://github.com/angular-ui/bootstrap/issues/5587)
+
+### Features
+
+* **datepicker:** add helpers for styling ([c15dcbd](https://github.com/angular-ui/bootstrap/commit/c15dcbd)), closes [#5580](https://github.com/angular-ui/bootstrap/issues/5580)
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/angular-ui/bootstrap/compare/1.2.1...v1.2.2) (2016-03-03)
 
