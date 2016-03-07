@@ -610,8 +610,8 @@ describe('uib-accordion', function() {
       });
     });
 
-    describe('uib-accordion group panel class - #3968', function() {
-      it('should use the default value when panel class is falsy', function() {
+    describe('uib-accordion group panel class', function() {
+      it('should use the default value when panel class is falsy - #3968', function() {
         element = $compile('<uib-accordion><uib-accordion-group heading="Heading">Content</uib-accordion-group></uib-accordion>')(scope);
         scope.$digest();
         groups = element.find('.panel');
@@ -623,12 +623,25 @@ describe('uib-accordion', function() {
         expect(groups.eq(0)).toHaveClass('panel-default');
       });
 
-      it('should use the specified value when not falsy', function() {
+      it('should use the specified value when not falsy - #3968', function() {
         element = $compile('<uib-accordion><uib-accordion-group heading="Heading" panel-class="custom-class">Content</uib-accordion-group></uib-accordion>')(scope);
         scope.$digest();
         groups = element.find('.panel');
         expect(groups.eq(0)).toHaveClass('custom-class');
         expect(groups.eq(0)).not.toHaveClass('panel-default');
+      });
+      
+      it('should change class if panel-class is changed', function() {
+        element = $compile('<uib-accordion><uib-accordion-group heading="Heading" panel-class="{{panelClass}}">Content</uib-accordion-group></uib-accordion>')(scope);
+        scope.panelClass = 'custom-class';
+        scope.$digest();
+        groups = element.find('.panel');
+        expect(groups.eq(0)).toHaveClass('custom-class');
+        
+        scope.panelClass = 'different-class';
+        scope.$digest();
+        expect(groups.eq(0)).toHaveClass('different-class');
+        expect(groups.eq(0)).not.toHaveClass('custom-class');
       });
     });
   });
