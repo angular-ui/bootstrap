@@ -21,6 +21,6 @@
   margin: 0;
 }
 
-[uib-popover-popup].popover, [uib-popover-template-popup].popover {
+[uib-popover-popup].popover, [uib-popover-template-popup].popover, [uib-popover-html-popup].popover {
   display: block !important;
 }
