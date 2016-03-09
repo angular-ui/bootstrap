@@ -6,6 +6,22 @@
 [uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,
 [uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,
 [uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,
+[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,
+[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,
 [uib-popover-popup].popover.top-left > .arrow,
 [uib-popover-popup].popover.top-right > .arrow,
 [uib-popover-popup].popover.bottom-left > .arrow,
@@ -13,7 +29,23 @@
 [uib-popover-popup].popover.left-top > .arrow,
 [uib-popover-popup].popover.left-bottom > .arrow,
 [uib-popover-popup].popover.right-top > .arrow,
-[uib-popover-popup].popover.right-bottom > .arrow {
+[uib-popover-popup].popover.right-bottom > .arrow,
+[uib-popover-html-popup].popover.top-left > .arrow,
+[uib-popover-html-popup].popover.top-right > .arrow,
+[uib-popover-html-popup].popover.bottom-left > .arrow,
+[uib-popover-html-popup].popover.bottom-right > .arrow,
+[uib-popover-html-popup].popover.left-top > .arrow,
+[uib-popover-html-popup].popover.left-bottom > .arrow,
+[uib-popover-html-popup].popover.right-top > .arrow,
+[uib-popover-html-popup].popover.right-bottom > .arrow,
+[uib-popover-template-popup].popover.top-left > .arrow,
+[uib-popover-template-popup].popover.top-right > .arrow,
+[uib-popover-template-popup].popover.bottom-left > .arrow,
+[uib-popover-template-popup].popover.bottom-right > .arrow,
+[uib-popover-template-popup].popover.left-top > .arrow,
+[uib-popover-template-popup].popover.left-bottom > .arrow,
+[uib-popover-template-popup].popover.right-top > .arrow,
+[uib-popover-template-popup].popover.right-bottom > .arrow {
   top: auto;
   bottom: auto;
   left: auto;
@@ -21,6 +53,8 @@
   margin: 0;
 }
 
-[uib-popover-popup].popover, [uib-popover-template-popup].popover, [uib-popover-html-popup].popover {
+[uib-popover-popup].popover,
+[uib-popover-html-popup].popover,
+[uib-popover-template-popup].popover {
   display: block !important;
 }
