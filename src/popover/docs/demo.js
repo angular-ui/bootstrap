@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.demo').controller('PopoverDemoCtrl', function ($scope) {
+angular.module('ui.bootstrap.demo').controller('PopoverDemoCtrl', function ($scope, $sce) {
   $scope.dynamicPopover = {
     content: 'Hello, World!',
     templateUrl: 'myPopoverTemplate.html',
@@ -22,4 +22,6 @@ angular.module('ui.bootstrap.demo').controller('PopoverDemoCtrl', function ($sco
     ],
     selected: 'top'
   };
+  
+  $scope.htmlPopover = $sce.trustAsHtml('<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content');
 });
