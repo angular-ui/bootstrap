@@ -7,7 +7,7 @@ module.
 __Note to mobile developers__:  Please note that while popovers may work correctly on mobile devices (including tablets),
   we have made the decision to not officially support such a use-case because it does not make sense from a UX perspective.
 
-There are three versions of the popover: `uib-popover` and `uib-popover-template`, and `uib-tooltip-html`:
+There are three versions of the popover: `uib-popover` and `uib-popover-template`, and `uib-popover-html`:
 
 * `uib-popover` -
   Takes text only and will escape any HTML provided for the popover body.
@@ -27,13 +27,18 @@ All these settings are available for the three types of popovers.
   <small class="badge">C</small>
   _(Default: `true`, Config: `animation`)_ -
   Should it fade in and out?
-  
+
 * `popover-append-to-body`
   <small class="badge">$</small>
   <small class="badge">C</small>
   _(Default: `false`, Config: `appendToBody`)_ -
   Should the popover be appended to '$body' instead of the parent element?
-  
+
+* `popover-enable`
+  <small class="badge">$</small>
+  _(Default: `true`)_ -
+  Is it enabled? It will enable or disable the configured popover-trigger.
+
 * `popover-is-open`
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
@@ -43,7 +48,7 @@ All these settings are available for the three types of popovers.
   <small class="badge">C</small>
   _(Default: `top`, Config: `placement`)_ -
   Passing in 'auto' separated by a space before the placement will enable auto positioning, e.g: "auto bottom-left". The popover will attempt to position where it fits in the closest scrollable ancestor. Accepts:
-  
+
    * `top` - popover on top, horizontally centered on host element.
    * `top-left` - popover on top, left edge aligned with host element left edge.
    * `top-right` - popover on top, right edge aligned with host element right edge.
@@ -56,7 +61,7 @@ All these settings are available for the three types of popovers.
    * `right` - popover on right, vertically centered on host element.
    * `right-top` - popover on right, top edge aligned with host element top edge.
    * `right-bottom` - popover on right, bottom edge aligned with host element bottom edge.
-   
+
 * `popover-popup-close-delay`
   <small class="badge">C</small>
   _(Default: `0`, Config: `popupCloseDelay`)_ -
@@ -69,7 +74,7 @@ All these settings are available for the three types of popovers.
 
 * `popover-title` -
    A string to display as a fancy title.
-   
+
 * `popover-trigger`
   _(Default: `click`)_ -
   What should trigger a show of the popover? Supports a space separated list of event names (see below).
@@ -101,7 +106,7 @@ methods are available:
 * `setTriggers(obj)`
   _(Example: `{ 'openTrigger': 'closeTrigger' }`)_ -
   Extends the default trigger mappings mentioned above with mappings of your own.
-  
+
 * `options(obj)` -
   Provide a set of defaults for certain tooltip and popover attributes. Currently supports the ones with the <small class="badge">C</small> badge.
 
