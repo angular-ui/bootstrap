@@ -18,7 +18,8 @@ angular.module('ui.bootstrap.timepicker', [])
   var selected = new Date(),
     watchers = [],
     ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl
-    meridians = angular.isDefined($attrs.meridians) ? $scope.$parent.$eval($attrs.meridians) : timepickerConfig.meridians || $locale.DATETIME_FORMATS.AMPMS;
+    meridians = angular.isDefined($attrs.meridians) ? $scope.$parent.$eval($attrs.meridians) : timepickerConfig.meridians || $locale.DATETIME_FORMATS.AMPMS,
+    padHours = angular.isDefined($attrs.padHours) ? $scope.$parent.$eval($attrs.padHours) : true;
 
   $scope.tabindex = angular.isDefined($attrs.tabindex) ? $attrs.tabindex : 0;
   $element.removeAttr('tabindex');
@@ -190,12 +191,12 @@ angular.module('ui.bootstrap.timepicker', [])
     return seconds >= 0 && seconds < 60 ? seconds : undefined;
   }
 
-  function pad(value) {
+  function pad(value, noPad) {
     if (value === null) {
       return '';
     }
 
-    return angular.isDefined(value) && value.toString().length < 2 ?
+    return angular.isDefined(value) && value.toString().length < 2 && !noPad ?
       '0' + value : value.toString();
   }
 
@@ -326,7 +327,7 @@ angular.module('ui.bootstrap.timepicker', [])
         invalidate(true);
       } else if (!$scope.invalidHours && $scope.hours < 10) {
         $scope.$apply(function() {
-          $scope.hours = pad($scope.hours);
+          $scope.hours = pad($scope.hours, !padHours);
         });
       }
     });
@@ -435,7 +436,7 @@ angular.module('ui.bootstrap.timepicker', [])
         hours = hours === 0 || hours === 12 ? 12 : hours % 12; // Convert 24 to 12 hour system
       }
 
-      $scope.hours = keyboardChange === 'h' ? hours : pad(hours);
+      $scope.hours = keyboardChange === 'h' ? hours : pad(hours, !padHours);
       if (keyboardChange !== 'm') {
         $scope.minutes = pad(minutes);
       }

@@ -57,6 +57,11 @@ A lightweight & configurable timepicker directive.
   <i class="glyphicon glyphicon-eye-open"></i> -
   Date object that provides the time state.
 
+* `pad-hours`
+  <small class="badge">$</small>
+  _(Default: true)_ -
+  Whether the hours column is padded with a 0.
+
 * `readonly-input`
   <small class="badge">$</small>
   <small class="badge">C</small>

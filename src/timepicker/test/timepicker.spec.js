@@ -986,6 +986,37 @@ describe('timepicker directive', function() {
     });
   });
 
+  describe('`pad-hours` attribute', function() {
+    function triggerInput(elem, val) {
+      elem.val(val);
+      elem.trigger('input');
+    }
+
+    it('should pad the hours by default', function() {
+      element = $compile('<uib-timepicker ng-model="time"></uib-timepicker>')($rootScope);
+      $rootScope.$digest();
+
+      var inputs = element.find('input');
+      var hoursInput = inputs.eq(0);
+      triggerInput(hoursInput, 4);
+      hoursInput.blur();
+
+      expect(hoursInput.val()).toBe('04');
+    });
+
+    it('should not pad the hours', function() {
+      element = $compile('<uib-timepicker ng-model="time" pad-hours="false"></uib-timepicker>')($rootScope);
+      $rootScope.$digest();
+
+      var inputs = element.find('input');
+      var hoursInput = inputs.eq(0);
+      triggerInput(hoursInput, 4);
+      hoursInput.blur();
+
+      expect(hoursInput.val()).toBe('4');
+    });
+  });
+
   describe('setting uibTimepickerConfig steps', function() {
     var originalConfig = {};
     beforeEach(inject(function(_$compile_, _$rootScope_, uibTimepickerConfig) {
