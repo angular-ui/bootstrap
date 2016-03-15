@@ -38,6 +38,11 @@ Rating directive that will take care of visualising a star rating bar.
   _(Default: ['one', 'two', 'three', 'four', 'five']`)_ -
   An array of strings defining titles for all icons.
 
+* `enable-reset`
+  <small class="badge">$</small>
+  _(Default: `true`)_ -
+  Clicking the icon of the current rating will reset the rating to 0.
+
 * `state-off`
   <small class="badge">$</small>
   <small class="badge">C</small>

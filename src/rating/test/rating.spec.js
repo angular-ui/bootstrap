@@ -146,6 +146,31 @@ describe('rating directive', function() {
     expect(getState()).toEqual([true, true, true, true, true]);
   });
 
+  it('handles enable-reset attribute', function() {
+    $rootScope.canReset = false;
+    element = $compile('<uib-rating ng-model="rate" enable-reset="canReset"></uib-rating>')($rootScope);
+    $rootScope.$digest();
+
+    var star = {
+      states: [true, true, true, true, true],
+      rating: 5
+    };
+
+    var selectStar = getStar(star.rating);
+
+    selectStar.click();
+    $rootScope.$digest();
+    expect(getState()).toEqual(star.states);
+    expect($rootScope.rate).toBe(5);
+    expect(element.attr('aria-valuenow')).toBe('5');
+
+    selectStar.click();
+    $rootScope.$digest();
+    expect(getState()).toEqual(star.states);
+    expect($rootScope.rate).toBe(5);
+    expect(element.attr('aria-valuenow')).toBe('5');
+  });
+
   it('should fire onHover', function() {
     $rootScope.hoveringOver = jasmine.createSpy('hoveringOver');
     element = $compile('<uib-rating ng-model="rate" on-hover="hoveringOver(value)"></uib-rating>')($rootScope);
