@@ -1828,6 +1828,13 @@ describe('datepicker', function() {
         expect(getTitle()).toBe('January 2014');
       });
 
+      it('should not change model when going to next month - #5441', function() {
+        $rootScope.date = new Date('January 30, 2014');
+        $rootScope.$digest();
+        clickNextButton();
+        expect($rootScope.date).toEqual(new Date('January 30, 2014'));
+      });
+
       describe('when `model` changes', function() {
         function testCalendar() {
           expect(getTitle()).toBe('November 2005');
