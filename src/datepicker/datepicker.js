@@ -30,224 +30,108 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       watchListeners = [],
       optionsUsed = !!$attrs.datepickerOptions;
 
+  if (!$scope.datepickerOptions) {
+    $scope.datepickerOptions = {};
+  }
+
   // Modes chain
   this.modes = ['day', 'month', 'year'];
 
-  if (optionsUsed) {
-    [
-      'customClass',
-      'dateDisabled',
-      'datepickerMode',
-      'formatDay',
-      'formatDayHeader',
-      'formatDayTitle',
-      'formatMonth',
-      'formatMonthTitle',
-      'formatYear',
-      'initDate',
-      'maxDate',
-      'maxMode',
-      'minDate',
-      'minMode',
-      'showWeeks',
-      'shortcutPropagation',
-      'startingDay',
-      'yearColumns',
-      'yearRows'
-    ].forEach(function(key) {
-      switch (key) {
-        case 'customClass':
-        case 'dateDisabled':
-          $scope[key] = $scope.datepickerOptions[key] || angular.noop;
-          break;
-        case 'datepickerMode':
-          $scope.datepickerMode = angular.isDefined($scope.datepickerOptions.datepickerMode) ?
-            $scope.datepickerOptions.datepickerMode : datepickerConfig.datepickerMode;
-          break;
-        case 'formatDay':
-        case 'formatDayHeader':
-        case 'formatDayTitle':
-        case 'formatMonth':
-        case 'formatMonthTitle':
-        case 'formatYear':
-          self[key] = angular.isDefined($scope.datepickerOptions[key]) ?
-            $interpolate($scope.datepickerOptions[key])($scope.$parent) :
-            datepickerConfig[key];
-          break;
-        case 'showWeeks':
-        case 'shortcutPropagation':
-        case 'yearColumns':
-        case 'yearRows':
-          self[key] = angular.isDefined($scope.datepickerOptions[key]) ?
-            $scope.datepickerOptions[key] : datepickerConfig[key];
-          break;
-        case 'startingDay':
-          if (angular.isDefined($scope.datepickerOptions.startingDay)) {
-            self.startingDay = $scope.datepickerOptions.startingDay;
-          } else if (angular.isNumber(datepickerConfig.startingDay)) {
-            self.startingDay = datepickerConfig.startingDay;
-          } else {
-            self.startingDay = ($locale.DATETIME_FORMATS.FIRSTDAYOFWEEK + 8) % 7;
-          }
+  [
+    'customClass',
+    'dateDisabled',
+    'datepickerMode',
+    'formatDay',
+    'formatDayHeader',
+    'formatDayTitle',
+    'formatMonth',
+    'formatMonthTitle',
+    'formatYear',
+    'maxDate',
+    'maxMode',
+    'minDate',
+    'minMode',
+    'showWeeks',
+    'shortcutPropagation',
+    'startingDay',
+    'yearColumns',
+    'yearRows'
+  ].forEach(function(key) {
+    switch (key) {
+      case 'customClass':
+      case 'dateDisabled':
+        $scope[key] = $scope.datepickerOptions[key] || angular.noop;
+        break;
+      case 'datepickerMode':
+        $scope.datepickerMode = angular.isDefined($scope.datepickerOptions.datepickerMode) ?
+          $scope.datepickerOptions.datepickerMode : datepickerConfig.datepickerMode;
+        break;
+      case 'formatDay':
+      case 'formatDayHeader':
+      case 'formatDayTitle':
+      case 'formatMonth':
+      case 'formatMonthTitle':
+      case 'formatYear':
+        self[key] = angular.isDefined($scope.datepickerOptions[key]) ?
+          $interpolate($scope.datepickerOptions[key])($scope.$parent) :
+          datepickerConfig[key];
+        break;
+      case 'showWeeks':
+      case 'shortcutPropagation':
+      case 'yearColumns':
+      case 'yearRows':
+        self[key] = angular.isDefined($scope.datepickerOptions[key]) ?
+          $scope.datepickerOptions[key] : datepickerConfig[key];
+        break;
+      case 'startingDay':
+        if (angular.isDefined($scope.datepickerOptions.startingDay)) {
+          self.startingDay = $scope.datepickerOptions.startingDay;
+        } else if (angular.isNumber(datepickerConfig.startingDay)) {
+          self.startingDay = datepickerConfig.startingDay;
+        } else {
+          self.startingDay = ($locale.DATETIME_FORMATS.FIRSTDAYOFWEEK + 8) % 7;
+        }
 
-          break;
-        case 'maxDate':
-        case 'minDate':
-          if ($scope.datepickerOptions[key]) {
-            $scope.$watch(function() { return $scope.datepickerOptions[key]; }, function(value) {
-              if (value) {
-                if (angular.isDate(value)) {
-                  self[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
-                } else {
-                  self[key] = new Date(dateFilter(value, 'medium'));
-                }
+        break;
+      case 'maxDate':
+      case 'minDate':
+        if ($scope.datepickerOptions[key]) {
+          $scope.$watch('datepickerOptions.' + key, function(value) {
+            if (value) {
+              if (angular.isDate(value)) {
+                self[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
               } else {
-                self[key] = null;
+                self[key] = new Date(dateFilter(value, 'medium'));
               }
-
-              self.refreshView();
-            });
-          } else {
-            self[key] = datepickerConfig[key] ? dateParser.fromTimezone(new Date(datepickerConfig[key]), ngModelOptions.timezone) : null;
-          }
-
-          break;
-        case 'maxMode':
-        case 'minMode':
-          if ($scope.datepickerOptions[key]) {
-            $scope.$watch(function() { return $scope.datepickerOptions[key]; }, function(value) {
-              self[key] = $scope[key] = angular.isDefined(value) ? value : datepickerOptions[key];
-              if (key === 'minMode' && self.modes.indexOf($scope.datepickerOptions.datepickerMode) < self.modes.indexOf(self[key]) ||
-                key === 'maxMode' && self.modes.indexOf($scope.datepickerOptions.datepickerMode) > self.modes.indexOf(self[key])) {
-                $scope.datepickerMode = self[key];
-                $scope.datepickerOptions.datepickerMode = self[key];
-              }
-            });
-          } else {
-            self[key] = $scope[key] = datepickerConfig[key] || null;
-          }
-
-          break;
-        case 'initDate':
-          if ($scope.datepickerOptions.initDate) {
-            self.activeDate = dateParser.fromTimezone($scope.datepickerOptions.initDate, ngModelOptions.timezone) || new Date();
-            $scope.$watch(function() { return $scope.datepickerOptions.initDate; }, function(initDate) {
-              if (initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)) {
-                self.activeDate = dateParser.fromTimezone(initDate, ngModelOptions.timezone);
-                self.refreshView();
-              }
-            });
-          } else {
-            self.activeDate = new Date();
-          }
-      }
-    });
-  } else {
-    // Interpolated configuration attributes
-    angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle'], function(key) {
-      self[key] = angular.isDefined($attrs[key]) ? $interpolate($attrs[key])($scope.$parent) : datepickerConfig[key];
-
-      if (angular.isDefined($attrs[key]) && datepickerAttributeWarning) {
-        $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
-      }
-    });
-
-    // Evaled configuration attributes
-    angular.forEach(['showWeeks', 'yearRows', 'yearColumns', 'shortcutPropagation'], function(key) {
-      self[key] = angular.isDefined($attrs[key]) ?
-        $scope.$parent.$eval($attrs[key]) : datepickerConfig[key];
-
-      if (angular.isDefined($attrs[key]) && datepickerAttributeWarning) {
-        $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
-      }
-    });
-
-    angular.forEach(['dateDisabled', 'customClass'], function(key) {
-      if (angular.isDefined($attrs[key]) && datepickerAttributeWarning) {
-        $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
-      }
-    });
-
-    if (angular.isDefined($attrs.startingDay)) {
-      if (datepickerAttributeWarning) {
-        $log.warn('uib-datepicker startingDay attribute usage is deprecated, use datepicker-options attribute instead');
-      }
-
-      self.startingDay = $scope.$parent.$eval($attrs.startingDay);
-    } else if (angular.isNumber(datepickerConfig.startingDay)) {
-      self.startingDay = datepickerConfig.startingDay;
-    } else {
-      self.startingDay = ($locale.DATETIME_FORMATS.FIRSTDAYOFWEEK + 8) % 7;
-    }
-
-    // Watchable date attributes
-    angular.forEach(['minDate', 'maxDate'], function(key) {
-      if ($attrs[key]) {
-        if (datepickerAttributeWarning) {
-          $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
-        }
-
-        watchListeners.push($scope.$parent.$watch($attrs[key], function(value) {
-          if (value) {
-            if (angular.isDate(value)) {
-              self[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
             } else {
-              self[key] = new Date(dateFilter(value, 'medium'));
+              self[key] = null;
             }
-          } else {
-            self[key] = null;
-          }
 
-          self.refreshView();
-        }));
-      } else {
-        self[key] = datepickerConfig[key] ? dateParser.fromTimezone(new Date(datepickerConfig[key]), ngModelOptions.timezone) : null;
-      }
-    });
-
-    angular.forEach(['minMode', 'maxMode'], function(key) {
-      if ($attrs[key]) {
-        if (datepickerAttributeWarning) {
-          $log.warn('uib-datepicker ' + key + ' attribute usage is deprecated, use datepicker-options attribute instead');
+            self.refreshView();
+          });
+        } else {
+          self[key] = datepickerConfig[key] ? dateParser.fromTimezone(new Date(datepickerConfig[key]), ngModelOptions.timezone) : null;
         }
 
-        watchListeners.push($scope.$parent.$watch($attrs[key], function(value) {
-          self[key] = $scope[key] = angular.isDefined(value) ? value : $attrs[key];
-          if (key === 'minMode' && self.modes.indexOf($scope.datepickerMode) < self.modes.indexOf(self[key]) ||
-            key === 'maxMode' && self.modes.indexOf($scope.datepickerMode) > self.modes.indexOf(self[key])) {
-            $scope.datepickerMode = self[key];
-          }
-        }));
-      } else {
-        self[key] = $scope[key] = datepickerConfig[key] || null;
-      }
-    });
-
-    if (angular.isDefined($attrs.initDate)) {
-      if (datepickerAttributeWarning) {
-        $log.warn('uib-datepicker initDate attribute usage is deprecated, use datepicker-options attribute instead');
-      }
-
-      var initDate = dateParser.fromTimezone($scope.$parent.$eval($attrs.initDate), ngModelOptions.timezone);
-      this.activeDate = !isNaN(initDate) ? initDate : new Date();
-      watchListeners.push($scope.$parent.$watch($attrs.initDate, function(initDate) {
-        if (initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)) {
-          initDate = dateParser.fromTimezone(initDate, ngModelOptions.timezone);
-          self.activeDate = !isNaN(initDate) ? initDate : new Date();
-          self.refreshView();
+        break;
+      case 'maxMode':
+      case 'minMode':
+        if ($scope.datepickerOptions[key]) {
+          $scope.$watch(function() { return $scope.datepickerOptions[key]; }, function(value) {
+            self[key] = $scope[key] = angular.isDefined(value) ? value : datepickerOptions[key];
+            if (key === 'minMode' && self.modes.indexOf($scope.datepickerOptions.datepickerMode) < self.modes.indexOf(self[key]) ||
+              key === 'maxMode' && self.modes.indexOf($scope.datepickerOptions.datepickerMode) > self.modes.indexOf(self[key])) {
+              $scope.datepickerMode = self[key];
+              $scope.datepickerOptions.datepickerMode = self[key];
+            }
+          });
+        } else {
+          self[key] = $scope[key] = datepickerConfig[key] || null;
         }
-      }));
-    } else {
-      this.activeDate = new Date();
-    }
 
-    if ($attrs.datepickerMode && datepickerAttributeWarning) {
-      $log.warn('uib-datepicker datepickerMode attribute usage is deprecated, use datepicker-options attribute instead');
+        break;
     }
-
-    $scope.datepickerMode = $scope.datepickerMode ||
-      datepickerConfig.datepickerMode;
-  }
+  });
 
   $scope.uniqueId = 'datepicker-' + $scope.$id + '-' + Math.floor(Math.random() * 10000);
 
@@ -270,6 +154,17 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   this.init = function(ngModelCtrl_) {
     ngModelCtrl = ngModelCtrl_;
     ngModelOptions = ngModelCtrl_.$options || datepickerConfig.ngModelOptions;
+    if ($scope.datepickerOptions.initDate) {
+      self.activeDate = dateParser.fromTimezone($scope.datepickerOptions.initDate, ngModelOptions.timezone) || new Date();
+      $scope.$watch('datepickerOptions.initDate', function(initDate) {
+        if (initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)) {
+          self.activeDate = dateParser.fromTimezone(initDate, ngModelOptions.timezone);
+          self.refreshView();
+        }
+      });
+    } else {
+      self.activeDate = new Date();
+    }
 
     this.activeDate = ngModelCtrl.$modelValue ?
       dateParser.fromTimezone(new Date(ngModelCtrl.$modelValue), ngModelOptions.timezone) :
@@ -436,9 +331,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   function setMode(mode) {
     $scope.datepickerMode = mode;
-    if (optionsUsed) {
-      $scope.datepickerOptions.datepickerMode = mode;
-    }
+    $scope.datepickerOptions.datepickerMode = mode;
   }
 }])
 
@@ -676,11 +569,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       return attrs.templateUrl || 'uib/template/datepicker/datepicker.html';
     },
     scope: {
-      datepickerMode: '=?',
-      datepickerOptions: '=?',
-      dateDisabled: '&',
-      customClass: '&',
-      shortcutPropagation: '&?'
+      datepickerOptions: '=?'
     },
     require: ['uibDatepicker', '^ngModel'],
     controller: 'UibDatepickerController',
@@ -773,13 +662,12 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     isHtml5DateInput = false;
   var dateFormat, closeOnDateSelection, appendToBody, onOpenFocus,
     datepickerPopupTemplateUrl, datepickerTemplateUrl, popupEl, datepickerEl, scrollParentEl,
-    ngModel, ngModelOptions, $popup, altInputFormats, watchListeners = [];
-
-  $scope.watchData = {};
+    ngModel, ngModelOptions, $popup, altInputFormats, watchListeners = [],
+    timezone;
 
   this.init = function(_ngModel_) {
     ngModel = _ngModel_;
-    ngModelOptions = _ngModel_.$options || datepickerConfig.ngModelOptions;
+    ngModelOptions = _ngModel_.$options;
     closeOnDateSelection = angular.isDefined($attrs.closeOnDateSelection) ?
       $scope.$parent.$eval($attrs.closeOnDateSelection) :
       datepickerPopupConfig.closeOnDateSelection;
@@ -831,16 +719,22 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
     // popup element used to display calendar
     popupEl = angular.element('<div uib-datepicker-popup-wrap><div uib-datepicker></div></div>');
-    $scope.ngModelOptions = angular.copy(ngModelOptions);
-    $scope.ngModelOptions.timezone = null;
-    if ($scope.ngModelOptions.updateOnDefault === true) {
-      $scope.ngModelOptions.updateOn = $scope.ngModelOptions.updateOn ?
-        $scope.ngModelOptions.updateOn + ' default' : 'default';
+    if (ngModelOptions) {
+      timezone = ngModelOptions.timezone;
+      $scope.ngModelOptions = angular.copy(ngModelOptions);
+      $scope.ngModelOptions.timezone = null;
+      if ($scope.ngModelOptions.updateOnDefault === true) {
+        $scope.ngModelOptions.updateOn = $scope.ngModelOptions.updateOn ?
+          $scope.ngModelOptions.updateOn + ' default' : 'default';
+      }
+
+      popupEl.attr('ng-model-options', 'ngModelOptions');
+    } else {
+      timezone = null;
     }
 
     popupEl.attr({
       'ng-model': 'date',
-      'ng-model-options': 'ngModelOptions',
       'ng-change': 'dateSelection(date)',
       'template-url': datepickerPopupTemplateUrl
     });
@@ -849,98 +743,18 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     datepickerEl = angular.element(popupEl.children()[0]);
     datepickerEl.attr('template-url', datepickerTemplateUrl);
 
+    if (!$scope.datepickerOptions) {
+      $scope.datepickerOptions = {};
+    }
+
     if (isHtml5DateInput) {
       if ($attrs.type === 'month') {
-        datepickerEl.attr('datepicker-mode', '"month"');
-        datepickerEl.attr('min-mode', 'month');
+        $scope.datepickerOptions.datepickerMode = 'month';
+        $scope.datepickerOptions.minMode = 'month';
       }
     }
 
-    if ($scope.datepickerOptions) {
-      datepickerEl.attr('datepicker-options', 'datepickerOptions');
-    }
-
-    angular.forEach(['minMode', 'maxMode', 'datepickerMode', 'shortcutPropagation'], function(key) {
-      if ($attrs[key]) {
-        if (datepickerPopupAttributeWarning) {
-          $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
-        }
-
-        var getAttribute = $parse($attrs[key]);
-        var propConfig = {
-          get: function() {
-            return getAttribute($scope.$parent);
-          }
-        };
-
-        datepickerEl.attr(cameltoDash(key), 'watchData.' + key);
-
-        // Propagate changes from datepicker to outside
-        if (key === 'datepickerMode') {
-          var setAttribute = getAttribute.assign;
-          propConfig.set = function(v) {
-            setAttribute($scope.$parent, v);
-          };
-        }
-
-        Object.defineProperty($scope.watchData, key, propConfig);
-      }
-    });
-
-    angular.forEach(['minDate', 'maxDate', 'initDate'], function(key) {
-      if ($attrs[key]) {
-        if (datepickerPopupAttributeWarning) {
-          $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
-        }
-
-        var getAttribute = $parse($attrs[key]);
-
-        watchListeners.push($scope.$parent.$watch(getAttribute, function(value) {
-          if (key === 'minDate' || key === 'maxDate') {
-            if (value === null) {
-              cache[key] = null;
-            } else if (angular.isDate(value)) {
-              cache[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
-            } else {
-              cache[key] = new Date(dateFilter(value, 'medium'));
-            }
-
-            $scope.watchData[key] = value === null ? null : cache[key];
-          } else {
-            var date = value ? new Date(value) : new Date();
-            $scope.watchData[key] = dateParser.fromTimezone(date, ngModelOptions.timezone);
-          }
-        }));
-
-        datepickerEl.attr(cameltoDash(key), 'watchData.' + key);
-      }
-    });
-
-    if ($attrs.dateDisabled) {
-      if (datepickerPopupAttributeWarning) {
-        $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
-      }
-
-      datepickerEl.attr('date-disabled', 'dateDisabled({ date: date, mode: mode })');
-    }
-
-    angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle', 'showWeeks', 'startingDay', 'yearRows', 'yearColumns'], function(key) {
-      if (angular.isDefined($attrs[key])) {
-        if (datepickerPopupAttributeWarning) {
-          $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
-        }
-
-        datepickerEl.attr(cameltoDash(key), $attrs[key]);
-      }
-    });
-
-    if ($attrs.customClass) {
-      if (datepickerPopupAttributeWarning) {
-        $log.warn('uib-datepicker settings via uib-datepicker-popup attributes are deprecated and will be removed in UI Bootstrap 1.3, use datepicker-options attribute instead');
-      }
-
-      datepickerEl.attr('custom-class', 'customClass({ date: date, mode: mode })');
-    }
+    datepickerEl.attr('datepicker-options', 'datepickerOptions');
 
     if (!isHtml5DateInput) {
       // Internal API to maintain the correct ng-invalid-[key] class
@@ -953,7 +767,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
           return value;
         }
 
-        $scope.date = dateParser.fromTimezone(value, ngModelOptions.timezone);
+        $scope.date = dateParser.fromTimezone(value, timezone);
 
         if (angular.isNumber($scope.date)) {
           $scope.date = new Date($scope.date);
@@ -963,7 +777,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
       });
     } else {
       ngModel.$formatters.push(function(value) {
-        $scope.date = dateParser.fromTimezone(value, ngModelOptions.timezone);
+        $scope.date = dateParser.fromTimezone(value, timezone);
         return value;
       });
     }
@@ -1015,17 +829,23 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
   $scope.isDisabled = function(date) {
     if (date === 'today') {
-      date = dateParser.fromTimezone(new Date(), ngModelOptions.timezone);
+      date = dateParser.fromTimezone(new Date(), timezone);
     }
 
-    if ($scope.datepickerOptions) {
-      return $scope.datepickerOptions &&
-        $scope.datepickerOptions.minDate && $scope.compare(date, $scope.datepickerOptions.minDate) < 0 ||
-        $scope.datepickerOptions.maxDate && $scope.compare(date, $scope.datepickerOptions.maxDate) > 0;
-    }
+    var dates = {};
+    angular.forEach(['minDate', 'maxDate'], function(key) {
+      if ($scope.datepickerOptions[key] === null) {
+        dates[key] = null;
+      } else if (angular.isDate($scope.datepickerOptions[key])) {
+        dates[key] = dateParser.fromTimezone(new Date($scope.datepickerOptions[key]), timezone);
+      } else {
+        dates[key] = new Date(dateFilter($scope.datepickerOptions[key], 'medium'));
+      }
+    });
 
-    return $scope.watchData.minDate && $scope.compare(date, cache.minDate) < 0 ||
-      $scope.watchData.maxDate && $scope.compare(date, cache.maxDate) > 0;
+    return $scope.datepickerOptions &&
+      dates.minDate && $scope.compare(date, dates.minDate) < 0 ||
+      dates.maxDate && $scope.compare(date, dates.maxDate) > 0;
   };
 
   $scope.compare = function(date1, date2) {
@@ -1093,6 +913,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
           if (onOpenFocus) {
             $scope.$broadcast('uib:datepicker.focus');
           }
+
           $document.on('click', documentClickBind);
 
           var placement = $attrs.popupPlacement ? $attrs.popupPlacement : datepickerPopupConfig.placement;
@@ -1153,7 +974,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     if (angular.isString(viewValue)) {
       var date = parseDateString(viewValue);
       if (!isNaN(date)) {
-        return dateParser.toTimezone(date, ngModelOptions.timezone);
+        return dateParser.toTimezone(date, timezone);
       }
     }
 
@@ -1246,9 +1067,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
       isOpen: '=?',
       currentText: '@',
       clearText: '@',
-      closeText: '@',
-      dateDisabled: '&',
-      customClass: '&'
+      closeText: '@'
     },
     link: function(scope, element, attrs, ctrls) {
       var ngModel = ctrls[0],
