@@ -1,3 +1,26 @@
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/angular-ui/bootstrap/compare/1.2.4...v1.2.5) (2016-03-20)
+
+
+### Bug Fixes
+
+* **datepicker:** dereference date initialization ([1b888d4](https://github.com/angular-ui/bootstrap/commit/1b888d4)), closes [#5643](https://github.com/angular-ui/bootstrap/issues/5643) [#5441](https://github.com/angular-ui/bootstrap/issues/5441)
+* **datepicker:** fix today button disabled condition ([316e96c](https://github.com/angular-ui/bootstrap/commit/316e96c)), closes [#5637](https://github.com/angular-ui/bootstrap/issues/5637) [#5622](https://github.com/angular-ui/bootstrap/issues/5622)
+* **modal:** dynamically fetch elements ([e15a22a](https://github.com/angular-ui/bootstrap/commit/e15a22a)), closes [#5630](https://github.com/angular-ui/bootstrap/issues/5630) [#5050](https://github.com/angular-ui/bootstrap/issues/5050) [#5421](https://github.com/angular-ui/bootstrap/issues/5421)
+* **popover:** add popover-html css ([54ac06a](https://github.com/angular-ui/bootstrap/commit/54ac06a)), closes [#5603](https://github.com/angular-ui/bootstrap/issues/5603) [#5602](https://github.com/angular-ui/bootstrap/issues/5602)
+* **tooltip:** css to support arrow positioning ([66c416c](https://github.com/angular-ui/bootstrap/commit/66c416c)), closes [#5610](https://github.com/angular-ui/bootstrap/issues/5610) [#5611](https://github.com/angular-ui/bootstrap/issues/5611)
+* **typeahead:** reset errors when clearing ([bc7c55a](https://github.com/angular-ui/bootstrap/commit/bc7c55a)), closes [#5641](https://github.com/angular-ui/bootstrap/issues/5641)
+
+### Features
+
+* **accordion:** add bound panel-class support ([ffb5529](https://github.com/angular-ui/bootstrap/commit/ffb5529)), closes [#5368](https://github.com/angular-ui/bootstrap/issues/5368) [#5596](https://github.com/angular-ui/bootstrap/issues/5596)
+* **modal:** exclude hidden elements from query ([5ef56e2](https://github.com/angular-ui/bootstrap/commit/5ef56e2)), closes [#5512](https://github.com/angular-ui/bootstrap/issues/5512) [#5644](https://github.com/angular-ui/bootstrap/issues/5644)
+* **rating:** ability to disable rating reset ([8747b58](https://github.com/angular-ui/bootstrap/commit/8747b58)), closes [#5532](https://github.com/angular-ui/bootstrap/issues/5532) [#5631](https://github.com/angular-ui/bootstrap/issues/5631)
+* **tab:** add select expressions ([bb36e40](https://github.com/angular-ui/bootstrap/commit/bb36e40)), closes [#5438](https://github.com/angular-ui/bootstrap/issues/5438)
+* **timepicker:** add pad-hours support ([c7be087](https://github.com/angular-ui/bootstrap/commit/c7be087)), closes [#4288](https://github.com/angular-ui/bootstrap/issues/4288) [#5633](https://github.com/angular-ui/bootstrap/issues/5633)
+
+
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/angular-ui/bootstrap/compare/1.2.3...v1.2.4) (2016-03-06)
 
