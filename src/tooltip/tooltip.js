@@ -129,7 +129,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
           'placement="' + startSym + 'placement' + endSym + '" '+
           'popup-class="' + startSym + 'popupClass' + endSym + '" '+
           'animation="animation" ' +
-          'is-open="isOpen"' +
+          'is-open="isOpen" ' +
           'origin-scope="origScope" ' +
           'class="uib-position-measure"' +
           '>' +
