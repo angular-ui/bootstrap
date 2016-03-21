@@ -48,7 +48,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
   /**
    * This allows you to extend the set of trigger mappings available. E.g.:
    *
-   *   $tooltipProvider.setTriggers( 'openTrigger': 'closeTrigger' );
+   *   $tooltipProvider.setTriggers( { 'openTrigger': 'closeTrigger' } );
    */
   this.setTriggers = function setTriggers(triggers) {
     angular.extend(triggerMap, triggers);
