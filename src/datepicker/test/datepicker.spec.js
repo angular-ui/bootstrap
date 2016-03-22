@@ -920,6 +920,30 @@ describe('datepicker', function() {
         });
       });
 
+      describe('minDate with no initial value', function() {
+        beforeEach(function() {
+          $rootScope.options = {};
+          $rootScope.date = new Date('September 10, 2010');
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="options"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('should toggle appropriately', function() {
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+
+          $rootScope.options.minDate = new Date('September 12, 2010');
+          $rootScope.$digest();
+
+          refreshedButtons = getAllOptionsEl();
+          angular.forEach(refreshedButtons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index < 14);
+          });
+        });
+      });
+
       describe('minDate', function() {
         beforeEach(function() {
           $rootScope.options = {
@@ -1015,6 +1039,30 @@ describe('datepicker', function() {
           var buttons = getAllOptionsEl();
           angular.forEach(buttons, function(button, index) {
             expect(angular.element(button).prop('disabled')).toBe(index < 7);
+          });
+        });
+      });
+
+      describe('maxDate with no initial value', function() {
+        beforeEach(function() {
+          $rootScope.options = {};
+          $rootScope.date = new Date('September 10, 2010');
+          element = $compile('<uib-datepicker ng-model="date" datepicker-options="options"></uib-datepicker>')($rootScope);
+          $rootScope.$digest();
+        });
+
+        it('should toggle appropriately', function() {
+          var buttons = getAllOptionsEl();
+          angular.forEach(buttons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(false);
+          });
+
+          $rootScope.options.maxDate = new Date('September 25, 2010');
+          $rootScope.$digest();
+
+          refreshedButtons = getAllOptionsEl();
+          angular.forEach(refreshedButtons, function(button, index) {
+            expect(angular.element(button).prop('disabled')).toBe(index > 27);
           });
         });
       });

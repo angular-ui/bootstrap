@@ -94,23 +94,21 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         break;
       case 'maxDate':
       case 'minDate':
-        if ($scope.datepickerOptions[key]) {
-          $scope.$watch('datepickerOptions.' + key, function(value) {
-            if (value) {
-              if (angular.isDate(value)) {
-                self[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
-              } else {
-                self[key] = new Date(dateFilter(value, 'medium'));
-              }
+        $scope.$watch('datepickerOptions.' + key, function(value) {
+          if (value) {
+            if (angular.isDate(value)) {
+              self[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
             } else {
-              self[key] = null;
+              self[key] = new Date(dateFilter(value, 'medium'));
             }
+          } else {
+            self[key] = datepickerConfig[key] ?
+              dateParser.fromTimezone(new Date(datepickerConfig[key]), ngModelOptions.timezone) :
+              null;
+          }
 
-            self.refreshView();
-          });
-        } else {
-          self[key] = datepickerConfig[key] ? dateParser.fromTimezone(new Date(datepickerConfig[key]), ngModelOptions.timezone) : null;
-        }
+          self.refreshView();
+        });
 
         break;
       case 'maxMode':
