@@ -6,16 +6,6 @@
   min-width: 100%;
 }
 
-.uib-datepicker-popup.dropdown-menu {
-  display: block;
-  float: none;
-  margin: 0;
-}
-
-.uib-button-bar {
-  padding: 10px 9px 2px;
-}
-
 .uib-left, .uib-right {
   width: 100%
 }
