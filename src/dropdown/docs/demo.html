@@ -5,7 +5,7 @@
       <a href id="simple-dropdown" uib-dropdown-toggle>
         Click me for a dropdown, yo!
       </a>
-      <ul uib-dropdown-menu aria-labelledby="simple-dropdown">
+      <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
         <li ng-repeat="choice in items">
           <a href>{{choice}}</a>
         </li>
@@ -17,7 +17,7 @@
       <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
         Button dropdown <span class="caret"></span>
       </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -33,7 +33,7 @@
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="split-button">
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -47,7 +47,7 @@
       <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>
         Dropdown on Body <span class="caret"></span>
       </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -61,7 +61,7 @@
       <button id="button-template-url" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
         Dropdown using template <span class="caret"></span>
       </button>
-      <ul uib-dropdown-menu template-url="dropdown.html" aria-labelledby="button-template-url">
+      <ul class="dropdown-menu" uib-dropdown-menu template-url="dropdown.html" aria-labelledby="button-template-url">
       </ul>
     </div>
 
@@ -77,7 +77,7 @@
         <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
             Dropdown with keyboard navigation <span class="caret"></span>
         </button>
-        <ul uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
             <li role="menuitem"><a href="#">Action</a></li>
             <li role="menuitem"><a href="#">Another action</a></li>
             <li role="menuitem"><a href="#">Something else here</a></li>
