@@ -88,14 +88,6 @@ describe('uib-dropdown', function() {
       expect(element).toHaveClass(dropdownConfig.openClass);
     });
 
-    it('should close on $location change', function() {
-      clickDropdownToggle();
-      expect(element).toHaveClass(dropdownConfig.openClass);
-      $rootScope.$broadcast('$locationChangeSuccess');
-      $rootScope.$apply();
-      expect(element).not.toHaveClass(dropdownConfig.openClass);
-    });
-
     it('should only allow one dropdown to be open at once', function() {
       var elm1 = dropdown();
       var elm2 = dropdown();
@@ -276,32 +268,6 @@ describe('uib-dropdown', function() {
       element.remove();
       $rootScope.$digest();
       expect($document.find('#dropdown-menu').length).toEqual(0);
-    });
-  });
-
-  describe('integration with $location URL rewriting', function() {
-    function dropdown() {
-      // Simulate URL rewriting behavior
-      $document.on('click', 'a[href="#something"]', function() {
-        $rootScope.$broadcast('$locationChangeSuccess');
-        $rootScope.$apply();
-      });
-
-      return $compile('<li uib-dropdown><a href uib-dropdown-toggle></a>' +
-        '<ul><li><a href="#something">Hello</a></li></ul></li>')($rootScope);
-    }
-
-    beforeEach(function() {
-      element = dropdown();
-    });
-
-    it('should close without errors on $location change', function() {
-      $document.find('body').append(element);
-      clickDropdownToggle();
-      expect(element).toHaveClass(dropdownConfig.openClass);
-      var optionEl = element.find('ul > li').eq(0).find('a').eq(0);
-      optionEl.click();
-      expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
   });
 
@@ -520,16 +486,6 @@ describe('uib-dropdown', function() {
         clickDropdownToggle(elm2);
         expect(elm1).not.toHaveClass(dropdownConfig.openClass);
         expect(elm2).toHaveClass(dropdownConfig.openClass);
-      });
-
-      it('should not close on $locationChangeSuccess if auto-close="disabled"', function() {
-        var elm1 = dropdown('disabled');
-        expect(elm1).not.toHaveClass(dropdownConfig.openClass);
-        clickDropdownToggle(elm1);
-        expect(elm1).toHaveClass(dropdownConfig.openClass);
-        $rootScope.$broadcast('$locationChangeSuccess');
-        $rootScope.$digest();
-        expect(elm1).toHaveClass(dropdownConfig.openClass);
       });
     });
 

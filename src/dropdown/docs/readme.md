@@ -14,7 +14,7 @@ Each of these parts need to be used as attribute directives.
   _(Default: `always`)_ -
   Controls the behavior of the menu when clicked.
   * `always` - Automatically closes the dropdown when any of its elements is clicked.
-  * `disabled` - Disables the auto close. You can control it manually with `is-open`. It still gets closed if the toggle is clicked, `esc` is pressed or another dropdown is open. It also won't be closed on `$locationchangeSuccess`.
+  * `disabled` - Disables the auto close. You can control it manually with `is-open`. It still gets closed if the toggle is clicked, `esc` is pressed or another dropdown is open.
   * `outsideClick` - Closes the dropdown automatically only when the user clicks any element outside the dropdown.
 
 * `dropdown-append-to`

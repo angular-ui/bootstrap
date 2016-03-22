@@ -268,12 +268,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       setIsOpen($scope, isOpen);
     }
   });
-
-  $scope.$on('$locationChangeSuccess', function() {
-    if (scope.getAutoClose() !== 'disabled') {
-      scope.isOpen = false;
-    }
-  });
 }])
 
 .directive('uibDropdown', function() {
