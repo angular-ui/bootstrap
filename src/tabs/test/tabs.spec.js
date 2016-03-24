@@ -670,6 +670,31 @@ describe('tabs', function() {
       expect(contents().eq(1)).toHaveClass('active');
     }));
 
+    it('should use updated index in tab', inject(function($controller, $compile, $rootScope) {
+      scope = $rootScope.$new();
+      elm = $compile('<uib-tabset active="active"><uib-tab index="0" heading="1">Hello</uib-tab><uib-tab index="$index + 1" ng-repeat="i in list" heading="tab {{i}}">content {{i}}</uib-tab></uib-tabset>')(scope);
+      scope.$apply();
+
+      scope.$apply('list = [1,2,3]');
+      expectTitles(['1', 'tab 1', 'tab 2', 'tab 3']);
+      expectContents(['Hello', 'content 1', 'content 2', 'content 3']);
+
+      // Remove middle "tab 2" tab
+      scope.$apply('list = [1,3]');
+      expectTitles(['1', 'tab 1', 'tab 3']);
+      expectContents(['Hello', 'content 1', 'content 3']);
+
+      // Remove last "tab 3" tab
+      scope.$apply('list = [1]');
+      expectTitles(['1', 'tab 1']);
+      expectContents(['Hello', 'content 1']);
+
+      // Select first tab
+      titles().find('> a').eq(0).click();
+      expect(titles().eq(0)).toHaveClass('active');
+      expect(contents().eq(0)).toHaveClass('active');
+    }));
+
     it('should not select tabs when being destroyed', inject(function($controller, $compile, $rootScope) {
       var selectList = [],
         deselectList = [],
