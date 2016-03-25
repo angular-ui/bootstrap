@@ -104,6 +104,8 @@ A lightweight & configurable timepicker directive.
   _(Defaults: `uib/template/timepicker/timepicker.html`)_ -
   Add the ability to override the template used on the component.
 
- **Notes**
+**Notes**
 
- If the model value is updated (i.e. via `Date.prototype.setDate`), you must update the model value by breaking the reference by `modelValue = new Date(modelValue)` in order to have the timepicker update.
+This component makes no claims of absolutely supporting the preservation of dates in all cases, and it is highly recommended that model tracking of dates is encapsulated in a different object. This component should not be used with the same model as the datepicker. This is due to edge cases with situations such as Daylight Savings timezone changes which require a modification of the date in order to prevent an impossible to increment or decrement situation. See [#5485](https://github.com/angular-ui/bootstrap/issues/5485) for details.
+
+If the model value is updated (i.e. via `Date.prototype.setDate`), you must update the model value by breaking the reference by `modelValue = new Date(modelValue)` in order to have the timepicker update.
