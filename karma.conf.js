@@ -28,6 +28,7 @@ module.exports = function(config) {
     // list of files to exclude
     exclude: [
       'src/**/index.js',
+      'src/**/index-nocss.js',
       'src/**/docs/*'
     ],
 

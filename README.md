@@ -31,12 +31,12 @@ Do you want to see directives in action? Visit http://angular-ui.github.io/boots
 
 # Angular 2
 
-Are you interested in Angular 2? We are on our way! Check out [ng-bootstrap](https://github.com/ui-bootstrap/core). 
+Are you interested in Angular 2? We are on our way! Check out [ng-bootstrap](https://github.com/ui-bootstrap/core).
 
 # Installation
 
 Installation is easy as UI Bootstrap has minimal dependencies - only the AngularJS and Twitter Bootstrap's CSS are required.
-*Notes:* 
+*Notes:*
 * Since version 0.13.0, UI Bootstrap depends on [ngAnimate](https://docs.angularjs.org/api/ngAnimate) for transitions and animations, such as the accordion, carousel, etc. Include `ngAnimate` in the module dependencies for your app in order to enable animation.
 * UI Bootstrap depends on [ngTouch](https://docs.angularjs.org/api/ngTouch) for swipe actions. Include `ngTouch` in the module dependencies for your app in order to enable swiping.
 
@@ -89,9 +89,10 @@ When you are done downloading all the dependencies and project files the only re
 angular.module('myModule', ['ui.bootstrap']);
 ```
 
-# Webpack
+# Webpack / JSPM
 
-To use this project with webpack, follow the [NPM](#install-with-npm) instructions. Now, if you want to use only the accordion, you can do:
+To use this project with webpack, follow the [NPM](#install-with-npm) instructions.
+Now, if you want to use only the accordion, you can do:
 
 ```js
 import accordion from 'angular-ui-bootstrap/src/accordion';
@@ -111,6 +112,24 @@ angular.module('myModule', [accordion, datepicker]);
 This will load all the dependencies (if any) and also the templates (if any).
 
 Be sure to have a loader able to process `css` files like `css-loader`.
+
+If you would prefer not to load your css through your JavaScript file loader/bundler, you can choose to import the `index-nocss.js` file instead, which is available for the modules:
+* carousel
+* datepicker
+* datepickerPopup
+* position
+* timepicker
+* tooltip
+* typeahead
+
+The other modules, such as `accordion` in the example below, do not have CSS resources to load, so you should continue to import them as normal:
+
+```js
+import accordion from 'angular-ui-bootstrap/src/accordion';
+import typeahead from 'angular-ui-bootstrap/src/typeahead/index-nocss.js';
+
+angular.module('myModule', [accordion, datepicker]);
+```
 
 # Support
 
