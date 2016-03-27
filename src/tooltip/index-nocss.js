@@ -1,4 +1,4 @@
-require('../position');
+require('../position/index-nocss.js');
 require('../stackedMap');
 require('../../template/tooltip/tooltip-popup.html.js');
 require('../../template/tooltip/tooltip-html-popup.html.js');

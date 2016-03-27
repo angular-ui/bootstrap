@@ -1,5 +1,5 @@
-require('../datepicker');
-require('../position');
+require('../datepicker/index-nocss.js');
+require('../position/index-nocss.js');
 require('../../template/datepickerPopup/popup.html.js');
 
 var MODULE_NAME = 'ui.bootstrap.module.datepickerPopup';

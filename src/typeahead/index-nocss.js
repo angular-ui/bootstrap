@@ -1,5 +1,5 @@
 require('../debounce');
-require('../position');
+require('../position/index-nocss.js');
 require('../../template/typeahead/typeahead-match.html.js');
 require('../../template/typeahead/typeahead-popup.html.js');
 require('./typeahead');
