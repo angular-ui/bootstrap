@@ -9,7 +9,7 @@ module.exports = function(grunt) {
   grunt.util.linefeed = '\n';
 
   grunt.initConfig({
-    ngversion: '1.5.2',
+    ngversion: '1.5.3',
     bsversion: '3.3.6',
     modules: [],//to be filled in by build task
     pkg: grunt.file.readJSON('package.json'),
