@@ -45,14 +45,59 @@ Gets the closest positioned ancestor.
 * _(Type: `element`)_ -
   The closest positioned ancestor.
 
-#### scrollbarWidth()
+#### scrollbarWidth(isBody)
 
 Calculates the browser scrollbar width and caches the result for future calls.  Concept from the TWBS measureScrollbar() function in [modal.js](https://github.com/twbs/bootstrap/blob/master/js/modal.js).
+
+##### parameters
+
+* `isBody`
+  _(Type: `boolean`, Default: `false`, optional)_ - Is the requested scrollbar width for the body/html element.  IE and Edge overlay the scrollbar on the body/html element and should be considered 0.
 
 ##### returns
 
 * _(Type: `number`)_ -
   The width of the browser scrollbar.
+
+#### scrollbarPadding(element)
+
+Calculates the padding required to replace the scrollbar on an element.
+
+##### parameters
+
+* 'element' _(Type: `element`)_ - The element to calculate the padding on (should be a scrollable element).
+
+##### returns
+
+An object with the following properties:
+
+* `scrollbarWidth`
+  _(Type: `number`)_ -
+  The width of the scrollbar.
+
+* `widthOverflow`
+  _(Type: `boolean`)_ -
+  Whether the width is overflowing.
+
+* `right`
+  _(Type: `number`)_ -
+  The total right padding required to replace the scrollbar.
+
+* `originalRight`
+  _(Type: `number`)_ -
+  The oringal right padding on the element.
+
+* `heightOverflow`
+  _(Type: `boolean`)_ -
+  Whether the height is overflowing.
+
+* `bottom`
+  _(Type: `number`)_ -
+  The total bottom padding required to replace the scrollbar.
+
+* `originalBottom`
+  _(Type: `number`)_ -
+  The oringal bottom padding on the element.
 
 #### isScrollable(element, includeHidden)
 
@@ -72,7 +117,7 @@ Determines if an element is scrollable.
 * _(Type: `boolean`)_ -
   Whether the element is scrollable.
 
-#### scrollParent(element, includeHidden)
+#### scrollParent(element, includeHidden, includeSelf)
 
 Gets the closest scrollable ancestor.  Concept from the jQueryUI [scrollParent.js](https://github.com/jquery/jquery-ui/blob/master/ui/scroll-parent.js).
 
@@ -84,6 +129,9 @@ Gets the closest scrollable ancestor.  Concept from the jQueryUI [scrollParent.j
 
 * `includeHidden`
   _(Type: `boolean`, Default: `false`, optional)_ - Should scroll style of 'hidden' be considered.
+
+* `includeSelf`
+  _(Type: `boolean`, Default: `false`, optional)_ - Should the element passed in be included in the scrollable lookup.
 
 ##### returns
 

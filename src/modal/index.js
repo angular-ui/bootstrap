@@ -2,6 +2,7 @@ require('../stackedMap');
 require('../../template/modal/backdrop.html.js');
 require('../../template/modal/window.html.js');
 require('./modal');
+require('../position/position.css');
 
 var MODULE_NAME = 'ui.bootstrap.module.modal';
 
