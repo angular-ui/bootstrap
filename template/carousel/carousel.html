@@ -1,10 +1,10 @@
 <div ng-mouseenter="pause()" ng-mouseleave="play()" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()">
   <div class="carousel-inner" ng-transclude></div>
-  <a role="button" href class="left carousel-control" ng-click="prev()" ng-show="slides.length > 1">
+  <a role="button" href class="left carousel-control" ng-click="prev()" ng-class="{ disabled: isPrevDisabled() }" ng-show="slides.length > 1">
     <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
     <span class="sr-only">previous</span>
   </a>
-  <a role="button" href class="right carousel-control" ng-click="next()" ng-show="slides.length > 1">
+  <a role="button" href class="right carousel-control" ng-click="next()" ng-class="{ disabled: isNextDisabled() }" ng-show="slides.length > 1">
     <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">next</span>
   </a>

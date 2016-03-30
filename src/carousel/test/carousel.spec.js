@@ -163,6 +163,38 @@ describe('carousel', function() {
       expect(navPrev.length).toBe(0);
     });
 
+    it('should disable prev button when slide index is 0 and noWrap is truthy', function() {
+      scope.$apply();
+
+      var $scope = elm.isolateScope();
+      $scope.noWrap = function() {return true;};
+
+      $scope.isPrevDisabled();
+      scope.$apply();
+
+      var navPrev = elm.find('a.left');
+      expect(navPrev.hasClass('disabled')).toBe(true);
+    });
+
+    it('should disable next button when last slide is active and noWrap is truthy', function() {
+      scope.slides = [
+        {content: 'one', index: 0},
+        {content: 'two', index: 1}
+      ];
+
+      scope.$apply();
+
+      var $scope = elm.isolateScope();
+      $scope.noWrap = function() {return true;};
+      $scope.next();
+
+      $scope.isNextDisabled();
+      scope.$apply();
+
+      var navNext = elm.find('a.right');
+      expect(navNext.hasClass('disabled')).toBe(true);
+    });
+
     it('should show navigation when there are 3 slides', function () {
       var indicators = elm.find('ol.carousel-indicators > li');
       expect(indicators.length).not.toBe(0);
