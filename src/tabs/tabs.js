@@ -13,6 +13,9 @@ angular.module('ui.bootstrap.tabs', [])
         previousSelected.tab.onDeselect({
           $event: evt
         });
+        if (evt && evt.defaultPrevented) {
+          return;
+        }
         previousSelected.tab.active = false;
       }
 

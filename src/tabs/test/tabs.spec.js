@@ -33,6 +33,7 @@ describe('tabs', function() {
       scope = $rootScope.$new();
       scope.first = '1';
       scope.second = '2';
+      scope.third = '3';
       scope.active = 1;
       scope.firstClass = 'first-class';
       scope.secondClass = 'second-class-1 second-class-2';
@@ -40,6 +41,9 @@ describe('tabs', function() {
       scope.selectSecond = jasmine.createSpy();
       scope.deselectFirst = jasmine.createSpy();
       scope.deselectSecond = jasmine.createSpy();
+      scope.deselectThird = function($event) {
+        $event.preventDefault();
+      };
       elm = $compile([
         '<uib-tabset class="hello" data-pizza="pepperoni" active="active">',
         '  <uib-tab index="1" heading="First Tab {{first}}" classes="{{firstClass}}" select="selectFirst($event)" deselect="deselectFirst($event)">',
@@ -48,6 +52,10 @@ describe('tabs', function() {
         '  <uib-tab index="2" classes="{{secondClass}}" select="selectSecond($event)" deselect="deselectSecond($event)">',
         '    <uib-tab-heading><b>Second</b> Tab {{second}}</uib-tab-heading>',
         '    second content is {{second}}',
+        '  </uib-tab>',
+        '  <uib-tab index="3" classes="{{thirdClass}}" deselect="deselectThird($event)">',
+        '    <uib-tab-heading><b>Second</b> Tab {{third}}</uib-tab-heading>',
+        '    third content is {{third}}',
         '  </uib-tab>',
         '</uib-tabset>'
       ].join('\n'))(scope);
@@ -65,7 +73,7 @@ describe('tabs', function() {
 
     it('should create clickable titles', function() {
       var t = titles();
-      expect(t.length).toBe(2);
+      expect(t.length).toBe(3);
       expect(t.find('> a').eq(0).text()).toBe('First Tab 1');
       //It should put the uib-tab-heading element into the 'a' title
       expect(t.find('> a').eq(1).children().is('uib-tab-heading')).toBe(true);
@@ -73,7 +81,7 @@ describe('tabs', function() {
     });
 
     it('should bind tabs content and set first tab active', function() {
-      expectContents(['first content is 1', 'second content is 2']);
+      expectContents(['first content is 1', 'second content is 2', 'third content is 3']);
       expect(titles().eq(0)).toHaveClass('active');
       expect(titles().eq(1)).not.toHaveClass('active');
       expect(scope.active).toBe(1);
@@ -116,6 +124,16 @@ describe('tabs', function() {
       titles().eq(1).find('> a').click();
       expect(scope.deselectFirst.calls.count()).toBe(2);
       expect(scope.deselectFirst.calls.argsFor(1)[0].target).toBe(titles().eq(1).find('> a')[0]);
+    });
+
+    it('should prevent tab deselection when $event.preventDefault() is called', function() {
+      spyOn(scope, 'deselectThird');
+      titles().eq(2).find('> a').click();
+      expect(scope.active).toBe(3);
+      titles().eq(1).find('> a').click();
+      expect(scope.deselectThird).toHaveBeenCalled();
+      expect(scope.active).not.toBe(1);
+      expect(scope.active).toBe(2);
     });
   });
 
