@@ -86,6 +86,22 @@ describe('popover template', function() {
     expect(elmBody.children().length).toBe(1);
   }));
 
+  it ('should display the title', inject(function($compile) {
+    elmBody = angular.element(
+      '<div><span uib-popover-template="templateUrl" popover-title="popover title">Selector Text</span></div>'
+    );
+
+    $compile(elmBody)(scope);
+    scope.$digest();
+    elm = elmBody.find('span');
+
+    elm.trigger('click');
+    scope.$digest();
+
+    var titleEl = elmBody.find('.popover-title');
+    expect(titleEl.text()).toBe('popover title');
+  }));
+
   describe('supports options', function() {
     describe('placement', function() {
       it('can specify an alternative, valid placement', inject(function($compile) {

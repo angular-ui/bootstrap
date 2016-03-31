@@ -103,6 +103,36 @@ describe('popover', function() {
     expect(elmBody.children().eq(1)).not.toHaveClass('fade');
   }));
 
+  it ('should display the title', inject(function($compile) {
+      elmBody = angular.element(
+        '<div><span uib-popover="popover text" popover-title="popover title">Trigger here</span></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$digest();
+
+      elm = elmBody.find('span');
+      elm.trigger('click');
+      scope.$digest();
+
+      var titleEl = elmBody.find('.popover-title');
+      expect(titleEl.text()).toBe('popover title');
+  }));
+
+  it ('should display the content', inject(function($compile) {
+      elmBody = angular.element(
+        '<div><span uib-popover="popover text" popover-title="popover title">Trigger here</span></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$digest();
+
+      elm = elmBody.find('span');
+      elm.trigger('click');
+      scope.$digest();
+
+      var contentEl = elmBody.find('.popover-content');
+      expect(contentEl.text()).toBe('popover text');
+  }));
+
   describe('supports options', function() {
     describe('placement', function() {
       it('can specify an alternative, valid placement', inject(function($compile) {

@@ -147,6 +147,22 @@ describe('popover', function() {
     expect(elmBody.children().eq(1)).not.toHaveClass('fade');
   }));
 
+  it ('should display the title', inject(function($compile) {
+    elmBody = angular.element(
+      '<div><span uib-popover-html="template" popover-title="popover title">Selector Text</span></div>'
+    );
+
+    $compile(elmBody)(scope);
+    scope.$digest();
+    elm = elmBody.find('span');
+
+    elm.trigger('click');
+    scope.$digest();
+
+    var titleEl = elmBody.find('.popover-title');
+    expect(titleEl.text()).toBe('popover title');
+  }));
+
   describe('supports options', function() {
     describe('placement', function() {
       it('can specify an alternative, valid placement', inject(function($compile) {
