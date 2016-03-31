@@ -45,7 +45,7 @@ AngularJS version of the tabs directive.
   Heading text.
 
 * `index` -
-  Tab index. Must be unique number.
+  Tab index. Must be unique number or string.
 
 * `select()`
   <small class="badge">$</small> -

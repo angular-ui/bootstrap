@@ -226,6 +226,41 @@ describe('tabs', function() {
     });
   });
 
+  describe('index as strings', function() {
+    beforeEach(inject(function($compile, $rootScope) {
+      scope = $rootScope.$new();
+      scope.first = 'one';
+      scope.second = 'two';
+      scope.active = 'two';
+      elm = $compile([
+        '<uib-tabset active="active">',
+        '  <uib-tab index="first" heading="First Tab">',
+        '    first content',
+        '  </uib-tab>',
+        '  <uib-tab index="second" heading="Second Tab">',
+        '    second content',
+        '  </uib-tab>',
+        '</uib-tabset>'
+      ].join('\n'))(scope);
+      scope.$apply();
+      return elm;
+    }));
+
+    it('should set second tab active', function() {
+      expect(titles().eq(0)).not.toHaveClass('active');
+      expect(titles().eq(1)).toHaveClass('active');
+      expect(elm.controller('uibTabset').active).toBe('two');
+    });
+
+    it('should change active on click', function() {
+      expect(titles().eq(0)).not.toHaveClass('active');
+      titles().eq(0).find('> a').click();
+      expect(titles().eq(0)).toHaveClass('active');
+      expect(titles().eq(1)).not.toHaveClass('active');
+      expect(elm.controller('uibTabset').active).toBe('one');
+    });
+  });
+
   describe('tab callback order', function() {
     var execOrder;
     beforeEach(inject(function($compile, $rootScope) {
