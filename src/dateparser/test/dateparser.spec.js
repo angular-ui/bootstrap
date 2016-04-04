@@ -282,9 +282,14 @@ describe('date parser', function() {
     it('should work correctly for `yy`', function() {
       expectParse('17.11.13', 'dd.MM.yy', new Date(2013, 10, 17, 0));
       expectParse('02-05-11', 'dd-MM-yy', new Date(2011, 4, 2, 0));
-      expectParse('02/05/80', 'MM/dd/yy', new Date(2080, 1, 5, 0));
+      expectParse('02/05/80', 'MM/dd/yy', new Date(1980, 1, 5, 0));
       expectParse('55/02/05', 'yy/MM/dd', new Date(2055, 1, 5, 0));
       expectParse('11-08-13', 'dd-MM-yy', new Date(2013, 7, 11, 0));
+    });
+
+    it('should use `68` as the pivot year for `yy`', function() {
+      expectParse('17.11.68', 'dd.MM.yy', new Date(2068, 10, 17, 0));
+      expectParse('17.11.69', 'dd.MM.yy', new Date(1969, 10, 17, 0));
     });
 
     it('should work correctly for `y`', function() {

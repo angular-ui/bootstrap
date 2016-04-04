@@ -27,7 +27,7 @@ angular.module('ui.bootstrap.dateparser', [])
       {
         key: 'yy',
         regex: '\\d{2}',
-        apply: function(value) { this.year = +value + 2000; },
+        apply: function(value) { value = +value; this.year = value < 69 ? value + 2000 : value + 1900; },
         formatter: function(date) {
           var _date = new Date();
           _date.setFullYear(Math.abs(date.getFullYear()));
