@@ -1,5 +1,7 @@
 angular.module('ui.bootstrap.datepickerPopup', ['ui.bootstrap.datepicker', 'ui.bootstrap.position'])
 
+.value('$datepickerPopupLiteralWarning', true)
+
 .constant('uibDatepickerPopupConfig', {
   altInputFormats: [],
   appendToBody: false,
@@ -20,8 +22,8 @@ angular.module('ui.bootstrap.datepickerPopup', ['ui.bootstrap.datepicker', 'ui.b
   placement: 'auto bottom-left'
 })
 
-.controller('UibDatepickerPopupController', ['$scope', '$element', '$attrs', '$compile', '$log', '$parse', '$window', '$document', '$rootScope', '$uibPosition', 'dateFilter', 'uibDateParser', 'uibDatepickerPopupConfig', '$timeout', 'uibDatepickerConfig',
-function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $rootScope, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout, datepickerConfig) {
+.controller('UibDatepickerPopupController', ['$scope', '$element', '$attrs', '$compile', '$log', '$parse', '$window', '$document', '$rootScope', '$uibPosition', 'dateFilter', 'uibDateParser', 'uibDatepickerPopupConfig', '$timeout', 'uibDatepickerConfig', '$datepickerPopupLiteralWarning',
+function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $rootScope, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout, datepickerConfig, $datepickerPopupLiteralWarning) {
   var cache = {},
     isHtml5DateInput = false;
   var dateFormat, closeOnDateSelection, appendToBody, onOpenFocus,
@@ -203,6 +205,10 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
       } else if (angular.isDate($scope.datepickerOptions[key])) {
         dates[key] = dateParser.fromTimezone(new Date($scope.datepickerOptions[key]), timezone);
       } else {
+        if ($datepickerPopupLiteralWarning) {
+          $log.warn('Literal date support has been deprecated, please switch to date object usage');
+        }
+
         dates[key] = new Date(dateFilter($scope.datepickerOptions[key], 'medium'));
       }
     });

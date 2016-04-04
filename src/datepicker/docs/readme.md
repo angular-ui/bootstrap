@@ -84,7 +84,7 @@ Apart from the previous settings, to configure the uib-datepicker you need to cr
     <small class="badge">C</small>
     <i class="glyphicon glyphicon-eye-open"></i>
     _(Default: `null`)_ -
-    Defines the maximum available date.
+    Defines the maximum available date. Requires a Javascript Date object.
 
   * `maxMode`
     <small class="badge">C</small>
@@ -96,7 +96,7 @@ Apart from the previous settings, to configure the uib-datepicker you need to cr
     <small class="badge">C</small>
     <i class="glyphicon glyphicon-eye-open"></i>
     _(Default: `null`)_ -
-    Defines the minimum available date.
+    Defines the minimum available date. Requires a Javascript Date object.
 
   * `minMode`
     <small class="badge">C</small>

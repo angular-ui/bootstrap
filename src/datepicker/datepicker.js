@@ -2,6 +2,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
 .value('$datepickerSuppressError', false)
 
+.value('$datepickerLiteralWarning', true)
+
 .constant('uibDatepickerConfig', {
   datepickerMode: 'day',
   formatDay: 'dd',
@@ -21,8 +23,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   yearRows: 4
 })
 
-.controller('UibDatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$locale', '$log', 'dateFilter', 'uibDatepickerConfig', '$datepickerSuppressError', 'uibDateParser',
-  function($scope, $attrs, $parse, $interpolate, $locale, $log, dateFilter, datepickerConfig, $datepickerSuppressError, dateParser) {
+.controller('UibDatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$locale', '$log', 'dateFilter', 'uibDatepickerConfig', '$datepickerLiteralWarning', '$datepickerSuppressError', 'uibDateParser',
+  function($scope, $attrs, $parse, $interpolate, $locale, $log, dateFilter, datepickerConfig, $datepickerLiteralWarning, $datepickerSuppressError, dateParser) {
   var self = this,
       ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl;
       ngModelOptions = {},
@@ -99,6 +101,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
             if (angular.isDate(value)) {
               self[key] = dateParser.fromTimezone(new Date(value), ngModelOptions.timezone);
             } else {
+              if ($datepickerLiteralWarning) {
+                $log.warn('Literal date support has been deprecated, please switch to date object usage');
+              }
+
               self[key] = new Date(dateFilter(value, 'medium'));
             }
           } else {

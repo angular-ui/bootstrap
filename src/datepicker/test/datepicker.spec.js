@@ -139,6 +139,86 @@ describe('datepicker', function() {
     element.trigger(e);
   }
 
+  describe('$datepickerLiteralWarning', function() {
+    var $compile,
+      $log,
+      $scope;
+
+    it('should warn when using literals for min date by default', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      spyOn($log, 'warn');
+      $scope.options = {
+        minDate: '1984-01-01'
+      };
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-options="options"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('Literal date support has been deprecated, please switch to date object usage');
+    });
+
+    it('should suppress warning when using literals for min date', function() {
+      module(function($provide) {
+        $provide.value('$datepickerLiteralWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      spyOn($log, 'warn');
+      $scope.options = {
+        minDate: '1984-01-01'
+      };
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-options="options"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+
+    it('should warn when using literals for max date by default', function() {
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      spyOn($log, 'warn');
+      $scope.options = {
+        maxDate: '1984-01-01'
+      };
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-options="options"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).toHaveBeenCalledWith('Literal date support has been deprecated, please switch to date object usage');
+    });
+
+    it('should suppress warning when using literals for max date', function() {
+      module(function($provide) {
+        $provide.value('$datepickerLiteralWarning', false);
+      });
+      inject(function(_$log_, _$rootScope_, _$compile_) {
+        $log = _$log_;
+        $scope = _$rootScope_.$new();
+        $compile = _$compile_;
+      });
+
+      spyOn($log, 'warn');
+      $scope.options = {
+        maxDate: '1984-01-01'
+      };
+      element = $compile('<uib-datepicker ng-model="locals.date" datepicker-options="options"></uib-datepicker>')($scope);
+      $scope.$digest();
+
+      expect($log.warn).not.toHaveBeenCalled();
+    });
+  });
+
   describe('$datepickerSuppressError', function() {
     var $compile,
         $log,
