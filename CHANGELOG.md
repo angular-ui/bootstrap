@@ -1,3 +1,14 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/angular-ui/bootstrap/compare/1.3.0...v1.3.1) (2016-04-05)
+
+
+### Bug Fixes
+
+* **datepickerPopup:** register popup module ([86ee9c3](https://github.com/angular-ui/bootstrap/commit/86ee9c3)), closes [#5745](https://github.com/angular-ui/bootstrap/issues/5745)
+* **modal:** ensure correct index is set ([a08ad70](https://github.com/angular-ui/bootstrap/commit/a08ad70)), closes [#5733](https://github.com/angular-ui/bootstrap/issues/5733) [#5670](https://github.com/angular-ui/bootstrap/issues/5670)
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/angular-ui/bootstrap/compare/1.2.5...v1.3.0) (2016-04-05)
 
