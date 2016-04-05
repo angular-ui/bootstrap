@@ -200,7 +200,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
     var dates = {};
     angular.forEach(['minDate', 'maxDate'], function(key) {
-      if ($scope.datepickerOptions[key] === null) {
+      if (!$scope.datepickerOptions[key]) {
         dates[key] = null;
       } else if (angular.isDate($scope.datepickerOptions[key])) {
         dates[key] = dateParser.fromTimezone(new Date($scope.datepickerOptions[key]), timezone);
