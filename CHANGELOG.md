@@ -1,3 +1,46 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/angular-ui/bootstrap/compare/1.2.5...v1.3.0) (2016-04-05)
+
+
+### Bug Fixes
+
+* **carousel:** fix animation from programmatic trigger ([44fb19b](https://github.com/angular-ui/bootstrap/commit/44fb19b)), closes [#5674](https://github.com/angular-ui/bootstrap/issues/5674) [#5601](https://github.com/angular-ui/bootstrap/issues/5601)
+* modify CSS loaded for modules with dependencies ([8074899](https://github.com/angular-ui/bootstrap/commit/8074899)), closes [#5698](https://github.com/angular-ui/bootstrap/issues/5698)
+* **carousel:** use proper sort comparison ([434c1c5](https://github.com/angular-ui/bootstrap/commit/434c1c5)), closes [#5638](https://github.com/angular-ui/bootstrap/issues/5638) [#5702](https://github.com/angular-ui/bootstrap/issues/5702)
+* **modal:** body content shift ([c83d0a8](https://github.com/angular-ui/bootstrap/commit/c83d0a8)), closes [#2631](https://github.com/angular-ui/bootstrap/issues/2631) [#5711](https://github.com/angular-ui/bootstrap/issues/5711)
+* **popover:** rename title attribute ([cca1460](https://github.com/angular-ui/bootstrap/commit/cca1460)), closes [#5719](https://github.com/angular-ui/bootstrap/issues/5719) [#5721](https://github.com/angular-ui/bootstrap/issues/5721)
+* **tab:** add support for tab deselect prevention ([e0fcc00](https://github.com/angular-ui/bootstrap/commit/e0fcc00)), closes [#5720](https://github.com/angular-ui/bootstrap/issues/5720) [#5723](https://github.com/angular-ui/bootstrap/issues/5723)
+* **tab:** correctly identify index on removal ([03e6047](https://github.com/angular-ui/bootstrap/commit/03e6047)), closes [#5689](https://github.com/angular-ui/bootstrap/issues/5689)
+* **tab:** fix event handler call ([d767afb](https://github.com/angular-ui/bootstrap/commit/d767afb)), closes [#5720](https://github.com/angular-ui/bootstrap/issues/5720) [#5738](https://github.com/angular-ui/bootstrap/issues/5738)
+
+### Features
+
+* add support for loading without CSS ([de504fb](https://github.com/angular-ui/bootstrap/commit/de504fb)), closes [#5696](https://github.com/angular-ui/bootstrap/issues/5696)
+* **carousel:** disable prev/next arrows if at bounds ([a3964d4](https://github.com/angular-ui/bootstrap/commit/a3964d4)), closes [#5704](https://github.com/angular-ui/bootstrap/issues/5704) [#5708](https://github.com/angular-ui/bootstrap/issues/5708)
+* **dateparser:** use 68 as the yy format pivot year ([701e0cb](https://github.com/angular-ui/bootstrap/commit/701e0cb)), closes [#5735](https://github.com/angular-ui/bootstrap/issues/5735)
+* **datepicker:** deprecate literal usage ([fc02fd1](https://github.com/angular-ui/bootstrap/commit/fc02fd1)), closes [#5658](https://github.com/angular-ui/bootstrap/issues/5658) [#5732](https://github.com/angular-ui/bootstrap/issues/5732)
+* **datepicker:** remove deprecated code ([ad91c82](https://github.com/angular-ui/bootstrap/commit/ad91c82)), closes [#5660](https://github.com/angular-ui/bootstrap/issues/5660)
+* **datepicker:** watch for changes when falsy ([45165ba](https://github.com/angular-ui/bootstrap/commit/45165ba)), closes [#5672](https://github.com/angular-ui/bootstrap/issues/5672) [#5677](https://github.com/angular-ui/bootstrap/issues/5677)
+* **datepickerPopup:** split off popup from datepicker ([fbc873c](https://github.com/angular-ui/bootstrap/commit/fbc873c)), closes [#5676](https://github.com/angular-ui/bootstrap/issues/5676)
+* **dropdown:** remove $locationChangeSuccess listener ([c534cb4](https://github.com/angular-ui/bootstrap/commit/c534cb4)), closes [#5648](https://github.com/angular-ui/bootstrap/issues/5648) [#5680](https://github.com/angular-ui/bootstrap/issues/5680)
+* **timepicker:** remove automatic padding when empty ([449c0d1](https://github.com/angular-ui/bootstrap/commit/449c0d1)), closes [#5293](https://github.com/angular-ui/bootstrap/issues/5293) [#5299](https://github.com/angular-ui/bootstrap/issues/5299)
+
+
+### BREAKING CHANGES
+
+* carousel: This adds disabled CSS - there is a possibility this may break existing UI slightly for those adding custom CSS/making use of custom templates. Modify the template appropriately if necessary
+* timepicker: This removes automatic padding done by the timepicker
+when the input is empty - if that behavior is desired, write a custom
+directive implementing it
+* dropdown: The dropdown no longer will remain open on $locationChangeSuccess with autoclose set to disabled. Implement this logic inside app along with usage of isOpen two-way binding if this functionality is desired.
+* datepickerPopup: The datepicker popup is no longer a part of the
+datepicker module, but now a part of the datepickerPopup module. Please
+change code accordingly if including specific modules
+* datepicker: This removes inline datepicker attribute support and
+attribute pass-throughs in the popup
+
+
+
 <a name="1.2.5"></a>
 ## [1.2.5](https://github.com/angular-ui/bootstrap/compare/1.2.4...v1.2.5) (2016-03-20)
 
