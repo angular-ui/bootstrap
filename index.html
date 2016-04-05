@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="assets/favicon.ico" />
     <title>Angular directives for Bootstrap</title>
-    <meta name="description" content="AngularJS (Angular) native directives for Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Accordion, Alert, Buttons, Carousel, Collapse, Dateparser, Datepicker, Dropdown, Modal, Pager, Pagination, Popover, Position, Progressbar, Rating, Tabs, Timepicker, Tooltip, Typeahead, ">
+    <meta name="description" content="AngularJS (Angular) native directives for Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required! Widgets: Accordion, Alert, Buttons, Carousel, Collapse, Dateparser, Datepicker, Datepicker Popup, Dropdown, Modal, Pager, Pagination, Popover, Position, Progressbar, Rating, Tabs, Timepicker, Tooltip, Typeahead, ">
     <meta name="google-site-verification" content="7lc5HyceLDqpV_6oNHteYFfxDJH7-S3DwnJKtNUKcRg" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.0.0/FileSaver.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-touch.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
-    <script src="ui-bootstrap-tpls-1.2.5.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js"></script>
+    <script src="ui-bootstrap-tpls-1.3.0.min.js"></script>
     <script src="assets/plunker.js"></script>
     <script src="assets/app.js"></script>
 
@@ -46,7 +46,7 @@
                         Directives <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#accordion">Accordion</a></li><li><a href="#alert">Alert</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#carousel">Carousel</a></li><li><a href="#collapse">Collapse</a></li><li><a href="#dateparser">Dateparser</a></li><li><a href="#datepicker">Datepicker</a></li><li><a href="#dropdown">Dropdown</a></li><li><a href="#modal">Modal</a></li><li><a href="#pager">Pager</a></li><li><a href="#pagination">Pagination</a></li><li><a href="#popover">Popover</a></li><li><a href="#position">Position</a></li><li><a href="#progressbar">Progressbar</a></li><li><a href="#rating">Rating</a></li><li><a href="#tabs">Tabs</a></li><li><a href="#timepicker">Timepicker</a></li><li><a href="#tooltip">Tooltip</a></li><li><a href="#typeahead">Typeahead</a></li>
+                        <li><a href="#accordion">Accordion</a></li><li><a href="#alert">Alert</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#carousel">Carousel</a></li><li><a href="#collapse">Collapse</a></li><li><a href="#dateparser">Dateparser</a></li><li><a href="#datepicker">Datepicker</a></li><li><a href="#datepickerPopup">Datepicker Popup</a></li><li><a href="#dropdown">Dropdown</a></li><li><a href="#modal">Modal</a></li><li><a href="#pager">Pager</a></li><li><a href="#pagination">Pagination</a></li><li><a href="#popover">Popover</a></li><li><a href="#position">Position</a></li><li><a href="#progressbar">Progressbar</a></li><li><a href="#rating">Rating</a></li><li><a href="#tabs">Tabs</a></li><li><a href="#timepicker">Timepicker</a></li><li><a href="#tooltip">Tooltip</a></li><li><a href="#typeahead">Typeahead</a></li>
                     </ul>
                 </li>
                 <li><a href="#getting_started">Getting started</a></li>
@@ -84,7 +84,7 @@
             <p>
                 <a class="btn btn-outline-inverse btn-lg" href="https://github.com/angular-ui/bootstrap"><i class="icon-github"></i>Code on Github</a>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showDownloadModal()">
-                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(1.2.5)</small>
+                    <i class="glyphicon glyphicon-download-alt"></i> Download <small>(1.3.0)</small>
                 </button>
                 <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="showBuildModal()"><i class="glyphicon glyphicon-wrench"></i> Create a Build</button>
             </p>
@@ -152,6 +152,8 @@
                         
                             <li><a href="#datepicker">Datepicker</a></li>
                         
+                            <li><a href="#datepickerPopup">Datepicker Popup</a></li>
+                        
                             <li><a href="#dropdown">Dropdown</a></li>
                         
                             <li><a href="#modal">Modal</a></li>
@@ -190,13 +192,13 @@
                         JavaScript is required. The <strong>only required dependencies</strong> are:
                     </p>
                     <ul>
-                        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires AngularJS 1.4.x or higher, tested with 1.5.0).
+                        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires AngularJS 1.4.x or higher, tested with 1.5.3).
                             0.14.3 is the last version of this library that supports AngularJS 1.3.x and
                             0.12.0 is the last version that supports AngularJS 1.2.x.</li>
-                        <li><a href="http://angularjs.org" target="_blank">Angular-animate</a> (the version should match with your angular's, tested with 1.5.0) if you plan in using animations, you need to load angular-animate as well.</li>
-                        <li><a href="http://angularjs.org" target="_blank">Angular-touch</a> (the version should match with your angular's, tested with 1.5.0) if you plan in using swipe actions, you need to load angular-touch as well.</li>
+                        <li><a href="http://angularjs.org" target="_blank">Angular-animate</a> (the version should match with your angular's, tested with 1.5.3) if you plan in using animations, you need to load angular-animate as well.</li>
+                        <li><a href="http://angularjs.org" target="_blank">Angular-touch</a> (the version should match with your angular's, tested with 1.5.3) if you plan in using swipe actions, you need to load angular-touch as well.</li>
                         <li><a href="http://getbootstrap.com" target="_blank">Bootstrap CSS</a> (tested with version 3.3.6).
-                            This version of the library (1.2.5) works only with Bootstrap CSS in version 3.x.
+                            This version of the library (1.3.0) works only with Bootstrap CSS in version 3.x.
                             0.8.0 is the last version of this library that supports Bootstrap CSS in version 2.3.x.
                         </li>
                     </ul>
@@ -370,7 +372,7 @@ Add the ability to override the template used on the component.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'accordion')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -541,7 +543,7 @@ Defines the type of the alert. Go to <a href="http://getbootstrap.com/components
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'alert')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -696,7 +698,7 @@ Event used to toggle the buttons.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'buttons')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -893,7 +895,7 @@ Add the ability to override the template used on the component.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'carousel')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -1110,7 +1112,7 @@ Whether the element should be collapsed or not.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'collapse')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -1311,7 +1313,7 @@ Parses the long form of the era (<code>Anno Domini</code> or <code>Before Christ
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'dateparser')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'dateparser')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -1414,7 +1416,6 @@ Parses the long form of the era (<code>Anno Domini</code> or <code>Before Christ
                             <div class="col-md-6">
                                 <p>Our datepicker is flexible and fully customizable.</p>
 <p>You can navigate through days, months and years.</p>
-<p>It comes in two formats, an inline <code>uib-datepicker</code> and an <code>uib-datepicker-popup</code> to be embedded in an input.</p>
 <p>The datepicker has 3 modes:</p>
 <ul>
 <li><code>day</code> - In this mode you&#39;re presented with a 6-week calendar for a specified month.</li>
@@ -1500,7 +1501,7 @@ The initial date view when no model value is specified.</p>
 <small class="badge">C</small>
 <i class="glyphicon glyphicon-eye-open"></i>
 <em>(Default: <code>null</code>)</em> -
-Defines the maximum available date.</p>
+Defines the maximum available date. Requires a Javascript Date object.</p>
 </li>
 <li><p><code>maxMode</code>
 <small class="badge">C</small>
@@ -1512,7 +1513,7 @@ Sets an upper limit for mode.</p>
 <small class="badge">C</small>
 <i class="glyphicon glyphicon-eye-open"></i>
 <em>(Default: <code>null</code>)</em> -
-Defines the minimum available date.</p>
+Defines the minimum available date. Requires a Javascript Date object.</p>
 </li>
 <li><p><code>minMode</code>
 <small class="badge">C</small>
@@ -1548,104 +1549,6 @@ Number of columns displayed in year selection.</p>
 </ul>
 </li>
 </ul>
-<h3 id="uib-datepicker-popup-settings">uib-datepicker-popup settings</h3>
-<p>The popup is a wrapper that you can use in an input to toggle a datepicker. To configure the datepicker, use <code>datepicker-options</code>.</p>
-<ul>
-<li><p><code>alt-input-formats</code>
-<small class="badge">$</small>
-<small class="badge">C</small>
-<em>(Default: <code>[]</code>)</em> -
-A list of alternate formats acceptable for manual entry.</p>
-</li>
-<li><p><code>clear-text</code>
-<small class="badge">C</small>
-<em>(Default: <code>Clear</code>)</em> -
-The text to display for the clear button.</p>
-</li>
-<li><p><code>close-on-date-selection</code>
-<small class="badge">$</small>
-<small class="badge">C</small>
-<em>(Default: <code>true</code>)</em> -
-Whether to close calendar when a date is chosen.</p>
-</li>
-<li><p><code>close-text</code>
-<small class="badge">C</small>
-<em>(Default: <code>Done</code>)</em> -
-The text to display for the close button.</p>
-</li>
-<li><p><code>current-text</code>
-<small class="badge">C</small>
-<em>(Default: <code>Today</code>)</em> -
-The text to display for the current day button.</p>
-</li>
-<li><p><code>datepicker-append-to-body</code>
-<small class="badge">$</small>
-<small class="badge">C</small>
-<em>(Default: <code>false</code>, Config: <code>appendToBody</code>)</em> -
-Append the datepicker popup element to <code>body</code>, rather than inserting after <code>datepicker-popup</code>.</p>
-</li>
-<li><p><code>datepicker-options</code>
-<small class="badge">$</small> -
-An object with any combination of the datepicker settings (in camelCase) used to configure the wrapped datepicker.</p>
-</li>
-<li><p><code>datepicker-popup-template-url</code>
-<small class="badge">C</small>
-<em>(Default: <code>uib/template/datepicker/popup.html</code>)</em> -
-Add the ability to override the template used on the component.</p>
-</li>
-<li><p><code>datepicker-template-url</code>
-<small class="badge">C</small>
-<em>(Default: <code>uib/template/datepicker/datepicker.html</code>)</em> -
-Add the ability to override the template used on the component (inner uib-datepicker).</p>
-</li>
-<li><p><code>is-open</code>
-<small class="badge">$</small>
-<i class="glyphicon glyphicon-eye-open"></i>
-<em>(Default: <code>false</code>)</em> -
-Whether or not to show the datepicker.</p>
-</li>
-<li><p><code>on-open-focus</code>
-<small class="badge">$</small>
-<small class="badge">C</small>
-<em>(Default: <code>true</code>)</em> -
-Whether or not to focus the datepicker popup upon opening.</p>
-</li>
-<li><p><code>show-button-bar</code>
-<small class="badge">$</small>
-<small class="badge">C</small>
-<em>(Default: <code>true</code>)</em> -
-Whether or not to display a button bar underneath the uib-datepicker.</p>
-</li>
-<li><p><code>type</code>
-<small class="badge">C</small>
-<em>(Default: <code>text</code>, Config: <code>html5Types</code>)</em> -
-You can override the input type to be <em>(date|datetime-local|month)</em>. That will change the date format of the popup.</p>
-</li>
-<li><p><code>popup-placement</code>
- <small class="badge">C</small>
- <em>(Default: <code>auto bottom-left</code>, Config: &#39;placement&#39;)</em> -
-Passing in &#39;auto&#39; separated by a space before the placement will enable auto positioning, e.g: &quot;auto bottom-left&quot;. The popup will attempt to position where it fits in the closest scrollable ancestor. Accepts:</p>
-<ul>
-<li><code>top</code> - popup on top, horizontally centered on input element.</li>
-<li><code>top-left</code> - popup on top, left edge aligned with input element left edge.</li>
-<li><code>top-right</code> - popup on top, right edge aligned with input element right edge.</li>
-<li><code>bottom</code> - popup on bottom, horizontally centered on input element.</li>
-<li><code>bottom-left</code> - popup on bottom, left edge aligned with input element left edge.</li>
-<li><code>bottom-right</code> - popup on bottom, right edge aligned with input element right edge.</li>
-<li><code>left</code> - popup on left, vertically centered on input element.</li>
-<li><code>left-top</code> - popup on left, top edge aligned with input element top edge.</li>
-<li><code>left-bottom</code> - popup on left, bottom edge aligned with input element bottom edge.</li>
-<li><code>right</code> - popup on right, vertically centered on input element.</li>
-<li><code>right-top</code> - popup on right, top edge aligned with input element top edge.</li>
-<li><code>right-bottom</code> - popup on right, bottom edge aligned with input element bottom edge.</li>
-</ul>
-</li>
-<li><p><code>uib-datepicker-popup</code>
-<small class="badge">C</small>
-<em>(Default: <code>yyyy-MM-dd</code>, Config: <code>datepickerConfig</code>)</em> -
-The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. <code>yyyy-MM-dd h &#39;o\&#39;clock&#39;</code>.</p>
-</li>
-</ul>
 <h3 id="keyboard-support">Keyboard support</h3>
 <p>Depending on datepicker&#39;s current mode, the date may refer either to day, month or year. Accordingly, the term view refers either to a month, year or year range.</p>
 <ul>
@@ -1664,7 +1567,6 @@ The format for displayed dates. This string can take string literals by surround
 </ul>
 <p><strong>Notes</strong></p>
 <p>If the date a user enters falls outside of the min-/max-date range, a <code>dateDisabled</code> validation error will show on the form.</p>
-<p>If using this directive on input type date, a native browser datepicker could also appear.</p>
 
                             </div>
                         </div>
@@ -1672,7 +1574,7 @@ The format for displayed dates. This string can take string literals by surround
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'datepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -1798,7 +1700,7 @@ The format for displayed dates. This string can take string literals by surround
 
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  var afterTomorrow = new Date();
+  var afterTomorrow = new Date(tomorrow);
   afterTomorrow.setDate(tomorrow.getDate() + 1);
   $scope.events = [
     {
@@ -1837,6 +1739,428 @@ The format for displayed dates. This string can take string literals by surround
                         </div>
                     </section>
                     <script>angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($scope) {
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.clear = function() {
+    $scope.dt = null;
+  };
+
+  $scope.inlineOptions = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
+  };
+
+  $scope.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+  // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
+
+  $scope.toggleMin = function() {
+    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+  };
+
+  $scope.toggleMin();
+
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.open2 = function() {
+    $scope.popup2.opened = true;
+  };
+
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scope.format = $scope.formats[0];
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.popup1 = {
+    opened: false
+  };
+
+  $scope.popup2 = {
+    opened: false
+  };
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date(tomorrow);
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
+  $scope.events = [
+    {
+      date: tomorrow,
+      status: 'full'
+    },
+    {
+      date: afterTomorrow,
+      status: 'partially'
+    }
+  ];
+
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
+    if (mode === 'day') {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i = 0; i < $scope.events.length; i++) {
+        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return $scope.events[i].status;
+        }
+      }
+    }
+
+    return '';
+  }
+});
+</script>
+                
+                    <section id="datepickerPopup">
+                        <div class="page-header">
+                          <h1>Datepicker Popup<small>
+                              (<a target="_blank" href="https://github.com/angular-ui/bootstrap/tree/master/src/datepickerPopup">ui.bootstrap.datepickerPopup</a>)
+                          </small></h1>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 show-grid">
+                                <style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+<div ng-controller="DatepickerPopupDemoCtrl">
+    <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+
+    <h4>Popup</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+
+      <div class="col-md-6">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
+      </div>
+    </div>
+
+    <hr />
+    <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2009, 7, 24)">2009-08-24</button>
+    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+</div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <p>The datepicker popup is meant to be used with an input element. To understand usage of the datepicker, please refer to its documentation <a href="https://angular-ui.github.io/bootstrap/#/datepicker">here</a>.</p>
+<h3 id="uib-datepicker-popup-settings">uib-datepicker-popup settings</h3>
+<p>The popup is a wrapper that you can use in an input to toggle a datepicker. To configure the datepicker, use <code>datepicker-options</code> as documented in the <a href="https://angular-ui.github.io/bootstrap/#/datepicker">inline datepicker</a>.</p>
+<ul>
+<li><p><code>alt-input-formats</code>
+<small class="badge">$</small>
+<small class="badge">C</small>
+<em>(Default: <code>[]</code>)</em> -
+A list of alternate formats acceptable for manual entry.</p>
+</li>
+<li><p><code>clear-text</code>
+<small class="badge">C</small>
+<em>(Default: <code>Clear</code>)</em> -
+The text to display for the clear button.</p>
+</li>
+<li><p><code>close-on-date-selection</code>
+<small class="badge">$</small>
+<small class="badge">C</small>
+<em>(Default: <code>true</code>)</em> -
+Whether to close calendar when a date is chosen.</p>
+</li>
+<li><p><code>close-text</code>
+<small class="badge">C</small>
+<em>(Default: <code>Done</code>)</em> -
+The text to display for the close button.</p>
+</li>
+<li><p><code>current-text</code>
+<small class="badge">C</small>
+<em>(Default: <code>Today</code>)</em> -
+The text to display for the current day button.</p>
+</li>
+<li><p><code>datepicker-append-to-body</code>
+<small class="badge">$</small>
+<small class="badge">C</small>
+<em>(Default: <code>false</code>, Config: <code>appendToBody</code>)</em> -
+Append the datepicker popup element to <code>body</code>, rather than inserting after <code>datepicker-popup</code>.</p>
+</li>
+<li><p><code>datepicker-options</code>
+<small class="badge">$</small> -
+An object with any combination of the datepicker settings (in camelCase) used to configure the wrapped datepicker.</p>
+</li>
+<li><p><code>datepicker-popup-template-url</code>
+<small class="badge">C</small>
+<em>(Default: <code>uib/template/datepickerPopup/popup.html</code>)</em> -
+Add the ability to override the template used on the component.</p>
+</li>
+<li><p><code>datepicker-template-url</code>
+<small class="badge">C</small>
+<em>(Default: <code>uib/template/datepicker/datepicker.html</code>)</em> -
+Add the ability to override the template used on the component (inner uib-datepicker).</p>
+</li>
+<li><p><code>is-open</code>
+<small class="badge">$</small>
+<i class="glyphicon glyphicon-eye-open"></i>
+<em>(Default: <code>false</code>)</em> -
+Whether or not to show the datepicker.</p>
+</li>
+<li><p><code>on-open-focus</code>
+<small class="badge">$</small>
+<small class="badge">C</small>
+<em>(Default: <code>true</code>)</em> -
+Whether or not to focus the datepicker popup upon opening.</p>
+</li>
+<li><p><code>show-button-bar</code>
+<small class="badge">$</small>
+<small class="badge">C</small>
+<em>(Default: <code>true</code>)</em> -
+Whether or not to display a button bar underneath the uib-datepicker.</p>
+</li>
+<li><p><code>type</code>
+<small class="badge">C</small>
+<em>(Default: <code>text</code>, Config: <code>html5Types</code>)</em> -
+You can override the input type to be <em>(date|datetime-local|month)</em>. That will change the date format of the popup.</p>
+</li>
+<li><p><code>popup-placement</code>
+<small class="badge">C</small>
+<em>(Default: <code>auto bottom-left</code>, Config: &#39;placement&#39;)</em> -
+Passing in &#39;auto&#39; separated by a space before the placement will enable auto positioning, e.g: &quot;auto bottom-left&quot;. The popup will attempt to position where it fits in the closest scrollable ancestor. Accepts:</p>
+<ul>
+<li><code>top</code> - popup on top, horizontally centered on input element.</li>
+<li><code>top-left</code> - popup on top, left edge aligned with input element left edge.</li>
+<li><code>top-right</code> - popup on top, right edge aligned with input element right edge.</li>
+<li><code>bottom</code> - popup on bottom, horizontally centered on input element.</li>
+<li><code>bottom-left</code> - popup on bottom, left edge aligned with input element left edge.</li>
+<li><code>bottom-right</code> - popup on bottom, right edge aligned with input element right edge.</li>
+<li><code>left</code> - popup on left, vertically centered on input element.</li>
+<li><code>left-top</code> - popup on left, top edge aligned with input element top edge.</li>
+<li><code>left-bottom</code> - popup on left, bottom edge aligned with input element bottom edge.</li>
+<li><code>right</code> - popup on right, vertically centered on input element.</li>
+<li><code>right-top</code> - popup on right, top edge aligned with input element top edge.</li>
+<li><code>right-bottom</code> - popup on right, bottom edge aligned with input element bottom edge.</li>
+</ul>
+</li>
+<li><p><code>uib-datepicker-popup</code>
+<small class="badge">C</small>
+<em>(Default: <code>yyyy-MM-dd</code>, Config: <code>datepickerConfig</code>)</em> -
+The format for displayed dates. This string can take string literals by surrounding the value with single quotes, i.e. <code>yyyy-MM-dd h &#39;o\&#39;clock&#39;</code>.</p>
+</li>
+</ul>
+<p><strong>Notes</strong></p>
+<p>If using this directive on input type date, a native browser datepicker could also appear.</p>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row code">
+                            <div class="col-md-12" ng-controller="PlunkerCtrl">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'datepickerPopup')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                </div>
+                                <uib-tabset active="activeTab">
+                                    <uib-tab index="0" heading="Markup">
+                                        <div plunker-content="markup">
+                                            <pre ng-non-bindable><code data-language="html">&lt;style&gt;
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+&lt;/style&gt;
+&lt;div ng-controller=&quot;DatepickerPopupDemoCtrl&quot;&gt;
+    &lt;pre&gt;Selected date is: &lt;em&gt;{{dt | date:&#x27;fullDate&#x27; }}&lt;/em&gt;&lt;/pre&gt;
+
+    &lt;h4&gt;Popup&lt;/h4&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-md-6&quot;&gt;
+        &lt;p class=&quot;input-group&quot;&gt;
+          &lt;input type=&quot;text&quot; class=&quot;form-control&quot; uib-datepicker-popup=&quot;{{format}}&quot; ng-model=&quot;dt&quot; is-open=&quot;popup1.opened&quot; datepicker-options=&quot;dateOptions&quot; ng-required=&quot;true&quot; close-text=&quot;Close&quot; alt-input-formats=&quot;altInputFormats&quot; /&gt;
+          &lt;span class=&quot;input-group-btn&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;open1()&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+          &lt;/span&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;col-md-6&quot;&gt;
+        &lt;p class=&quot;input-group&quot;&gt;
+          &lt;input type=&quot;text&quot; class=&quot;form-control&quot; uib-datepicker-popup ng-model=&quot;dt&quot; is-open=&quot;popup2.opened&quot; datepicker-options=&quot;dateOptions&quot; ng-required=&quot;true&quot; close-text=&quot;Close&quot; /&gt;
+          &lt;span class=&quot;input-group-btn&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;open2()&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+          &lt;/span&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-md-6&quot;&gt;
+        &lt;label&gt;Format: &lt;span class=&quot;muted-text&quot;&gt;(manual alternate &lt;em&gt;{{altInputFormats[0]}}&lt;/em&gt;)&lt;/span&gt;&lt;/label&gt; &lt;select class=&quot;form-control&quot; ng-model=&quot;format&quot; ng-options=&quot;f for f in formats&quot;&gt;&lt;option&gt;&lt;/option&gt;&lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;hr /&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-info&quot; ng-click=&quot;today()&quot;&gt;Today&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-default&quot; ng-click=&quot;setDate(2009, 7, 24)&quot;&gt;2009-08-24&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-danger&quot; ng-click=&quot;clear()&quot;&gt;Clear&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-default&quot; ng-click=&quot;toggleMin()&quot; uib-tooltip=&quot;After today restriction&quot;&gt;Min date&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab index="1" heading="JavaScript">
+                                        <div plunker-content="javascript">
+                                            <pre ng-non-bindable><code data-language="javascript">angular.module(&#x27;ui.bootstrap.demo&#x27;).controller(&#x27;DatepickerPopupDemoCtrl&#x27;, function ($scope) {
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.clear = function() {
+    $scope.dt = null;
+  };
+
+  $scope.inlineOptions = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
+  };
+
+  $scope.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: &#x27;yy&#x27;,
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+  // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === &#x27;day&#x27; &amp;&amp; (date.getDay() === 0 || date.getDay() === 6);
+  }
+
+  $scope.toggleMin = function() {
+    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+  };
+
+  $scope.toggleMin();
+
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.open2 = function() {
+    $scope.popup2.opened = true;
+  };
+
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
+  $scope.formats = [&#x27;dd-MMMM-yyyy&#x27;, &#x27;yyyy/MM/dd&#x27;, &#x27;dd.MM.yyyy&#x27;, &#x27;shortDate&#x27;];
+  $scope.format = $scope.formats[0];
+  $scope.altInputFormats = [&#x27;M!/d!/yyyy&#x27;];
+
+  $scope.popup1 = {
+    opened: false
+  };
+
+  $scope.popup2 = {
+    opened: false
+  };
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date();
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
+  $scope.events = [
+    {
+      date: tomorrow,
+      status: &#x27;full&#x27;
+    },
+    {
+      date: afterTomorrow,
+      status: &#x27;partially&#x27;
+    }
+  ];
+
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
+    if (mode === &#x27;day&#x27;) {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i = 0; i &lt; $scope.events.length; i++) {
+        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return $scope.events[i].status;
+        }
+      }
+    }
+
+    return &#x27;&#x27;;
+  }
+});
+</code></pre>
+                                        </div>
+                                    </uib-tab>
+                                </uib-tabset>
+                            </div>
+                        </div>
+                    </section>
+                    <script>angular.module('ui.bootstrap.demo').controller('DatepickerPopupDemoCtrl', function ($scope) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -1948,7 +2272,7 @@ The format for displayed dates. This string can take string literals by surround
       <a href id="simple-dropdown" uib-dropdown-toggle>
         Click me for a dropdown, yo!
       </a>
-      <ul uib-dropdown-menu aria-labelledby="simple-dropdown">
+      <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
         <li ng-repeat="choice in items">
           <a href>{{choice}}</a>
         </li>
@@ -1960,7 +2284,7 @@ The format for displayed dates. This string can take string literals by surround
       <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
         Button dropdown <span class="caret"></span>
       </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -1976,7 +2300,7 @@ The format for displayed dates. This string can take string literals by surround
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="split-button">
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -1990,7 +2314,7 @@ The format for displayed dates. This string can take string literals by surround
       <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>
         Dropdown on Body <span class="caret"></span>
       </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
         <li role="menuitem"><a href="#">Action</a></li>
         <li role="menuitem"><a href="#">Another action</a></li>
         <li role="menuitem"><a href="#">Something else here</a></li>
@@ -2004,7 +2328,7 @@ The format for displayed dates. This string can take string literals by surround
       <button id="button-template-url" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
         Dropdown using template <span class="caret"></span>
       </button>
-      <ul uib-dropdown-menu template-url="dropdown.html" aria-labelledby="button-template-url">
+      <ul class="dropdown-menu" uib-dropdown-menu template-url="dropdown.html" aria-labelledby="button-template-url">
       </ul>
     </div>
 
@@ -2020,7 +2344,7 @@ The format for displayed dates. This string can take string literals by surround
         <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
             Dropdown with keyboard navigation <span class="caret"></span>
         </button>
-        <ul uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
             <li role="menuitem"><a href="#">Action</a></li>
             <li role="menuitem"><a href="#">Another action</a></li>
             <li role="menuitem"><a href="#">Something else here</a></li>
@@ -2103,7 +2427,7 @@ The format for displayed dates. This string can take string literals by surround
 Controls the behavior of the menu when clicked.</p>
 <ul>
 <li><code>always</code> - Automatically closes the dropdown when any of its elements is clicked.</li>
-<li><code>disabled</code> - Disables the auto close. You can control it manually with <code>is-open</code>. It still gets closed if the toggle is clicked, <code>esc</code> is pressed or another dropdown is open. It also won&#39;t be closed on <code>$locationchangeSuccess</code>.</li>
+<li><code>disabled</code> - Disables the auto close. You can control it manually with <code>is-open</code>. It still gets closed if the toggle is clicked, <code>esc</code> is pressed or another dropdown is open.</li>
 <li><code>outsideClick</code> - Closes the dropdown automatically only when the user clicks any element outside the dropdown.</li>
 </ul>
 </li>
@@ -2159,7 +2483,7 @@ Class to apply when the dropdown is open.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'dropdown')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -2171,7 +2495,7 @@ Class to apply when the dropdown is open.</p>
       &lt;a href id=&quot;simple-dropdown&quot; uib-dropdown-toggle&gt;
         Click me for a dropdown, yo!
       &lt;/a&gt;
-      &lt;ul uib-dropdown-menu aria-labelledby=&quot;simple-dropdown&quot;&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; uib-dropdown-menu aria-labelledby=&quot;simple-dropdown&quot;&gt;
         &lt;li ng-repeat=&quot;choice in items&quot;&gt;
           &lt;a href&gt;{{choice}}&lt;/a&gt;
         &lt;/li&gt;
@@ -2183,7 +2507,7 @@ Class to apply when the dropdown is open.</p>
       &lt;button id=&quot;single-button&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; uib-dropdown-toggle ng-disabled=&quot;disabled&quot;&gt;
         Button dropdown &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;single-button&quot;&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;single-button&quot;&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
@@ -2199,7 +2523,7 @@ Class to apply when the dropdown is open.</p>
         &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
         &lt;span class=&quot;sr-only&quot;&gt;Split button!&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;split-button&quot;&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;split-button&quot;&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
@@ -2213,7 +2537,7 @@ Class to apply when the dropdown is open.</p>
       &lt;button id=&quot;btn-append-to-body&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; uib-dropdown-toggle&gt;
         Dropdown on Body &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;btn-append-to-body&quot;&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;btn-append-to-body&quot;&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
         &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
@@ -2227,7 +2551,7 @@ Class to apply when the dropdown is open.</p>
       &lt;button id=&quot;button-template-url&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; uib-dropdown-toggle ng-disabled=&quot;disabled&quot;&gt;
         Dropdown using template &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
-      &lt;ul uib-dropdown-menu template-url=&quot;dropdown.html&quot; aria-labelledby=&quot;button-template-url&quot;&gt;
+      &lt;ul class=&quot;dropdown-menu&quot; uib-dropdown-menu template-url=&quot;dropdown.html&quot; aria-labelledby=&quot;button-template-url&quot;&gt;
       &lt;/ul&gt;
     &lt;/div&gt;
 
@@ -2243,7 +2567,7 @@ Class to apply when the dropdown is open.</p>
         &lt;button id=&quot;simple-btn-keyboard-nav&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot; uib-dropdown-toggle&gt;
             Dropdown with keyboard navigation &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
         &lt;/button&gt;
-        &lt;ul uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;simple-btn-keyboard-nav&quot;&gt;
+        &lt;ul class=&quot;dropdown-menu&quot; uib-dropdown-menu role=&quot;menu&quot; aria-labelledby=&quot;simple-btn-keyboard-nav&quot;&gt;
             &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
             &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
             &lt;li role=&quot;menuitem&quot;&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
@@ -2541,7 +2865,7 @@ Also, the <code>$close</code> and <code>$dismiss</code> methods returns true if 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'modal')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -2761,7 +3085,7 @@ Total number of items in all pages.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'pager')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'pager')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -2935,7 +3259,7 @@ Total number of items in all pages.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'pagination')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -3186,7 +3510,7 @@ Provide a set of defaults for certain tooltip and popover attributes. Currently 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'popover')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -3390,12 +3714,55 @@ The element to get the offset parent for.</li>
 <li><em>(Type: <code>element</code>)</em> -
 The closest positioned ancestor.</li>
 </ul>
-<h4 id="scrollbarwidth-">scrollbarWidth()</h4>
+<h4 id="scrollbarwidth-isbody-">scrollbarWidth(isBody)</h4>
 <p>Calculates the browser scrollbar width and caches the result for future calls.  Concept from the TWBS measureScrollbar() function in <a href="https://github.com/twbs/bootstrap/blob/master/js/modal.js">modal.js</a>.</p>
+<h5 id="parameters">parameters</h5>
+<ul>
+<li><code>isBody</code>
+<em>(Type: <code>boolean</code>, Default: <code>false</code>, optional)</em> - Is the requested scrollbar width for the body/html element.  IE and Edge overlay the scrollbar on the body/html element and should be considered 0.</li>
+</ul>
 <h5 id="returns">returns</h5>
 <ul>
 <li><em>(Type: <code>number</code>)</em> -
 The width of the browser scrollbar.</li>
+</ul>
+<h4 id="scrollbarpadding-element-">scrollbarPadding(element)</h4>
+<p>Calculates the padding required to replace the scrollbar on an element.</p>
+<h5 id="parameters">parameters</h5>
+<ul>
+<li>&#39;element&#39; <em>(Type: <code>element</code>)</em> - The element to calculate the padding on (should be a scrollable element).</li>
+</ul>
+<h5 id="returns">returns</h5>
+<p>An object with the following properties:</p>
+<ul>
+<li><p><code>scrollbarWidth</code>
+<em>(Type: <code>number</code>)</em> -
+The width of the scrollbar.</p>
+</li>
+<li><p><code>widthOverflow</code>
+<em>(Type: <code>boolean</code>)</em> -
+Whether the width is overflowing.</p>
+</li>
+<li><p><code>right</code>
+<em>(Type: <code>number</code>)</em> -
+The total right padding required to replace the scrollbar.</p>
+</li>
+<li><p><code>originalRight</code>
+<em>(Type: <code>number</code>)</em> -
+The oringal right padding on the element.</p>
+</li>
+<li><p><code>heightOverflow</code>
+<em>(Type: <code>boolean</code>)</em> -
+Whether the height is overflowing.</p>
+</li>
+<li><p><code>bottom</code>
+<em>(Type: <code>number</code>)</em> -
+The total bottom padding required to replace the scrollbar.</p>
+</li>
+<li><p><code>originalBottom</code>
+<em>(Type: <code>number</code>)</em> -
+The oringal bottom padding on the element.</p>
+</li>
 </ul>
 <h4 id="isscrollable-element-includehidden-">isScrollable(element, includeHidden)</h4>
 <p>Determines if an element is scrollable.</p>
@@ -3414,7 +3781,7 @@ The element to check.</p>
 <li><em>(Type: <code>boolean</code>)</em> -
 Whether the element is scrollable.</li>
 </ul>
-<h4 id="scrollparent-element-includehidden-">scrollParent(element, includeHidden)</h4>
+<h4 id="scrollparent-element-includehidden-includeself-">scrollParent(element, includeHidden, includeSelf)</h4>
 <p>Gets the closest scrollable ancestor.  Concept from the jQueryUI <a href="https://github.com/jquery/jquery-ui/blob/master/ui/scroll-parent.js">scrollParent.js</a>.</p>
 <h5 id="parameters">parameters</h5>
 <ul>
@@ -3424,6 +3791,9 @@ The element to get the closest scrollable ancestor for.</p>
 </li>
 <li><p><code>includeHidden</code>
 <em>(Type: <code>boolean</code>, Default: <code>false</code>, optional)</em> - Should scroll style of &#39;hidden&#39; be considered.</p>
+</li>
+<li><p><code>includeSelf</code>
+<em>(Type: <code>boolean</code>, Default: <code>false</code>, optional)</em> - Should the element passed in be included in the scrollable lookup.</p>
 </li>
 </ul>
 <h5 id="returns">returns</h5>
@@ -3627,7 +3997,7 @@ The placement for the element.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'position')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'position')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -3839,7 +4209,7 @@ Title to use as label (for accessibility).</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'progressbar')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -4051,7 +4421,7 @@ A variable used in the template to specify the state for unselected icons.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'rating')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -4247,7 +4617,7 @@ Whether tabs appear vertically stacked.</p>
 </li>
 <li><p><code>deselect()</code>
 <small class="badge">$</small> -
-An optional expression called when tab is deactivated. Supports $event in template for expression.</p>
+An optional expression called when tab is deactivated. Supports $event in template for expression. You may call <code>$event.preventDefault()</code> in this event handler to prevent a tab change from occurring.</p>
 </li>
 <li><p><code>disable</code>
 <small class="badge">$</small>
@@ -4281,7 +4651,7 @@ A URL representing the location of a template to use for the tab heading.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'tabs')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -4550,10 +4920,11 @@ Sets tabindex for each control in the timepicker.</p>
 <small class="badge">C</small>
 <em>(Defaults: <code>uib/template/timepicker/timepicker.html</code>)</em> -
 Add the ability to override the template used on the component.</p>
-<p><strong>Notes</strong></p>
-<p>If the model value is updated (i.e. via <code>Date.prototype.setDate</code>), you must update the model value by breaking the reference by <code>modelValue = new Date(modelValue)</code> in order to have the timepicker update.</p>
 </li>
 </ul>
+<p><strong>Notes</strong></p>
+<p>This component makes no claims of absolutely supporting the preservation of dates in all cases, and it is highly recommended that model tracking of dates is encapsulated in a different object. This component should not be used with the same model as the datepicker. This is due to edge cases with situations such as Daylight Savings timezone changes which require a modification of the date in order to prevent an impossible to increment or decrement situation. See <a href="https://github.com/angular-ui/bootstrap/issues/5485">#5485</a> for details.</p>
+<p>If the model value is updated (i.e. via <code>Date.prototype.setDate</code>), you must update the model value by breaking the reference by <code>modelValue = new Date(modelValue)</code> in order to have the timepicker update.</p>
 
                             </div>
                         </div>
@@ -4561,7 +4932,7 @@ Add the ability to override the template used on the component.</p>
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'timepicker')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -4869,7 +5240,7 @@ Provide a set of defaults for certain tooltip and popover attributes. Currently 
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'tooltip')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -5219,7 +5590,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                         <div class="row code">
                             <div class="col-md-12" ng-controller="PlunkerCtrl">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.0', '3.3.6', '1.2.5', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
+                                    <button type="button" class="btn btn-info plunk-btn" ng-click="edit('1.5.3', '3.3.6', '1.3.0', 'typeahead')"><i class="glyphicon glyphicon-edit"></i> Edit in plunker</button>
                                 </div>
                                 <uib-tabset active="activeTab">
                                     <uib-tab index="0" heading="Markup">
@@ -5442,7 +5813,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
     </div>
     <div class="modal-footer">
         <a class="btn btn-default" ng-click="cancel()">Close</a>
-        <a class="btn btn-primary" ng-href="{{download('1.2.5')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 1.2.5</a>
+        <a class="btn btn-primary" ng-href="{{download('1.3.0')}}" download><i class="glyphicon glyphicon-download-alt"></i> Download 1.3.0</a>
     </div>
 </script>
 <script type="text/ng-template" id="buildModal.html">
@@ -5554,17 +5925,6 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
-               ng-class="{'btn-primary': module.position}"
-               ng-model="module.position"
-               uib-btn-checkbox
-               ng-change="selectedChanged('position', module.position)">
-                  Position
-              </button>
-              
-            
-              
-              <button type="button" class="btn btn-default"
-               style="width: 33%; border-radius: 0;"
                ng-class="{'btn-primary': module.datepicker}"
                ng-model="module.datepicker"
                uib-btn-checkbox
@@ -5572,11 +5932,33 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Datepicker
               </button>
               
+            
+              
+              <button type="button" class="btn btn-default"
+               style="width: 33%; border-radius: 0;"
+               ng-class="{'btn-primary': module.position}"
+               ng-model="module.position"
+               uib-btn-checkbox
+               ng-change="selectedChanged('position', module.position)">
+                  Position
+              </button>
+              
                 </div>
               
             
               
                 <div class="btn-group" style="width: 100%;">
+              
+              <button type="button" class="btn btn-default"
+               style="width: 33%; border-radius: 0;"
+               ng-class="{'btn-primary': module.datepickerPopup}"
+               ng-model="module.datepickerPopup"
+               uib-btn-checkbox
+               ng-change="selectedChanged('datepickerPopup', module.datepickerPopup)">
+                  Datepicker Popup
+              </button>
+              
+            
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5598,7 +5980,11 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Dropdown
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5609,11 +5995,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Stacked Map
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5635,7 +6017,11 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Paging
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5646,11 +6032,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Pager
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5672,7 +6054,11 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Tooltip
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5683,11 +6069,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Popover
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5709,7 +6091,11 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Rating
               </button>
               
+                </div>
+              
             
+              
+                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5720,11 +6106,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Tabs
               </button>
               
-                </div>
-              
             
-              
-                <div class="btn-group" style="width: 100%;">
               
               <button type="button" class="btn btn-default"
                style="width: 33%; border-radius: 0;"
@@ -5746,6 +6128,8 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
                   Typeahead
               </button>
               
+                </div>
+              
             
         </div>
     </div>
@@ -5753,7 +6137,7 @@ Comprehension Angular expression (see <a href="http://docs.angularjs.org/api/ng.
         <a class="btn btn-default" ng-click="cancel()">Close</a>
         <a class="btn btn-primary" ng-hide="isOldBrowser()"
             ng-disabled="isOldBrowser() !== false && !selectedModules.length"
-            ng-click="selectedModules.length && build(selectedModules, '1.2.5')">
+            ng-click="selectedModules.length && build(selectedModules, '1.3.0')">
             <i class="glyphicon glyphicon-download-alt"></i> Download {{selectedModules.length}} Modules
         </a>
     </div>
