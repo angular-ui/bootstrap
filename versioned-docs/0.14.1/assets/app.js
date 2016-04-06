@@ -1,6 +1,8 @@
 /* global FastClick, smoothScroll */
 angular.module('ui.bootstrap.demo', ['ui.bootstrap', 'plunker', 'ngTouch', 'ngAnimate', 'ngSanitize'], function($httpProvider){
-  FastClick.attach(document.body);
+  if (!!window.FastClick) {
+    FastClick.attach(document.body);
+  }
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }).run(['$location', function($location){
   //Allows us to navigate to the correct element on initialization
