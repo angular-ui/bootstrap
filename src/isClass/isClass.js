@@ -88,8 +88,7 @@ function ($animate) {
               data.scope = newWatchScope;
             }
           });
-        }
-        else {
+        } else {
           expToData = {};
         }
       }
