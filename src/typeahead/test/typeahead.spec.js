@@ -315,6 +315,21 @@ describe('typeahead tests', function() {
       expect($scope.form.input.$error.parse).toBeFalsy();
     });
 
+    it('should go through other validators after blur for typeahead-editable="false"', function () {
+        var element = prepareInputEl(
+        '<div><form name="form">' +
+          '<input name="input" ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="false" required>' +
+        '</form></div>');
+        var inputEl = findInput(element);
+
+        changeInputValueTo(element, 'not in matches');
+        expect($scope.result).toEqual(undefined);
+        expect(inputEl.val()).toEqual('not in matches');
+        inputEl.blur(); // input loses focus
+        expect($scope.result).toEqual(undefined);
+        expect($scope.form.input.$error.required).toBeTruthy();
+    });
+
     it('should clear view value when no value selected for typeahead-editable="false" typeahead-select-on-blur="false"', function () {
         var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="false" typeahead-select-on-blur="false"></div>');
         var inputEl = findInput(element);
