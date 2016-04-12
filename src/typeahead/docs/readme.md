@@ -77,6 +77,11 @@ This directive works with promises, meaning you can retrieve matches using the `
   _(Default: `angular.noop`)_ -
   Binding to a variable that indicates if no matching results were found.
 
+* `typeahead-should-select($event)`
+  <small class="badge">$</small>
+  _(Default: `null`)_ -
+  A callback executed when a `keyup` event that might trigger a selection occurs. Selection will only occur if this function returns true.
+
 * `typeahead-on-select($item, $model, $label, $event)`
   <small class="badge">$</small>
   _(Default: `null`)_ -

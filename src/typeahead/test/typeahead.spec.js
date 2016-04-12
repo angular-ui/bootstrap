@@ -472,6 +472,48 @@ describe('typeahead tests', function() {
     });
   });
 
+  describe('shouldSelect', function() {
+    it('should select a match when function returns true', function() {
+      $scope.shouldSelectFn = function() {
+        return true;
+      };
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-should-select="shouldSelectFn($event)" uib-typeahead="item for item in source | filter:$viewValue"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'b');
+      triggerKeyDown(element, 13);
+
+      expect($scope.result).toEqual('bar');
+      expect(inputEl.val()).toEqual('bar');
+      expect(element).toBeClosed();
+    });
+    it('should not select a match when function returns false', function() {
+      $scope.shouldSelectFn = function() {
+        return false;
+      };
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-should-select="shouldSelectFn($event)" uib-typeahead="item for item in source | filter:$viewValue"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'b');
+      triggerKeyDown(element, 13);
+
+      // no change
+      expect($scope.result).toEqual('b');
+      expect(inputEl.val()).toEqual('b');
+    });
+    it('should pass key event into select trigger function', function() {
+      $scope.shouldSelectFn = jasmine.createSpy('shouldSelectFn');//.and.returnValue(true);
+      var element = prepareInputEl('<div><input ng-model="result" typeahead-should-select="shouldSelectFn($event)" uib-typeahead="item for item in source | filter:$viewValue"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'b');
+      triggerKeyDown(element, 13);
+
+      expect($scope.shouldSelectFn.calls.count()).toEqual(1);
+      expect($scope.shouldSelectFn.calls.argsFor(0)[0].which).toEqual(13);
+    });
+  });
+
   describe('selecting a match', function() {
     it('should select a match on enter', function() {
       var element = prepareInputEl('<div><input ng-model="result" uib-typeahead="item for item in source | filter:$viewValue"></div>');
