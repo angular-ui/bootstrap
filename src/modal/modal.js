@@ -309,8 +309,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
         removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
           var modalBodyClass = modalWindow.openedClass || OPENED_MODAL_CLASS;
           openedClasses.remove(modalBodyClass, modalInstance);
-          appendToElement.toggleClass(modalBodyClass, openedClasses.hasKey(modalBodyClass));
-          if (scrollbarPadding && scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
+          var areAnyOpen = openedClasses.hasKey(modalBodyClass);
+          appendToElement.toggleClass(modalBodyClass, areAnyOpen);
+          if (!areAnyOpen && scrollbarPadding && scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
             if (scrollbarPadding.originalRight) {
               appendToElement.css({paddingRight: scrollbarPadding.originalRight + 'px'});
             } else {
@@ -444,7 +445,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           modalBodyClass = modal.openedClass || OPENED_MODAL_CLASS;
 
         toggleTopWindowClass(false);
-        
+
         // Store the current top first, to determine what index we ought to use
         // for the current top modal
         previousTopOpenedModal = openedWindows.top();
@@ -482,6 +483,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           }
           $compile(backdropDomEl)(backdropScope);
           $animate.enter(backdropDomEl, appendToElement);
+          scrollbarPadding = $uibPosition.scrollbarPadding(appendToElement);
+          if (scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
+            appendToElement.css({paddingRight: scrollbarPadding.right + 'px'});
+          }
         }
 
         // Set the top modal index based on the index of the previous top modal
@@ -499,10 +504,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           angularDomEl.attr('modal-animation', 'true');
         }
 
-        scrollbarPadding = $uibPosition.scrollbarPadding(appendToElement);
-        if (scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
-          appendToElement.css({paddingRight: scrollbarPadding.right + 'px'});
-        }
         appendToElement.addClass(modalBodyClass);
         $animate.enter($compile(angularDomEl)(modal.scope), appendToElement);
 
