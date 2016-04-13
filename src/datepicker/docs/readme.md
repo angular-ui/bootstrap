@@ -33,11 +33,11 @@ Apart from the previous settings, to configure the uib-datepicker you need to cr
   <small class="badge">$</small> -
   An object to configure the datepicker in one place.
 
-  * `customClass (date, mode)` -
-    An optional expression to add classes based on passing a date and current mode.
+  * `customClass ({date: date, mode: mode})` -
+    An optional expression to add classes based on passing an object with date and current mode properties.
 
-  * `dateDisabled (date, mode)` -
-    An optional expression to disable visible options based on passing a date and current mode.
+  * `dateDisabled ({date: date, mode: mode})` -
+    An optional expression to disable visible options based on passing an object with date and current mode properties.
 
   * `datepickerMode`
     <small class="badge">C</small>
