@@ -17,7 +17,7 @@
 
   <uib-tabset active="active">
     <uib-tab index="0" heading="Static title">Static content</uib-tab>
-    <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+    <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
       {{tab.content}}
     </uib-tab>
     <uib-tab index="3" select="alertMe()">
