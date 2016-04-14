@@ -1,3 +1,29 @@
+<a name="1.3.2"></a>
+## [1.3.2](https://github.com/angular-ui/bootstrap/compare/1.3.1...v1.3.2) (2016-04-14)
+
+
+### Bug Fixes
+
+* **datepicker:** ensure datepicker is focused ([33cbd0f](https://github.com/angular-ui/bootstrap/commit/33cbd0f)), closes [#5761](https://github.com/angular-ui/bootstrap/issues/5761) [#5754](https://github.com/angular-ui/bootstrap/issues/5754)
+* **datepickerPopup:** do not show incorrect warning ([98eb8f1](https://github.com/angular-ui/bootstrap/commit/98eb8f1)), closes [#5743](https://github.com/angular-ui/bootstrap/issues/5743) [#5747](https://github.com/angular-ui/bootstrap/issues/5747)
+* **dropdown:** stop esc keydown event ([68200bb](https://github.com/angular-ui/bootstrap/commit/68200bb)), closes [#5778](https://github.com/angular-ui/bootstrap/issues/5778) [#5787](https://github.com/angular-ui/bootstrap/issues/5787)
+* **modal:** missing require in modal ([a887d2b](https://github.com/angular-ui/bootstrap/commit/a887d2b)), closes [#5786](https://github.com/angular-ui/bootstrap/issues/5786)
+* **modal:** scroll padding only added once ([aef08d5](https://github.com/angular-ui/bootstrap/commit/aef08d5)), closes [#5790](https://github.com/angular-ui/bootstrap/issues/5790) [#5789](https://github.com/angular-ui/bootstrap/issues/5789)
+* **site:** allow FastClick to be blocked ([37f9cd2](https://github.com/angular-ui/bootstrap/commit/37f9cd2)), closes [#5756](https://github.com/angular-ui/bootstrap/issues/5756)
+* **tooltip:** arrow position ([d96d53e](https://github.com/angular-ui/bootstrap/commit/d96d53e)), closes [#5785](https://github.com/angular-ui/bootstrap/issues/5785) [#5779](https://github.com/angular-ui/bootstrap/issues/5779)
+* **typeahead:** use $setViewValue on blur ([bba3f27](https://github.com/angular-ui/bootstrap/commit/bba3f27)), closes [#5769](https://github.com/angular-ui/bootstrap/issues/5769) [#5694](https://github.com/angular-ui/bootstrap/issues/5694)
+
+### Features
+
+* **modal:** add no css import script ([a27a4e2](https://github.com/angular-ui/bootstrap/commit/a27a4e2)), closes [#5788](https://github.com/angular-ui/bootstrap/issues/5788)
+
+
+### BREAKING CHANGES
+
+* dropdown: Stops propagation of keydown event when escape key is pressed. Removes keydown event from the document and moves it to the dropdown element.
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/angular-ui/bootstrap/compare/1.3.0...v1.3.1) (2016-04-05)
 
