@@ -33,7 +33,7 @@ AngularJS version of the tabs directive.
 
 * `deselect()`
   <small class="badge">$</small> -
-  An optional expression called when tab is deactivated. Supports $event in template for expression. You may call `$event.preventDefault()` in this event handler to prevent a tab change from occurring.
+  An optional expression called when tab is deactivated. Supports `$event` and `$selectedIndex` in template for expression. You may call `$event.preventDefault()` in this event handler to prevent a tab change from occurring. The `$selectedIndex` can be used to determine which tab was attempted to be opened.
 
 * `disable`
   <small class="badge">$</small>
