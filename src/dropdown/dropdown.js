@@ -191,7 +191,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     if (appendTo && self.dropdownMenu) {
       var pos = $position.positionElements($element, self.dropdownMenu, 'bottom-left', true),
         css,
-        rightalign;
+        rightalign,
+        scrollbarWidth;
 
       css = {
         top: pos.top + 'px',
@@ -204,7 +205,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         css.right = 'auto';
       } else {
         css.left = 'auto';
-        css.right = window.innerWidth -
+        scrollbarWidth = $position.scrollbarWidth(true);
+        css.right = window.innerWidth - scrollbarWidth -
           (pos.left + $element.prop('offsetWidth')) + 'px';
       }
 
