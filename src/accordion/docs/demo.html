@@ -3,8 +3,11 @@
     <div class="panel {{panelClass || 'panel-default'}}">
       <div class="panel-heading">
         <h4 class="panel-title" style="color:#fa39c3">
-          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
-            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+            <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+              {{heading}}
+            </span>
+          </a>
         </h4>
       </div>
       <div class="panel-collapse collapse" uib-collapse="!isOpen">
@@ -38,6 +41,12 @@
     </uib-accordion-group>
     <uib-accordion-group heading="Custom template" template-url="group-template.html">
       Hello
+    </uib-accordion-group>
+    <uib-accordion-group is-open="status.isCustomHeaderOpen" template-url="group-template.html">
+      <uib-accordion-heading>
+        Custom template with custom header template <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+      </uib-accordion-heading>
+      World
     </uib-accordion-group>
     <uib-accordion-group heading="Delete account" panel-class="panel-danger">
       <p>Please, to delete your account, click the button below</p>
