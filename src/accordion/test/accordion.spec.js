@@ -610,6 +610,17 @@ describe('uib-accordion', function() {
       });
     });
 
+    describe('uib-accordion-heading attribute, with custom template', function() {
+        it('should transclude heading to a template using data-uib-accordion-header', inject(function($templateCache) {
+          $templateCache.put('foo/bar.html', '<div class="panel"><a uib-accordion-transclude="heading" class="accordion-toggle"><span data-uib-accordion-header></span></a><div ng-transclude></div></div>');
+
+          element = $compile('<uib-accordion><uib-accordion-group  template-url="foo/bar.html"><uib-accordion-heading>baz</uib-accordion-heading></uib-accordion-group></uib-accordion>')(scope);
+          scope.$digest();
+          groups = element.find('.panel');
+          expect(findGroupLink(0).text()).toBe('baz');
+      }));
+    });
+
     describe('uib-accordion group panel class', function() {
       it('should use the default value when panel class is falsy - #3968', function() {
         element = $compile('<uib-accordion><uib-accordion-group heading="Heading">Content</uib-accordion-group></uib-accordion>')(scope);
@@ -630,14 +641,14 @@ describe('uib-accordion', function() {
         expect(groups.eq(0)).toHaveClass('custom-class');
         expect(groups.eq(0)).not.toHaveClass('panel-default');
       });
-      
+
       it('should change class if panel-class is changed', function() {
         element = $compile('<uib-accordion><uib-accordion-group heading="Heading" panel-class="{{panelClass}}">Content</uib-accordion-group></uib-accordion>')(scope);
         scope.panelClass = 'custom-class';
         scope.$digest();
         groups = element.find('.panel');
         expect(groups.eq(0)).toHaveClass('custom-class');
-        
+
         scope.panelClass = 'different-class';
         scope.$digest();
         expect(groups.eq(0)).toHaveClass('different-class');
