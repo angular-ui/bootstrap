@@ -695,9 +695,11 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
                 //controllers
                 if (modalOptions.controller) {
                   ctrlLocals.$scope = modalScope;
+                  ctrlLocals.$scope.$resolve = {};
                   ctrlLocals.$uibModalInstance = modalInstance;
                   angular.forEach(tplAndVars[1], function(value, key) {
                     ctrlLocals[key] = value;
+                    ctrlLocals.$scope.$resolve[key] = value;
                   });
 
                   // the third param will make the controller instantiate later,private api
@@ -707,7 +709,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
                     ctrlInstance = ctrlInstantiate.instance;
                     ctrlInstance.$close = modalScope.$close;
                     ctrlInstance.$dismiss = modalScope.$dismiss;
-                    angular.extend(ctrlInstance, providedScope);
+                    angular.extend(ctrlInstance, {
+                      $resolve: ctrlLocals.$scope.$resolve
+                    }, providedScope);
                   }
 
                   ctrlInstance = ctrlInstantiate();

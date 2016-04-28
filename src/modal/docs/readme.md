@@ -135,3 +135,5 @@ Events fired:
 ##### UI Router resolves
 
 If one wants to have the modal resolve using [UI Router's](https://github.com/angular-ui/ui-router) pre-1.0 resolve mechanism, one can call `$uibResolve.setResolver('$resolve')` in the configuration phase of the application. One can also provide a custom resolver as well, as long as the signature conforms to UI Router's [$resolve](http://angular-ui.github.io/ui-router/site/#/api/ui.router.util.$resolve).
+
+When the modal is opened with a controller, a `$resolve` object is exposed on the template with the resolved values from the resolve object.

@@ -1053,6 +1053,20 @@ describe('$uibModal', function() {
         });
         expect($document).toHaveModalOpenWithContent('Content from root scope', 'div');
       });
+
+      it('should expose $resolve in template', function() {
+        open({
+          controller: function($scope) {},
+          resolve: {
+            $foo: function() {
+              return 'Content from resolve';
+            }
+          },
+          template: '<div>{{$resolve.$foo}}</div>'
+        });
+
+        expect($document).toHaveModalOpenWithContent('Content from resolve', 'div');
+      });
     });
 
     describe('keyboard', function () {
