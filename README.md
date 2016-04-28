@@ -13,7 +13,7 @@
     - [NuGet](#install-with-nuget)
     - [Custom](#custom-build)
     - [Manual](#manual-download)
-- [Webpack](#webpack)
+- [Webpack / JSPM](#webpack--jspm)
 - [Support](#support)
     - [FAQ](#faq)
     - [Code of Conduct](#code-of-conduct)
