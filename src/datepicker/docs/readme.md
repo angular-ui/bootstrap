@@ -13,7 +13,7 @@ The datepicker has 3 modes:
 * `ng-model`
   <small class="badge">$</small>
   <i class="glyphicon glyphicon-eye-open"></i> -
-  The date object. Needs to be a Javascript Date object.
+  The date object. Must be a Javascript `Date` object. You may use the `uibDateParser` service to assist in string-to-object conversion.
 
 * `ng-model-options`
   <small class="badge">$</small>

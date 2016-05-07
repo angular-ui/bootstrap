@@ -57,6 +57,11 @@ Add the ability to override the template used on the component (inner uib-datepi
 _(Default: `false`)_ -
 Whether or not to show the datepicker.
 
+* `ng-model`
+  <small class="badge">$</small>
+  <i class="glyphicon glyphicon-eye-open"></i> -
+  The date object. Must be a Javascript `Date` object. You may use the `uibDateParser` service to assist in string-to-object conversion.
+
 * `on-open-focus`
 <small class="badge">$</small>
 <small class="badge">C</small>
