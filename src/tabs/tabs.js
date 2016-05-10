@@ -115,9 +115,6 @@ angular.module('ui.bootstrap.tabs', [])
         scope.$parent.$eval(attrs.vertical) : false;
       scope.justified = angular.isDefined(attrs.justified) ?
         scope.$parent.$eval(attrs.justified) : false;
-      if (angular.isUndefined(attrs.active)) {
-        scope.active = 0;
-      }
     }
   };
 })
