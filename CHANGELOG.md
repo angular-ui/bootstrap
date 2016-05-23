@@ -1,3 +1,29 @@
+<a name="1.3.3"></a>
+## [1.3.3](https://github.com/angular-ui/bootstrap/compare/1.3.2...v1.3.3) (2016-05-23)
+
+
+### Bug Fixes
+
+* **datepicker:** add intermediary valid date check([a417ec2](https://github.com/angular-ui/bootstrap/commit/a417ec2)), closes [#5872](https://github.com/angular-ui/bootstrap/issues/5872) [#5865](https://github.com/angular-ui/bootstrap/issues/5865)
+* **datepickerPopup:** convert numbers to date before parsing([5188463](https://github.com/angular-ui/bootstrap/commit/5188463)), closes [#5873](https://github.com/angular-ui/bootstrap/issues/5873) [#5871](https://github.com/angular-ui/bootstrap/issues/5871)
+* **dropdown:** align position with vertical scrollbar([2b48259](https://github.com/angular-ui/bootstrap/commit/2b48259)), closes [#5830](https://github.com/angular-ui/bootstrap/issues/5830) [#4317](https://github.com/angular-ui/bootstrap/issues/4317)
+
+
+### Features
+
+* **accordion:** add alternative attribute support([4c40d9d](https://github.com/angular-ui/bootstrap/commit/4c40d9d)), closes [#5834](https://github.com/angular-ui/bootstrap/issues/5834) [#5839](https://github.com/angular-ui/bootstrap/issues/5839)
+* **modal:** add resolve values to template([dd09148](https://github.com/angular-ui/bootstrap/commit/dd09148)), closes [#5808](https://github.com/angular-ui/bootstrap/issues/5808) [#5857](https://github.com/angular-ui/bootstrap/issues/5857)
+* **tab:** allow strings for index([26d3995](https://github.com/angular-ui/bootstrap/commit/26d3995)), closes [#5713](https://github.com/angular-ui/bootstrap/issues/5713) [#5827](https://github.com/angular-ui/bootstrap/issues/5827)
+* **tabs:** pass the selected index to onDeselect([241fea8](https://github.com/angular-ui/bootstrap/commit/241fea8)), closes [#5820](https://github.com/angular-ui/bootstrap/issues/5820) [#5821](https://github.com/angular-ui/bootstrap/issues/5821)
+* **typeahead:** Add support for `should-select`([2ffb86f](https://github.com/angular-ui/bootstrap/commit/2ffb86f)), closes [#5671](https://github.com/angular-ui/bootstrap/issues/5671) [#5794](https://github.com/angular-ui/bootstrap/issues/5794)
+
+
+### BREAKING CHANGES
+
+* modal: Since this adds support for $resolve being exposed on $scope, it could potentially overwrite any pre-existing usage of it - this is an unlikely scenario, but marked as a breaking change in case this key is being used
+
+
+
 <a name="1.3.2"></a>
 ## [1.3.2](https://github.com/angular-ui/bootstrap/compare/1.3.1...v1.3.2) (2016-04-14)
 
