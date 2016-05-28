@@ -953,6 +953,23 @@ describe('datepicker', function() {
     });
 
     describe('attribute `datepicker-options`', function() {
+      describe('ngModelOptions', function() {
+          beforeEach(inject(function() {
+            $rootScope.date = new Date('2005-11-07T10:00:00.000Z');
+            $rootScope.options = {
+              ngModelOptions: {
+                timezone: '+600'
+              }
+            };
+            element = $compile('<uib-datepicker ng-model="date" datepicker-options="options"></uib-datepicker>')($rootScope);
+            $rootScope.$digest();
+          }));
+
+          it('supports ngModelOptions from options object and sets date to appropriate date', function() {
+            expectSelectedElement(8);
+          });
+      });
+
       describe('startingDay', function() {
         beforeEach(function() {
           $rootScope.options = {

@@ -175,8 +175,10 @@ describe('datepicker popup', function() {
       $sniffer = _$sniffer_;
 
       $rootScope.date = new Date('September 30, 2010 15:30:00');
-      $rootScope.modelOptions = {allowInvalid: true};
-      element = $compile('<div><input ng-model="date" ng-model-options="modelOptions" uib-datepicker-popup></div>')($rootScope);
+      $rootScope.ngModelOptions = {
+        allowInvalid: true
+      };
+      element = $compile('<div><input ng-model="date" ng-model-options="ngModelOptions" uib-datepicker-popup></div>')($rootScope);
       inputEl = element.find('input');
       $rootScope.$digest();
     }));
@@ -557,8 +559,13 @@ describe('datepicker popup', function() {
       $timeout = _$timeout_;
       $rootScope.isopen = true;
       $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
+      $rootScope.options = {
+        ngModelOptions: {
+          updateOn: 'default'
+        }
+      };
       wrapElement = $compile('<div><input ng-model="date" ' +
-        'ng-model-options="{ updateOn: \'default\' }" ' +
+        'datepicker-options="options" ' +
         'uib-datepicker-popup is-open="isopen"><div>')($rootScope);
       $rootScope.$digest();
       assignElements(wrapElement);
@@ -1598,9 +1605,13 @@ describe('datepicker popup', function() {
 
       beforeEach(function() {
         $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
-        $rootScope.ngModelOptions = { timezone: '+600' };
+        $rootScope.options = {
+          ngModelOptions: {
+            timezone: '+600'
+          }
+        };
         $rootScope.isopen = true;
-        var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="MM/dd/yyyy" ng-model-options="ngModelOptions" is-open="isopen"></div>')($rootScope);
+        var wrapper = $compile('<div><input ng-model="date" uib-datepicker-popup="MM/dd/yyyy" datepicker-options="options" is-open="isopen"></div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapper);
       });
@@ -1631,9 +1642,13 @@ describe('datepicker popup', function() {
 
       beforeEach(function() {
         $rootScope.date = new Date('2010-09-30T10:00:00.000Z');
-        $rootScope.ngModelOptions = { timezone: '+600' };
+        $rootScope.options = {
+          ngModelOptions: {
+            timezone: '+600'
+          }
+        };
         $rootScope.isopen = true;
-        var wrapper = $compile('<div><input type="date" ng-model="date" uib-datepicker-popup ng-model-options="ngModelOptions" is-open="isopen"></div>')($rootScope);
+        var wrapper = $compile('<div><input type="date" ng-model="date" uib-datepicker-popup datepicker-options="options" is-open="isopen"></div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapper);
       });

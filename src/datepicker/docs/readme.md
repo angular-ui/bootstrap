@@ -104,6 +104,11 @@ Apart from the previous settings, to configure the uib-datepicker you need to cr
     _(Default: `day`)_ -
     Sets a lower limit for mode.
 
+  * `ngModelOptions`
+    <small class="badge">C</small>
+    _(Default: `null`)_ -
+    Sets `ngModelOptions` for datepicker. This can be overridden through attribute usage
+
   * `shortcutPropagation`
     <small class="badge">C</small>
     _(Default: `false`)_ -
