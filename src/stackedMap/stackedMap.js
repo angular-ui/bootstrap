@@ -43,7 +43,7 @@ angular.module('ui.bootstrap.stackedMap', [])
             return stack.splice(idx, 1)[0];
           },
           removeTop: function() {
-            return stack.splice(stack.length - 1, 1)[0];
+            return stack.pop();
           },
           length: function() {
             return stack.length;
