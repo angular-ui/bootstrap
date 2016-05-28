@@ -222,8 +222,6 @@ describe('typeahead tests', function() {
         expect(element).toBeClosed();
     });
 
-
-
     it('should support custom model selecting function', function() {
       $scope.updaterFn = function(selectedItem) {
         return 'prefix' + selectedItem;
@@ -469,6 +467,15 @@ describe('typeahead tests', function() {
         prepareInputEl('<div><input ng-model="result" uib-typeahead="an invalid expression"></div>');
       };
       expect(prepareInvalidDir).toThrow();
+    });
+
+    it('should remove the id attribute from the original DOM element', function() {
+      var element = prepareInputEl('<div><input id="typeahead-element" ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-show-hint="true"></div>');
+      var inputEl = findInput(element);
+
+      expect(inputEl.size()).toBe(2);
+      expect(inputEl.eq(0).attr('id')).toBe(undefined);
+      expect(inputEl.eq(1).attr('id')).toBe('typeahead-element');
     });
   });
 

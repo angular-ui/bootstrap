@@ -152,6 +152,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         'vertical-align': 'top',
         'background-color': 'transparent'
       });
+
+      if (hintInputElem.attr('id')) {
+        hintInputElem.removeAttr('id'); // remove duplicate id if present.
+      }
       inputsContainer.append(hintInputElem);
       hintInputElem.after(element);
     }
