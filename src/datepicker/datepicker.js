@@ -16,6 +16,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   maxMode: 'year',
   minDate: null,
   minMode: 'day',
+  monthColumns: 3,
   ngModelOptions: {},
   shortcutPropagation: false,
   showWeeks: true,
@@ -54,6 +55,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     'maxMode',
     'minDate',
     'minMode',
+    'monthColumns',
     'showWeeks',
     'shortcutPropagation',
     'startingDay',
@@ -79,6 +81,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
           $interpolate($scope.datepickerOptions[key])($scope.$parent) :
           datepickerConfig[key];
         break;
+      case 'monthColumns':
       case 'showWeeks':
       case 'shortcutPropagation':
       case 'yearColumns':
@@ -488,7 +491,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     }
 
     scope.title = dateFilter(this.activeDate, this.formatMonthTitle);
-    scope.rows = this.split(months, 3);
+    scope.rows = this.split(months, this.monthColumns);
+    scope.yearHeaderColspan = this.monthColumns > 3 ? this.monthColumns - 2 : 1;
   };
 
   this.compare = function(date1, date2) {
@@ -505,11 +509,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     if (key === 'left') {
       date = date - 1;
     } else if (key === 'up') {
-      date = date - 3;
+      date = date - this.monthColumns;
     } else if (key === 'right') {
       date = date + 1;
     } else if (key === 'down') {
-      date = date + 3;
+      date = date + this.monthColumns;
     } else if (key === 'pageup' || key === 'pagedown') {
       var year = this.activeDate.getFullYear() + (key === 'pageup' ? - 1 : 1);
       this.activeDate.setFullYear(year);

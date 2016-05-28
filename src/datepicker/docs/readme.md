@@ -104,6 +104,11 @@ Apart from the previous settings, to configure the uib-datepicker you need to cr
     _(Default: `day`)_ -
     Sets a lower limit for mode.
 
+  * `monthColumns`
+    <small class="badge">C</small>
+    _(Default: `3`)_ -
+    Number of columns displayed in month selection.
+    
   * `ngModelOptions`
     <small class="badge">C</small>
     _(Default: `null`)_ -
@@ -123,7 +128,7 @@ Apart from the previous settings, to configure the uib-datepicker you need to cr
     <small class="badge">C</small>
     *(Default: `$locale.DATETIME_FORMATS.FIRSTDAYOFWEEK`)* -
     Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
-
+    
   * `yearRows`
     <small class="badge">C</small>
     _(Default: `4`)_ -

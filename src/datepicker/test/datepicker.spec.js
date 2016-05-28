@@ -26,8 +26,12 @@ describe('datepicker', function() {
     });
   }));
 
+  function getTitleCell() {
+    return element.find('th').eq(1);
+  }
+
   function getTitleButton() {
-    return element.find('th').eq(1).find('button').first();
+    return getTitleCell().find('button').first();
   }
 
   function getTitle() {
@@ -1325,6 +1329,7 @@ describe('datepicker', function() {
         uibDatepickerConfig.yearRows = 2;
         uibDatepickerConfig.yearColumns = 5;
         uibDatepickerConfig.startingDay = 6;
+        uibDatepickerConfig.monthColumns = 4;
 
         element = $compile('<div uib-datepicker ng-model="date"></div>')($rootScope);
         $rootScope.$digest();
@@ -1346,11 +1351,15 @@ describe('datepicker', function() {
 
         expect(getTitle()).toBe('10');
         expect(getOptions()).toEqual([
-          ['Jan', 'Feb', 'Mar'],
-          ['Apr', 'May', 'Jun'],
-          ['Jul', 'Aug', 'Sep'],
-          ['Oct', 'Nov', 'Dec']
+          ['Jan', 'Feb', 'Mar', 'Apr'],
+          ['May', 'Jun', 'Jul', 'Aug'],
+          ['Sep', 'Oct', 'Nov', 'Dec']
         ]);
+      });
+
+      it('shows title year button to expand to fill width in `month` mode', function() {
+        clickTitleButton();
+        expect(getTitleCell().attr('colspan')).toBe('2');
       });
 
       it('changes the title, year format & range in `year` mode', function() {
