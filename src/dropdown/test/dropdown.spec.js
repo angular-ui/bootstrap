@@ -220,10 +220,26 @@ describe('uib-dropdown', function() {
 
     beforeEach(function() {
       element = dropdown();
+      $document.find('body').append(element);
+    });
+
+    afterEach(function() {
+      element.remove();
     });
 
     it('adds the menu to the body', function() {
       expect($document.find('#dropdown-menu').parent()[0]).toBe($document.find('body')[0]);
+    });
+
+    it('focuses the dropdown element on close', function() {
+      var toggle = element.find('[uib-dropdown-toggle]');
+      var menu = $document.find('#dropdown-menu a');
+      toggle.trigger('click');
+      menu.focus();
+
+      menu.trigger('click');
+
+      expect(document.activeElement).toBe(toggle[0]);
     });
 
     it('removes the menu when the dropdown is removed', function() {
@@ -266,6 +282,17 @@ describe('uib-dropdown', function() {
       expect(container).toHaveClass('uib-dropdown-open');
       element.find('[uib-dropdown-toggle]').click();
       expect(container).not.toHaveClass('uib-dropdown-open');
+    });
+
+    it('focuses the dropdown element on close', function() {
+      var toggle = element.find('[uib-dropdown-toggle]');
+      var menu = $document.find('#dropdown-menu a');
+      toggle.trigger('click');
+      menu.focus();
+
+      menu.trigger('click');
+
+      expect(document.activeElement).toBe(toggle[0]);
     });
 
     it('removes the menu when the dropdown is removed', function() {

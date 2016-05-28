@@ -50,6 +50,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
 
     openScope.isOpen = false;
+    openScope.focusToggleElement();
 
     if (!$rootScope.$$phase) {
       openScope.$apply();
