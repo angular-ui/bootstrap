@@ -51,7 +51,7 @@
 
     <div class="form-group">
       <label>Or use custom triggers, like focus: </label>
-      <input type="text" value="Click me!" uib-tooltip="See? Now click away..." tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
+      <input type="text" value="Click me!" uib-tooltip="See? Now click away..." tooltip-trigger="'focus'" tooltip-placement="right" class="form-control" />
     </div>
 
     <div class="form-group" ng-class="{'has-error' : !inputModel}">
@@ -60,7 +60,7 @@
              placeholder="Hover over this for a tooltip until this is filled"
              uib-tooltip="Enter something in this input field to disable this tooltip"
              tooltip-placement="top"
-             tooltip-trigger="mouseenter"
+             tooltip-trigger="'mouseenter'"
              tooltip-enable="!inputModel" />
     </div>
     <div class="form-group">

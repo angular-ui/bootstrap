@@ -504,7 +504,7 @@ describe('tooltip', function() {
 
     it('should use it to show but set the hide trigger based on the map for mapped triggers', inject(function($compile) {
       elmBody = angular.element(
-        '<div><input uib-tooltip="Hello!" tooltip-trigger="focus" /></div>'
+        '<div><input uib-tooltip="Hello!" tooltip-trigger="\'focus\'" /></div>'
       );
       $compile(elmBody)(scope);
       scope.$apply();
@@ -521,7 +521,7 @@ describe('tooltip', function() {
 
     it('should use it as both the show and hide triggers for unmapped triggers', inject(function($compile) {
       elmBody = angular.element(
-        '<div><input uib-tooltip="Hello!" tooltip-trigger="fakeTriggerAttr" /></div>'
+        '<div><input uib-tooltip="Hello!" tooltip-trigger="\'fakeTriggerAttr\'" /></div>'
       );
       $compile(elmBody)(scope);
       scope.$apply();
@@ -540,8 +540,8 @@ describe('tooltip', function() {
       scope.test = true;
       elmBody = angular.element(
         '<div>' +
-          '<input uib-tooltip="Hello!" tooltip-trigger="{{ (test && \'mouseenter\' || \'click\') }}" />' +
-          '<input uib-tooltip="Hello!" tooltip-trigger="{{ (test && \'mouseenter\' || \'click\') }}" />' +
+          '<input uib-tooltip="Hello!" tooltip-trigger="test && \'mouseenter\' || \'click\'" />' +
+          '<input uib-tooltip="Hello!" tooltip-trigger="test && \'mouseenter\' || \'click\'" />' +
         '</div>'
       );
 
@@ -566,7 +566,7 @@ describe('tooltip', function() {
 
     it('should accept multiple triggers based on the map for mapped triggers', inject(function($compile) {
       elmBody = angular.element(
-        '<div><input uib-tooltip="Hello!" tooltip-trigger="focus fakeTriggerAttr" /></div>'
+        '<div><input uib-tooltip="Hello!" tooltip-trigger="\'focus fakeTriggerAttr\'" /></div>'
       );
       $compile(elmBody)(scope);
       scope.$apply();
@@ -587,7 +587,7 @@ describe('tooltip', function() {
 
     it('should not show when trigger is set to "none"', inject(function($compile) {
       elmBody = angular.element(
-        '<div><input uib-tooltip="Hello!" tooltip-trigger="none" /></div>'
+        '<div><input uib-tooltip="Hello!" tooltip-trigger="\'none\'" /></div>'
       );
       $compile(elmBody)(scope);
       scope.$apply();
@@ -601,7 +601,7 @@ describe('tooltip', function() {
 
     it('should toggle on click and hide when anything else is clicked when trigger is set to "outsideClick"', inject(function($compile, $document) {
       elm = $compile(angular.element(
-        '<span uib-tooltip="tooltip text" tooltip-trigger="outsideClick">Selector Text</span>'
+        '<span uib-tooltip="tooltip text" tooltip-trigger="\'outsideClick\'">Selector Text</span>'
       ))(scope);
       scope.$apply();
       elmScope = elm.scope();
@@ -621,6 +621,23 @@ describe('tooltip', function() {
       expect(tooltipScope.isOpen).toBeTruthy();
       angular.element($document[0].body).trigger('click');
       tooltipScope.$digest();
+      expect(tooltipScope.isOpen).toBeFalsy();
+    }));
+
+    it('should support objects', inject(function($compile) {
+      elmBody = angular.element(
+        '<div><input uib-tooltip="Hello!" tooltip-trigger="{show: \'hide\'}" /></div>'
+      );
+      $compile(elmBody)(scope);
+      scope.$apply();
+      elm = elmBody.find('input');
+      elmScope = elm.scope();
+      tooltipScope = elmScope.$$childTail;
+
+      expect(tooltipScope.isOpen).toBeFalsy();
+      trigger(elm, 'show');
+      expect(tooltipScope.isOpen).toBeTruthy();
+      trigger(elm, 'hide');
       expect(tooltipScope.isOpen).toBeFalsy();
     }));
   });
@@ -673,7 +690,7 @@ describe('tooltip', function() {
     }
 
     beforeEach(inject(function($compile, $rootScope) {
-      elmBody = angular.element('<div><input uib-tooltip="Hello!" tooltip-trigger="fooTrigger" /></div>');
+      elmBody = angular.element('<div><input uib-tooltip="Hello!" tooltip-trigger="\'fooTrigger\'" /></div>');
 
       $compile(elmBody)($rootScope);
       $rootScope.$apply();
@@ -754,7 +771,7 @@ describe('tooltipWithDifferentSymbols', function() {
 
     it('should show the correct tooltip text', inject(function($compile, $rootScope) {
       elmBody = angular.element(
-        '<div><input type="text" uib-tooltip="My tooltip" tooltip-trigger="focus" tooltip-placement="right" /></div>'
+        '<div><input type="text" uib-tooltip="My tooltip" tooltip-trigger="\'focus\'" tooltip-placement="right" /></div>'
       );
       $compile(elmBody)($rootScope);
       $rootScope.$apply();
@@ -1030,7 +1047,7 @@ describe('$uibTooltipProvider', function() {
 
       it('should override the show and hide triggers if there is an attribute', inject(function($rootScope, $compile) {
         elmBody = angular.element(
-          '<div><input uib-tooltip="tooltip text" tooltip-trigger="mouseenter"/></div>'
+          '<div><input uib-tooltip="tooltip text" tooltip-trigger="\'mouseenter\'"/></div>'
         );
 
         scope = $rootScope;

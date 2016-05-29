@@ -76,8 +76,9 @@ All these settings are available for the three types of popovers.
    A string to display as a fancy title.
 
 * `popover-trigger`
-  _(Default: `click`)_ -
-  What should trigger a show of the popover? Supports a space separated list of event names (see below).
+  <small class="badge">$</small>
+  _(Default: `'click'`)_ -
+  What should trigger a show of the popover? Supports a space separated list of event names, or objects (see below).
 
 **Note:** To configure the tooltips, you need to do it on `$uibTooltipProvider` (also see below).
 
