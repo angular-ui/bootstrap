@@ -1041,6 +1041,13 @@ describe('datepicker popup', function() {
         expect($rootScope.date).toBe(null);
       });
 
+      it('should clear the previously selected date', function() {
+         $rootScope.date = new Date();
+         $rootScope.$digest();
+         buttons.eq(1).click();
+         expect($rootScope.date).toBe(null);
+      });
+
       it('should have a button to close calendar', function() {
         buttons.eq(2).click();
         assignElements(wrapElement);
