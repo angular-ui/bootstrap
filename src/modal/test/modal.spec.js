@@ -807,6 +807,52 @@ describe('$uibModal', function() {
 
       initialPage.remove();
     });
+
+    it('should change focus to next tabbable element when tab is pressed', function() {
+      var initialPage = angular.element('<a href="#" id="cannot-get-focus-from-modal">Outland link</a>');
+      angular.element(document.body).append(initialPage);
+      initialPage.focus();
+
+      open({
+        template:'<button id="tab-focus-button1" tabindex="-1">Skip me!</button><a href="#" id="tab-focus-link1">a</a>' +
+        '<a href="#" id="tab-focus-link2">b</a><a href="#" id="tab-focus-link3">c</a>' +
+        '<button id="tab-focus-button2" tabindex="-1">Skip me!</button>',
+        keyboard: false
+      });
+      $rootScope.$digest();
+      expect($document).toHaveModalsOpen(1);
+
+      $('#tab-focus-link3').focus();
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link3');
+
+      triggerKeyDown(angular.element(document.activeElement), 9, false);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link1');
+
+      initialPage.remove();
+    });
+
+    it('should change focus to previous tabbable element when shift+tab is pressed', function() {
+      var initialPage = angular.element('<a href="#" id="cannot-get-focus-from-modal">Outland link</a>');
+      angular.element(document.body).append(initialPage);
+      initialPage.focus();
+
+      open({
+        template:'<button id="tab-focus-button1" tabindex="-1">Skip me!</button><a href="#" id="tab-focus-link1">a</a>' +
+        '<a href="#" id="tab-focus-link2">b</a><a href="#" id="tab-focus-link3">c</a>' +
+        '<button id="tab-focus-button2" tabindex="-1">Skip me!</button>',
+        keyboard: false
+      });
+      $rootScope.$digest();
+      expect($document).toHaveModalsOpen(1);
+
+      $('#tab-focus-link1').focus();
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link1');
+
+      triggerKeyDown(angular.element(document.activeElement), 9, true);
+      expect(document.activeElement.getAttribute('id')).toBe('tab-focus-link3');
+
+      initialPage.remove();
+    });
   });
 
   describe('default options can be changed in a provider', function() {
