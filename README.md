@@ -133,6 +133,10 @@ import typeahead from 'angular-ui-bootstrap/src/typeahead/index-nocss.js';
 angular.module('myModule', [accordion, datepicker]);
 ```
 
+# Versioning
+
+Pre-2.0.0 does not follow a particular versioning system. 2.0.0 and onwards follows [semantic versioning](http://semver.org/). All release changes can be viewed on our [changelog](CHANGELOG.md).
+
 # Support
 
 ## FAQ
