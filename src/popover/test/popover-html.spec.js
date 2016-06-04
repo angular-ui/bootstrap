@@ -21,6 +21,7 @@ describe('popover', function() {
     scope.template = $sce.trustAsHtml('<span>My template</span>');
     $compile(elmBody)(scope);
     scope.$digest();
+    $document.find('body').append(elmBody);
     elm = elmBody.find('span');
     elmScope = elm.scope();
     tooltipScope = elmScope.$$childTail;
@@ -87,6 +88,7 @@ describe('popover', function() {
   it('should hide popover when template becomes empty', inject(function($timeout) {
     elm.trigger('click');
     tooltipScope.$digest();
+    $timeout.flush(0);
     expect(tooltipScope.isOpen).toBe(true);
 
     scope.template = '';

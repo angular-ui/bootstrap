@@ -163,17 +163,27 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               if (!positionTimeout) {
                 positionTimeout = $timeout(function() {
                   var ttPosition = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
+                  var initialHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
+                  var elementPos = appendToBody ? $position.offset(element) : $position.position(element);
                   tooltip.css({ top: ttPosition.top + 'px', left: ttPosition.left + 'px' });
+                  var placementClasses = ttPosition.placement.split('-');
 
-                  if (!tooltip.hasClass(ttPosition.placement.split('-')[0])) {
+                  if (!tooltip.hasClass(placementClasses[0])) {
                     tooltip.removeClass(lastPlacement.split('-')[0]);
-                    tooltip.addClass(ttPosition.placement.split('-')[0]);
+                    tooltip.addClass(placementClasses[0]);
                   }
 
                   if (!tooltip.hasClass(options.placementClassPrefix + ttPosition.placement)) {
                     tooltip.removeClass(options.placementClassPrefix + lastPlacement);
                     tooltip.addClass(options.placementClassPrefix + ttPosition.placement);
                   }
+
+                  $timeout(function() {
+                    var currentHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
+                    if (placementClasses.indexOf('top') !== -1 && initialHeight !== currentHeight) {
+                      tooltip.css({top: elementPos.top - currentHeight + 'px'});
+                    }
+                  }, 0, false);
 
                   // first time through tt element will have the
                   // uib-position-measure class or if the placement

@@ -1,5 +1,5 @@
 describe('tooltip directive', function() {
-  var $rootScope, $compile, $document, $timeout;
+  var $rootScope, $compile, $document, $timeout, body, fragment;
 
   beforeEach(module('ui.bootstrap.tooltip'));
   beforeEach(module('uib/template/tooltip/tooltip-popup.html'));
@@ -10,6 +10,8 @@ describe('tooltip directive', function() {
     $compile = _$compile_;
     $document = _$document_;
     $timeout = _$timeout_;
+
+    body = $document.find('body');
   }));
 
   beforeEach(function() {
@@ -39,12 +41,13 @@ describe('tooltip directive', function() {
 
   afterEach(function() {
     $document.off('keypress');
+    fragment.remove();
   });
 
   function compileTooltip(ttipMarkup) {
-    var fragment = $compile('<div>' + ttipMarkup + '</div>')($rootScope);
+    fragment = $compile('<div>' + ttipMarkup + '</div>')($rootScope);
     $rootScope.$digest();
-    return fragment;
+    body.append(fragment);
   }
 
   function closeTooltip(hostEl, triggerEvt, shouldNotFlush) {
@@ -62,7 +65,7 @@ describe('tooltip directive', function() {
 
   describe('basic scenarios with default options', function() {
     it('shows default tooltip on mouse enter and closes on mouse leave', function() {
-      var fragment = compileTooltip('<span uib-tooltip="tooltip text">Trigger here</span>');
+      compileTooltip('<span uib-tooltip="tooltip text">Trigger here</span>');
 
       trigger(fragment.find('span'), 'mouseenter');
       expect(fragment).toHaveOpenTooltips();
@@ -72,16 +75,17 @@ describe('tooltip directive', function() {
     });
 
     it('should not show a tooltip when its content is empty', function() {
-      var fragment = compileTooltip('<span uib-tooltip=""></span>');
+      compileTooltip('<span uib-tooltip=""></span>');
       trigger(fragment.find('span'), 'mouseenter');
       expect(fragment).not.toHaveOpenTooltips();
     });
 
     it('should not show a tooltip when its content becomes empty', function() {
       $rootScope.content = 'some text';
-      var fragment = compileTooltip('<span uib-tooltip="{{ content }}"></span>');
+      compileTooltip('<span uib-tooltip="{{ content }}"></span>');
 
       trigger(fragment.find('span'), 'mouseenter');
+      $timeout.flush(0);
       expect(fragment).toHaveOpenTooltips();
 
       $rootScope.content = '';
@@ -92,7 +96,7 @@ describe('tooltip directive', function() {
 
     it('should update tooltip when its content becomes empty', function() {
       $rootScope.content = 'some text';
-      var fragment = compileTooltip('<span uib-tooltip="{{ content }}"></span>');
+      compileTooltip('<span uib-tooltip="{{ content }}"></span>');
 
       $rootScope.content = '';
       $rootScope.$digest();
@@ -119,7 +123,7 @@ describe('tooltip directive', function() {
       describe(key, function() {
         describe('placement', function() {
           it('can specify an alternative, valid placement', function() {
-            var fragment = compileTooltip('<span ' + html + ' tooltip-placement="left">Trigger here</span>');
+            compileTooltip('<span ' + html + ' tooltip-placement="left">Trigger here</span>');
             trigger(fragment.find('span'), 'mouseenter');
 
             var ttipElement = fragment.find('div.tooltip');
@@ -133,7 +137,7 @@ describe('tooltip directive', function() {
 
         describe('class', function() {
           it('can specify a custom class', function() {
-            var fragment = compileTooltip('<span ' + html + ' tooltip-class="custom">Trigger here</span>');
+            compileTooltip('<span ' + html + ' tooltip-class="custom">Trigger here</span>');
             trigger(fragment.find('span'), 'mouseenter');
 
             var ttipElement = fragment.find('div.tooltip');
@@ -149,7 +153,7 @@ describe('tooltip directive', function() {
   });
 
   it('should show even after close trigger is called multiple times - issue #1847', function() {
-    var fragment = compileTooltip('<span uib-tooltip="tooltip text">Trigger here</span>');
+    compileTooltip('<span uib-tooltip="tooltip text">Trigger here</span>');
 
     trigger(fragment.find('span'), 'mouseenter');
     expect(fragment).toHaveOpenTooltips();
@@ -169,7 +173,7 @@ describe('tooltip directive', function() {
   });
 
   it('should hide even after show trigger is called multiple times', function() {
-    var fragment = compileTooltip('<span uib-tooltip="tooltip text" tooltip-popup-delay="1000">Trigger here</span>');
+    compileTooltip('<span uib-tooltip="tooltip text" tooltip-popup-delay="1000">Trigger here</span>');
 
     trigger(fragment.find('span'), 'mouseenter');
     trigger(fragment.find('span'), 'mouseenter');
@@ -179,7 +183,7 @@ describe('tooltip directive', function() {
   });
 
   it('should not show tooltips element is disabled (button) - issue #3167', function() {
-    var fragment = compileTooltip('<button uib-tooltip="cancel!" ng-disabled="disabled" ng-click="disabled = true">Cancel</button>');
+    compileTooltip('<button uib-tooltip="cancel!" ng-disabled="disabled" ng-click="disabled = true">Cancel</button>');
 
     trigger(fragment.find('button'), 'mouseenter');
     expect(fragment).toHaveOpenTooltips();

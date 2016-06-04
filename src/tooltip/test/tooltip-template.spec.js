@@ -75,6 +75,7 @@ describe('tooltip template', function() {
 
   it('should hide tooltip when template becomes empty', inject(function($timeout) {
     trigger(elm, 'mouseenter');
+    $timeout.flush(0);
     expect(tooltipScope.isOpen).toBe(true);
 
     scope.templateUrl = '';

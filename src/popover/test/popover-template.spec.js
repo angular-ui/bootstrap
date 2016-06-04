@@ -25,6 +25,7 @@ describe('popover template', function() {
 
     scope = $rootScope;
     $compile(elmBody)(scope);
+    $document.find('body').append(elmBody);
     scope.templateUrl = 'myUrl';
 
     scope.$digest();
@@ -35,6 +36,7 @@ describe('popover template', function() {
 
   afterEach(function() {
     $document.off('keypress');
+    elmBody.remove();
   });
 
   it('should open on click', inject(function() {
@@ -75,6 +77,7 @@ describe('popover template', function() {
   it('should hide popover when template becomes empty', inject(function($timeout) {
     elm.trigger('click');
     tooltipScope.$digest();
+    $timeout.flush(0);
     expect(tooltipScope.isOpen).toBe(true);
 
     scope.templateUrl = '';
