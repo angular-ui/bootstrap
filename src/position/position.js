@@ -529,13 +529,33 @@ angular.module('ui.bootstrap.position', [])
       },
 
       /**
-      * Provides a way for positioning tooltip & dropdown
-      * arrows when using placement options beyond the standard
-      * left, right, top, or bottom.
-      *
-      * @param {element} elem - The tooltip/dropdown element.
-      * @param {string} placement - The placement for the elem.
-      */
+       * Provides a way to adjust the top positioning after first
+       * render to correctly align element to top after content
+       * rendering causes resized element height
+       *
+       * @param {array} placementClasses - The array of strings of classes
+       * element should have.
+       * @param {object} containerPosition - The object with container
+       * position information
+       * @param {number} initialHeight - The initial height for the elem.
+       * @param {number} currentHeight - The current height for the elem.
+       */
+      adjustTop: function(placementClasses, containerPosition, initialHeight, currentHeight) {
+        if (placementClasses.indexOf('top') !== -1 && initialHeight !== currentHeight) {
+          return {
+            top: containerPosition.top - currentHeight + 'px'
+          };
+        }
+      }
+
+      /**
+       * Provides a way for positioning tooltip & dropdown
+       * arrows when using placement options beyond the standard
+       * left, right, top, or bottom.
+       *
+       * @param {element} elem - The tooltip/dropdown element.
+       * @param {string} placement - The placement for the elem.
+       */
       positionArrow: function(elem, placement) {
         elem = this.getRawNode(elem);
 

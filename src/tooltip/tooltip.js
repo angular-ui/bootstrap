@@ -180,8 +180,9 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
                   $timeout(function() {
                     var currentHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
-                    if (placementClasses.indexOf('top') !== -1 && initialHeight !== currentHeight) {
-                      tooltip.css({top: elementPos.top - currentHeight + 'px'});
+                    var adjustment = $position.adjustTop(placementClasses, elementPos, initialHeight, currentHeight);
+                    if (adjustment) {
+                      tooltip.css(adjustment);
                     }
                   }, 0, false);
 
