@@ -35,7 +35,7 @@ describe('uib-dropdown', function() {
 
   describe('basic', function() {
     function dropdown() {
-      return $compile('<li uib-dropdown><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown><a href uib-dropdown-toggle></a><ul uib-dropdown-menu><li><a href>Hello</a></li></ul></li>')($rootScope);
     }
 
     beforeEach(function() {
@@ -69,9 +69,10 @@ describe('uib-dropdown', function() {
     });
 
     it('should close on escape key & focus toggle element', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      var event = triggerKeyDown(element, 27);
+      var event = triggerKeyDown(dropdownMenu, 27);
       expect(element).not.toHaveClass(dropdownConfig.openClass);
       expect(element.find('a')).toHaveFocus();
       expect(event.stopPropagation).toHaveBeenCalled();
@@ -108,7 +109,7 @@ describe('uib-dropdown', function() {
     });
 
     it('should not toggle if the element has `disabled` class', function() {
-      var elm = $compile('<li uib-dropdown><a class="disabled" uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+      var elm = $compile('<li uib-dropdown><a class="disabled" uib-dropdown-toggle></a><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
       clickDropdownToggle( elm );
       expect(elm).not.toHaveClass(dropdownConfig.openClass);
     });
@@ -121,7 +122,7 @@ describe('uib-dropdown', function() {
 
     it('should not toggle if the element has `ng-disabled` as true', function() {
       $rootScope.isdisabled = true;
-      var elm = $compile('<li uib-dropdown><div ng-disabled="isdisabled" uib-dropdown-toggle></div><ul><li>Hello</li></ul></li>')($rootScope);
+      var elm = $compile('<li uib-dropdown><div ng-disabled="isdisabled" uib-dropdown-toggle></div><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
       $rootScope.$digest();
       elm.find('div').click();
       expect(elm).not.toHaveClass(dropdownConfig.openClass);
@@ -134,7 +135,7 @@ describe('uib-dropdown', function() {
 
     it('should unbind events on scope destroy', function() {
       var $scope = $rootScope.$new();
-      var elm = $compile('<li uib-dropdown><button ng-disabled="isdisabled" uib-dropdown-toggle></button><ul><li>Hello</li></ul></li>')($scope);
+      var elm = $compile('<li uib-dropdown><button ng-disabled="isdisabled" uib-dropdown-toggle></button><ul uib-dropdown-menu><li>Hello</li></ul></li>')($scope);
       $scope.$digest();
 
       var buttonEl = elm.find('button');
@@ -306,7 +307,7 @@ describe('uib-dropdown', function() {
     describe('with uib-dropdown-toggle', function() {
       beforeEach(function() {
         $rootScope.isopen = true;
-        element = $compile('<li uib-dropdown is-open="isopen"><a href uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown is-open="isopen"><a href uib-dropdown-toggle></a><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -340,7 +341,7 @@ describe('uib-dropdown', function() {
     describe('without uib-dropdown-toggle', function() {
       beforeEach(function() {
         $rootScope.isopen = true;
-        element = $compile('<li uib-dropdown is-open="isopen"><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown is-open="isopen"><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -361,7 +362,7 @@ describe('uib-dropdown', function() {
       beforeEach(function() {
         $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
         $rootScope.isopen = false;
-        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)" is-open="isopen"><a uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)" is-open="isopen"><a uib-dropdown-toggle></a><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -388,7 +389,7 @@ describe('uib-dropdown', function() {
       beforeEach(function() {
         $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
         $rootScope.isopen = true;
-        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)" is-open="isopen"><a uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)" is-open="isopen"><a uib-dropdown-toggle></a><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -416,7 +417,7 @@ describe('uib-dropdown', function() {
     describe('without is-open', function() {
       beforeEach(function() {
         $rootScope.toggleHandler = jasmine.createSpy('toggleHandler');
-        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)"><a uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown on-toggle="toggleHandler(open)"><a uib-dropdown-toggle></a><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
       });
 
@@ -444,7 +445,7 @@ describe('uib-dropdown', function() {
     function dropdown(autoClose) {
       return $compile('<li uib-dropdown ' +
         (autoClose === undefined ? '' : 'auto-close="' + autoClose + '"') +
-        '><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li></ul></li>')($rootScope);
+        '><a href uib-dropdown-toggle></a><ul uib-dropdown-menu><li><a href>Hello</a></li></ul></li>')($rootScope);
     }
 
     describe('always', function() {
@@ -476,7 +477,7 @@ describe('uib-dropdown', function() {
 
       it('control with is-open', function() {
         $rootScope.isopen = true;
-        element = $compile('<li uib-dropdown is-open="isopen" auto-close="disabled"><a href uib-dropdown-toggle></a><ul><li>Hello</li></ul></li>')($rootScope);
+        element = $compile('<li uib-dropdown is-open="isopen" auto-close="disabled"><a href uib-dropdown-toggle></a><ul uib-dropdown-menu><li>Hello</li></ul></li>')($rootScope);
         $rootScope.$digest();
 
         expect(element).toHaveClass(dropdownConfig.openClass);
@@ -499,9 +500,10 @@ describe('uib-dropdown', function() {
 
       it('should close anyway if esc is pressed', function() {
         element = dropdown('disabled');
+        var dropdownMenu = element.find('[uib-dropdown-menu]');
         $document.find('body').append(element);
         clickDropdownToggle();
-        triggerKeyDown(element, 27);
+        triggerKeyDown(dropdownMenu, 27);
         expect(element).not.toHaveClass(dropdownConfig.openClass);
         expect(element.find('a')).toHaveFocus();
       });
@@ -546,16 +548,17 @@ describe('uib-dropdown', function() {
 
   describe('using keyboard-nav', function() {
     function dropdown() {
-      return $compile('<li uib-dropdown keyboard-nav><a href uib-dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+      return $compile('<li uib-dropdown keyboard-nav><a href uib-dropdown-toggle></a><ul uib-dropdown-menu><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
     }
     beforeEach(function() {
       element = dropdown();
     });
 
     it('should focus first list element when down arrow pressed', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown(element, 40);
+      triggerKeyDown(dropdownMenu, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var optionEl = element.find('ul').eq(0).find('a').eq(0);
@@ -563,8 +566,9 @@ describe('uib-dropdown', function() {
     });
 
     it('should not focus first list element when down arrow pressed if closed', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
-      triggerKeyDown(element, 40);
+      triggerKeyDown(dropdownMenu, 40);
 
       expect(element).not.toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
@@ -572,10 +576,11 @@ describe('uib-dropdown', function() {
     });
 
     it('should focus second list element when down arrow pressed twice', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown(element, 40);
-      triggerKeyDown(element, 40);
+      triggerKeyDown(dropdownMenu, 40);
+      triggerKeyDown(dropdownMenu, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
@@ -583,19 +588,21 @@ describe('uib-dropdown', function() {
     });
 
     it('should not focus first list element when up arrow pressed after dropdown toggled', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
       expect(element).toHaveClass(dropdownConfig.openClass);
 
-      triggerKeyDown(element, 38);
+      triggerKeyDown(dropdownMenu, 38);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
       expect(focusEl).not.toHaveFocus();
     });
 
     it('should focus last list element when up arrow pressed after dropdown toggled', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown(element, 38);
+      triggerKeyDown(dropdownMenu, 38);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
@@ -603,9 +610,10 @@ describe('uib-dropdown', function() {
     });
 
     it('should not change focus when other keys are pressed', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown(element, 37);
+      triggerKeyDown(dropdownMenu, 37);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a');
@@ -614,12 +622,13 @@ describe('uib-dropdown', function() {
     });
 
     it('should focus first list element when down arrow pressed 2x and up pressed 1x', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown(element, 40);
-      triggerKeyDown(element, 40);
+      triggerKeyDown(dropdownMenu, 40);
+      triggerKeyDown(dropdownMenu, 40);
 
-      triggerKeyDown(element, 38);
+      triggerKeyDown(dropdownMenu, 38);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
@@ -627,10 +636,11 @@ describe('uib-dropdown', function() {
     });
 
     it('should stay focused on final list element if down pressed at list end', function() {
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown(element, 40);
-      triggerKeyDown(element, 40);
+      triggerKeyDown(dropdownMenu, 40);
+      triggerKeyDown(dropdownMenu, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
@@ -642,16 +652,17 @@ describe('uib-dropdown', function() {
 
     it('should close if esc is pressed while focused', function() {
       element = dropdown('disabled');
+      var dropdownMenu = element.find('[uib-dropdown-menu]');
       $document.find('body').append(element);
       clickDropdownToggle();
 
-      triggerKeyDown(element, 40);
+      triggerKeyDown(dropdownMenu, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
       expect(focusEl).toHaveFocus();
 
-      triggerKeyDown(element, 27);
+      triggerKeyDown(dropdownMenu, 27);
       expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
@@ -667,9 +678,9 @@ describe('uib-dropdown', function() {
       it('should focus first list element when down arrow pressed', function() {
         clickDropdownToggle();
 
-        triggerKeyDown(element, 40);
-
         var dropdownMenu = $document.find('#dropdown-menu');
+
+        triggerKeyDown(dropdownMenu, 40);
 
         expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
         var focusEl = $document.find('ul').eq(0).find('a');
@@ -678,11 +689,10 @@ describe('uib-dropdown', function() {
 
       it('should focus second list element when down arrow pressed twice', function() {
         clickDropdownToggle();
-        triggerKeyDown(element, 40);
-        triggerKeyDown(element, 40);
-        triggerKeyDown(element, 40);
-
         var dropdownMenu = $document.find('#dropdown-menu');
+        triggerKeyDown(dropdownMenu, 40);
+        triggerKeyDown(dropdownMenu, 40);
+        triggerKeyDown(dropdownMenu, 40);
 
         expect(dropdownMenu.parent()).toHaveClass(dropdownConfig.appendToOpenClass);
         var elem1 = $document.find('ul');

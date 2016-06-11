@@ -11,7 +11,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   this.open = function(dropdownScope, element) {
     if (!openScope) {
       $document.on('click', closeDropdown);
-      element.on('keydown', keybindFilter);
     }
 
     if (openScope && openScope !== dropdownScope) {
@@ -25,7 +24,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     if (openScope === dropdownScope) {
       openScope = null;
       $document.off('click', closeDropdown);
-      element.off('keydown', keybindFilter);
+      dropdownScope.getDropdownElement().off('keydown', this.keybindFilter);
     }
   };
 
@@ -57,7 +56,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
   };
 
-  var keybindFilter = function(evt) {
+  this.keybindFilter = function(evt) {
     if (evt.which === 27) {
       evt.stopPropagation();
       openScope.focusToggleElement();
@@ -248,13 +247,17 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
             var newEl = dropdownElement;
             self.dropdownMenu.replaceWith(newEl);
             self.dropdownMenu = newEl;
+            self.dropdownMenu.on('keydown', uibDropdownService.keybindFilter);
           });
         });
+      } else {
+        scope.getDropdownElement().on('keydown', uibDropdownService.keybindFilter);
       }
 
       scope.focusToggleElement();
       uibDropdownService.open(scope, $element);
     } else {
+      uibDropdownService.close(scope, $element);
       if (self.dropdownMenuTemplateUrl) {
         if (templateScope) {
           templateScope.$destroy();
@@ -264,7 +267,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         self.dropdownMenu = newEl;
       }
 
-      uibDropdownService.close(scope, $element);
       self.selectedOption = null;
     }
 
