@@ -546,7 +546,7 @@ angular.module('ui.bootstrap.position', [])
             top: containerPosition.top - currentHeight + 'px'
           };
         }
-      }
+      },
 
       /**
        * Provides a way for positioning tooltip & dropdown
