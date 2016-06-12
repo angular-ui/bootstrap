@@ -1,17 +1,5 @@
 describe('carousel', function() {
-  beforeEach(module('ui.bootstrap.carousel', function($compileProvider, $provide) {
-    angular.forEach(['ngSwipeLeft', 'ngSwipeRight'], makeMock);
-    function makeMock(name) {
-      $provide.value(name + 'Directive', []); //remove existing directive if it exists
-      $compileProvider.directive(name, function() {
-        return function(scope, element, attr) {
-          element.on(name, function() {
-            scope.$apply(attr[name]);
-          });
-        };
-      });
-    }
-  }));
+  beforeEach(module('ui.bootstrap.carousel'));
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('uib/template/carousel/carousel.html', 'uib/template/carousel/slide.html'));
 
@@ -36,11 +24,11 @@ describe('carousel', function() {
         {content: 'three', index: 2}
       ];
       elm = $compile(
-        '<uib-carousel active="active" interval="interval" no-transition="true" no-pause="nopause">' +
-          '<uib-slide ng-repeat="slide in slides track by slide.index" index="slide.index">' +
+        '<div uib-carousel active="active" interval="interval" no-transition="true" no-pause="nopause">' +
+          '<div uib-slide ng-repeat="slide in slides track by slide.index" index="slide.index">' +
             '{{slide.content}}' +
-          '</uib-slide>' +
-        '</uib-carousel>'
+          '</div>' +
+        '</div>'
       )(scope);
       scope.interval = 5000;
       scope.nopause = undefined;
@@ -60,19 +48,19 @@ describe('carousel', function() {
     it('should allow overriding of the carousel template', function() {
       $templateCache.put('foo/bar.html', '<div>foo</div>');
 
-      elm = $compile('<uib-carousel template-url="foo/bar.html"></uib-carousel>')(scope);
+      elm = $compile('<div uib-carousel template-url="foo/bar.html"></div>')(scope);
       $rootScope.$digest();
 
-      expect(elm.html()).toBe('foo');
+      expect(elm.html()).toBe('<div>foo</div>');
     });
 
     it('should allow overriding of the slide template', function() {
       $templateCache.put('foo/bar.html', '<div class="slide">bar</div>');
 
       elm = $compile(
-        '<uib-carousel interval="interval" no-transition="true" no-pause="nopause">' +
-          '<uib-slide template-url="foo/bar.html"></uib-slide>' +
-        '</uib-carousel>'
+        '<div uib-carousel interval="interval" no-transition="true" no-pause="nopause">' +
+          '<div uib-slide template-url="foo/bar.html"></div>' +
+        '</div>'
       )(scope);
       $rootScope.$digest();
 
@@ -101,11 +89,11 @@ describe('carousel', function() {
 
     it('should stop cycling slides forward when noWrap is truthy', function () {
       elm = $compile(
-        '<uib-carousel active="active" interval="interval" no-wrap="noWrap">' +
-          '<uib-slide ng-repeat="slide in slides track by slide.index" index="slide.index">' +
+        '<div uib-carousel active="active" interval="interval" no-wrap="noWrap">' +
+          '<div uib-slide ng-repeat="slide in slides track by slide.index" index="slide.index">' +
             '{{slide.content}}' +
-          '</uib-slide>' +
-        '</uib-carousel>'
+          '</div>' +
+        '</div>'
       )(scope);
 
       scope.noWrap = true;
@@ -124,11 +112,11 @@ describe('carousel', function() {
 
     it('should stop cycling slides backward when noWrap is truthy', function () {
       elm = $compile(
-        '<uib-carousel active="active" interval="interval" no-wrap="noWrap">' +
-          '<uib-slide ng-repeat="slide in slides track by slide.index" index="slide.index">' +
+        '<div uib-carousel active="active" interval="interval" no-wrap="noWrap">' +
+          '<div uib-slide ng-repeat="slide in slides track by slide.index" index="slide.index">' +
             '{{slide.content}}' +
-          '</uib-slide>' +
-        '</uib-carousel>'
+          '</div>' +
+        '</div>'
       )(scope);
 
       scope.noWrap = true;
@@ -147,11 +135,11 @@ describe('carousel', function() {
       scope.slides = [{active:false,content:'one'}];
       scope.$apply();
       elm = $compile(
-        '<uib-carousel active="active" interval="interval" no-transition="true">' +
-          '<uib-slide ng-repeat="slide in slides" index="$index">' +
+        '<div uib-carousel active="active" interval="interval" no-transition="true">' +
+          '<div uib-slide ng-repeat="slide in slides" index="$index">' +
             '{{slide.content}}' +
-          '</uib-slide>' +
-        '</uib-carousel>'
+          '</div>' +
+        '</div>'
       )(scope);
       var indicators = elm.find('ol.carousel-indicators > li');
       expect(indicators.length).toBe(0);
@@ -228,20 +216,6 @@ describe('carousel', function() {
       testSlideActive(0);
     });
 
-    describe('swiping', function() {
-      it('should go next on swipeLeft', function() {
-        testSlideActive(0);
-        elm.triggerHandler('ngSwipeLeft');
-        testSlideActive(1);
-      });
-
-      it('should go prev on swipeRight', function() {
-        testSlideActive(0);
-        elm.triggerHandler('ngSwipeRight');
-        testSlideActive(2);
-      });
-    });
-
     it('should select a slide when clicking on slide indicators', function () {
       var indicators = elm.find('ol.carousel-indicators > li');
       indicators.eq(1).click();
@@ -269,7 +243,7 @@ describe('carousel', function() {
     });
 
     it('should bind the content to slides', function() {
-      var contents = elm.find('div.item');
+      var contents = elm.find('div.item [ng-transclude]');
 
       expect(contents.length).toBe(3);
       expect(contents.eq(0).text()).toBe('one');
@@ -343,7 +317,7 @@ describe('carousel', function() {
         {content:'new3', index: 6}
       ];
       scope.$apply();
-      var contents = elm.find('div.item');
+      var contents = elm.find('div.item [ng-transclude]');
       expect(contents.length).toBe(3);
       expect(contents.eq(0).text()).toBe('new1');
       expect(contents.eq(1).text()).toBe('new2');
@@ -441,11 +415,11 @@ describe('carousel', function() {
         {content: 'three', id: 2}
       ];
       elm = $compile(
-        '<uib-carousel active="active" interval="interval" no-transition="true" no-pause="nopause">' +
-          '<uib-slide ng-repeat="slide in slides | orderBy: \'id\' track by slide.id" index="slide.id">' +
+        '<div uib-carousel active="active" interval="interval" no-transition="true" no-pause="nopause">' +
+          '<div uib-slide ng-repeat="slide in slides | orderBy: \'id\' track by slide.id" index="slide.id">' +
             '{{slide.content}}' +
-          '</uib-slide>' +
-        '</uib-carousel>'
+          '</div>' +
+        '</div>'
       )(scope);
       scope.$apply();
     });
@@ -465,7 +439,7 @@ describe('carousel', function() {
       scope.slides[1].id = 2;
       scope.slides[2].id = 1;
       scope.$apply();
-      var contents = elm.find('div.item');
+      var contents = elm.find('div.item [ng-transclude]');
       expect(contents.length).toBe(3);
       expect(contents.eq(0).text()).toBe('three');
       expect(contents.eq(1).text()).toBe('two');
@@ -491,7 +465,7 @@ describe('carousel', function() {
       scope.slides[2].id = 4;
       scope.slides.push({content:'four', id: 5});
       scope.$apply();
-      var contents = elm.find('div.item');
+      var contents = elm.find('div.item [ng-transclude]');
       expect(contents.length).toBe(4);
       expect(contents.eq(0).text()).toBe('two');
       expect(contents.eq(1).text()).toBe('one');
@@ -503,7 +477,7 @@ describe('carousel', function() {
       testSlideActive(1);
       scope.slides.splice(1, 1);
       scope.$apply();
-      var contents = elm.find('div.item');
+      var contents = elm.find('div.item [ng-transclude]');
       expect(contents.length).toBe(2);
       expect(contents.eq(0).text()).toBe('three');
       expect(contents.eq(1).text()).toBe('one');
@@ -583,7 +557,7 @@ describe('carousel', function() {
       $templateCache.put('uib/template/carousel/carousel.html', '<div>{{carousel.text}}</div>');
 
       var scope = $rootScope.$new();
-      var elm = $compile('<uib-carousel interval="bar" no-transition="false" no-pause="true"></uib-carousel>')(scope);
+      var elm = $compile('<div uib-carousel interval="bar" no-transition="false" no-pause="true"></div>')(scope);
       $rootScope.$digest();
 
       var ctrl = elm.controller('uibCarousel');
@@ -593,7 +567,7 @@ describe('carousel', function() {
       ctrl.text = 'foo';
       $rootScope.$digest();
 
-      expect(elm.html()).toBe('foo');
+      expect(elm.html()).toBe('<div class="ng-binding">foo</div>');
     }));
   });
 
@@ -605,11 +579,11 @@ describe('carousel', function() {
       {active:false,content:'three'}
     ];
     var elm = $compile(
-      '<uib-carousel active="active" interval="interval" no-transition="true" no-pause="nopause">' +
-        '<uib-slide ng-repeat="slide in slides" index="$index" actual="slide">' +
+      '<div uib-carousel active="active" interval="interval" no-transition="true" no-pause="nopause">' +
+        '<div uib-slide ng-repeat="slide in slides" index="$index" actual="slide">' +
           '{{slide.content}}' +
-        '</uib-slide>' +
-      '</uib-carousel>'
+        '</div>' +
+      '</div>'
     )(scope);
     $rootScope.$digest();
 
