@@ -12,9 +12,10 @@ describe('uib-alert', function() {
 
     element = angular.element(
       '<div>' +
-        '<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"' +
+        '<div uib-alert ng-repeat="alert in alerts" ' +
+          'ng-class="\'alert-\' + (alert.type || \'warning\')" ' +
           'close="removeAlert($index)">{{alert.msg}}' +
-        '</uib-alert>' +
+        '</div>' +
       '</div>');
 
     scope.alerts = [
@@ -41,7 +42,7 @@ describe('uib-alert', function() {
   it('should expose the controller to the view', function() {
     $templateCache.put('uib/template/alert/alert.html', '<div>{{alert.text}}</div>');
 
-    element = $compile('<uib-alert></uib-alert>')(scope);
+    element = $compile('<div uib-alert></div>')(scope);
     scope.$digest();
 
     var ctrl = element.controller('uib-alert');
@@ -50,38 +51,21 @@ describe('uib-alert', function() {
     ctrl.text = 'foo';
     scope.$digest();
 
-    expect(element.html()).toBe('foo');
+    expect(element.html()).toBe('<div class="ng-binding">foo</div>');
   });
 
   it('should support custom templates', function() {
     $templateCache.put('foo/bar.html', '<div>baz</div>');
 
-    element = $compile('<uib-alert template-url="foo/bar.html"></uib-alert>')(scope);
+    element = $compile('<div uib-alert template-url="foo/bar.html"></div>')(scope);
     scope.$digest();
 
-    expect(element.html()).toBe('baz');
+    expect(element.html()).toBe('<div>baz</div>');
   });
 
   it('should generate alerts using ng-repeat', function() {
     var alerts = createAlerts();
     expect(alerts.length).toEqual(3);
-  });
-
-  it('should use correct classes for different alert types', function() {
-    var alerts = createAlerts();
-    expect(alerts.eq(0)).toHaveClass('alert-success');
-    expect(alerts.eq(1)).toHaveClass('alert-error');
-    expect(alerts.eq(2)).toHaveClass('alert-warning');
-  });
-
-  it('should respect alert type binding', function() {
-    var alerts = createAlerts();
-    expect(alerts.eq(0)).toHaveClass('alert-success');
-
-    scope.alerts[0].type = 'error';
-    scope.$digest();
-
-    expect(alerts.eq(0)).toHaveClass('alert-error');
   });
 
   it('should show the alert content', function() {
@@ -115,22 +99,15 @@ describe('uib-alert', function() {
   });
 
   it('should not show close button and have the dismissible class if no close callback specified', function() {
-    element = $compile('<uib-alert>No close</uib-alert>')(scope);
+    element = $compile('<div uib-alert>No close</div>')(scope);
     scope.$digest();
     expect(findCloseButton(0)).toBeHidden();
     expect(element).not.toHaveClass('alert-dismissible');
   });
 
-  it('should be possible to add additional classes for alert', function() {
-    var element = $compile('<uib-alert class="alert-block" type="info">Default alert!</uib-alert>')(scope);
-    scope.$digest();
-    expect(element).toHaveClass('alert-block');
-    expect(element).toHaveClass('alert-info');
-  });
-
   it('should close automatically if dismiss-on-timeout is defined on the element', function() {
     scope.removeAlert = jasmine.createSpy();
-    $compile('<uib-alert close="removeAlert()" dismiss-on-timeout="500">Default alert!</uib-alert>')(scope);
+    $compile('<div uib-alert close="removeAlert()" dismiss-on-timeout="500">Default alert!</div>')(scope);
     scope.$digest();
 
     $timeout.flush();
@@ -140,7 +117,7 @@ describe('uib-alert', function() {
   it('should not close immediately with a dynamic dismiss-on-timeout', function() {
     scope.removeAlert = jasmine.createSpy();
     scope.dismissTime = 500;
-    $compile('<uib-alert close="removeAlert()" dismiss-on-timeout="{{dismissTime}}">Default alert!</uib-alert>')(scope);
+    $compile('<div uib-alert close="removeAlert()" dismiss-on-timeout="{{dismissTime}}">Default alert!</div>')(scope);
     scope.$digest();
 
     $timeout.flush(100);

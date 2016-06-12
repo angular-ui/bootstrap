@@ -1,11 +1,9 @@
 <div ng-controller="AlertDemoCtrl">
   <script type="text/ng-template" id="alert.html">
-    <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
-      <div ng-transclude></div>
-    </div>
+    <div ng-transclude></div>
   </script>
 
-  <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
-  <uib-alert template-url="alert.html">A happy alert!</uib-alert>
+  <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+  <div uib-alert template-url="alert.html" style="background-color:#fa39c3;color:white">A happy alert!</div>
   <button type="button" class='btn btn-default' ng-click="addAlert()">Add Alert</button>
 </div>
