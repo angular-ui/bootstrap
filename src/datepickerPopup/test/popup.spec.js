@@ -1367,7 +1367,7 @@ describe('datepicker popup', function() {
 
       var datepicker = elm.find('[uib-datepicker]');
 
-      expect(datepicker.html()).toBe('baz');
+      expect(datepicker.html()).toBe('<div>baz</div>');
     });
   });
 
