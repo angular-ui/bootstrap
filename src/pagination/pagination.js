@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.pagination', ['ui.bootstrap.paging'])
+angular.module('ui.bootstrap.pagination', ['ui.bootstrap.paging', 'ui.bootstrap.tabindex'])
 .controller('UibPaginationController', ['$scope', '$attrs', '$parse', 'uibPaging', 'uibPaginationConfig', function($scope, $attrs, $parse, uibPaging, uibPaginationConfig) {
   var ctrl = this;
   // Setup configuration parameters

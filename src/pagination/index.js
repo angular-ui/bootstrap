@@ -1,4 +1,5 @@
 require('../paging');
+require('../tabindex');
 require('../../template/pagination/pagination.html.js');
 require('./pagination');
 
