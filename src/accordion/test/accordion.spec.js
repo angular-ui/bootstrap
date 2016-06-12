@@ -176,12 +176,12 @@ describe('uib-accordion', function() {
 
       var tpl =
         '<uib-accordion>' +
-          '<uib-accordion-group heading="title 1" template-url="foo/bar.html"></uib-accordion-group>' +
+          '<div uib-accordion-group heading="title 1" template-url="foo/bar.html"></div>' +
         '</uib-accordion>';
 
       element = $compile(tpl)(scope);
       scope.$digest();
-      expect(element.find('[template-url]').html()).toBe('baz');
+      expect(element.find('[template-url]').html()).toBe('<div>baz</div>');
     }));
 
     describe('with static panels', function() {
@@ -189,8 +189,8 @@ describe('uib-accordion', function() {
         spyOn(Math, 'random').and.returnValue(0.1);
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group heading="title 1">Content 1</uib-accordion-group>' +
-            '<uib-accordion-group heading="title 2">Content 2</uib-accordion-group>' +
+            '<div uib-accordion-group heading="title 1">Content 1</div>' +
+            '<div uib-accordion-group heading="title 2">Content 2</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         $compile(element)(scope);
@@ -288,8 +288,8 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group heading="title 1" open-class="custom-open-class">Content 1</uib-accordion-group>' +
-            '<uib-accordion-group heading="title 2" open-class="custom-open-class">Content 2</uib-accordion-group>' +
+            '<div uib-accordion-group heading="title 1" open-class="custom-open-class">Content 1</div>' +
+            '<div uib-accordion-group heading="title 2" open-class="custom-open-class">Content 2</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         $compile(element)(scope);
@@ -318,7 +318,7 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}">{{group.content}}</uib-accordion-group>' +
+            '<div uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}">{{group.content}}</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         model = [
@@ -363,8 +363,8 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group heading="title 1" is-open="open.first">Content 1</uib-accordion-group>' +
-            '<uib-accordion-group heading="title 2" is-open="open.second">Content 2</uib-accordion-group>' +
+            '<div uib-accordion-group heading="title 1" is-open="open.first">Content 1</div>' +
+            '<div uib-accordion-group heading="title 2" is-open="open.second">Content 2</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         scope.open = { first: false, second: true };
@@ -393,8 +393,8 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group heading="title 1" is-open="open1"><div ng-repeat="item in items">{{item}}</div></uib-accordion-group>' +
-            '<uib-accordion-group heading="title 2" is-open="open2">Static content</uib-accordion-group>' +
+            '<div uib-accordion-group heading="title 1" is-open="open1"><div ng-repeat="item in items">{{item}}</div></div>' +
+            '<div uib-accordion-group heading="title 2" is-open="open2">Static content</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         scope.items = ['Item 1', 'Item 2', 'Item 3'];
@@ -421,7 +421,7 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}" is-open="group.open">{{group.content}}</uib-accordion-group>' +
+            '<div uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}" is-open="group.open">{{group.content}}</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         scope.groups = [
@@ -456,7 +456,7 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}" is-open="group.open" class="testClass">{{group.content}}</uib-accordion-group>' +
+            '<div uib-accordion-group ng-repeat="group in groups" heading="{{group.name}}" is-open="group.open" class="testClass">{{group.content}}</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         scope.groups = [
@@ -480,7 +480,7 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion>' +
-            '<uib-accordion-group heading="title 1" is-disabled="disabled">Content 1</uib-accordion-group>' +
+            '<div uib-accordion-group heading="title 1" is-disabled="disabled">Content 1</div>' +
           '</uib-accordion>';
         element = angular.element(tpl);
         scope.disabled = true;
@@ -519,10 +519,10 @@ describe('uib-accordion', function() {
     function isDisabledStyleCheck() {
       var tpl =
         '<uib-accordion ng-init="a = [1,2,3]">' +
-          '<uib-accordion-group heading="I get overridden" is-disabled="true">' +
+          '<div uib-accordion-group heading="I get overridden" is-disabled="true">' +
             '<uib-accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </uib-accordion-heading>' +
             'Body' +
-          '</uib-accordion-group>' +
+          '</div>' +
         '</uib-accordion>';
       scope.disabled = true;
       element = $compile(tpl)(scope);
@@ -536,10 +536,10 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion ng-init="a = [1,2,3]">' +
-            '<uib-accordion-group heading="I get overridden">' +
+            '<div uib-accordion-group heading="I get overridden">' +
               '<uib-accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </uib-accordion-heading>' +
               'Body' +
-            '</uib-accordion-group>' +
+            '</div>' +
           '</uib-accordion>';
         element = $compile(tpl)(scope);
         scope.$digest();
@@ -565,10 +565,10 @@ describe('uib-accordion', function() {
       beforeEach(function() {
         var tpl =
           '<uib-accordion ng-init="a = [1,2,3]">' +
-            '<uib-accordion-group heading="I get overridden">' +
+            '<div uib-accordion-group heading="I get overridden">' +
               '<div uib-accordion-heading>Heading Element <span ng-repeat="x in a">{{x}}</span> </div>' +
               'Body' +
-            '</uib-accordion-group>' +
+            '</div>' +
           '</uib-accordion>';
         element = $compile(tpl)(scope);
         scope.$digest();
@@ -588,7 +588,7 @@ describe('uib-accordion', function() {
 
     describe('uib-accordion-heading, with repeating uib-accordion-groups', function() {
       it('should clone the uib-accordion-heading for each group', function() {
-        element = $compile('<uib-accordion><uib-accordion-group ng-repeat="x in [1,2,3]"><uib-accordion-heading>{{x}}</uib-accordion-heading></uib-accordion-group></uib-accordion>')(scope);
+        element = $compile('<uib-accordion><div uib-accordion-group ng-repeat="x in [1,2,3]"><uib-accordion-heading>{{x}}</uib-accordion-heading></div></uib-accordion>')(scope);
         scope.$digest();
         groups = element.find('.panel');
         expect(groups.length).toBe(3);
@@ -600,7 +600,7 @@ describe('uib-accordion', function() {
 
     describe('uib-accordion-heading attribute, with repeating uib-accordion-groups', function() {
       it('should clone the uib-accordion-heading for each group', function() {
-        element = $compile('<uib-accordion><uib-accordion-group ng-repeat="x in [1,2,3]"><div uib-accordion-heading>{{x}}</div></uib-accordion-group></uib-accordion>')(scope);
+        element = $compile('<uib-accordion><div uib-accordion-group ng-repeat="x in [1,2,3]"><div uib-accordion-heading>{{x}}</div></div></uib-accordion>')(scope);
         scope.$digest();
         groups = element.find('.panel');
         expect(groups.length).toBe(3);
@@ -614,46 +614,11 @@ describe('uib-accordion', function() {
         it('should transclude heading to a template using data-uib-accordion-header', inject(function($templateCache) {
           $templateCache.put('foo/bar.html', '<div class="panel"><a uib-accordion-transclude="heading" class="accordion-toggle"><span data-uib-accordion-header></span></a><div ng-transclude></div></div>');
 
-          element = $compile('<uib-accordion><uib-accordion-group  template-url="foo/bar.html"><uib-accordion-heading>baz</uib-accordion-heading></uib-accordion-group></uib-accordion>')(scope);
+          element = $compile('<uib-accordion><div uib-accordion-group  template-url="foo/bar.html"><uib-accordion-heading>baz</uib-accordion-heading></div></uib-accordion>')(scope);
           scope.$digest();
           groups = element.find('.panel');
           expect(findGroupLink(0).text()).toBe('baz');
       }));
-    });
-
-    describe('uib-accordion group panel class', function() {
-      it('should use the default value when panel class is falsy - #3968', function() {
-        element = $compile('<uib-accordion><uib-accordion-group heading="Heading">Content</uib-accordion-group></uib-accordion>')(scope);
-        scope.$digest();
-        groups = element.find('.panel');
-        expect(groups.eq(0)).toHaveClass('panel-default');
-
-        element = $compile('<uib-accordion><uib-accordion-group heading="Heading" panel-class="">Content</uib-accordion-group></uib-accordion>')(scope);
-        scope.$digest();
-        groups = element.find('.panel');
-        expect(groups.eq(0)).toHaveClass('panel-default');
-      });
-
-      it('should use the specified value when not falsy - #3968', function() {
-        element = $compile('<uib-accordion><uib-accordion-group heading="Heading" panel-class="custom-class">Content</uib-accordion-group></uib-accordion>')(scope);
-        scope.$digest();
-        groups = element.find('.panel');
-        expect(groups.eq(0)).toHaveClass('custom-class');
-        expect(groups.eq(0)).not.toHaveClass('panel-default');
-      });
-
-      it('should change class if panel-class is changed', function() {
-        element = $compile('<uib-accordion><uib-accordion-group heading="Heading" panel-class="{{panelClass}}">Content</uib-accordion-group></uib-accordion>')(scope);
-        scope.panelClass = 'custom-class';
-        scope.$digest();
-        groups = element.find('.panel');
-        expect(groups.eq(0)).toHaveClass('custom-class');
-
-        scope.panelClass = 'different-class';
-        scope.$digest();
-        expect(groups.eq(0)).toHaveClass('different-class');
-        expect(groups.eq(0)).not.toHaveClass('custom-class');
-      });
     });
   });
 });

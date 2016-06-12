@@ -32,11 +32,6 @@ The body of each accordion group is transcluded into the body of the collapsible
   _(Default: `false`)_ -
   Whether accordion group is open or closed.
 
-* `panel-class`
-  <i class="glyphicon glyphicon-eye-open"></i>
-  _(Default: `panel-default`)_ -
-  Add ability to use Bootstrap's contextual panel classes (panel-primary, panel-success, panel-info, etc...) or your own.  This must be a string.
-
 * `template-url`
   _(Default: `uib/template/accordion/accordion-group.html`)_ -
   Add the ability to override the template used on the component.
