@@ -1344,7 +1344,7 @@ describe('datepicker popup', function() {
       $compile(elm)($rootScope);
       $rootScope.$digest();
 
-      expect(elm.children().eq(1).html()).toBe('baz');
+      expect(elm.children().eq(1).html()).toBe('<div>baz</div>');
     });
   });
 
