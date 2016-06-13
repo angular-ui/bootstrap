@@ -251,7 +251,9 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
           });
         });
       } else {
-        scope.getDropdownElement().on('keydown', uibDropdownService.keybindFilter);
+        if (self.dropdownMenu) {
+          self.dropdownMenu.on('keydown', uibDropdownService.keybindFilter);
+        }
       }
 
       scope.focusToggleElement();
