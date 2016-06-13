@@ -126,12 +126,11 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
           (options.useContentExp ?
             'content-exp="contentExp()" ' :
             'content="' + startSym + 'content' + endSym + '" ') +
-          'placement="' + startSym + 'placement' + endSym + '" ' +
-          'popup-class="' + startSym + 'popupClass' + endSym + '" ' +
-          'animation="animation" ' +
-          'is-open="isOpen" ' +
           'origin-scope="origScope" ' +
-          'class="uib-position-measure"' +
+          'class="uib-position-measure ' + prefix + '" ' +
+          'tooltip-animation-class="fade"' +
+          'uib-tooltip-classes ' +
+          'ng-class="{ in: isOpen }" ' +
           '>' +
         '</div>';
 
@@ -667,7 +666,7 @@ function ($animate, $sce, $compile, $templateRequest) {
         element.addClass(scope.popupClass);
       }
 
-      if (scope.animation()) {
+      if (scope.animation) {
         element.addClass(attrs.tooltipAnimationClass);
       }
     }
@@ -676,8 +675,8 @@ function ($animate, $sce, $compile, $templateRequest) {
 
 .directive('uibTooltipPopup', function() {
   return {
-    replace: true,
-    scope: { content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
+    restrict: 'A',
+    scope: { content: '@' },
     templateUrl: 'uib/template/tooltip/tooltip-popup.html'
   };
 })
@@ -688,9 +687,8 @@ function ($animate, $sce, $compile, $templateRequest) {
 
 .directive('uibTooltipTemplatePopup', function() {
   return {
-    replace: true,
-    scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
-      originScope: '&' },
+    restrict: 'A',
+    scope: { contentExp: '&', originScope: '&' },
     templateUrl: 'uib/template/tooltip/tooltip-template-popup.html'
   };
 })
@@ -703,8 +701,8 @@ function ($animate, $sce, $compile, $templateRequest) {
 
 .directive('uibTooltipHtmlPopup', function() {
   return {
-    replace: true,
-    scope: { contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
+    restrict: 'A',
+    scope: { contentExp: '&' },
     templateUrl: 'uib/template/tooltip/tooltip-html-popup.html'
   };
 })

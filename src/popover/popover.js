@@ -7,9 +7,8 @@ angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
 
 .directive('uibPopoverTemplatePopup', function() {
   return {
-    replace: true,
-    scope: { uibTitle: '@', contentExp: '&', placement: '@', popupClass: '@', animation: '&', isOpen: '&',
-      originScope: '&' },
+    restrict: 'A',
+    scope: { uibTitle: '@', contentExp: '&', originScope: '&' },
     templateUrl: 'uib/template/popover/popover-template.html'
   };
 })
@@ -22,8 +21,8 @@ angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
 
 .directive('uibPopoverHtmlPopup', function() {
   return {
-    replace: true,
-    scope: { contentExp: '&', uibTitle: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
+    restrict: 'A',
+    scope: { contentExp: '&', uibTitle: '@' },
     templateUrl: 'uib/template/popover/popover-html.html'
   };
 })
@@ -36,8 +35,8 @@ angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
 
 .directive('uibPopoverPopup', function() {
   return {
-    replace: true,
-    scope: { uibTitle: '@', content: '@', placement: '@', popupClass: '@', animation: '&', isOpen: '&' },
+    restrict: 'A',
+    scope: { uibTitle: '@', content: '@' },
     templateUrl: 'uib/template/popover/popover.html'
   };
 })
