@@ -1,17 +1,18 @@
 describe('rating directive', function() {
-  var $rootScope, $compile, element;
+  var $rootScope, $compile, element, innerElem;
   beforeEach(module('ui.bootstrap.rating'));
   beforeEach(module('uib/template/rating/rating.html'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.rate = 3;
-    element = $compile('<uib-rating ng-model="rate"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
   }));
 
   function getStars() {
-    return element.find('i');
+    return innerElem.find('i');
   }
 
   function getStar(number) {
@@ -38,17 +39,17 @@ describe('rating directive', function() {
   function triggerKeyDown(keyCode) {
     var e = $.Event('keydown');
     e.which = keyCode;
-    element.trigger(e);
+    innerElem.trigger(e);
   }
 
   it('contains the default number of icons', function() {
     expect(getStars().length).toBe(5);
-    expect(element.attr('aria-valuemax')).toBe('5');
+    expect(innerElem.attr('aria-valuemax')).toBe('5');
   });
 
   it('initializes the default star icons as selected', function() {
     expect(getState()).toEqual([true, true, true, false, false]);
-    expect(element.attr('aria-valuenow')).toBe('3');
+    expect(innerElem.attr('aria-valuenow')).toBe('3');
   });
 
   it('handles correctly the click event', function() {
@@ -56,19 +57,19 @@ describe('rating directive', function() {
     $rootScope.$digest();
     expect(getState()).toEqual([true, true, false, false, false]);
     expect($rootScope.rate).toBe(2);
-    expect(element.attr('aria-valuenow')).toBe('2');
+    expect(innerElem.attr('aria-valuenow')).toBe('2');
 
     getStar(5).click();
     $rootScope.$digest();
     expect(getState()).toEqual([true, true, true, true, true]);
     expect($rootScope.rate).toBe(5);
-    expect(element.attr('aria-valuenow')).toBe('5');
+    expect(innerElem.attr('aria-valuenow')).toBe('5');
 
     getStar(5).click();
     $rootScope.$digest();
     expect(getState()).toEqual([false, false, false, false, false]);
     expect($rootScope.rate).toBe(0);
-    expect(element.attr('aria-valuenow')).toBe('0');
+    expect(innerElem.attr('aria-valuenow')).toBe('0');
   });
 
   it('handles correctly the hover event', function() {
@@ -82,7 +83,7 @@ describe('rating directive', function() {
     expect(getState()).toEqual([true, true, true, true, true]);
     expect($rootScope.rate).toBe(3);
 
-    element.trigger('mouseout');
+    innerElem.trigger('mouseout');
     expect(getState()).toEqual([true, true, true, false, false]);
     expect($rootScope.rate).toBe(3);
   });
@@ -92,13 +93,13 @@ describe('rating directive', function() {
     $rootScope.$digest();
 
     expect(getState()).toEqual([true, true, false, false, false]);
-    expect(element.attr('aria-valuenow')).toBe('2');
+    expect(innerElem.attr('aria-valuenow')).toBe('2');
 
     $rootScope.rate = 2.5;
     $rootScope.$digest();
 
     expect(getState()).toEqual([true, true, true, false, false]);
-    expect(element.attr('aria-valuenow')).toBe('3');
+    expect(innerElem.attr('aria-valuenow')).toBe('3');
   });
 
   it('changes the number of selected icons when value changes', function() {
@@ -106,30 +107,33 @@ describe('rating directive', function() {
     $rootScope.$digest();
 
     expect(getState()).toEqual([true, true, false, false, false]);
-    expect(element.attr('aria-valuenow')).toBe('2');
-    expect(element.attr('aria-valuetext')).toBe('two');
+    expect(innerElem.attr('aria-valuenow')).toBe('2');
+    expect(innerElem.attr('aria-valuetext')).toBe('two');
   });
 
   it('shows different number of icons when `max` attribute is set', function() {
-    element = $compile('<uib-rating ng-model="rate" max="7"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate" max="7"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
 
     expect(getStars().length).toBe(7);
-    expect(element.attr('aria-valuemax')).toBe('7');
+    expect(innerElem.attr('aria-valuemax')).toBe('7');
   });
 
   it('shows different number of icons when `max` attribute is from scope variable', function() {
     $rootScope.max = 15;
-    element = $compile('<uib-rating ng-model="rate" max="max"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate" max="max"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
     expect(getStars().length).toBe(15);
-    expect(element.attr('aria-valuemax')).toBe('15');
+    expect(innerElem.attr('aria-valuemax')).toBe('15');
   });
 
   it('handles read-only attribute', function() {
     $rootScope.isReadonly = true;
-    element = $compile('<uib-rating ng-model="rate" read-only="isReadonly"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate" read-only="isReadonly"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
 
     expect(getState()).toEqual([true, true, true, false, false]);
 
@@ -148,8 +152,9 @@ describe('rating directive', function() {
 
   it('handles enable-reset attribute', function() {
     $rootScope.canReset = false;
-    element = $compile('<uib-rating ng-model="rate" enable-reset="canReset"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate" enable-reset="canReset"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
 
     var star = {
       states: [true, true, true, true, true],
@@ -162,19 +167,20 @@ describe('rating directive', function() {
     $rootScope.$digest();
     expect(getState()).toEqual(star.states);
     expect($rootScope.rate).toBe(5);
-    expect(element.attr('aria-valuenow')).toBe('5');
+    expect(innerElem.attr('aria-valuenow')).toBe('5');
 
     selectStar.click();
     $rootScope.$digest();
     expect(getState()).toEqual(star.states);
     expect($rootScope.rate).toBe(5);
-    expect(element.attr('aria-valuenow')).toBe('5');
+    expect(innerElem.attr('aria-valuenow')).toBe('5');
   });
 
   it('should fire onHover', function() {
     $rootScope.hoveringOver = jasmine.createSpy('hoveringOver');
-    element = $compile('<uib-rating ng-model="rate" on-hover="hoveringOver(value)"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate" on-hover="hoveringOver(value)"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
 
     getStar(3).trigger('mouseover');
     $rootScope.$digest();
@@ -183,10 +189,11 @@ describe('rating directive', function() {
 
   it('should fire onLeave', function() {
     $rootScope.leaving = jasmine.createSpy('leaving');
-    element = $compile('<uib-rating ng-model="rate" on-leave="leaving()"></uib-rating>')($rootScope);
+    element = $compile('<span uib-rating ng-model="rate" on-leave="leaving()"></span>')($rootScope);
     $rootScope.$digest();
+    innerElem = element.children().eq(0);
 
-    element.trigger('mouseleave');
+    innerElem.trigger('mouseleave');
     $rootScope.$digest();
     expect($rootScope.leaving).toHaveBeenCalled();
   });
@@ -243,8 +250,9 @@ describe('rating directive', function() {
     beforeEach(inject(function() {
       $rootScope.classOn = 'icon-ok-sign';
       $rootScope.classOff = 'icon-ok-circle';
-      element = $compile('<uib-rating ng-model="rate" state-on="classOn" state-off="classOff"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate" state-on="classOn" state-off="classOff"></span>')($rootScope);
       $rootScope.$digest();
+      innerElem = element.children().eq(0);
     }));
 
     it('changes the default icons', function() {
@@ -260,13 +268,14 @@ describe('rating directive', function() {
         {stateOn: 'heart'},
         {stateOff: 'off'}
       ];
-      element = $compile('<uib-rating ng-model="rate" rating-states="states"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate" rating-states="states"></span>')($rootScope);
       $rootScope.$digest();
+      innerElem = element.children().eq(0);
     }));
 
     it('should define number of icon elements', function() {
       expect(getStars().length).toBe(4);
-      expect(element.attr('aria-valuemax')).toBe('4');
+      expect(innerElem.attr('aria-valuemax')).toBe('4');
     });
 
     it('handles each icon', function() {
@@ -291,8 +300,9 @@ describe('rating directive', function() {
       uibRatingConfig.max = 10;
       uibRatingConfig.stateOn = 'on';
       uibRatingConfig.stateOff = 'off';
-      element = $compile('<uib-rating ng-model="rate"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate"></span>')($rootScope);
       $rootScope.$digest();
+      innerElem = element.children().eq(0);
     }));
     afterEach(inject(function(uibRatingConfig) {
       // return it to the original state
@@ -320,8 +330,9 @@ describe('rating directive', function() {
       $rootScope.rate = 5;
       angular.extend(originalConfig, uibRatingConfig);
       uibRatingConfig.max = 10;
-      element = $compile('<uib-rating ng-model="rate"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate"></span>')($rootScope);
       $rootScope.$digest();
+      innerElem = element.children().eq(0);
     }));
     afterEach(inject(function(uibRatingConfig) {
       // return it to the original state
@@ -336,18 +347,20 @@ describe('rating directive', function() {
   describe('shows custom titles ', function() {
     it('should return the custom title for each star', function() {
       $rootScope.titles = [44,45,46];
-      element = $compile('<uib-rating ng-model="rate" titles="titles"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate" titles="titles"></span>')($rootScope);
       $rootScope.$digest();
+      innerElem = element.children().eq(0);
       expect(getTitles()).toEqual(['44', '45', '46', '4', '5']);
     });
     it('should return the default title if the custom title is empty', function() {
       $rootScope.titles = [];
-      element = $compile('<uib-rating ng-model="rate" titles="titles"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate" titles="titles"></span>')($rootScope);
       $rootScope.$digest();
+      innerElem = element.children().eq(0);
       expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
     });
    it('should return the default title if the custom title is not an array', function() {
-      element = $compile('<uib-rating ng-model="rate" titles="test"></uib-rating>')($rootScope);
+      element = $compile('<span uib-rating ng-model="rate" titles="test"></span>')($rootScope);
       $rootScope.$digest();
       expect(getTitles()).toEqual(['one', 'two', 'three', 'four', 'five']);
     });

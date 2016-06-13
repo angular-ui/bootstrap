@@ -5,7 +5,7 @@ angular.module('ui.bootstrap.rating', [])
   stateOn: null,
   stateOff: null,
   enableReset: true,
-  titles : ['one', 'two', 'three', 'four', 'five']
+  titles: ['one', 'two', 'three', 'four', 'five']
 })
 
 .controller('UibRatingController', ['$scope', '$attrs', 'uibRatingConfig', function($scope, $attrs, ratingConfig) {
@@ -90,6 +90,7 @@ angular.module('ui.bootstrap.rating', [])
 .directive('uibRating', function() {
   return {
     require: ['uibRating', 'ngModel'],
+    restrict: 'A',
     scope: {
       readonly: '=?readOnly',
       onHover: '&',
@@ -97,7 +98,6 @@ angular.module('ui.bootstrap.rating', [])
     },
     controller: 'UibRatingController',
     templateUrl: 'uib/template/rating/rating.html',
-    replace: true,
     link: function(scope, element, attrs, ctrls) {
       var ratingCtrl = ctrls[0], ngModelCtrl = ctrls[1];
       ratingCtrl.init(ngModelCtrl);
