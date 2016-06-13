@@ -24,7 +24,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     if (openScope === dropdownScope) {
       openScope = null;
       $document.off('click', closeDropdown);
-      dropdownScope.getDropdownElement().off('keydown', this.keybindFilter);
+      var dropdownMenu = dropdownScope.getDropdownElement();
+      if (dropdownMenu) {
+        dropdownMenu.off('keydown', this.keybindFilter);
+      }
     }
   };
 
