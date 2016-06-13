@@ -106,8 +106,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
   .directive('uibModalBackdrop', ['$animate', '$injector', '$uibModalStack',
   function($animate, $injector, $modalStack) {
     return {
-      replace: true,
-      templateUrl: 'uib/template/modal/backdrop.html',
+      restrict: 'A',
       compile: function(tElement, tAttrs) {
         tElement.addClass(tAttrs.backdropClass);
         return linkFn;
@@ -136,13 +135,12 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
       scope: {
         index: '@'
       },
-      replace: true,
+      restrict: 'A',
       transclude: true,
       templateUrl: function(tElement, tAttrs) {
         return tAttrs.templateUrl || 'uib/template/modal/window.html';
       },
       link: function(scope, element, attrs) {
-        element.addClass(attrs.windowClass || '');
         element.addClass(attrs.windowTopClass || '');
         scope.size = attrs.size;
 
@@ -167,12 +165,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
 
         // Deferred object that will be resolved when this modal is render.
         var modalRenderDeferObj = $q.defer();
-        // Observe function will be called on next digest cycle after compilation, ensuring that the DOM is ready.
-        // In order to use this way of finding whether DOM is ready, we need to observe a scope property used in modal's template.
-        attrs.$observe('modalRender', function(value) {
-          if (value === 'true') {
-            modalRenderDeferObj.resolve();
-          }
+        // Resolve render promise post-digest
+        scope.$$postDigest(function() {
+          modalRenderDeferObj.resolve();
         });
 
         modalRenderDeferObj.promise.then(function() {
@@ -477,7 +472,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           backdropScope.modalOptions = modal;
           backdropScope.index = currBackdropIndex;
           backdropDomEl = angular.element('<div uib-modal-backdrop="modal-backdrop"></div>');
-          backdropDomEl.attr('backdrop-class', modal.backdropClass);
+          backdropDomEl.attr({
+            'class': 'modal-backdrop',
+            'ng-style': '{\'z-index\': 1040 + (index && 1 || 0) + index*10}',
+            'uib-modal-animation-class': 'fade',
+            'modal-in-class': 'in'
+          });
+          if (modal.backdropClass) {
+            backdropDomEl.addClass(modal.backdropClass);
+          }
+
           if (modal.animation) {
             backdropDomEl.attr('modal-animation', 'true');
           }
@@ -493,13 +497,22 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
         topModalIndex = previousTopOpenedModal ? parseInt(previousTopOpenedModal.value.modalDomEl.attr('index'), 10) + 1 : 0;
         var angularDomEl = angular.element('<div uib-modal-window="modal-window"></div>');
         angularDomEl.attr({
+          'class': 'modal',
           'template-url': modal.windowTemplateUrl,
-          'window-class': modal.windowClass,
           'window-top-class': modal.windowTopClass,
+          'role': 'dialog',
           'size': modal.size,
           'index': topModalIndex,
-          'animate': 'animate'
+          'animate': 'animate',
+          'ng-style': '{\'z-index\': 1050 + index*10, display: \'block\'}',
+          'tabindex': -1,
+          'uib-modal-animation-class': 'fade',
+          'modal-in-class': 'in'
         }).html(modal.content);
+        if (modal.windowClass) {
+          angularDomEl.addClass(modal.windowClass);
+        }
+
         if (modal.animation) {
           angularDomEl.attr('modal-animation', 'true');
         }

@@ -52,7 +52,6 @@ describe('$uibModal', function() {
 
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.modal'));
-  beforeEach(module('uib/template/modal/backdrop.html'));
   beforeEach(module('uib/template/modal/window.html'));
   beforeEach(module(function(_$controllerProvider_, _$uibModalProvider_, $compileProvider) {
     $controllerProvider = _$controllerProvider_;
@@ -1415,15 +1414,6 @@ describe('$uibModal', function() {
       expect($rootScope.foo).toBeTruthy();
     });
 
-    it('should support custom CSS classes as string', function() {
-      $rootScope.animate = false;
-      var windowEl = $compile('<div uib-modal-window animate="animate" window-class="test foo">content</div>')($rootScope);
-      $rootScope.$digest();
-
-      expect(windowEl).toHaveClass('test');
-      expect(windowEl).toHaveClass('foo');
-    });
-
     it('should support window top class', function () {
       $rootScope.animate = false;
       var windowEl = $compile('<div uib-modal-window animate="animate" window-top-class="test foo">content</div>')($rootScope);
@@ -1434,13 +1424,12 @@ describe('$uibModal', function() {
     });
 
     it('should support custom template url', inject(function($templateCache) {
-      $templateCache.put('window.html', '<div class="mywindow" ng-transclude></div>');
+      $templateCache.put('window.html', '<div ng-transclude></div>');
 
-      var windowEl = $compile('<div uib-modal-window template-url="window.html" window-class="test">content</div>')($rootScope);
+      var windowEl = $compile('<div uib-modal-window template-url="window.html">content</div>')($rootScope);
       $rootScope.$digest();
 
-      expect(windowEl).toHaveClass('mywindow');
-      expect(windowEl).toHaveClass('test');
+      expect(windowEl.html()).toBe('<div ng-transclude=""><span class="ng-scope">content</span></div>');
     }));
   });
 
@@ -1726,7 +1715,6 @@ describe('$uibModal', function() {
         content: '<div>Modal1</div>'
       });
 
-      expect($document).toHaveModalsOpen(0);
       $rootScope.$digest();
       $animate.flush();
       expect($document).toHaveModalsOpen(1);
@@ -1746,7 +1734,6 @@ describe('$uibModal', function() {
         modal2Index = parseInt($uibModalStack.getTop().value.modalDomEl.attr('index'), 10);
       });
 
-      expect($document).toHaveModalsOpen(1);
       $rootScope.$digest();
       $animate.flush();
       expect($document).toHaveModalsOpen(2);
@@ -1768,7 +1755,6 @@ describe('$uibModal', function() {
         modal3Index = parseInt($uibModalStack.getTop().value.modalDomEl.attr('index'), 10);
       });
 
-      expect($document).toHaveModalsOpen(1);
       $rootScope.$digest();
       $animate.flush();
       expect($document).toHaveModalsOpen(2);
