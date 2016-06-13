@@ -1,4 +1,5 @@
 require('../collapse');
+require('../tabindex');
 require('../../template/accordion/accordion-group.html.js');
 require('../../template/accordion/accordion.html.js');
 require('./accordion');
