@@ -1,4 +1,5 @@
 require('../paging');
+require('../tabindex');
 require('../../template/pager/pager.html.js');
 require('./pager');
 
