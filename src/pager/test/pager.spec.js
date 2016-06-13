@@ -10,7 +10,7 @@ describe('pager directive', function() {
     $document = _$document_;
     $templateCache = _$templateCache_;
     body = $document.find('body');
-    element = $compile('<uib-pager total-items="total" ng-model="currentPage"></uib-pager>')($rootScope);
+    element = $compile('<ul uib-pager total-items="total" ng-model="currentPage"></ul>')($rootScope);
     $rootScope.$digest();
   }));
 
@@ -56,7 +56,7 @@ describe('pager directive', function() {
   it('exposes the controller on the template', function() {
     $templateCache.put('uib/template/pager/pager.html', '<div>{{pager.text}}</div>');
 
-    element = $compile('<uib-pager></uib-pager>')($rootScope);
+    element = $compile('<ul uib-pager></ul uib-pager>')($rootScope);
     $rootScope.$digest();
 
     var ctrl = element.controller('uibPager');
@@ -65,7 +65,7 @@ describe('pager directive', function() {
     ctrl.text = 'foo';
     $rootScope.$digest();
 
-    expect(element.html()).toBe('foo');
+    expect(element.html()).toBe('<div class="ng-binding">foo</div>');
   });
 
   it('disables the "previous" link if current page is 1', function() {
@@ -102,7 +102,7 @@ describe('pager directive', function() {
 
   it('executes the `ng-change` expression when an element is clicked', function() {
     $rootScope.selectPageHandler = jasmine.createSpy('selectPageHandler');
-    element = $compile('<uib-pager total-items="total" ng-model="currentPage" ng-change="selectPageHandler()"></uib-pager>')($rootScope);
+    element = $compile('<ul uib-pager total-items="total" ng-model="currentPage" ng-change="selectPageHandler()"></ul>')($rootScope);
     $rootScope.$digest();
 
     clickPaginationEl(-1);
@@ -147,16 +147,16 @@ describe('pager directive', function() {
   it('allows custom templates', function() {
     $templateCache.put('foo/bar.html', '<div>baz</div>');
 
-    element = $compile('<uib-pager template-url="foo/bar.html"></uib-pager>')($rootScope);
+    element = $compile('<ul uib-pager template-url="foo/bar.html"></ul>')($rootScope);
     $rootScope.$digest();
 
-    expect(element.html()).toBe('baz');
+    expect(element.html()).toBe('<div>baz</div>');
   });
 
   describe('`items-per-page`', function() {
     beforeEach(function() {
       $rootScope.perpage = 5;
-      element = $compile('<uib-pager total-items="total" items-per-page="perpage" ng-model="currentPage"></uib-pager>')($rootScope);
+      element = $compile('<ul uib-pager total-items="total" items-per-page="perpage" ng-model="currentPage"></ul>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -190,7 +190,7 @@ describe('pager directive', function() {
   describe('`num-pages`', function() {
     beforeEach(function() {
       $rootScope.numpg = null;
-      element = $compile('<uib-pager total-items="total" ng-model="currentPage" num-pages="numpg"></uib-pager>')($rootScope);
+      element = $compile('<ul uib-pager total-items="total" ng-model="currentPage" num-pages="numpg"></ul>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -206,7 +206,7 @@ describe('pager directive', function() {
       uibPagerConfig.previousText = 'PR';
       uibPagerConfig.nextText = 'NE';
       uibPagerConfig.align = false;
-      element = $compile('<uib-pager total-items="total" ng-model="currentPage"></uib-pager>')($rootScope);
+      element = $compile('<ul uib-pager total-items="total" ng-model="currentPage"></ul>')($rootScope);
       $rootScope.$digest();
     }));
     afterEach(inject(function(uibPagerConfig) {
@@ -227,7 +227,7 @@ describe('pager directive', function() {
 
   describe('override configuration from attributes', function() {
     beforeEach(function() {
-      element = $compile('<uib-pager align="false" previous-text="<" next-text=">" total-items="total" ng-model="currentPage"></uib-pager>')($rootScope);
+      element = $compile('<ul uib-pager align="false" previous-text="<" next-text=">" total-items="total" ng-model="currentPage"></ul>')($rootScope);
       $rootScope.$digest();
     });
 
@@ -248,7 +248,7 @@ describe('pager directive', function() {
     it('changes "previous" & "next" text from interpolated attributes', function() {
       $rootScope.previousText = '<<';
       $rootScope.nextText = '>>';
-      element = $compile('<uib-pager align="false" previous-text="{{previousText}}" next-text="{{nextText}}" total-items="total" ng-model="currentPage"></uib-pager>')($rootScope);
+      element = $compile('<ul uib-pager align="false" previous-text="{{previousText}}" next-text="{{nextText}}" total-items="total" ng-model="currentPage"></ul>')($rootScope);
       $rootScope.$digest();
 
       expect(getPaginationEl(0).text()).toBe('<<');
@@ -259,7 +259,7 @@ describe('pager directive', function() {
   it('disables the component when ng-disabled is true', function() {
     $rootScope.disable = true;
 
-    element = $compile('<uib-pager total-items="total" ng-disabled="disable" ng-model="currentPage"></uib-pager>')($rootScope);
+    element = $compile('<ul uib-pager total-items="total" ng-disabled="disable" ng-model="currentPage"></ul>')($rootScope);
     $rootScope.$digest();
     updateCurrentPage(2);
 

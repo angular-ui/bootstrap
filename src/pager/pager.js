@@ -22,13 +22,14 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.paging'])
       ngDisabled: '='
     },
     require: ['uibPager', '?ngModel'],
+    restrict: 'A',
     controller: 'UibPagerController',
     controllerAs: 'pager',
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'uib/template/pager/pager.html';
     },
-    replace: true,
     link: function(scope, element, attrs, ctrls) {
+      element.addClass('pager');
       var paginationCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
       if (!ngModelCtrl) {
