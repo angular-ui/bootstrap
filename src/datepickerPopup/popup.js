@@ -355,7 +355,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     }
 
     if (angular.isString(value)) {
-      return !isNaN(parseDateString(viewValue));
+      return !isNaN(parseDateString(value));
     }
 
     return false;
