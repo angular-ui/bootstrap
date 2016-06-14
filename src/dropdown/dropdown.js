@@ -1,6 +1,6 @@
 angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
-.constant('uibDropdownConfig', {
+.value('uibDropdownConfig', {
   appendToOpenClass: 'uib-dropdown-open',
   openClass: 'open'
 })
