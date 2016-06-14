@@ -702,4 +702,34 @@ describe('uib-dropdown', function() {
       });
     });
   });
+
+  // issue #5942
+  describe('using dropdown-append-to-body with dropdown-menu-right class', function() {
+    function dropdown() {
+      return $compile('<li style="float: right;" uib-dropdown dropdown-append-to-body><a href uib-dropdown-toggle>Toggle menu</a><ul uib-dropdown-menu class="dropdown-menu-right" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+      $document.find('body').append(element);
+
+      var menu = $document.find('#dropdown-menu');
+      menu.css('position', 'absolute');
+    });
+
+    afterEach(function() {
+      element.remove();
+    });
+
+    it('should align the menu correctly when the body has no vertical scrollbar', function() {
+      var toggle = element.find('[uib-dropdown-toggle]');
+      var menu = $document.find('#dropdown-menu');
+      toggle.trigger('click');
+
+      // Get the offsets of the rightmost position of both the toggle and the menu (offset from the left of the window)
+      var toggleRight = Math.round(toggle.offset().left + toggle.outerWidth());
+      var menuRight = Math.round(menu.offset().left + menu.outerWidth());
+      expect(menuRight).toBe(toggleRight);
+    });
+  });
 });
