@@ -1,6 +1,5 @@
 require('../position/index-nocss.js');
 require('../stackedMap');
-require('../../template/modal/backdrop.html.js');
 require('../../template/modal/window.html.js');
 require('./modal');
 
