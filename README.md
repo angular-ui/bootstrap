@@ -118,6 +118,7 @@ If you would prefer not to load your css through your JavaScript file loader/bun
 * datepicker
 * datepickerPopup
 * dropdown
+* modal
 * popover
 * position
 * timepicker
