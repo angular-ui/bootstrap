@@ -27,4 +27,8 @@
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether the element should be collapsed or not.
+  
+* `horizontal`
+  <small class="badge">$</small> -
+  An optional attribute that permit to collapse horizontally.
 

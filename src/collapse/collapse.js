@@ -5,16 +5,44 @@ angular.module('ui.bootstrap.collapse', [])
     return {
       link: function(scope, element, attrs) {
         var expandingExpr = $parse(attrs.expanding),
-            expandedExpr = $parse(attrs.expanded),
-            collapsingExpr = $parse(attrs.collapsing),
-            collapsedExpr = $parse(attrs.collapsed);
+          expandedExpr = $parse(attrs.expanded),
+          collapsingExpr = $parse(attrs.collapsing),
+          collapsedExpr = $parse(attrs.collapsed),
+          horizontal = false,
+          css = {},
+          cssTo = {};
 
-        if (!scope.$eval(attrs.uibCollapse)) {
-          element.addClass('in')
-            .addClass('collapse')
-            .attr('aria-expanded', true)
-            .attr('aria-hidden', false)
-            .css({height: 'auto'});
+        init();
+
+        function init() {
+          horizontal = !!('horizontal' in attrs);
+          if (horizontal) {
+            css = {
+              width: 'auto',
+              height: 'inherit'
+            };
+            cssTo = {width: '0'};
+          } else {
+            css = {
+              width: 'inherit',
+              height: 'auto'
+            };
+            cssTo = {height: '0'};
+          }
+          if (!scope.$eval(attrs.uibCollapse)) {
+            element.addClass('in')
+              .addClass('collapse')
+              .attr('aria-expanded', true)
+              .attr('aria-hidden', false)
+              .css(css);
+          }
+        }
+
+        function getScrollFromElement(element) {
+          if (horizontal) {
+            return {width: element.scrollWidth + 'px'};
+          }
+          return {height: element.scrollHeight + 'px'};
         }
 
         function expand() {
@@ -33,11 +61,11 @@ angular.module('ui.bootstrap.collapse', [])
                 $animateCss(element, {
                   addClass: 'in',
                   easing: 'ease',
-                  to: { height: element[0].scrollHeight + 'px' }
+                  to: getScrollFromElement(element[0])
                 }).start()['finally'](expandDone);
               } else {
                 $animate.addClass(element, 'in', {
-                  to: { height: element[0].scrollHeight + 'px' }
+                  to: getScrollFromElement(element[0])
                 }).then(expandDone);
               }
             });
@@ -46,7 +74,7 @@ angular.module('ui.bootstrap.collapse', [])
         function expandDone() {
           element.removeClass('collapsing')
             .addClass('collapse')
-            .css({height: 'auto'});
+            .css(css);
           expandedExpr(scope);
         }
 
@@ -58,10 +86,10 @@ angular.module('ui.bootstrap.collapse', [])
           $q.resolve(collapsingExpr(scope))
             .then(function() {
               element
-                // IMPORTANT: The height must be set before adding "collapsing" class.
-                // Otherwise, the browser attempts to animate from height 0 (in
-                // collapsing class) to the given height here.
-                .css({height: element[0].scrollHeight + 'px'})
+              // IMPORTANT: The width must be set before adding "collapsing" class.
+              // Otherwise, the browser attempts to animate from width 0 (in
+              // collapsing class) to the given width here.
+                .css(getScrollFromElement(element[0]))
                 // initially all panel collapse have the collapse class, this removal
                 // prevents the animation from jumping to collapsed state
                 .removeClass('collapse')
@@ -72,18 +100,18 @@ angular.module('ui.bootstrap.collapse', [])
               if ($animateCss) {
                 $animateCss(element, {
                   removeClass: 'in',
-                  to: {height: '0'}
+                  to: cssTo
                 }).start()['finally'](collapseDone);
               } else {
                 $animate.removeClass(element, 'in', {
-                  to: {height: '0'}
+                  to: cssTo
                 }).then(collapseDone);
               }
             });
         }
 
         function collapseDone() {
-          element.css({height: '0'}); // Required so that collapse works when animation is disabled
+          element.css(cssTo); // Required so that collapse works when animation is disabled
           element.removeClass('collapsing')
             .addClass('collapse');
           collapsedExpr(scope);
