@@ -313,6 +313,39 @@ describe('typeahead tests', function() {
       expect($scope.form.input.$error.parse).toBeFalsy();
     });
 
+    // fix for #6032
+    it('should clear errors and refresh scope after blur for typeahead-editable="false"', function () {
+      var element = prepareInputEl(
+        '<div><form name="form" ng-class="{invalid : form.input.$invalid}">' +
+          '<input name="input" ng-model="result" uib-typeahead="item for item in source | filter:$viewValue" typeahead-editable="false">' +
+        '</form></div>');
+      var inputEl = findInput(element);
+
+      // first try
+      changeInputValueTo(element, 'not in matches');
+      expect($scope.result).toEqual(undefined);
+      expect(inputEl.val()).toEqual('not in matches');
+      expect(element.find('form')).toHaveClass('invalid');
+      inputEl.blur();
+
+      expect(inputEl.val()).toEqual('');  // <-- input is reset
+      expect($scope.form.input.$error.editable).toBeFalsy();
+      expect($scope.form.input.$error.parse).toBeFalsy();
+      expect(element.find('form')).not.toHaveClass('invalid');  // <-- form has no error (it always works for some reason)
+
+      // second try
+      changeInputValueTo(element, 'not in matches');
+      expect($scope.result).toEqual(undefined);
+      expect(inputEl.val()).toEqual('not in matches');
+      expect(element.find('form')).toHaveClass('invalid');
+      inputEl.blur();
+
+      expect(inputEl.val()).toEqual('');  // <-- input is reset
+      expect($scope.form.input.$error.editable).toBeFalsy();
+      expect($scope.form.input.$error.parse).toBeFalsy();
+      expect(element.find('form')).not.toHaveClass('invalid');  // <-- form has no error (it didn't work prior to #6032 fix)
+    });
+
     it('should go through other validators after blur for typeahead-editable="false"', function () {
         var element = prepareInputEl(
         '<div><form name="form">' +
