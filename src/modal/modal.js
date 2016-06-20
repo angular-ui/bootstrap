@@ -230,16 +230,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
     };
   })
 
-  .directive('uibModalTransclude', function() {
+  .directive('uibModalTransclude', ['$animate', function($animate) {
     return {
       link: function(scope, element, attrs, controller, transclude) {
         transclude(scope.$parent, function(clone) {
           element.empty();
-          element.append(clone);
+          $animate.enter(clone, element);
         });
       }
     };
-  })
+  }])
 
   .factory('$uibModalStack', ['$animate', '$animateCss', '$document',
     '$compile', '$rootScope', '$q', '$$multiMap', '$$stackedMap', '$uibPosition',

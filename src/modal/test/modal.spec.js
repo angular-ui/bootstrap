@@ -46,6 +46,62 @@ describe('$uibResolve', function() {
   });
 });
 
+describe('uibModalTransclude', function() {
+  var uibModalTranscludeDDO,
+    $animate;
+
+  beforeEach(module('ui.bootstrap.modal'));
+  beforeEach(module(function($provide) {
+    $animate = jasmine.createSpyObj('$animate', ['enter']);
+    $provide.value('$animate', $animate);
+  }));
+
+  beforeEach(inject(function(uibModalTranscludeDirective) {
+    uibModalTranscludeDDO = uibModalTranscludeDirective[0];
+  }));
+
+  describe('when initialised', function() {
+    var scope,
+      element,
+      transcludeSpy,
+      transcludeFn;
+
+    beforeEach(function() {
+      scope = {
+        $parent: 'parentScope'
+      };
+
+      element = jasmine.createSpyObj('containerElement', ['empty']);
+      transcludeSpy = jasmine.createSpy('transcludeSpy').and.callFake(function(scope, fn) {
+        transcludeFn = fn;
+      });
+
+      uibModalTranscludeDDO.link(scope, element, {}, {}, transcludeSpy);
+    });
+
+    it('should call the transclusion function', function() {
+      expect(transcludeSpy).toHaveBeenCalledWith(scope.$parent, jasmine.any(Function));
+    });
+
+    describe('transclusion callback', function() {
+      var transcludedContent;
+
+      beforeEach(function() {
+        transcludedContent = 'my transcluded content';
+        transcludeFn(transcludedContent);
+      });
+
+      it('should empty the element', function() {
+        expect(element.empty).toHaveBeenCalledWith();
+      });
+
+      it('should append the transcluded content', function() {
+        expect($animate.enter).toHaveBeenCalledWith(transcludedContent, element);
+      });
+    });
+  });
+});
+
 describe('$uibModal', function() {
   var $animate, $controllerProvider, $rootScope, $document, $compile, $templateCache, $timeout, $q;
   var $uibModal, $uibModalStack, $uibModalProvider;
