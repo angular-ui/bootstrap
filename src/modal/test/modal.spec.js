@@ -1390,7 +1390,7 @@ describe('$uibModal', function() {
         expect(body).not.toHaveClass('modal-open');
       });
 
-      it('should remove the custom class on closing of modal', function() {
+      it('should remove the custom class on closing of modal after animations have completed', function() {
         var modal = open({
           template: '<div>dummy modal</div>',
           openedClass: 'foo'
@@ -1398,7 +1398,13 @@ describe('$uibModal', function() {
 
         expect(body).toHaveClass('foo');
 
-        close(modal);
+        close(modal, null, true);
+        expect(body).toHaveClass('foo');
+
+        $animate.flush();
+        $rootScope.$digest();
+        $animate.flush();
+        $rootScope.$digest();
 
         expect(body).not.toHaveClass('foo');
       });

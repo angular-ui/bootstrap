@@ -375,6 +375,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           afterAnimating.done = true;
 
           $animate.leave(domEl).then(function() {
+            if (done) {
+              done();
+            }
+
             domEl.remove();
             if (closedDeferred) {
               closedDeferred.resolve();
@@ -382,9 +386,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           });
 
           scope.$destroy();
-          if (done) {
-            done();
-          }
         }
       }
 
