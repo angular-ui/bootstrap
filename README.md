@@ -27,7 +27,7 @@
 
 # Demo
 
-Do you want to see directives in action? Visit http://angular-ui.github.io/bootstrap/!
+Do you want to see directives in action? Visit https://angular-ui.github.io/bootstrap/!
 
 # Angular 2
 
@@ -73,7 +73,7 @@ PM> Install-Package Angular.UI.Bootstrap
 
 #### Custom build
 
-Head over to http://angular-ui.github.io/bootstrap/ and hit the *Custom build* button to create your own custom UI Bootstrap build, just the way you like it.
+Head over to https://angular-ui.github.io/bootstrap/ and hit the *Custom build* button to create your own custom UI Bootstrap build, just the way you like it.
 
 #### Manual download
 
