@@ -507,7 +507,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           'size': modal.size,
           'index': topModalIndex,
           'animate': 'animate',
-          'ng-style': '{\'z-index\': 1050 + index*10, display: \'block\'}',
+          'ng-style': '{\'z-index\': 1050 + $$topModalIndex*10, display: \'block\'}',
           'tabindex': -1,
           'uib-modal-animation-class': 'fade',
           'modal-in-class': 'in'
@@ -521,6 +521,11 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
         }
 
         appendToElement.addClass(modalBodyClass);
+        if (modal.scope) {
+          // we need to explicitly add the modal index to the modal scope
+          // because it is needed by ngStyle to compute the zIndex property.
+          modal.scope.$$topModalIndex = topModalIndex;
+        }
         $animate.enter($compile(angularDomEl)(modal.scope), appendToElement);
 
         openedWindows.top().value.modalDomEl = angularDomEl;

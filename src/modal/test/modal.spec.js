@@ -1824,6 +1824,104 @@ describe('$uibModal', function() {
       expect(modal3Index).toEqual(2);
       expect(modal2Index).toBeLessThan(modal3Index);
     });
+
+    it('should have top modal with highest z-index', function() {
+      var modal2zIndex = null;
+      var modal3zIndex = null;
+
+      var modal1Instance = {
+        result: $q.defer(),
+        opened: $q.defer(),
+        closed: $q.defer(),
+        rendered: $q.defer(),
+        close: function(result) {
+          return $uibModalStack.close(modal1Instance, result);
+        },
+        dismiss: function(reason) {
+          return $uibModalStack.dismiss(modal1Instance, reason);
+        }
+      };
+      var modal2Instance = {
+        result: $q.defer(),
+        opened: $q.defer(),
+        closed: $q.defer(),
+        rendered: $q.defer(),
+        close: function(result) {
+          return $uibModalStack.close(modal2Instance, result);
+        },
+        dismiss: function(reason) {
+          return $uibModalStack.dismiss(modal2Instance, reason);
+        }
+      };
+      var modal3Instance = {
+        result: $q.defer(),
+        opened: $q.defer(),
+        closed: $q.defer(),
+        rendered: $q.defer(),
+        close: function(result) {
+          return $uibModalStack.close(modal3Instance, result);
+        },
+        dismiss: function(reason) {
+          return $uibModalStack.dismiss(modal3Instance, reason);
+        }
+      };
+
+      var modal1 = $uibModalStack.open(modal1Instance, {
+        appendTo: angular.element(document.body),
+        scope: $rootScope.$new(),
+        deferred: modal1Instance.result,
+        renderDeferred: modal1Instance.rendered,
+        closedDeferred: modal1Instance.closed,
+        content: '<div>Modal1</div>'
+      });
+
+      $rootScope.$digest();
+      $animate.flush();
+      expect($document).toHaveModalsOpen(1);
+
+      expect(+$uibModalStack.getTop().value.modalDomEl[0].style.zIndex).toBe(1050);
+
+      var modal2 = $uibModalStack.open(modal2Instance, {
+        appendTo: angular.element(document.body),
+        scope: $rootScope.$new(),
+        deferred: modal2Instance.result,
+        renderDeferred: modal2Instance.rendered,
+        closedDeferred: modal2Instance.closed,
+        content: '<div>Modal2</div>'
+      });
+
+      modal2Instance.rendered.promise.then(function() {
+        modal2zIndex = +$uibModalStack.getTop().value.modalDomEl[0].style.zIndex;
+      });
+
+      $rootScope.$digest();
+      $animate.flush();
+      expect($document).toHaveModalsOpen(2);
+
+      expect(modal2zIndex).toBe(1060);
+      close(modal1Instance);
+      expect($document).toHaveModalsOpen(1);
+
+      var modal3 = $uibModalStack.open(modal3Instance, {
+        appendTo: angular.element(document.body),
+        scope: $rootScope.$new(),
+        deferred: modal3Instance.result,
+        renderDeferred: modal3Instance.rendered,
+        closedDeferred: modal3Instance.closed,
+        content: '<div>Modal3</div>'
+      });
+
+      modal3Instance.rendered.promise.then(function() {
+        modal3zIndex = +$uibModalStack.getTop().value.modalDomEl[0].style.zIndex;
+      });
+
+      $rootScope.$digest();
+      $animate.flush();
+      expect($document).toHaveModalsOpen(2);
+
+      expect(modal3zIndex).toBe(1070);
+      expect(modal2zIndex).toBeLessThan(modal3zIndex);
+    });
   });
 
   describe('modal.closing event', function() {
