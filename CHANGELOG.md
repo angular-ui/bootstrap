@@ -1,3 +1,83 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/angular-ui/bootstrap/compare/1.3.3...v2.0.0) (2016-07-20)
+
+
+### Bug Fixes
+
+* **dateparser:** correctly format with literals([d846e2d](https://github.com/angular-ui/bootstrap/commit/d846e2d)), closes [#6055](https://github.com/angular-ui/bootstrap/issues/6055) [#5620](https://github.com/angular-ui/bootstrap/issues/5620) [#5802](https://github.com/angular-ui/bootstrap/issues/5802)
+* **datepickerPopup:** clear date when button is clicked([b0466d9](https://github.com/angular-ui/bootstrap/commit/b0466d9)), closes [#5945](https://github.com/angular-ui/bootstrap/issues/5945) [#5906](https://github.com/angular-ui/bootstrap/issues/5906)
+* **datepickerPopup:** specify dependency on datepicker([4fef037](https://github.com/angular-ui/bootstrap/commit/4fef037)), closes [#5954](https://github.com/angular-ui/bootstrap/issues/5954)
+* **datepickerPopup:** use value instead of viewValue([7e320e0](https://github.com/angular-ui/bootstrap/commit/7e320e0)), closes [#6007](https://github.com/angular-ui/bootstrap/issues/6007)
+* **dropdown:** align position correctly with scrollbar([2d831bc](https://github.com/angular-ui/bootstrap/commit/2d831bc)), closes [#6008](https://github.com/angular-ui/bootstrap/issues/6008) [#5942](https://github.com/angular-ui/bootstrap/issues/5942)
+* **dropdown:** bind event listener on dropdown menu([6038403](https://github.com/angular-ui/bootstrap/commit/6038403)), closes [#5982](https://github.com/angular-ui/bootstrap/issues/5982)
+* **modal:** check for overflow hidden([433e536](https://github.com/angular-ui/bootstrap/commit/433e536)), closes [#6037](https://github.com/angular-ui/bootstrap/issues/6037) [#6041](https://github.com/angular-ui/bootstrap/issues/6041)
+* **modal:** filter out non-tabbable elements([35ced04](https://github.com/angular-ui/bootstrap/commit/35ced04)), closes [#5963](https://github.com/angular-ui/bootstrap/issues/5963) [#5955](https://github.com/angular-ui/bootstrap/issues/5955)
+* **modal:** remove unused template from modal([1de58a3](https://github.com/angular-ui/bootstrap/commit/1de58a3))
+* **modal:** remove window class after animation([409b7aa](https://github.com/angular-ui/bootstrap/commit/409b7aa)), closes [#6056](https://github.com/angular-ui/bootstrap/issues/6056) [#6051](https://github.com/angular-ui/bootstrap/issues/6051)
+* **tooltip:** missed dependency for cjs([164811a](https://github.com/angular-ui/bootstrap/commit/164811a)), closes [#5999](https://github.com/angular-ui/bootstrap/issues/5999)
+* **tooltip:** reposition for placement top([34a1443](https://github.com/angular-ui/bootstrap/commit/34a1443)), closes [#5959](https://github.com/angular-ui/bootstrap/issues/5959)
+* **typeahead:** change to select class([13c14af](https://github.com/angular-ui/bootstrap/commit/13c14af)), closes [#5922](https://github.com/angular-ui/bootstrap/issues/5922) [#5848](https://github.com/angular-ui/bootstrap/issues/5848)
+* **typeahead:** clear validity in $digest([ed3400b](https://github.com/angular-ui/bootstrap/commit/ed3400b)), closes [#6033](https://github.com/angular-ui/bootstrap/issues/6033) [#6032](https://github.com/angular-ui/bootstrap/issues/6032)
+* **typeahead:** remove duplicate id attribute([6d5b84a](https://github.com/angular-ui/bootstrap/commit/6d5b84a)), closes [#5936](https://github.com/angular-ui/bootstrap/issues/5936) [#5926](https://github.com/angular-ui/bootstrap/issues/5926)
+
+
+### Features
+
+* **accordion:** add appropriate tabindex on disabled([5f4eedd](https://github.com/angular-ui/bootstrap/commit/5f4eedd)), closes [#4067](https://github.com/angular-ui/bootstrap/issues/4067) [#5990](https://github.com/angular-ui/bootstrap/issues/5990)
+* **accordion:** remove replace: true usage([3819bbe](https://github.com/angular-ui/bootstrap/commit/3819bbe)), closes [#5985](https://github.com/angular-ui/bootstrap/issues/5985)
+* **alert:** remove replace: true usage([2458c28](https://github.com/angular-ui/bootstrap/commit/2458c28)), closes [#5986](https://github.com/angular-ui/bootstrap/issues/5986)
+* **carousel:** remove replace: true usage([5046bd4](https://github.com/angular-ui/bootstrap/commit/5046bd4)), closes [#5987](https://github.com/angular-ui/bootstrap/issues/5987)
+* **collapse:** add horizontal support([1ec0997](https://github.com/angular-ui/bootstrap/commit/1ec0997)), closes [#3593](https://github.com/angular-ui/bootstrap/issues/3593) [#6010](https://github.com/angular-ui/bootstrap/issues/6010)
+* **datepicker:** add monthColumns([39d9b98](https://github.com/angular-ui/bootstrap/commit/39d9b98)), closes [#5515](https://github.com/angular-ui/bootstrap/issues/5515) [#5935](https://github.com/angular-ui/bootstrap/issues/5935)
+* **datepicker:** add ngModelOptions support([23b91d9](https://github.com/angular-ui/bootstrap/commit/23b91d9)), closes [#5933](https://github.com/angular-ui/bootstrap/issues/5933) [#5825](https://github.com/angular-ui/bootstrap/issues/5825)
+* **datepicker:** remove replace: true usage([e92fb7f](https://github.com/angular-ui/bootstrap/commit/e92fb7f)), closes [#5988](https://github.com/angular-ui/bootstrap/issues/5988)
+* **datepickerPopup:** remove replace usage([a47bced](https://github.com/angular-ui/bootstrap/commit/a47bced)), closes [#5993](https://github.com/angular-ui/bootstrap/issues/5993)
+* **dropdown:** focus toggle on close from click([cce0097](https://github.com/angular-ui/bootstrap/commit/cce0097)), closes [#5934](https://github.com/angular-ui/bootstrap/issues/5934) [#5782](https://github.com/angular-ui/bootstrap/issues/5782)
+* **dropdown:** use .value() for uibDropdownConfig([7457fb0](https://github.com/angular-ui/bootstrap/commit/7457fb0)), closes [#6004](https://github.com/angular-ui/bootstrap/issues/6004) [#6006](https://github.com/angular-ui/bootstrap/issues/6006)
+* **modal:** append using $animate([1cbd73d](https://github.com/angular-ui/bootstrap/commit/1cbd73d)), closes [#6023](https://github.com/angular-ui/bootstrap/issues/6023) [#6029](https://github.com/angular-ui/bootstrap/issues/6029)
+* **modal:** remove replace usage([96d52ce](https://github.com/angular-ui/bootstrap/commit/96d52ce)), closes [#5989](https://github.com/angular-ui/bootstrap/issues/5989)
+* **pager:** remove replace usage([9b24e1d](https://github.com/angular-ui/bootstrap/commit/9b24e1d)), closes [#5991](https://github.com/angular-ui/bootstrap/issues/5991)
+* **pager:** toggle tabindex when disabled([0d8cec6](https://github.com/angular-ui/bootstrap/commit/0d8cec6)), closes [#5996](https://github.com/angular-ui/bootstrap/issues/5996)
+* **pagination:** disable tabbing when disabled([1a870a3](https://github.com/angular-ui/bootstrap/commit/1a870a3)), closes [#5984](https://github.com/angular-ui/bootstrap/issues/5984)
+* **pagination:** remove replace usage([387c6e7](https://github.com/angular-ui/bootstrap/commit/387c6e7)), closes [#5992](https://github.com/angular-ui/bootstrap/issues/5992)
+* **rating:** remove replace usage([d6fe9c7](https://github.com/angular-ui/bootstrap/commit/d6fe9c7)), closes [#5998](https://github.com/angular-ui/bootstrap/issues/5998)
+* **stackedMap:** improve perf of removeTop([a075824](https://github.com/angular-ui/bootstrap/commit/a075824)), closes [#5925](https://github.com/angular-ui/bootstrap/issues/5925) [#5932](https://github.com/angular-ui/bootstrap/issues/5932)
+* **timepicker:** avoid allowing to tab to controls([4e68778](https://github.com/angular-ui/bootstrap/commit/4e68778)), closes [#5930](https://github.com/angular-ui/bootstrap/issues/5930)
+* **timepicker:** remove replace usage([7518821](https://github.com/angular-ui/bootstrap/commit/7518821)), closes [#5997](https://github.com/angular-ui/bootstrap/issues/5997)
+* **tooltip:** add expression support([4b91222](https://github.com/angular-ui/bootstrap/commit/4b91222)), closes [#5221](https://github.com/angular-ui/bootstrap/issues/5221) [#5938](https://github.com/angular-ui/bootstrap/issues/5938)
+* **tooltip:** remove replace usage([1616e97](https://github.com/angular-ui/bootstrap/commit/1616e97)), closes [#5994](https://github.com/angular-ui/bootstrap/issues/5994)
+
+
+### Reverts
+
+* **dropdown:** change back to .constant()([4e0e34f](https://github.com/angular-ui/bootstrap/commit/4e0e34f))
+
+
+### BREAKING CHANGES
+
+* tooltip: The template structure changed slightly due to the removal of `replace: true` - see documentation examples in action to see differences in practice.
+* typeahead: This changes the selector used so that it doesn't select for the `li` tag specifically, but the elements with the class `uib-typeahead-match` - if using a custom template, this class needs to be added to the `li` element in the typeahead popup template.
+* rating: Due to the removal of `replace: true`, this results in a slight change to the HTML structure - see the documentation examples to see it in action.
+* timepicker: This removes `replace: true`, which changes the HTML structure slightly - see the documentation examples to see it in action.
+* datepickerPopup: Due to the nature of `replace: true`, this has a slight structural HTML change in the popup as a result - see documentation examples for the change in action.
+* pagination: Due to the removal of `replace: true`, this affects the HTML structure slightly - see documentation examples to see new usage.
+* pager: This removes `replace: true` usage from the pager, which causes a slight usage change - see documentation examples for new usage.
+* modal: This removes `replace: true` usage, causing some structural changes to the HTML - the major part here is that there is no more backdrop template, and the top level elements for the window/backdrop elements lose a little flexibility. See documentation examples for new structure.
+* modal: This introduces a minor behavior change in when the class is removed
+* carousel: Due to the removal of `replace: true`, this causes a slight HTML structure change to the carousel and the slide elements - see documentation demos to see how it changes. This also caused removal of the ngTouch built in support - if one is using ng-touch, one needs to add the `ng-swipe-left` and `ng-swipe-right` directives to the carousel element with relevant logic.
+* alert: This removes the `replace: true` usage, so this has an effect on how one uses the directive in the template - see documentation for reference
+* accordion: This removes usage of `replace: true` in the accordion group, which results in a template change where the template no longer needs to contain the panel itself, but its contents. The accordion group will add the `panel` class by default, so the user just needs to add the appropriate classes to the accordion group element. This allows the user to use ng-class as well to fully control the panel related classes, so `panel-class` now is unnecessary
+* tooltip: This removes support for plain strings and interpolations in tooltip-trigger and popover-trigger - please change these appropriately. See test changes in this commit for reference
+* typeahead: This change removes the `id` attribute on the first `<input>`
+element placed into the DOM when the `typeahead-show-hint` attribute is used
+and there is an `id` attribute present on the original `uib-typeahead` element.
+This could affect selectors if they are being used.
+* dropdown: This changes the focus behavior of the dropdown slightly, and potentially may break code built around current usage
+* datepicker: This modifies the current behavior around the datepicker & popup's ngModelOptions, which may affect custom components that are built around both
+* datepicker: As a result of removal of `replace: true`, there is the potential that this may break some CSS layout due to the slightly different HTML. Refer to the documentation examples to see the new structure.
+
+
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/angular-ui/bootstrap/compare/1.3.2...v1.3.3) (2016-05-23)
 
