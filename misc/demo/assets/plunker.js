@@ -4,7 +4,7 @@ angular.module('plunker', [])
 
     return function (ngVersion, bsVersion, version, module, content) {
 
-      var form = angular.element('<form style="display: none;" method="post" action="http://plnkr.co/edit/?p=preview" target="_blank"></form>');
+      var form = angular.element('<form style="display: none;" method="post" action="https://plnkr.co/edit/?p=preview" target="_blank"></form>');
       var addField = function (name, value) {
         var input = angular.element('<input type="hidden" name="' + name + '">');
         input.attr('value', value);
