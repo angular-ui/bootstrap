@@ -1,3 +1,13 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/angular-ui/bootstrap/compare/2.0.0...v2.0.1) (2016-08-02)
+
+
+### Bug Fixes
+
+* **modal:** restore broken stacked modals([c61d16a](https://github.com/angular-ui/bootstrap/commit/c61d16a)), closes [#6103](https://github.com/angular-ui/bootstrap/issues/6103) [#6104](https://github.com/angular-ui/bootstrap/issues/6104)
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/angular-ui/bootstrap/compare/1.3.3...v2.0.0) (2016-07-20)
 
