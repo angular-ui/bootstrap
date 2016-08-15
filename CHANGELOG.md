@@ -1,3 +1,14 @@
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/angular-ui/bootstrap/compare/2.0.1...v2.0.2) (2016-08-15)
+
+
+### Bug Fixes
+
+* **datepickerPopup:** correctly format to timezone ([fbd0845](https://github.com/angular-ui/bootstrap/commit/fbd0845)), closes [#6159](https://github.com/angular-ui/bootstrap/issues/6159) [#6105](https://github.com/angular-ui/bootstrap/issues/6105) [#6146](https://github.com/angular-ui/bootstrap/issues/6146) [#6147](https://github.com/angular-ui/bootstrap/issues/6147)
+* **dropdown:** fix keyboard-nav ([6bad759](https://github.com/angular-ui/bootstrap/commit/6bad759)), closes [#6102](https://github.com/angular-ui/bootstrap/issues/6102) [#6154](https://github.com/angular-ui/bootstrap/issues/6154)
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/angular-ui/bootstrap/compare/2.0.0...v2.0.1) (2016-08-02)
 
