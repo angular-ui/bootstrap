@@ -17,6 +17,7 @@ angular.module('plunker', [])
           '  <head>\n' +
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular.js"></script>\n' +
           '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular-animate.js"></script>\n' +
+          '    <script src="//ajax.googleapis.com/ajax/libs/angularjs/'+ngVersion+'/angular-sanitize.js"></script>\n' +
           '    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-'+version+'.js"></script>\n' +
           '    <script src="example.js"></script>\n' +
           '    <link href="//netdna.bootstrapcdn.com/bootstrap/'+bsVersion+'/css/bootstrap.min.css" rel="stylesheet">\n' +
@@ -28,7 +29,7 @@ angular.module('plunker', [])
       };
 
       var scriptContent = function(content) {
-        return "angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);" + "\n" + content;
+        return "angular.module('ui.bootstrap.demo', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);" + "\n" + content;
       };
 
       addField('description', 'http://angular-ui.github.io/bootstrap/');
