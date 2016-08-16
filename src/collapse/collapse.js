@@ -18,13 +18,11 @@ angular.module('ui.bootstrap.collapse', [])
           horizontal = !!('horizontal' in attrs);
           if (horizontal) {
             css = {
-              width: 'auto',
-              height: 'inherit'
+              width: 'auto'
             };
             cssTo = {width: '0'};
           } else {
             css = {
-              width: 'inherit',
               height: 'auto'
             };
             cssTo = {height: '0'};
