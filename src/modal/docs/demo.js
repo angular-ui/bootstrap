@@ -8,6 +8,8 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($scope
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
       templateUrl: 'myModalContent.html',
       controller: 'ModalInstanceCtrl',
       size: size,

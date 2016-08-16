@@ -14,6 +14,14 @@ The `$uibModal` service has only one method: `open(options)`.
 * `appendTo` 
   _(Type: `angular.element`, Default: `body`: Example: `$document.find('aside').eq(0)`)_ -
   Appends the modal to a specific element.
+
+* `ariaDescribedBy` 
+  _(Type: `string`, `my-modal-description`)_ -
+  Sets the [`aria-describedby`](https://www.w3.org/TR/wai-aria/states_and_properties#aria-describedby) property on the modal. The value should be an id (without the leading `#`) pointing to the element that describes your modal. Typically, this will be the text on your modal, but does not include something the user would interact with, like buttons or a form. Omitting this option will not impact sighted users but will weaken your accessibility support.
+
+* `ariaLabelledBy` 
+  _(Type: `string`, `my-modal-title`)_ -
+  Sets the [`aria-labelledby`](https://www.w3.org/TR/wai-aria/states_and_properties#aria-labelledby) property on the modal. The value should be an id (without the leading `#`) pointing to the element that labels your modal. Typically, this will be a header element. Omitting this option will not impact sighted users but will weaken your accessibility support.
   
 * `backdrop`
   _(Type: `boolean|string`, Default: `true`)_ -

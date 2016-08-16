@@ -1,9 +1,9 @@
 <div ng-controller="ModalDemoCtrl">
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
+            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="modal-body">
             <ul>
                 <li ng-repeat="item in items">
                     <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>

@@ -1465,6 +1465,28 @@ describe('$uibModal', function() {
         expect(body).not.toHaveClass('modal-open');
       });
     });
+
+    describe('ariaLabelledBy', function() {
+      it('should add the aria-labelledby property to the modal', function() {
+        open({
+          template: '<div><h3 id="modal-label">Modal Label</h3><p id="modal-description">Modal description</p></div>',
+          ariaLabelledBy: 'modal-label'
+        });
+
+        expect($document.find('.modal').attr('aria-labelledby')).toEqual('modal-label');
+      });
+    });
+
+    describe('ariaDescribedBy', function() {
+      it('should add the aria-describedby property to the modal', function() {
+        open({
+          template: '<div><h3 id="modal-label">Modal Label</h3><p id="modal-description">Modal description</p></div>',
+          ariaDescribedBy: 'modal-description'
+        });
+
+        expect($document.find('.modal').attr('aria-describedby')).toEqual('modal-description');
+      });
+    });
   });
 
   describe('modal window', function() {
