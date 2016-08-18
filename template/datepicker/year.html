@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="uib-years" ng-repeat="row in rows track by $index">
+    <tr class="uib-years" ng-repeat="row in rows track by $index" role="row">
       <td ng-repeat="dt in row" class="uib-year text-center" role="gridcell"
         id="{{::dt.uid}}"
         ng-class="::dt.customClass">
