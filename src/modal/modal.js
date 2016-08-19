@@ -260,6 +260,15 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
         'button:not([disabled]):not([tabindex=\'-1\']),select:not([disabled]):not([tabindex=\'-1\']), textarea:not([disabled]):not([tabindex=\'-1\']), ' +
         'iframe, object, embed, *[tabindex]:not([tabindex=\'-1\']), *[contenteditable=true]';
       var scrollbarPadding;
+      var SNAKE_CASE_REGEXP = /[A-Z]/g;
+
+      // TODO: extract into common dependency with tooltip
+      function snake_case(name) {
+        var separator = '-';
+        return name.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
+          return (pos ? separator : '') + letter.toLowerCase();
+        });
+      }
 
       function isVisible(element) {
         return !!(element.offsetWidth ||
@@ -496,6 +505,21 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           }
         }
 
+        var content;
+        if (modal.component) {
+          content = document.createElement(snake_case(modal.component.name));
+          content = angular.element(content);
+          content.attr({
+            resolve: '$resolve',
+            'modal-instance': '$uibModalInstance',
+            close: 'close($value)',
+            dismiss: 'dismiss($value)'
+          });
+          content = $compile(content)(modal.scope);
+        } else {
+          content = modal.content;
+        }
+
         // Set the top modal index based on the index of the previous top modal
         topModalIndex = previousTopOpenedModal ? parseInt(previousTopOpenedModal.value.modalDomEl.attr('index'), 10) + 1 : 0;
         var angularDomEl = angular.element('<div uib-modal-window="modal-window"></div>');
@@ -513,7 +537,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           'tabindex': -1,
           'uib-modal-animation-class': 'fade',
           'modal-in-class': 'in'
-        }).html(modal.content);
+        }).html(content);
         if (modal.windowClass) {
           angularDomEl.addClass(modal.windowClass);
         }
@@ -682,12 +706,17 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
             modalOptions.appendTo = modalOptions.appendTo || $document.find('body').eq(0);
 
             //verify options
-            if (!modalOptions.template && !modalOptions.templateUrl) {
-              throw new Error('One of template or templateUrl options is required.');
+            if (!modalOptions.component && !modalOptions.template && !modalOptions.templateUrl) {
+              throw new Error('One of component or template or templateUrl options is required.');
             }
 
-            var templateAndResolvePromise =
-              $q.all([getTemplatePromise(modalOptions), $uibResolve.resolve(modalOptions.resolve, {}, null, null)]);
+            var templateAndResolvePromise;
+            if (modalOptions.component) {
+              templateAndResolvePromise = $q.when($uibResolve.resolve(modalOptions.resolve, {}, null, null));
+            } else {
+              templateAndResolvePromise =
+                $q.all([getTemplatePromise(modalOptions), $uibResolve.resolve(modalOptions.resolve, {}, null, null)]);
+            }
 
             function resolveWithTemplate() {
               return templateAndResolvePromise;
@@ -713,17 +742,34 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
                   }
                 });
 
+                var modal = {
+                  scope: modalScope,
+                  deferred: modalResultDeferred,
+                  renderDeferred: modalRenderDeferred,
+                  closedDeferred: modalClosedDeferred,
+                  animation: modalOptions.animation,
+                  backdrop: modalOptions.backdrop,
+                  keyboard: modalOptions.keyboard,
+                  backdropClass: modalOptions.backdropClass,
+                  windowTopClass: modalOptions.windowTopClass,
+                  windowClass: modalOptions.windowClass,
+                  windowTemplateUrl: modalOptions.windowTemplateUrl,
+                  ariaLabelledBy: modalOptions.ariaLabelledBy,
+                  ariaDescribedBy: modalOptions.ariaDescribedBy,
+                  size: modalOptions.size,
+                  openedClass: modalOptions.openedClass,
+                  appendTo: modalOptions.appendTo
+                };
+
+                var component = {};
                 var ctrlInstance, ctrlInstantiate, ctrlLocals = {};
 
-                //controllers
-                if (modalOptions.controller) {
-                  ctrlLocals.$scope = modalScope;
-                  ctrlLocals.$scope.$resolve = {};
-                  ctrlLocals.$uibModalInstance = modalInstance;
-                  angular.forEach(tplAndVars[1], function(value, key) {
-                    ctrlLocals[key] = value;
-                    ctrlLocals.$scope.$resolve[key] = value;
-                  });
+                if (modalOptions.component) {
+                  constructLocals(component, false, true, false);
+                  component.name = modalOptions.component;
+                  modal.component = component;
+                } else if (modalOptions.controller) {
+                  constructLocals(ctrlLocals, true, false, true);
 
                   // the third param will make the controller instantiate later,private api
                   // @see https://github.com/angular/angular.js/blob/master/src/ng/controller.js#L126
@@ -744,27 +790,31 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
                   }
                 }
 
-                $modalStack.open(modalInstance, {
-                  scope: modalScope,
-                  deferred: modalResultDeferred,
-                  renderDeferred: modalRenderDeferred,
-                  closedDeferred: modalClosedDeferred,
-                  content: tplAndVars[0],
-                  animation: modalOptions.animation,
-                  backdrop: modalOptions.backdrop,
-                  keyboard: modalOptions.keyboard,
-                  backdropClass: modalOptions.backdropClass,
-                  windowTopClass: modalOptions.windowTopClass,
-                  windowClass: modalOptions.windowClass,
-                  windowTemplateUrl: modalOptions.windowTemplateUrl,
-                  ariaLabelledBy: modalOptions.ariaLabelledBy,
-                  ariaDescribedBy: modalOptions.ariaDescribedBy,
-                  size: modalOptions.size,
-                  openedClass: modalOptions.openedClass,
-                  appendTo: modalOptions.appendTo
-                });
+                if (!modalOptions.component) {
+                  modal.content = tplAndVars[0];
+                }
+
+                $modalStack.open(modalInstance, modal);
                 modalOpenedDeferred.resolve(true);
 
+                function constructLocals(obj, template, instanceOnScope, injectable) {
+                  obj.$scope = modalScope;
+                  obj.$scope.$resolve = {};
+                  if (instanceOnScope) {
+                    obj.$scope.$uibModalInstance = modalInstance;
+                  } else {
+                    obj.$uibModalInstance = modalInstance;
+                  }
+
+                  var resolves = template ? tplAndVars[1] : tplAndVars;
+                  angular.forEach(resolves, function(value, key) {
+                    if (injectable) {
+                      obj[key] = value;
+                    }
+
+                    obj.$scope.$resolve[key] = value;
+                  });
+                }
             }, function resolveError(reason) {
               modalOpenedDeferred.reject(reason);
               modalResultDeferred.reject(reason);

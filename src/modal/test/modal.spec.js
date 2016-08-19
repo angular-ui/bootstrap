@@ -131,6 +131,16 @@ describe('$uibModal', function() {
           elem.focus();
         }
       };
+    }).component('fooBar', {
+      bindings: {
+        resolve: '<',
+        modalInstance: '<',
+        close: '&',
+        dismiss: '&'
+      },
+      controller: angular.noop,
+      controllerAs: 'foobar',
+      template: '<div>Foo Bar</div>'
     });
   }));
 
@@ -930,16 +940,89 @@ describe('$uibModal', function() {
     });
   });
 
-  describe('option by option', function () {
-    describe('template and templateUrl', function () {
-      it('should throw an error if none of template and templateUrl are provided', function() {
+  describe('option by option', function() {
+    describe('component', function() {
+      function getModalComponent($document) {
+        return $document.find('body > div.modal > div.modal-dialog > div.modal-content foo-bar');
+      }
+
+      it('should use as modal content', function() {
+        open({
+          component: 'fooBar'
+        });
+
+        var component = getModalComponent($document);
+        expect(component.html()).toBe('<div>Foo Bar</div>');
+      });
+
+      it('should bind expected values', function() {
+        var modal = open({
+          component: 'fooBar',
+          resolve: {
+            foo: function() {
+              return 'bar';
+            }
+          }
+        });
+
+        var component = getModalComponent($document);
+        var componentScope = component.isolateScope();
+
+        expect(componentScope.foobar.resolve.foo).toBe('bar');
+        expect(componentScope.foobar.modalInstance).toBe(modal);
+        expect(componentScope.foobar.close).toEqual(jasmine.any(Function));
+        expect(componentScope.foobar.dismiss).toEqual(jasmine.any(Function));
+      });
+
+      it('should close the modal', function() {
+        var modal = open({
+          component: 'fooBar',
+          resolve: {
+            foo: function() {
+              return 'bar';
+            }
+          }
+        });
+
+        var component = getModalComponent($document);
+        var componentScope = component.isolateScope();
+
+        componentScope.foobar.close({
+          $value: 'baz'
+        });
+
+        expect(modal.result).toBeResolvedWith('baz');
+      });
+
+      it('should dismiss the modal', function() {
+        var modal = open({
+          component: 'fooBar',
+          resolve: {
+            foo: function() {
+              return 'bar';
+            }
+          }
+        });
+
+        var component = getModalComponent($document);
+        var componentScope = component.isolateScope();
+
+        componentScope.foobar.dismiss({
+          $value: 'baz'
+        });
+
+        expect(modal.result).toBeRejectedWith('baz');
+      });
+    });
+
+    describe('template and templateUrl', function() {
+      it('should throw an error if none of component, template and templateUrl are provided', function() {
         expect(function(){
           var modal = open({});
-        }).toThrow(new Error('One of template or templateUrl options is required.'));
+        }).toThrow(new Error('One of component or template or templateUrl options is required.'));
       });
 
       it('should not fail if a templateUrl contains leading / trailing white spaces', function() {
-
         $templateCache.put('whitespace.html', '  <div>Whitespaces</div>  ');
         open({templateUrl: 'whitespace.html'});
         expect($document).toHaveModalOpenWithContent('Whitespaces', 'div');
