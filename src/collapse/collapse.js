@@ -59,10 +59,16 @@ angular.module('ui.bootstrap.collapse', [])
                 $animateCss(element, {
                   addClass: 'in',
                   easing: 'ease',
+                  css: {
+                    overflow: 'hidden'
+                  },
                   to: getScrollFromElement(element[0])
                 }).start()['finally'](expandDone);
               } else {
                 $animate.addClass(element, 'in', {
+                  css: {
+                    overflow: 'hidden'
+                  },
                   to: getScrollFromElement(element[0])
                 }).then(expandDone);
               }
