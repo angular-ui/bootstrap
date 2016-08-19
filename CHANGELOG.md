@@ -1,3 +1,21 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/angular-ui/bootstrap/compare/2.0.2...v2.1.0) (2016-08-19)
+
+
+### Bug Fixes
+
+* **collapse:** remove unnecessary inherit ([ca20be4](https://github.com/angular-ui/bootstrap/commit/ca20be4)), closes [#6164](https://github.com/angular-ui/bootstrap/issues/6164) [#6163](https://github.com/angular-ui/bootstrap/issues/6163)
+* **collapse:** set overflow to hidden on transition ([84cc2cf](https://github.com/angular-ui/bootstrap/commit/84cc2cf)), closes [#6180](https://github.com/angular-ui/bootstrap/issues/6180) [#5474](https://github.com/angular-ui/bootstrap/issues/5474)
+* **datepickerPopup:** apply timezone conversion ([f147d22](https://github.com/angular-ui/bootstrap/commit/f147d22)), closes [#6173](https://github.com/angular-ui/bootstrap/issues/6173) [#6147](https://github.com/angular-ui/bootstrap/issues/6147)
+* **modal:** improve ARIA support ([4a5e6a7](https://github.com/angular-ui/bootstrap/commit/4a5e6a7)), closes [#4772](https://github.com/angular-ui/bootstrap/issues/4772)
+* **tooltip:** close tooltip on esc ([f5ff12c](https://github.com/angular-ui/bootstrap/commit/f5ff12c)), closes [#6177](https://github.com/angular-ui/bootstrap/issues/6177) [#6108](https://github.com/angular-ui/bootstrap/issues/6108)
+
+### Features
+
+* **modal:** add component support ([2ade054](https://github.com/angular-ui/bootstrap/commit/2ade054)), closes [#5683](https://github.com/angular-ui/bootstrap/issues/5683) [#6179](https://github.com/angular-ui/bootstrap/issues/6179)
+
+
+
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/angular-ui/bootstrap/compare/2.0.1...v2.0.2) (2016-08-15)
 
