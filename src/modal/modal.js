@@ -537,7 +537,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           'tabindex': -1,
           'uib-modal-animation-class': 'fade',
           'modal-in-class': 'in'
-        }).html(content);
+        }).append(content);
         if (modal.windowClass) {
           angularDomEl.addClass(modal.windowClass);
         }
