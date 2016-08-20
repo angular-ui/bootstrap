@@ -27,8 +27,11 @@
   <i class="glyphicon glyphicon-eye-open"></i>
   _(Default: `false`)_ -
   Whether the element should be collapsed or not.
-  
+
 * `horizontal`
   <small class="badge">$</small> -
   An optional attribute that permit to collapse horizontally.
 
+### Known Issues
+
+When using the `horizontal` attribute with this directive, keep in mind that due to how CSS can reflow as the collapse element goes from 0px to its desired end width, this cause result in issues with a changing height. This can cause animations to not appear to run. The best way around this is to set a fixed height via CSS on the horizontal collapse element so that this situation does not occur, and so the animation can run as expected.

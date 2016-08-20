@@ -1,3 +1,8 @@
+<style>
+  .horizontal-collapse {
+    height: 70px;
+  }
+</style>
 <div ng-controller="CollapseDemoCtrl">
 	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse Vertically</button>
 	<hr>
@@ -7,7 +12,7 @@
 
 	<button type="button" class="btn btn-default" ng-click="isCollapsedHorizontal = !isCollapsedHorizontal">Toggle collapse Horizontally</button>
 	<hr>
-	<div uib-collapse="isCollapsedHorizontal" horizontal>
+	<div class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>
 		<div class="well well-lg">Some content</div>
 	</div>
 </div>
