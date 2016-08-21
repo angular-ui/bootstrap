@@ -512,8 +512,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           content.attr({
             resolve: '$resolve',
             'modal-instance': '$uibModalInstance',
-            close: 'close($value)',
-            dismiss: 'dismiss($value)'
+            close: '$close($value)',
+            dismiss: '$dismiss($value)'
           });
           content = $compile(content)(modal.scope);
         } else {
