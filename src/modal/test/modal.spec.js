@@ -161,6 +161,7 @@ describe('$uibModal', function() {
       toBeResolvedWith: function(util, customEqualityTesters) {
         return {
           compare: function(promise, expected) {
+            var called = false;
             promise.then(function(result) {
               expect(result).toEqual(expected);
 
@@ -169,9 +170,17 @@ describe('$uibModal', function() {
               } else {
                 result.message = 'Expected "' + angular.mock.dump(result) + '" to be resolved with "' + expected + '".';
               }
+            }, function(result) {
+              fail('Expected "' + angular.mock.dump(result) + '" to be resolved with "' + expected + '".');
+            })['finally'](function() {
+              called = true;
             });
 
             $rootScope.$digest();
+
+            if (!called) {
+              fail('Expected "' + angular.mock.dump(result) + '" to be resolved with "' + expected + '".');
+            }
 
             return {pass: true};
           }
@@ -181,9 +190,10 @@ describe('$uibModal', function() {
         return {
           compare: function(promise, expected) {
             var result = {};
+            var called = false;
 
-            promise.then(function() {
-
+            promise.then(function(result) {
+              fail('Expected "' + angular.mock.dump(result) + '" to be rejected with "' + expected + '".');
             }, function(result) {
               expect(result).toEqual(expected);
 
@@ -192,9 +202,15 @@ describe('$uibModal', function() {
               } else {
                 result.message = 'Expected "' + angular.mock.dump(result) + '" to be rejected with "' + expected + '".';
               }
+            })['finally'](function() {
+              called = true;
             });
 
             $rootScope.$digest();
+
+            if (!called) {
+              fail('Expected "' + angular.mock.dump(result) + '" to be rejected with "' + expected + '".');
+            }
 
             return {pass: true};
           }
