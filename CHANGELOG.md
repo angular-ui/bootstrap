@@ -1,3 +1,14 @@
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/angular-ui/bootstrap/compare/2.1.0...v2.1.1) (2016-08-21)
+
+
+### Bug Fixes
+
+* **collapse:** default to css([aef24cd](https://github.com/angular-ui/bootstrap/commit/aef24cd)), closes [#6182](https://github.com/angular-ui/bootstrap/issues/6182) [#6045](https://github.com/angular-ui/bootstrap/issues/6045)
+* **modal:** switch to .append([fb5fabf](https://github.com/angular-ui/bootstrap/commit/fb5fabf)), closes [#6187](https://github.com/angular-ui/bootstrap/issues/6187) [#6186](https://github.com/angular-ui/bootstrap/issues/6186)
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/angular-ui/bootstrap/compare/2.0.2...v2.1.0) (2016-08-19)
 
