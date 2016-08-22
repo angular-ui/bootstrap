@@ -1,3 +1,15 @@
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/angular-ui/bootstrap/compare/2.1.1...v2.1.2) (2016-08-22)
+
+
+### Bug Fixes
+
+* **collapse:** revert change to transition css ([515bcf2](https://github.com/angular-ui/bootstrap/commit/515bcf2)), closes [#6196](https://github.com/angular-ui/bootstrap/issues/6196) [#6194](https://github.com/angular-ui/bootstrap/issues/6194)
+* **datepicker:** fix accidental global ([ddcacb7](https://github.com/angular-ui/bootstrap/commit/ddcacb7)), closes [#6188](https://github.com/angular-ui/bootstrap/issues/6188)
+* **modal:** close and dismiss bindings on component ([3e8ecff](https://github.com/angular-ui/bootstrap/commit/3e8ecff)), closes [#6192](https://github.com/angular-ui/bootstrap/issues/6192) [#6191](https://github.com/angular-ui/bootstrap/issues/6191)
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/angular-ui/bootstrap/compare/2.1.0...v2.1.1) (2016-08-21)
 
