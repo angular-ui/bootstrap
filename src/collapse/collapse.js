@@ -38,9 +38,9 @@ angular.module('ui.bootstrap.collapse', [])
 
         function getScrollFromElement(element) {
           if (horizontal) {
-            return {width: ''};
+            return {width: element.scrollWidth + 'px'};
           }
-          return {height: ''};
+          return {height: element.scrollHeight + 'px'};
         }
 
         function expand() {
