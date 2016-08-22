@@ -118,3 +118,5 @@ For Safari 7+ support, if you want to use the **focus** `tooltip-trigger`, you n
   Click Me
 </a>
 ```
+
+For Safari (potentially all versions up to 9), there is an issue with the hover CSS selector when using multiple elements grouped close to each other that are using the tooltip - it is possible for multiple elements to gain the hover state when mousing between the elements quickly and exiting the container at the right time. See [issue #5445](https://github.com/angular-ui/bootstrap/issues/5445) for more details.
