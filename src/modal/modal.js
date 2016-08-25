@@ -515,7 +515,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
             close: '$close($value)',
             dismiss: '$dismiss($value)'
           });
-          content = $compile(content)(modal.scope);
         } else {
           content = modal.content;
         }
