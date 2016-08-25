@@ -1,3 +1,13 @@
+<a name="2.1.3"></a>
+## [2.1.3](https://github.com/angular-ui/bootstrap/compare/2.1.2...v2.1.3) (2016-08-25)
+
+
+### Bug Fixes
+
+* **modal:** compile only once with component ([969eb9c](https://github.com/angular-ui/bootstrap/commit/969eb9c)), closes [#6202](https://github.com/angular-ui/bootstrap/issues/6202) [#6201](https://github.com/angular-ui/bootstrap/issues/6201)
+
+
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/angular-ui/bootstrap/compare/2.1.1...v2.1.2) (2016-08-22)
 
