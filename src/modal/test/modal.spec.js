@@ -526,7 +526,7 @@ describe('$uibModal', function() {
 
       var modal = open({template: '<div>Content<button>inside modal</button></div>'});
       $rootScope.$digest();
-      expect(document.activeElement.tagName).toBe('DIV');
+      expect(document.activeElement.tagName).toBe('BUTTON');
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
@@ -656,7 +656,7 @@ describe('$uibModal', function() {
     it('should not focus on the element that has autofocus attribute when the modal is opened and something in the modal already has focus and the animations have finished', function() {
       function openAndCloseModalWithAutofocusElement() {
 
-        var modal = open({template: '<div><input type="text" id="auto-focus-element" autofocus><input type="text" id="pre-focus-element" focus-me></div>'});
+        var modal = open({template: '<div><input type="text" id="pre-focus-element" focus-me><input type="text" id="auto-focus-element" autofocus></div>'});
         $rootScope.$digest();
         expect(angular.element('#auto-focus-element')).not.toHaveFocus();
         expect(angular.element('#pre-focus-element')).toHaveFocus();
@@ -698,7 +698,7 @@ describe('$uibModal', function() {
         $rootScope.$digest();
         $animate.flush();
 
-        expect(document.activeElement.tagName).toBe('DIV');
+        expect(document.activeElement.tagName).toBe('INPUT');
 
         close(modal, 'closed ok');
 

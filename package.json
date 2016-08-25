@@ -15,6 +15,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "demo": "grunt after-test && static dist -a 0.0.0.0 -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}'",
     "test": "grunt"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "angular-mocks": "1.5.8",
     "angular-sanitize": "1.5.8",
     "grunt": "^0.4.5",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-concat": "^1.0.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1",
@@ -44,6 +46,7 @@
     "load-grunt-tasks": "^3.3.0",
     "lodash": "^4.1.0",
     "marked": "^0.3.5",
+    "node-static": "^0.7.8",
     "semver": "^5.0.1",
     "shelljs": "^0.6.0"
   },

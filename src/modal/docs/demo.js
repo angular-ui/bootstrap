@@ -1,10 +1,12 @@
-angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($uibModal, $log) {
+angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($uibModal, $log, $document) {
   var $ctrl = this;
   $ctrl.items = ['item1', 'item2', 'item3'];
 
   $ctrl.animationsEnabled = true;
 
-  $ctrl.open = function (size) {
+  $ctrl.open = function (size, parentSelector) {
+    var parentElem = parentSelector ? 
+      angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
     var modalInstance = $uibModal.open({
       animation: $ctrl.animationsEnabled,
       ariaLabelledBy: 'modal-title',
@@ -13,6 +15,7 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($uibMo
       controller: 'ModalInstanceCtrl',
       controllerAs: '$ctrl',
       size: size,
+      appendTo: parentElem,
       resolve: {
         items: function () {
           return $ctrl.items;
@@ -42,6 +45,30 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($uibMo
       $ctrl.selected = selectedItem;
     }, function () {
       $log.info('modal-component dismissed at: ' + new Date());
+    });
+  };
+
+  $ctrl.openMultipleModals = function () {
+    $uibModal.open({
+      animation: $ctrl.animationsEnabled,
+      ariaLabelledBy: 'modal-title-bottom',
+      ariaDescribedBy: 'modal-body-bottom',
+      templateUrl: 'stackedModal.html',
+      size: 'sm',
+      controller: function($scope) {
+        $scope.name = 'bottom';  
+      }
+    });
+
+    $uibModal.open({
+      animation: $ctrl.animationsEnabled,
+      ariaLabelledBy: 'modal-title-top',
+      ariaDescribedBy: 'modal-body-top',
+      templateUrl: 'stackedModal.html',
+      size: 'sm',
+      controller: function($scope) {
+        $scope.name = 'top';  
+      }
     });
   };
 
