@@ -73,7 +73,7 @@ section {
 
 }
 
-.navbar .collapse {
+.navbar-fixed-top .collapse {
     border-top: 1px solid #e7e7e7;
     margin-left: -15px;
     margin-right: -15px;
