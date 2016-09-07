@@ -144,6 +144,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
             var showTimeout;
             var hideTimeout;
             var positionTimeout;
+            var adjustmentTimeout;
             var appendToBody = angular.isDefined(options.appendToBody) ? options.appendToBody : false;
             var triggers = getTriggers(undefined);
             var hasEnableExp = angular.isDefined(attrs[prefix + 'Enable']);
@@ -176,12 +177,13 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                     tooltip.addClass(options.placementClassPrefix + ttPosition.placement);
                   }
 
-                  $timeout(function() {
+                  adjustmentTimeout = $timeout(function() {
                     var currentHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
                     var adjustment = $position.adjustTop(placementClasses, elementPos, initialHeight, currentHeight);
                     if (adjustment) {
                       tooltip.css(adjustment);
                     }
+                    adjustmentTimeout = null;
                   }, 0, false);
 
                   // first time through tt element will have the
@@ -346,7 +348,11 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
 
               if (tooltip) {
                 tooltip.remove();
+                
                 tooltip = null;
+                if (adjustmentTimeout) {
+                  $timeout.cancel(adjustmentTimeout);
+                }
               }
 
               openedTooltips.remove(ttScope);
