@@ -34,6 +34,9 @@ All these settings are available for the three types of popovers.
   _(Default: `false`, Config: `appendToBody`)_ -
   Should the popover be appended to '$body' instead of the parent element?
 
+* `popover-class` -
+  Custom class to be applied to the popover.
+
 * `popover-enable`
   <small class="badge">$</small>
   _(Default: `true`)_ -
