@@ -1230,6 +1230,7 @@ describe('timepicker directive', function() {
       changeInputValueTo(el, 'pizza');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('has-error')).toBe(true);
+      expect(el.hasClass('ng-invalid-hours'));
       expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 8);
@@ -1247,6 +1248,7 @@ describe('timepicker directive', function() {
       changeInputValueTo(el, '8a');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('has-error')).toBe(true);
+      expect(el.hasClass('ng-invalid-minutes'));
       expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 22);
@@ -1262,6 +1264,7 @@ describe('timepicker directive', function() {
       changeInputValueTo(el, 'pizza');
       expect($rootScope.time).toBe(null);
       expect(el.parent().hasClass('has-error')).toBe(true);
+      expect(el.hasClass('ng-invalid-seconds'));
       expect(element.hasClass('ng-invalid-time')).toBe(true);
 
       changeInputValueTo(el, 13);
@@ -1291,6 +1294,9 @@ describe('timepicker directive', function() {
       elS.blur();
       $rootScope.$digest();
 
+      expect(elH.hasClass('ng-valid'));
+      expect(elM.hasClass('ng-valid'));
+      expect(elS.hasClass('ng-valid'));
       expect(element.hasClass('ng-invalid-time')).toBe(false);
     });
 
