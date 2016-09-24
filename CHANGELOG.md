@@ -1,3 +1,14 @@
+<a name="2.1.4"></a>
+## [2.1.4](https://github.com/angular-ui/bootstrap/compare/2.1.3...v2.1.4) (2016-09-24)
+
+
+### Bug Fixes
+
+* **datepicker:** improve accessibility ([3f70d76](https://github.com/angular-ui/bootstrap/commit/3f70d76)), closes [#6247](https://github.com/angular-ui/bootstrap/issues/6247)
+* **dropdown:** prevent premature scope removal ([08ee30a](https://github.com/angular-ui/bootstrap/commit/08ee30a)), closes [#6238](https://github.com/angular-ui/bootstrap/issues/6238) [#6225](https://github.com/angular-ui/bootstrap/issues/6225)
+
+
+
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/angular-ui/bootstrap/compare/2.1.2...v2.1.3) (2016-08-25)
 
