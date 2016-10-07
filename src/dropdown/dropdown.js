@@ -22,9 +22,9 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
   this.close = function(dropdownScope, element) {
     if (openScope === dropdownScope) {
-      openScope = null;
       $document.off('click', closeDropdown);
       $document.off('keydown', this.keybindFilter);
+      openScope = null;
     }
   };
 
@@ -57,6 +57,11 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   };
 
   this.keybindFilter = function(evt) {
+    if (!openScope) {
+      // see this.close as ESC could have been pressed which kills the scope so we can not proceed
+      return;
+    }
+
     var dropdownElement = openScope.getDropdownElement();
     var toggleElement = openScope.getToggleElement();
     var dropdownElementTargeted = dropdownElement && dropdownElement[0].contains(evt.target);
