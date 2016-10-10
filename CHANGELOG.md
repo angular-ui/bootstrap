@@ -1,3 +1,20 @@
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/angular-ui/bootstrap/compare/2.1.4...v2.2.0) (2016-10-10)
+
+
+### Bug Fixes
+
+* **dropdown:** exit keybind is not open ([14384fc](https://github.com/angular-ui/bootstrap/commit/14384fc)), closes [#6278](https://github.com/angular-ui/bootstrap/issues/6278) [#6208](https://github.com/angular-ui/bootstrap/issues/6208)
+* **modal:** improve ARIA support. ([f9f7e02](https://github.com/angular-ui/bootstrap/commit/f9f7e02)), closes [#6203](https://github.com/angular-ui/bootstrap/issues/6203)
+* **position:** correct scrollbar width calculation ([58f1813](https://github.com/angular-ui/bootstrap/commit/58f1813)), closes [#6273](https://github.com/angular-ui/bootstrap/issues/6273)
+* **tooltip:** cancel timeout when hidden ([7855976](https://github.com/angular-ui/bootstrap/commit/7855976)), closes [#6226](https://github.com/angular-ui/bootstrap/issues/6226) [#6221](https://github.com/angular-ui/bootstrap/issues/6221)
+
+### Features
+
+* **timepicker:** add validation information ([9666c64](https://github.com/angular-ui/bootstrap/commit/9666c64)), closes [#6230](https://github.com/angular-ui/bootstrap/issues/6230) [#6259](https://github.com/angular-ui/bootstrap/issues/6259)
+
+
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/angular-ui/bootstrap/compare/2.1.3...v2.1.4) (2016-09-24)
 
