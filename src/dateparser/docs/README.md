@@ -58,6 +58,9 @@ Certain format codes support i18n. Check this [guide](https://docs.angularjs.org
   _(Example: `3` or `03`)_ -
   Parses a numeric month, but allowing an optional leading zero
 
+* `LLLL`
+  _(Example: `February`, i18n support)_ - Stand-alone month in year (January-December). Requires Angular version 1.5.1 or higher.
+
 * `dd`
   _(Example: `05`, Leading 0)_ -
   Parses a numeric day.

@@ -84,6 +84,16 @@ describe('date parser', function() {
       expectFilter(new Date(2011, 4, 2, 0), 'dd-M!-yy', '02-05-11');
       expectFilter(oldDate, 'yyyy/M!/dd', '0001/03/06');
     });
+    
+    it('should work correctly for `LLLL`', function() {
+      expectFilter(new Date(2013, 7, 24, 0), 'LLLL/dd/yyyy', 'August/24/2013');
+      expectFilter(new Date(2004, 10, 7, 0), 'dd.LLLL.yy', '07.November.04');
+      expectFilter(new Date(2011, 4, 18, 0), 'dd-LLLL-yy', '18-May-11');
+      expectFilter(new Date(1980, 1, 5, 0), 'LLLL/dd/yyyy', 'February/05/1980');
+      expectFilter(new Date(1955, 2, 5, 0), 'yyyy/LLLL/dd', '1955/March/05');
+      expectFilter(new Date(2011, 5, 2, 0), 'dd-LLLL-yy', '02-June-11');
+      expectFilter(oldDate, 'yyyy/LLLL/dd', '0001/March/06');
+    });
 
     it('should work correctly for `d`', function() {
       expectFilter(new Date(2013, 10, 17, 0), 'd.MMMM.yy', '17.November.13');
