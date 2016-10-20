@@ -526,7 +526,7 @@ describe('$uibModal', function() {
 
       var modal = open({template: '<div>Content<button>inside modal</button></div>'});
       $rootScope.$digest();
-      expect(document.activeElement.tagName).toBe('BUTTON');
+      expect(document.activeElement.className.split(' ')).toContain('modal');
       expect($document).toHaveModalsOpen(1);
 
       triggerKeyDown($document, 27);
@@ -698,7 +698,7 @@ describe('$uibModal', function() {
         $rootScope.$digest();
         $animate.flush();
 
-        expect(document.activeElement.tagName).toBe('INPUT');
+        expect(document.activeElement.className.split(' ')).toContain('modal');
 
         close(modal, 'closed ok');
 
