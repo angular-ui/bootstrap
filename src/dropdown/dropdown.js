@@ -272,6 +272,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       scope.focusToggleElement();
       uibDropdownService.open(scope, $element);
     } else {
+      $document.off('keydown', uibDropdownService.keybindFilter);
       uibDropdownService.close(scope, $element);
       if (self.dropdownMenuTemplateUrl) {
         if (templateScope) {
