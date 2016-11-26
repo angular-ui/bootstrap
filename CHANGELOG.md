@@ -1,3 +1,13 @@
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/angular-ui/bootstrap/compare/2.2.0...v2.3.0) (2016-11-26)
+
+
+### Features
+
+* **dateparser:** add LLLL support([25ff206](https://github.com/angular-ui/bootstrap/commit/25ff206)), closes [#6281](https://github.com/angular-ui/bootstrap/issues/6281)
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/angular-ui/bootstrap/compare/2.1.4...v2.2.0) (2016-10-10)
 
