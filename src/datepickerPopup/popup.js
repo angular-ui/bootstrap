@@ -333,7 +333,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     if (angular.isString(viewValue)) {
       var date = parseDateString(viewValue);
       if (!isNaN(date)) {
-        return dateParser.fromTimezone(date, ngModelOptions.timezone);
+        return dateParser.toTimezone(date, ngModelOptions.timezone);
       }
     }
 
