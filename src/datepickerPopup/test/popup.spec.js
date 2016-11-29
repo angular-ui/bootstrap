@@ -397,7 +397,7 @@ describe('datepicker popup', function() {
       it('stops the ESC key from propagating if the dropdown is open, but not when closed', function() {
         var documentKey = -1;
         var getKey = function(evt) { documentKey = evt.which; };
-        $document.bind('keydown', getKey);
+        $document.on('keydown', getKey);
 
         triggerKeyDown(inputEl, 'esc');
         expect(documentKey).toBe(-1);
@@ -405,7 +405,7 @@ describe('datepicker popup', function() {
         triggerKeyDown(inputEl, 'esc');
         expect(documentKey).toBe(27);
 
-        $document.unbind('keydown', getKey);
+        $document.off('keydown', getKey);
       });
     });
 
