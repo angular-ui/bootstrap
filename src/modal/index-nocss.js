@@ -1,3 +1,4 @@
+require('../multiMap');
 require('../position/index-nocss.js');
 require('../stackedMap');
 require('../../template/modal/window.html.js');

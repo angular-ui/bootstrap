@@ -1,7 +1,7 @@
 describe('multi map', function() {
   var multiMap;
 
-  beforeEach(module('ui.bootstrap.modal'));
+  beforeEach(module('ui.bootstrap.multiMap'));
   beforeEach(inject(function($$multiMap) {
     multiMap = $$multiMap.createNew();
   }));

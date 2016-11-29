@@ -99,11 +99,11 @@ describe('uib-dropdown', function() {
       expect(elm1).not.toHaveClass(dropdownConfig.openClass);
       expect(elm2).not.toHaveClass(dropdownConfig.openClass);
 
-      clickDropdownToggle( elm1 );
+      clickDropdownToggle(elm1);
       expect(elm1).toHaveClass(dropdownConfig.openClass);
       expect(elm2).not.toHaveClass(dropdownConfig.openClass);
 
-      clickDropdownToggle( elm2 );
+      clickDropdownToggle(elm2);
       expect(elm1).not.toHaveClass(dropdownConfig.openClass);
       expect(elm2).toHaveClass(dropdownConfig.openClass);
     });
@@ -300,6 +300,37 @@ describe('uib-dropdown', function() {
       element.remove();
       $rootScope.$digest();
       expect($document.find('#dropdown-menu').length).toEqual(0);
+    });
+  });
+
+  describe('using dropdown-append-to with two dropdowns', function() {
+    function dropdown() {
+      return $compile('<div><div class="dropdown1" uib-dropdown dropdown-append-to="appendTo" on-toggle="log(1, open)"><a href uib-dropdown-toggle></a><ul class="dropdown-menu" uib-dropdown-menu id="dropdown-menu"><li><a href>Hello On Container</a></li></ul></div><div class="dropdown2" uib-dropdown dropdown-append-to="appendTo" on-toggle="log(2, open)"><a href uib-dropdown-toggle></a><ul class="dropdown-menu" uib-dropdown-menu id="dropdown-menu"><li><a href>Hello On Container</a></li></ul></div></div>')($rootScope);
+    }
+
+    beforeEach(function() {
+      $document.find('body').append(angular.element('<div id="dropdown-container"></div>'));
+
+      $rootScope.appendTo = $document.find('#dropdown-container');
+      $rootScope.log = jasmine.createSpy('log');
+
+      element = dropdown();
+      $document.find('body').append(element);
+    });
+
+    afterEach(function() {
+      // Cleanup the extra elements we appended
+      $document.find('#dropdown-container').remove();
+    });
+
+    it('should keep the class when toggling from one dropdown to another with the same container', function() {
+      var container = $document.find('#dropdown-container');
+
+      expect(container).not.toHaveClass('uib-dropdown-open');
+      element.find('.dropdown1 [uib-dropdown-toggle]').click();
+      expect(container).toHaveClass('uib-dropdown-open');
+      element.find('.dropdown2 [uib-dropdown-toggle]').click();
+      expect(container).toHaveClass('uib-dropdown-open');
     });
   });
 
