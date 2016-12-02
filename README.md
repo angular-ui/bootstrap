@@ -131,7 +131,7 @@ The other modules, such as `accordion` in the example below, do not have CSS res
 import accordion from 'angular-ui-bootstrap/src/accordion';
 import typeahead from 'angular-ui-bootstrap/src/typeahead/index-nocss.js';
 
-angular.module('myModule', [accordion, datepicker]);
+angular.module('myModule', [accordion, typeahead]);
 ```
 
 # Versioning
