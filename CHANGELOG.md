@@ -1,3 +1,15 @@
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/angular-ui/bootstrap/compare/2.3.0...v2.3.1) (2016-12-10)
+
+
+### Bug Fixes
+
+* **dateparser:** add new date format for angular 1.5+ only([f2722b5](https://github.com/angular-ui/bootstrap/commit/f2722b5)), closes [#6349](https://github.com/angular-ui/bootstrap/issues/6349)
+
+* **datepickerPopup:** change to toTimezone only([1962485](https://github.com/angular-ui/bootstrap/commit/1962485)), fixes [#6235](https://github.com/angular-ui/bootstrap/issues/6235)
+
+* **modal:** revert focus behavior on open([8a4f625](https://github.com/angular-ui/bootstrap/commit/8a4f625)), closes [#6295](https://github.com/angular-ui/bootstrap/issues/6295)
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/angular-ui/bootstrap/compare/2.2.0...2.3.0) (2016-11-26)
 
