@@ -791,4 +791,28 @@ describe('date parser', function() {
       });
     });
   });
+
+  describe('overrideParser', function() {
+    var twoDigitYearParser = function (value) {
+      this.year = +value + (+value > 30 ? 1900 : 2000);
+    };
+
+    it('should get the current parser', function() {
+      expect(dateParser.getParser('yy')).toBeTruthy();
+    });
+
+    it('should override the parser', function() {
+      dateParser.overrideParser('yy', twoDigitYearParser);
+      expect(dateParser.parse('68', 'yy').getFullYear()).toEqual(1968);
+      expect(dateParser.parse('67', 'yy').getFullYear()).toEqual(1967);
+      expect(dateParser.parse('31', 'yy').getFullYear()).toEqual(1931);
+      expect(dateParser.parse('30', 'yy').getFullYear()).toEqual(2030);
+    });
+
+    it('should clear cached parsers', function() {
+      expect(dateParser.parse('68', 'yy').getFullYear()).toEqual(2068);
+      dateParser.overrideParser('yy', twoDigitYearParser);
+      expect(dateParser.parse('68', 'yy').getFullYear()).toEqual(1968);
+    });
+  });
 });

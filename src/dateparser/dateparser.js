@@ -1,6 +1,6 @@
 angular.module('ui.bootstrap.dateparser', [])
 
-.service('uibDateParser', ['$log', '$locale', 'dateFilter', 'orderByFilter', function($log, $locale, dateFilter, orderByFilter) {
+.service('uibDateParser', ['$log', '$locale', 'dateFilter', 'orderByFilter', 'filterFilter', function($log, $locale, dateFilter, orderByFilter, filterFilter) {
   // Pulled from https://github.com/mbostock/d3/blob/master/src/format/requote.js
   var SPECIAL_CHARACTERS_REGEXP = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
 
@@ -242,6 +242,23 @@ angular.module('ui.bootstrap.dateparser', [])
   };
 
   this.init();
+
+  function getFormatCodeToRegex(key) {
+    return filterFilter(formatCodeToRegex, {key: key}, true)[0];
+  }
+
+  this.getParser = function (key) {
+    var f = getFormatCodeToRegex(key);
+    return f && f.apply || null;
+  };
+
+  this.overrideParser = function (key, parser) {
+    var f = getFormatCodeToRegex(key);
+    if (f && angular.isFunction(parser)) {
+      this.parsers = {};
+      f.apply = parser;
+    }
+  }.bind(this);
 
   function createParser(format) {
     var map = [], regex = format.split('');
