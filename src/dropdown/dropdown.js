@@ -337,6 +337,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.multiMap', 'ui.bootstrap.
       scope.focusToggleElement();
       uibDropdownService.open(scope, $element, appendTo);
     } else {
+      uibDropdownService.close(scope, $element, appendTo);
       if (self.dropdownMenuTemplateUrl) {
         if (templateScope) {
           templateScope.$destroy();
