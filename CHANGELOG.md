@@ -1,3 +1,13 @@
+<a name="2.3.2"></a>
+## [2.3.2](https://github.com/angular-ui/bootstrap/compare/2.3.1...v2.3.2) (2016-12-27)
+
+
+### Bug Fixes
+
+* **dropdown:** re-add close([955848c](https://github.com/angular-ui/bootstrap/commit/955848c)), closes [#6382](https://github.com/angular-ui/bootstrap/issues/6382) [#6321](https://github.com/angular-ui/bootstrap/issues/6321) [#6357](https://github.com/angular-ui/bootstrap/issues/6357) [#6364](https://github.com/angular-ui/bootstrap/issues/6364)
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/angular-ui/bootstrap/compare/2.3.0...v2.3.1) (2016-12-10)
 
