@@ -1,3 +1,13 @@
+<a name="2.4.0"></a>
+# [2.4.0](https://github.com/angular-ui/bootstrap/compare/2.3.2...v2.4.0) (2016-12-30)
+
+
+### Features
+
+* **dateparser:** allow overriding of parsers([5a3e44a](https://github.com/angular-ui/bootstrap/commit/5a3e44a)), closes [#6370](https://github.com/angular-ui/bootstrap/issues/6370) [#6373](https://github.com/angular-ui/bootstrap/issues/6373)
+
+
+
 <a name="2.3.2"></a>
 ## [2.3.2](https://github.com/angular-ui/bootstrap/compare/2.3.1...v2.3.2) (2016-12-27)
 
