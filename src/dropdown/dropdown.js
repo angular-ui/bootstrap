@@ -88,7 +88,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.multiMap', 'ui.bootstrap.
   var closeDropdown = function(evt) {
     // This method may still be called during the same mouse event that
     // unbound this event handler. So check openScope before proceeding.
-    if (!openScope) { return; }
+    if (!openScope || !openScope.isOpen) { return; }
 
     if (evt && openScope.getAutoClose() === 'disabled') { return; }
 
