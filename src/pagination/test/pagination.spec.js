@@ -54,6 +54,15 @@ describe('pagination directive', function() {
     expect(element.hasClass('pagination')).toBe(true);
   });
 
+  it('has accessibility attributes', function() {
+    expect(element.attr('role')).toEqual('menu');
+
+    var li = element.find('li');
+    for (var i = 0; i < li.length; i++) {
+      expect(li.eq(i).attr('role')).toEqual('menuitem');
+    }
+  });
+
   it('exposes the controller to the template', function() {
     $templateCache.put('uib/template/pagination/pagination.html', '<div>{{pagination.randomText}}</div>');
     var scope = $rootScope.$new();

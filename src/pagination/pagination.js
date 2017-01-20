@@ -9,6 +9,7 @@ angular.module('ui.bootstrap.pagination', ['ui.bootstrap.paging', 'ui.bootstrap.
     pageLabel = angular.isDefined($attrs.pageLabel) ? function(idx) { return $scope.$parent.$eval($attrs.pageLabel, {$page: idx}); } : angular.identity;
   $scope.boundaryLinks = angular.isDefined($attrs.boundaryLinks) ? $scope.$parent.$eval($attrs.boundaryLinks) : uibPaginationConfig.boundaryLinks;
   $scope.directionLinks = angular.isDefined($attrs.directionLinks) ? $scope.$parent.$eval($attrs.directionLinks) : uibPaginationConfig.directionLinks;
+  $attrs.$set('role', 'menu');
 
   uibPaging.create(this, $scope, $attrs);
 
