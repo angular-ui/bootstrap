@@ -25,7 +25,7 @@ Each of these parts need to be used as attribute directives.
 * `dropdown-append-to-body`
   <small class="badge">B</small>
   _(Default: `false`)_ -
-  Appends the inner dropdown-menu to the body element.
+  Appends the inner dropdown-menu to the body element if the attribute is present without a value, or with a non `false` value.
 
 * `is-open`
   <small class="badge">$</small>
