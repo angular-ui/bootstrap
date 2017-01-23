@@ -34,4 +34,4 @@
 
 ### Known Issues
 
-When using the `horizontal` attribute with this directive, keep in mind that due to how CSS can reflow as the collapse element goes from 0px to its desired end width, this cause result in issues with a changing height. This can cause animations to not appear to run. The best way around this is to set a fixed height via CSS on the horizontal collapse element so that this situation does not occur, and so the animation can run as expected.
+When using the `horizontal` attribute with this directive, CSS can reflow as the collapse element goes from `0px` to its desired end width, which can result in height changes. This can cause animations to not appear to run. The best way around this is to set a fixed height via CSS on the horizontal collapse element so that this situation does not occur, and so the animation can run as expected.
