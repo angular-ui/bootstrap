@@ -496,6 +496,13 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               }
             }
 
+            // KeyboardEvent handler to hide the tooltip on Escape key press
+            function hideOnEscapeKey(e) {
+              if (e.which === 27) {
+                hideTooltipBind();
+              }
+            }
+
             var unregisterTriggers = function() {
               triggers.show.forEach(function(trigger) {
                 if (trigger === 'outsideClick') {
@@ -504,6 +511,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                   element.off(trigger, showTooltipBind);
                   element.off(trigger, toggleTooltipBind);
                 }
+                element.off('keypress', hideOnEscapeKey);
               });
               triggers.hide.forEach(function(trigger) {
                 if (trigger === 'outsideClick') {
@@ -543,12 +551,7 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
                     element.on(trigger, showTooltipBind);
                     element.on(triggers.hide[idx], hideTooltipBind);
                   }
-
-                  element.on('keypress', function(e) {
-                    if (e.which === 27) {
-                      hideTooltipBind();
-                    }
-                  });
+                  element.on('keypress', hideOnEscapeKey);
                 });
               }
             }
