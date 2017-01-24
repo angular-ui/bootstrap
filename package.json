@@ -30,9 +30,9 @@
     "url": "https://github.com/angular-ui/bootstrap.git"
   },
   "devDependencies": {
-    "angular": "1.5.8",
-    "angular-mocks": "1.5.8",
-    "angular-sanitize": "1.5.8",
+    "angular": "1.6.1",
+    "angular-mocks": "1.6.1",
+    "angular-sanitize": "1.6.1",
     "grunt": "^0.4.5",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-concat": "^1.0.0",

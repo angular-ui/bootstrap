@@ -72,7 +72,7 @@ angular.module('ui.bootstrap.collapse', [])
                   to: getScrollFromElement(element[0])
                 }).then(expandDone);
               }
-            });
+            }, angular.noop);
         }
 
         function expandDone() {
@@ -111,7 +111,7 @@ angular.module('ui.bootstrap.collapse', [])
                   to: cssTo
                 }).then(collapseDone);
               }
-            });
+            }, angular.noop);
         }
 
         function collapseDone() {

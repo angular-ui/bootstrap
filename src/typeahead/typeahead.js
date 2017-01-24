@@ -94,7 +94,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     var invokeModelSetter = $parse(attrs.ngModel + '($$$p)');
     var $setModelValue = function(scope, newValue) {
       if (angular.isFunction(parsedModel(originalScope)) &&
-        ngModelOptions && ngModelOptions.$options && ngModelOptions.$options.getterSetter) {
+        ngModelOptions.getOption('getterSetter')) {
         return invokeModelSetter(scope, {$$$p: newValue});
       }
 
@@ -507,11 +507,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       element.after($popup);
     }
 
-    this.init = function(_modelCtrl, _ngModelOptions) {
+    this.init = function(_modelCtrl) {
       modelCtrl = _modelCtrl;
-      ngModelOptions = _ngModelOptions;
+      ngModelOptions = extractOptions(modelCtrl);
 
-      scope.debounceUpdate = modelCtrl.$options && $parse(modelCtrl.$options.debounce)(originalScope);
+      scope.debounceUpdate = $parse(ngModelOptions.getOption('debounce'))(originalScope);
 
       //plug into $parsers pipeline to open a typeahead on view changes initiated from DOM
       //$parsers kick-in on all the changes coming from the view as well as manually triggered by $setViewValue
@@ -571,14 +571,32 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         return candidateViewValue !== emptyViewValue ? candidateViewValue : modelValue;
       });
     };
+
+    function extractOptions(ngModelCtrl) {
+      var ngModelOptions;
+
+      if (angular.version.minor < 6) { // in angular < 1.6 $options could be missing
+        // guarantee a value
+        ngModelOptions = ngModelCtrl.$options || {};
+
+        // mimic 1.6+ api
+        ngModelOptions.getOption = function (key) {
+          return ngModelOptions[key];
+        };
+      } else { // in angular >=1.6 $options is always present
+        ngModelOptions = ngModelCtrl.$options;
+      }
+
+      return ngModelOptions;
+    }
   }])
 
   .directive('uibTypeahead', function() {
     return {
       controller: 'UibTypeaheadController',
-      require: ['ngModel', '^?ngModelOptions', 'uibTypeahead'],
+      require: ['ngModel', 'uibTypeahead'],
       link: function(originalScope, element, attrs, ctrls) {
-        ctrls[2].init(ctrls[0], ctrls[1]);
+        ctrls[1].init(ctrls[0]);
       }
     };
   })

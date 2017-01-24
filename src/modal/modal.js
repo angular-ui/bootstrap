@@ -419,10 +419,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
         var appendToElement = modal.appendTo,
             currBackdropIndex = backdropIndex();
 
-        if (!appendToElement.length) {
-          throw new Error('appendTo element not found. Make sure that the element passed is in DOM.');
-        }
-
         if (currBackdropIndex >= 0 && !backdropDomEl) {
           backdropScope = $rootScope.$new(true);
           backdropScope.modalOptions = modal;
@@ -698,6 +694,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
             modalOptions = angular.extend({}, $modalProvider.options, modalOptions);
             modalOptions.resolve = modalOptions.resolve || {};
             modalOptions.appendTo = modalOptions.appendTo || $document.find('body').eq(0);
+
+            if (!modalOptions.appendTo.length) {
+              throw new Error('appendTo element not found. Make sure that the element passed is in DOM.');
+            }
 
             //verify options
             if (!modalOptions.component && !modalOptions.template && !modalOptions.templateUrl) {

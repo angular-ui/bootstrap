@@ -296,6 +296,8 @@ describe('$uibModal', function() {
 
   function open(modalOptions, noFlush, noDigest) {
     var modal = $uibModal.open(modalOptions);
+    modal.opened['catch'](angular.noop);
+    modal.result['catch'](angular.noop);
 
     if (!noDigest) {
       $rootScope.$digest();
@@ -1612,7 +1614,7 @@ describe('$uibModal', function() {
       var windowEl = $compile('<div uib-modal-window template-url="window.html">content</div>')($rootScope);
       $rootScope.$digest();
 
-      expect(windowEl.html()).toBe('<div ng-transclude=""><span class="ng-scope">content</span></div>');
+      expect(windowEl.html()).toBe('<div ng-transclude="">content</div>');
     }));
   });
 
@@ -1736,16 +1738,19 @@ describe('$uibModal', function() {
           ds[x] = {index: i, deferred: $q.defer(), reject: reject};
 
           var scope = $rootScope.$new();
+          var failed = false;
           scope.index = i;
           open({
             template: '<div>' + i + '</div>',
             scope: scope,
             resolve: {
-              x: function() { return ds[x].deferred.promise; }
+              x: function() { return ds[x].deferred.promise['catch'](function () {
+                failed = true;
+              }); }
             }
           }, true).opened.then(function() {
             expect($uibModalStack.getTop().value.modalScope.index).toEqual(i);
-            actual += i;
+            if (!failed) { actual += i; }
           });
         });
 

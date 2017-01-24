@@ -551,7 +551,7 @@ describe('uib-accordion', function() {
       });
 
       it('attaches the same scope to the transcluded heading and body', function() {
-        expect(findGroupLink(0).find('span.ng-scope').scope().$id).toBe(findGroupBody(0).find('span').scope().$id);
+        expect(findGroupLink(0).scope().$id).toBe(findGroupBody(0).scope().$id);
       });
 
       it('should wrap the transcluded content in a span', function() {
@@ -580,7 +580,7 @@ describe('uib-accordion', function() {
       });
 
       it('attaches the same scope to the transcluded heading and body', function() {
-        expect(findGroupLink(0).find('span.ng-scope').scope().$id).toBe(findGroupBody(0).find('span').scope().$id);
+        expect(findGroupLink(0).scope().$id).toBe(findGroupBody(0).scope().$id);
       });
 
       it('should have disabled styling when is-disabled is true', isDisabledStyleCheck);

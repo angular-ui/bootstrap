@@ -36,7 +36,7 @@ describe('uib-alert', function() {
   }
 
   function findContent(index) {
-    return element.find('div[ng-transclude] span').eq(index);
+    return element.find('div[ng-transclude]').eq(index);
   }
 
   it('should expose the controller to the view', function() {

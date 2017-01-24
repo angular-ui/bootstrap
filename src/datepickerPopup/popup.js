@@ -32,11 +32,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
   this.init = function(_ngModel_) {
     ngModel = _ngModel_;
-    ngModelOptions = angular.isObject(_ngModel_.$options) ?
-      _ngModel_.$options :
-      {
-        timezone: null
-      };
+    ngModelOptions = extractOptions(ngModel);
     closeOnDateSelection = angular.isDefined($attrs.closeOnDateSelection) ?
       $scope.$parent.$eval($attrs.closeOnDateSelection) :
       datepickerPopupConfig.closeOnDateSelection;
@@ -127,13 +123,13 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
           value = new Date(value);
         }
 
-        $scope.date = dateParser.fromTimezone(value, ngModelOptions.timezone);
+        $scope.date = dateParser.fromTimezone(value, ngModelOptions.getOption('timezone'));
 
         return dateParser.filter($scope.date, dateFormat);
       });
     } else {
       ngModel.$formatters.push(function(value) {
-        $scope.date = dateParser.fromTimezone(value, ngModelOptions.timezone);
+        $scope.date = dateParser.fromTimezone(value, ngModelOptions.getOption('timezone'));
         return value;
       });
     }
@@ -185,7 +181,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
   $scope.isDisabled = function(date) {
     if (date === 'today') {
-      date = dateParser.fromTimezone(new Date(), ngModelOptions.timezone);
+      date = dateParser.fromTimezone(new Date(), ngModelOptions.getOption('timezone'));
     }
 
     var dates = {};
@@ -242,7 +238,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
         date = new Date($scope.date);
         date.setFullYear(today.getFullYear(), today.getMonth(), today.getDate());
       } else {
-        date = dateParser.fromTimezone(today, ngModelOptions.timezone);
+        date = dateParser.fromTimezone(today, ngModelOptions.getOption('timezone'));
         date.setHours(0, 0, 0, 0);
       }
     }
@@ -333,11 +329,11 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     if (angular.isString(viewValue)) {
       var date = parseDateString(viewValue);
       if (!isNaN(date)) {
-        return dateParser.toTimezone(date, ngModelOptions.timezone);
+        return dateParser.toTimezone(date, ngModelOptions.getOption('timezone'));
       }
     }
 
-    return ngModel.$options && ngModel.$options.allowInvalid ? viewValue : undefined;
+    return ngModelOptions.getOption('allowInvalid') ? viewValue : undefined;
   }
 
   function validator(modelValue, viewValue) {
@@ -410,6 +406,28 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
         dpElement.removeClass('uib-position-measure');
       }
     }
+  }
+
+  function extractOptions(ngModelCtrl) {
+    var ngModelOptions;
+
+    if (angular.version.minor < 6) { // in angular < 1.6 $options could be missing
+      // guarantee a value
+      ngModelOptions = angular.isObject(ngModelCtrl.$options) ?
+        ngModelCtrl.$options :
+        {
+          timezone: null
+        };
+
+      // mimic 1.6+ api
+      ngModelOptions.getOption = function (key) {
+        return ngModelOptions[key];
+      };
+    } else { // in angular >=1.6 $options is always present
+      ngModelOptions = ngModelCtrl.$options;
+    }
+
+    return ngModelOptions;
   }
 
   $scope.$on('uib:datepicker.mode', function() {
