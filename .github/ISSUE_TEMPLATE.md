@@ -6,6 +6,8 @@ existing issues (both open and closed) prior to opening any new issue and ensure
 
 ### Link to minimally-working plunker that reproduces the issue:
 
+### Steps to reproduce the issue:
+
 ### Version of Angular, UIBS, and Bootstrap
 
 Angular:
