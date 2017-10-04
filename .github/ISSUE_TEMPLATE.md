@@ -1,17 +1,5 @@
-The issues forum is __NOT__ for support requests. It is for bugs and feature requests only.
-Please read https://github.com/angular-ui/bootstrap/blob/master/CONTRIBUTING.md and search
-existing issues (both open and closed) prior to opening any new issue and ensure you follow the instructions therein.
+# PLEASE READ
 
-### Bug description:
+As per the [README](https://github.com/angular-ui/bootstrap/blob/master/README.md), this project is no longer being maintained.  Any issues entered will remain uninvestigated and unresolved.
 
-### Link to minimally-working plunker that reproduces the issue:
-
-### Steps to reproduce the issue:
-
-### Version of Angular, UIBS, and Bootstrap
-
-Angular:
-
-UIBS:
-
-Bootstrap:
+We thank you for your contributions over the years.  This library would not have been successful without them.

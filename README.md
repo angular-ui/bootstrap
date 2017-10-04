@@ -1,3 +1,10 @@
+# Project Status (please read)
+Due to [Angular](https://angular.io)'s continued adoption, our creation of [the Angular version of this library](https://ng-bootstrap.github.io), and the the project maintainers' moving on to other things, this project is considered feature-complete and is no longer being maintained.
+
+We thank you for all your contributions over the years and hope you've enjoyed using this library as much as we've had developing and maintaining it.  It would not have been successful without them.
+
+-
+
 ### UI Bootstrap - [AngularJS](http://angularjs.org/) directives specific to [Bootstrap](http://getbootstrap.com)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-ui/bootstrap?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
