@@ -3,6 +3,7 @@ node_js:
   - "5.9"
 env:
   - CXX=g++-4.8
+dist: trusty
 addons:
   apt:
     sources:
